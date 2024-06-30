@@ -17,10 +17,12 @@ r"""
 Install library to site-packages
 """
 
+from pathlib import Path
+
 import setuptools
 
-# with open("README.md", "r", encoding="utf-8") as fh:
-#     long_description = fh.read()
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name='quairkit',
@@ -28,6 +30,7 @@ setuptools.setup(
     author='QuAIR team.',
     author_email='leizhang116.4@gmail.com',
     description='QuAIRKit is a Python research toolbox for developing quantum computing, quantum information, and quantum machine learning algorithms.',
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://www.quairkit.com',
     packages=[
