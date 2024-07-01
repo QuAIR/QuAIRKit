@@ -1,0 +1,53 @@
+name: API Auto Update  # The name of the workflow indicates its purpose to automatically update the API documentation.
+
+on:  # Defines the events that trigger the workflow.
+  push:
+    branches: ["main"]
+  workflow_dispatch:  # This allows the workflow to be manually triggered.
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+
+jobs:
+  deploy:  # Defines a job called 'deploy'.
+    runs-on: ubuntu-latest  # Specifies the virtual environment where the job will run.
+
+    steps:  
+      - name: Checkout  # Step to checkout the repository's code.
+        uses: actions/checkout@v4  # Uses the actions/checkout action to access the repository code.
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Cache pip  # Step to cache pip packages.
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies  # Step to install dependencies.
+        run: |
+          pip install quairkit sphinx_immaterial nbsphinx
+
+      - name: Generate Sphinx Documentation for API Documentation  # Step to generate Sphinx documentation.
+        run: bash ./version.sh
+
+      - name: Upload artifact  # Step to upload the built site as an artifact.
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/api
+
+      - name: Deploy to GitHub Pages  # Step to deploy to GitHub Pages.
+        id: deployment
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_branch: gh-pages  # Specifies the branch to deploy to.
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Authenticates using a GitHub Token.
+          publish_dir: ./docs/api  # Specifies the directory to deploy.

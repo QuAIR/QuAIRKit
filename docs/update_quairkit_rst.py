@@ -9,6 +9,9 @@ from typing import List, Tuple
 
 _platform_name = "QuAIRKit"
 
+# set the module names you want to include in API documentation in _module_names
+_module_names = ["quairkit", "tutorials"]
+
 # set the file name you want to ignore in API documentation in _ignore_file_names
 _ignore_file_names = ["quairkit.core.utils", "quairkit.core.intrinsic"]
 
@@ -22,7 +25,7 @@ def is_correct_directory():
     return os.path.exists(required_file)
 
 def _list_quairkit_files(
-    path: str = os.path.join(".", "quairkit"),
+    path: str = os.path.join("."),
     base_path: str = "",
     file_name_attr_list: List[Tuple[str, str]] = None,
 ) -> List[Tuple[str, str]]:
@@ -47,15 +50,26 @@ def _list_quairkit_files(
         relative_path = os.path.join(base_path, child).replace(os.path.sep, ".")
 
         if os.path.isdir(child_path):
-            sub_list = _list_quairkit_files(child_path, relative_path, [])
-            if sub_list:  # 仅当子目录非空时才添加
-                file_name_attr_list.append((f"quairkit.{relative_path}", "folder"))
+            if sub_list := _list_quairkit_files(child_path, relative_path, []):
+                file_name_attr_list.append((f"{relative_path}", "folder"))
                 file_name_attr_list.extend(sub_list)
         elif child.endswith(".py"):
             file_name_attr_list.append(
-                (f"quairkit.{relative_path.replace('.py', '')}", "python")
+                (f"{relative_path.rstrip('.py')}", "python")
             )
-    
+        # elif child.endswith(".ipynb"):
+        #     file_name_attr_list.append(
+        #         (f"{relative_path.rstrip('.ipynb')}", "notebook")
+        #     )
+
+    file_name_attr_list = [
+        sub_array
+        for sub_array in file_name_attr_list
+        if any(
+            sub_array[0].startswith(module_name) for module_name in _module_names
+        )
+    ]
+
     file_name_attr_list = [
         sub_array
         for sub_array in file_name_attr_list
@@ -63,6 +77,7 @@ def _list_quairkit_files(
             sub_array[0].startswith(ignore_item) for ignore_item in _ignore_file_names
         )
     ]
+
     file_name_attr_list.sort()
 
     return file_name_attr_list
@@ -106,6 +121,23 @@ def _update_function_rst(
 
         with open(file_path, "w") as file:
             file.write(rst_content)
+    
+    rst_content = \
+"""\
+tutorials
+=========
+
+.. toctree::
+    :maxdepth: 4
+    :glob:
+
+    tutorials/*
+"""
+
+    file_path = os.path.join(source_directory, "tutorials.rst")
+
+    with open(file_path, "w") as file:
+        file.write(rst_content)
 
     return
 
@@ -113,10 +145,9 @@ def _update_function_rst(
 def _update_index_rst(
     file_list: List[Tuple[str, str]], source_directory: str = _sphinx_source_dir
 ) -> None:
-    """_summary_
-
+    """
     Args:
-        source_directory (str, optional): _description_. Defaults to source_dir.
+        source_directory (str, optional): Defaults to source_dir. The directory where .rst files will be created.
     """
     rst_content = ""
     if len(sys.argv) == 1:
@@ -126,7 +157,7 @@ def _update_index_rst(
 Welcome to {_platform_name}'s documentation!
 ====================================
 
-|quairkit| `Go to {_platform_name} Home <https://quair.github.io/quairkit/>`_
+|quairkit| `Go to QuAIR-Platform Home <https://www.quairkit.com/>`_
 
 """
 
@@ -134,22 +165,11 @@ Welcome to {_platform_name}'s documentation!
 .. toctree::
     :maxdepth: 1
 """
-    rst_content += _get_modules_rst(file_list)
+    rst_content += "".join(f"\n    {item}" for item in _module_names)
     file_path = os.path.join(source_directory, "index.rst")
 
     with open(file_path, "w") as file:
         file.write(rst_content)
-
-
-def _get_modules_rst(
-    file_list: List[Tuple[str, str]], source_directory: str = _sphinx_source_dir
-):
-    file_list_copy = file_list.copy()
-    rst_content = ""
-    for item in file_list_copy:
-        if item[0].count(".") == 1:
-            rst_content += f"\n    {item[0]}"
-    return rst_content
 
 
 def _update_conf_py(source_directory: str = _sphinx_source_dir):
@@ -173,13 +193,12 @@ def _update_conf_py(source_directory: str = _sphinx_source_dir):
 import os
 import sys
 
-sys.path.insert(0, os.path.join('..', '..', ''))
+sys.path.insert(0, os.path.join('..', '..'))
 # -- Project information -----------------------------------------------------
 
 project = "{_platform_name}"
-copyright = "2023, QuAIR"
+copyright = "2024, QuAIR"
 author = "QuAIR"
-html_baseurl = "https://quair.github.io/"
 
 # The full version, including alpha/beta/rc tags
 release = "0.1.0"
@@ -197,6 +216,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.todo",
     "sphinx_immaterial",
+    "nbsphinx",
 """
     if len(sys.argv) == 2 and sys.argv[1] == "wiki":
         rst_content += """\
@@ -228,22 +248,11 @@ html_theme = "sphinx_immaterial"
 html_title = "QuAIRKit"
 html_short_title = "QuAIRKit"
 build_dir = "api"
-# html_theme_options = {
-#     'navigation_depth': 1,
-# }
 html_theme_options = {
-    'base_url': 'https://quair.github.io/quairkit/',
-    'repo_url': 'https://github.com/QuAIR/QuAIRKit',
-    'repo_name': 'QuAIRKit',
-    # 'google_analytics_account': 'UA-XXXXX',
-    'html_minify': True,
-    'css_minify': True,
-    'nav_title': 'QuAIRKit API Documentation',
-    # 'logo_icon': '&#xe869',
-    # 'globaltoc_depth': 2,
-    'color_primary': "green",
-    'color_accent': 'indigo',
-    "palette": { "primary": "green" }
+    "repo_url": 'https://github.com/QuAIR/QuAIRKit',
+    "repo_name": 'QuAIRKit',
+    "palette": { "primary": "green" },
+    "version_dropdown": True,
 }
 html_favicon = '../favicon.svg'
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -262,6 +271,8 @@ autodoc_inherit_docstrings = False
 autodoc_docstring_signature = False
 autodoc_typehints_description_target = "documented"
 autodoc_typehints_format = "short"
+
+
 """
 
     file_path = os.path.join(source_directory, "conf.py")
@@ -269,16 +280,38 @@ autodoc_typehints_format = "short"
         file.write(rst_content)
 
 
+def _create_redirect_html():
+    html_content = """
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="refresh" content="0; url=latest/index.html" />
+        <link rel="canonical" href="latest/index.html" />
+    </head>
+    <body>
+        <p>If this page does not refresh automatically, then please direct your browser to
+            <a href="latest/index.html">our latest docs</a>.
+        </p>
+    </body>
+</html>
+"""
+    file_dir = os.path.join(".", "docs", "api")
+    os.makedirs(file_dir, exist_ok=True)
+    with open(os.path.join(file_dir, "index.html"), 'w', encoding='utf-8') as file:
+        file.write(html_content)
+
+
 if __name__ == "__main__":
     _current_script_path = os.path.abspath(__file__)
     _platform_dir_path = os.path.dirname(os.path.dirname(_current_script_path))
 
     _current_working_dir = os.getcwd()
-    if _current_working_dir == _platform_dir_path:
-        result = _list_quairkit_files()
-        os.makedirs(_sphinx_source_dir, exist_ok=True)
-        _update_index_rst(result)
-        _update_function_rst(result)
-        _update_conf_py()
-    else:
+    if _current_working_dir != _platform_dir_path:
         raise SystemExit(f"The current working directory is not {_platform_dir_path}.")
+    result = _list_quairkit_files()
+    os.makedirs(_sphinx_source_dir, exist_ok=True)
+    _update_index_rst(result)
+    _update_function_rst(result)
+    _update_conf_py()
+    _create_redirect_html()
