@@ -1,0 +1,6 @@
+quairkit.qinfo
+==============
+
+.. automodule:: quairkit.qinfo
+	:members:
+

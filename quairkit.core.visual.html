@@ -1,0 +1,1248 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="_static/favicon.svg">
+    
+    
+      
+        <title>quairkit.core.visual - QuAIRKit</title>
+      
+    
+    
+      
+        
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.e0b5691b38cca82da.min.css?v=b1736040" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quairkit.core.visual.plot_state_in_bloch_sphere" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              quairkit.core.visual
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.ansatz.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>ansatz</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.circuit.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>circuit</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="quairkit.core.html"><span class="md-ellipsis">quairkit.<wbr>core</span></a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="quairkit.core" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">quairkit.<wbr>core</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.base.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>base</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.hamiltonian.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>hamiltonian</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.state.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-ellipsis">quairkit.<wbr>core.<wbr>visual</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>visual</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere (Python function) — Plot the input quantum state on the Bloch sphere." class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>state_<wbr>in_<wbr>bloch_<wbr>sphere</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_state_in_bloch_sphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.state (Python parameter) — List of the input quantum states in the state vector form or the density matrix form." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Defaults to False." class="md-ellipsis">show_<wbr>arrow</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.save_gif" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Defaults to False." class="md-ellipsis">save_<wbr>gif</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.filename" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.filename (Python parameter) — The name of the gif file to be stored. Defaults to None." class="md-ellipsis">filename</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.view_angle (Python parameter) — View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to (30, 45)." class="md-ellipsis">view_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_dist" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.view_dist (Python parameter) — View distance. Defaults to 7." class="md-ellipsis">view_<wbr>dist</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.set_color" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.set_color (Python parameter) — To set the specified color, consult the cmap table. Defaults to &#34;red to black gradient&#34;." class="md-ellipsis">set_<wbr>color</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere (Python function) — Displaying the quantum state on the Bloch sphere which has multi qubits." class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>multi_<wbr>qubits_<wbr>state_<wbr>in_<wbr>bloch_<wbr>sphere</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state (Python parameter) — List of the input quantum states in the state vector form or the density matrix form." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits (Python parameter) — Index of qubits to display, default to be fully displayed." class="md-ellipsis">which_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Default is False." class="md-ellipsis">show_<wbr>arrow</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Default is False." class="md-ellipsis">save_<wbr>gif</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic (Python parameter) — Whether to store the picture. Default is True." class="md-ellipsis">save_<wbr>pic</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename (Python parameter) — The name of the picture to be stored. Defaults to None." class="md-ellipsis">filename</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle (Python parameter) — View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to (30, 45)." class="md-ellipsis">view_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist (Python parameter) — View distance. Default is 7." class="md-ellipsis">view_<wbr>dist</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color (Python parameter) — To set the specified color, consult the cmap table. Default is &#34;blue&#34;." class="md-ellipsis">set_<wbr>color</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere (Python function) — Plot the rotation starting from the initial quantum state on the Bloch sphere." class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>rotation_<wbr>in_<wbr>bloch_<wbr>sphere</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_rotation_in_bloch_sphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state (Python parameter) — Initial quantum state in the state vector form or the density matrix form." class="md-ellipsis">init_<wbr>state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle (Python parameter) — Rotation angle [theta, phi, lam]." class="md-ellipsis">rotating_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Defaults to False." class="md-ellipsis">show_<wbr>arrow</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Defaults to False." class="md-ellipsis">save_<wbr>gif</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.filename" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.filename (Python parameter) — The name of the gif file to be stored. Defaults to None." class="md-ellipsis">filename</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle (Python parameter) — The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to None." class="md-ellipsis">view_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist (Python parameter) — View distance. Default is 7." class="md-ellipsis">view_<wbr>dist</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme (Python parameter) — initial color, trace color, and end color, respectively. To set the specified color, consult the cmap table. Default is “red”." class="md-ellipsis">color_<wbr>scheme</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_density_matrix_graph (Python function) — Density matrix visualization tools" class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>density_<wbr>matrix_<wbr>graph</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_density_matrix_graph">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph.density_matrix" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_density_matrix_graph.density_matrix (Python parameter) — The state vector or density matrix of quantum state with multi qubits, requiring the number of qubits greater than 1" class="md-ellipsis">density_<wbr>matrix</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph.size" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_density_matrix_graph.size (Python parameter) — Bar width, between 0 and 1, default is 0.3." class="md-ellipsis">size</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph-raises" class="md-nav__link">
+    <span class="md-ellipsis">Raises</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>database</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.loss.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>loss</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.operator.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>operator</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.qinfo.html" class="md-nav__link">
+        <span class="md-ellipsis">quairkit.<wbr>qinfo</span>
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere (Python function) — Plot the input quantum state on the Bloch sphere." class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>state_<wbr>in_<wbr>bloch_<wbr>sphere</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_state_in_bloch_sphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.state (Python parameter) — List of the input quantum states in the state vector form or the density matrix form." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Defaults to False." class="md-ellipsis">show_<wbr>arrow</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.save_gif" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Defaults to False." class="md-ellipsis">save_<wbr>gif</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.filename" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.filename (Python parameter) — The name of the gif file to be stored. Defaults to None." class="md-ellipsis">filename</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.view_angle (Python parameter) — View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to (30, 45)." class="md-ellipsis">view_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_dist" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.view_dist (Python parameter) — View distance. Defaults to 7." class="md-ellipsis">view_<wbr>dist</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_state_in_bloch_sphere.set_color" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_state_in_bloch_sphere.set_color (Python parameter) — To set the specified color, consult the cmap table. Defaults to &#34;red to black gradient&#34;." class="md-ellipsis">set_<wbr>color</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere (Python function) — Displaying the quantum state on the Bloch sphere which has multi qubits." class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>multi_<wbr>qubits_<wbr>state_<wbr>in_<wbr>bloch_<wbr>sphere</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state (Python parameter) — List of the input quantum states in the state vector form or the density matrix form." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits (Python parameter) — Index of qubits to display, default to be fully displayed." class="md-ellipsis">which_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Default is False." class="md-ellipsis">show_<wbr>arrow</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Default is False." class="md-ellipsis">save_<wbr>gif</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic (Python parameter) — Whether to store the picture. Default is True." class="md-ellipsis">save_<wbr>pic</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename (Python parameter) — The name of the picture to be stored. Defaults to None." class="md-ellipsis">filename</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle (Python parameter) — View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to (30, 45)." class="md-ellipsis">view_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist (Python parameter) — View distance. Default is 7." class="md-ellipsis">view_<wbr>dist</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color (Python parameter) — To set the specified color, consult the cmap table. Default is &#34;blue&#34;." class="md-ellipsis">set_<wbr>color</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere (Python function) — Plot the rotation starting from the initial quantum state on the Bloch sphere." class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>rotation_<wbr>in_<wbr>bloch_<wbr>sphere</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_rotation_in_bloch_sphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state (Python parameter) — Initial quantum state in the state vector form or the density matrix form." class="md-ellipsis">init_<wbr>state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle (Python parameter) — Rotation angle [theta, phi, lam]." class="md-ellipsis">rotating_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Defaults to False." class="md-ellipsis">show_<wbr>arrow</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Defaults to False." class="md-ellipsis">save_<wbr>gif</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.filename" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.filename (Python parameter) — The name of the gif file to be stored. Defaults to None." class="md-ellipsis">filename</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle (Python parameter) — The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to None." class="md-ellipsis">view_<wbr>angle</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist (Python parameter) — View distance. Default is 7." class="md-ellipsis">view_<wbr>dist</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme (Python parameter) — initial color, trace color, and end color, respectively. To set the specified color, consult the cmap table. Default is “red”." class="md-ellipsis">color_<wbr>scheme</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.core.visual.plot_density_matrix_graph (Python function) — Density matrix visualization tools" class="md-ellipsis">quairkit.<wbr>core.<wbr>visual.<wbr>plot_<wbr>density_<wbr>matrix_<wbr>graph</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.visual.plot_density_matrix_graph">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph.density_matrix" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_density_matrix_graph.density_matrix (Python parameter) — The state vector or density matrix of quantum state with multi qubits, requiring the number of qubits greater than 1" class="md-ellipsis">density_<wbr>matrix</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph.size" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.visual.plot_density_matrix_graph.size (Python parameter) — Bar width, between 0 and 1, default is 0.3." class="md-ellipsis">size</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.visual.plot_density_matrix_graph-raises" class="md-nav__link">
+    <span class="md-ellipsis">Raises</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="module-quairkit.core.visual"><span id="quairkit-core-visual"></span>quairkit.core.visual<a class="headerlink" href="#module-quairkit.core.visual" title="Link to this heading">¶</a></h1>
+<p>The visualization function in QuAIRKit.</p>
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.visual.plot_state_in_bloch_sphere">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.visual.</span></span><span class="sig-name descname"><span class="pre">plot_state_in_bloch_sphere</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.state" title="quairkit.core.visual.plot_state_in_bloch_sphere.state (Python parameter) — List of the input quantum states in the state vector form or the density matrix form."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow" title="quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Defaults to False."><span class="n"><span class="pre">show_arrow</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.save_gif" title="quairkit.core.visual.plot_state_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Defaults to False."><span class="n"><span class="pre">save_gif</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.filename" title="quairkit.core.visual.plot_state_in_bloch_sphere.filename (Python parameter) — The name of the gif file to be stored. Defaults to None."><span class="n"><span class="pre">filename</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_angle" title="quairkit.core.visual.plot_state_in_bloch_sphere.view_angle (Python parameter) — View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to (30, 45)."><span class="n"><span class="pre">view_angle</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_dist" title="quairkit.core.visual.plot_state_in_bloch_sphere.view_dist (Python parameter) — View distance. Defaults to 7."><span class="n"><span class="pre">view_dist</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_state_in_bloch_sphere.set_color" title="quairkit.core.visual.plot_state_in_bloch_sphere.set_color (Python parameter) — To set the specified color, consult the cmap table. Defaults to &quot;red to black gradient&quot;."><span class="n"><span class="pre">set_color</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the input quantum state on the Bloch sphere.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.visual.plot_state_in_bloch_sphere-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[<a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit.">State</a>]</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.state" title="Permalink to this definition">¶</a></dt><dd><p>List of the input quantum states in the state vector form or the density matrix form.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow"><span class="sig-name descname">show_arrow</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.show_arrow" title="Permalink to this definition">¶</a></dt><dd><p>Whether to show an arrow for each vector. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.save_gif"><span class="sig-name descname">save_gif</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.save_gif" title="Permalink to this definition">¶</a></dt><dd><p>Whether to store the gif. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.filename"><span class="sig-name descname">filename</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.filename" title="Permalink to this definition">¶</a></dt><dd><p>The name of the gif file to be stored. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.view_angle"><span class="sig-name descname">view_angle</span><span class="p"> : </span><span class="desctype"><span class="desctype">tuple | list | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_angle" title="Permalink to this definition">¶</a></dt><dd><p>View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to <code class="docutils literal notranslate"><span class="pre">(30,</span> <span class="pre">45)</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.view_dist"><span class="sig-name descname">view_dist</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.view_dist" title="Permalink to this definition">¶</a></dt><dd><p>View distance. Defaults to <code class="docutils literal notranslate"><span class="pre">7</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_state_in_bloch_sphere.set_color"><span class="sig-name descname">set_color</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_state_in_bloch_sphere.set_color" title="Permalink to this definition">¶</a></dt><dd><p>To set the specified color, consult the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> table. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;red</span> <span class="pre">to</span> <span class="pre">black</span> <span class="pre">gradient&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.visual.</span></span><span class="sig-name descname"><span class="pre">plot_multi_qubits_state_in_bloch_sphere</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state (Python parameter) — List of the input quantum states in the state vector form or the density matrix form."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits (Python parameter) — Index of qubits to display, default to be fully displayed."><span class="n"><span class="pre">which_qubits</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Default is False."><span class="n"><span class="pre">show_arrow</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Default is False."><span class="n"><span class="pre">save_gif</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic (Python parameter) — Whether to store the picture. Default is True."><span class="n"><span class="pre">save_pic</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename (Python parameter) — The name of the picture to be stored. Defaults to None."><span class="n"><span class="pre">filename</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle (Python parameter) — View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to (30, 45)."><span class="n"><span class="pre">view_angle</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist (Python parameter) — View distance. Default is 7."><span class="n"><span class="pre">view_dist</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color" title="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color (Python parameter) — To set the specified color, consult the cmap table. Default is &quot;blue&quot;."><span class="n"><span class="pre">set_color</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;#0000FF&#39;</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere" title="Link to this definition">¶</a></dt>
+<dd><p>Displaying the quantum state on the Bloch sphere which has multi qubits.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit.">State</a></span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.state" title="Permalink to this definition">¶</a></dt><dd><p>List of the input quantum states in the state vector form or the density matrix form.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits"><span class="sig-name descname">which_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.which_qubits" title="Permalink to this definition">¶</a></dt><dd><p>Index of qubits to display, default to be fully displayed.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow"><span class="sig-name descname">show_arrow</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.show_arrow" title="Permalink to this definition">¶</a></dt><dd><p>Whether to show an arrow for each vector. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif"><span class="sig-name descname">save_gif</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_gif" title="Permalink to this definition">¶</a></dt><dd><p>Whether to store the gif. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic"><span class="sig-name descname">save_pic</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.save_pic" title="Permalink to this definition">¶</a></dt><dd><p>Whether to store the picture. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename"><span class="sig-name descname">filename</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.filename" title="Permalink to this definition">¶</a></dt><dd><p>The name of the picture to be stored. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle"><span class="sig-name descname">view_angle</span><span class="p"> : </span><span class="desctype"><span class="desctype">tuple | list | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_angle" title="Permalink to this definition">¶</a></dt><dd><p>View angle. The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to <code class="docutils literal notranslate"><span class="pre">(30,</span> <span class="pre">45)</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist"><span class="sig-name descname">view_dist</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.view_dist" title="Permalink to this definition">¶</a></dt><dd><p>View distance. Default is <code class="docutils literal notranslate"><span class="pre">7</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color"><span class="sig-name descname">set_color</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_multi_qubits_state_in_bloch_sphere.set_color" title="Permalink to this definition">¶</a></dt><dd><p>To set the specified color, consult the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> table. Default is <code class="docutils literal notranslate"><span class="pre">&quot;blue&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.visual.plot_rotation_in_bloch_sphere">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.visual.</span></span><span class="sig-name descname"><span class="pre">plot_rotation_in_bloch_sphere</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state (Python parameter) — Initial quantum state in the state vector form or the density matrix form."><span class="n"><span class="pre">init_state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle (Python parameter) — Rotation angle [theta, phi, lam]."><span class="n"><span class="pre">rotating_angle</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow (Python parameter) — Whether to show an arrow for each vector. Defaults to False."><span class="n"><span class="pre">show_arrow</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif (Python parameter) — Whether to store the gif. Defaults to False."><span class="n"><span class="pre">save_gif</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.filename" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.filename (Python parameter) — The name of the gif file to be stored. Defaults to None."><span class="n"><span class="pre">filename</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle (Python parameter) — The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to None."><span class="n"><span class="pre">view_angle</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist (Python parameter) — View distance. Default is 7."><span class="n"><span class="pre">view_dist</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme" title="quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme (Python parameter) — initial color, trace color, and end color, respectively. To set the specified color, consult the cmap table. Default is “red”."><span class="n"><span class="pre">color_scheme</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the rotation starting from the initial quantum state on the Bloch sphere.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.visual.plot_rotation_in_bloch_sphere-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state"><span class="sig-name descname">init_state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit.">State</a></span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.init_state" title="Permalink to this definition">¶</a></dt><dd><p>Initial quantum state in the state vector form or the density matrix form.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle"><span class="sig-name descname">rotating_angle</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[Tensor]</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.rotating_angle" title="Permalink to this definition">¶</a></dt><dd><p>Rotation angle <code class="docutils literal notranslate"><span class="pre">[theta,</span> <span class="pre">phi,</span> <span class="pre">lam]</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow"><span class="sig-name descname">show_arrow</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.show_arrow" title="Permalink to this definition">¶</a></dt><dd><p>Whether to show an arrow for each vector. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif"><span class="sig-name descname">save_gif</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.save_gif" title="Permalink to this definition">¶</a></dt><dd><p>Whether to store the gif. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.filename"><span class="sig-name descname">filename</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.filename" title="Permalink to this definition">¶</a></dt><dd><p>The name of the gif file to be stored. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle"><span class="sig-name descname">view_angle</span><span class="p"> : </span><span class="desctype"><span class="desctype">tuple | list | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_angle" title="Permalink to this definition">¶</a></dt><dd><p>The first element is the angle [0-360] to the x-y plane, and the second element is the angle [0-360] to the x-z plane. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist"><span class="sig-name descname">view_dist</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.view_dist" title="Permalink to this definition">¶</a></dt><dd><p>View distance. Default is <code class="docutils literal notranslate"><span class="pre">7</span></code>.</p>
+</dd>
+<dt id="quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme"><span class="sig-name descname">color_scheme</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[str] | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_rotation_in_bloch_sphere.color_scheme" title="Permalink to this definition">¶</a></dt><dd><p>initial color, trace color, and end color, respectively. To set the specified color, consult the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> table. Default is <code class="docutils literal notranslate"><span class="pre">“red”</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.visual.plot_density_matrix_graph">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.visual.</span></span><span class="sig-name descname"><span class="pre">plot_density_matrix_graph</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_density_matrix_graph.density_matrix" title="quairkit.core.visual.plot_density_matrix_graph.density_matrix (Python parameter) — The state vector or density matrix of quantum state with multi qubits, requiring the number of qubits greater than 1"><span class="n"><span class="pre">density_matrix</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.visual.plot_density_matrix_graph.size" title="quairkit.core.visual.plot_density_matrix_graph.size (Python parameter) — Bar width, between 0 and 1, default is 0.3."><span class="n"><span class="pre">size</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.3</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.visual.plot_density_matrix_graph" title="Link to this definition">¶</a></dt>
+<dd><p>Density matrix visualization tools</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.visual.plot_density_matrix_graph-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.visual.plot_density_matrix_graph-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.visual.plot_density_matrix_graph.density_matrix"><span class="sig-name descname">density_matrix</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit.">State</a></span></span><a class="headerlink" href="#quairkit.core.visual.plot_density_matrix_graph.density_matrix" title="Permalink to this definition">¶</a></dt><dd><p>The state vector or density matrix of quantum state with multi qubits, requiring the number of qubits greater than 1</p>
+</dd>
+<dt id="quairkit.core.visual.plot_density_matrix_graph.size"><span class="sig-name descname">size</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.core.visual.plot_density_matrix_graph.size" title="Permalink to this definition">¶</a></dt><dd><p>Bar width, between 0 and 1, default is <code class="docutils literal notranslate"><span class="pre">0.3</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.core.visual.plot_density_matrix_graph-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.core.visual.plot_density_matrix_graph-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Expected density_matrix to be np.ndarray or torch.Tensor or State</p></li>
+<li><p><strong>ValueError</strong> – Expected density matrix dim0 equal to dim1</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="quairkit.core.state.state.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.core.state.state" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              quairkit.core.state.state
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="quairkit.database.html" class="md-footer__link md-footer__link--next" aria-label="Next: quairkit.database" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              quairkit.database
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2023, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    7.3.7.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+    
+  </body>
+</html>

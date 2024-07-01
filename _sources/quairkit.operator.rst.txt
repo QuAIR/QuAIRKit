@@ -1,0 +1,12 @@
+quairkit.operator
+=================
+
+.. automodule:: quairkit.operator
+	:members:
+
+.. toctree::
+    :maxdepth: 2
+
+    quairkit.operator.channel
+    quairkit.operator.gate
+    quairkit.operator.special
