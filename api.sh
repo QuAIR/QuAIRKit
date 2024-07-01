@@ -5,7 +5,8 @@ rm -rf docs/api/html
 rm -rf docs/api/sphinx_src
 
 # Step 1: 安装 Sphinx 和 sphinx_material（如果尚未安装）
-pip install sphinx_material
+pip show quairkit > /dev/null 2>&1 || pip install quairkit
+pip show sphinx_immaterial > /dev/null 2>&1 || pip install sphinx_immaterial
 
 # Step 2: 生成所有必要的 rst 和 conf.py 文件
 python docs/update_quairkit_rst.py
