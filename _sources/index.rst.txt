@@ -3,7 +3,7 @@
 Welcome to QuAIRKit's documentation!
 ====================================
 
-|quairkit| `Go to QuAIRKit Home <https://quair.github.io/quairkit/>`_
+|quairkit| `Go to QuAIR-Platform Home <https://www.quairkit.com/>`_
 
 .. toctree::
     :maxdepth: 1
