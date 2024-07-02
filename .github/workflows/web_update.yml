@@ -25,7 +25,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Cache pip  # Step to cache pip packages.
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -34,12 +34,10 @@ jobs:
 
       - name: Install dependencies  # Step to install dependencies.
         run: |
-          pip install quairkit sphinx_immaterial
+          pip install quairkit sphinx_immaterial nbsphinx
 
       - name: Generate Sphinx Documentation for API Documentation  # Step to generate Sphinx documentation.
-        run: |
-          python docs/update_quairkit_rst.py
-          sphinx-build -b html docs/sphinx_src docs/api
+        run: bash ./version.sh
 
       - name: Upload artifact  # Step to upload the built site as an artifact.
         uses: actions/upload-pages-artifact@v3
