@@ -1,0 +1,742 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="_static/favicon.svg">
+    
+    
+      
+        <title>Constructing Quantum Circuits in QuAIRKit - QuAIRKit</title>
+      
+    
+    
+      
+        
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.3625f807144f53acf.min.css?v=fbfc4466" />
+        <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Constructing Quantum Circuits in QuAIRKit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRK
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRK
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.html" class="md-nav__link">
+        <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials.html" class="md-nav__link">
+        <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="Constructing-Quantum-Circuits-in-QuAIRKit">Constructing Quantum Circuits in QuAIRKit<a class="headerlink" href="#Constructing-Quantum-Circuits-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>QuAIRKit uses the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class to represent quantum circuits. In this tutorial, we will learn how to manipulate quantum circuits in QuAIRKit.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Constructing-quantum-circuits"><span class="std std-ref">Constructing quantum circuits</span></a></p>
+<ul>
+<li><p>Add operations</p></li>
+<li><p><a class="reference internal" href="#Add-circuit-templates"><span class="std std-ref">Add circuit templates</span></a></p></li>
+<li><p><a class="reference internal" href="#Operator-management"><span class="std std-ref">Operator management</span></a></p></li>
+<li><p><a class="reference internal" href="#Execution"><span class="std std-ref">Execution</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Other-properties"><span class="std std-ref">Other properties</span></a></p></li>
+<li><p><a class="reference external" href="Training-noisy-ground-state-preparation">Training noisy ground state preparation</a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[100]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import time
+from quairkit import Circuit
+from quairkit.database import *
+from quairkit.operator import RZ
+from quairkit.qinfo import *
+</code></pre></div>
+</div>
+</div>
+<h2 id="Constructing-quantum-circuits">Constructing quantum circuits<a class="headerlink" href="#Constructing-quantum-circuits" title="Link to this heading">¶</a></h2>
+<p>In QuAIRKit, circuits can be generated with or without specifying the total number of qubits.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[101]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3
+
+cir = Circuit() # Create a dynamic circuit
+</code></pre></div>
+</div>
+</div>
+<h3 id="Add-gates">Add gates<a class="headerlink" href="#Add-gates" title="Link to this heading">¶</a></h3>
+<p>Constant gates can be directly called from the attributes of the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class. The semantic rule for specifying the locations added operations is as follows:</p>
+<ul class="simple">
+<li><p>No inputs: The operations are added across all qubits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: The single-qubit operation is added to the specified qubit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">List[int]</span></code>: The single-qubit operation is added across the specified qubits, or the multi-qubit operation is added across the specified qubits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">List[List[int]]</span></code>: The multi-qubit operation is added across different groups of specified qubits.</p></li>
+</ul>
+<p>```python</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[102]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.h(0) # Add Hadamard gate to qubit 0
+cir.x([0, 1]) # Add X gate to qubit 0 and 1
+cir.cx([0, 2]) # Add CNOT gate to qubit 0 and 2
+cir.swap([[1, 2], [0, 2]]) # Add SWAP gate to qubit 1 and 2, and qubit 0 and 2
+cir.z() # Add Z gate to all qubits
+cir.cy() # Add CY gate in cycle
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/circuit_5_0.png" src="_images/circuit_5_0.png" />
+</div>
+</div>
+<p>When the number of qubits is not specified, the total number of qubits will be changed as operations are added to the circuit. However, in this case, one cannot add the first operation without specifying the location.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[103]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(cir.num_qubits)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3
+</pre></div></div>
+</div>
+<p>For parametrized gates, <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> can add the gate with randomly generated parameters, or you can specify them as keyword arguments.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[104]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.rx() # Add Rx gate to all qubits with random parameters
+cir.rx([0, 1], param=np.arange(2)) # Add RX gate to the first two qubits with specified parameters
+
+cir.u3([0]) # Add universal single qubit gate
+cir.universal_two_qubits([0, 1]) # Add universal two qubits gate
+cir.universal_three_qubits([0, 1, 2]) # Add universal three qubits gate
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/circuit_9_0.png" src="_images/circuit_9_0.png" />
+</div>
+</div>
+<p>You can also add custom gates by specifying the matrix representation of the gate.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[105]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.oracle(dagger(qft_matrix(3)), qubits_idx=[0, 1, 2], latex_name=r&#39;$\text{QFT}^\dagger$&#39;)
+cir.control_oracle(random_unitary(2), qubits_idx=[0, 1, 2], gate_name=&#39;O&#39;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/circuit_11_0.png" src="_images/circuit_11_0.png" />
+</div>
+</div>
+<p>Similar construction semantic applies to noisy operations such as depolarizing channel, where the related plot logic is not supported yet.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[106]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.depolarizing(0.1) # Add depolarizing noise with probability 0.1
+cir.bit_phase_flip(0.2) # Add bit-phase flip noise with probability 0.2
+
+sigma = random_state(3)
+cir.choi_channel(replacement_choi(sigma), qubits_idx=[0, 1, 2]) # Add replacement channel
+cir.kraus_channel(reset_kraus([0.1, 0.2]), qubits_idx=[1, 2]) # Add reset channel
+</code></pre></div>
+</div>
+</div>
+<p>More available operations can be found in the <a class="reference external" href="www.quairkit.com">API document</a>.</p>
+<h3 id="Add-circuit-templates">Add circuit templates<a class="headerlink" href="#Add-circuit-templates" title="Link to this heading">¶</a></h3>
+<p>If you find it hard to construct the training circuit from scratch, you can use the predefined circuit templates in QuAIRKit. Note that the templates are only available for the circuits with a known number of qubits.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[107]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(num_qubits)
+
+cir.linear_entangled_layer(depth=1)
+
+cir.real_block_layer(depth=1)
+cir.real_entangled_layer(depth=1)
+
+cir.complex_block_layer(depth=1)
+cir.complex_entangled_layer(depth=1)
+
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/circuit_16_0.png" src="_images/circuit_16_0.png" />
+</div>
+</div>
+<h3 id="Operator-management">Operator management<a class="headerlink" href="#Operator-management" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> is essentially a list of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> objects. Thus, you can access the operations by indexing the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[108]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&#39;The matrix of the gate at the 5th position is\n&#39;, cir[4].matrix)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The matrix of the gate at the 5th position is
+ tensor([[[-0.9971+0.j, -0.0765+0.j],
+         [ 0.0765+0.j, -0.9971+0.j]],
+
+        [[-0.9955+0.j, -0.0943+0.j],
+         [ 0.0943+0.j, -0.9955+0.j]]], grad_fn=&lt;SqueezeBackward1&gt;)
+</pre></div></div>
+</div>
+<p>You can also add or remove the operations for advanced setup.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[109]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(3)
+
+# Set parameters and customize quantum gates. Here we select Ry, Rx, Rz gates
+param = np.random.rand(2)
+
+ # By default, randomly generates a set of parameters
+rz_gate = RZ(param=param, qubits_idx=[1, 2])
+
+# Add quantum gates
+cir.ry([0, 2])
+cir.rx([0, 1])
+cir.insert(index=2, module=rz_gate)  # index where to insert
+
+print(&#39;The quantum circuit after adding gates is: &#39;)
+cir.plot()
+
+cir.pop(1)  # Remove Rx gate
+print(&#39;The quantum circuit after removing gates is:&#39;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The quantum circuit after adding gates is:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/circuit_20_1.png" src="_images/circuit_20_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The quantum circuit after removing gates is:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/circuit_20_3.png" src="_images/circuit_20_3.png" />
+</div>
+</div>
+<h3 id="Execution">Execution<a class="headerlink" href="#Execution" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object can be executed by calling the object itself.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[110]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>output_state = cir() # Run the circuit with initial state |0&gt;
+print(&#39;The output state for inputting zero state is:&#39;, output_state)
+
+output_state = cir(sigma) # Run the circuit with initial state sigma
+print(&#39;The output state for inputting sigma is:&#39;, output_state)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The output state for inputting zero state is:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2, 2]
+ System sequence: [2, 1, 0]
+[-0.29+0.26j -0.05+0.05j  0.  +0.j    0.  +0.j    0.88-0.21j  0.16-0.04j
+  0.  +0.j    0.  +0.j  ]
+---------------------------------------------------
+
+The output state for inputting sigma is:
+---------------------------------------------------
+ Backend: density_matrix
+ System dimension: [2, 2, 2]
+ System sequence: [2, 1, 0]
+[[ 0.09-0.j    0.06+0.03j -0.02-0.04j -0.01-0.03j  0.02+0.04j  0.07+0.11j
+  -0.01+0.05j  0.12+0.05j]
+ [ 0.06-0.03j  0.06+0.j   -0.04+0.01j -0.02-0.04j  0.05+0.03j  0.07+0.04j
+   0.02+0.04j  0.1 -0.j  ]
+ [-0.02+0.04j -0.04-0.01j  0.16+0.j   -0.06+0.06j -0.03-0.12j -0.05+0.07j
+  -0.04-0.09j -0.04-0.j  ]
+ [-0.01+0.03j -0.02+0.04j -0.06-0.06j  0.08-0.j   -0.06+0.08j -0.02-0.03j
+  -0.04+0.04j -0.05+0.06j]
+ [ 0.02-0.04j  0.05-0.03j -0.03+0.12j -0.06-0.08j  0.13-0.j   -0.01+0.01j
+   0.08-0.j    0.08-0.03j]
+ [ 0.07-0.11j  0.07-0.04j -0.05-0.07j -0.02+0.03j -0.01-0.01j  0.23+0.j
+   0.  +0.06j  0.13-0.11j]
+ [-0.01-0.05j  0.02-0.04j -0.04+0.09j -0.04-0.04j  0.08+0.j    0.  -0.06j
+   0.07-0.j    0.03-0.06j]
+ [ 0.12-0.05j  0.1 +0.j   -0.04+0.j   -0.05-0.06j  0.08+0.03j  0.13+0.11j
+   0.03+0.06j  0.19+0.j  ]]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<h2 id="Other-properties">Other properties<a class="headerlink" href="#Other-properties" title="Link to this heading">¶</a></h2>
+<p>Circuit have other properties for further information and manipulation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[111]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&#39;The circuit depth is&#39;, cir.depth)
+print(&#39;The unitary matrix of this circuit is\n&#39;, cir.unitary_matrix())
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The circuit depth is 2
+The unitary matrix of this circuit is
+ tensor([[-0.2855+0.2624j, -0.6660+0.6122j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0513-0.0472j,  0.1197-0.1100j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.8807-0.2067j, -0.3775+0.0886j,  0.0000+0.0000j,  0.0000+0.0000j,
+         -0.1583+0.0372j,  0.0678-0.0159j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.3775-0.0886j, -0.8807-0.2067j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.0678+0.0159j,  0.1583+0.0372j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.6660+0.6122j, -0.2855-0.2624j,
+          0.0000+0.0000j,  0.0000+0.0000j, -0.1197-0.1100j,  0.0513+0.0472j],
+        [-0.0513+0.0472j, -0.1197+0.1100j,  0.0000+0.0000j,  0.0000+0.0000j,
+         -0.2855+0.2624j, -0.6660+0.6122j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.1583-0.0372j, -0.0678+0.0159j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.8807-0.2067j, -0.3775+0.0886j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.0678-0.0159j, -0.1583-0.0372j,
+          0.0000+0.0000j,  0.0000+0.0000j, -0.3775-0.0886j, -0.8807-0.2067j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.1197+0.1100j, -0.0513-0.0472j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.6660+0.6122j, -0.2855-0.2624j]],
+       grad_fn=&lt;ViewBackward0&gt;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[112]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&#39;The trainable parameters of entire circuit is&#39;, cir.param)
+cir.update_param(torch.ones_like(cir.param)) # Update the parameters of the circuit
+print(&#39;The trainable parameters of entire circuit is&#39;, cir.param)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The trainable parameters of entire circuit is tensor([0.3557, 3.9515])
+The trainable parameters of entire circuit is tensor([1., 1.])
+</pre></div></div>
+</div>
+<p>It is worth noting that <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> is inherently a subclass of <code class="docutils literal notranslate"><span class="pre">torch.Module</span></code>, which means that it can be used as a part of the neural network model in PyTorch.</p>
+<h2 id="Training-noisy-ground-state-preparation">Training noisy ground state preparation<a class="headerlink" href="#Training-noisy-ground-state-preparation" title="Link to this heading">¶</a></h2>
+<p>In this demo, we will prepare the ground state of a randomly generated Hamiltonian. In particular, we suppose the output state contains a depolarizing channel with error parameter 0.1. The loss function is defined as the expectation value of the circuit with respect to the Hamiltonian.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[113]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>hamiltonian = random_hamiltonian_generator(num_qubits)
+
+# construct QNN
+cir = Circuit(num_qubits)
+cir.complex_entangled_layer(depth=20)
+cir.depolarizing(0.1)
+
+# define loss function
+loss_fcn = lambda circuit: circuit().expec_val(hamiltonian)
+
+# set optimizer
+LR, NUM_ITR = 0.1, 200
+opt = torch.optim.Adam(lr=LR, params=cir.parameters())
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, &#39;min&#39;, factor=0.5) # activate scheduler
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[114]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>loss_list, time_list = [], []
+
+for itr in range(NUM_ITR):
+    start_time = time.time()
+    opt.zero_grad()
+
+    loss = loss_fcn(cir) # compute loss
+
+    loss.backward()
+    opt.step()
+    scheduler.step(loss)
+
+    loss = loss.item()
+    loss_list.append(loss)
+    time_list.append(time.time() - start_time)
+
+    if itr % 20 == 0 or itr == NUM_ITR - 1:
+        print(f&quot;iter: {itr}, loss: {loss:.8f}, avg_time: {np.mean(time_list):.4f}s&quot;)
+        time_list = []
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+iter: 0, loss: -0.14351884, avg_time: 0.0351s
+iter: 20, loss: -1.08153820, avg_time: 0.0249s
+iter: 40, loss: -1.15248334, avg_time: 0.0225s
+iter: 60, loss: -1.15756059, avg_time: 0.0252s
+iter: 80, loss: -1.15914619, avg_time: 0.0228s
+iter: 100, loss: -1.15918970, avg_time: 0.0234s
+iter: 120, loss: -1.15919995, avg_time: 0.0230s
+iter: 140, loss: -1.15920043, avg_time: 0.0223s
+iter: 160, loss: -1.15920222, avg_time: 0.0230s
+iter: 180, loss: -1.15873241, avg_time: 0.0230s
+iter: 199, loss: -1.14867520, avg_time: 0.0213s
+</pre></div></div>
+</div>
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2023, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    7.4.7.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [], "versionPath": "versions.json"}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

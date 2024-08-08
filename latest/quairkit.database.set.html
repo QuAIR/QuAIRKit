@@ -1,0 +1,1628 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="_static/favicon.svg">
+    
+    
+      
+        <title>quairkit.database.set - QuAIRKit</title>
+      
+    
+    
+      
+        
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.3625f807144f53acf.min.css?v=fbfc4466" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quairkit.database.set.pauli_basis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              quairkit.database.set
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRK
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRK
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="quairkit.html"><span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span></a>
+          
+            <label for="__nav_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="quairkit" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.ansatz.html" class="md-nav__link">
+        <span title="/quairkit.ansatz.rst (reference label)" class="md-ellipsis">quairkit.<wbr>ansatz</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.circuit.html" class="md-nav__link">
+        <span title="/quairkit.circuit.rst (reference label)" class="md-ellipsis">quairkit.<wbr>circuit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.html" class="md-nav__link">
+        <span title="/quairkit.core.rst (reference label)" class="md-ellipsis">quairkit.<wbr>core</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="quairkit.database.html"><span title="/quairkit.database.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database</span></a>
+          
+            <label for="__nav_1_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="quairkit.database" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/quairkit.database.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.hamiltonian.html" class="md-nav__link">
+        <span title="/quairkit.database.hamiltonian.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>hamiltonian</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.matrix.html" class="md-nav__link">
+        <span title="/quairkit.database.matrix.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>matrix</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.random.html" class="md-nav__link">
+        <span title="/quairkit.database.random.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>random</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.representation.html" class="md-nav__link">
+        <span title="/quairkit.database.representation.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>representation</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span title="/quairkit.database.set.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>set</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/quairkit.database.set.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>set</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.pauli_basis (Python function) — Generate a Pauli basis." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>pauli_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.pauli_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis.num_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.pauli_basis.num_qubits (Python parameter) — the number of qubits n." class="md-ellipsis">num_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.pauli_str_basis (Python function) — Get the state basis with respect to the Pauli string" class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>pauli_<wbr>str_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.pauli_str_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis.pauli_str" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.pauli_str_basis.pauli_str (Python parameter) — the string composed of &#39;i&#39;, &#39;x&#39;, &#39;y&#39; and &#39;z&#39; only." class="md-ellipsis">pauli_<wbr>str</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.pauli_str_povm (Python function) — Get the povm with respect to the Pauli string" class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>pauli_<wbr>str_<wbr>povm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.pauli_str_povm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm.pauli_str" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.pauli_str_povm.pauli_str (Python parameter) — the string composed of &#39;i&#39;, &#39;x&#39;, &#39;y&#39; and &#39;z&#39; only." class="md-ellipsis">pauli_<wbr>str</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.qft_basis (Python function) — Compute the eigenvectors (eigenbasis) of the Quantum Fourier Transform (QFT) matrix." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>qft_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.qft_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis.num_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.qft_basis.num_qubits (Python parameter) — Number of qubits n such that N = 2^n." class="md-ellipsis">num_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.std_basis (Python function) — Generate all standard basis states for a given number of qubits." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>std_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.std_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis.num_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.std_basis.num_qubits (Python parameter) — The number of qubits in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.bell_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.bell_basis (Python function) — Generate the Bell basis for a 2-qubit system, with each basis state accessible along the first dimension of a tensor." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>bell_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.bell_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.bell_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.bell_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.heisenberg_weyl (Python function) — The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) pi i a b/ d}Z^a X^b." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>heisenberg_<wbr>weyl</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.heisenberg_weyl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl.dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.heisenberg_weyl.dim (Python parameter) — dimension of qudit" class="md-ellipsis">dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.phase_space_point (Python function) — Generate phase space point operator for qudit" class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>phase_<wbr>space_<wbr>point</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.phase_space_point">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point.dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.phase_space_point.dim (Python parameter) — dimension of qudit" class="md-ellipsis">dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.gell_mann (Python function) — Generate a set of Gell-Mann matrices for a given dimension. These matrices span the entire space dim-by-dim matrices, and they generalize the Pauli operators when dim = 2 and the Gell-Mann operators when dim = 3." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>gell_<wbr>mann</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.gell_mann">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann.dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.gell_mann.dim (Python parameter) — a positive integer indicating the dimension." class="md-ellipsis">dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.state.html" class="md-nav__link">
+        <span title="/quairkit.database.state.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database.<wbr>state</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.loss.html" class="md-nav__link">
+        <span title="/quairkit.loss.rst (reference label)" class="md-ellipsis">quairkit.<wbr>loss</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.operator.html" class="md-nav__link">
+        <span title="/quairkit.operator.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.qinfo.html" class="md-nav__link">
+        <span title="/quairkit.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials.html" class="md-nav__link">
+        <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.pauli_basis (Python function) — Generate a Pauli basis." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>pauli_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.pauli_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis.num_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.pauli_basis.num_qubits (Python parameter) — the number of qubits n." class="md-ellipsis">num_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.pauli_str_basis (Python function) — Get the state basis with respect to the Pauli string" class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>pauli_<wbr>str_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.pauli_str_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis.pauli_str" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.pauli_str_basis.pauli_str (Python parameter) — the string composed of &#39;i&#39;, &#39;x&#39;, &#39;y&#39; and &#39;z&#39; only." class="md-ellipsis">pauli_<wbr>str</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.pauli_str_povm (Python function) — Get the povm with respect to the Pauli string" class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>pauli_<wbr>str_<wbr>povm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.pauli_str_povm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm.pauli_str" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.pauli_str_povm.pauli_str (Python parameter) — the string composed of &#39;i&#39;, &#39;x&#39;, &#39;y&#39; and &#39;z&#39; only." class="md-ellipsis">pauli_<wbr>str</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.pauli_str_povm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.qft_basis (Python function) — Compute the eigenvectors (eigenbasis) of the Quantum Fourier Transform (QFT) matrix." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>qft_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.qft_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis.num_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.qft_basis.num_qubits (Python parameter) — Number of qubits n such that N = 2^n." class="md-ellipsis">num_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.qft_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.std_basis (Python function) — Generate all standard basis states for a given number of qubits." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>std_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.std_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis.num_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.std_basis.num_qubits (Python parameter) — The number of qubits in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.std_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.bell_basis" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.bell_basis (Python function) — Generate the Bell basis for a 2-qubit system, with each basis state accessible along the first dimension of a tensor." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>bell_<wbr>basis</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.bell_basis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.bell_basis-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.bell_basis-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.heisenberg_weyl (Python function) — The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) pi i a b/ d}Z^a X^b." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>heisenberg_<wbr>weyl</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.heisenberg_weyl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl.dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.heisenberg_weyl.dim (Python parameter) — dimension of qudit" class="md-ellipsis">dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.heisenberg_weyl-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.phase_space_point (Python function) — Generate phase space point operator for qudit" class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>phase_<wbr>space_<wbr>point</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.phase_space_point">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point.dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.phase_space_point.dim (Python parameter) — dimension of qudit" class="md-ellipsis">dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.phase_space_point-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.gell_mann (Python function) — Generate a set of Gell-Mann matrices for a given dimension. These matrices span the entire space dim-by-dim matrices, and they generalize the Pauli operators when dim = 2 and the Gell-Mann operators when dim = 3." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>gell_<wbr>mann</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.database.set.gell_mann">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann.dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.set.gell_mann.dim (Python parameter) — a positive integer indicating the dimension." class="md-ellipsis">dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.set.gell_mann-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="module-quairkit.database.set"><span id="quairkit-database-set"></span>quairkit.database.set<a class="headerlink" href="#module-quairkit.database.set" title="Link to this heading">¶</a></h1>
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.pauli_basis">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">pauli_basis</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.pauli_basis.num_qubits" title="quairkit.database.set.pauli_basis.num_qubits (Python parameter) — the number of qubits n."><span class="n"><span class="pre">num_qubits</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.pauli_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a Pauli basis.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.pauli_basis-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_basis-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.pauli_basis.num_qubits"><span class="sig-name descname">num_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.pauli_basis.num_qubits" title="Permalink to this definition">¶</a></dt><dd><p>the number of qubits <span class="math notranslate nohighlight">\(n\)</span>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.pauli_basis-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_basis-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The Pauli basis of <span class="math notranslate nohighlight">\(\mathbb{C}^{2^n \times 2^n}\)</span>, where each tensor is accessible along the first dimension.</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.pauli_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_basis-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.pauli_str_basis">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">pauli_str_basis</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.pauli_str_basis.pauli_str" title="quairkit.database.set.pauli_str_basis.pauli_str (Python parameter) — the string composed of 'i', 'x', 'y' and 'z' only."><span class="n"><span class="pre">pauli_str</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.pauli_str_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Get the state basis with respect to the Pauli string</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.pauli_str_basis-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_basis-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.pauli_str_basis.pauli_str"><span class="sig-name descname">pauli_str</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | List[str]</span></span><a class="headerlink" href="#quairkit.database.set.pauli_str_basis.pauli_str" title="Permalink to this definition">¶</a></dt><dd><p>the string composed of ‘i’, ‘x’, ‘y’ and ‘z’ only.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.pauli_str_basis-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_basis-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The state basis of the observable given by the Pauli string</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.pauli_str_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_basis-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.pauli_str_povm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">pauli_str_povm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.pauli_str_povm.pauli_str" title="quairkit.database.set.pauli_str_povm.pauli_str (Python parameter) — the string composed of 'i', 'x', 'y' and 'z' only."><span class="n"><span class="pre">pauli_str</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.pauli_str_povm" title="Link to this definition">¶</a></dt>
+<dd><p>Get the povm with respect to the Pauli string</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.pauli_str_povm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_povm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.pauli_str_povm.pauli_str"><span class="sig-name descname">pauli_str</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | List[str]</span></span><a class="headerlink" href="#quairkit.database.set.pauli_str_povm.pauli_str" title="Permalink to this definition">¶</a></dt><dd><p>the string composed of ‘i’, ‘x’, ‘y’ and ‘z’ only.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.pauli_str_povm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_povm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The POVM of the observable given by the Pauli string</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.pauli_str_povm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_povm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.qft_basis">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">qft_basis</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.qft_basis.num_qubits" title="quairkit.database.set.qft_basis.num_qubits (Python parameter) — Number of qubits n such that N = 2^n."><span class="n"><span class="pre">num_qubits</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.qft_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the eigenvectors (eigenbasis) of the Quantum Fourier Transform (QFT) matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.qft_basis-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.qft_basis-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.qft_basis.num_qubits"><span class="sig-name descname">num_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.qft_basis.num_qubits" title="Permalink to this definition">¶</a></dt><dd><p>Number of qubits <span class="math notranslate nohighlight">\(n\)</span> such that <span class="math notranslate nohighlight">\(N = 2^n\)</span>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.qft_basis-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.qft_basis-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>A tensor where the first index gives the eigenvector of the QFT matrix.</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.qft_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.qft_basis-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.std_basis">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">std_basis</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.std_basis.num_qubits" title="quairkit.database.set.std_basis.num_qubits (Python parameter) — The number of qubits in the quantum state."><span class="n"><span class="pre">num_qubits</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.std_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Generate all standard basis states for a given number of qubits.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.std_basis-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.std_basis-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.std_basis.num_qubits"><span class="sig-name descname">num_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.std_basis.num_qubits" title="Permalink to this definition">¶</a></dt><dd><p>The number of qubits in the quantum state.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.std_basis-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.std_basis-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>A tensor where the first index gives the computational vector</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.std_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.std_basis-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.bell_basis">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">bell_basis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.bell_basis" title="Link to this definition">¶</a></dt>
+<dd><p>Generate the Bell basis for a 2-qubit system,
+with each basis state accessible along the first dimension of a tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.bell_basis-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.bell_basis-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p>A tensor of shape (4, 4, 1), representing the four Bell basis states.</p>
+</dd>
+<dt class="field-even" id="quairkit.database.set.bell_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.bell_basis-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.heisenberg_weyl">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">heisenberg_weyl</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.heisenberg_weyl.dim" title="quairkit.database.set.heisenberg_weyl.dim (Python parameter) — dimension of qudit"><span class="n"><span class="pre">dim</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.heisenberg_weyl" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Generate Heisenberg-Weyl operator for qudit.</dt><dd><p>The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) pi i a b/ d}Z^a X^b.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.heisenberg_weyl-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.heisenberg_weyl-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.heisenberg_weyl.dim"><span class="sig-name descname">dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.heisenberg_weyl.dim" title="Permalink to this definition">¶</a></dt><dd><p>dimension of qudit</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.heisenberg_weyl-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.heisenberg_weyl-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Heisenberg-Weyl operator for qudit</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.heisenberg_weyl-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.heisenberg_weyl-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.phase_space_point">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">phase_space_point</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.phase_space_point.dim" title="quairkit.database.set.phase_space_point.dim (Python parameter) — dimension of qudit"><span class="n"><span class="pre">dim</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.phase_space_point" title="Link to this definition">¶</a></dt>
+<dd><p>Generate phase space point operator for qudit</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.phase_space_point-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.phase_space_point-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.phase_space_point.dim"><span class="sig-name descname">dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.phase_space_point.dim" title="Permalink to this definition">¶</a></dt><dd><p>dimension of qudit</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.phase_space_point-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.phase_space_point-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Phase space point operator for qudit</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.phase_space_point-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.phase_space_point-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.database.set.gell_mann">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">gell_mann</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.gell_mann.dim" title="quairkit.database.set.gell_mann.dim (Python parameter) — a positive integer indicating the dimension."><span class="n"><span class="pre">dim</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.gell_mann" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a set of Gell-Mann matrices for a given dimension. These matrices span the entire space
+dim-by-dim matrices, and they generalize the Pauli operators when dim = 2 and the Gell-Mann operators
+when dim = 3.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.database.set.gell_mann-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.gell_mann-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.database.set.gell_mann.dim"><span class="sig-name descname">dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.gell_mann.dim" title="Permalink to this definition">¶</a></dt><dd><p>a positive integer indicating the dimension.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.database.set.gell_mann-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.gell_mann-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>A set of Gell-Mann matrices.</p>
+</dd>
+<dt class="field-odd" id="quairkit.database.set.gell_mann-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.gell_mann-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="quairkit.database.representation.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.database.representation" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              quairkit.database.representation
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="quairkit.database.state.html" class="md-footer__link md-footer__link--next" aria-label="Next: quairkit.database.state" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              quairkit.database.state
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2023, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    7.4.7.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [], "versionPath": "versions.json"}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>
