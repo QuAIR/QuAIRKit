@@ -254,7 +254,6 @@ html_theme_options = {
     "repo_name": 'QuAIRKit',
     "palette": { "primary": "green" },
     "version_dropdown": True,
-    "version_json": "versions.json",
 }
 html_favicon = '../favicon.svg'
 # Add any paths that contain custom static files (such as style sheets) here,
