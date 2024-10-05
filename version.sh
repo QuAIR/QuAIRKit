@@ -43,24 +43,6 @@ for tag in "${tags[@]}"; do
             sphinx-build docs/source docs/api/$tag
             rm -rf docs/source
             ;;
-        v0.0.2-alpha)
-            git checkout $tag
-            python docs/avocado/update_avocado_rst.py
-            sphinx-build docs/avocado/sphinx_src docs/api/$tag
-            rm -rf docs/avocado/sphinx_src
-            ;;
-        v0.1.0 | *)
-            git checkout $tag
-            python docs/update_quairkit_rst.py
-            sphinx-build docs/sphinx_src docs/api/$tag
-            rm -rf docs/sphinx_src
-            ;;
-        v0.2.0-alpha | *)
-            git checkout $tag
-            python docs/update_quairkit_rst.py
-            sphinx-build docs/sphinx_src docs/api/$tag
-            rm -rf docs/sphinx_src
-            ;;
         v0.2.0 | *)
             git checkout $tag
             python docs/update_quairkit_rst.py
