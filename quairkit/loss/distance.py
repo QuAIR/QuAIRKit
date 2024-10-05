@@ -21,6 +21,7 @@ import torch
 
 from ..core import Operator, State, utils
 
+__all__ = ["TraceDistance", "StateFidelity"]
 
 class TraceDistance(Operator):
     r"""The class of the loss function to compute the trace distance.

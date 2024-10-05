@@ -21,44 +21,12 @@ from typing import Dict, Iterable, List, Tuple, Union
 
 import numpy as np
 
-from ..core.intrinsic import _cnot_idx_fetch
+from ..core.intrinsic import _cnot_idx_fetch, _format_layer_idx
 from ..operator import CNOT, RX, RY, RZ, U3, H
 from .container import OperatorList
 
 __all__ = ['Layer', 'SuperpositionLayer', 'LinearEntangledLayer', 'RealEntangledLayer', 'ComplexEntangledLayer', 'WeakSuperpositionLayer',
            'ComplexBlockLayer', 'RealBlockLayer', 'QAOALayer', 'QAOALayerWeighted']
-
-
-def _qubits_idx_filter(qubits_idx: Union[List[int], str], num_qubits: int) -> List[int]:
-    r"""Check the validity of ``qubits_idx`` and ``num_qubits``.
-
-    Args:
-        qubits_idx: Indices of qubits.
-        num_qubits: Total number of qubits.
-
-    Raises:
-        RuntimeError: You must specify ``qubits_idx`` or ``num_qubits`` to instantiate the class.
-        ValueError: The ``qubits_idx`` must be ``Iterable`` or ``None``.
-
-    Returns:
-        Checked indices of qubits.
-    """
-    if qubits_idx is None or qubits_idx == 'full':
-        if num_qubits is None:
-            raise RuntimeError(
-                "You must specify qubits_idx or num_qubits to instantiate the class.")
-        return list(range(num_qubits))
-    elif isinstance(qubits_idx, Iterable):
-        assert len(np.array(qubits_idx).shape) == 1, \
-            "The input qubit index must be a list of int for layers."
-        qubits_idx = list(qubits_idx)
-        assert len(qubits_idx) > 1, \
-            f"Requires more than 1 qubit for a layer to act on: received length {len(qubits_idx)}"
-        assert len(qubits_idx) == len(set(qubits_idx)), \
-            f"Layers do not allow repeated indices: received {qubits_idx}"
-        return qubits_idx
-    
-    raise ValueError(f"The qubits_idx must be a list of int or None: received {type(qubits_idx)}")
 
 
 class Layer(OperatorList):
@@ -75,7 +43,7 @@ class Layer(OperatorList):
     """
     def __init__(self, qubits_idx: Union[Iterable[int], str], num_qubits: int, depth: int = 1):
         self.num_qubits = num_qubits
-        self.qubits_idx = _qubits_idx_filter(qubits_idx, num_qubits)
+        self.qubits_idx = _format_layer_idx(qubits_idx, num_qubits)
         self.depth = depth
         super().__init__()
         
@@ -101,14 +69,14 @@ class SuperpositionLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
     """
     def __init__(
             self, qubits_idx: Union[Iterable[int], str] = None, num_qubits: int = None
     ):
         super().__init__(qubits_idx, num_qubits)
-        self.append(H(self.qubits_idx, num_qubits))
+        self.append(H(self.qubits_idx))
 
 
 class WeakSuperpositionLayer(Layer):
@@ -116,14 +84,14 @@ class WeakSuperpositionLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
     """
     def __init__(
             self, qubits_idx: Union[Iterable[int], str] = None, num_qubits: int = None
     ):
         super().__init__(qubits_idx, num_qubits)
-        self.append(RY(self.qubits_idx, num_qubits, np.pi / 4, param_sharing=True))
+        self.append(RY(self.qubits_idx, np.pi / 4, param_sharing=True))
 
 
 class LinearEntangledLayer(Layer):
@@ -131,7 +99,7 @@ class LinearEntangledLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
         depth: Number of layers. Defaults to ``1``.
     """
@@ -160,7 +128,7 @@ class RealEntangledLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
         depth: Number of layers. Defaults to ``1``.
     """
@@ -187,7 +155,7 @@ class ComplexEntangledLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
         depth: Number of layers. Defaults to ``1``.
     """
@@ -213,7 +181,7 @@ class RealBlockLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
         depth: Number of layers. Defaults to ``1``.
     """
@@ -250,7 +218,7 @@ class ComplexBlockLayer(Layer):
 
     Args:
         qubits_idx: Indices of the qubits on which the layer is applied. 
-        Defaults to ``None`` i.e. applied on all qubits.
+         Defaults to ``None`` i.e. applied on all qubits.
         num_qubits: Total number of qubits. Defaults to ``None``.
         depth: Number of layers. Defaults to ``1``.
     """

@@ -34,14 +34,14 @@ def _abs_norm(mat: torch.Tensor) -> float:
 
 def _p_norm_herm(mat: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
     eigval = torch.linalg.eigvalsh(mat)
-    norm = torch.abs(eigval).pow(p).sum(dim = len(list(mat.shape[:-2]))).pow(1 / p).view(-1)
-    return norm
+    norm = torch.abs(eigval).pow(p).sum(dim = len(list(mat.shape[:-2]))).pow(1 / p)
+    return norm.view(mat.shape[:-2])
 
 
 def _p_norm(mat: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
     s = torch.linalg.svdvals(mat)
-    norm = s.pow(p).sum(dim = len(list(mat.shape[:-2]))).pow(1 / p).view(-1)    
-    return norm
+    norm = s.pow(p).sum(dim = len(list(mat.shape[:-2]))).pow(1 / p) 
+    return norm.view(mat.shape[:-2])
 
 
 def _dagger(mat: torch.Tensor) -> torch.Tensor: 
@@ -114,7 +114,7 @@ def _herm_transform(
 
     return mat
 
-# No reference
+
 def _subsystem_decomposition(
     mat: torch.Tensor,
     first_basis: List[torch.Tensor],
@@ -122,7 +122,7 @@ def _subsystem_decomposition(
     inner_prod: Callable[[torch.Tensor, torch.Tensor], torch.Tensor],
 ) -> torch.Tensor:
     # Check if the input has a batch dimension
-    if len(mat.shape) == 3:
+    if mat.ndim == 3:
         batch_size, d1, d2 = mat.shape
     else:
         d1, d2 = mat.shape
@@ -158,59 +158,65 @@ def _subsystem_decomposition(
     return coefs.squeeze(0) if batch_size == 1 else coefs
 
 
-def _partial_trace( 
-    state: torch.Tensor, dim1: int, dim2: int, A_or_B: int
+def _perm_to_left(mat: torch.Tensor, perm_system_idx: List[int], system_dim: List[int]) -> torch.Tensor:
+    r"""Permute the given systems of input matrix to the left.
+    
+    Args:
+        mat: input matrix.
+        perm_system_idx: the indices of the systems to be permuted.
+        system_dim: the dimensions of all systems.
+    
+    """
+    num_systems = len(system_dim)
+    if perm_system_idx == list(range(num_systems)):
+        return mat
+    target_idx = perm_system_idx + [x for x in list(range(num_systems)) if x not in perm_system_idx]
+    return _permute_systems(mat, target_idx, system_dim)
+
+
+def _trace_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
+    r"""Tracing out the first system of the matrix
+    
+    Args:
+        dim1: the dimension of the first system.
+    
+    """
+    batch_dims, dim2 = list(mat.shape[:-2]), int(mat.shape[-1] // dim1)
+    mat = mat.view(-1, dim1, dim2, dim1, dim2)
+    return _trace(mat, axis1=-2, axis2=-4).reshape(batch_dims + [dim2, dim2])
+
+
+def _transpose_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
+    r"""Transpose the first system of the matrix
+    
+    Args:
+        dim1: the dimension of the first system.
+    
+    """
+    total_dim = mat.shape[-1]
+    batch_dims, dim2 = list(mat.shape[:-2]), int(total_dim // dim1)
+    mat = mat.view(-1, dim1, dim2, dim1, dim2)
+    return torch.permute(mat, [0, 3, 2, 1, 4]).reshape(batch_dims + [total_dim, total_dim])
+
+
+def _partial_trace(
+    state: torch.Tensor, trace_idx: List[int], system_dim: List[int]
 ) -> torch.Tensor:
-
-    batch_dims = list(state.shape[:-2])
-
-    new_state = _trace(
-        torch.reshape(
-            state,
-            batch_dims + [dim1, dim2, dim1, dim2],
-        ),
-        axis1=-1 + A_or_B + len(batch_dims),
-        axis2=1 + A_or_B + len(batch_dims),
-    )
-
-    return new_state
+    state = _perm_to_left(state, trace_idx, system_dim)
+    
+    traced_dim = int(np.prod([system_dim[i] for i in trace_idx]))
+    return _trace_1(state, traced_dim)
 
 
 def _partial_trace_discontiguous(  
-    rho: torch.Tensor, preserve_qubits: Optional[list] = None
+    rho: torch.Tensor, preserve_qubits: List[int]
 ) -> torch.Tensor:
     if preserve_qubits is None:
         return rho
 
     n = int(math.log2(rho.shape[-1]))
-
-    def new_partial_trace_singleOne(rho: torch.Tensor, at: int) -> torch.Tensor:
-        n_qubits = int(math.log2(rho.shape[-1]))
-        batch_dims = list(rho.shape[:-2])
-        rho = _trace(
-            torch.reshape(
-                rho,
-                batch_dims.copy()
-                + [
-                    2**at,
-                    2,
-                    2 ** (n_qubits - at - 1),
-                    2**at,
-                    2,
-                    2 ** (n_qubits - at - 1),
-                ],
-            ),
-            axis1=1 + len(batch_dims),
-            axis2=4 + len(batch_dims),
-        )
-        return torch.reshape(
-            rho, batch_dims.copy() + [2 ** (n_qubits - 1), 2 ** (n_qubits - 1)]
-        )
-
-    for i, at in enumerate(x for x in range(n) if x not in preserve_qubits):
-        rho = new_partial_trace_singleOne(rho, at - i)
-
-    return rho
+    system_dim, traced_qubits = [2] * n, [i for i in range(n) if i not in preserve_qubits]
+    return _partial_trace(rho, traced_qubits, system_dim)
 
 
 def _zero(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
@@ -221,7 +227,6 @@ def _zero(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
 def _one(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
     dtype = torch.float64 if dtype is None else dtype
     return torch.tensor([1], dtype=dtype)
-
 
 
 def _density_to_vector(rho: torch.Tensor) -> torch.Tensor: 
@@ -243,11 +248,11 @@ def _density_to_vector(rho: torch.Tensor) -> torch.Tensor:
             f"The output state may not be a pure state, maximum eigenvalue distance: {torch.abs(max_eigval_values - 1)}"
         )
 
-    return eigvec[torch.arange(len(max_eigval_indices)), : ,max_eigval_indices].squeeze()
+    return eigvec[torch.arange(len(max_eigval_indices)), : ,max_eigval_indices].squeeze().unsqueeze(-1)
 
 
 
-def _trace(mat: torch.Tensor, axis1: Optional[int]=-2, axis2: Optional[int]=-1) -> torch.Tensor: #No change
+def _trace(mat: torch.Tensor, axis1: Optional[int]=-2, axis2: Optional[int]=-1) -> torch.Tensor:
     dia_elements = torch.diagonal(mat, offset=0 ,dim1=axis1, dim2=axis2)
     return torch.sum(dia_elements, dim=-1, keepdim=False)
 
@@ -272,48 +277,27 @@ def _nkron(
     return reduce(batch_kron, args, initial_kron).squeeze()
 
 
-def _partial_transpose(density_op: torch.Tensor, n: int) -> torch.Tensor: 
-    n_qubits = int(math.log2(density_op.shape[-1]))
-    batch_dims = list(density_op.shape[:-2])
-    batch_size = [int(np.prod(batch_dims))] 
-    
-    density_op = torch.reshape(
-        density_op, batch_size + [2**n, 2 ** (n_qubits - n), 2**n, 2 ** (n_qubits - n)]
-    )
-    
-    density_op = torch.permute(density_op, [0, 3, 2, 1, 4])
-        
-    density_op = torch.reshape(density_op, batch_dims.copy() + [2**n_qubits, 2**n_qubits])
+def _partial_transpose(state: torch.Tensor, transpose_idx: List[int], system_dim: List[int]) -> torch.Tensor: 
+    state = _perm_to_left(state, transpose_idx, system_dim)
+    transpose_dim = int(np.prod([system_dim[i] for i in transpose_idx]))
+    state = _transpose_1(state, transpose_dim)
 
-    return density_op
-
+    original_seq = list(range(len(system_dim)))
+    current_seq = transpose_idx + [i for i in original_seq if i not in transpose_idx]
+    current_system_dim = [system_dim[x] for x in current_seq]
+    map_original = _perm_of_list(current_seq, original_seq)
+    return _permute_systems(state, map_original, current_system_dim)
 
 
 def _permute_systems(mat: torch.Tensor, perm_list: List[int], dim_list: List[int]) -> torch.Tensor:
-
-    # generalize from _base_transpose_for_dm in intrinsic
-    batch_dim = list(mat.shape[:-2])
-    batch_size = [int(np.prod(batch_dim))] 
-    
-    mat = mat.reshape(batch_size + list(mat.shape[-2:]))
-    dim_tensor = torch.tensor(dim_list)
-    num_aran = torch.prod(dim_tensor)
-    
-    # Using the logic changing the order of each component in a 2**n array
-    base_idx = torch.arange(num_aran).view(dim_list)
-
-    base_idx = torch.permute(base_idx, dims=perm_list).contiguous()
-    
-    # left permute
-    mat = mat.gather(1, index=base_idx.view([1, -1, 1]).expand(mat.shape))
-    
-    # right permute
-    mat = mat.gather(2, index=base_idx.view([1, 1, -1]).expand(mat.shape))
-
-    return mat.squeeze()
+    if perm_list == list(range(len(dim_list))):
+        return mat
+    original_shape = mat.shape
+    mat = mat.view([-1] + list(mat.shape[-2:]))
+    return _base_transpose_for_dm(mat, perm_list, dim_list).view(original_shape).contiguous()
 
 
-def _schmidt_decompose(  #Done
+def _schmidt_decompose(
     psi: torch.Tensor, sys_A: Optional[List[int]] = None  
 ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
 
@@ -422,52 +406,49 @@ def _sqrtm_scipy(A: torch.Tensor) -> torch.Tensor:
 
 
 
-def _perm_of_list(orig_list: List[int], targ_list: List[int]) -> List[int]:
+def _perm_of_list(origin: List[int], target: List[int]) -> List[int]:
     r"""Find the permutation mapping the original list to the target list
     """
-    perm_map = {val: index for index, val in enumerate(orig_list)}
-    return [perm_map[val] for val in targ_list]
+    perm_map = {val: index for index, val in enumerate(origin)}
+    return [perm_map[val] for val in target]
 
 
-def _base_transpose(state: torch.Tensor, perm: Union[List, Tuple]) -> torch.Tensor:
+def _base_transpose(state: torch.Tensor, perm: Union[List, Tuple],
+                    system_dim: List[int]) -> torch.Tensor:
     r"""speed-up logic using using np.transpose + torch.gather.
 
     Args:
         state: input state data.
-        perm: permutation of qubit sequence.
+        perm: permutation of system sequence.
+        system_dim: list of dimensions for all systems
 
     Returns:
-        torch.Tensor: permuted state.
+        permuted state.
 
     """
-    num_qubits = len(perm)
-    # Using the logic changing the order of each component in a 2**n array
-    base_idx = torch.arange(2 ** num_qubits).view([2] * num_qubits)
+    base_idx = torch.arange(int(np.prod(system_dim))).view(system_dim)
     base_idx = torch.permute(base_idx, dims=perm)
     base_idx = base_idx.reshape([1, -1]).expand(state.shape)
     
     return state.gather(1, index=base_idx)
 
 
-def _base_transpose_for_dm(state: torch.Tensor, perm: Union[List, Tuple]) -> torch.Tensor:
+def _base_transpose_for_dm(state: torch.Tensor, perm: Union[List, Tuple],
+                           system_dim: List[int]) -> torch.Tensor:
     r"""speed-up logic using using np.transpose + torch.gather.
 
     Args:
         state: input state data.
-        perm: permutation of qubit sequence.
+        perm: permutation of system sequence.
+        system_dim: list of dimensions for all systems
 
     Returns:
-        torch.Tensor: permuted state.
+        permuted state.
     """
-    num_qubits = len(perm)
-    # Using the logic changing the order of each component in a 2**n array
-    base_idx = torch.arange(2 ** num_qubits).view([2] * num_qubits)
+    base_idx = torch.arange(int(np.prod(system_dim))).view(system_dim)
     base_idx = torch.permute(base_idx, dims=perm).contiguous()
     
-    # left permute
     state = state.gather(1, index=base_idx.view([1, -1, 1]).expand(state.shape))
-    
-    # right permute
     state = state.gather(2, index=base_idx.view([1, 1, -1]).expand(state.shape))
 
     return state

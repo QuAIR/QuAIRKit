@@ -18,8 +18,7 @@ The source file of the Circuit class.
 """
 
 import warnings
-from math import pi
-from typing import Dict, Iterable, List, Optional, Tuple, Union
+from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -31,8 +30,8 @@ from .ansatz import (ComplexBlockLayer, ComplexEntangledLayer, Layer,
                      LinearEntangledLayer, OperatorList, QAOALayer,
                      RealBlockLayer, RealEntangledLayer, SuperpositionLayer,
                      WeakSuperpositionLayer)
-from .core import Backend, get_backend, get_dtype, get_float_dtype
-from .core.intrinsic import _cnot_idx_fetch, _format_qubits_idx
+from .core import Backend, get_backend, get_dtype, get_float_dtype, to_state
+from .core.intrinsic import _alias, _cnot_idx_fetch, _format_circuit_idx
 from .core.state import State
 from .database import std_basis, zero_state
 from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CX, CY, CZ, MS,
@@ -40,182 +39,131 @@ from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CX, CY, CZ, MS,
                        BitFlip, BitPhaseFlip, ChoiRepr, Collapse,
                        ControlOracle, Depolarizing, Gate,
                        GeneralizedAmplitudeDamping, GeneralizedDepolarizing, H,
-                       KrausRepr, Oracle, P, PauliChannel, PhaseDamping,
-                       PhaseFlip, ResetChannel, S, Sdg, StinespringRepr, T,
-                       Tdg, ThermalRelaxation, UniversalQudits,
+                       KrausRepr, Oracle, P, ParamOracle, PauliChannel,
+                       PhaseDamping, PhaseFlip, ResetChannel, S, Sdg,
+                       StinespringRepr, T, Tdg, ThermalRelaxation,
                        UniversalThreeQubits, UniversalTwoQubits, X, Y, Z)
 from .operator.gate import _circuit_plot
+from .operator.gate.custom import UniversalQudits
 
 
 class Circuit(OperatorList):
     r"""Quantum circuit.
 
     Args:
-        num_qubits: Number of qubits. Defaults to None.
+        num_systems: number of systems in the circuit. Defaults to None. Alias of ``num_qubits``.
+        system_dim: dimension of systems of this circuit. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
+    
+    Note:
+        when the number of system is unknown and system_dim is an int, the circuit is a dynamic quantum circuit.
+
     """
-
-    def __init__(self, num_qubits: Optional[int] = None):
+    @_alias({'num_systems': 'num_qubits'})
+    def __init__(self, num_systems: Optional[int] = None, 
+                 system_dim: Optional[Union[List[int], int]] = 2):
         super().__init__()
-        self.__num_qubits = num_qubits
-
-        # whether the circuit is a dynamic quantum circuit
-        self.__isdynamic = num_qubits is None
+        self.__register_circuit(num_systems, system_dim)
 
         # alias
         self.toffoli = self.ccx
         self.cx = self.cnot
 
+        # TODO recover the gather logic for CNOT
         # preparing cnot index in 'cycle' case
-        if num_qubits is not None and num_qubits > 1:
-            cnot_qubits_idx = _format_qubits_idx("cycle", num_qubits, num_acted_qubits=2)
-            self.__cnot_cycle_idx = _cnot_idx_fetch(num_qubits=num_qubits, qubits_idx=cnot_qubits_idx)
+        # num_qubits = self.num_qubits
+        # if num_qubits > 1:
+        #     cnot_qubits_idx = _format_system_idx("cycle", num_qubits, num_acted_system=2)
+        #     self.__cnot_cycle_idx = _cnot_idx_fetch(num_qubits=num_qubits, qubits_idx=cnot_qubits_idx)
 
+    
+    def __register_circuit(self, num_systems: Union[int, None], system_dim: Union[List[int], int]) -> None:
+        r"""Register the circuit and determine whether it is dynamic.
+        """
+        self.__isdynamic = False
+        self.__equal_dim = False
+        if isinstance(system_dim, int):
+            self.__equal_dim = True
+            if num_systems is None:
+                self.__isdynamic = True
+            else:
+                system_dim = [system_dim] * num_systems
+        elif num_systems is None:
+            num_systems = len(system_dim)
+        else:
+            if len(set(system_dim)) == 1:
+                self.__equal_dim = True
+            assert num_systems == len(system_dim), \
+                f"num_systems and system_dim do not agree: received {num_systems} and {system_dim}"
+        self.__num_system = num_systems
+        self.__system_dim = system_dim
 
     @property
     def num_qubits(self) -> int:
         r"""Number of qubits.
         """
-        return self.__num_qubits
+        return 0 if isinstance(self.__system_dim, int) else self.__system_dim.count(2)
+    
+    @property
+    def num_qutrits(self) -> int:
+        r"""Number of qutrits.
+        """
+        return 0 if isinstance(self.__system_dim, int) else self.__system_dim.count(3)
 
     @property
     def isdynamic(self) -> bool:
         r"""Whether the circuit is dynamic
         """
         return self.__dynamic
-
-    @num_qubits.setter
-    def num_qubits(self, value: int) -> None:
-        assert isinstance(value, int)
-        self.__num_qubits = value
-
+    
     @property
-    def param(self) -> torch.Tensor:
-        r"""Flattened parameters in the circuit.
+    def num_systems(self) -> int:
+        r"""Number of systems.
         """
-        assert self._modules, \
-                "The circuit is empty, please add some operators first."
-        if flattened_params := [
-            torch.flatten(param.clone()) for param in self.parameters()
-        ]:
-            concatenated_params = torch.cat(flattened_params).detach()
-        else:
-            concatenated_params = torch.tensor([])
-        return concatenated_params
-
+        return self.__num_system
+    
     @property
-    def grad(self) -> np.ndarray:
-        r"""Gradients with respect to the flattened parameters.
+    def system_dim(self) -> Union[List[int], int]:
+        r"""Dimension of systems.
         """
-        assert self._modules, \
-            "The circuit is empty, please add some operators first."
-        grad_list = []
-        for param in self.parameters():
-            assert param.grad is not None, (
-                'The gradient is None, run the backward first before calling this property, '
-                'otherwise check where the gradient chain is broken.')
-            grad_list.append(param.grad.detach().numpy().flatten())
-        return np.concatenate(grad_list) if grad_list != [] else grad_list
+        return self.__system_dim
 
-    def update_param(self, theta: Union[torch.Tensor, np.ndarray, float], idx: int = None) -> None:
-        r"""Replace parameters of all/one layer(s) by ``theta``.
+    def __info_update(self, systems_idx: Union[Iterable[int], int, str, None], num_acted_system: int) -> List[List[int]]:
+        r"""Update circuit information according to input operator information, or report error.
 
         Args:
-            theta: New parameters
-            idx: Index of replacement. Defaults to None, referring to all layers.
+            systems_idx: input system indices
+            acted_system_dim: dimension of systems that one operator acts on.
+        
+        Returns:
+            the formatted system indices.
+        
         """
-        if not isinstance(theta, torch.Tensor):
-            theta = torch.tensor(theta)
-        theta = torch.flatten(theta).to(dtype=get_float_dtype())
+        num_systems = self.num_systems
 
-        if idx is None:
-            assert self.param.shape == theta.shape, \
-                f"the shape of input parameters is not correct: expect {self.param.shape}, received {theta.shape}"
-            for layer in self:
-                for name, param in layer.named_parameters():
-                    num_param = int(torch.numel(param))
-                    layer.register_parameter(name, Parameter(theta[:num_param].reshape(param.shape)))
+        if systems_idx is None or isinstance(systems_idx, str):
+            assert self.__equal_dim, \
+                    f"The circuit's systems have different dimensions. Invalid input qubit idx: {systems_idx}"
+        if systems_idx is None:
+            return systems_idx
 
-                    if num_param == theta.shape[0]:
-                        return
-                    theta = theta[num_param:]
-        elif isinstance(idx, int):
-            assert idx < len(self), f"the index is out of range, expect below {len(self)}"
+        systems_idx = _format_circuit_idx(systems_idx, num_systems, num_acted_system)
+        max_idx = np.max(systems_idx)
 
-            layer = self[idx]
-            assert theta.shape == torch.cat([torch.flatten(param) for param in layer.parameters()]).shape, (
-                "The shape of input parameters is not correct.")
+        if num_systems is None:
+            self.__num_system = max_idx + 1
+            self.__system_dim = [self.__system_dim]
+            return systems_idx
 
-            for name, param in layer.named_parameters():
-                num_param = int(torch.numel(param))
-                layer.register_parameter(name, Parameter(theta[:num_param].reshape(param.shape)))
-                
-                if num_param == theta.shape[0]:
-                    return
-                theta = theta[num_param:]
+        if self.__isdynamic:
+            if max_idx >= num_systems:
+                self.__num_system = max_idx + 1
+                self.__system_dim = [self.__system_dim[0]] * self.__num_system
         else:
-            raise ValueError("idx must be an integer or None")
-
-    def transfer_static(self) -> None:
-        r"""
-        set ``stop_gradient`` of all parameters of the circuit as ``True``
-        """
-        for layer in self:
-            for name, param in layer.named_parameters():
-                param.requires_grad = False
-                layer.register_parameter(name, param)
-
-    def randomize_param(self, arg0: float = 0, arg1: float = 2 * pi, initializer_type: str= 'Uniform') -> None:
-        r"""Randomize parameters of the circuit based on the initializer.  Current we only support Uniform and Normal initializer. 
-
-        Args:
-            arg0: first argument of the initializer. Defaults to 0.
-            arg1: first argument of the initializer. Defaults to 2 * pi.
-            initializer_type: The type of the initializer. Defaults to 'Uniform'.
-        """
-        assert initializer_type in {
-            "Uniform",
-            "Normal",
-        }, "The initializer should be Uniform or Normal."
-
-        for layer in self:
-            for name, param in layer.named_parameters():
-                
-                param = Parameter(param.normal_(mean=arg0, std=arg1))
-                
-                if initializer_type == 'Normal':
-                    param = Parameter(param.normal_(mean=arg0, std=arg1))
-                elif initializer_type == 'Uniform':
-                    param = Parameter(param.uniform_(mean=arg0, std=arg1))
-                else:
-                    raise NotImplementedError
-                
-                layer.register_parameter(name, param)
-
-    def __num_qubits_update(self, qubits_idx: Union[Iterable[int], int, str]) -> None:
-        r"""Update ``self.num_qubits`` according to ``qubits_idx``, or report error.
-
-        Args:
-            qubits_idx: Input qubit indices of a quantum gate.
-        """
-        num_qubits = self.__num_qubits
-        if isinstance(qubits_idx, str) or qubits_idx is None:
-            assert num_qubits is not None, \
-                f"The qubit idx cannot be a string or None when the number of qubits is unknown: received {qubits_idx}"
-            return
-
-        if isinstance(qubits_idx, Iterable):
-            max_idx = np.max(qubits_idx)
-        else:
-            max_idx = qubits_idx
-
-        if num_qubits is None:
-            self.__num_qubits = max_idx + 1
-            return
-
-        assert max_idx + 1 <= num_qubits or self.__isdynamic, (
-            "The circuit is not a dynamic quantum circuit. "
-            f"Invalid input qubit idx: {max_idx} num_qubit: {self.__num_qubits}")
-        self.__num_qubits = int(max(max_idx + 1, num_qubits))
+            assert max_idx < num_systems, (
+                "The circuit is not a dynamic quantum circuit. "
+                f"Invalid input system idx: {max_idx} for a circuit with {self.__num_system} systems.")
+        return systems_idx
     
     def unitary_matrix(self) -> torch.Tensor:
         r"""Get the unitary matrix form of the circuit.
@@ -223,8 +171,8 @@ class Circuit(OperatorList):
         Returns:
             Unitary matrix form of the circuit.
         """
-        dim = 2 ** self.num_qubits
-        input_basis = std_basis(self.num_qubits)
+        dim = int(np.prod(self.__system_dim))
+        input_basis = std_basis(self.__num_system, self.__system_dim)
         input_basis._switch_unitary_matrix = True
         output = self.forward(input_basis)
         
@@ -267,84 +215,84 @@ class Circuit(OperatorList):
             See Niel's answer in the [StackExchange](https://quantumcomputing.stackexchange.com/a/5772).
         
         """
-        qubit_depth = np.array([0] * self.num_qubits)
+        system_depth = np.array([0] * self.num_systems)
         for gate_info in self.gate_history:
-            qubits_idx = gate_info['which_qubits']
-            if isinstance(qubits_idx, int):
-                qubit_depth[qubits_idx] += 1
+            sys_idx = gate_info['which_system']
+            if isinstance(sys_idx, int):
+                system_depth[sys_idx] += 1
             else:
-                qubit_depth[qubits_idx] = np.max(qubit_depth[qubits_idx]) + 1
-        return int(np.max(qubit_depth))
+                system_depth[sys_idx] = np.max(system_depth[sys_idx]) + 1
+        return int(np.max(system_depth))
 
     def __count_history(self, history):
         # Record length of each section
         length = [5]
-        n = self.__num_qubits
-        # Record current section number for every qubit
-        qubit = [0] * n
+        n = self.__num_system
+        # Record current section number for every system
+        system = [0] * n
         # Number of sections
-        qubit_max = max(qubit)
+        system_max = max(system)
         # Record section number for each gate
         gate = []
         for current_gate in history:
             # Single-qubit gates with no params to print
             if current_gate['gate'] in {'h', 's', 't', 'x', 'y', 'z', 'u', 'sdg', 'tdg'}:
-                curr_qubit = current_gate['which_qubits']
-                gate.append(qubit[curr_qubit])
-                qubit[curr_qubit] = qubit[curr_qubit] + 1
+                curr_system = current_gate['which_system']
+                gate.append(system[curr_system])
+                system[curr_system] = system[curr_system] + 1
                 # A new section is added
-                if qubit[curr_qubit] > qubit_max:
+                if system[curr_system] > system_max:
                     length.append(5)
-                    qubit_max = qubit[curr_qubit]
+                    system_max = system[curr_system]
             elif current_gate['gate'] in {'p', 'rx', 'ry', 'rz'}:
-                curr_qubit = current_gate['which_qubits']
-                gate.append(qubit[curr_qubit])
-                if length[qubit[curr_qubit]] == 5:
-                    length[qubit[curr_qubit]] = 13
-                qubit[curr_qubit] = qubit[curr_qubit] + 1
-                if qubit[curr_qubit] > qubit_max:
+                curr_system = current_gate['which_system']
+                gate.append(system[curr_system])
+                if length[system[curr_system]] == 5:
+                    length[system[curr_system]] = 13
+                system[curr_system] = system[curr_system] + 1
+                if system[curr_system] > system_max:
                     length.append(5)
-                    qubit_max = qubit[curr_qubit]
+                    system_max = system[curr_system]
             elif current_gate['gate'] in {
                 'cnot', 'swap', 'rxx', 'ryy', 'rzz', 'ms',
                 'cy', 'cz', 'cu', 'cp', 'crx', 'cry', 'crz', 'cswap', 'ccx'
             }:
-                a = max(current_gate['which_qubits'])
-                b = min(current_gate['which_qubits'])
-                ind = max(qubit[b: a + 1])
+                a = max(current_gate['which_system'])
+                b = min(current_gate['which_system'])
+                ind = max(system[b: a + 1])
                 gate.append(ind)
                 if length[ind] < 13 and current_gate['gate'] in {
                     'rxx', 'ryy', 'rzz', 'cp', 'crx', 'cry', 'crz'
                 }:
                     length[ind] = 13
                 for j in range(b, a + 1):
-                    qubit[j] = ind + 1
-                if ind + 1 > qubit_max:
+                    system[j] = ind + 1
+                if ind + 1 > system_max:
                     length.append(5)
-                    qubit_max = ind + 1
+                    system_max = ind + 1
 
         return length, gate
 
     @property
-    def qubit_history(self) -> List[List[Tuple[Dict[str, Union[str, List[int], torch.Tensor]], int]]]:
-        r""" gate information on each qubit
+    def system_history(self) -> List[List[Tuple[Dict[str, Union[str, List[int], torch.Tensor]], int]]]:
+        r""" gate information on each system
 
         Returns:
-            list of gate history on each qubit
+            list of gate history on each system
 
         Note:
-            The entry ``qubit_history[i][j][0/1]`` returns the gate information / gate index of the j-th gate
-            applied on the i-th qubit.
+            The entry ``system_history[i][j][0/1]`` returns the gate information / gate index of the j-th gate
+            applied on the i-th system.
         """
-        history_qubit = [[] for _ in range(self.num_qubits)]
+        history_system = [[] for _ in range(self.num_qubits)]
         for idx, i in enumerate(self.gate_history):
-            qubits = i["which_qubits"]
-            if not isinstance(qubits, Iterable):
-                history_qubit[qubits].append([i, idx])
+            systems = i["which_system"]
+            if not isinstance(systems, Iterable):
+                history_system[systems].append([i, idx])
             else:
-                for j in qubits:
-                    history_qubit[j].append([i, idx])
-        return history_qubit
+                for j in systems:
+                    history_system[j].append([i, idx])
+        return history_system
     
     def plot(
             self,
@@ -384,26 +332,26 @@ class Circuit(OperatorList):
         if output:
             return _fig  # return the ``matplotlib.pyplot.figure`` instance
 
-    def extend(self, cir):
+    def extend(self, cir: Union['Circuit', OperatorList]) -> None:
         r""" extend for quantum circuit
 
         Args:
-            cir: a Circuit or a Sequential
+            cir: a Circuit or a OperatorList
 
         Returns:
             concatenation of two quantum circuits
         """
         if isinstance(cir, Circuit):
-            if self.__num_qubits is None:
-                self.__num_qubits = cir.num_qubits
+            if self.__num_system is None:
+                self.__num_system = cir.num_qubits
             else:
-                self.__num_qubits = self.__num_qubits if cir.num_qubits is None else max(self.__num_qubits,
+                self.__num_system = self.__num_system if cir.num_qubits is None else max(self.__num_system,
                                                                                          cir.num_qubits)
             super().extend(cir)
         elif isinstance(cir, OperatorList):
             super().extend(cir)
         else:
-            raise TypeError("the input type must be Circuit or Sequential")
+            raise TypeError("the input type must be Circuit or OperatorList")
         
     
     def __call__(self, state: Optional[State] = None) -> State:
@@ -421,17 +369,22 @@ class Circuit(OperatorList):
         Returns:
             output quantum state
         """
-        assert self.__num_qubits is not None, "Information about num_qubits is required before running the circuit"
-
         if state is None:
-            state = zero_state(self.__num_qubits)
-        else:
-            assert self.__num_qubits == state.num_qubits, \
-                f"num_qubits does not agree: expected {self.__num_qubits}, received {state.num_qubits}"
-
-        if self.backend == Backend.QPU and state.backend == Backend.QPU:
-            state.oper_history = self.oper_history
+            state = zero_state(self.__num_system, self.__system_dim)
+        
+        if self.__num_system is None:
+            warnings.warn("The circuit is empty: return the input state.", UserWarning)
             return state
+
+        assert (
+            self.__system_dim == state.system_dim
+        ), f"System dimension of circuit and state does not agree: expected {self.__system_dim}, received {state.system_dim}"
+            
+
+        # TODO recover QPU history
+        # if self.backend == Backend.QPU and state.backend == Backend.QPU:
+        #     state.oper_history = self.oper_history
+        #     return state
 
         state = state.clone()
         state = super().forward(state)
@@ -460,8 +413,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(H(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(H(qubits_idx))
 
     def s(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -482,8 +435,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(S(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(S(qubits_idx))
 
     def sdg(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -504,8 +457,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(Sdg(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(Sdg(qubits_idx))
 
     def t(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -525,8 +478,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(T(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(T(qubits_idx))
 
     def tdg(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -547,8 +500,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(Tdg(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(Tdg(qubits_idx))
 
     def x(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -567,8 +520,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(X(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(X(qubits_idx))
 
     def y(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -588,8 +541,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(Y(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(Y(qubits_idx))
 
     def z(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -609,8 +562,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(Z(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(Z(qubits_idx))
 
     def p(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full',
@@ -632,8 +585,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(P(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(P(qubits_idx, param, param_sharing))
 
     def rx(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full',
@@ -655,8 +608,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(RX(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(RX(qubits_idx, param, param_sharing))
 
     def ry(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full',
@@ -678,8 +631,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(RY(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(RY(qubits_idx, param, param_sharing))
 
     def rz(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full',
@@ -701,8 +654,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(RZ(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(RZ(qubits_idx, param, param_sharing))
 
     def u3(
             self, qubits_idx: Union[Iterable[int], int, str] = 'full',
@@ -727,8 +680,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(U3(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(U3(qubits_idx, param, param_sharing))
 
     def cnot(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle'
@@ -754,11 +707,11 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'cycle'.
         
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 2)
         if qubits_idx == "cycle" and not self.__isdynamic:
-            self.append(CNOT(qubits_idx, self.num_qubits, self.__cnot_cycle_idx))
+            self.append(CNOT(qubits_idx, self.__cnot_cycle_idx))
         else:
-            self.append(CNOT(qubits_idx, self.num_qubits))
+            self.append(CNOT(qubits_idx))
 
     def cy(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle'
@@ -784,8 +737,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'cycle'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CY(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CY(qubits_idx))
 
     def cz(
             self, qubits_idx: Union[Iterable[int], str] = 'linear'
@@ -811,8 +764,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'linear'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CZ(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CZ(qubits_idx))
 
     def swap(
             self, qubits_idx: Union[Iterable[int], str] = 'linear'
@@ -837,8 +790,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'linear'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(SWAP(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(SWAP(qubits_idx))
 
     def cp(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle',
@@ -865,8 +818,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CP(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CP(qubits_idx, param, param_sharing))
 
     def crx(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle',
@@ -894,8 +847,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CRX(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CRX(qubits_idx, param, param_sharing))
 
     def cry(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle',
@@ -923,8 +876,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CRY(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CRY(qubits_idx, param, param_sharing))
 
     def crz(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle',
@@ -952,8 +905,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CRZ(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CRZ(qubits_idx, param, param_sharing))
 
     def cu(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle',
@@ -981,8 +934,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CU(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CU(qubits_idx, param, param_sharing))
 
     def rxx(
             self, qubits_idx: Union[Iterable[int], str] = 'linear',
@@ -1009,8 +962,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(RXX(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(RXX(qubits_idx, param, param_sharing))
 
     def ryy(
             self, qubits_idx: Union[Iterable[int], str] = 'linear',
@@ -1037,8 +990,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(RYY(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(RYY(qubits_idx, param, param_sharing))
 
     def rzz(
             self, qubits_idx: Union[Iterable[int], str] = 'linear',
@@ -1065,8 +1018,8 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(RZZ(qubits_idx, self.num_qubits, param, param_sharing))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(RZZ(qubits_idx, param, param_sharing))
 
     def ms(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle'
@@ -1091,8 +1044,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'cycle'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(MS(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(MS(qubits_idx))
 
     def cswap(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle'
@@ -1121,8 +1074,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'cycle'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CSWAP(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 2)
+        self.append(CSWAP(qubits_idx))
 
     def ccx(
             self, qubits_idx: Union[Iterable[int], str] = 'cycle'
@@ -1150,8 +1103,8 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'cycle'.
         
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(CCX(qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 3)
+        self.append(CCX(qubits_idx))
 
     def universal_two_qubits(
             self, qubits_idx: Union[Iterable[int], str] = 'linear',
@@ -1164,9 +1117,9 @@ class Circuit(OperatorList):
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 2)
         self.append(UniversalTwoQubits(
-            qubits_idx, self.num_qubits, param, param_sharing))
+            qubits_idx, param, param_sharing))
 
     def universal_three_qubits(
             self, qubits_idx: Union[Iterable[int], str] = 'linear',
@@ -1182,66 +1135,111 @@ class Circuit(OperatorList):
         Raises:
             ValueError: The ``param`` must be torch.Tensor or float.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 3)
         self.append(UniversalThreeQubits(
-            qubits_idx, self.num_qubits, param, param_sharing))
+            qubits_idx, param, param_sharing))
     
-    def universal_qudits(self, qubits_idx: List[int],
+    @_alias({"system_idx": "qubits_idx"})
+    def universal_qudits(self, system_idx: List[int],
             param: Union[torch.Tensor, float] = None, param_sharing: bool = False
     ) -> None:
-        r"""TODO add description
-        """
-        self.__num_qubits_update(qubits_idx)
-        self.append(UniversalQudits(qubits_idx, param, param_sharing))
+        r"""Add universal qudit gates. One of such a gate requires :math:`d^2 - 1` parameters,
+        where :math:`d` is the gate dimension.
 
+        Args:
+            system_idx: Indices of the systems on which the gates are applied. Defaults to 'linear'.
+            param: Parameters of the gates. Defaults to None.
+            param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
+
+        Raises:
+            ValueError: The ``param`` must be torch.Tensor or float.
+        """
+        system_idx = self.__info_update(system_idx, 1 if isinstance(system_idx, int) else len(system_idx))
+        self.append(UniversalQudits(system_idx, [self.__system_dim[idx] for idx in system_idx],
+                                    param, param_sharing))
+
+    @_alias({"system_idx": "qubits_idx"})
     def oracle(
-            self, oracle: torch.Tensor, qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int],
+            self, oracle: torch.Tensor, system_idx: Union[List[int], int],
             gate_name: Optional[str] = 'O', latex_name: Optional[str] = None, plot_width: Optional[float] = None
     ) -> None:
         """Add an oracle gate.
 
         Args:
             oracle: Unitary oracle to be implemented.
-            qubits_idx: Indices of the qubits on which the gates are applied.
+            system_idx: Indices of the systems on which the gates are applied.
             gate_name: name of this oracle.
             latex_name: latex name of this oracle, default to be the gate name.
             plot_width: width of this gate in circuit plot, default to be proportional with the gate name.
         """
-        self.__num_qubits_update(qubits_idx)
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.__info_update(system_idx, len(system_idx))
         gate_info = {
             'gatename': gate_name,
             'texname': f"${gate_name}$" if latex_name is None else latex_name,
             'plot_width': 0.6 * len(gate_name) if plot_width is None else plot_width}
+        
+        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
         self.append(Oracle(
-            oracle, qubits_idx, self.num_qubits, gate_info))
+            oracle, system_idx, acted_system_dim, gate_info))
 
+    @_alias({"system_idx": "qubits_idx"})
     def control_oracle(
-            self, oracle: torch.Tensor, qubits_idx: Union[Iterable[Iterable[int]], Iterable[int]],
+            self, oracle: torch.Tensor, system_idx: List[int],
             gate_name: Optional[str] = 'O', latex_name: Optional[str] = None, plot_width: Optional[float] = None
     ) -> None:
         """Add a controlled oracle gate.
 
         Args:
             oracle: Unitary oracle to be implemented.
-            qubits_idx: Indices of the qubits on which the gates are applied.
+            system_idx: Indices of the systems on which the gates are applied.
             gate_name: name of this oracle.
             latex_name: latex name of this oracle, default to be the gate name.
             plot_width: width of this gate in circuit plot, default to be proportional with the gate name.
         """
-        self.__num_qubits_update(qubits_idx)
+        system_idx = self.__info_update(system_idx, len(system_idx))
         gate_info = {
             'gatename': f"c{gate_name}",
             'texname': f"${gate_name}$" if latex_name is None else latex_name,
             'plot_width': 0.6 * len(gate_name) if plot_width is None else plot_width}
+        
+        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
         self.append(ControlOracle(
-            oracle, qubits_idx, self.num_qubits, gate_info))
+            oracle, system_idx, acted_system_dim, gate_info))
+        
+    @_alias({"system_idx": "qubits_idx"})
+    def param_oracle(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int,
+                     system_idx: Union[List[int], int], param: Union[torch.Tensor, float] = None,
+                     gate_name: Optional[str] = 'P', latex_name: Optional[str] = None, plot_width: Optional[float] = None
+        ) -> None:
+        r"""Add a parameterized oracle gate.
+        
+        Args:
+            generator: function that generates the oracle.
+            num_acted_param: the number of parameters required for a single operation.
+            system_idx: indices of the system on which this gate acts on.
+            param: input parameters of quantum parameterized gates. Defaults to ``None`` i.e. randomized.
+            gate_name: name of this oracle.
+            latex_name: latex name of this oracle, default to be the gate name.
+            plot_width: width of this gate in circuit plot, default to be proportional with the gate name.
+        """
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.__info_update(system_idx, len(system_idx))
+        
+        gate_info = {
+            'gatename': gate_name,
+            'texname': f"${gate_name}$" if latex_name is None else latex_name,
+            'plot_width': 1 * len(gate_name) if plot_width is None else plot_width}
+        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
+        self.append(ParamOracle(
+            generator, param, num_acted_param, False, system_idx, acted_system_dim, gate_info))
 
-    def collapse(self, qubits_idx: Union[Iterable[int], int, str] = 'full',
+    def collapse(self, system_idx: Union[Iterable[int], int, str] = None,
                  desired_result: Union[int, str] = None, if_print: bool = False,
-                 measure_basis: Union[Iterable[torch.Tensor], str] = 'z') -> None:
+                 measure_basis: Optional[torch.Tensor] = None) -> None:
         r"""
         Args:
-            qubits_idx: list of qubits to be collapsed. Defaults to ``'full'``.
+            system_idx: list of systems to be collapsed. Defaults to all qubits.
             desired_result: The desired result you want to collapse. Defaults to ``None`` meaning randomly choose one.
             if_print: whether print the information about the collapsed state. Defaults to ``False``.
             measure_basis: The basis of the measurement. The quantum state will collapse to the corresponding eigenstate.
@@ -1253,9 +1251,9 @@ class Circuit(OperatorList):
         Note:
             When desired_result is `None`, Collapse does not support gradient calculation
         """
-        self.__num_qubits_update(qubits_idx)
+        system_idx = self.__info_update(system_idx, None)
         self.append(Collapse(
-            qubits_idx, self.num_qubits, desired_result, if_print, measure_basis))
+            system_idx, desired_result, if_print, measure_basis))
 
     def superposition_layer(
             self, qubits_idx: Iterable[int] = None
@@ -1263,10 +1261,10 @@ class Circuit(OperatorList):
         r"""Add layers of Hadamard gates.
 
         Args:
-            qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
+            qubits_idx: Indices of the qubits on which the gates are applied. Defaults to all qubits.
         
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             SuperpositionLayer(qubits_idx, self.num_qubits))
 
@@ -1276,10 +1274,10 @@ class Circuit(OperatorList):
         r"""Add layers of Ry gates with a rotation angle :math:`\pi/4`.
 
         Args:
-            qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
+            qubits_idx: Indices of the qubits on which the gates are applied. Defaults to all qubits.
         
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             WeakSuperpositionLayer(qubits_idx, self.num_qubits))
 
@@ -1289,10 +1287,10 @@ class Circuit(OperatorList):
         r"""Add linear entangled layers consisting of Ry gates, Rz gates, and CNOT gates.
 
         Args:
-            qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
+            qubits_idx: Indices of the qubits on which the gates are applied. Defaults to all qubits.
             depth: Number of layers. Defaults to 1.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             LinearEntangledLayer(qubits_idx, self.num_qubits, depth))
 
@@ -1305,7 +1303,7 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
             depth: Number of layers. Defaults to 1.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             RealEntangledLayer(qubits_idx, self.num_qubits, depth))
 
@@ -1318,7 +1316,7 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
             depth: Number of layers. Defaults to 1.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             ComplexEntangledLayer(qubits_idx, self.num_qubits, depth))
 
@@ -1331,7 +1329,7 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
             depth: Number of layers. Defaults to 1.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             RealBlockLayer(qubits_idx, self.num_qubits, depth))
 
@@ -1344,14 +1342,14 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``None``.
             depth: Number of layers. Defaults to 1.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, None)
         self.extend(
             ComplexBlockLayer(qubits_idx, self.num_qubits, depth))
 
     def qaoa_layer(self, edges: Iterable, nodes: Iterable, depth: Optional[int] = 1) -> None:
         # TODO: see qaoa layer in layer.py
-        self.__num_qubits_update(edges)
-        self.__num_qubits_update(nodes)
+        self.__info_update(edges, None)
+        self.__info_update(nodes, None)
         self.extend(QAOALayer(edges, nodes, depth))
 
     def bit_flip(
@@ -1364,7 +1362,7 @@ class Circuit(OperatorList):
             prob: Probability of a bit flip.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 1)
         self.append(BitFlip(prob, qubits_idx, self.num_qubits))
 
     def phase_flip(
@@ -1376,7 +1374,7 @@ class Circuit(OperatorList):
             prob: Probability of a phase flip.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 1)
         self.append(PhaseFlip(prob, qubits_idx,
                     self.num_qubits))
 
@@ -1389,8 +1387,8 @@ class Circuit(OperatorList):
             prob: Probability of a bit phase flip.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(BitPhaseFlip(prob, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(BitPhaseFlip(prob, qubits_idx))
 
     def amplitude_damping(
             self, gamma: Union[torch.Tensor, float],
@@ -1402,8 +1400,8 @@ class Circuit(OperatorList):
             gamma: Damping probability.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(AmplitudeDamping(gamma, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(AmplitudeDamping(gamma, qubits_idx))
 
     def generalized_amplitude_damping(
             self, gamma: Union[torch.Tensor, float], prob: Union[torch.Tensor, float],
@@ -1416,9 +1414,9 @@ class Circuit(OperatorList):
             prob: Excitation probability. Its value should be in the range :math:`[0, 1]`.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 1)
         self.append(GeneralizedAmplitudeDamping(
-            gamma, prob, qubits_idx, self.num_qubits))
+            gamma, prob, qubits_idx))
 
     def phase_damping(
             self, gamma: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -1429,8 +1427,8 @@ class Circuit(OperatorList):
             gamma: Parameter of the phase damping channel.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(PhaseDamping(gamma, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(PhaseDamping(gamma, qubits_idx))
 
     def depolarizing(
             self, prob: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -1441,8 +1439,8 @@ class Circuit(OperatorList):
             prob: Parameter of the depolarizing channel.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(Depolarizing(prob, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(Depolarizing(prob, qubits_idx))
 
     def generalized_depolarizing(
             self, prob: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str]
@@ -1453,8 +1451,8 @@ class Circuit(OperatorList):
             prob: Probabilities corresponding to the Pauli basis.
             qubits_idx: Indices of the qubits on which the channel is applied.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(GeneralizedDepolarizing(prob, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(GeneralizedDepolarizing(prob, qubits_idx))
 
     def pauli_channel(
             self, prob: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -1465,8 +1463,8 @@ class Circuit(OperatorList):
             prob: Probabilities corresponding to the Pauli X, Y, and Z operators.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(PauliChannel(prob, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(PauliChannel(prob, qubits_idx))
 
     def reset_channel(
             self, prob: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -1477,8 +1475,8 @@ class Circuit(OperatorList):
             prob: Probabilities of resetting to :math:`|0\rangle` and to :math:`|1\rangle`.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(ResetChannel(prob, qubits_idx, self.num_qubits))
+        qubits_idx = self.__info_update(qubits_idx, 1)
+        self.append(ResetChannel(prob, qubits_idx))
 
     def thermal_relaxation(
             self, const_t: Union[torch.Tensor, Iterable[float]], exec_time: Union[torch.Tensor, float],
@@ -1491,79 +1489,84 @@ class Circuit(OperatorList):
             exec_time: Quantum gate execution time in the process of relaxation in nanoseconds.
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
-        self.__num_qubits_update(qubits_idx)
+        qubits_idx = self.__info_update(qubits_idx, 1)
         self.append(
-            ThermalRelaxation(const_t, exec_time, qubits_idx, self.num_qubits))
+            ThermalRelaxation(const_t, exec_time, qubits_idx))
 
     def choi_channel(
             self, choi_repr: Iterable[torch.Tensor],
-            qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int]
+            system_idx: Union[Iterable[Iterable[int]], Iterable[int], int]
     ) -> None:
         r"""Add custom channels in the Choi representation.
 
         Args:
             choi_repr: Choi representation of this channel.
-            qubits_idx: Indices of the qubits on which the channels are applied.
+            system_idx: Indices of the systems on which the channels are applied.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(ChoiRepr(choi_repr, qubits_idx, self.num_qubits))
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.__info_update(system_idx, len(system_idx))
+        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
+        self.append(ChoiRepr(choi_repr, system_idx, acted_system_dim))
 
     def kraus_channel(
             self, kraus_oper: Iterable[torch.Tensor],
-            qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int]
+            system_idx: Union[Iterable[Iterable[int]], Iterable[int], int]
     ) -> None:
         r"""Add custom channels in the Kraus representation.
 
         Args:
             kraus_oper: Kraus representation of this channel.
-            qubits_idx: Indices of the qubits on which the channels are applied.
+            system_idx: Indices of the systems on which the channels are applied.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(KrausRepr(kraus_oper, qubits_idx, self.num_qubits))
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.__info_update(system_idx, len(system_idx))
+        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
+        self.append(KrausRepr(kraus_oper, system_idx, acted_system_dim))
 
     def stinespring_channel(
             self, stinespring_repr: Iterable[torch.Tensor],
-            qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int]
+            system_idx: Union[Iterable[Iterable[int]], Iterable[int], int]
     ) -> None:
         r"""Add custom channels in the Stinespring representation.
 
         Args:
             stinespring_repr: Stinespring representation of this channel.
-            qubits_idx: Indices of the qubits on which the channels are applied.
+            system_idx: Indices of the systems on which the channels are applied.
         """
-        self.__num_qubits_update(qubits_idx)
-        self.append(
-            StinespringRepr(stinespring_repr, qubits_idx, self.num_qubits))
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.__info_update(system_idx, len(system_idx))
+        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
+        self.append(StinespringRepr(stinespring_repr, system_idx, acted_system_dim))
 
     def __str__(self):
         history = self.gate_history
-        num_qubits = self.__num_qubits
+        num_systems = self.__num_system
         length, gate = self.__count_history(history)
         # Ignore the unused section
         total_length = sum(length) - 5
         print_list = [['-' if i % 2 == 0 else ' '] *
-                      total_length for i in range(num_qubits * 2)]
+                      total_length for i in range(num_systems * 2)]
         for i, current_gate in enumerate(history):
             if current_gate['gate'] in {'h', 's', 't', 'x', 'y', 'z', 'u'}:
                 # Calculate starting position ind of current gate
                 sec = gate[i]
                 ind = sum(length[:sec])
-                print_list[current_gate['which_qubits'] * 2][ind +
+                print_list[current_gate['which_system'] * 2][ind +
                                                              length[sec] // 2] = current_gate['gate'].upper()
             elif current_gate['gate'] in {'sdg'}:
                 sec = gate[i]
                 ind = sum(length[:sec])
-                print_list[current_gate['which_qubits'] * 2][
+                print_list[current_gate['which_system'] * 2][
                     ind + length[sec] // 2 - 1: ind + length[sec] // 2 + 2] = current_gate['gate'].upper()
             elif current_gate['gate'] in {'tdg'}:
                 sec = gate[i]
                 ind = sum(length[:sec])
-                print_list[current_gate['which_qubits'] * 2][
+                print_list[current_gate['which_system'] * 2][
                     ind + length[sec] // 2 - 1: ind + length[sec] // 2 + 2] = current_gate['gate'].upper()
             elif current_gate['gate'] in {'p', 'rx', 'ry', 'rz'}:
                 sec = gate[i]
                 ind = sum(length[:sec])
-                line = current_gate['which_qubits'] * 2
+                line = current_gate['which_system'] * 2
                 # param = self.__param[current_gate['theta'][2 if current_gate['gate'] == 'rz' else 0]]
                 param = current_gate['theta']
                 if current_gate['gate'] == 'p':
@@ -1581,8 +1584,8 @@ class Circuit(OperatorList):
                                           'cu', 'cp', 'crx', 'cry', 'crz'}:
                 sec = gate[i]
                 ind = sum(length[:sec])
-                cqubit = current_gate['which_qubits'][0]
-                tqubit = current_gate['which_qubits'][1]
+                cqubit = current_gate['which_system'][0]
+                tqubit = current_gate['which_system'][1]
                 if current_gate['gate'] in {'cnot', 'swap', 'cy', 'cz', 'cu'}:
                     print_list[cqubit * 2][ind + length[sec] // 2] = \
                         '*' if current_gate['gate'] in {'cnot',
@@ -1633,11 +1636,11 @@ class Circuit(OperatorList):
             elif current_gate['gate'] in {'cswap'}:
                 sec = gate[i]
                 ind = sum(length[:sec])
-                cqubit = current_gate['which_qubits'][0]
-                tqubit1 = current_gate['which_qubits'][1]
-                tqubit2 = current_gate['which_qubits'][2]
-                start_line = min(current_gate['which_qubits'])
-                end_line = max(current_gate['which_qubits'])
+                cqubit = current_gate['which_system'][0]
+                tqubit1 = current_gate['which_system'][1]
+                tqubit2 = current_gate['which_system'][2]
+                start_line = min(current_gate['which_system'])
+                end_line = max(current_gate['which_system'])
                 for k in range(start_line * 2 + 1, end_line * 2):
                     print_list[k][ind + length[sec] // 2] = '|'
                 if current_gate['gate'] in {'cswap'}:
@@ -1647,11 +1650,11 @@ class Circuit(OperatorList):
             elif current_gate['gate'] in {'ccx'}:
                 sec = gate[i]
                 ind = sum(length[:sec])
-                cqubit1 = current_gate['which_qubits'][0]
-                cqubit2 = current_gate['which_qubits'][1]
-                tqubit = current_gate['which_qubits'][2]
-                start_line = min(current_gate['which_qubits'])
-                end_line = max(current_gate['which_qubits'])
+                cqubit1 = current_gate['which_system'][0]
+                cqubit2 = current_gate['which_system'][1]
+                tqubit = current_gate['which_system'][2]
+                start_line = min(current_gate['which_system'])
+                end_line = max(current_gate['which_system'])
                 for k in range(start_line * 2 + 1, end_line * 2):
                     print_list[k][ind + length[sec] // 2] = '|'
                 if current_gate['gate'] in {'ccx'}:

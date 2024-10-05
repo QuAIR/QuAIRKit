@@ -21,6 +21,8 @@ import torch
 
 from ..core import Hamiltonian
 
+__all__ = ["ising_hamiltonian", "xy_hamiltonian", "heisenberg_hamiltonian"]
+
 
 def ising_hamiltonian(edges: torch.Tensor, vertices: torch.Tensor) -> Hamiltonian:
     r"""Compute the Ising Hamiltonian

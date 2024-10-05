@@ -17,7 +17,7 @@
 The library of random data generation functions
 """
 
-
+import math
 from typing import List, Optional, Union
 
 import numpy as np
@@ -25,10 +25,29 @@ import scipy
 import torch
 from scipy.stats import unitary_group
 
+# TODO this is added due to channel_repr_convert, move it to intrinsic
 import quairkit as qkit
 
 from ..core import Hamiltonian, State, get_dtype, get_float_dtype, to_state
+from ..core.intrinsic import _alias, _format_total_dim
 from ..core.utils.linalg import _dagger
+
+__all__ = [
+    "random_pauli_str_generator",
+    "random_state",
+    "random_hamiltonian_generator",
+    "random_hermitian",
+    "random_orthogonal_projection",
+    "random_density_matrix",
+    "random_unitary",
+    "random_unitary_hermitian",
+    "random_unitary_with_hermitian_block",
+    "haar_orthogonal",
+    "haar_unitary",
+    "haar_state_vector",
+    "haar_density_operator",
+    "random_channel",
+]
 
 
 def random_pauli_str_generator(num_qubits: int, terms: Optional[int] = 3) -> List:
@@ -57,17 +76,21 @@ def random_pauli_str_generator(num_qubits: int, terms: Optional[int] = 3) -> Lis
     return pauli_str
 
 
-def random_state(num_qubits: int, 
+@_alias({"num_systems": "num_qubits"})
+def random_state(num_systems: int, 
                  rank: Optional[int] = None, 
                  is_real: Optional[bool] = False, 
-                 size: Optional[Union[int, List[int]]] = 1) -> State:
+                 size: Optional[Union[int, List[int]]] = 1,
+                 system_dim: Union[List[int], int] = 2) -> State:
     r"""Generate a random quantum state.
 
     Args:
-        num_qubits: The number of qubits contained in the quantum state.
+        num_systems: The number of qubits contained in the quantum state.
         rank: The rank of the density matrix. Defaults to ``None`` which means full rank.
         is_real: If the quantum state only contains the real number. Defaults to ``False``.
         size: Batch size. Defaults to 1
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Raises:
         NotImplementedError: If the backend is wrong or not implemented.
@@ -75,19 +98,20 @@ def random_state(num_qubits: int,
     Returns:
         The generated quantum state.
     """
-    dim, size = 2 ** num_qubits, [size] if isinstance(size, int) else list(size)
+    dim = _format_total_dim(num_systems, system_dim)
+    size = [size] if isinstance(size, int) else list(size)
     rank = np.random.randint(1, dim + 1) if rank is None else rank
-    total_size = np.prod(size)
+    total_size = int(np.prod(size))
     
     if rank == 1:
-        list_state = torch.stack([haar_state_vector(num_qubits, is_real=is_real) 
+        list_state = torch.stack([haar_state_vector(dim, is_real) 
                                   for _ in range(total_size)]).view(size + [dim, 1])
     else:
-        list_state = torch.stack([haar_density_operator(num_qubits, rank=rank, is_real=is_real) 
+        list_state = torch.stack([haar_density_operator(dim, rank, is_real) 
                                   for _ in range(total_size)]).view(size + [dim, dim])
     
     list_state = list_state if total_size > 1 else list_state.squeeze()
-    return to_state(list_state)
+    return to_state(list_state, system_dim)
 
 
 def random_hamiltonian_generator(num_qubits: int, terms: Optional[int] = 3) -> Hamiltonian:
@@ -154,23 +178,29 @@ def random_density_matrix(num_qubits: int) -> torch.Tensor:
         a :math:`2^n \times 2^n` density matrix
 
     """
-    return haar_density_operator(num_qubits, rank=np.random.randint(1, 2**num_qubits+1))
+    dim = 2 ** num_qubits
+    return haar_density_operator(dim, rank=np.random.randint(1, dim + 1))
 
 
-def random_unitary(num_qubits: int, 
-                   size: Optional[Union[int, List[int]]] = 1) -> torch.Tensor:
-    r"""randomly generate a :math:`2^n \times 2^n` unitary
+@_alias({"num_systems": "num_qubits"})
+def random_unitary(num_systems: int,
+                   size: Optional[Union[int, List[int]]] = 1,
+                   system_dim: Union[List[int], int] = 2) -> torch.Tensor:
+    r"""randomly generate a :math:`d \times d` unitary
 
     Args:
-        num_qubits: number of qubits :math:`n`
+        num_systems: number of systems in this unitary. Alias of ``num_qubits``.
         size: batch size. Defaults to 1
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
-         (a) :math:`2^n \times 2^n` unitary matrix
+         (a) :math:`d \times d` unitary matrix
 
     """
-    dim, size = 2 ** num_qubits, [size] if isinstance(size, int) else list(size)
-    total_size = np.prod(size)
+    dim = _format_total_dim(num_systems, system_dim)
+    size = [size] if isinstance(size, int) else list(size)
+    total_size = math.prod(size)
     list_unitary = torch.stack([torch.tensor(unitary_group.rvs(dim), dtype=get_dtype()) 
                                 for _ in range(total_size)]).view(size + [dim, dim])
     return list_unitary if total_size > 1 else list_unitary.squeeze()
@@ -216,18 +246,16 @@ def random_unitary_with_hermitian_block(num_qubits: int, is_unitary: bool = Fals
     return torch.tensor(mat, dtype=get_dtype())
 
 
-def haar_orthogonal(num_qubits: int) -> torch.Tensor:
+def haar_orthogonal(dim: int) -> torch.Tensor:
     r""" randomly generate an orthogonal matrix following Haar random, referenced by arXiv:math-ph/0609050v2
 
     Args:
-        num_qubits: number of qubits :math:`n`
+        dim: dimension of orthogonal matrix
 
     Returns:
         a :math:`2^n \times 2^n` orthogonal matrix
 
     """
-    # Matrix dimension
-    dim = 2 ** num_qubits
     # Step 1: sample from Ginibre ensemble
     ginibre = (np.random.randn(dim, dim))
     # Step 2: perform QR decomposition of G
@@ -238,18 +266,16 @@ def haar_orthogonal(num_qubits: int) -> torch.Tensor:
     return torch.tensor(mat_u, dtype=get_dtype())
 
 
-def haar_unitary(num_qubits: int) -> torch.Tensor:
+def haar_unitary(dim: int) -> torch.Tensor:
     r""" randomly generate a unitary following Haar random, referenced by arXiv:math-ph/0609050v2
 
     Args:
-        num_qubits: number of qubits :math:`n`
+        dim: dimension of unitary
 
     Returns:
-        a :math:`2^n \times 2^n` unitary
+        a :math:`d \times d` unitary
 
     """
-    # Matrix dimension
-    dim = 2 ** num_qubits
     # Step 1: sample from Ginibre ensemble
     ginibre = (np.random.randn(dim, dim) + 1j * np.random.randn(dim, dim)) / np.sqrt(2)
     # Step 2: perform QR decomposition of G
@@ -260,45 +286,42 @@ def haar_unitary(num_qubits: int) -> torch.Tensor:
     return torch.tensor(mat_u, dtype=get_dtype())
 
 
-def haar_state_vector(num_qubits: int, is_real: Optional[bool] = False) -> torch.Tensor:
+def haar_state_vector(dim: int, is_real: Optional[bool] = False) -> torch.Tensor:
     r""" randomly generate a state vector following Haar random
 
     Args:
-        num_qubits: number of qubits :math:`n`
+        dim: dimension of density matrix
         is_real: whether the vector is real, default to be False
 
     Returns:
         a :math:`2^n \times 1` state vector
 
     """
-    # Vector dimension
-    dim = 2 ** num_qubits
     if is_real:
         # Generate a Haar random orthogonal matrix
-        mat_orthog = haar_orthogonal(num_qubits)
+        mat_orthog = haar_orthogonal(dim)
         # Perform u onto |0>, i.e., the first column of o
         phi = mat_orthog[:, 0]
     else:
         # Generate a Haar random unitary
-        unitary = haar_unitary(num_qubits)
+        unitary = haar_unitary(dim)
         # Perform u onto |0>, i.e., the first column of u
         phi = unitary[:, 0]
 
     return phi.view([-1, 1])
 
 
-def haar_density_operator(num_qubits: int, rank: int, is_real: Optional[bool] = False) -> torch.Tensor:
+def haar_density_operator(dim: int, rank: int, is_real: Optional[bool] = False) -> torch.Tensor:
     r""" randomly generate a density matrix following Haar random
 
-        Args:
-            num_qubits: number of qubits :math:`n`
-            rank: rank of density matrix, default to be ``None`` refering to full ranks
-            is_real: whether the density matrix is real, default to be False
+    Args:
+        dim: dimension of density matrix
+        rank: rank of density matrix, default to be ``None`` refering to full ranks
+        is_real: whether the density matrix is real, default to be False
 
-        Returns:
-            a :math:`2^n \times 2^n` density matrix
+    Returns:
+        a :math:`2^n \times 2^n` density matrix
     """
-    dim = 2 ** num_qubits
     assert 0 < rank <= dim, 'rank is an invalid number'
     if is_real:
         ginibre_matrix = np.random.randn(dim, rank)
@@ -310,22 +333,27 @@ def haar_density_operator(num_qubits: int, rank: int, is_real: Optional[bool] = 
     return torch.tensor(rho, dtype=get_dtype())
 
 
-def random_channel(num_qubits: int, rank: int = None, 
-                   target: str = 'kraus', size: Optional[int] = 1) -> torch.Tensor:
+@_alias({"num_systems": "num_qubits"})
+def random_channel(num_systems: int, rank: int = None, 
+                   target: str = 'kraus', 
+                   size: Optional[int] = 1,
+                   system_dim: Union[List[int], int] = 2) -> torch.Tensor:
     r"""Generate a random channel from its Stinespring representation
 
     Args:
-        num_qubits: number of qubits :math:`n`
-        rank: rank of this Channel. Defaults to be random sampled from :math:`[0, 2^n]`
+        num_systems: number of systems
+        rank: rank of this Channel. Defaults to be random sampled from :math:`[1, d]`
         target: target representation, should to be ``'choi'``, ``'kraus'`` or ``'stinespring'``
         size: batch size. Defaults to 1
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
         the target representation of a random channel.
 
     """
     target = target.lower()
-    dim = 2 ** num_qubits
+    dim = _format_total_dim(num_systems, system_dim)
     rank = np.random.randint(dim) + 1 if rank is None else rank
     assert 1 <= rank <= dim, \
         f"rank must be positive and no larger than the dimension {dim} of the channel: received {rank}"

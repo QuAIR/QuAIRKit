@@ -135,7 +135,7 @@ def _circuit_plot(
             raise NotImplementedError
         _x += gate.display_in_circuit(_axes, _x)
 
-    for _ in range(circuit.num_qubits):     # plot horizontal lines for all qubits
+    for _ in range(circuit.num_systems):     # plot horizontal lines for all qubits
         line = Line2D((-offset, _x + offset), (_y, _y), lw=lw, color='k', zorder=0)
         _axes.add_line(line)
         _y += height
@@ -146,7 +146,7 @@ def _circuit_plot(
     _axes.set_ylim(_y - height * 0.5,  - height * 0.5)
     _axes.set_aspect('equal')
     _fig.set_figwidth(_x + offset * 2)
-    _fig.set_figheight((circuit.num_qubits)*height)
+    _fig.set_figheight((circuit.num_systems)*height)
     plt.subplots_adjust(top=1-margin, bottom=margin, right=1-margin, left=margin,)
 
     return _fig
@@ -317,7 +317,7 @@ def _base_gate_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
     
-    for act_qubits in gate.qubits_idx:   # get vertical position
+    for act_qubits in gate.system_idx:   # get vertical position
         _single_qubit_gate_display(ax, x, act_qubits[0]*h, h, w, tex_name)
     x += w  # next layer
     return x - x_start
@@ -339,7 +339,7 @@ def _base_param_gate_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
 
-    for param_idx, act_qubits in enumerate(gate.qubits_idx):
+    for param_idx, act_qubits in enumerate(gate.system_idx):
         theta = gate.theta[0, 0] if gate.param_sharing else gate.theta[param_idx, 0]
         _single_qubit_gate_display(ax, x, act_qubits[0]*h, h, w, _param_tex_name_(tex_name, theta))
     x += w
@@ -362,7 +362,7 @@ def _cx_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
 
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w       # the center of block
         _patch_display(ax, x_c, act_qubits[0]*h, mode='.')
         _single_qubit_gate_display(ax, x, act_qubits[1]*h, h, w, tex_name)
@@ -387,7 +387,7 @@ def _crx_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
 
-    for param_idx, act_qubits in enumerate(gate.qubits_idx):
+    for param_idx, act_qubits in enumerate(gate.system_idx):
         theta = gate.theta[0, 0] if gate.param_sharing else gate.theta[param_idx, 0]
         
         x_c = x + 0.5 * w        # the center of block
@@ -414,7 +414,7 @@ def _oracle_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
 
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         if len(act_qubits) == 1:
             _single_qubit_gate_display(ax, x, act_qubits[0]*h, h, w, tex_name)
         else:
@@ -440,7 +440,7 @@ def _c_oracle_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
 
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         assert _is_continuous_list(act_qubits[1:]), 'Discontinuous oracle cannot be plotted.'
         min_ = min(act_qubits[1:])
         max_ = max(act_qubits[1:])
@@ -471,7 +471,7 @@ def _rxx_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
     tex_name = gate.gate_info['texname']
 
-    for param_idx, act_qubits in enumerate(gate.qubits_idx):
+    for param_idx, act_qubits in enumerate(gate.system_idx):
         assert _is_continuous_list(act_qubits), 'Discontinuous oracle cannot be plotted.'
         theta = gate.theta[0, 0] if gate.param_sharing else gate.theta[param_idx, 0]
 
@@ -495,9 +495,9 @@ def _cnot_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    parallel = _index_no_intersection_(gate.qubits_idx)
+    parallel = _index_no_intersection_(gate.system_idx)
     
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w
         _patch_display(ax, x_c, act_qubits[0]*h, mode='.')
         _patch_display(ax, x_c, act_qubits[1]*h, mode='+')
@@ -523,9 +523,9 @@ def _swap_display(gate, ax: matplotlib.axes.Axes,  x: float,) -> float:
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    parallel = _index_no_intersection_(gate.qubits_idx)
+    parallel = _index_no_intersection_(gate.system_idx)
     
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w
         _patch_display(ax, x_c, act_qubits[0]*h, mode='x')
         _patch_display(ax, x_c, act_qubits[1]*h, mode='x')
@@ -552,7 +552,7 @@ def _cswap_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
 
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w
         _patch_display(ax, x_c, act_qubits[0]*h, mode='.')
         _patch_display(ax, x_c, act_qubits[1]*h, mode='x')
@@ -577,7 +577,7 @@ def _tofolli_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
     w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
 
-    for act_qubits in gate.qubits_idx:
+    for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w
         _patch_display(ax, x_c, act_qubits[0]*h, mode='.')
         _patch_display(ax, x_c, act_qubits[1]*h, mode='.')

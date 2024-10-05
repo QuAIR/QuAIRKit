@@ -36,7 +36,7 @@ class Hamiltonian:
     Args:
         pauli_str: A list of Hamiltonian information, e.g. ``[(1, 'Z0, Z1'), (2, 'I')]``
         compress: Determines whether the input list will be automatically merged (e.g. ``(1, 'Z0, Z1')`` and ``(2, 'Z1, Z0')``, these two items will be automatically merged).
-        Defaults to ``True``.
+         Defaults to ``True``.
 
     Returns:
         Create a Hamiltonian class

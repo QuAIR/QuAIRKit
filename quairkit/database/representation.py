@@ -27,6 +27,24 @@ from ..core.intrinsic import _get_float_dtype
 from ..core.utils.linalg import _one, _zero
 from .set import pauli_basis
 
+__all__ = [
+    "bit_flip_kraus",
+    "phase_flip_kraus",
+    "bit_phase_flip_kraus",
+    "amplitude_damping_kraus",
+    "generalized_amplitude_damping_kraus",
+    "phase_damping_kraus",
+    "depolarizing_kraus",
+    "generalized_depolarizing_kraus",
+    "phase_damping_kraus",
+    "depolarizing_kraus",
+    "generalized_depolarizing_kraus",
+    "pauli_kraus",
+    "reset_kraus",
+    "thermal_relaxation_kraus",
+    "replacement_choi",
+]
+
 
 def bit_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
     r"""Kraus representation of a bit flip channel with form

@@ -17,9 +17,6 @@ r"""
 The source file of the basic class for the quantum gates.
 """
 
-import copy
-import math
-import warnings
 from typing import Any, Callable, Iterable, List, Union
 
 import matplotlib
@@ -35,23 +32,23 @@ class Gate(Channel):
 
     Args:
         matrix: the matrix of this gate. Defaults to ``None`` i.e. not specified.
-        qubits_idx: indices of the qubits on which this gate acts on. Defaults to ``None``.
-            i.e. list(range(num_acted_qubits)).
-        gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
-        Defaults to ``None``.
-        num_qubits: total number of qubits. Defaults to ``None``.
+        system_idx: indices of the systems that this gate acts on. Defaults to ``None``. i.e. list(range(# of acted systems)).
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
         check_legality: whether check the completeness of the matrix if provided. Defaults to ``True``.
-        num_acted_qubits: the number of qubits that this gate acts on. Defaults to ``None``.
+        gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
+            Defaults to ``None``.
     """
 
     def __init__(
-            self, matrix: torch.Tensor = None, qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            gate_info: dict = None, num_qubits: int = None, check_legality: bool = True, num_acted_qubits: int = None,
+            self, matrix: torch.Tensor = None, system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+            acted_system_dim: Union[List[int], int] = 2, check_legality: bool = True, gate_info: dict = None
     ):
-        assert matrix is not None or num_acted_qubits is not None, (
-            "Received None for matrix and num_acted_qubits: "
+        assert not (matrix is None and isinstance(acted_system_dim, int)), (
+            "Received None for matrix and integer for acted_system_dim: "
             "either one of them must be specified to initialize a Gate instance.")
-        super().__init__('gate', matrix, qubits_idx, num_qubits, check_legality, num_acted_qubits)
+        
+        super().__init__('gate', matrix, system_idx, acted_system_dim, check_legality)
         
         default_gate_info = {
             'gatename': 'O',
@@ -84,9 +81,9 @@ class Gate(Channel):
 
         """
         gate_history = []
-        for qubit_idx in self.qubits_idx:
+        for system_idx in self.system_idx:
             gate_info = {
-                'gate': self.gate_info['gatename'], 'which_qubits': qubit_idx, 'theta': None}
+                'gate': self.gate_info['gatename'], 'which_system': system_idx, 'theta': None}
             gate_history.append(gate_info)
         self.gate_history = gate_history
 
@@ -124,33 +121,34 @@ class Gate(Channel):
         Returns:
             The updated state after the single-qubit gates have been combined, represented as a `State` object.
         """
-        threshold_qubits = 6
-        tensor_times, tensor_left = divmod(len(self.qubits_idx), threshold_qubits)
+        threshold_dim = 2 ** 6
+        threshold_systems = threshold_dim // self.dim
+        tensor_times, tensor_left = divmod(len(self.system_idx), threshold_systems)
         for threshold_idx in range(tensor_times):
-            idx_beg = threshold_idx * threshold_qubits
-            idx_end = (threshold_idx + 1) * threshold_qubits
+            idx_beg = threshold_idx * threshold_systems
+            idx_end = (threshold_idx + 1) * threshold_systems
             
             matrix = utils.linalg._nkron(*matrices[idx_beg:idx_end])
-            state._evolve(matrix, sum(self.qubits_idx[idx_beg:idx_end], []))
+            state._evolve(matrix, sum(self.system_idx[idx_beg:idx_end], []))
         
         if tensor_left > 0:
-            idx_beg = tensor_times * threshold_qubits
+            idx_beg = tensor_times * threshold_systems
             
             matrix = utils.linalg._nkron(*matrices[idx_beg:]) if tensor_left > 1 else matrices[idx_beg]
-            state._evolve(matrix, sum(self.qubits_idx[idx_beg:], []))
+            state._evolve(matrix, sum(self.system_idx[idx_beg:], []))
         
         return state
 
     def forward(self, state: State) -> State:
         state = state.clone()
-        matrices = [self.matrix for _ in self.qubits_idx]
 
-        if self.num_acted_qubits == 1:
+        if self.num_acted_system == 1 and self.dim == 2:
             state = self._single_qubit_combine_with_threshold6(
-                state=state, matrices=matrices)
+                state=state, matrices=[self.matrix for _ in self.system_idx])
         else:
-            for idx, qubit_idx in enumerate(self.qubits_idx):
-                state._evolve(matrices[idx], qubit_idx)
+            for system_idx in self.system_idx:
+                state._evolve(self.matrix, system_idx)
+
         return state
 
 
@@ -164,27 +162,27 @@ class ParamGate(Gate):
             i.e. list(range(num_acted_qubits)).
         num_acted_param: the number of parameters required for a single operation.
         param_sharing: whether all operations are shared by the same parameter set.
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
+        check_legality: whether check the completeness of the matrix if provided. Defaults to ``True``.
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit.
             Defaults to ``None``.
-        num_qubits: total number of qubits. Defaults to ``None``.
-        check_legality: whether check the completeness of the matrix if provided. Defaults to ``True``.
-        num_acted_qubits: the number of qubits that this gate acts on.  Defaults to ``None``.
     """
 
     def __init__(
             self, generator: Callable[[torch.Tensor], torch.Tensor],
             param: Union[torch.Tensor, float, List[float]] = None,
             num_acted_param: int = 1, param_sharing: bool = False,
-            qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None, gate_info: dict = None,
-            num_qubits: int = None, check_legality: bool = True, num_acted_qubits: int = None,
+            system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+            acted_system_dim: Union[List[int], int] = 2, check_legality: bool = True, gate_info: dict = None,
     ):
-        # if num_acted_qubits is unknown, generate an example matrix to run Gate.__init__
+        # if # of acted system is unknown, generate an example matrix to run Gate.__init__
         ex_matrix = generator(torch.randn(
-            [num_acted_param], dtype=get_float_dtype())) if num_acted_qubits is None else None
+            [num_acted_param], dtype=get_float_dtype())) if isinstance(acted_system_dim, int) else None
 
-        super().__init__(ex_matrix, qubits_idx, gate_info, num_qubits, check_legality, num_acted_qubits)
+        super().__init__(ex_matrix, system_idx, acted_system_dim, check_legality, gate_info)
         
-        intrinsic._theta_generation(self, param, self.qubits_idx, num_acted_param, param_sharing)
+        intrinsic._theta_generation(self, param, self.system_idx, num_acted_param, param_sharing)
         self.param_sharing = param_sharing
         self.__generator = generator
     
@@ -193,31 +191,22 @@ class ParamGate(Gate):
 
     @property
     def matrix(self) -> Union[torch.Tensor, List[torch.Tensor]]:
-        theta = self.theta.expand(len(self.qubits_idx), -1, -1) if self.param_sharing else self.theta 
-
+        theta = self.theta.expand(len(self.system_idx), -1, -1) if self.param_sharing else self.theta
         matrices_list = [
             torch.stack([self.__generator(param) for param in theta[param_idx]])
-            for param_idx in range(len(self.qubits_idx))
+            for param_idx in range(len(self.system_idx))
         ]
         matrices_list = torch.stack(matrices_list)
-        return matrices_list.squeeze(1).to(device=self.device)
-    
-    @property
-    def kraus_repr(self) -> List[torch.Tensor]:
-        # TODO add batch support
-        matrix = self.matrix
-        assert not isinstance(matrix, List), \
-            f"Cannot generate Kraus representation for multiple matrices: received number of matrices {len(matrix)}"
-        return [matrix]
+        return matrices_list.squeeze().to(device=self.device)
 
     def gate_history_generation(self) -> None:
         r""" determine self.gate_history when gate is parameterized
         """
         gate_history = []
-        for idx, qubit_idx in enumerate(self.qubits_idx):
+        for idx, system_idx in enumerate(self.system_idx):
             param = self.theta if self.param_sharing else self.theta[idx]
             gate_info = {
-                'gate': self.gate_info['gatename'], 'which_qubits': qubit_idx, 'theta': param}
+                'gate': self.gate_info['gatename'], 'which_system': system_idx, 'theta': param}
             gate_history.append(gate_info)
         self.gate_history = gate_history
 
@@ -237,18 +226,18 @@ class ParamGate(Gate):
         return _base_param_gate_display(self, ax, x)
 
     def forward(self, state: State) -> State:
-        state = state.clone()
-        matrices_list = self.matrix
+        dim, state = self.dim, state.clone()
+        matrices_list = self.matrix.view([-1, self.theta.shape[-2], dim, dim]).squeeze(-3)
         
-        # if self.num_acted_qubits == 1:
+        # if self.num_acted_system == 1:
                 
         #     # TODO add NKron batch support
         #     state = self._single_qubit_combine_with_threshold6(
         #         state=state, matrices=param_matrices)
         # else:
-        #     for param_idx, qubit_idx in enumerate(self.qubits_idx):
-        #         state._evolve(matrices_list[param_idx], qubit_idx)
+        #     for param_idx, system_idx in enumerate(self.system_idx):
+        #         state._evolve(matrices_list[param_idx], system_idx)
         
-        for param_idx, qubit_idx in enumerate(self.qubits_idx):
-                state._evolve(matrices_list[param_idx], qubit_idx)
+        for param_idx, system_idx in enumerate(self.system_idx):
+            state._evolve(matrices_list[param_idx], system_idx)
         return state

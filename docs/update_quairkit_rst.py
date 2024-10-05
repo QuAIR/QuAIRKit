@@ -38,13 +38,13 @@ def _list_quairkit_files(
         result (List[Tuple[str, str]], optional): A list to store the result. Defaults to None.
 
     Returns:
-        List[Tuple[str, str]]: A list of tuples where each tuple contains the relative path and the type (folder or python file).
+        List[Tuple[str, str]]: A list of tuples where each tuple contains the relative path and the type (folder, python, or notebook).
     """
     if file_name_attr_list is None:
         file_name_attr_list = []
 
     for child in os.listdir(path):
-        if child.startswith("__"):
+        if child.startswith("__") or child.startswith("."):
             continue
         child_path = os.path.join(path, child)
         relative_path = os.path.join(base_path, child).replace(os.path.sep, ".")
@@ -57,10 +57,10 @@ def _list_quairkit_files(
             file_name_attr_list.append(
                 (f"{relative_path.rstrip('.py')}", "python")
             )
-        # elif child.endswith(".ipynb"):
-        #     file_name_attr_list.append(
-        #         (f"{relative_path.rstrip('.ipynb')}", "notebook")
-        #     )
+        elif child.endswith(".ipynb"):
+            file_name_attr_list.append(
+                (f"{relative_path.rstrip('.ipynb')}", "notebook")
+            )
 
     file_name_attr_list = [
         sub_array
@@ -88,56 +88,93 @@ def _update_function_rst(
     source_directory: str = _sphinx_source_dir,
 ) -> None:
     """
-    Create .rst files in the test directory based on the file list.
+    Create .rst files in the source directory based on the file list.
 
     Args:
-        file_list (List[Tuple[str, str]]): A list of tuples where each tuple contains the relative path and the type (folder or python file).
+        file_list (List[Tuple[str, str]]): A list of tuples where each tuple contains the relative path and the type (folder, python, or notebook).
 
         source_directory (str): The directory where .rst files will be created.
     """
 
+    # Collect immediate subfolders under 'tutorials'
+    tutorials_subfolders = []
     for file_name, file_type in file_list:
+        if file_type == 'folder' and file_name.startswith('tutorials.'):
+            # Check if it is an immediate subfolder of 'tutorials'
+            if file_name.count('.') == 1:
+                tutorials_subfolders.append(file_name)
+
+    # Collect notebooks directly under 'tutorials'
+    tutorials_notebooks = [
+        item[0] for item in file_list
+        if item[1] == 'notebook' and item[0].count('.') == 1 and item[0].startswith('tutorials.')
+    ]
+
+    # Generate tutorials.rst
+    rst_content = "tutorials\n"
+    rst_content += "=" * len('tutorials') + "\n\n"
+    rst_content += ".. toctree::\n    :maxdepth: 2\n    :glob:\n\n"
+    rst_content += "    tutorials/*\n"
+
+    # Add subfolders to tutorials.rst
+    for subfolder in tutorials_subfolders:
+        rst_content += f"    {subfolder}\n"
+
+    # Write tutorials.rst
+    file_path = os.path.join(source_directory, "tutorials.rst")
+    with open(file_path, "w") as file:
+        file.write(rst_content)
+
+    # Generate .rst files for subfolders under 'tutorials'
+    for subfolder in tutorials_subfolders:
+        rst_content = f"{subfolder}\n"
+        rst_content += "=" * len(subfolder) + "\n\n"
+        rst_content += ".. toctree::\n    :maxdepth: 2\n    :glob:\n\n"
+        subdir_path = subfolder.replace('.', '/')
+        rst_content += f"    {subdir_path}/*\n"
+
+        # Write subfolder.rst
+        file_path = os.path.join(source_directory, f"{subfolder}.rst")
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, "w") as file:
+            file.write(rst_content)
+
+    # Handle other folders and Python files
+    for file_name, file_type in file_list:
+        if file_name == 'tutorials' or file_name in tutorials_subfolders:
+            continue  # Already processed
+
         rst_content = ""
 
-        # .. title:: Your Title Here
+        # Skip notebooks (do not generate .rst files for notebooks)
+        if file_type == "notebook":
+            continue
+
+        # Set the title
         rst_content += f"{file_name}\n"
         rst_content += "=" * len(file_name) + "\n\n"
-        rst_content += f".. automodule:: {file_name}\n"
-        rst_content += "\t:members:\n\n"
 
         if file_type == "folder":
             rst_content += ".. toctree::\n    :maxdepth: 2\n\n"
-
-            py_files = [
+            # List immediate child files and folders
+            child_files = [
                 item[0]
                 for item in file_list
-                if item[0].startswith(file_name)
+                if item[0].startswith(file_name + ".")
                 and item[0].count(".") == file_name.count(".") + 1
             ]
-            for subfolder in py_files:
+            for subfolder in child_files:
                 rst_content += f"    {subfolder}\n"
 
-        file_path = os.path.join(source_directory, f"{file_name}.rst")
+        elif file_type == "python":
+            # For python files, generate automodule
+            rst_content += f".. automodule:: {file_name}\n"
+            rst_content += "    :members:\n\n"
 
+        file_path = os.path.join(source_directory, f"{file_name}.rst")
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w") as file:
             file.write(rst_content)
-    
-    rst_content = \
-"""\
-tutorials
-=========
-
-.. toctree::
-    :maxdepth: 4
-    :glob:
-
-    tutorials/*
-"""
-
-    file_path = os.path.join(source_directory, "tutorials.rst")
-
-    with open(file_path, "w") as file:
-        file.write(rst_content)
 
     return
 
@@ -173,11 +210,8 @@ Welcome to {_platform_name}'s documentation!
 
 
 def _update_conf_py(source_directory: str = _sphinx_source_dir):
-    """_summary_
+    """Update the Sphinx configuration file."""
 
-    Args:
-        source_directory (str, optional): _description_. Defaults to source_dir.
-    """
     rst_content = f"""\
 # Configuration file for the Sphinx documentation builder.
 #
@@ -186,14 +220,11 @@ def _update_conf_py(source_directory: str = _sphinx_source_dir):
 
 # -- Path setup --------------------------------------------------------------
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-
 import os
 import sys
 
 sys.path.insert(0, os.path.join('..', '..'))
+
 # -- Project information -----------------------------------------------------
 
 project = "{_platform_name}"
@@ -201,14 +232,10 @@ copyright = "2024, QuAIR"
 author = "QuAIR"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.0"
+release = "0.2.0"
 
 
 # -- General configuration ---------------------------------------------------
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -218,6 +245,7 @@ extensions = [
     "sphinx_immaterial",
     "nbsphinx",
 """
+
     if len(sys.argv) == 2 and sys.argv[1] == "wiki":
         rst_content += """\
     "sphinxcontrib.restbuilder",
@@ -234,16 +262,10 @@ rst_link_suffix = ""
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
 # -- Options for HTML output -------------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
 html_theme = "sphinx_immaterial"
 html_title = "QuAIRKit"
 html_short_title = "QuAIRKit"
@@ -255,14 +277,10 @@ html_theme_options = {
     "version_dropdown": True,
 }
 html_favicon = '../favicon.svg'
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ["_static"]
 
 master_doc = "index"
 
-# Autodoc
+# Autodoc configurations
 napoleon_numpy_docstring = False
 autodoc_member_order = "bysource"
 autodoc_typehints = "description"
@@ -271,8 +289,6 @@ autodoc_inherit_docstrings = False
 autodoc_docstring_signature = False
 autodoc_typehints_description_target = "documented"
 autodoc_typehints_format = "short"
-
-
 """
 
     file_path = os.path.join(source_directory, "conf.py")

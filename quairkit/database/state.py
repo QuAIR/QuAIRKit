@@ -19,64 +19,82 @@ The library of common quantum states.
 
 
 import math
-from typing import List
+from typing import List, Union
 
 import torch
 
 from ..core import State, to_state
+from ..core.intrinsic import _alias, _format_total_dim
+
+__all__ = [
+    "zero_state",
+    "one_state",
+    "computational_state",
+    "bell_state",
+    "bell_diagonal_state",
+    "w_state",
+    "ghz_state",
+    "completely_mixed_computational",
+    "r_state",
+    "s_state",
+    "isotropic_state",
+]
 
 
-def zero_state(num_qubits: int) -> State:
+@_alias({"num_systems": "num_qubits"})
+def zero_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
     r"""The function to generate a zero state.
 
     Args:
-        num_qubits: The number of qubits contained in the quantum state.
-
-    Raises:
-        NotImplementedError: If the backend is wrong or not implemented.
+        num_systems: number of systems in this state. Alias of ``num_qubits``.
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
        The generated quantum state.
     """
-    return computational_basis(num_qubits, 0)
+    return computational_state(num_systems, 0, system_dim)
 
 
-def one_state(num_qubits: int) -> State:
+@_alias({"num_systems": "num_qubits"})
+def one_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
     r"""The function to generate a one state.
 
     Args:
-        num_qubits: The number of qubits contained in the quantum state.
-
-    Raises:
-        NotImplementedError: If the backend is wrong or not implemented.
+        num_systems: number of systems in this state. Alias of ``num_qubits``.
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
        The generated quantum state.
     """
-    return computational_basis(num_qubits, 1)
+    return computational_state(num_systems, 1, system_dim)
 
 
-def computational_basis(num_qubits: int, index: int) -> State:
-    r"""Generate a computational basis state :math:`|e_{i}\rangle` , 
+@_alias({"num_systems": "num_qubits"})
+def computational_state(num_systems: int, index: int, 
+                        system_dim: Union[List[int], int] = 2) -> State:
+    r"""Generate a computational state :math:`|e_{i}\rangle` , 
     whose i-th element is 1 and all the other elements are 0.
 
     Args:
-        num_qubits: The number of qubits contained in the quantum state.
+        num_systems: number of systems in this state. Alias of ``num_qubits``.
         index:  Index :math:`i` of the computational basis state :math`|e_{i}rangle` .
-
-    Raises:
-        NotImplementedError: If the backend is wrong or not implemented.
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
         The generated quantum state.
     """
-    dim = 2 ** num_qubits
+    dim = _format_total_dim(num_systems, system_dim)
+    
     data = torch.zeros(dim)
     data[index] = 1
-    return to_state(data)
+    return to_state(data, system_dim)
 
 
-def bell_state(num_qubits: int) -> State:
+@_alias({"num_systems": "num_qubits"})
+def bell_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
     r"""Generate a bell state.
 
     Its matrix form is:
@@ -86,24 +104,29 @@ def bell_state(num_qubits: int) -> State:
         |\Phi_{D}\rangle=\frac{1}{\sqrt{D}} \sum_{j=0}^{D-1}|j\rangle_{A}|j\rangle_{B}
 
     Args:
-        num_qubits: The number of qubits contained in the quantum state.
-
-    Raises:
-        NotImplementedError: If the backend is wrong or not implemented.
+        num_systems: number of systems in this state. Alias of ``num_qubits``.
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
         The generated quantum state.
     """
-    assert num_qubits > 1, f"Number of qubits must be greater than 1 to form a Bell state. Received: {num_qubits}"
+    assert num_systems % 2 == 0, \
+        f"Number of systems must be even to form a Bell state. Received: {num_systems}"
+    half = num_systems // 2
     
-    dim = 2 ** num_qubits
-    local_dim = 2 ** int(num_qubits // 2)
+    dim = _format_total_dim(num_systems, system_dim)
+    if isinstance(system_dim, int):
+        local_dim = system_dim ** half
+    else:
+        local_dim = math.prod(system_dim[:half])
+        assert dim == (local_dim ** 2), \
+            f"Dimension of systems must be evenly distributed. Received: {system_dim}"
     
     data = torch.zeros(dim)
     for i in range(0, dim, local_dim + 1 ):
         data[i] = 1 / math.sqrt(local_dim)
-    
-    return to_state(data)
+    return to_state(data, system_dim)
 
 
 def bell_diagonal_state(prob: List[float]) -> State:

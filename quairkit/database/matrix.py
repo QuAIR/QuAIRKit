@@ -17,10 +17,9 @@ r"""
 Gate matrices.
 """
 
-import itertools
 import math
-from functools import lru_cache, reduce
-from typing import Callable, List, Optional
+from functools import reduce
+from typing import Callable, Optional
 
 import numpy as np
 import torch
@@ -29,6 +28,47 @@ from .. import database
 from ..core import get_dtype
 from ..core.intrinsic import _get_complex_dtype
 from ..core.utils.linalg import _one, _unitary_transformation, _zero
+
+__all__ = [
+    "phase",
+    "shift",
+    "grover_matrix",
+    "qft_matrix",
+    "h",
+    "s",
+    "sdg",
+    "t",
+    "tdg",
+    "eye",
+    "x",
+    "y",
+    "z",
+    "p",
+    "rx",
+    "ry",
+    "rz",
+    "u3",
+    "cnot",
+    "cy",
+    "cz",
+    "swap",
+    "cp",
+    "crx",
+    "cry",
+    "crz",
+    "cu",
+    "rxx",
+    "ryy",
+    "rzz",
+    "ms",
+    "cswap",
+    "toffoli",
+    "universal2",
+    "universal3",
+    "universal_qudit",
+    "Uf",
+    "Of",
+]
 
 
 def phase(dim: int) -> torch.Tensor:
@@ -42,7 +82,7 @@ def phase(dim: int) -> torch.Tensor:
     """
     w = np.exp(2 * np.pi * 1j / dim)
     return torch.from_numpy(np.diag([w ** i for i in range(dim)])).to(get_dtype())
- 
+
 
 def shift(dim: int) -> torch.Tensor:
     r"""Generate shift operator for qudit
@@ -985,7 +1025,7 @@ def toffoli(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
     .. math::
 
         \begin{align}
-            \mathit{CSWAP} =
+            \mathit{Toffoli} =
                 \begin{bmatrix}
                     1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
                     0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -1123,7 +1163,7 @@ def universal3(theta: torch.Tensor) -> torch.Tensor:
     unitary = _unitary_transformation(unitary, universal2(psi[3]), qubit_idx=[0, 1], num_qubits=3)
     unitary = _unitary_transformation(unitary, u3(phi[6, 0:3]), qubit_idx=2, num_qubits=3)
     return unitary
-    
+
 
 def universal_qudit(theta: torch.Tensor, dimension: int) -> torch.Tensor:
     r"""Generalized GellMann matrix basis were used to construct the universal gate for qudits
@@ -1139,7 +1179,7 @@ def universal_qudit(theta: torch.Tensor, dimension: int) -> torch.Tensor:
         [wolfram mathworld](https://mathworld.wolfram.com/GeneralizedGell-MannMatrix.html)
     """
     complex_dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view ([(dimension ** 2) - 1, 1, 1])
+    theta = theta.view([(dimension ** 2) - 1, 1, 1])
 
     generalized_gellmann_matrix = database.set.gell_mann(dimension).to(complex_dtype)
     hamiltonian = torch.eye(dimension) + torch.sum(torch.mul(theta, generalized_gellmann_matrix), dim=0)
@@ -1153,7 +1193,6 @@ def Uf(f:Callable[[torch.Tensor], torch.Tensor], n:int) -> torch.Tensor:
     Args:
         f: a boolean function :math:`f` that maps :math:`\{ 0,1 \}^{n}` to :math:`\{ 0,1 \}`;
         n: the length of input :math:`\{ 0,1 \}^{n}`;
-        dtype: the data type you used. Defaults to the type of current device.
 
     Returns:
         Unitary matrix in form
@@ -1189,7 +1228,6 @@ def Of(f:Callable[[torch.Tensor], torch.Tensor], n:int) -> torch.Tensor:
     Args:
         f: a boolean function :math:`f` that maps :math:`\{ 0,1 \}^{n}` to :math:`\{ 0,1 \}`;
         n: the length of input :math:`\{ 0,1 \}^{n}`;
-        dtype: the data type you used. Defaults to the type of current device.
 
     Returns:
         Unitary matrix in form
@@ -1223,3 +1261,4 @@ for name, func in list(globals().items()):
         # Add '_gate' to the name for functions without an underscore
         new_name = f'{name}_gate'
         globals()[new_name] = func
+        __all__ += [new_name]

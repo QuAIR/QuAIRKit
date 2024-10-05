@@ -18,107 +18,187 @@ The library of intrinsic functions of the QuAIRKit.
 NOT ALLOWED to be exposed to users.
 """
 
+import copy
+import functools
 import math
-from typing import Callable, Iterable, List, Tuple, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, Union
 
 import numpy as np
 import torch
 from torch.nn.parameter import Parameter
 
-from . import base, utils
+from .base import Operator, get_dtype, get_float_dtype, get_seed
 from .state import State, to_state
 
 
-def _format_qubits_idx(
-        qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int, str],
-        num_qubits: int, num_acted_qubits: int
-) -> List[List[int]]:
-    r"""Formatting the qubit indices that operations acts on
+def _format_total_dim(num_systems: int, system_dim: Union[List[int], int]) -> int:
+    r"""Given number of systems with dimension, check the dimension of the total system
+    
+    Args:
+        num_systems: total number of systems
+        system_dim: dimension of each system
+        
+    Returns:
+        dimension of the total system
+    
+    """
+    if isinstance(system_dim, int):
+        return system_dim ** num_systems 
+    
+    assert len(system_dim) == num_systems, \
+        f"Dimension of each system should be equal to the number of systems: received {system_dim} and {num_systems}"
+    return math.prod(system_dim)
+
+
+def _format_system_dim(total_dim: int, system_dim: Union[List[int], int]) -> List[int]:
+    r"""Given total dimension with dimension of each system, check the dimension of each system
+    
+    Args:
+        total_dim: dimension of the total system
+        system_dim: dimension of each system (could be an int)
+        
+    Returns:
+        dimension of each 
+    
+    """
+    if isinstance(system_dim, int):
+        num_system = int(math.log(total_dim, system_dim))
+        system_dim = [system_dim] * num_system
+        assert math.prod(system_dim) == total_dim, \
+            f"Total system dimension {total_dim} does not match the dimension of each system {len(system_dim)}"
+    else:
+        assert math.prod(system_dim) == total_dim, \
+            f"Dimension of each system should be equal to the total dimension: received {system_dim} and {total_dim}"
+    return system_dim
+
+
+def _format_circuit_idx(system_idx: Union[List[List[int]], List[int], int, str],
+                        num_systems: Union[int, None], num_acted_system: int) -> List[List[int]]:
+    r"""Formatting the system indices in a circuit
 
     Args:
-        qubits_idx: input qubit indices, could be a string
-        num_qubits: total number of qubits
-        num_acted_qubits: the number of qubits that one operation acts on
+        system_idx: input system indices
+        num_systems: total number of systems
+        num_acted_system: the number of systems that one operation acts on
 
     Note:
-        The shape of output qubit indices are formatted as follows:
-        - If num_acted_qubits is 1, the output shape is [# of qubits that one operation acts on];
-        - otherwise, the output shape is [# of vertical gates, num_acted_qubits].
-
+        The shape of output system indices are formatted as [# of vertical gates, num_acted_system].
     """
-    assert not (isinstance(qubits_idx, str) and num_qubits is None), \
-        f"Cannot specify the qubit indices when num_qubits is None: received qubit_idx {qubits_idx} and num_qubits {num_qubits}"
-    if num_acted_qubits == 1:
-        if qubits_idx == 'full':
-            qubits_idx = list(range(num_qubits))
-        elif qubits_idx == 'even':
-            qubits_idx = list(range(num_qubits, 2))
-        elif qubits_idx == 'odd':
-            qubits_idx = list(range(1, num_qubits, 2))
-        elif isinstance(qubits_idx, Iterable):
-            assert len(qubits_idx) == len(set(qubits_idx)), \
-                f"Single-qubit operators do not allow repeated indices: received {qubits_idx}"
-        else:
-            qubits_idx = [qubits_idx]
-        qubits_idx = [[idx] for idx in qubits_idx]
-    else:
-        if qubits_idx == 'cycle':
-            assert num_qubits >= num_acted_qubits, \
-                f"# of qubits should be >= # of acted qubits: received {num_qubits} and {num_acted_qubits}"
-            qubits_idx = []
-            for idx in range(num_qubits - num_acted_qubits):
-                qubits_idx.append(
-                    [i for i in range(idx, idx + num_acted_qubits)])
-            for idx in range(num_qubits - num_acted_qubits, num_qubits):
-                qubits_idx.append([i for i in range(idx, num_qubits)] +
-                                  [i for i in range(idx + num_acted_qubits - num_qubits)])
-        elif qubits_idx == 'linear':
-            assert num_qubits >= num_acted_qubits, \
-                f"# of qubits should be >= # of acted qubits: received {num_qubits} and {num_acted_qubits}"
-                
-            qubits_idx = []
-            for idx in range(num_qubits - num_acted_qubits + 1):
-                qubits_idx.append(
-                    [i for i in range(idx, idx + num_acted_qubits)])
-        elif len(np.shape(qubits_idx)) == 1 and len(qubits_idx) == num_acted_qubits:
-            qubits_idx = [list(qubits_idx)]
-        elif len(np.shape(qubits_idx)) == 2 and all((len(indices) == num_acted_qubits for indices in qubits_idx)):
-            qubits_idx = [list(indices) for indices in qubits_idx]
-        else:
-            raise TypeError(
-                "The qubits_idx should be iterable such as list, tuple, and so on whose elements are all integers."
-                "And the length of acted_qubits should be consistent with the corresponding gate."
-                f"\n    Received qubits_idx type {type(qubits_idx)}, qubits # {len(qubits_idx)}, gate dimension {num_acted_qubits}"
-            )
-    return qubits_idx
+    if not isinstance(system_idx, str):
+        return system_idx
+    
+    assert (
+        not isinstance(system_idx, str) or num_systems is not None
+    ), f"Cannot specify the system indices when num_systems is None: received system_idx {system_idx} and num_systems {num_systems}"
+
+    if num_acted_system == 1:
+        if system_idx == 'full':
+            system_idx = list(range(num_systems))
+        elif system_idx == 'even':
+            system_idx = list(range(num_systems, 2))
+        elif system_idx == 'odd':
+            system_idx = list(range(1, num_systems, 2))
+
+    elif system_idx == 'cycle':
+        assert num_systems >= num_acted_system, \
+            f"# of qubits should be >= # of acted qubits: received {num_systems} and {num_acted_system}"
+        system_idx = [
+            list(range(idx, idx + num_acted_system))
+            for idx in range(num_systems - num_acted_system)
+        ]
+        system_idx.extend(
+            list(range(idx, num_systems))
+            + list(range(idx + num_acted_system - num_systems))
+            for idx in range(num_systems - num_acted_system, num_systems)
+        )
+    elif system_idx == 'linear':
+        assert num_systems >= num_acted_system, \
+            f"# of system should be >= # of acted systems: received {num_systems} and {num_acted_system}"
+
+        system_idx = [
+            list(range(idx, idx + num_acted_system))
+            for idx in range(num_systems - num_acted_system + 1)
+        ]
+    return system_idx
 
 
-def _format_param_shape(qubits_idx: List[List[int]], num_acted_param: int, 
+def _format_layer_idx(qubits_idx: Union[List[int], str], num_qubits: int) -> List[int]:
+    r"""Check the validity of ``qubits_idx`` and ``num_qubits``.
+
+    Args:
+        qubits_idx: Indices of qubits.
+        num_qubits: Total number of qubits.
+
+    Raises:
+        RuntimeError: You must specify ``qubits_idx`` or ``num_qubits`` to instantiate the class.
+        ValueError: The ``qubits_idx`` must be ``Iterable`` or ``None``.
+
+    Returns:
+        Checked indices of qubits.
+    """
+    if qubits_idx is None or qubits_idx == 'full':
+        if num_qubits is None:
+            raise RuntimeError(
+                "You must specify qubits_idx or num_qubits to instantiate the class.")
+        return list(range(num_qubits))
+    elif isinstance(qubits_idx, Iterable):
+        assert len(np.array(qubits_idx).shape) == 1, \
+            "The input qubit index must be a list of int for layers."
+        qubits_idx = list(qubits_idx)
+        assert len(qubits_idx) > 1, \
+            f"Requires more than 1 qubit for a layer to act on: received length {len(qubits_idx)}"
+        assert len(qubits_idx) == len(set(qubits_idx)), \
+            f"Layers do not allow repeated indices: received {qubits_idx}"
+        return qubits_idx
+
+    raise ValueError(f"The qubits_idx must be a list of int or None: received {type(qubits_idx)}")
+
+
+def _format_operator_idx(
+        system_idx: Union[List[List[int]], List[int], int], num_acted_system: int
+) -> List[List[int]]:
+    r"""Formatting the system indices that operations acts on
+
+    Args:
+        system_idx: input system indices
+        num_acted_system: the number of systems that one operation acts on
+
+    Note:
+        The shape of output system indices are formatted as [# of vertical gates, num_acted_system].
+    """
+    
+    system_idx = np.array(system_idx).reshape([-1, num_acted_system])
+    assert system_idx.shape == np.unique(system_idx, axis=1).shape, \
+        f"Operators do not allow repeated indices: received {system_idx.tolist()}"
+    return system_idx.tolist()
+
+
+def _format_param_shape(system_idx: List[List[int]], num_acted_param: int, 
                         param_sharing: bool, batch_size: int = 1) -> List[int]:
     r"""Formatting the shape of parameters of param gates
 
     Args:
-        qubits_idx: list of input qubit indices
+        system_idx: list of input system indices
         num_acted_param: the number of parameters required for a single operation
         param_sharing: whether all operations are shared by the same parameter set
         batch_size: size of gate batch
 
     Note:
-        The input ``qubits_idx`` must be formatted by ``_format_qubits_idx`` first.
-        The shape of parameters are formatted as [len(qubits_idx), batch_size, num_acted_param].
+        The input ``system_idx`` must be formatted by ``_format_system_idx`` first.
+        The shape of parameters are formatted as [len(system_idx), batch_size, num_acted_param].
 
     """
-    return [1 if param_sharing else len(qubits_idx), batch_size, num_acted_param]
+    return [1 if param_sharing else len(system_idx), batch_size, num_acted_param]
 
 
-def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, List[float]], 
-                      qubits_idx: List[List[int]], num_acted_param: int, param_sharing: bool) -> None:
+def _theta_generation(net: Operator, param: Union[torch.Tensor, float, List[float]], 
+                      system_idx: List[List[int]], num_acted_param: int, param_sharing: bool) -> None:
     r""" determine net.theta, and create parameter if necessary
 
     Args:
         net: neural network instance
         param: input theta
-        qubits_idx: list of input qubit indices
+        system_idx: list of input system indices
         num_acted_param: the number of parameters required for a single operation
         param_sharing: whether all operations are shared by the same parameter set
 
@@ -135,7 +215,7 @@ def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, Li
             - ``param`` is a float scalar
     """
     float_dtype = _get_float_dtype(net.dtype)
-    expect_shape = _format_param_shape(qubits_idx, num_acted_param, param_sharing)
+    expect_shape = _format_param_shape(system_idx, num_acted_param, param_sharing)
     
     # TODO unify support for batch and non-batch case
     
@@ -144,7 +224,7 @@ def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, Li
         net.register_parameter('theta', Parameter(theta))
     
     elif isinstance(param, Parameter):
-        assert param.shape == expect_shape, \
+        assert list(param.shape) == expect_shape, \
             f"Shape assertion failed for input parameter: receive {list(param.shape)}, expect {expect_shape}"
         assert param.dtype == (torch.float32 if float_dtype == torch.float32 else torch.float64), \
             f"Dtype assertion failed for input parameter: receive {param.dtype}, expect {float_dtype}"
@@ -155,8 +235,8 @@ def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, Li
     
     elif isinstance(param, torch.Tensor):
         expect_shape[1] = -1
-        expect_shape = _format_param_shape(qubits_idx, num_acted_param, param_sharing, -1)
-        net.theta = param.to(float_dtype).reshape(expect_shape)
+        expect_shape = _format_param_shape(system_idx, num_acted_param, param_sharing, -1)
+        net.theta = param.to(net.device, dtype=float_dtype).reshape(expect_shape)
     
     else:  # when param is an Iterable
         expect_shape[1] = -1
@@ -185,30 +265,33 @@ def _get_complex_dtype(float_dtype: torch.dtype) -> torch.dtype:
     return complex_dtype
 
 
-def _type_fetch(data: Union[np.ndarray, torch.Tensor, State]) -> str:
-    r""" fetch the type of ``data``
+def _type_fetch(data: Union[np.ndarray, torch.Tensor, State, Any], 
+                ndim: Optional[int]= None) -> Union[str, Tuple[str, List[int]]]:
+    r"""Fetch the type of ``data``
 
     Args:
         data: the input data, and datatype of which should be either ``numpy.ndarray``,
     ''torch.Tensor'' or ``quairkit.State``
+        ndim: the number of dimensions to be removed, used for batched data
 
     Returns:
-        string of datatype of ``data``, can be either ``"numpy"``, ``"tensor"``,
-    ``"state_vector"`` or ``"density_matrix"``
+        When ``ndim`` is not none, the returned tuple contains the following variables:
+        - a string of datatype of ``data``, can be either ``"numpy"``, ``"tensor"`` or ``"state"``
+        - the batch dimension
+        When ``ndim`` is none, the returned variable is just the string.
 
     Raises:
-        ValueError: does not support the current backend of input state.
         TypeError: cannot recognize the current type of input data.
 
     """
     if isinstance(data, np.ndarray):
-        return "numpy"
-
+        return "numpy" if ndim is None else ("numpy", list(data.shape[:-ndim]))
+    
     if isinstance(data, torch.Tensor):
-        return "tensor"
-
+        return "tensor" if ndim is None else ("tensor", list(data.shape[:-ndim]))
+    
     if isinstance(data, State):
-        return data.backend
+        return "state" if ndim is None else ("state", list(data.batch_dim))
 
     raise TypeError(
         f"cannot recognize the current type {type(data)} of input data.")
@@ -242,14 +325,14 @@ def _density_to_vector(rho: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray
     return state.detach().numpy() if type_str == "numpy" else state
 
 
-def _type_transform(data: Union[np.ndarray, torch.Tensor, State],
-                    output_type: str) -> Union[np.ndarray, torch.Tensor, State]:
+def _type_transform(data: Union[np.ndarray, torch.Tensor, State], output_type: str, 
+                    system_dim: Optional[Union[List[int], int]] = None) -> Union[np.ndarray, torch.Tensor, State]:
     r""" transform the datatype of ``input`` to ``output_type``
 
     Args:
         data: data to be transformed
-        output_type: datatype of the output data, type is either ``"numpy"``, ``"tensor"``,
-    ``"state_vector"`` or ``"density_matrix"``
+        output_type: datatype of the output data, type is either ``"numpy"``, ``"tensor"`` or ``"state"``
+        system_dim: dimension of the system, used for transforming to state. Defaults to qubit case.
 
     Returns:
         the output data with expected type
@@ -260,7 +343,7 @@ def _type_transform(data: Union[np.ndarray, torch.Tensor, State],
     """
     current_type = _type_fetch(data)
 
-    support_type = {"numpy", "tensor", "state_vector", "density_matrix"}
+    support_type = {"numpy", "tensor", "state"}
     if output_type not in support_type:
         raise ValueError(
             f"does not support transformation to type {output_type}")
@@ -268,103 +351,29 @@ def _type_transform(data: Union[np.ndarray, torch.Tensor, State],
     if current_type == output_type:
         return data
 
+    #TODO remove when all state manipulation functions are implemented
+    if system_dim is None:
+        shape = data.shape
+        system_dim = shape[-2] if (len(shape) >= 2 and shape[-1] == 1) else shape[-1]
+    else:
+        system_dim = _format_system_dim(data.shape[-1], system_dim)
+
     if current_type == "numpy":
         if output_type == "tensor":
-            return torch.tensor(data)
+            return torch.from_numpy(data)
 
-        data = np.squeeze(data)
-        # state_vector case
-        if output_type == "state_vector":
-            if len(data.shape) == 2:
-                data = _density_to_vector(data)
-        
-        # density_matrix case
-        if len(data.shape) == 1:
-            data = data.reshape([len(data), 1])
-            data = data @ np.conj(data.T)
-        return to_state(data)
+        return to_state(data, system_dim=system_dim, eps=None)
 
     if current_type == "tensor":
         if output_type == "numpy":
             return data.detach().cpu().resolve_conj().numpy()
 
-        data = torch.squeeze(data)
-        # state_vector case
-        if output_type == "state_vector":
-            if len(data.shape) == 2:
-                data = utils.linalg._density_to_vector(data)
+        return to_state(data, system_dim=system_dim, eps=None)
 
-        # density_matrix case
-        if len(data.shape) == 1:
-            data = data.reshape([len(data), 1])
-            data = data @ torch.conj(data.T)
-        return to_state(data)
-
-    if current_type == "state_vector":
-        if output_type == "density_matrix":
-            return to_state(data, state_backend='density_matrix')
-        return data.ket.detach().numpy() if output_type == "numpy" else data.ket
-
-    # density_matrix data
-    if output_type == "state_vector":
-        raise NotImplementedError(
-            "The transformation from density matrix to state vector is not supported.")
-    return data.detach().numpy() if output_type == "numpy" else data.density_matrix
-
-
-def _perm_to_swaps(perm: List[int]) -> List[Tuple[int]]:
-    r"""This function takes a permutation as a list of integers and returns its
-        decomposition into a list of tuples representing the two-permutation (two conjugated 2-cycles).
-
-    Args:
-        perm: the target permutation
-
-    Returns:
-        the decomposition of the permutation.
-    """
-    n = len(perm)
-    swapped = [False] * n
-    swap_ops = []
-
-    for idx in range(n):
-        if not swapped[idx]:
-            next_idx = idx
-            swapped[next_idx] = True
-            while not swapped[perm[next_idx]]:
-                swapped[perm[next_idx]] = True
-                if next_idx < perm[next_idx]:
-                    swap_ops.append((next_idx, perm[next_idx]))
-                else:
-                    swap_ops.append((perm[next_idx], next_idx))
-                next_idx = perm[next_idx]
-
-    return swap_ops
-
-
-def _trans_ops(state: torch.Tensor, swap_ops: List[Tuple[int]], batch_dims: List[int], num_qubits: int,
-               extra_dims: int = 1) -> torch.Tensor:
-    r"""Transpose the state tensor given a list of swap operations.
-
-    Args:
-        swap_ops: given list of swap operations
-        batch_dims: intrinsic dimension of the state tensor
-        num_qubits: the number of qubits in the system
-        extra_dims: labeling the dimension of state, 1 for statevector; 2 for density operator
-
-    Returns:
-        torch.Tensor: transposed state tensor given the swap list
-    """
-    num_batch_dims = len(batch_dims)
-    for swap_op in swap_ops:
-        shape = batch_dims.copy()
-        shape.extend([2**(swap_op[0]), 2, 2**(swap_op[1] - swap_op[0] - 1),
-                     2, 2**(extra_dims * num_qubits - swap_op[1] - 1)])
-        state = torch.reshape(state, shape)
-        state = torch.permute(
-            state, tuple(range(num_batch_dims)) +
-            tuple(item + num_batch_dims for item in [0, 3, 2, 1, 4])
-        )
-    return state
+    if current_type == "state":
+        if output_type == "numpy":
+            return data.numpy()
+        return data._data.clone()
 
 
 def _cnot_idx_fetch(num_qubits: int, qubits_idx: List[Tuple[int, int]]) -> List[int]:
@@ -381,13 +390,13 @@ def _cnot_idx_fetch(num_qubits: int, qubits_idx: List[Tuple[int, int]]) -> List[
                 obtained by applying the CNOT gate.
     """
     assert len(np.shape(qubits_idx)) == 2, \
-        "The CNOT qubits_idx should be list of tuple of integers, e.g., [[0, 1], [1, 2]]."
+        "The CNOT system_idx should be list of tuple of integers, e.g., [[0, 1], [1, 2]]."
     binary_list = [bin(i)[2:].zfill(num_qubits) for i in range(2 ** num_qubits)]
-    qubits_idx_length = len(qubits_idx)
+    system_idx_length = len(qubits_idx)
     for item in range(len(binary_list)):
-        for bin_idx in range(qubits_idx_length):
-            id1 = qubits_idx[qubits_idx_length - bin_idx - 1][0]
-            id2 = qubits_idx[qubits_idx_length - bin_idx - 1][1]
+        for bin_idx in range(system_idx_length):
+            id1 = qubits_idx[system_idx_length - bin_idx - 1][0]
+            id2 = qubits_idx[system_idx_length - bin_idx - 1][1]
             if binary_list[item][id1] == "1":
                 if binary_list[item][id2] == '0':
                     binary_list[item] = binary_list[item][:id2] + '1' + binary_list[item][id2 + 1:]
@@ -415,16 +424,17 @@ def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], p
         message: optional message to be printed if the gradient check fails. Defaults to None.
     
     """
-    seed = base.get_seed()
-    func, param = lambda x: func(x).double(), param.clone().detach().double().requires_grad_(True)
-    if not param.requires_grad:
-        # Perform gradient check
-        result = torch.autograd.gradcheck(func, param, eps=eps, atol=atol, 
-                                          rtol=rtol, raise_exception = exception)
-        assert result, (
-            "The function is not accurate enough for precision \n"
-            f"Function name: {func}, seed: {seed}, precision: {atol}, message: {message} "
-        )
+    seed = get_seed()
+    assert get_float_dtype() == torch.float64, \
+        "The gradient check only supports double precision, which can be set by `quairkit.set_dtype('complex128')`."
+    
+    param = param.clone().requires_grad_(True)
+    result = torch.autograd.gradcheck(func, param, eps=eps, atol=atol, 
+                                        rtol=rtol, raise_exception = exception)
+    assert result, (
+        "The function is not accurate enough for precision \n"
+        f"Function name: {func}, seed: {seed}, precision: {atol}, message: {message} "
+    )
         
     
     # Print the result for confirmation
@@ -432,4 +442,137 @@ def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], p
         print(f"Gradient test with seed {seed} passed",
               f"under abs tolerance {atol} and rel tolerance {rtol}.")
 
+
+def _is_sample_linear(
+    func: Callable[[Union[torch.Tensor, np.ndarray]], Union[torch.Tensor, np.ndarray]],
+    info: Union[List[int], Callable[[], torch.Tensor], Callable[[], np.ndarray]],
+    input_dtype: torch.dtype = None,
+) -> Tuple[Callable[[torch.Tensor], torch.Tensor], Callable[[], torch.Tensor], torch.dtype, str]:
+    r"""Check whether the inputs in `is_linear`, `create_matrix`, `create_choi_repr` are legal
+
+    Args:
+        func: A callable function to be tested.
+        info: Information of the sample function, either the shape of sample data or the function itself.
+        input_dtype: The data type of the input tensor. Defaults to None.
+
+    Returns:
+        A tuple containing:
+        - A function to be tested, which ensures the input and output are torch.Tensors.
+        - A function that generates input samples as torch.Tensors.
+        - The data type of the input tensor.
+        - A string representing the original type of the input function's output.
+
+    Raises:
+        TypeError: The input arguments are not of expected types.
+    """
+    assert isinstance(
+        func, Callable
+    ), f"The input 'func' must be callable, received {type(func)}"
+
+    # Process the 'info' argument to create a tensor generator
+    generator = info
+
+    if input_dtype is None:
+        input_dtype = get_dtype()
+    elif not isinstance(input_dtype, torch.dtype):
+        raise TypeError(f"Input must be of type torch.dtype or None. Received type: {type(input_dtype)}")
+
+    if isinstance(info, list) and all((isinstance(x, int) and x > 0) for x in info):
+        # If 'info' is a list of integers, create a torch.tensor generator based on the shape of input data and the input dtype
+        generator = lambda: torch.randn(info, dtype=input_dtype)
+        sample = generator()
+        func_in = func
+
+    elif isinstance(info, Callable):
+        sample = info()
+        # Handling different types of generated inputs
+
+        if isinstance(sample, np.ndarray):
+            generator = lambda: torch.from_numpy(info())
+            func_in = lambda input_data: func(torch.from_numpy(input_data))
+        elif isinstance(sample, torch.Tensor):
+            generator = lambda: info()
+            func_in = func
+        else:
+            raise TypeError(
+                f"The output of info must be a torch.Tensor or numpy.ndarray: received {type(sample)}"
+            )
+
+    else:
+        raise TypeError(
+            "the info entry should either the shape of input data, or a Callable functions: "
+            + f"received info {info} with type {type(info)}"
+        )
+
+    # guarantee the output type is torch.Tensor
+    output = func(sample)
+
+    func_tensor = func_in
+    if isinstance(output, np.ndarray):
+        func_tensor = lambda mat: torch.from_numpy(func_in(mat))
+    elif not isinstance(output, torch.Tensor):
+        raise TypeError(
+            f"The input function either return torch.Tensor or np.ndarray: received type {type(output)}"
+        )
+
+    return func_tensor, generator, input_dtype, _type_fetch(output)
+
+
+def _alias(aliases: Dict[str, str]) -> Callable:
+    r"""alias decorator for function arguments
+    
+    Args:
+        aliases: a dictionary of alias names. The key is the original name, and the value is the alias name.
+    
+    Returns:
+        A decorator that replaces the alias name with the original name.
+    
+    Note:
+        See stack overflow #29374425
+    
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for name, alias in aliases.items():
+                if name not in kwargs and alias in kwargs:
+                    kwargs[name] = copy.deepcopy(kwargs[alias])
+                    del kwargs[alias]
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
+def _digit_to_int(digits: str, base: Union[int, List[int]]) -> int:
+    r"""Convert a string of digits in a given base to an integer
+    """
+    if isinstance(base, int):
+        return int(digits, base=base)
+    
+    number = 0
+    multiplier = 1
+    for digit, base in zip(reversed(digits), reversed(base)):
+        if not digit.isdigit() or int(digit) >= base:
+            raise ValueError(
+                f"Digit '{digit}' is invalid for base {base}.")
         
+        number += int(digit) * multiplier
+        multiplier *= base   
+    return number
+
+
+def _int_to_digit(number: int, base: Union[int, List[int]]) -> str:
+    r"""Convert an integer to a string of digits in a given base
+    """
+    if number < 0:
+        return f'-{_int_to_digit(-number, base)}'
+
+    if isinstance(base, int):
+        return np.base_repr(number, base=base)
+
+    digits = []
+    for base in reversed(base):
+        digits.append(str(number % base))
+        number //= base
+    return ''.join(reversed(digits))
+

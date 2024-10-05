@@ -23,13 +23,11 @@ from typing import Iterable, List, Optional, Union
 
 import torch
 
-from quairkit.core.utils.qinfo import (_choi_to_kraus, _choi_to_stinespring,
-                                       _kraus_to_choi, _kraus_to_stinespring,
-                                       _stinespring_to_choi,
-                                       _stinespring_to_kraus)
-
 from ...core import MixedState, Operator, State, utils
-from ...core.intrinsic import _format_qubits_idx
+from ...core.intrinsic import _format_operator_idx
+from ...core.utils.qinfo import (_choi_to_kraus, _choi_to_stinespring,
+                                 _kraus_to_choi, _kraus_to_stinespring,
+                                 _stinespring_to_choi, _stinespring_to_kraus)
 
 
 class Channel(Operator):
@@ -38,143 +36,148 @@ class Channel(Operator):
     Args:
         type_repr: type of a representation. should be ``'choi'``, ``'kraus'``, ``'stinespring'``.
         representation: the representation of this channel. Defaults to ``None`` i.e. not specified.
-        qubits_idx: indices of the qubits on which this channel acts on. Defaults to ``None``.
-            i.e. list(range(num_acted_qubits)).
-        num_qubits: total number of qubits. Defaults to ``None``.
+        system_idx: indices of the system on which this channel acts on. Defaults to ``None``.
+            i.e. list(range(number of acted systems)).
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to ``None``.
         check_legality: whether check the completeness of the representation if provided. Defaults to ``True``.
-        num_acted_qubits: the number of qubits that this channel acts on.  Defaults to ``None``.
 
     Raises:
         ValueError: Unsupported channel representation for ``type_repr``.
         NotImplementedError: The noisy channel can only run in density matrix mode.
         TypeError: Unexpected data type for Channel representation.
-
+        
     Note:
-        If ``representation`` is given, then ``num_acted_qubits`` will be determined by ``representation``, no matter
-        ``num_acted_qubits`` is ``None`` or not.
+        Assume the input dimension is the same as the output.
+    
     """
     def __init__(
-            self, type_repr: str, representation: torch.Tensor = None,
-            qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            num_qubits: int = None, check_legality: bool = True, num_acted_qubits: int = None,
+            self, type_repr: str, representation: Optional[Union[torch.Tensor]] = None,
+            system_idx: Optional[Union[Iterable[Iterable[int]], Iterable[int], int]] = None,
+            acted_system_dim: Optional[Union[List[int], int]] = None, check_legality: Optional[bool] = True,
     ) -> None:
-        super().__init__()
-        assert representation is not None or num_acted_qubits is not None, (
-            "Received None for representation and num_acted_qubits: "
-            "either one of them must be specified to initialize a Channel instance.")
         type_repr = type_repr.lower()
         if type_repr not in ['choi', 'kraus', 'gate', 'stinespring']:
             raise ValueError(
                 "Unsupported channel representation:"
                 f"require 'choi', 'kraus', 'gate', or 'stinespring', not {type_repr}")
-
-        if representation is None:
-            assert num_acted_qubits is not None, (
-                "Received None for representation and num_acted_qubits: "
-                "either one of them must be specified to initialize a Channel instance.")
-        else:
-            num_acted_qubits = getattr(self, f'_Channel__{type_repr}_init')(representation, check_legality)
-
-        if qubits_idx is None:
-            self.qubits_idx = [[0] if num_acted_qubits == 1 else list(range(num_acted_qubits))]
-        else:
-            self.qubits_idx = _format_qubits_idx(qubits_idx, num_qubits, num_acted_qubits)
         self.type_repr = type_repr
-        self.num_acted_qubits = num_acted_qubits
-        self.num_qubits = num_qubits
+        super().__init__()
+        
+        if representation is None:
+            assert not isinstance(acted_system_dim, int), \
+                f"Need to specify all system dimensions to get # of acted systems: received {acted_system_dim}"
+            self.system_dim, num_acted_system = acted_system_dim, len(acted_system_dim)
+        else:
+            representation = representation.to(dtype=self.dtype, device=self.device)
+            num_acted_system = getattr(self, f'_Channel__{type_repr}_init')(representation, acted_system_dim, check_legality)
+        
+        if system_idx is None:
+            self.system_idx = [list(range(num_acted_system))]
+        else:
+            self.system_idx = _format_operator_idx(system_idx, num_acted_system)
+        self.num_acted_system = num_acted_system
     
     def __call__(self, state: State) -> State:
         return self.forward(state)
+    
+    def __register_dim(self, input_dim: int, acted_system_dim: Union[List[int], int, None]) -> int:
+        if acted_system_dim is None:
+            self.system_dim, num_acted_system = [input_dim], 1
+        elif isinstance(acted_system_dim, int):
+            num_acted_system = int(math.log(input_dim, acted_system_dim))
+            
+            assert input_dim == (acted_system_dim ** num_acted_system), \
+                f"The input dimension of {self.type_repr} representation does not match with acted system dimension: received {acted_system_dim}."
+            
+            self.system_dim = [acted_system_dim] * num_acted_system
+        else:
+            assert input_dim == (expec_dim := math.prod(acted_system_dim)), \
+                (f"The input dimension of {self.type_repr} representation should match with system dimension {acted_system_dim}:" + 
+                 f"input {input_dim}, expect {expec_dim}.")
+            self.system_dim, num_acted_system = acted_system_dim, len(acted_system_dim)
+        return num_acted_system
 
-    def __choi_init(self, choi_repr: torch.Tensor, check_legality: bool) -> int:
+    def __choi_init(self, choi_repr: torch.Tensor, 
+                    acted_system_dim: Union[List[int], int, None], 
+                    check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'choi'``
         """
-        #TODO add batch support
+        input_dim = math.isqrt(choi_repr.shape[-1])
+        num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
-        if not isinstance(choi_repr, torch.Tensor):
-            raise TypeError(
-                f"Unexpected data type for Choi representation: expected torch.Tensor, received {type(choi_repr)}")
-        choi_repr = choi_repr.to(self.dtype)
-
-        num_acted_qubits = int(math.log2(choi_repr.shape[-1]) / 2)
-        if check_legality:
-            # TODO: need to add more sanity check for choi
-            assert 2 ** (2 * num_acted_qubits) == choi_repr.shape[-1], \
-                "The shape of Choi representation should be the integer power of 4: check your inputs."
-
+        if check_legality and not torch.all(utils.check._is_choi(choi_repr)):
+            warnings.warn(
+                "The input data may not be a Choi representation of a channel.", UserWarning)
+        
         self.__choi_repr = choi_repr
-        return num_acted_qubits
+        return num_acted_system
 
-    def __kraus_init(self, kraus_repr: torch.Tensor, check_legality: bool) -> int:
+    def __kraus_init(self, kraus_repr: torch.Tensor, 
+                     acted_system_dim: Union[List[int], int, None], 
+                     check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'kraus'``
         """
-        #TODO add batch support
-
         if len(kraus_repr.shape) == 2:
             kraus_repr = kraus_repr.unsqueeze(0)
-        kraus_repr = kraus_repr.to(self.dtype)
 
-        dimension = kraus_repr.shape[-1]
-        num_acted_qubits = int(math.log2(dimension))
-        assert 2 ** num_acted_qubits == dimension, \
-                "The length of oracle should be integer power of 2."
+        input_dim = kraus_repr.shape[-1]
+        num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
         # sanity check
         if check_legality:
             oper_sum = (utils.linalg._dagger(kraus_repr) @ kraus_repr).sum(dim=-3)
-            identity = torch.eye(dimension).to(device=oper_sum.device).expand_as(oper_sum)
+            identity = torch.eye(input_dim).to(device=oper_sum.device)
             err = torch.norm(torch.abs(oper_sum - identity)).item()
-            if err > min(1e-6 * dimension * len(kraus_repr), 0.01):
+            if err > min(1e-6 * input_dim * len(kraus_repr), 0.01):
                 warnings.warn(
-                    f"\nThe input data may not be a Kraus representation of a channel: norm(sum(E * E^d) - I) = {err}.",
+                    f"The input data may not be a Kraus representation of a channel: norm(sum(E * E^d) - I) = {err}.",
                     UserWarning)
 
         self.__kraus_repr = kraus_repr
-        return num_acted_qubits
+        return num_acted_system
     
-    def __gate_init(self, gate_matrix: torch.Tensor, check_legality: bool) -> int:
+    def __gate_init(self, mat: torch.Tensor, 
+                    acted_system_dim: Union[List[int], int, None], 
+                    check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'gate'``
         """
-        complex_dtype = self.dtype
-        gate_matrix = gate_matrix.to(complex_dtype)
-
-        if not isinstance(gate_matrix, torch.Tensor):
-            raise TypeError(
-                f"Unexpected data type for quantum gate: expected torch.Tensor, received {type(gate_matrix)}")
-
-        dimension = gate_matrix.shape[-1]
+        input_dim = mat.shape[-1]
+        num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
         if check_legality:
-            identity = torch.eye(dimension).to(device=gate_matrix.device).expand_as(gate_matrix)
-            err = torch.norm(
-                torch.abs(utils.linalg._dagger(gate_matrix) @ gate_matrix - identity)
-            ).item()
-            if err > min(1e-6 * dimension, 0.01):
+            identity = torch.eye(input_dim).to(device=mat.device).expand_as(mat)
+            err = torch.norm(torch.abs(utils.linalg._dagger(mat) @ mat - identity)).item()
+            if err > min(1e-6 * input_dim, 0.01):
                 warnings.warn(
                     f"\nThe input gate matrix may not be a unitary: norm(U * U^d - I) = {err}.", UserWarning)
-        num_acted_qubits = int(math.log2(dimension))
+        
+        self.__kraus_repr = mat.unsqueeze(-3)
+        return num_acted_system
 
-        self.__kraus_repr = gate_matrix.unsqueeze(-3)
-        self.__matrix = gate_matrix
-        return num_acted_qubits
-
-    def __stinespring_init(self, stinespring_repr: torch.Tensor, check_legality: bool) -> int:
+    def __stinespring_init(self, stinespring_repr: torch.Tensor, 
+                           acted_system_dim: Union[List[int], int, None], 
+                           check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'Stinespring'``
         """
-
-        stinespring_repr = stinespring_repr.to(self.dtype)
-        num_acted_qubits = int(math.log2(stinespring_repr.shape[-1]))
+        input_dim = stinespring_repr.shape[-1]
+        num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
         # sanity check
         if check_legality:
             # TODO: need to add more sanity check for stinespring
-            dim_ancilla = stinespring_repr.shape[-2] // stinespring_repr.shape[-1]
-            dim_act = stinespring_repr.shape[-1]
-            assert dim_act * dim_ancilla == stinespring_repr.shape[-2], \
+            out_dim = stinespring_repr.shape[-2]
+            assert out_dim % input_dim == 0, \
                 'The width of stinespring matrix should be the factor of its height'
 
         self.__stinespring_repr = stinespring_repr
-        return num_acted_qubits
+        return num_acted_system
+
+    @property
+    def dim(self) -> int:
+        r"""Dimension of the input/output system of this channel
+        """
+        return math.prod(self.system_dim)
 
     @property
     def choi_repr(self) -> torch.Tensor:
@@ -196,7 +199,7 @@ class Channel(Operator):
         elif type_repr == 'kraus':
             return _kraus_to_choi(self.kraus_repr)
         elif type_repr == 'gate':
-            return _kraus_to_choi(self.__matrix.unsqueeze(-3))
+            return _kraus_to_choi(self.matrix.unsqueeze(-3))
         else:
             return _stinespring_to_choi(self.stinespring_repr)
 
@@ -216,7 +219,7 @@ class Channel(Operator):
         if type_repr == 'choi':
             return _choi_to_kraus(self.choi_repr, tol=1e-6)
         elif type_repr == 'gate':
-            return self.__matrix.unsqueeze(-3)
+            return self.matrix.unsqueeze(-3)
         elif type_repr == 'kraus':
             if self.__kraus_repr is None:
                 raise ValueError(
@@ -254,11 +257,10 @@ class Channel(Operator):
         else:
             state = state.clone()
         
-        for qubits_idx in self.qubits_idx:
+        for system_idx in self.system_idx:
             if self.type_repr == 'choi':
-                state._transform(self.choi_repr, qubits_idx, 'choi')
+                state._transform(self.choi_repr, system_idx, 'choi')
             else:
-                state._transform(self.kraus_repr, qubits_idx, 'kraus')
+                state._transform(self.kraus_repr, system_idx, 'kraus')
         
         return state
-

@@ -31,12 +31,10 @@ States in QuAIRKit obeys the following broadcast rule:
 Note that the last rule currently is only applicable to the `evolve_keep_dim` method.
 """
 
-import random
 import warnings
 from abc import ABC, abstractmethod
-from typing import Iterable, List, Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
@@ -95,7 +93,7 @@ class State(ABC):
         
         Args:
             other: the state/tensor to be expanded to. Note that if other is a
-            torch.Tensor, the batch dimension of the state will be expanded to the same size as other.
+             torch.Tensor, the batch dimension of the state will be expanded to the same size as other.
         
         Note:
             See torch.Tensor.expand_as() for more information about expand.
@@ -146,19 +144,16 @@ class State(ABC):
 
     @staticmethod
     @abstractmethod
-    def check(data: torch.Tensor, sys_dim: Union[int, List[int]]) -> int:
+    def check(data: torch.Tensor, sys_dim: Union[int, List[int]], eps: Optional[float] = 1e-4) -> int:
         r"""Assert whether the input data is valid for the specific State class.
 
         Args:
             data: tensor array for quantum state(s).
             sys_dim: (list of) dimension(s) of the systems, can be a list of integers or an integer.
+            eps: the tolerance for the numerical check. Can be None means the check is overridden.
 
         Returns:
             the number of systems.
-
-        Note:
-            error message see the docstring of `is_xxx` in `quairkit.qinfo` for more details, 
-            where xxx is the backend name of the state class.
 
         """
 
@@ -169,6 +164,21 @@ class State(ABC):
         warnings.warn(
             'The data property is depreciated, use ket or density_matrix instead', DeprecationWarning)
         return self._data
+    
+    @property
+    def batch_dim(self) -> List[int]:
+        r"""The batch dimension of this state
+        """
+        if hasattr(self, '_batch_dim'):
+            return self._batch_dim
+        else:
+            raise KeyError(f"The state class {self.backend} does not have batch functional")
+    
+    @property
+    def shape(self) -> torch.Size:
+        r"""The shape of this state
+        """
+        return self._data.shape
     
     @property
     def dtype(self) -> torch.dtype:
@@ -185,19 +195,33 @@ class State(ABC):
     def numel(self) -> int:
         r"""The number of elements in this data
         """
-        return np.prod(self.batch_dim) if self.batch_dim else 1
+        return int(np.prod(self.batch_dim)) if self.batch_dim else 1
 
     @property
     def dim(self) -> int:
         r"""The dimension of this state
         """
         return self._data.shape[-1]
-
+    
     @property
     def system_dim(self) -> List[int]:
         r"""The list of dimensions for each system
         """
         return self._sys_dim.copy()
+    
+    @system_dim.setter
+    def system_dim(self, sys_dim: List[int]) -> None:
+        r"""Set the system dimensions of the state
+        
+        Args:
+            sys_dim: the target system dimensions.
+        
+        """
+        self.reset_sequence()
+        assert int(np.prod(sys_dim)) == self.dim, \
+            f"The input system dim {sys_dim} does not match the original state dim {self.dim}."
+        self._sys_dim = sys_dim.copy()
+        self._system_seq = list(range(len(sys_dim)))
     
     def are_qubits(self) -> bool:
         r"""Whether all systems are qubits
@@ -255,29 +279,28 @@ class State(ABC):
         return data.squeeze((0,1)).view(self.batch_dim + [-1, 1])
     
     @abstractmethod 
-    def _trace(self, sys_idx: List[int]) -> 'State':
+    def _trace(self, trace_idx: List[int]) -> 'State':
         r"""Partial trace of the state
         
         Args:
-            sys_idx: the subsystem indices to be traced out.
+            trace_idx: the subsystem indices to be traced out.
         
         Returns:
             the partial trace of the state as a new state.
         
         """
-    
-    def trace(self, sys_idx: List[int] = None) -> Union[torch.Tensor, 'State']:
-        r"""(Partial) trace of the state
+        
+    @abstractmethod
+    def _transpose(self, transpose_idx: List[int]) -> 'State':
+        r"""Partial transpose of the state
         
         Args:
-            sys_idx: the subsystem indices to be traced out. Defaults to all systems.
+            transpose_idx: the subsystem indices to be transposed.
         
         Returns:
-            the trace of the state as a Tensor, or a new state if sys_idx is not None.
+            the transposed state as a new state.
+        
         """
-        if sys_idx is None:
-            return utils.linalg._trace(self.density_matrix, -2, -1)
-        return self._trace(sys_idx)
 
     @property
     def rank(self) -> List[int]:
@@ -346,6 +369,18 @@ class State(ABC):
             target_seq: the target systems order.
 
         """
+    
+    def permute(self, target_seq: List[int]) -> 'State':
+        r"""Permute the systems order of the state.
+        
+        Args:
+            target_seq: the target systems order.
+        
+        """
+        new_state = self.clone()
+        new_state.system_seq = target_seq
+        new_state._system_seq = list(range(self.num_systems))
+        return new_state
 
     def reset_sequence(self) -> None:
         r"""reset the system order to default sequence i.e. from 1 to n.
@@ -466,18 +501,13 @@ class State(ABC):
             Evolve support the broadcast rule.
         
         """
-        # TODO add assertion for the dimension of input unitaries
-        if len(unitary.shape) > 2:
-            raise NotImplementedError(
-                'consider the batched unitary in the upcoming future')
-        
         if sys_idx is None:
             sys_idx = list(range(self.num_systems))
         if isinstance(sys_idx, int):
             sys_idx = [sys_idx]
         
         applied_dim = unitary.shape[-1]
-        assert applied_dim == np.prod((list_dim := [self._sys_dim[i] for i in sys_idx])), \
+        assert applied_dim == int(np.prod((list_dim := [self._sys_dim[i] for i in sys_idx]))), \
             f"The unitary's dimension {applied_dim} does not match the dimensions of its acting systems {list_dim}"
         
         new_state = self.clone()
@@ -539,7 +569,7 @@ class State(ABC):
             currently only run in qubit case.
         
         """
-        if not self.are_qubits:
+        if not self.are_qubits():
             raise NotImplementedError(
                 f"Currently only support qubit computation in Hamiltonian tasks: received {self._sys_dim}")
         
@@ -594,7 +624,7 @@ class State(ABC):
             sys_idx = [sys_idx]
         
         if measured_op is None:
-            dim = np.prod([self._sys_dim[i] for i in sys_idx])
+            dim = int(np.prod([self._sys_dim[i] for i in sys_idx]))
             identity = torch.eye(dim, dtype=self.dtype, device=self.device).unsqueeze(-1)
             measured_op = identity @ identity.mH
         
@@ -607,3 +637,49 @@ class State(ABC):
             
         prob, collapsed_state = self._measure(measured_op, sys_idx)
         return (prob, collapsed_state) if keep_state else prob
+    
+    @abstractmethod
+    def sqrt(self) -> torch.Tensor:
+        r"""Matrix square root of the state.
+        """
+    
+    @abstractmethod
+    def log(self) -> torch.Tensor:
+        r"""Matrix logarithm of the state.
+        """
+    
+    def trace(self, trace_idx: Optional[Union[List[int], int]] = None) -> Union[torch.Tensor, 'State']:
+        r"""(Partial) trace of the state
+        
+        Args:
+            trace_idx: the subsystem indices to be traced out. Defaults to all systems.
+        
+        Returns:
+            the trace of the state as a Tensor, or a new state if sys_idx is not None.
+        """
+        if trace_idx is None:
+            return utils.linalg._trace(self.density_matrix, -2, -1)
+        if isinstance(trace_idx, int):
+            trace_idx = [trace_idx]
+        assert max(trace_idx) < self.num_systems, \
+            f"The trace index {trace_idx} should be smaller than number of systems {self.num_systems}"
+            
+        return self._trace(trace_idx)
+    
+    def transpose(self, transpose_idx: Optional[Union[List[int], int]] = None) -> 'State':
+        r"""(Partial) transpose of the state
+        
+        Args:
+            transpose_idx: the subsystem indices to be transposed. Defaults to all systems.
+        
+        Returns:
+            the transpose of the state as a Tensor, or a new state if sys_idx is not None.
+        """
+        if transpose_idx is None:
+            transpose_idx = list(range(self.num_systems))
+        elif isinstance(transpose_idx, int):
+            transpose_idx = [transpose_idx]
+        assert max(transpose_idx) < self.num_systems, \
+            f"The transpose index {transpose_idx} should be smaller than number of systems {self.num_systems}"
+        
+        return self._transpose(transpose_idx)

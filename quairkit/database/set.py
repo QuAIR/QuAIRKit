@@ -24,6 +24,20 @@ from torch.linalg import matrix_power
 
 from .. import database
 from ..core import State, get_dtype, to_state, utils
+from ..core.intrinsic import _alias
+
+__all__ = [
+    "pauli_basis",
+    "pauli_group",
+    "pauli_str_basis",
+    "pauli_str_povm",
+    "qft_basis",
+    "std_basis",
+    "bell_basis",
+    "heisenberg_weyl",
+    "phase_space_point",
+    "gell_mann",
+]
 
 
 def pauli_basis(num_qubits: int) -> torch.Tensor:
@@ -47,6 +61,19 @@ def pauli_basis(num_qubits: int) -> torch.Tensor:
         [single_pauli_basis for _ in range(num_qubits - 2)],
         torch.kron(single_pauli_basis, single_pauli_basis),
     ).to(get_dtype())
+
+
+def pauli_group(num_qubits: int) -> torch.Tensor:
+    r"""Generate a Pauli group i.e., an unnormalized Pauli basis.
+
+    Args:
+        num_qubits: the number of qubits :math:`n`.
+
+    Returns:
+         The Pauli group of :math:`\mathbb{C}^{2^n \times 2^n}`, where each tensor is accessible along the first dimension.
+
+    """
+    return pauli_basis(num_qubits) * (math.sqrt(2) ** num_qubits)
 
 
 def pauli_str_basis(pauli_str: Union[str, List[str]]) -> State:
@@ -105,18 +132,21 @@ def qft_basis(num_qubits: int) -> State:
     return to_state(eigvec.T.unsqueeze(-1).to(get_dtype()))
 
 
-def std_basis(num_qubits: int) -> State:
+@_alias({"num_systems": "num_qubits"})
+def std_basis(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
     r"""Generate all standard basis states for a given number of qubits.
 
     Args:
-        num_qubits: The number of qubits in the quantum state.
+        num_systems: number of systems in this state. Alias of ``num_qubits``.
+        system_dim: dimension of systems. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
         A tensor where the first index gives the computational vector
     
     """
-    dim = 2 ** num_qubits
-    return to_state(torch.eye(dim).unsqueeze(-1).to(get_dtype()))
+    dim = system_dim ** num_systems if isinstance(system_dim, int) else math.prod(system_dim)
+    return to_state(torch.eye(dim).unsqueeze(-1).to(get_dtype()), system_dim)
 
 
 def bell_basis() -> State:
@@ -195,10 +225,13 @@ def __gell_mann(index1: int, index2: int, dim: int) -> torch.Tensor:
         if index1 == 0:
             mat = torch.eye(dim)
         else:
-            # Diagonal matrix with specific pattern
             N = math.sqrt(2 / (index1 * (index1 + 1)))
-            diag_element = torch.cat([torch.ones(index1), torch.tensor([-index1]), torch.zeros(dim-index1-1)])
-            mat = N * torch.sparse.spdiags(diag_element, torch.tensor([0]), (dim, dim)).to_dense().to(torch.complex128)
+            
+            diag_element = torch.zeros(dim)
+            diag_element[:index1] = 1
+            diag_element[index1] = -index1
+            
+            mat = N * torch.diag(diag_element).to(torch.complex128)
     else:
         # Off-diagonal elements
         E = torch.zeros(dim, dim)

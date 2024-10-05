@@ -21,6 +21,7 @@ from typing import Iterable, List, Union
 
 import torch
 
+from ...core.intrinsic import _alias
 from .base import Channel
 
 
@@ -29,16 +30,19 @@ class ChoiRepr(Channel):
 
     Args:
         choi_repr: Choi operator of this channel.
-        qubits_idx: Indices of the qubits on which this channel acts. Defaults to ``None``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
+    
     """
+    @_alias({'system_idx': 'qubits_idx'})
     def __init__(
         self,
         choi_repr: torch.Tensor,
-        qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-        num_qubits: int = None
+        system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+        acted_system_dim: Union[List[int], int] = 2
     ):
-        super().__init__('choi', choi_repr, qubits_idx, num_qubits)
+        super().__init__('choi', choi_repr, system_idx, acted_system_dim)
 
 
 class KrausRepr(Channel):
@@ -46,15 +50,18 @@ class KrausRepr(Channel):
 
     Args:
         kraus_repr: list of Kraus operators of this channel.
-        qubits_idx: Indices of the qubits on which this channel acts. Defaults to ``None``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
+    
     """
+    @_alias({'system_idx': 'qubits_idx'})
     def __init__(
         self, kraus_repr: Union[torch.Tensor, List[torch.Tensor]], 
-        qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-        num_qubits: int = None
+        system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+        acted_system_dim: Union[List[int], int] = 2
     ):
-        super().__init__('kraus', kraus_repr, qubits_idx, num_qubits)
+        super().__init__('kraus', kraus_repr, system_idx, acted_system_dim)
 
 
 class StinespringRepr(Channel):
@@ -62,13 +69,16 @@ class StinespringRepr(Channel):
 
     Args:
         stinespring_mat: Stinespring matrix that represents this channel.
-        qubits_idx: Indices of the qubits on which this channel acts. Defaults to ``None``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
+    
     """
+    @_alias({'system_idx': 'qubits_idx'})
     def __init__(
         self,
         stinespring_mat: torch.Tensor,
-        qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-        num_qubits: int = None
+        system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+        acted_system_dim: Union[List[int], int] = 2
     ):
-        super().__init__('stinespring', stinespring_mat, qubits_idx, num_qubits)
+        super().__init__('stinespring', stinespring_mat, system_idx, acted_system_dim)

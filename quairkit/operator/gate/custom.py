@@ -17,11 +17,15 @@ r"""
 The source file of the oracle class and the control oracle class.
 """
 
-from typing import Callable, Iterable, List, Union
+import math
+from functools import partial
+from typing import Callable, Iterable, List, Optional, Union
 
 import matplotlib
 import torch
 
+from ...core import get_device, get_dtype
+from ...database.set import gell_mann
 from .base import Gate, ParamGate
 from .visual import _c_oracle_like_display, _oracle_like_display
 
@@ -31,14 +35,15 @@ class Oracle(Gate):
 
     Args:
         oracle: Unitary oracle to be implemented.
-        qubits_idx: Indices of the qubits on which the gates are applied.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        system_idx: Indices of the systems on which the gates are applied.
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
     """
     def __init__(
-            self, oracle: torch.Tensor, qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            num_qubits: int = None, gate_info: dict = None
+            self, oracle: torch.Tensor, system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+            acted_system_dim: Union[List[int], int] = 2, gate_info: dict = None,
     ):
-        super().__init__(oracle, qubits_idx, gate_info, num_qubits)
+        super().__init__(oracle, system_idx, acted_system_dim, gate_info=gate_info)
     
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float,) -> float:
         return _oracle_like_display(self, ax, x)
@@ -49,23 +54,27 @@ class ControlOracle(Gate):
 
     Args:
         oracle: Unitary oracle to be implemented.
-        qubits_idx: Indices of the qubits on which the gates are applied.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        system_idx: Indices of the systems on which the gates are applied.
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
     """
     
     def __init__(
-            self, oracle: torch.Tensor, qubits_idx: Union[Iterable[Iterable[int]], Iterable[int]],
-            num_qubits: int = None, gate_info: dict = None
+            self, oracle: torch.Tensor, system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+            acted_system_dim: Union[List[int], int] = 2, gate_info: dict = None,
     ) -> None:
+        ctrl_dim = acted_system_dim if isinstance(acted_system_dim, int) else acted_system_dim[0]
+        
         #TODO: support more control types
-        __zero = torch.tensor([[1, 0], [0, 0]])
-        __one = torch.tensor([[0, 0], [0, 1]])
-        __eye = torch.eye(oracle.shape[-1])
+        _zero, _other = torch.zeros([ctrl_dim, ctrl_dim]), torch.eye(ctrl_dim)
+        _zero[0, 0] += 1
+        _other -= _zero
+        
+        _eye = torch.eye(oracle.shape[-1])
         if len(oracle.shape) > 2:
-            __zero = __zero.view([1, 2, 2])
-            __one = __one.view([1, 2, 2])
-            __eye = __eye.expand_as(oracle)
-        oracle = torch.kron(__zero, __eye) + torch.kron(__one, oracle)
+            _zero, _other = _zero.unsqueeze(0), _other.unsqueeze(0)
+            _eye = _eye.expand_as(oracle)
+        oracle = torch.kron(_zero, _eye) + torch.kron(_other, oracle)
 
         default_gate_info = {
             'gatename': 'cO',
@@ -74,7 +83,7 @@ class ControlOracle(Gate):
         }
         if gate_info is not None:
             default_gate_info |= gate_info
-        super().__init__(oracle, qubits_idx, default_gate_info, num_qubits)
+        super().__init__(oracle, system_idx, acted_system_dim, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float,) -> float:
         return _c_oracle_like_display(self, ax, x)
@@ -86,19 +95,62 @@ class ParamOracle(ParamGate):
     Args:
         generator: function that generates the oracle.
         param: input parameters of quantum parameterized gates. Defaults to ``None`` i.e. randomized.
-        qubits_idx: indices of the qubits on which this gate acts on. Defaults to ``None`` i.e. list(range(num_qubits)).
-        depth: number of layers. Defaults to ``1``.
+        system_idx: indices of the system on which this gate acts on. Defaults to ``None`` i.e. list(range(num_systems)).
         num_acted_param: the number of parameters required for a single operation.
         param_sharing: whether all operations are shared by the same parameter set.
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
-        Defaults to ``None``.
-        num_qubits: total number of qubits. Defaults to ``None``.
+            Defaults to ``None``.
 
     """
     def __init__(
             self, generator: Callable[[torch.Tensor], torch.Tensor], param: Union[torch.Tensor, float, List[float]] = None,
             num_acted_param: int = 1, param_sharing: bool = False,
-            qubits_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            gate_info: dict = None, num_qubits: int = None
+            system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+            acted_system_dim: Union[List[int], int] = 2, gate_info: dict = None
     ):
-        super().__init__(generator, param, num_acted_param, param_sharing, qubits_idx, gate_info, num_qubits)
+        super().__init__(generator, param, num_acted_param, param_sharing, system_idx, acted_system_dim, gate_info)
+
+
+def _universal_matrix(param: torch.Tensor, bases: torch.Tensor) -> torch.Tensor:
+    r"""Generate a universal matrix with the given parameters and bases.
+    """
+    h = torch.sum(torch.mul(param.view([-1, 1, 1]), bases), dim=-3)
+    return torch.matrix_exp(1j * h)
+
+class UniversalQudits(ParamGate):
+    r"""A collection of universal qudit gates. One of such a gate requires :math:`d^2 - 1` parameters.
+
+    Args:
+        system_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
+        param: Parameters of the gates. Defaults to ``None``.
+        param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case.
+    """
+    def __init__(
+        self, system_idx: Optional[Union[Iterable[int], str]], acted_system_dim: Iterable[int],
+        param: Optional[Union[torch.Tensor, float]] = None,
+        param_sharing: Optional[bool] = False,
+
+    ):
+        assert not isinstance(acted_system_dim, int), \
+            f"system dimensions for UniversalQudits cannot be a integer: received {acted_system_dim}"
+
+        dim = math.prod(acted_system_dim)
+        bases = gell_mann(dim).to(get_device(), dtype=get_dtype())
+        matrix_func = partial(_universal_matrix, bases=bases)
+
+        gate_info = {
+            'gatename': 'uni qudit',
+            'texname': r'$\text{UNI}_{' + str(dim) + r'}$',
+            'plot_width': 0.8,
+        }
+        super().__init__(
+            matrix_func, param, dim ** 2 - 1, param_sharing, system_idx, acted_system_dim,
+            check_legality=False, gate_info=gate_info)
+
+    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
+        return _oracle_like_display(self, ax, x)
+    

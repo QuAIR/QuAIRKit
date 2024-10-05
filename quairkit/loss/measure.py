@@ -16,14 +16,20 @@
 r"""
 The source file of the class for the measurement.
 """
+
 import math
 import warnings
 from typing import Dict, Iterable, List, Optional, Tuple, Union
 
+import numpy as np
 import torch
 
-from ..core import Hamiltonian, Operator, State, utils
-from ..database import pauli_str_basis
+from ..core import Hamiltonian, Operator, utils
+from ..core.intrinsic import _alias, _digit_to_int
+from ..core.state import State
+from ..database import pauli_str_basis, std_basis
+
+__all__ = ["Measure", "ExpecVal"]
 
 
 # Debug: torch.trace
@@ -63,7 +69,7 @@ class Measure(Operator):
     r"""Compute the probability of the specified measurement result.
 
     Args:
-        measure_basis: Specify the basis of the measurement. Defaults to ``'computational'``.
+        measure_op: Specify the basis of the measurement. Defaults to ``'computational'``.
         
     Note:
         the allowable input for `measure_op` are:
@@ -84,7 +90,7 @@ class Measure(Operator):
             self.measure_op = self.measure_basis.density_matrix
         
         elif isinstance(measure_op, torch.Tensor):
-            if not all(check := utils.check._is_positive(measure_op)):
+            if not all(check := utils.check._is_positive(measure_op).tolist()):
                 warnings.warn(
                     f"Some elements of the input PVM is not positive: received {check}", UserWarning)
 
@@ -100,29 +106,31 @@ class Measure(Operator):
             raise ValueError(
                 f"Unsupported type for measure_basis: receive type {type(measure_op)}")
     
-    def __call__(self, state: State, qubits_idx: Optional[Union[Iterable[int], int, str]] = 'full',
+    @_alias({"system_idx": "qubits_idx"})
+    def __call__(self, state: State, system_idx: Optional[Union[Iterable[int], int, str]] = 'full',
                  desired_result: Optional[Union[Iterable[str], str]] = None, keep_state: Optional[bool] = False
     ) -> Union[torch.Tensor, Tuple[torch.Tensor, State]]:
-        return self.forward(state, qubits_idx, desired_result, keep_state)
+        return self.forward(state, system_idx, desired_result, keep_state)
     
-    def __check_measure_op(self, state: State, qubits_idx: List[int]) -> bool:
+    def __check_measure_op(self, state: State, system_idx: List[int]) -> bool:
         r"""Check whether the shape of input measurement operator is valid,
         and return whether measurement is performed across all qubits.
         """
+        system_dim = [state.system_dim[idx] for idx in system_idx]
         measure_op = self.measure_op
+        num_measure_systems = len(system_idx)
+        
         if measure_op is None:
-            self.measure_basis = pauli_str_basis('i' * len(qubits_idx))
-            return True
-
-        dim = 2 ** len(qubits_idx)
+            self.measure_basis = std_basis(num_measure_systems, system_dim)
+            return num_measure_systems == state.num_systems
+        
+        dim = math.prod(system_dim)
         expected_shape = [dim, dim]
-
         if measure_op.shape[-2:] != tuple(expected_shape):
             raise ValueError(
                 f"The dimension of the PVM does not match the number of qubits: "
                 f"received shape {measure_op.shape}, expected {expected_shape}"
             )
-
         if ((measure_batch_dim := list(measure_op.shape[:-3])) and 
             state.batch_dim and 
             (state.batch_dim != measure_batch_dim)):
@@ -134,18 +142,19 @@ class Measure(Operator):
         return bool(
             self.measure_basis
             and dim == measure_op.shape[-3]
-            and state.num_qubits == len(qubits_idx)
+            and num_measure_systems == state.num_systems
         )
 
+    @_alias({"system_idx": "qubits_idx"})
     def forward(
-            self, state: State, qubits_idx: Optional[Union[Iterable[int], int, str]] = 'full',
-            desired_result: Optional[Union[Iterable[str], str]] = None, keep_state: Optional[bool] = False
+            self, state: State, system_idx: Optional[Union[Iterable[int], int, str]] = 'full',
+            desired_result: Optional[Union[List[Union[int, str]], int, str]] = None, keep_state: Optional[bool] = False
     ) -> Union[torch.Tensor, Tuple[torch.Tensor, State], Tuple[Dict, State]]:
         r"""Compute the probability of measurement to the input state.
 
         Args:
             state: The quantum state to be measured.
-            qubits_idx: The index of the qubits to be measured. Defaults to ``'full'`` which means measure all the qubits.
+            system_idx: The index of the systems to be measured. Defaults to ``'full'`` which means measure all the qubits.
             desired_result: Specify the results of the measurement to return. Defaults to ``None`` which means return the probability of all the results.
             keep_state: Whether return the measured state. Defaults to ``False``.
 
@@ -153,28 +162,30 @@ class Measure(Operator):
             The probability of the measurement.
         
         """
-        num_qubits = state.num_qubits
-        if qubits_idx == 'full':
-            qubits_idx = list(range(num_qubits))
-        elif isinstance(qubits_idx, int):
-            qubits_idx = [qubits_idx]
+        num_systems = state.num_systems
+        if system_idx == 'full':
+            system_idx = list(range(num_systems))
+        elif isinstance(system_idx, int):
+            system_idx = [system_idx]
         else:
-            qubits_idx = list(qubits_idx)
-        measure_all_sys = self.__check_measure_op(state, qubits_idx)
+            system_idx = list(system_idx)
+        system_dim = [state.system_dim[idx] for idx in system_idx]
+        measure_all_sys = self.__check_measure_op(state, system_idx)
         
-        prob_array, measured_state = state.measure(self.measure_op, qubits_idx, keep_state=True)
+        prob_array, measured_state = state.measure(self.measure_op, system_idx, keep_state=True)
         
         if measure_all_sys:
             measured_state = self.measure_basis.expand_as(measured_state)
         
         if desired_result:
-            if isinstance(desired_result, str):
-                desired_result = [int(desired_result, base=2)]
-            elif isinstance(desired_result, List):
-                desired_result = [int(res, base=2) for res in desired_result]
+            if isinstance(desired_result, int):
+                desired_result = [desired_result]
+            elif isinstance(desired_result, str):
+                desired_result = [_digit_to_int(desired_result, system_dim)]
             else:
-                raise TypeError(
-                    f"Unrecognized type for desired_result: received type {type(desired_result)}")
+                desired_result = [(_digit_to_int(res, system_dim) if isinstance(res, str) else res)
+                                  for res in desired_result]
+            
             prob_array = torch.index_select(prob_array, dim=-1, index=torch.tensor(desired_result))
             measured_state = measured_state.index_select(dim=-1, index=torch.tensor(desired_result))
         

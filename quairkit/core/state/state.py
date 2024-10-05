@@ -29,22 +29,26 @@ __state_dict: Dict[str, State] = {'state_vector': PureState, 'density_matrix': M
 
 
 # TODO: should be default instead of choosing state_vector
-def __state_convert(input_state: State, backend: str) -> State:
+def __state_convert(input_state: State, backend: Optional[str], system_dim: Union[int, List[int]]) -> State:
     r"""Copy and convert the input state to the expected state.
     
     Args:
         state: the input state.
         backend: the backend of the input state.
+        system_dim: a list of dimensions for each system.
     
     Returns:
         state in the specified backend.
     
     """
-    if backend == input_state.backend:
-        return input_state.clone()
+    system_dim = [system_dim] * input_state.num_systems if isinstance(system_dim, int) else system_dim
+    backend = input_state.backend if backend is None else backend
+    input_state.reset_sequence()
     
+    assert input_state.dim == int(np.prod(system_dim)), \
+        f"The state dimension {input_state.dim} does not match with the input system dimension: {system_dim}."
     initializer = __state_dict[backend]
-    return initializer(input_state.fit(backend), input_state.system_dim, input_state.system_seq)
+    return initializer(input_state.fit(backend), system_dim)
 
 
 def __fetch_default_init(list_dim: List[int]) -> Type[State]:
@@ -65,19 +69,21 @@ def __fetch_default_init(list_dim: List[int]) -> Type[State]:
 
 def to_state(
         data: Union[torch.Tensor, np.ndarray, State], 
-        sys_dim: Optional[Union[int, List[int]]] = 2,
+        system_dim: Optional[Union[int, List[int]]] = 2,
         dtype: Optional[str] = None,
-        state_backend: Optional[str] = None
+        state_backend: Optional[str] = None,
+        eps: Optional[float] = 1e-4
 ) -> State:
     r"""The function to generate a specified state instance.
 
     Args:
         data: a representation of the quantum state in allowable backend, or an instance of the State class.
-        sys_dim: (list of) dimension(s) of the systems, can be a list of integers or an integer.
-        For example, ``sys_dim = 2`` means the systems are qubits (default setup); ``sys_dim = [2, 3]`` means 
-        the first system is a qubit and the second is a qutrit.
+        system_dim: (list of) dimension(s) of the systems, can be a list of integers or an integer.
+         For example, ``system_dim = 2`` means the systems are qubits (default setup); ``system_dim = [2, 3]`` means 
+         the first system is a qubit and the second is a qutrit.
         dtype: Used to specify the data dtype of the data. Defaults to the global setup.
         state_backend: The backend of the state. Specified only when the input data is an instance of the State class.
+        eps: The tolerance for checking the validity of the input state. Can be adjusted to ``None`` to disable the check.
 
     Returns:
         The generated quantum state.
@@ -95,16 +101,13 @@ def to_state(
     
     """
     if isinstance(data, State):
-        assert state_backend is not None, \
-            "The backend that the input state converts to must be specified."
-        return __state_convert(data, state_backend)
+        assert (state_backend is not None) or (system_dim is not None), \
+            "The backend or the system dimension that the input state converts to must be specified."
+        return __state_convert(data, state_backend, system_dim)
     
     dtype = get_dtype() if dtype is None else dtype
     data = data.to(dtype=dtype) if isinstance(data, torch.Tensor) else \
         torch.from_numpy(data).to(dtype=dtype)
-    
-    if not isinstance(data, torch.Tensor):
-        data = torch.tensor(data)
     list_dim = data.shape
     
     if get_backend() == 'default':
@@ -112,10 +115,9 @@ def to_state(
     else:
         raise NotImplementedError(
             f"the backend is not recognized or implemented: receive {get_backend()}")
-    
-    num_systems = initializer.check(data, sys_dim)
-    sys_dim = [sys_dim] * num_systems if isinstance(sys_dim, int) else sys_dim
-    return initializer(data, sys_dim)
+    num_systems = initializer.check(data, system_dim, eps)
+    system_dim = [system_dim] * num_systems if isinstance(system_dim, int) else system_dim
+    return initializer(data, system_dim)
 
 
 def image_to_density_matrix(image_filepath: str) -> State:
@@ -153,7 +155,7 @@ def tensor_state(state_a: State, state_b: State, *args: State) -> State:
     Args:
         state_a: State
         state_b: State
-        *args: other states
+        args: other states
 
     Returns:
         tensor product state of input states

@@ -46,14 +46,13 @@ class BitFlip(Channel):
 
     Args:
         prob: Probability of a bit flip. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', bit_flip_kraus(prob), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', bit_flip_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class PhaseFlip(Channel):
@@ -68,14 +67,13 @@ class PhaseFlip(Channel):
 
     Args:
         prob: Probability of a phase flip. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', phase_flip_kraus(prob), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', phase_flip_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class BitPhaseFlip(Channel):
@@ -90,14 +88,13 @@ class BitPhaseFlip(Channel):
 
     Args:
         prob: Probability of a bit phase flip. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', bit_phase_flip_kraus(prob), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', bit_phase_flip_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class AmplitudeDamping(Channel):
@@ -120,14 +117,13 @@ class AmplitudeDamping(Channel):
 
     Args:
         gamma: Damping probability. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
     """
     def __init__(
             self, gamma: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', amplitude_damping_kraus(gamma), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', amplitude_damping_kraus(gamma), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class GeneralizedAmplitudeDamping(Channel):
@@ -149,15 +145,14 @@ class GeneralizedAmplitudeDamping(Channel):
     Args:
         gamma: Damping probability. Its value should be in the range :math:`[0, 1]`.
         prob: Excitation probability. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
     """
     def __init__(
             self, gamma: Union[torch.Tensor, float], prob: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
         super().__init__(
-            'kraus', generalized_amplitude_damping_kraus(gamma, prob), qubits_idx, num_qubits, check_legality=False)
+            'kraus', generalized_amplitude_damping_kraus(gamma, prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class PhaseDamping(Channel):
@@ -180,14 +175,13 @@ class PhaseDamping(Channel):
 
     Args:
         gamma: Parameter of the phase damping channels. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
     """
     def __init__(
             self, gamma: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', phase_damping_kraus(gamma), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', phase_damping_kraus(gamma), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class Depolarizing(Channel):
@@ -204,8 +198,7 @@ class Depolarizing(Channel):
 
     Args:
         prob: Parameter of the depolarizing channels. Its value should be in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
 
     Note:
         The implementation logic for this feature has been updated.
@@ -216,9 +209,9 @@ class Depolarizing(Channel):
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', depolarizing_kraus(prob), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', depolarizing_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class GeneralizedDepolarizing(Channel):
@@ -246,8 +239,8 @@ class GeneralizedDepolarizing(Channel):
                 'The generalized depolarizing channel should act on all qubits of the system')
         num_acted_qubits = np.size(np.array(qubits_idx))
         super().__init__(
-            'kraus', generalized_depolarizing_kraus(prob, num_acted_qubits),
-            qubits_idx, num_qubits, check_legality=False)
+            'kraus', generalized_depolarizing_kraus(prob, num_acted_qubits), qubits_idx, 
+            acted_system_dim=2, check_legality=False)
 
 
 class PauliChannel(Channel):
@@ -256,17 +249,16 @@ class PauliChannel(Channel):
     Args:
         prob: Probabilities corresponding to the Pauli X, Y, and Z operators. Each value should be in the
             range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
 
     Note:
         The sum of three input probabilities should be less than or equal to 1.
     """
     def __init__(
             self, prob: Union[torch.Tensor, Iterable[float]],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', pauli_kraus(prob), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', pauli_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class ResetChannel(Channel):
@@ -302,17 +294,16 @@ class ResetChannel(Channel):
     Args:
         prob: Probabilities of resetting to :math:`|0\rangle` and to :math:`|1\rangle`. Each value should be
             in the range :math:`[0, 1]`.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
 
     Note:
         The sum of two input probabilities should be less than or equal to 1.
     """
     def __init__(
             self, prob: Union[torch.Tensor, Iterable[float]],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', reset_kraus(prob), qubits_idx, num_qubits, check_legality=False)
+        super().__init__('kraus', reset_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class ThermalRelaxation(Channel):
@@ -323,19 +314,18 @@ class ThermalRelaxation(Channel):
     Args:
         const_t: :math:`T_1` and :math:`T_2` relaxation time in microseconds.
         exec_time: Quantum gate execution time in the process of relaxation in nanoseconds.
-        qubits_idx: Indices of the qubits on which the channels act. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
 
     Note:
         Relaxation time must satisfy :math:`T_2 \le T_1`. For reference please see https://arxiv.org/abs/2101.02109.
     """
     def __init__(
             self, const_t: Union[torch.Tensor, Iterable[float]], exec_time: Union[torch.Tensor, float],
-            qubits_idx: Union[Iterable[int], int, str] = 'full', num_qubits: int = None
+            qubits_idx: Union[Iterable[int], int, str] = None
     ):
         super().__init__(
             'kraus', thermal_relaxation_kraus(const_t, exec_time),
-            qubits_idx, num_qubits, check_legality=False)
+            qubits_idx, acted_system_dim=2, check_legality=False)
 
 
 class ReplacementChannel(Channel):
@@ -349,14 +339,11 @@ class ReplacementChannel(Channel):
 
     Args:
         sigma: The state to be replaced.
-        qubits_idx: Indices of the qubits on which the channels act, the length of which is :math:`n`.
-            Defaults to be ``None``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        system_idx: Indices of the qubits on which the channels act, the length of which is :math:`n`.
+            Defaults to list(range(# of acted qubits)).
     """
     def __init__(
             self, sigma: State,
-            qubits_idx: Union[Iterable[int], int, str] = None, num_qubits: int = None
+            system_idx: Union[Iterable[int], int, str] = None
     ):
-        if qubits_idx is None:
-            qubits_idx = list(range(sigma.num_qubits))
-        super().__init__('choi', replacement_choi(sigma), qubits_idx, num_qubits)
+        super().__init__('choi', replacement_choi(sigma), system_idx, acted_system_dim=sigma.dim)

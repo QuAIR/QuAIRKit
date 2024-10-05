@@ -27,132 +27,75 @@ import torch
 from .. import utils
 
 
-def _is_hermitian(mat: torch.Tensor, eps: Optional[float] = 1e-6, sys_dim: Union[int, List[int]] = 2) -> Union[bool, List[bool]]:
-    # TODO depreciate num_qubits checkmat = mat.to(torch.complex128)
-    shape = mat.shape
-
-    num_sys = len(sys_dim) if isinstance(sys_dim, list) else int(math.log(shape[-1], sys_dim))
-    expected_dimension = math.prod(sys_dim) if isinstance(sys_dim, list) else sys_dim ** num_sys
-
-    if shape[-1] != shape[-2] or shape[-1] != expected_dimension:
-        # not a square mat / shape is not in form sys_dim^num_qubits x sys_dim^num_qubits
-        return False
-    return (torch.norm(mat - mat.mH, dim=(-2, -1)) < eps * expected_dimension).tolist()
+def _is_square(mat: torch.Tensor) -> bool:
+    return mat.ndim >= 2 and mat.shape[-1] == mat.shape[-2]
 
 
-def _is_positive(mat: torch.Tensor, eps: Optional[float] = 1e-6, sys_dim: Union[int, List[int]] = 2) -> Union[bool, List[bool]]:
-    # TODO depreciate num_qubits check
+def _is_hermitian(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
-    if _is_hermitian(mat, eps, sys_dim):
-        return (torch.min(torch.linalg.eigvalsh(mat), dim = -1).values >= -eps).tolist()
-    return False
+    return (mat - utils.linalg._dagger(mat)).norm(dim=(-2, -1)) < eps
 
 
-def _is_state_vector(vec: torch.Tensor, eps: Optional[float] = None, sys_dim: Union[int, List[int]] = 2,\
-                      is_batch: Optional[bool] = False) -> Union[Tuple[bool, int],Tuple[List[bool], List[int]]]:
+def _is_positive(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+    mat = mat.to(torch.complex128)
+    
+    herm_check = _is_hermitian(mat, eps)
+    pos_check = torch.min(torch.linalg.eigvalsh(mat), dim=-1).values >= -eps
+    
+    return herm_check & pos_check
+
+
+def _is_state_vector(vec: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+    # assume the input is of shape [..., d, 1] or [d, 1]
     vec = vec.to(torch.complex128)
-    vec = torch.squeeze(vec)
+    eps = min(eps * vec.shape[-2], 1e-4)
     
-    shape = vec.shape
-    if (not is_batch and len(vec.shape) != 1)\
-        or (is_batch and len(vec.shape) != 2):
-        # not a vector / not a batch of vectors
-        return False, -3
-    
-    num_sys = len(sys_dim) if isinstance(sys_dim, list) else int(math.log(shape[-1], sys_dim))
-    expected_dimension = math.prod(sys_dim) if isinstance(sys_dim, list) else sys_dim ** num_sys
+    vec_bra = utils.linalg._dagger(vec)
+    return (vec_bra @ vec - (1 + 0j)).norm(dim=(-2, -1)) < eps
 
-    if expected_dimension != shape[-1]:
-        # not a vector of expected dimension
-        return False, -2
 
-    if eps is None: # check unnormalized state vector
-        return True, num_sys
-    
-    vec = vec.reshape([*shape, 1])
-    vec_bra = torch.conj(vec.transpose(-2, -1))
-    eps = min(eps * shape[-1], 1e-2)
-    result = torch.abs(vec_bra @ vec - (1 + 0j)) < eps
-    result = result.view(1,len(result)).squeeze()
-    return result.tolist(), torch.where(result, torch.tensor(num_sys), torch.tensor(-1)).tolist()
-
-# TODO: repeated ``-4`` error in _is_positive
-def _is_density_matrix(rho: torch.Tensor, eps: Optional[float] = None, sys_dim: Union[int, List[int]] = 2,\
-                        is_batch: Optional[bool] = False) -> Union[Tuple[bool, int],Tuple[List[bool], List[int]]]:
+def _is_density_matrix(rho: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
     rho = rho.to(torch.complex128)
-    shape = rho.shape
-
-    if (not is_batch and len(rho.shape)!= 2)\
-        or (is_batch and len(rho.shape) != 3)\
-              or shape[-1] != shape[-2]:
-        # not a square mat / not a batch of square mat / not a square mat
-        return False, -4
-
-    num_sys = len(sys_dim) if isinstance(sys_dim, list) else int(math.log(shape[-1], sys_dim))
-    expected_dimension = math.prod(sys_dim) if isinstance(sys_dim, list) else sys_dim ** num_sys
-
-    if expected_dimension != shape[-1]:
-        # not a mat of expected dimension
-        return False, -3
-
-    if eps is None:
-        # check unnormalized density matrix
-        return True, num_sys
-
-    eps = min(eps * shape[-1], 1e-2)
-    result_int = 1
-    if is_batch:
-        result_bool = torch.abs(torch.einsum('bii->b', rho) - (1 + 0j)) < eps # trace condition
-        result_int = torch.where(result_bool, torch.tensor(num_sys), torch.tensor(-2)).tolist()
-    else:
-        if torch.abs(torch.trace(rho) - (1 + 0j)).item() > eps:
-            return False, -2
-
-    result_bool = _is_positive(rho, eps, sys_dim) # positive-semidefinite condition
-    result_int = torch.Tensor([result_int, torch.where(torch.tensor(result_bool), torch.tensor(num_sys), torch.tensor(-1)).tolist()])
-    return (torch.min(result_int, dim = 0).values > 0).tolist(), torch.min(result_int, dim = 0).values.int().tolist()
+    eps = min(eps * rho.shape[-1], 1e-4)
+    
+    is_trace_one = torch.abs(utils.linalg._trace(rho, -2, -1) - 1) < eps
+    is_pos = _is_positive(rho, eps)
+    return is_trace_one & is_pos
 
 
-def _is_projector(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> Union[bool, List[bool]]:
-    # TODO depreciate num_qubits check
+def _is_projector(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
-    shape = mat.shape
-    if shape[-1] != shape[-2] or math.log2(shape[-1]) != math.ceil(math.log2(shape[-1])):
-        # not a mat / not a square mat / shape is not in form 2^num_qubits x 2^num_qubits
-        return False
-    return (torch.norm(torch.abs(mat @ mat - mat), dim=(-2, -1)) < eps).tolist()
+    return (mat @ mat - mat).norm(dim=(-2, -1)) < eps
 
 
-def _is_unitary(mat: torch.Tensor, eps: Optional[float] = 1e-4) -> Union[bool, List[bool]]:
-    # TODO depreciate num_qubits check
+def _is_isometry(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
-    shape = mat.shape
-    eps = min(eps * shape[-1], 1e-2)
-    if shape[-1] != shape[-2] or math.log2(shape[-1]) != math.ceil(math.log2(shape[-1])):
-        # not a square mat / shape is not in form 2^num_qubits x 2^num_qubits
-        return False
-    return (torch.norm(torch.abs(mat @ mat.mH - torch.eye(shape[-1]).to(mat.dtype)), dim=(-2, -1)) < eps).tolist()
+    dim = mat.shape[-1]
+    eps = min(eps * dim, 1e-2)
+    
+    identity = torch.eye(dim, device=mat.device)
+    return (utils.linalg._dagger(mat) @ mat - identity).norm(dim=(-2, -1)) < eps
 
 
-def _is_ppt(density_op: torch.Tensor, eps: Optional[float] = 1e-6) -> Union[bool, List[bool]]:
+def _is_unitary(mat: torch.Tensor, eps: Optional[float] = 1e-4) -> torch.Tensor:
+    return _is_isometry(mat, eps) & _is_hermitian(utils.linalg._dagger(mat) @ mat, eps)
+
+
+def _is_ppt(density_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
     density_op = density_op.to(torch.complex128)
-    result = utils.qinfo._negativity(density_op) <= eps
-    return result.tolist() if result.numel() > 1 else result.item()
+    return utils.qinfo._negativity(density_op) <= eps
 
 
-def _is_choi(op: torch.Tensor) -> Union[bool, List[bool]]:
+def _is_choi(op: torch.Tensor) -> torch.Tensor:
     op = op.to(torch.complex128)
-    n = int(math.log2(op.shape[-1]))
-    sys_dim = 2 ** (n // 2)
+    sys_dim = math.isqrt(op.shape[-1])
     
-    # CP condition and Trace non-increasing condition
-    is_pos = utils.check._is_positive(op)
+    is_pos = _is_positive(op)
     
-    partial_op = utils.linalg._partial_trace(op, sys_dim, sys_dim, 2)
-    is_trace_non_inc = utils.check._is_positive(torch.eye(sys_dim).expand_as(partial_op) - partial_op)
+    partial_op = utils.linalg._partial_trace(op, [1], [sys_dim, sys_dim])
+    is_trace_non_inc = _is_positive(torch.eye(sys_dim).expand_as(partial_op) - partial_op)
     
-    result = np.logical_and(is_pos, is_trace_non_inc)
-    return result.tolist() if isinstance(is_pos, np.ndarray) else result
+    return is_pos & is_trace_non_inc
 
 
 def _is_linear(
@@ -160,7 +103,7 @@ def _is_linear(
     generator: Union[List[int], Callable[[], torch.Tensor]],
     input_dtype: torch.dtype,
     eps: Optional[float] = 1e-5,
-) -> bool:
+) -> torch.Tensor:
     list_err = []
     for _ in range(5):
         A = generator()
@@ -168,7 +111,34 @@ def _is_linear(
         k = torch.rand(1, dtype=input_dtype)
 
         list_err.append(
-            torch.norm(torch.abs(func(k * A + B) - k * func(A) - func(B))).view([1])
+            torch.norm(func(k * A + B) - k * func(A) - func(B)).view([1])
         )
 
-    return torch.mean(torch.concat(list_err)).item() < eps
+    return torch.mean(torch.concat(list_err)) < eps
+
+
+def _is_povm(set_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+    dim, batch_shape, set_op = set_op.shape[-1], list(set_op.shape[:-3]), set_op.view([-1] + list(set_op.shape[-3:]))
+    
+    pos_check = _is_positive(set_op.view([-1, dim, dim]), eps)
+    pos_check = torch.all(pos_check.view(set_op.shape[:-2]), dim=-1)
+    
+    oper_sum = set_op.sum(dim=-3)
+    identity = torch.eye(dim, device=oper_sum.device)
+    complete_check = (identity - oper_sum).norm(dim=(-2, -1)) < eps
+    return (pos_check & complete_check).view(batch_shape)
+
+
+def _is_pvm(set_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+    set_op = set_op.to(torch.complex128)
+    
+    povm_check = _is_povm(set_op, eps)
+
+    proj_check = _is_projector(set_op, eps)
+    proj_check = torch.all(proj_check, dim=-1)
+    
+    set_isometry = set_op.view(list(set_op.shape[:-2]) + [-1])
+    identity = torch.eye(set_isometry.shape[-2], device=set_isometry.device)
+    isometry_check = (set_isometry @ utils.linalg._dagger(set_isometry) - identity).norm(dim=(-2, -1)) < eps
+
+    return povm_check & proj_check & isometry_check

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Update system repositories and install Pandoc
-sudo apt-get update
-sudo apt-get install -y pandoc
-
 # Check and install the Sphinx Material theme and nbsphinx if not already installed
 pip show sphinx_immaterial || pip install sphinx_immaterial
 pip show nbsphinx || pip install nbsphinx
@@ -53,7 +49,19 @@ for tag in "${tags[@]}"; do
             sphinx-build docs/avocado/sphinx_src docs/api/$tag
             rm -rf docs/avocado/sphinx_src
             ;;
-        *)
+        v0.1.0 | *)
+            git checkout $tag
+            python docs/update_quairkit_rst.py
+            sphinx-build docs/sphinx_src docs/api/$tag
+            rm -rf docs/sphinx_src
+            ;;
+        v0.2.0-alpha | *)
+            git checkout $tag
+            python docs/update_quairkit_rst.py
+            sphinx-build docs/sphinx_src docs/api/$tag
+            rm -rf docs/sphinx_src
+            ;;
+        v0.2.0 | *)
             git checkout $tag
             python docs/update_quairkit_rst.py
             sphinx-build docs/sphinx_src docs/api/$tag
@@ -67,7 +75,7 @@ git checkout $current_branch
 
 # Build the final Sphinx documentation for the current branch
 python docs/update_quairkit_rst.py
-cp -r tutorials docs/sphinx_src/tutorials
+cp -r tutorials docs/sphinx_src/
 echo "$version_info_content" >> docs/sphinx_src/conf.py
 sphinx-build docs/sphinx_src docs/api/latest
 

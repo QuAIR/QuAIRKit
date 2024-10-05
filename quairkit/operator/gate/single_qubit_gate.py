@@ -39,14 +39,13 @@ class H(Gate):
             \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = h(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
             'gatename': 'h',
@@ -54,7 +53,7 @@ class H(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -75,14 +74,13 @@ class S(Gate):
             \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = s(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 's',
@@ -90,7 +88,7 @@ class S(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -111,14 +109,13 @@ class Sdg(Gate):
             \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = sdg(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 'sdg',
@@ -126,7 +123,7 @@ class Sdg(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -147,14 +144,13 @@ class T(Gate):
             \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = t(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 't',
@@ -162,7 +158,7 @@ class T(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -183,14 +179,13 @@ class Tdg(Gate):
             \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = tdg(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 'tdg',
@@ -198,7 +193,7 @@ class Tdg(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -218,15 +213,14 @@ class X(Gate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
 
     __matrix = x(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 'x',
@@ -234,7 +228,7 @@ class X(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -254,14 +248,13 @@ class Y(Gate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = y(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 'y',
@@ -269,7 +262,7 @@ class Y(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -289,14 +282,13 @@ class Z(Gate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
     __matrix = z(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
             'gatename': 'z',
@@ -304,7 +296,7 @@ class Z(Gate):
             'plot_width': 0.4,
         }
         super().__init__(
-            None, qubits_idx, gate_info, num_qubits, check_legality=False, num_acted_qubits=1)
+            None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -324,8 +316,7 @@ class P(ParamGate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
         param: Parameters of the gates. Defaults to ``None``.
         param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
 
@@ -333,7 +324,7 @@ class P(ParamGate):
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     """
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
@@ -343,7 +334,7 @@ class P(ParamGate):
         }
 
         super().__init__(
-            p, param, 1, param_sharing, qubits_idx, gate_info, num_qubits, False, num_acted_qubits=1)
+            p, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class RX(ParamGate):
@@ -359,8 +350,7 @@ class RX(ParamGate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
         param: Parameters of the gates. Defaults to ``None``.
         param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
 
@@ -368,7 +358,7 @@ class RX(ParamGate):
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     """
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
@@ -378,7 +368,7 @@ class RX(ParamGate):
         }
 
         super().__init__(
-            rx, param, 1, param_sharing, qubits_idx, gate_info, num_qubits, False, num_acted_qubits=1)
+            rx, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class RY(ParamGate):
@@ -394,8 +384,7 @@ class RY(ParamGate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
         param: Parameters of the gates. Defaults to ``None``.
         param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
 
@@ -403,7 +392,7 @@ class RY(ParamGate):
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     """
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
@@ -412,7 +401,7 @@ class RY(ParamGate):
             'plot_width': 0.9,
         }
         super().__init__(
-            ry, param, 1, param_sharing, qubits_idx, gate_info, num_qubits, False, num_acted_qubits=1)
+            ry, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class RZ(ParamGate):
@@ -428,8 +417,7 @@ class RZ(ParamGate):
         \end{bmatrix}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
         param: Parameters of the gates. Defaults to ``None``.
         param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
 
@@ -437,7 +425,7 @@ class RZ(ParamGate):
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     """
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
@@ -447,7 +435,7 @@ class RZ(ParamGate):
         }
 
         super().__init__(
-            rz, param, 1, param_sharing, qubits_idx, gate_info, num_qubits, False, num_acted_qubits=1)
+            rz, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class U3(ParamGate):
@@ -466,8 +454,7 @@ class U3(ParamGate):
         \end{align}
 
     Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to ``'full'``.
-        num_qubits: Total number of qubits. Defaults to ``None``.
+        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
         param: Parameters of the gates. Defaults to ``None``.
         param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
 
@@ -475,7 +462,7 @@ class U3(ParamGate):
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     """
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None, num_qubits: Optional[int] = None,
+            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
             param: Optional[Union[torch.Tensor, Iterable[float]]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
@@ -485,4 +472,4 @@ class U3(ParamGate):
         }
 
         super().__init__(
-            u3, param, 3, param_sharing, qubits_idx, gate_info, num_qubits, False, num_acted_qubits=1)
+            u3, param, 3, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)

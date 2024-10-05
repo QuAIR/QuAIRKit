@@ -26,7 +26,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name='quairkit',
-    version='0.1.0',
+    version='0.2.0',
     author='QuAIR team.',
     author_email='leizhang116.4@gmail.com',
     description='QuAIRKit is a Python research toolbox for developing quantum computing, quantum information, and quantum machine learning algorithms.',
@@ -45,6 +45,7 @@ setuptools.setup(
         'quairkit.operator',
         'quairkit.operator.channel',
         'quairkit.operator.gate',
+        'quairkit.qinfo',
     ],
     install_requires=[
         'torch>=2.0.0',
