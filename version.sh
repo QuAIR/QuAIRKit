@@ -43,6 +43,12 @@ for tag in "${tags[@]}"; do
             sphinx-build docs/source docs/api/$tag
             rm -rf docs/source
             ;;
+        v0.1.0 | *)
+            git checkout $tag
+            python docs/update_quairkit_rst.py
+            sphinx-build docs/sphinx_src docs/api/$tag
+            rm -rf docs/sphinx_src
+            ;;
         v0.2.0 | *)
             git checkout $tag
             python docs/update_quairkit_rst.py
