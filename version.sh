@@ -18,14 +18,13 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 # Initialize the version_info list for Python configuration
 version_info_content="html_theme_options['version_info'] = ["
 
-# Populate the version_info list with tag data
+# Add the "latest" version to the version_info list first
+version_info_content+="{'version': 'latest', 'title': 'latest', 'aliases': ['latest']}"
+
+# Populate the version_info list with tag data, appending after "latest"
 for i in "${!tags[@]}"; do
     tag="${tags[$i]}"
-    if [ $i -eq 0 ]; then
-        version_info_content+="{'version': '$tag', 'title': '$tag', 'aliases': ['$tag']}"
-    else
-        version_info_content+=", {'version': '$tag', 'title': '$tag', 'aliases': ['$tag']}"
-    fi
+    version_info_content+=", {'version': '$tag', 'title': '$tag', 'aliases': ['$tag']}"
 done
 
 # Close the version_info list
@@ -36,14 +35,13 @@ git fetch --all --tags
 
 # Loop through all tags and generate Sphinx documentation for each with specific conditions
 for tag in "${tags[@]}"; do
+    # Skip the "latest" version if it exists in the tags
+    if [ "$tag" == "latest" ]; then
+        continue
+    fi
+
     case $tag in
-        v0.0.1)
-            git checkout $tag
-            python docs/update_avocado_rst.py
-            sphinx-build docs/source docs/api/$tag
-            rm -rf docs/source
-            ;;
-        v0.1.0 | *)
+        v0.1.0)
             git checkout $tag
             python docs/update_quairkit_rst.py
             sphinx-build docs/sphinx_src docs/api/$tag
@@ -52,6 +50,7 @@ for tag in "${tags[@]}"; do
         v0.2.0 | *)
             git checkout $tag
             python docs/update_quairkit_rst.py
+            cp -r tutorials docs/sphinx_src/
             sphinx-build docs/sphinx_src docs/api/$tag
             rm -rf docs/sphinx_src
             ;;
