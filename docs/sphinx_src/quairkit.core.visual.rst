@@ -1,6 +1,0 @@
-quairkit.core.visual
-====================
-
-.. automodule:: quairkit.core.visual
-    :members:
-

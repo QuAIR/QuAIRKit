@@ -1,6 +1,0 @@
-quairkit.operator.gate.encoding
-===============================
-
-.. automodule:: quairkit.operator.gate.encoding
-	:members:
-

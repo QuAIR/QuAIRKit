@@ -1,6 +1,0 @@
-quairkit.operator.gate.multi_qubit_gate
-=======================================
-
-.. automodule:: quairkit.operator.gate.multi_qubit_gate
-    :members:
-

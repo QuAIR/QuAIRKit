@@ -1,6 +1,0 @@
-quairkit.loss.measure
-=====================
-
-.. automodule:: quairkit.loss.measure
-    :members:
-
