@@ -1,0 +1,1269 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Manipulation of Quantum States in QuAIRKit - QuAIRKit</title>
+      
+    
+    
+      
+        
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.e0b5691b38cca82da.min.css?v=b1736040" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Preparation-of-states" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Manipulation of Quantum States in QuAIRKit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../tutorials.html"><span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span></a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        <span title="/tutorials.feature.rst (reference label)" class="md-ellipsis">tutorials.<wbr>feature</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../tutorials.introduction.html"><span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span></a>
+          
+            <label for="__nav_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="tutorials.introduction" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Hamiltonian.html" class="md-nav__link">
+        <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)" class="md-ellipsis">Hamiltonian in Qu<wbr>AIRKit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="circuit.html" class="md-nav__link">
+        <span title="/tutorials/introduction/circuit.ipynb (reference label)" class="md-ellipsis">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="measure.html" class="md-nav__link">
+        <span title="/tutorials/introduction/measure.ipynb (reference label)" class="md-ellipsis">Measuring quantum states in Qu<wbr>AIRKit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="operator.html" class="md-nav__link">
+        <span title="/tutorials/introduction/operator.ipynb (reference label)" class="md-ellipsis">Quantum Gates and Quantum Channels</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qinfo.html" class="md-nav__link">
+        <span title="/tutorials/introduction/qinfo.ipynb (reference label)" class="md-ellipsis">Quantum information tools</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span title="/tutorials/introduction/state.ipynb (reference label)" class="md-ellipsis">Manipulation of Quantum States in Qu<wbr>AIRKit</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/tutorials/introduction/state.ipynb (reference label)" class="md-ellipsis">Manipulation of Quantum States in Qu<wbr>AIRKit</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Preparation-of-states" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#preparation-of-states (reference label)" class="md-ellipsis">Preparation of states</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Information-of-a-State-instance" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#information-of-a-state-instance (reference label)" class="md-ellipsis">Information of a State instance</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Manipulation-of-states" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#manipulation-of-states (reference label)" class="md-ellipsis">Manipulation of states</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Interaction-with-environments" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#interaction-with-environments (reference label)" class="md-ellipsis">Interaction with environments</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="training.html" class="md-nav__link">
+        <span title="/tutorials/introduction/training.ipynb (reference label)" class="md-ellipsis">Training parameterized quantum circuits</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Preparation-of-states" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#preparation-of-states (reference label)" class="md-ellipsis">Preparation of states</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Information-of-a-State-instance" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#information-of-a-state-instance (reference label)" class="md-ellipsis">Information of a State instance</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Manipulation-of-states" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#manipulation-of-states (reference label)" class="md-ellipsis">Manipulation of states</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Interaction-with-environments" class="md-nav__link">
+    <span title="/tutorials/introduction/state.ipynb#interaction-with-environments (reference label)" class="md-ellipsis">Interaction with environments</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="Manipulation-of-Quantum-States-in-QuAIRKit">Manipulation of Quantum States in QuAIRKit<a class="headerlink" href="#Manipulation-of-Quantum-States-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>A pure quantum state is a unit vector in a Hilbert space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. A mixed quantum state could be described by a density matrix <span class="math notranslate nohighlight">\(\rho\)</span>, which is a Hermitian, positive semi-definite matrix with unit trace. Concretely, pure states are of the form <span class="math notranslate nohighlight">\(|\psi \rangle \langle \psi |\)</span> where <span class="math notranslate nohighlight">\(|\psi \rangle \in \mathcal{H}\)</span> is a normalized vector. Mixed state is the convex combination of the pure states <span class="math notranslate nohighlight">\(\sum_{x \in \mathcal{X}}p(x)|\psi_x \rangle \langle \psi_x |\)</span> for
+some set <span class="math notranslate nohighlight">\(\{|\psi_x \rangle\}_{x \in \mathcal{X}}\)</span> of state vectors defined with respect to a finite alphabet <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, where <span class="math notranslate nohighlight">\(p: \mathcal{X} \rightarrow [0, 1]\)</span> is a probability distribution. The <code class="docutils literal notranslate"><span class="pre">State</span></code> class in QuairKit supports operations related to quantum states, mainly including the preparation of quantum states and operations on them.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Preparation-of-states"><span class="std std-ref">Preparation of states</span></a></p></li>
+<li><p><a class="reference internal" href="#Information-of-a-State-instance"><span class="std std-ref">Information of a State instance</span></a></p></li>
+<li><p><a class="reference internal" href="#Manipulation-of-states"><span class="std std-ref">Manipulation of states</span></a></p></li>
+<li><p><a class="reference internal" href="#Interaction-with-environments"><span class="std std-ref">Interaction with environments</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Preparation-of-states">Preparation of states<a class="headerlink" href="#Preparation-of-states" title="Link to this heading">¶</a></h2>
+<p>In QuAIRKit, states are prepared in several ways. For some commonly-used states, they are available in QuAIRKit database:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># set the number of qubits</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># |00&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zero states with 2 qubits: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># (|00&gt; + |11&gt;) / sqrt(2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bell states: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">isotropic_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># isotropic state</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;isotropic state: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+zero states with 2 qubits:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[1.+0.j 0.+0.j 0.+0.j 0.+0.j]
+---------------------------------------------------
+
+Bell states:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+---------------------------------------------------
+
+isotropic state:
+---------------------------------------------------
+ Backend: density_matrix
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[[0.27+0.j 0.  +0.j 0.  +0.j 0.05+0.j]
+ [0.  +0.j 0.22+0.j 0.  +0.j 0.  +0.j]
+ [0.  +0.j 0.  +0.j 0.22+0.j 0.  +0.j]
+ [0.05+0.j 0.  +0.j 0.  +0.j 0.27+0.j]]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>Users can also prepare a random state, with desirable size and rank. Additionally, by setting <code class="docutils literal notranslate"><span class="pre">is_real=True</span></code> one can restrict the random state within the real space.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># random 2-qubit pure state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">is_real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># random 2-qubit real state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># 1000 random 2-qubit states</span>
+</code></pre></div>
+</div>
+</div>
+<p>Another way of preparing a quantum state uses the function <code class="docutils literal notranslate"><span class="pre">to_state</span></code>. <code class="docutils literal notranslate"><span class="pre">to_state</span></code> converts a <em>torch.Tensor</em> or a <em>numpy.ndarray</em> data type to a <code class="docutils literal notranslate"><span class="pre">State</span></code> instance. Allowed shapes of the input tensor are listed in the following table. Based on the input data, the state will be represented differently. If the input is a vector, the state will be represented by a state vector, whereas if the input is a density matrix, the state will be adapted to a density matrix. The type can be checked by the
+<code class="docutils literal notranslate"><span class="pre">state.backend</span></code>.</p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>single state</p></th>
+<th class="head"><p>batch states</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>state vector</p></td>
+<td><p>[d], [1, d], [d, 1]</p></td>
+<td><p>[d1, …, dn, d, 1]</p></td>
+</tr>
+<tr class="row-odd"><td><p>density matrix</p></td>
+<td><p>[d, d]</p></td>
+<td><p>[d1, …, dn, d, d]</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">haar_state_vector</span><span class="p">(</span>
+    <span class="n">num_qubits</span>
+<span class="p">)</span>  <span class="c1"># randomly generate a state vector with 2 qubits following Haar random</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;A state vector with 2 qubits following Haar random</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">random_density_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># random 2-qubit density matrix</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;type of the state: </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+A state vector with 2 qubits following Haar random
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2]
+ System sequence: [0]
+[0.23-0.11j 0.28-0.93j]
+---------------------------------------------------
+
+type of the state: density_matrix
+</pre></div></div>
+</div>
+<h2 id="Information-of-a-State-instance">Information of a State instance<a class="headerlink" href="#Information-of-a-State-instance" title="Link to this heading">¶</a></h2>
+<p>The information of a <code class="docutils literal notranslate"><span class="pre">State</span></code> instance is provided as follows. Three random generated single-qubit states <span class="math notranslate nohighlight">\(\{ |\psi_j\rangle \}_{j=1}^3\)</span> are taken as examples.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 3 random single-qubit pure states</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;3 random single-qubit pure states: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3 random single-qubit pure states:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2]
+ System sequence: [0]
+ Batch size: [3]
+
+ # 0:
+[-0.46-0.j   -0.85-0.27j]
+ # 1:
+[ 0.39-0.11j -0.87-0.26j]
+ # 2:
+[ 0.82-0.32j -0.42+0.24j]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>One can obtain the ket <span class="math notranslate nohighlight">\(\{ |\psi_j\rangle \}_{j=1}^3\)</span>, bra <span class="math notranslate nohighlight">\(\{ \langle\psi_j| \}_{j=1}^3\)</span> and the density matrix <span class="math notranslate nohighlight">\(\{ |\psi_j\rangle\langle\psi_j| \}_{j=1}^3\)</span> of these states. (Note that ket and bra forms are only available for pure states.)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Its density matrix is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">density_matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Its ket is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Its bra is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">bra</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Its density matrix is :
+ tensor([[[ 0.2082+0.0000j,  0.3876-0.1210j],
+         [ 0.3876+0.1210j,  0.7918+0.0000j]],
+
+        [[ 0.1690+0.0000j, -0.3152+0.2027j],
+         [-0.3152-0.2027j,  0.8310+0.0000j]],
+
+        [[ 0.7664+0.0000j, -0.4182-0.0642j],
+         [-0.4182+0.0642j,  0.2336+0.0000j]]])
+
+Its ket is :
+ tensor([[[-0.4563-0.0035j],
+         [-0.8473-0.2717j]],
+
+        [[ 0.3947-0.1150j],
+         [-0.8741-0.2588j]],
+
+        [[ 0.8157-0.3179j],
+         [-0.4185+0.2418j]]])
+
+Its bra is :
+ tensor([[[-0.4563+0.0035j, -0.8473+0.2717j]],
+
+        [[ 0.3947+0.1150j, -0.8741+0.2588j]],
+
+        [[ 0.8157+0.3179j, -0.4185-0.2418j]]])
+</pre></div></div>
+</div>
+<p>We can also use the method <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> to output <em>numpy.ndarray</em> type data for <code class="docutils literal notranslate"><span class="pre">State</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The state is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+The state is :
+ [[-0.45629326-0.00350509j -0.8473218 -0.2717167j ]
+ [ 0.39468753-0.1149976j  -0.8740804 -0.25880632j]
+ [ 0.8156662 -0.31794474j -0.41849422+0.24178998j]]
+</pre></div></div>
+</div>
+<p>Other useful information can be read via <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The trace of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">trace</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The rank of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The size of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The shape of vectorization of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The trace of these states are tensor([1.+0.j, 1.+0.j, 1.+0.j])
+The rank of these states are 1
+The size of these states are 2
+The shape of vectorization of these states are torch.Size([3, 4, 1])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number of systems in these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">num_systems</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Are these states qubits?&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">are_qubits</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Are these states qutrits?&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">are_qutrits</span><span class="p">())</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The number of systems in these states are 1
+Are these states qubits? True
+Are these states qutrits? False
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code> instance supports direct indexing, returning the <span class="math notranslate nohighlight">\(i\)</span>-th state in the batch.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the second and third state in the batch: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the second and third state in the batch:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2]
+ System sequence: [0]
+ Batch size: [2]
+
+ # 0:
+[ 0.39-0.11j -0.87-0.26j]
+ # 1:
+[ 0.82-0.32j -0.42+0.24j]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>Or if the length of the batch dimension is larger than 1, one can index elements in a batch dimension. See <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.index_select.html">torch.index_select</a> for more understanding.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The index of batch dimension is 0: </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The index of batch dimension is 0:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2]
+ System sequence: [0]
+ Batch size: [2]
+
+ # 0:
+[ 0.39-0.11j -0.87-0.26j]
+ # 1:
+[ 0.82-0.32j -0.42+0.24j]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<h2 id="Manipulation-of-states">Manipulation of states<a class="headerlink" href="#Manipulation-of-states" title="Link to this heading">¶</a></h2>
+<p>Matrix multiplication is implemented via <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, which makes calculating the inner product of two pure states <span class="math notranslate nohighlight">\(\langle \psi | \phi \rangle\)</span> easily.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state_1</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">random_density_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_2</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;matrix multiplication:</span><span class="se">\n</span><span class="si">{</span><span class="n">state_1</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">state_2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The overlap of state_1 and state_2 is :&quot;</span><span class="p">,</span> <span class="n">trace</span><span class="p">(</span><span class="n">state_1</span> <span class="o">@</span> <span class="n">state_2</span><span class="p">))</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+matrix multiplication:
+tensor([[0.6244+0.0000j, 0.1924+0.4444j],
+        [0.0000+0.0000j, 0.0000+0.0000j]])
+The overlap of state_1 and state_2 is : tensor(0.6244+0.j)
+</pre></div></div>
+</div>
+<p>User can also use <code class="docutils literal notranslate"><span class="pre">NKron</span></code> to obtain the tensor product <span class="math notranslate nohighlight">\(\rho \otimes \sigma\)</span> of the two quantum states <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">product_state</span> <span class="o">=</span> <span class="n">NKron</span><span class="p">(</span><span class="n">state_1</span><span class="p">,</span> <span class="n">state_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tensor product:</span><span class="se">\n</span><span class="si">{</span><span class="n">product_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tensor product:
+tensor([[0.6244+0.0000j, 0.1924+0.4444j, 0.0000+0.0000j, 0.0000+0.0000j],
+        [0.1924-0.4444j, 0.3756+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+        [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+        [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j]])
+</pre></div></div>
+</div>
+<p>Permuting subsystems can be implemented by adapting the value of <code class="docutils literal notranslate"><span class="pre">system_seq</span></code>. However, such a change does not affect its output on ket, bra, and density matrix, in which case <code class="docutils literal notranslate"><span class="pre">system_seq</span></code> would be reset to the default sequence. Here, three randomly prepared 2-qubit states <span class="math notranslate nohighlight">\(\{ |\phi_j\rangle \}_{j=1}^3\)</span> are permuted as examples.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># random 2-qubit pure states</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1 random 2-qubit pure states: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">state</span><span class="o">.</span><span class="n">system_seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># permutation</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after permutation: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1 random 2-qubit pure states:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[-0.56+0.12j -0.28+0.56j -0.3 +0.26j -0.24+0.24j]
+---------------------------------------------------
+
+state after permutation:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [1, 0]
+[-0.56+0.12j -0.3 +0.26j -0.28+0.56j -0.24+0.24j]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>User can also clone a state, or change its data type and device.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dtype of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The device of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+<span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
+<span class="p">)</span>  <span class="c1"># change to &quot;cuda&quot; if gpu is available</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dtype of new states are&quot;</span><span class="p">,</span> <span class="n">new_state</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The device of new states are&quot;</span><span class="p">,</span> <span class="n">new_state</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The dtype of these states are torch.complex64
+The device of these states are cpu
+The dtype of new states are torch.complex128
+The device of new states are cpu
+</pre></div></div>
+</div>
+<h2 id="Interaction-with-environments">Interaction with environments<a class="headerlink" href="#Interaction-with-environments" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code> instances can be sent to a quantum environment for further processing. For example, let the state evolve under a unitary operator.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_evo</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after evolving with unitary: </span><span class="si">{</span><span class="n">state_evo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+state after evolving with unitary:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [1, 0]
+[0.24+0.56j 0.22+0.15j 0.35+0.48j 0.21+0.4j ]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>Then, apply a random quantum channel to the state. Note that when pure states are sent to noisy environments, they will be automatically converted to mixed states, in which case their ket and bra properties will be lost.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">kraus</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_kra</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">kraus</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after transformation: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+state after transformation:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[-0.56+0.12j -0.28+0.56j -0.3 +0.26j -0.24+0.24j]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">choi</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
+<span class="n">state_cho</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">choi</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after transformation: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+state after transformation:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[-0.56+0.12j -0.28+0.56j -0.3 +0.26j -0.24+0.24j]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">State.expec_val()</span></code> calculates the expectation value of a state under a given observable. Here we set the observable to Pauli <span class="math notranslate nohighlight">\(Z\)</span> operator on the first qubit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">observable</span> <span class="o">=</span> <span class="n">hamiltonian</span><span class="o">.</span><span class="n">Hamiltonian</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Z0&quot;</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;the expectation value under the given observable: &quot;</span><span class="p">,</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">hamiltonian</span><span class="o">=</span><span class="n">observable</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the expectation value under the given observable:  tensor(0.9029)
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">State.measure()</span></code> returns the measurement result in the computational basis.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Theoretical value is :&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">measure</span><span class="p">())</span>  <span class="c1"># theoretical value</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Theoretical value is : tensor([0.3325, 0.3932, 0.1569, 0.1173])
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathcal{H}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathcal{H}_A\)</span></p></td>
+<td><p>a Hilbert space (of quantum system <span class="math notranslate nohighlight">\(A\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(X\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma_x\)</span></p></td>
+<td><p>Pauli X</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\vert \psi \rangle\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\vert \psi_j \rangle\)</span></p></td>
+<td><p>the <span class="math notranslate nohighlight">\(j\)</span>-th pure state</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\langle \psi \vert\)</span></p></td>
+<td></td>
+<td><p>conjugate transpose of <span class="math notranslate nohighlight">\(\vert \psi \rangle\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td></td>
+<td><p>general quantum state</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\langle \psi \vert \phi \rangle\)</span></p></td>
+<td></td>
+<td><p>inner product of two pure states</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho \otimes \sigma\)</span></p></td>
+<td></td>
+<td><p>tensor product of two states</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[21]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.2.0
+torch: 2.4.1+cpu
+numpy: 1.26.0
+scipy: 1.14.1
+matplotlib: 3.9.2
+---------SYSTEM---------
+Python version: 3.10.15
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="qinfo.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quantum information tools" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Quantum information tools
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="training.html" class="md-footer__link md-footer__link--next" aria-label="Next: Training parameterized quantum circuits" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Training parameterized quantum circuits
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    7.4.7.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}], "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>
