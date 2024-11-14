@@ -1,0 +1,11 @@
+quairkit.loss
+=============
+
+.. automodule:: quairkit.loss
+	:members:
+
+.. toctree::
+    :maxdepth: 2
+
+    quairkit.loss.distance
+    quairkit.loss.measure

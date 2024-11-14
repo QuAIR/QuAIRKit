@@ -1,0 +1,3410 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="_static/favicon.svg">
+    
+    
+      
+        <title>quairkit.qinfo.linalg - QuAIRKit</title>
+      
+    
+    
+      
+        
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quairkit.qinfo.linalg.abs_norm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              quairkit.qinfo.linalg
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="quairkit.html"><span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span></a>
+          
+            <label for="__nav_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="quairkit" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.ansatz.html" class="md-nav__link">
+        <span title="/quairkit.ansatz.rst (reference label)" class="md-ellipsis">quairkit.<wbr>ansatz</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.circuit.html" class="md-nav__link">
+        <span title="/quairkit.circuit.rst (reference label)" class="md-ellipsis">quairkit.<wbr>circuit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.html" class="md-nav__link">
+        <span title="/quairkit.core.rst (reference label)" class="md-ellipsis">quairkit.<wbr>core</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.html" class="md-nav__link">
+        <span title="/quairkit.database.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.loss.html" class="md-nav__link">
+        <span title="/quairkit.loss.rst (reference label)" class="md-ellipsis">quairkit.<wbr>loss</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.operator.html" class="md-nav__link">
+        <span title="/quairkit.operator.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_7" type="checkbox" id="__nav_1_7" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="quairkit.qinfo.html"><span title="/quairkit.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo</span></a>
+          
+            <label for="__nav_1_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="quairkit.qinfo" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_7">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/quairkit.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.qinfo.check.html" class="md-nav__link">
+        <span title="/quairkit.qinfo.check.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>check</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span title="/quairkit.qinfo.linalg.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/quairkit.qinfo.linalg.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.abs_norm (Python function) — tool for calculation of matrix norm" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>abs_<wbr>norm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.abs_norm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.abs_norm.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.block_enc_herm (Python function) — generate a (qubitized) block encoding of hermitian mat" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>block_<wbr>enc_<wbr>herm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.block_enc_herm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.block_enc_herm.mat (Python parameter) — matrix to be block encoded" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm.num_block_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.block_enc_herm.num_block_qubits (Python parameter) — ancilla qubits used in block encoding" class="md-ellipsis">num_<wbr>block_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.create_matrix (Python function) — Create a matrix representation of a linear map without needing to specify the output dimension." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>create_<wbr>matrix</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.create_matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix.linear_map" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.create_matrix.linear_map (Python parameter) — A function representing the linear map, which takes an input_dim-dimensional vector and returns a vector." class="md-ellipsis">linear_<wbr>map</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix.input_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.create_matrix.input_dim (Python parameter) — The dimension of the input space." class="md-ellipsis">input_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix.input_dtype" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.create_matrix.input_dtype (Python parameter) — The dtype of the input." class="md-ellipsis">input_<wbr>dtype</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-raises" class="md-nav__link">
+    <span class="md-ellipsis">Raises</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.dagger (Python function) — tool for calculation of matrix dagger" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>dagger</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.dagger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.dagger.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.direct_sum (Python function) — calculate the direct sum of A and B" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>direct_<wbr>sum</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.direct_sum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum.A" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.direct_sum.A (Python parameter) — m \times n matrix" class="md-ellipsis">A</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum.B" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.direct_sum.B (Python parameter) — p \times q matrix" class="md-ellipsis">B</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.gradient (Python function) — Computes the gradient of a given loss function with respect to its input variable." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>gradient</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.gradient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient.loss_function" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.gradient.loss_function (Python parameter) — A loss function to compute the gradient." class="md-ellipsis">loss_<wbr>function</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient.var" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.gradient.var (Python parameter) — A vector of shape (m,1) as the input variables for the loss function." class="md-ellipsis">var</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient.n" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.gradient.n (Python parameter) — The number of iterations for gradient computation." class="md-ellipsis">n</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.hessian (Python function) — Computes the Hessian matrix of a given loss function with respect to its input variables." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>hessian</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.hessian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian.loss_function" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.hessian.loss_function (Python parameter) — The loss function to compute the Hessian." class="md-ellipsis">loss_<wbr>function</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian.var" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.hessian.var (Python parameter) — A matrix of shape (n, m) as input variables for the loss function." class="md-ellipsis">var</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.herm_transform (Python function) — function transformation for Hermitian matrix" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>herm_<wbr>transform</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.herm_transform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform.fcn" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.herm_transform.fcn (Python parameter) — function f that can be expanded by Taylor series" class="md-ellipsis">fcn</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.herm_transform.mat (Python parameter) — hermitian matrix H" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform.ignore_zero" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.herm_transform.ignore_zero (Python parameter) — whether ignore eigenspaces with zero eigenvalue, defaults to be False" class="md-ellipsis">ignore_<wbr>zero</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.logm (Python function) — Calculate log of a matrix" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>logm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.logm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.logm.mat (Python parameter) — Input matrix." class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.NKron (Python function) — calculate Kronecker product of at least two density matrices" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>NKron</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.NKron">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron.matrix_A" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.NKron.matrix_A (Python parameter) — density matrix" class="md-ellipsis">matrix_<wbr>A</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron.matrix_B" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.NKron.matrix_B (Python parameter) — density matrix" class="md-ellipsis">matrix_<wbr>B</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron.args" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.NKron.args (Python parameter) — other density matrices" class="md-ellipsis">args</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.p_norm (Python function) — tool for calculation of Schatten p-norm" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>p_<wbr>norm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.p_norm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.p_norm.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm.p" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.p_norm.p (Python parameter) — p-norm parameter" class="md-ellipsis">p</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.partial_trace (Python function) — Calculate the partial trace of the quantum state" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>partial_<wbr>trace</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.partial_trace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace.state (Python parameter) — Input quantum state." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace.trace_idx" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace.trace_idx (Python parameter) — The system indices to be traced out." class="md-ellipsis">trace_<wbr>idx</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace.system_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace.system_dim (Python parameter) — The dimension of all systems." class="md-ellipsis">system_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.partial_trace_discontiguous (Python function) — Calculate the partial trace of the quantum state with arbitrarily selected subsystem" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>partial_<wbr>trace_<wbr>discontiguous</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.partial_trace_discontiguous">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace_discontiguous.state (Python parameter) — Input quantum state." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits (Python parameter) — Remaining qubits, default is None, indicate all qubits remain." class="md-ellipsis">preserve_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.partial_transpose (Python function) — Calculate the partial transpose \rho^{T_A} of the input quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>partial_<wbr>transpose</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.partial_transpose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_transpose.state (Python parameter) — input quantum state." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose.transpose_idx" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_transpose.transpose_idx (Python parameter) — The system indices to be transposed." class="md-ellipsis">transpose_<wbr>idx</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose.system_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_transpose.system_dim (Python parameter) — The dimension of all systems." class="md-ellipsis">system_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.pauli_decomposition (Python function) — Decompose the matrix by the Pauli basis." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>pauli_<wbr>decomposition</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.pauli_decomposition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.pauli_decomposition.mat (Python parameter) — the matrix to be decomposed" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.permute_systems (Python function) — Permute quantum system based on a permute list" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>permute_<wbr>systems</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.permute_systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems.perm_list" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.permute_systems.perm_list (Python parameter) — The permute list." class="md-ellipsis">perm_<wbr>list</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems.system_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.permute_systems.system_dim (Python parameter) — A list of dimension sizes of each subsystem." class="md-ellipsis">system_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.prob_sample (Python function) — Sample from a probability distribution." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>prob_<wbr>sample</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.prob_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.distribution" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.distribution (Python parameter) — The probability distribution." class="md-ellipsis">distribution</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.shots" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.shots (Python parameter) — The number of shots." class="md-ellipsis">shots</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.binary" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.binary (Python parameter) — Whether the sampled result is recorded as binary." class="md-ellipsis">binary</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.proportional" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.proportional (Python parameter) — Whether the counts are shown in proportion" class="md-ellipsis">proportional</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.schmidt_decompose (Python function) — Calculate the Schmidt decomposition of a quantum state \lvert\psi\rangle=\sum_ic_i\lvert i_A\rangle\otimes\lvert i_B \rangle." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>schmidt_<wbr>decompose</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.schmidt_decompose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose.psi" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.schmidt_decompose.psi (Python parameter) — State vector form of the quantum state, with shape (2**n)" class="md-ellipsis">psi</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose.sys_A" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.schmidt_decompose.sys_A (Python parameter) — Qubit indices to be included in subsystem A (other qubits are included in subsystem B), default are the first half qubits of \lvert \psi\rangle" class="md-ellipsis">sys_<wbr>A</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.sqrtm (Python function) — Calculate square root of a matrix" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>sqrtm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.sqrtm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.sqrtm.mat (Python parameter) — Input matrix." class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.trace (Python function) — Return the sum along diagonals of the tensor." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>trace</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.trace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace.mat (Python parameter) — Input tensor, from which the diagonals are taken." class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace.axis1" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace.axis1 (Python parameter) — The first axis of the 2-D sub-tensors along which the diagonals should be taken." class="md-ellipsis">axis1</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace.axis2" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace.axis2 (Python parameter) — The second axis of the 2-D sub-tensors along which the diagonals should be taken." class="md-ellipsis">axis2</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-raises" class="md-nav__link">
+    <span class="md-ellipsis">Raises</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.trace_norm (Python function) — tool for calculation of trace norm" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>trace_<wbr>norm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.trace_norm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace_norm.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.qinfo.qinfo.html" class="md-nav__link">
+        <span title="/quairkit.qinfo.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials.html" class="md-nav__link">
+        <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.abs_norm (Python function) — tool for calculation of matrix norm" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>abs_<wbr>norm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.abs_norm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.abs_norm.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.abs_norm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.block_enc_herm (Python function) — generate a (qubitized) block encoding of hermitian mat" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>block_<wbr>enc_<wbr>herm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.block_enc_herm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.block_enc_herm.mat (Python parameter) — matrix to be block encoded" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm.num_block_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.block_enc_herm.num_block_qubits (Python parameter) — ancilla qubits used in block encoding" class="md-ellipsis">num_<wbr>block_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.block_enc_herm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.create_matrix (Python function) — Create a matrix representation of a linear map without needing to specify the output dimension." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>create_<wbr>matrix</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.create_matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix.linear_map" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.create_matrix.linear_map (Python parameter) — A function representing the linear map, which takes an input_dim-dimensional vector and returns a vector." class="md-ellipsis">linear_<wbr>map</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix.input_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.create_matrix.input_dim (Python parameter) — The dimension of the input space." class="md-ellipsis">input_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix.input_dtype" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.create_matrix.input_dtype (Python parameter) — The dtype of the input." class="md-ellipsis">input_<wbr>dtype</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-raises" class="md-nav__link">
+    <span class="md-ellipsis">Raises</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.create_matrix-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.dagger (Python function) — tool for calculation of matrix dagger" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>dagger</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.dagger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.dagger.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.dagger-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.direct_sum (Python function) — calculate the direct sum of A and B" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>direct_<wbr>sum</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.direct_sum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum.A" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.direct_sum.A (Python parameter) — m \times n matrix" class="md-ellipsis">A</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum.B" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.direct_sum.B (Python parameter) — p \times q matrix" class="md-ellipsis">B</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.direct_sum-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.gradient (Python function) — Computes the gradient of a given loss function with respect to its input variable." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>gradient</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.gradient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient.loss_function" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.gradient.loss_function (Python parameter) — A loss function to compute the gradient." class="md-ellipsis">loss_<wbr>function</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient.var" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.gradient.var (Python parameter) — A vector of shape (m,1) as the input variables for the loss function." class="md-ellipsis">var</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient.n" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.gradient.n (Python parameter) — The number of iterations for gradient computation." class="md-ellipsis">n</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.gradient-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.hessian (Python function) — Computes the Hessian matrix of a given loss function with respect to its input variables." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>hessian</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.hessian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian.loss_function" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.hessian.loss_function (Python parameter) — The loss function to compute the Hessian." class="md-ellipsis">loss_<wbr>function</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian.var" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.hessian.var (Python parameter) — A matrix of shape (n, m) as input variables for the loss function." class="md-ellipsis">var</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.hessian-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.herm_transform (Python function) — function transformation for Hermitian matrix" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>herm_<wbr>transform</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.herm_transform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform.fcn" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.herm_transform.fcn (Python parameter) — function f that can be expanded by Taylor series" class="md-ellipsis">fcn</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.herm_transform.mat (Python parameter) — hermitian matrix H" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.herm_transform.ignore_zero" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.herm_transform.ignore_zero (Python parameter) — whether ignore eigenspaces with zero eigenvalue, defaults to be False" class="md-ellipsis">ignore_<wbr>zero</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.logm (Python function) — Calculate log of a matrix" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>logm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.logm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.logm.mat (Python parameter) — Input matrix." class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.logm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.NKron (Python function) — calculate Kronecker product of at least two density matrices" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>NKron</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.NKron">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron.matrix_A" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.NKron.matrix_A (Python parameter) — density matrix" class="md-ellipsis">matrix_<wbr>A</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron.matrix_B" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.NKron.matrix_B (Python parameter) — density matrix" class="md-ellipsis">matrix_<wbr>B</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron.args" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.NKron.args (Python parameter) — other density matrices" class="md-ellipsis">args</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.NKron-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.p_norm (Python function) — tool for calculation of Schatten p-norm" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>p_<wbr>norm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.p_norm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.p_norm.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm.p" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.p_norm.p (Python parameter) — p-norm parameter" class="md-ellipsis">p</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.p_norm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.partial_trace (Python function) — Calculate the partial trace of the quantum state" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>partial_<wbr>trace</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.partial_trace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace.state (Python parameter) — Input quantum state." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace.trace_idx" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace.trace_idx (Python parameter) — The system indices to be traced out." class="md-ellipsis">trace_<wbr>idx</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace.system_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace.system_dim (Python parameter) — The dimension of all systems." class="md-ellipsis">system_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.partial_trace_discontiguous (Python function) — Calculate the partial trace of the quantum state with arbitrarily selected subsystem" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>partial_<wbr>trace_<wbr>discontiguous</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.partial_trace_discontiguous">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace_discontiguous.state (Python parameter) — Input quantum state." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits (Python parameter) — Remaining qubits, default is None, indicate all qubits remain." class="md-ellipsis">preserve_<wbr>qubits</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_trace_discontiguous-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.partial_transpose (Python function) — Calculate the partial transpose \rho^{T_A} of the input quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>partial_<wbr>transpose</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.partial_transpose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose.state" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_transpose.state (Python parameter) — input quantum state." class="md-ellipsis">state</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose.transpose_idx" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_transpose.transpose_idx (Python parameter) — The system indices to be transposed." class="md-ellipsis">transpose_<wbr>idx</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose.system_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.partial_transpose.system_dim (Python parameter) — The dimension of all systems." class="md-ellipsis">system_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.partial_transpose-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.pauli_decomposition (Python function) — Decompose the matrix by the Pauli basis." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>pauli_<wbr>decomposition</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.pauli_decomposition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.pauli_decomposition.mat (Python parameter) — the matrix to be decomposed" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.pauli_decomposition-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.permute_systems (Python function) — Permute quantum system based on a permute list" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>permute_<wbr>systems</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.permute_systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems.perm_list" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.permute_systems.perm_list (Python parameter) — The permute list." class="md-ellipsis">perm_<wbr>list</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems.system_dim" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.permute_systems.system_dim (Python parameter) — A list of dimension sizes of each subsystem." class="md-ellipsis">system_<wbr>dim</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.permute_systems-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.prob_sample (Python function) — Sample from a probability distribution." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>prob_<wbr>sample</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.prob_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.distribution" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.distribution (Python parameter) — The probability distribution." class="md-ellipsis">distribution</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.shots" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.shots (Python parameter) — The number of shots." class="md-ellipsis">shots</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.binary" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.binary (Python parameter) — Whether the sampled result is recorded as binary." class="md-ellipsis">binary</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample.proportional" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.prob_sample.proportional (Python parameter) — Whether the counts are shown in proportion" class="md-ellipsis">proportional</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.prob_sample-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.schmidt_decompose (Python function) — Calculate the Schmidt decomposition of a quantum state \lvert\psi\rangle=\sum_ic_i\lvert i_A\rangle\otimes\lvert i_B \rangle." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>schmidt_<wbr>decompose</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.schmidt_decompose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose.psi" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.schmidt_decompose.psi (Python parameter) — State vector form of the quantum state, with shape (2**n)" class="md-ellipsis">psi</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose.sys_A" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.schmidt_decompose.sys_A (Python parameter) — Qubit indices to be included in subsystem A (other qubits are included in subsystem B), default are the first half qubits of \lvert \psi\rangle" class="md-ellipsis">sys_<wbr>A</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.schmidt_decompose-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.sqrtm (Python function) — Calculate square root of a matrix" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>sqrtm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.sqrtm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.sqrtm.mat (Python parameter) — Input matrix." class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.sqrtm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.trace (Python function) — Return the sum along diagonals of the tensor." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>trace</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.trace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace.mat (Python parameter) — Input tensor, from which the diagonals are taken." class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace.axis1" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace.axis1 (Python parameter) — The first axis of the 2-D sub-tensors along which the diagonals should be taken." class="md-ellipsis">axis1</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace.axis2" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace.axis2 (Python parameter) — The second axis of the 2-D sub-tensors along which the diagonals should be taken." class="md-ellipsis">axis2</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-raises" class="md-nav__link">
+    <span class="md-ellipsis">Raises</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.linalg.trace_norm (Python function) — tool for calculation of trace norm" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg.<wbr>trace_<wbr>norm</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.qinfo.linalg.trace_norm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm-parameters" class="md-nav__link">
+    <span class="md-ellipsis">Parameters</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm.mat" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.linalg.trace_norm.mat (Python parameter) — matrix" class="md-ellipsis">mat</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm-returns" class="md-nav__link">
+    <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.linalg.trace_norm-return-type" class="md-nav__link">
+    <span class="md-ellipsis">Return type</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="module-quairkit.qinfo.linalg"><span id="quairkit-qinfo-linalg"></span>quairkit.qinfo.linalg<a class="headerlink" href="#module-quairkit.qinfo.linalg" title="Link to this heading">¶</a></h1>
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.abs_norm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">abs_norm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.abs_norm.mat" title="quairkit.qinfo.linalg.abs_norm.mat (Python parameter) — matrix"><span class="n"><span class="pre">mat</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.abs_norm" title="Link to this definition">¶</a></dt>
+<dd><p>tool for calculation of matrix norm</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.abs_norm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.abs_norm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.abs_norm.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.abs_norm.mat" title="Permalink to this definition">¶</a></dt><dd><p>matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.abs_norm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.abs_norm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>norm of input matrix</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.abs_norm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.abs_norm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.block_enc_herm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">block_enc_herm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.block_enc_herm.mat" title="quairkit.qinfo.linalg.block_enc_herm.mat (Python parameter) — matrix to be block encoded"><span class="n"><span class="pre">mat</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.block_enc_herm.num_block_qubits" title="quairkit.qinfo.linalg.block_enc_herm.num_block_qubits (Python parameter) — ancilla qubits used in block encoding"><span class="n"><span class="pre">num_block_qubits</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.block_enc_herm" title="Link to this definition">¶</a></dt>
+<dd><p>generate a (qubitized) block encoding of hermitian <code class="docutils literal notranslate"><span class="pre">mat</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.block_enc_herm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.block_enc_herm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.block_enc_herm.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.block_enc_herm.mat" title="Permalink to this definition">¶</a></dt><dd><p>matrix to be block encoded</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.block_enc_herm.num_block_qubits"><span class="sig-name descname">num_block_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.block_enc_herm.num_block_qubits" title="Permalink to this definition">¶</a></dt><dd><p>ancilla qubits used in block encoding</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.block_enc_herm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.block_enc_herm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>a unitary that is a block encoding of <code class="docutils literal notranslate"><span class="pre">mat</span></code></p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.block_enc_herm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.block_enc_herm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.qinfo.linalg.create_matrix">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">create_matrix</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.create_matrix.linear_map" title="quairkit.qinfo.linalg.create_matrix.linear_map (Python parameter) — A function representing the linear map, which takes an input_dim-dimensional vector and returns a vector."><span class="n"><span class="pre">linear_map</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.create_matrix.input_dim" title="quairkit.qinfo.linalg.create_matrix.input_dim (Python parameter) — The dimension of the input space."><span class="n"><span class="pre">input_dim</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.create_matrix.input_dtype" title="quairkit.qinfo.linalg.create_matrix.input_dtype (Python parameter) — The dtype of the input."><span class="n"><span class="pre">input_dtype</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Create a matrix representation of a linear map without needing to specify the output dimension.</p>
+<p>This function constructs a matrix representation for a given linear map and input dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.create_matrix-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.create_matrix.linear_map"><span class="sig-name descname">linear_map</span><span class="p"> : </span><span class="desctype"><span class="desctype">Callable[[Tensor | ndarray], Tensor | ndarray]</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix.linear_map" title="Permalink to this definition">¶</a></dt><dd><p>A function representing the linear map, which takes an input_dim-dimensional vector and returns a vector.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.create_matrix.input_dim"><span class="sig-name descname">input_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix.input_dim" title="Permalink to this definition">¶</a></dt><dd><p>The dimension of the input space.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.create_matrix.input_dtype"><span class="sig-name descname">input_dtype</span><span class="p"> : </span><span class="desctype"><span class="desctype">dtype | None</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix.input_dtype" title="Permalink to this definition">¶</a></dt><dd><p>The dtype of the input. Defaults to None.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.create_matrix-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>A matrix representing the linear map.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.create_matrix-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><strong>RuntimeWarning</strong> – the input`linear_map` may not be linear.</p>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.create_matrix-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.create_matrix-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><em>Tensor</em> | <em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.dagger">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">dagger</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.dagger.mat" title="quairkit.qinfo.linalg.dagger.mat (Python parameter) — matrix"><span class="n"><span class="pre">mat</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.dagger" title="Link to this definition">¶</a></dt>
+<dd><p>tool for calculation of matrix dagger</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.dagger-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.dagger-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.dagger.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.dagger.mat" title="Permalink to this definition">¶</a></dt><dd><p>matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.dagger-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.dagger-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The dagger of matrix</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.dagger-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.dagger-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.direct_sum">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">direct_sum</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.direct_sum.A" title="quairkit.qinfo.linalg.direct_sum.A (Python parameter) — m \times n matrix"><span class="n"><span class="pre">A</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.direct_sum.B" title="quairkit.qinfo.linalg.direct_sum.B (Python parameter) — p \times q matrix"><span class="n"><span class="pre">B</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.direct_sum" title="Link to this definition">¶</a></dt>
+<dd><p>calculate the direct sum of A and B</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.direct_sum-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.direct_sum-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.direct_sum.A"><span class="sig-name descname">A</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.direct_sum.A" title="Permalink to this definition">¶</a></dt><dd><p><span class="math notranslate nohighlight">\(m \times n\)</span> matrix</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.direct_sum.B"><span class="sig-name descname">B</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.direct_sum.B" title="Permalink to this definition">¶</a></dt><dd><p><span class="math notranslate nohighlight">\(p \times q\)</span> matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.direct_sum-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.direct_sum-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>a direct sum of A and B, with shape <span class="math notranslate nohighlight">\((m + p) \times (n + q)\)</span></p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.direct_sum-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.direct_sum-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.gradient">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">gradient</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.gradient.loss_function" title="quairkit.qinfo.linalg.gradient.loss_function (Python parameter) — A loss function to compute the gradient."><span class="n"><span class="pre">loss_function</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.gradient.var" title="quairkit.qinfo.linalg.gradient.var (Python parameter) — A vector of shape (m,1) as the input variables for the loss function."><span class="n"><span class="pre">var</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.gradient.n" title="quairkit.qinfo.linalg.gradient.n (Python parameter) — The number of iterations for gradient computation."><span class="n"><span class="pre">n</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the gradient of a given loss function with respect to its input variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.gradient-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.gradient.loss_function"><span class="sig-name descname">loss_function</span><span class="p"> : </span><span class="desctype"><span class="desctype">Callable[[Tensor], Tensor]</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient.loss_function" title="Permalink to this definition">¶</a></dt><dd><p>A loss function to compute the gradient.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.gradient.var"><span class="sig-name descname">var</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient.var" title="Permalink to this definition">¶</a></dt><dd><p>A vector of shape (m,1) as the input variables for the loss function.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.gradient.n"><span class="sig-name descname">n</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient.n" title="Permalink to this definition">¶</a></dt><dd><p>The number of iterations for gradient computation.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.gradient-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The gradient vector of shape (m,1).</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.gradient-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.gradient-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.hessian">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">hessian</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.hessian.loss_function" title="quairkit.qinfo.linalg.hessian.loss_function (Python parameter) — The loss function to compute the Hessian."><span class="n"><span class="pre">loss_function</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.hessian.var" title="quairkit.qinfo.linalg.hessian.var (Python parameter) — A matrix of shape (n, m) as input variables for the loss function."><span class="n"><span class="pre">var</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.hessian" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the Hessian matrix of a given loss function with respect to its input variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.hessian-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.hessian-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.hessian.loss_function"><span class="sig-name descname">loss_function</span><span class="p"> : </span><span class="desctype"><span class="desctype">Callable[[Tensor], Tensor]</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.hessian.loss_function" title="Permalink to this definition">¶</a></dt><dd><p>The loss function to compute the Hessian.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.hessian.var"><span class="sig-name descname">var</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.hessian.var" title="Permalink to this definition">¶</a></dt><dd><p>A matrix of shape (n, m) as input variables for the loss function.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.hessian-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.hessian-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Hessian matrix of shape (m, n, n).</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.hessian-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.hessian-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.herm_transform">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">herm_transform</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.herm_transform.fcn" title="quairkit.qinfo.linalg.herm_transform.fcn (Python parameter) — function f that can be expanded by Taylor series"><span class="n"><span class="pre">fcn</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.herm_transform.mat" title="quairkit.qinfo.linalg.herm_transform.mat (Python parameter) — hermitian matrix H"><span class="n"><span class="pre">mat</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.herm_transform.ignore_zero" title="quairkit.qinfo.linalg.herm_transform.ignore_zero (Python parameter) — whether ignore eigenspaces with zero eigenvalue, defaults to be False"><span class="n"><span class="pre">ignore_zero</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.herm_transform" title="Link to this definition">¶</a></dt>
+<dd><p>function transformation for Hermitian matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.herm_transform-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.herm_transform-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.herm_transform.fcn"><span class="sig-name descname">fcn</span><span class="p"> : </span><span class="desctype"><span class="desctype">Callable[[float], float]</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.herm_transform.fcn" title="Permalink to this definition">¶</a></dt><dd><p>function <span class="math notranslate nohighlight">\(f\)</span> that can be expanded by Taylor series</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.herm_transform.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.herm_transform.mat" title="Permalink to this definition">¶</a></dt><dd><p>hermitian matrix <span class="math notranslate nohighlight">\(H\)</span></p>
+</dd>
+<dt id="quairkit.qinfo.linalg.herm_transform.ignore_zero"><span class="sig-name descname">ignore_zero</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.herm_transform.ignore_zero" title="Permalink to this definition">¶</a></dt><dd><p>whether ignore eigenspaces with zero eigenvalue, defaults to be <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p><span class="math notranslate nohighlight">\(f(H)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.logm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">logm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.logm.mat" title="quairkit.qinfo.linalg.logm.mat (Python parameter) — Input matrix."><span class="n"><span class="pre">mat</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.logm" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate log of a matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.logm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.logm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.logm.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.logm.mat" title="Permalink to this definition">¶</a></dt><dd><p>Input matrix.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.logm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.logm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The matrix of natural base logarithms</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.logm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.logm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.NKron">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">NKron</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.NKron.matrix_A" title="quairkit.qinfo.linalg.NKron.matrix_A (Python parameter) — density matrix"><span class="n"><span class="pre">matrix_A</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.NKron.matrix_B" title="quairkit.qinfo.linalg.NKron.matrix_B (Python parameter) — density matrix"><span class="n"><span class="pre">matrix_B</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="o"><span class="pre">*</span></span><a class="n reference internal" href="#quairkit.qinfo.linalg.NKron.args" title="quairkit.qinfo.linalg.NKron.args (Python parameter) — other density matrices"><span class="n"><span class="pre">args</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron" title="Link to this definition">¶</a></dt>
+<dd><p>calculate Kronecker product of at least two density matrices</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.NKron-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.NKron.matrix_A"><span class="sig-name descname">matrix_A</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron.matrix_A" title="Permalink to this definition">¶</a></dt><dd><p>density matrix</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.NKron.matrix_B"><span class="sig-name descname">matrix_B</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron.matrix_B" title="Permalink to this definition">¶</a></dt><dd><p>density matrix</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.NKron.args"><span class="sig-name descname">args</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron.args" title="Permalink to this definition">¶</a></dt><dd><p>other density matrices</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.NKron-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Kronecker product of matrices</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.NKron-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.NKron-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em> | <em>ndarray</em></p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.state</span> <span class="kn">import</span> <span class="n">density_op_random</span>
+<span class="kn">from</span> <span class="nn">quairkit.linalg</span> <span class="kn">import</span> <span class="n">NKron</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">density_op_random</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">density_op_random</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">density_op_random</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">NKron</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">result</span></code> from above code block should be A otimes B otimes C</p>
+</div>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.p_norm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">p_norm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.p_norm.mat" title="quairkit.qinfo.linalg.p_norm.mat (Python parameter) — matrix"><span class="n"><span class="pre">mat</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.p_norm.p" title="quairkit.qinfo.linalg.p_norm.p (Python parameter) — p-norm parameter"><span class="n"><span class="pre">p</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.p_norm" title="Link to this definition">¶</a></dt>
+<dd><p>tool for calculation of Schatten p-norm</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.p_norm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.p_norm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.p_norm.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.p_norm.mat" title="Permalink to this definition">¶</a></dt><dd><p>matrix</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.p_norm.p"><span class="sig-name descname">p</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | float</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.p_norm.p" title="Permalink to this definition">¶</a></dt><dd><p>p-norm parameter</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.p_norm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.p_norm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>p-norm of input matrix</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.p_norm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.p_norm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.partial_trace">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">partial_trace</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_trace.state" title="quairkit.qinfo.linalg.partial_trace.state (Python parameter) — Input quantum state."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_trace.trace_idx" title="quairkit.qinfo.linalg.partial_trace.trace_idx (Python parameter) — The system indices to be traced out."><span class="n"><span class="pre">trace_idx</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_trace.system_dim" title="quairkit.qinfo.linalg.partial_trace.system_dim (Python parameter) — The dimension of all systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the partial trace of the quantum state</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.partial_trace-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.partial_trace.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace.state" title="Permalink to this definition">¶</a></dt><dd><p>Input quantum state.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.partial_trace.trace_idx"><span class="sig-name descname">trace_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace.trace_idx" title="Permalink to this definition">¶</a></dt><dd><p>The system indices to be traced out.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.partial_trace.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>The dimension of all systems. Defaults to be the qubit case.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.partial_trace-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Partial trace of the quantum state with arbitrarily selected subsystem.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.partial_trace-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em> | <em>State</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.qinfo.linalg.partial_trace_discontiguous">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">partial_trace_discontiguous</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_trace_discontiguous.state" title="quairkit.qinfo.linalg.partial_trace_discontiguous.state (Python parameter) — Input quantum state."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits" title="quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits (Python parameter) — Remaining qubits, default is None, indicate all qubits remain."><span class="n"><span class="pre">preserve_qubits</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace_discontiguous" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the partial trace of the quantum state with arbitrarily selected subsystem</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.partial_trace_discontiguous-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace_discontiguous-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.partial_trace_discontiguous.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace_discontiguous.state" title="Permalink to this definition">¶</a></dt><dd><p>Input quantum state.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits"><span class="sig-name descname">preserve_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | None</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace_discontiguous.preserve_qubits" title="Permalink to this definition">¶</a></dt><dd><p>Remaining qubits, default is None, indicate all qubits remain.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.partial_trace_discontiguous-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace_discontiguous-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Partial trace of the quantum state with arbitrarily selected subsystem.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.partial_trace_discontiguous-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_trace_discontiguous-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em> | <em>State</em></p>
+</dd>
+</dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>suitable only when the systems are qubits.</p>
+</div>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.qinfo.linalg.partial_transpose">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">partial_transpose</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_transpose.state" title="quairkit.qinfo.linalg.partial_transpose.state (Python parameter) — input quantum state."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_transpose.transpose_idx" title="quairkit.qinfo.linalg.partial_transpose.transpose_idx (Python parameter) — The system indices to be transposed."><span class="n"><span class="pre">transpose_idx</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.partial_transpose.system_dim" title="quairkit.qinfo.linalg.partial_transpose.system_dim (Python parameter) — The dimension of all systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the partial transpose <span class="math notranslate nohighlight">\(\rho^{T_A}\)</span> of the input quantum state.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.partial_transpose-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.partial_transpose.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose.state" title="Permalink to this definition">¶</a></dt><dd><p>input quantum state.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.partial_transpose.transpose_idx"><span class="sig-name descname">transpose_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose.transpose_idx" title="Permalink to this definition">¶</a></dt><dd><p>The system indices to be transposed.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.partial_transpose.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>The dimension of all systems. Defaults to be the qubit case.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.partial_transpose-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The partial transpose of the input quantum state.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.partial_transpose-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.partial_transpose-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.pauli_decomposition">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">pauli_decomposition</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.pauli_decomposition.mat" title="quairkit.qinfo.linalg.pauli_decomposition.mat (Python parameter) — the matrix to be decomposed"><span class="n"><span class="pre">mat</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.pauli_decomposition" title="Link to this definition">¶</a></dt>
+<dd><p>Decompose the matrix by the Pauli basis.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.pauli_decomposition-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.pauli_decomposition-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.pauli_decomposition.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.pauli_decomposition.mat" title="Permalink to this definition">¶</a></dt><dd><p>the matrix to be decomposed</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.pauli_decomposition-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.pauli_decomposition-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The list of coefficients corresponding to Pauli basis.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.pauli_decomposition-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.pauli_decomposition-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.qinfo.linalg.permute_systems">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">permute_systems</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.permute_systems" title="quairkit.qinfo.linalg.permute_systems.state (Python parameter)"><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.permute_systems.perm_list" title="quairkit.qinfo.linalg.permute_systems.perm_list (Python parameter) — The permute list."><span class="n"><span class="pre">perm_list</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.permute_systems.system_dim" title="quairkit.qinfo.linalg.permute_systems.system_dim (Python parameter) — A list of dimension sizes of each subsystem."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.permute_systems" title="Link to this definition">¶</a></dt>
+<dd><p>Permute quantum system based on a permute list</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.permute_systems-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.permute_systems-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt><span class="sig-name descname">mat</span></dt><dd><p>A given matrix representation which is usually a quantum state.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.permute_systems.perm_list"><span class="sig-name descname">perm_list</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.permute_systems.perm_list" title="Permalink to this definition">¶</a></dt><dd><p>The permute list. e.g. input <code class="docutils literal notranslate"><span class="pre">[0,2,1,3]</span></code> will permute the 2nd and 3rd subsystems.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.permute_systems.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.permute_systems.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>A list of dimension sizes of each subsystem.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.permute_systems-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.permute_systems-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The permuted matrix</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.permute_systems-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.permute_systems-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em> | <em>State</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.qinfo.linalg.prob_sample">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">prob_sample</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.prob_sample.distribution" title="quairkit.qinfo.linalg.prob_sample.distribution (Python parameter) — The probability distribution."><span class="n"><span class="pre">distribution</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.prob_sample.shots" title="quairkit.qinfo.linalg.prob_sample.shots (Python parameter) — The number of shots."><span class="n"><span class="pre">shots</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1024</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.prob_sample.binary" title="quairkit.qinfo.linalg.prob_sample.binary (Python parameter) — Whether the sampled result is recorded as binary."><span class="n"><span class="pre">binary</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.prob_sample.proportional" title="quairkit.qinfo.linalg.prob_sample.proportional (Python parameter) — Whether the counts are shown in proportion"><span class="n"><span class="pre">proportional</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample" title="Link to this definition">¶</a></dt>
+<dd><p>Sample from a probability distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.prob_sample-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.prob_sample.distribution"><span class="sig-name descname">distribution</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample.distribution" title="Permalink to this definition">¶</a></dt><dd><p>The probability distribution.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.prob_sample.shots"><span class="sig-name descname">shots</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample.shots" title="Permalink to this definition">¶</a></dt><dd><p>The number of shots. Defaults to 1024.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.prob_sample.binary"><span class="sig-name descname">binary</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample.binary" title="Permalink to this definition">¶</a></dt><dd><p>Whether the sampled result is recorded as binary. Defaults to True.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.prob_sample.proportional"><span class="sig-name descname">proportional</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample.proportional" title="Permalink to this definition">¶</a></dt><dd><p>Whether the counts are shown in proportion</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.prob_sample-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>A dictionary containing the ordered sampled results and their counts.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.prob_sample-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.prob_sample-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Dict</em>[str, int | float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.schmidt_decompose">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">schmidt_decompose</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.schmidt_decompose.psi" title="quairkit.qinfo.linalg.schmidt_decompose.psi (Python parameter) — State vector form of the quantum state, with shape (2**n)"><span class="n"><span class="pre">psi</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.schmidt_decompose.sys_A" title="quairkit.qinfo.linalg.schmidt_decompose.sys_A (Python parameter) — Qubit indices to be included in subsystem A (other qubits are included in subsystem B), default are the first half qubits of \lvert \psi\rangle"><span class="n"><span class="pre">sys_A</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.schmidt_decompose" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the Schmidt decomposition of a quantum state <span class="math notranslate nohighlight">\(\lvert\psi\rangle=\sum_ic_i\lvert i_A\rangle\otimes\lvert i_B \rangle\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.schmidt_decompose-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.schmidt_decompose-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.schmidt_decompose.psi"><span class="sig-name descname">psi</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.schmidt_decompose.psi" title="Permalink to this definition">¶</a></dt><dd><p>State vector form of the quantum state, with shape (2**n)</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.schmidt_decompose.sys_A"><span class="sig-name descname">sys_A</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | None</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.schmidt_decompose.sys_A" title="Permalink to this definition">¶</a></dt><dd><p>Qubit indices to be included in subsystem A (other qubits are included in subsystem B), default are the first half qubits of <span class="math notranslate nohighlight">\(\lvert \psi\rangle\)</span></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.schmidt_decompose-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.schmidt_decompose-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><p>contains elements</p>
+<ul class="simple">
+<li><p>A one dimensional array composed of Schmidt coefficients, with shape <code class="docutils literal notranslate"><span class="pre">(k)</span></code></p></li>
+<li><p>A high dimensional array composed of bases for subsystem A <span class="math notranslate nohighlight">\(\lvert i_A\rangle\)</span>, with shape <code class="docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">2**m,</span> <span class="pre">1)</span></code></p></li>
+<li><p>A high dimensional array composed of bases for subsystem B <span class="math notranslate nohighlight">\(\lvert i_B\rangle\)</span> , with shape <code class="docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">2**m,</span> <span class="pre">1)</span></code></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.schmidt_decompose-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.schmidt_decompose-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>Tensor</em>, <em>Tensor</em>, <em>Tensor</em>] | <em>Tuple</em>[<em>ndarray</em>, <em>ndarray</em>, <em>ndarray</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.sqrtm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">sqrtm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.sqrtm.mat" title="quairkit.qinfo.linalg.sqrtm.mat (Python parameter) — Input matrix."><span class="n"><span class="pre">mat</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.sqrtm" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate square root of a matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.sqrtm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.sqrtm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.sqrtm.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.sqrtm.mat" title="Permalink to this definition">¶</a></dt><dd><p>Input matrix.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.sqrtm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.sqrtm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The square root of the matrix</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.sqrtm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.sqrtm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.trace">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.trace.mat" title="quairkit.qinfo.linalg.trace.mat (Python parameter) — Input tensor, from which the diagonals are taken."><span class="n"><span class="pre">mat</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.trace.axis1" title="quairkit.qinfo.linalg.trace.axis1 (Python parameter) — The first axis of the 2-D sub-tensors along which the diagonals should be taken."><span class="n"><span class="pre">axis1</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="o">-</span><span class="mi">2</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.trace.axis2" title="quairkit.qinfo.linalg.trace.axis2 (Python parameter) — The second axis of the 2-D sub-tensors along which the diagonals should be taken."><span class="n"><span class="pre">axis2</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="o">-</span><span class="mi">1</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace" title="Link to this definition">¶</a></dt>
+<dd><p>Return the sum along diagonals of the tensor.</p>
+<p>If <span class="math notranslate nohighlight">\(mat\)</span> is 2-D tensor, the sum along its diagonal is returned.</p>
+<p>If <span class="math notranslate nohighlight">\(mat\)</span> has more than two dimensions, then the axes specified by <code class="docutils literal notranslate"><span class="pre">axis1</span></code> and <code class="docutils literal notranslate"><span class="pre">axis2</span></code> are used to determine the 2-D sub-tensors whose traces are returned. The shape of the resulting tensor is the same as the shape of <span class="math notranslate nohighlight">\(mat\)</span> with <code class="docutils literal notranslate"><span class="pre">axis1</span></code> and <code class="docutils literal notranslate"><span class="pre">axis2</span></code> removed.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.trace-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.trace.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.trace.mat" title="Permalink to this definition">¶</a></dt><dd><p>Input tensor, from which the diagonals are taken.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.trace.axis1"><span class="sig-name descname">axis1</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.trace.axis1" title="Permalink to this definition">¶</a></dt><dd><p>The first axis of the 2-D sub-tensors along which the diagonals should be taken. Defaults to -2.</p>
+</dd>
+<dt id="quairkit.qinfo.linalg.trace.axis2"><span class="sig-name descname">axis2</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.trace.axis2" title="Permalink to this definition">¶</a></dt><dd><p>The second axis of the 2-D sub-tensors along which the diagonals should be taken. Defaults to -1.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.trace-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The sum along the diagonals. If <span class="math notranslate nohighlight">\(mat\)</span> is 2-D tensor, the sum along its diagonal is returned. If <span class="math notranslate nohighlight">\(mat\)</span> has larger dimensions, then a tensor of sums along diagonals is returned.</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.trace-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – The 2-D tensor from which the diagonals should be taken is not square.</p>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.trace-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>The 2-D tensor/array from which the diagonals is taken should be square.</p>
+</div>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.qinfo.linalg.trace_norm">
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.linalg.</span></span><span class="sig-name descname"><span class="pre">trace_norm</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.linalg.trace_norm.mat" title="quairkit.qinfo.linalg.trace_norm.mat (Python parameter) — matrix"><span class="n"><span class="pre">mat</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace_norm" title="Link to this definition">¶</a></dt>
+<dd><p>tool for calculation of trace norm</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.qinfo.linalg.trace_norm-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace_norm-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.qinfo.linalg.trace_norm.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | State</span></span><a class="headerlink" href="#quairkit.qinfo.linalg.trace_norm.mat" title="Permalink to this definition">¶</a></dt><dd><p>matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.qinfo.linalg.trace_norm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace_norm-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>trace norm of input matrix</p>
+</dd>
+<dt class="field-odd" id="quairkit.qinfo.linalg.trace_norm-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.linalg.trace_norm-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="quairkit.qinfo.check.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.qinfo.check" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              quairkit.qinfo.check
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="quairkit.qinfo.qinfo.html" class="md-footer__link md-footer__link--next" aria-label="Next: quairkit.qinfo.qinfo" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              quairkit.qinfo.qinfo
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

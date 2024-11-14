@@ -1,0 +1,1396 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Constructing Quantum Circuits in QuAIRKit - QuAIRKit</title>
+      
+    
+    
+      
+        
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Constructing-quantum-circuits" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Constructing Quantum Circuits in QuAIRKit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../tutorials.html"><span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span></a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        <span title="/tutorials.feature.rst (reference label)" class="md-ellipsis">tutorials.<wbr>feature</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../tutorials.introduction.html"><span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span></a>
+          
+            <label for="__nav_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="tutorials.introduction" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Hamiltonian.html" class="md-nav__link">
+        <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)" class="md-ellipsis">Hamiltonian in Qu<wbr>AIRKit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span title="/tutorials/introduction/circuit.ipynb (reference label)" class="md-ellipsis">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/tutorials/introduction/circuit.ipynb (reference label)" class="md-ellipsis">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Constructing-quantum-circuits" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#constructing-quantum-circuits (reference label)" class="md-ellipsis">Constructing quantum circuits</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructing quantum circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Add-operations" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-operations (reference label)" class="md-ellipsis">Add operations</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-custom-gates" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-custom-gates (reference label)" class="md-ellipsis">Add custom gates</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-quantum-channels" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-quantum-channels (reference label)" class="md-ellipsis">Add quantum channels</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-custom-quantum-channels" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-custom-quantum-channels (reference label)" class="md-ellipsis">Add custom quantum channels</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-circuit-templates" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-circuit-templates (reference label)" class="md-ellipsis">Add circuit templates</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Operator-management" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#operator-management (reference label)" class="md-ellipsis">Operator management</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Circuit-execution" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#circuit-execution (reference label)" class="md-ellipsis">Circuit execution</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Other-properties" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#other-properties (reference label)" class="md-ellipsis">Other properties</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#references (reference label)" class="md-ellipsis">References</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="measure.html" class="md-nav__link">
+        <span title="/tutorials/introduction/measure.ipynb (reference label)" class="md-ellipsis">Measuring quantum states in Qu<wbr>AIRKit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="operator.html" class="md-nav__link">
+        <span title="/tutorials/introduction/operator.ipynb (reference label)" class="md-ellipsis">Quantum Gates and Quantum Channels</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qinfo.html" class="md-nav__link">
+        <span title="/tutorials/introduction/qinfo.ipynb (reference label)" class="md-ellipsis">Quantum information tools</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="state.html" class="md-nav__link">
+        <span title="/tutorials/introduction/state.ipynb (reference label)" class="md-ellipsis">Manipulation of Quantum States in Qu<wbr>AIRKit</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="training.html" class="md-nav__link">
+        <span title="/tutorials/introduction/training.ipynb (reference label)" class="md-ellipsis">Training parameterized quantum circuits</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Constructing-quantum-circuits" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#constructing-quantum-circuits (reference label)" class="md-ellipsis">Constructing quantum circuits</span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructing quantum circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Add-operations" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-operations (reference label)" class="md-ellipsis">Add operations</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-custom-gates" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-custom-gates (reference label)" class="md-ellipsis">Add custom gates</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-quantum-channels" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-quantum-channels (reference label)" class="md-ellipsis">Add quantum channels</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-custom-quantum-channels" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-custom-quantum-channels (reference label)" class="md-ellipsis">Add custom quantum channels</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Add-circuit-templates" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#add-circuit-templates (reference label)" class="md-ellipsis">Add circuit templates</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Operator-management" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#operator-management (reference label)" class="md-ellipsis">Operator management</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Circuit-execution" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#circuit-execution (reference label)" class="md-ellipsis">Circuit execution</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Other-properties" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#other-properties (reference label)" class="md-ellipsis">Other properties</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    <span title="/tutorials/introduction/circuit.ipynb#references (reference label)" class="md-ellipsis">References</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="Constructing-Quantum-Circuits-in-QuAIRKit">Constructing Quantum Circuits in QuAIRKit<a class="headerlink" href="#Constructing-Quantum-Circuits-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>A quantum circuit is a series of operations, including quantum gates, initializations of qubits to known values, measurements, that act on qubits to perform a quantum algorithm. Circuits are written such that the horizontal axis is time, starting at the left-hand side and ending at the right. Horizontal lines are qubits, and doubled lines represent classical bits. The items that are connected by these lines are operations performed on the qubits, such as measurements or gates. These lines define
+the sequence of events and are usually not physical cables QuAIRKit uses the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class to represent quantum circuits. In this tutorial, we will learn how to manipulate quantum circuits in QuAIRKit.</p>
+<p><strong>Table of contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Constructing-quantum-circuits"><span class="std std-ref">Constructing quantum circuits</span></a></p>
+<ul>
+<li><p>Add gates</p></li>
+<li><p><a class="reference internal" href="#Add-custom-gates"><span class="std std-ref">Add custom gates</span></a></p></li>
+<li><p><a class="reference internal" href="#Add-quantum-channels"><span class="std std-ref">Add quantum channels</span></a></p></li>
+<li><p><a class="reference internal" href="#Add-custom-quantum-channels"><span class="std std-ref">Add custom quantum channels</span></a></p></li>
+<li><p><a class="reference internal" href="#Add-circuit-templates"><span class="std std-ref">Add circuit templates</span></a></p></li>
+<li><p><a class="reference internal" href="#Operator-management"><span class="std std-ref">Operator management</span></a></p></li>
+<li><p>Execution</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Other-properties"><span class="std std-ref">Other properties</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import numpy as np
+import torch
+
+import quairkit as qkit
+from quairkit import Circuit
+from quairkit.database import *
+from quairkit.operator import RZ, ChoiRepr, KrausRepr, StinespringRepr, Oracle
+from quairkit.qinfo import *
+</code></pre></div>
+</div>
+</div>
+<h2 id="Constructing-quantum-circuits">Constructing quantum circuits<a class="headerlink" href="#Constructing-quantum-circuits" title="Link to this heading">¶</a></h2>
+<p>In QuAIRKit, circuits can be generated with or without specifying the total number of qubits.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[21]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
+cir_static = Circuit(num_qubits)  # construct a circuit with specifying the number of qubits
+
+cir = Circuit()  # Create a dynamic circuit (without specifying the number of qubits)
+</code></pre></div>
+</div>
+</div>
+<h3 id="Add-operations">Add operations<a class="headerlink" href="#Add-operations" title="Link to this heading">¶</a></h3>
+<p>Fixed gates can be directly called from the attributes of the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class. The semantic rule for specifying the locations added operations is as follows:</p>
+<ul class="simple">
+<li><p>No inputs: The operations are added across all qubits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: The single-qubit operation is added to the specified qubit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">List[int]</span></code>: The single-qubit operation is added across the specified qubits, or the multi-qubit operation is added across the specified qubits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">List[List[int]]</span></code>: The multi-qubit operation is added across different groups of specified qubits.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[22]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.h(0)  # Add Hadamard gate to qubit 0
+cir.x([0, 1])  # Add X gate to qubit 0 and 1
+cir.cx([0, 1])  # Add CNOT gate to qubit 0 and 1
+print(&quot;the diagram of a quantum circuit:&quot;)
+cir.plot()
+print(f&quot;the total number of qubit of the circuit is {cir.num_qubits}&quot;)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_5_1.png" src="../../_images/tutorials_introduction_circuit_5_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the total number of qubit of the circuit is 2
+</pre></div></div>
+</div>
+<p>As the quantum circuit (with the initialization and measurement stages omitted) just represents a unitary evolution, we can express the whole things a matrix. We must follows the following rules: - Composition across wires is achieved by the tensor product. - Composition along (sets of) wires is achieved by the normal matrix product, but <strong>right to left</strong>.</p>
+<p>For example, the circuit we just constructed is equal to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}U = \text{CNOT} \times (X\otimes X) \times (H \otimes I_{2}) = \frac{1}{\sqrt{2}}
+\begin{bmatrix}
+0&amp;1&amp;0&amp;-1 \\
+1&amp;0&amp;-1&amp;0 \\
+1&amp;0&amp;1&amp;0 \\
+0&amp;1&amp;0&amp;1
+\end{bmatrix}, \tag{1}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(I_{2}\)</span> is the <span class="math notranslate nohighlight">\(2\times 2\)</span> identity. We can verify this equality by <code class="docutils literal notranslate"><span class="pre">Circuit.unitary_matrix</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[23]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;the unitary matrix of the circuit:\n{cir.unitary_matrix()}&quot;)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the unitary matrix of the circuit:
+tensor([[ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j, -0.7071+0.j],
+        [ 0.7071+0.j,  0.0000+0.j, -0.7071+0.j,  0.0000+0.j],
+        [ 0.7071+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j],
+        [ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.7071+0.j]])
+</pre></div></div>
+</div>
+<p>We can add more different types of gates, and change the total number of qubits of the circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[24]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.swap([[1, 2], [0, 2]])  # Add SWAP gate to qubit 1 and 2, and qubit 0 and 2
+cir.z()  # Add Z gate to all qubits
+cir.cy()  # Add CY gate in cycle
+print(&quot;the diagram of the quantum circuit with more gates:&quot;)
+cir.plot()
+print(f&quot;the total number of qubit of the circuit is {cir.num_qubits}&quot;)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of the quantum circuit with more gates:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_9_1.png" src="../../_images/tutorials_introduction_circuit_9_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the total number of qubit of the circuit is 3
+</pre></div></div>
+</div>
+<p>When the number of qubits is not specified, the total number of qubits will be changed as operations are added to the circuit. However, please note that, in this case, one cannot add the first operation without specifying the location.</p>
+<p>For parametrized gates, <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> can add the gate with randomly generated parameters, or you can specify them as keyword arguments.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[25]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.rx() # Add Rx gate to all qubits with random parameters
+cir.rx([0, 1], param=np.arange(2)) # Add RX gate to the first two qubits with specified parameters
+
+cir.u3([0]) # Add universal single qubit gate
+cir.universal_two_qubits([0, 1]) # Add universal two qubits gate
+cir.universal_three_qubits([0, 1, 2]) # Add universal three qubits gate
+
+print(&quot;the diagram of a quantum circuit with parametrized gates:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit with parametrized gates:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_12_1.png" src="../../_images/tutorials_introduction_circuit_12_1.png" />
+</div>
+</div>
+<h3 id="Add-custom-gates">Add custom gates<a class="headerlink" href="#Add-custom-gates" title="Link to this heading">¶</a></h3>
+<p>We have shown how to insert a gate into a <code class="docutils literal notranslate"><span class="pre">Circuit</span></code>. Moreover, one can add custom gates by specifying the matrix representation of the gate. This can be done through <code class="docutils literal notranslate"><span class="pre">Circuit.oracle</span></code>.</p>
+<p>For instance, consider the <span class="math notranslate nohighlight">\(n\)</span>-qubit inverse quantum Fourier transformation (QFT). It is a unitary operation whose matrix is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{QFT}^{\dagger}=\frac{1}{\sqrt{N}}
+\begin{bmatrix}
+1&amp;1&amp;1&amp;\dots&amp;1\\
+1&amp;\omega^{N-1}&amp;\omega^{N-2}&amp;\dots&amp;\omega\\
+1&amp;\omega^{2(N-1)}&amp;\omega^{2(N-2)}&amp;\dots&amp;\omega^{2}\\
+\vdots&amp;\vdots&amp;\vdots&amp;\dots&amp;\vdots\\
+1&amp;\omega^{(N-1)(N-1)}&amp;\omega^{(N-1)(N-2)}&amp;\dots&amp;\omega^{N-1}\\
+\end{bmatrix}, \tag{2}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N=2^{n}\)</span> is the dimension of the Hilbert space and <span class="math notranslate nohighlight">\(\omega=e^{2\pi i/N}\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[26]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=2)  # construct a 2-qubit quantum Fourier transformation (QFT) operator
+qft_inverse = dagger(qft_mat)  # get the inverse QFT
+
+cir.oracle(qft_inverse, qubits_idx=[0, 1], latex_name=r&#39;$\text{QFT}_{2}^{\dagger}$&#39;)  # add custom gate
+
+print(&quot;the diagram of a quantum circuit with a custom gate:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit with a custom gate:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_14_1.png" src="../../_images/tutorials_introduction_circuit_14_1.png" />
+</div>
+</div>
+<p>Users can also implement custom gates using <code class="docutils literal notranslate"><span class="pre">Circuit.append</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[27]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=3)  # construct a 3-qubit quantum Fourier transformation (QFT) operator
+qft_inverse = dagger(qft_mat)  # get the inverse QFT
+custom_unitary = Oracle(qft_inverse, gate_info={&#39;texname&#39;: r&#39;$QFT_{3}^{\dagger}$&#39;})
+
+cir.append(custom_unitary)
+
+print(&quot;the diagram of a quantum circuit with custom gates:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit with custom gates:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_16_1.png" src="../../_images/tutorials_introduction_circuit_16_1.png" />
+</div>
+</div>
+<p>Furthermore, in QuAIRKit, adding a controlled custom gate is supported.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[28]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.control_oracle(random_unitary(num_qubits=2), qubits_idx=[0, 1, 2], gate_name=&quot;O&quot;)
+
+print(&quot;the diagram of a quantum circuit with a controlled custom gate:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit with a controlled custom gate:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_18_1.png" src="../../_images/tutorials_introduction_circuit_18_1.png" />
+</div>
+</div>
+<h3 id="Add-quantum-channels">Add quantum channels<a class="headerlink" href="#Add-quantum-channels" title="Link to this heading">¶</a></h3>
+<p>Similar construction semantic applies to quantum channels such as depolarizing channel, bit-phase flip channel and so on. However, the related plot logic is not supported yet.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[29]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.depolarizing(prob=0.1, qubits_idx=[0])  # add a depolarizing channel (with probability 0.1) to qubit 0
+cir.bit_phase_flip(0.2)  # Add bit-phase flip channels (with probability 0.2) to all qubits
+</code></pre></div>
+</div>
+</div>
+<h3 id="Add-custom-quantum-channels">Add custom quantum channels<a class="headerlink" href="#Add-custom-quantum-channels" title="Link to this heading">¶</a></h3>
+<p>One can also add a custom quantum channel to a <code class="docutils literal notranslate"><span class="pre">Circuit</span></code>, where the quantum channel can be in Choi, Kraus, or Stinespring representations. We show how to add a custom channel using these three different representations.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[30]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits=3)
+replacement_choi_repr = replacement_choi(rho)  # replacement channel in Choi representation
+cir.choi_channel(replacement_choi_repr, system_idx=[0, 1, 2])  # add replacement channel in Choi representation
+
+reset_kraus_repr = reset_kraus([0.1, 0.2])  # reset channel in Kraus representation
+cir.kraus_channel(reset_kraus_repr, system_idx=2)  # add reset channel in Kraus representation
+
+random_stin_repr = random_channel(num_systems=1, target=&quot;stinespring&quot;)  # random single-qubit channel in Stinespring representation
+cir.stinespring_channel(random_stin_repr, system_idx=1)  # add random channel in Stinespring representation
+</code></pre></div>
+</div>
+</div>
+<p>Similarly, you can implement custom channels using <code class="docutils literal notranslate"><span class="pre">Circuit.append</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[31]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>choi_op = random_channel(num_systems=2, target=&quot;choi&quot;)
+choi_repr = ChoiRepr(choi_op, system_idx=[1, 2])
+cir.append(choi_repr)
+
+kraus_op = random_channel(num_systems=1, target=&quot;kraus&quot;)
+kraus_repr = KrausRepr(kraus_op, system_idx=0)
+cir.append(kraus_repr)
+
+stine_op = random_channel(num_systems=3, target=&quot;stinespring&quot;)
+stine_repr = StinespringRepr(stine_op, system_idx=[0, 1, 2])
+cir.append(stine_repr)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[31]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Circuit(
+  (0): H()
+  (1): X()
+  (2): CNOT()
+  (3): SWAP()
+  (4): Z()
+  (5): CY()
+  (6): RX()
+  (7): RX()
+  (8): U3()
+  (9): UniversalTwoQubits()
+  (10): UniversalThreeQubits()
+  (11): Oracle()
+  (12): Oracle()
+  (13): ControlOracle()
+  (14): Depolarizing()
+  (15): BitPhaseFlip()
+  (16): ChoiRepr()
+  (17): KrausRepr()
+  (18): StinespringRepr()
+  (19): ChoiRepr()
+  (20): KrausRepr()
+  (21): StinespringRepr()
+)
+</pre></div></div>
+</div>
+<p>More available operations can be found in the <a class="reference external" href="www.quairkit.com">API document</a>.</p>
+<h3 id="Add-circuit-templates">Add circuit templates<a class="headerlink" href="#Add-circuit-templates" title="Link to this heading">¶</a></h3>
+<p>QuAIRKit provides predefined circuit templates, or ansatz consisting of a sequence of gates applied to qubits. Note that the templates are only available for the circuits with a known number of qubits.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[32]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
+cir = Circuit(num_qubits)
+
+cir.linear_entangled_layer(depth=1)  # add a linear entangled layer
+
+cir.real_block_layer(depth=2)  # add real block layers in depth 2
+cir.real_entangled_layer(depth=1)  # add a real entangled layer
+
+cir.complex_block_layer(depth=1)  # add a complex block layer
+cir.complex_entangled_layer(depth=1)  # add a complex entangled layer
+
+print(&quot;the diagram of a quantum circuit with different kinds of layers:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit with different kinds of layers:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_27_1.png" src="../../_images/tutorials_introduction_circuit_27_1.png" />
+</div>
+</div>
+<h3 id="Operator-management">Operator management<a class="headerlink" href="#Operator-management" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> is essentially a list of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> objects. Thus, one can access the operations by indexing the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[33]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The matrix of the gate at the 5th position is\n&quot;, cir[4].matrix)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The matrix of the gate at the 5th position is
+ tensor([[[ 0.7492+0.j, -0.6624+0.j],
+         [ 0.6624+0.j,  0.7492+0.j]],
+
+        [[ 0.8098+0.j, -0.5868+0.j],
+         [ 0.5868+0.j,  0.8098+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)
+</pre></div></div>
+</div>
+<p>Note that the order here is from left to right.</p>
+<p>Users can also add or remove the operations for advanced setup.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[34]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(num_qubits=3)
+
+# Set parameters and customize quantum gates. Here we select Ry, Rx, Rz gates
+param = np.random.rand(2)
+
+# By default, randomly generates a set of parameters
+rz_gate = RZ(param=param, qubits_idx=[1, 2])
+
+# Add quantum gates
+cir.ry([0, 2])
+cir.rx([0, 1])
+cir.insert(index=2, module=rz_gate)  # index where to insert
+
+print(&quot;The quantum circuit after adding gates is: &quot;)
+cir.plot()
+
+cir.pop(1)  # Remove Rx gate
+print(&quot;The quantum circuit after removing gates is:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The quantum circuit after adding gates is:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_32_1.png" src="../../_images/tutorials_introduction_circuit_32_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The quantum circuit after removing gates is:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_circuit_32_3.png" src="../../_images/tutorials_introduction_circuit_32_3.png" />
+</div>
+</div>
+<h3 id="Circuit-execution">Circuit execution<a class="headerlink" href="#Circuit-execution" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object can be executed by calling the object itself, and you can apply the circuit to a specific initial state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[35]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>output_state = cir()  # Run the circuit with initial state |0&gt;
+print(&quot;the output state for inputting zero state is:&quot;, output_state)
+
+rho = random_state(num_qubits=3)
+output_state = cir(rho)  # Run the circuit with initial state sigma
+print(&quot;the output state for inputting state rho is:&quot;, output_state)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the output state for inputting zero state is:
+---------------------------------------------------
+ Backend: state_vector
+ System dimension: [2, 2, 2]
+ System sequence: [2, 1, 0]
+[0.67-0.62j 0.13-0.12j 0.  +0.j   0.  +0.j   0.35-0.07j 0.07-0.01j
+ 0.  +0.j   0.  +0.j  ]
+---------------------------------------------------
+
+the output state for inputting state rho is:
+---------------------------------------------------
+ Backend: density_matrix
+ System dimension: [2, 2, 2]
+ System sequence: [2, 1, 0]
+[[ 0.13+0.j   -0.03-0.03j -0.02+0.06j  0.02-0.01j -0.01+0.05j  0.04+0.1j
+  -0.04-0.03j  0.06-0.03j]
+ [-0.03+0.03j  0.18-0.j   -0.03-0.02j -0.13+0.01j -0.07+0.j    0.01-0.01j
+   0.  -0.02j -0.09-0.02j]
+ [-0.02-0.06j -0.03+0.02j  0.1 +0.j    0.05+0.01j  0.  -0.02j  0.02-0.03j
+   0.04+0.03j -0.  -0.03j]
+ [ 0.02+0.01j -0.13-0.01j  0.05-0.01j  0.15+0.j    0.03+0.01j -0.05+0.03j
+   0.02-0.02j  0.08+0.03j]
+ [-0.01-0.05j -0.07-0.j    0.  +0.02j  0.03-0.01j  0.11+0.j    0.04-0.01j
+  -0.06+0.04j  0.03-0.j  ]
+ [ 0.04-0.1j   0.01+0.01j  0.02+0.03j -0.05-0.03j  0.04+0.01j  0.12+0.j
+  -0.05+0.04j -0.03-0.07j]
+ [-0.04+0.03j  0.  +0.02j  0.04-0.03j  0.02+0.02j -0.06-0.04j -0.05-0.04j
+   0.09+0.j   -0.01+0.02j]
+ [ 0.06+0.03j -0.09+0.02j -0.  +0.03j  0.08-0.03j  0.03+0.j   -0.03+0.07j
+  -0.01-0.02j  0.13+0.j  ]]
+---------------------------------------------------
+
+</pre></div></div>
+</div>
+<h2 id="Other-properties">Other properties<a class="headerlink" href="#Other-properties" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> Class has other properties for further information and manipulation. For example, it includes properties like <code class="docutils literal notranslate"><span class="pre">depth</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_history</span></code>, <code class="docutils literal notranslate"><span class="pre">unitary_matrix</span></code> and so on.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[36]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the circuit depth is&quot;, cir.depth, &quot;\n&quot;)
+
+print(&quot;the gate history of the circuit is&quot;, cir.gate_history, &quot;\n&quot;)
+
+print(&quot;the qubit history of the circuit is&quot;, cir.system_history)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the circuit depth is 2
+
+the gate history of the circuit is [{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[0.3819]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.7412]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.9501]])}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.5337]])}]
+
+the qubit history of the circuit is [[[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[0.3819]], grad_fn=&lt;SelectBackward0&gt;)}, 0]], [[{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.9501]])}, 2]], [[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.7412]], grad_fn=&lt;SelectBackward0&gt;)}, 1], [{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.5337]])}, 3]]]
+</pre></div></div>
+</div>
+<p>Additionally, one can update the parameters of parameterized gates (if they exist) using the <code class="docutils literal notranslate"><span class="pre">update_param</span></code> method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[37]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the trainable parameters of entire circuit are&quot;, cir.param)
+
+cir.update_param(torch.ones_like(cir.param))  # update the parameters of the circuit
+print(&quot;the updated trainable parameters of entire circuit are&quot;, cir.param)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the trainable parameters of entire circuit are tensor([0.3819, 0.7412])
+the updated trainable parameters of entire circuit are tensor([1., 1.])
+</pre></div></div>
+</div>
+<p>It is worth noting that <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> is inherently a subclass of <code class="docutils literal notranslate"><span class="pre">torch.Module</span></code>, implying that variational quantum circuit can be used as a part of the neural network model in PyTorch.</p>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Nielsen, Michael A., and Isaac L. Chuang. <em>Quantum computation and quantum information</em>. Cambridge university press, 2010.</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td></td>
+<td><p>unitary matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\text{CNOT}\)</span></p></td>
+<td></td>
+<td><p>controlled-NOT gate</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(X\)</span></p></td>
+<td></td>
+<td><p>Pauli X gate</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td></td>
+<td><p>Hadamard gate</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(R_{x/y/z}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(R_{x/y/z}(\theta)\)</span></p></td>
+<td><p>rotation wrt. the axis of <span class="math notranslate nohighlight">\(X\)</span>/<span class="math notranslate nohighlight">\(Y\)</span>/<span class="math notranslate nohighlight">\(Z\)</span> (with angle <span class="math notranslate nohighlight">\(\theta\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(I_{2}\)</span></p></td>
+<td><p>(<span class="math notranslate nohighlight">\(2\times 2\)</span>) identity matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\text{QFT}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{QFT}_n\)</span></p></td>
+<td><p>(<span class="math notranslate nohighlight">\(n\)</span>-qubit) quantum Fourier transformation matrix</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[38]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.2.0
+torch: 2.4.1+cpu
+numpy: 1.26.0
+scipy: 1.14.1
+matplotlib: 3.9.2
+---------SYSTEM---------
+Python version: 3.10.15
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="Hamiltonian.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hamiltonian in QuAIRKit" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Hamiltonian in QuAIRKit
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="measure.html" class="md-footer__link md-footer__link--next" aria-label="Next: Measuring quantum states in QuAIRKit" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Measuring quantum states in QuAIRKit
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>
