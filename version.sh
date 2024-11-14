@@ -11,6 +11,7 @@ rm -rf docs/source
 
 # Retrieve all Git tags and store them in an array
 tags=($(git tag))
+echo "Tags available: ${tags[*]}"
 
 # Retrieve the name of the current branch
 current_branch=$(git rev-parse --abbrev-ref HEAD)
