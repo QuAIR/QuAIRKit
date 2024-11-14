@@ -36,7 +36,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.e0b5691b38cca82da.min.css?v=b1736040" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -570,17 +570,17 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import time
+from typing import Callable, List
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+import numpy as np
+import torch
+from matplotlib import pyplot as plt
 
-<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
-<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">Hamiltonian</span>
-<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+import quairkit as qkit
+from quairkit import Circuit, State, Hamiltonian
+from quairkit.database import *
+from quairkit.loss import *
 </code></pre></div>
 </div>
 </div>
@@ -588,7 +588,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1797587035</span><span class="p">)</span>  <span class="c1"># set a seed for reproducibility</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.set_seed(1797587035)  # set a seed for reproducibility
 </code></pre></div>
 </div>
 </div>
@@ -680,23 +680,23 @@ statistical physics and condensed matter theory.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">construct_cir</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Circuit</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Construct the quantum circuit for the variational quantum eigensolver.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def construct_cir(num_qubits: int, depth: int) -&gt; Circuit:
+    r&quot;&quot;&quot;Construct the quantum circuit for the variational quantum eigensolver.
 
-<span class="sd">    Args:</span>
-<span class="sd">        num_qubits: number of qubits in the quantum circuit.</span>
-<span class="sd">        depth: number of training layers in the circuit.</span>
+    Args:
+        num_qubits: number of qubits in the quantum circuit.
+        depth: number of training layers in the circuit.
 
-<span class="sd">    Returns:</span>
-<span class="sd">        the target quantum circuit</span>
+    Returns:
+        the target quantum circuit
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">circuit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+    &quot;&quot;&quot;
+    circuit = Circuit(num_qubits)
 
-    <span class="c1"># add qubit gates to the circuit</span>
-    <span class="n">circuit</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">(</span><span class="n">qubits_idx</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)),</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">)</span>
+    # add qubit gates to the circuit
+    circuit.complex_entangled_layer(qubits_idx=list(range(num_qubits)), depth=depth)
 
-    <span class="k">return</span> <span class="n">circuit</span>
+    return circuit
 </code></pre></div>
 </div>
 </div>
@@ -705,19 +705,19 @@ statistical physics and condensed matter theory.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_fcn</span><span class="p">(</span><span class="n">cir</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">exp_val</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">State</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the loss function of the quantum neural network.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def loss_fcn(cir: Circuit, exp_val: Callable[[State], torch.Tensor]) -&gt; torch.Tensor:
+    r&quot;&quot;&quot;Compute the loss function of the quantum neural network.
 
-<span class="sd">    Args:</span>
-<span class="sd">        cir: the input PQC</span>
-<span class="sd">        exp_val: the expectation value function</span>
+    Args:
+        cir: the input PQC
+        exp_val: the expectation value function
 
-<span class="sd">    Returns:</span>
-<span class="sd">        the loss value</span>
+    Returns:
+        the loss value
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">cir</span><span class="p">()</span>  <span class="c1"># input state is |0&gt; state by default</span>
-    <span class="k">return</span> <span class="n">exp_val</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>  <span class="c1"># calculate the expectation value of the output state</span>
+    &quot;&quot;&quot;
+    output = cir()  # input state is |0&gt; state by default
+    return exp_val(output)  # calculate the expectation value of the output state
 </code></pre></div>
 </div>
 </div>
@@ -726,52 +726,52 @@ statistical physics and condensed matter theory.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">display_results</span><span class="p">(</span><span class="n">loss_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">lambda_0</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Plot the training process and the final circuit.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def display_results(loss_list: List[float], lambda_0: int, circuit: Circuit) -&gt; None:
+    r&quot;&quot;&quot;Plot the training process and the final circuit.
 
-<span class="sd">    Args:</span>
-<span class="sd">        loss_list: the list of loss values during the training process</span>
-<span class="sd">        lambda_0: the ground-state energy</span>
-<span class="sd">        circuit: the final circuit</span>
+    Args:
+        loss_list: the list of loss values during the training process
+        lambda_0: the ground-state energy
+        circuit: the final circuit
 
-<span class="sd">    &quot;&quot;&quot;</span>
+    &quot;&quot;&quot;
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Circuit after training:&quot;</span><span class="p">)</span>
+    print(&quot;\n&quot; + &quot;-&quot; * 100 + &quot;\n&quot;)  # a line of &#39;-&#39; for better readability
+    print(&quot;Circuit after training:&quot;)
 
-    <span class="n">circuit</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>  <span class="c1"># plot the circuit</span>
+    circuit.plot()  # plot the circuit
 
-    <span class="n">num_itr</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">loss_list</span><span class="p">)</span>
-    <span class="n">base_line</span> <span class="o">=</span> <span class="n">lambda_0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_itr</span><span class="p">)</span>
-    <span class="n">list_itr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_itr</span><span class="p">))</span>
+    num_itr = len(loss_list)
+    base_line = lambda_0 * torch.ones(num_itr)
+    list_itr = list(range(num_itr))
 
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training process:&quot;</span><span class="p">)</span>
+    print(&quot;\n&quot; + &quot;-&quot; * 100 + &quot;\n&quot;)  # a line of &#39;-&#39; for better readability
+    print(&quot;Training process:&quot;)
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">list_itr</span><span class="p">,</span>
-        <span class="n">loss_list</span><span class="p">,</span>
-        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
-        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\left\langle {\psi \left( {\theta } \right)} \right|&quot;</span>
-        <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;H\left| {\psi \left( {\theta } \right)} \right\rangle $&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">list_itr</span><span class="p">,</span>
-        <span class="n">base_line</span><span class="p">,</span>
-        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
-        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ground-state energy $\lambda_0$&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of iteration&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Energy $\lambda_0$&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    plt.plot(
+        list_itr,
+        loss_list,
+        alpha=0.7,
+        marker=&quot;&quot;,
+        linestyle=&quot;-&quot;,
+        color=&quot;r&quot;,
+        label=r&quot;$\left\langle {\psi \left( {\theta } \right)} \right|&quot;
+        + r&quot;H\left| {\psi \left( {\theta } \right)} \right\rangle $&quot;,
+    )
+    plt.plot(
+        list_itr,
+        base_line,
+        alpha=0.7,
+        marker=&quot;&quot;,
+        linestyle=&quot;:&quot;,
+        color=&quot;b&quot;,
+        label=&quot;Ground-state energy $\lambda_0$&quot;,
+    )
+    plt.xlabel(&quot;Number of iteration&quot;)
+    plt.ylabel(r&quot;Energy $\lambda_0$&quot;)
+    plt.legend(loc=&quot;best&quot;)
+    plt.show()
 </code></pre></div>
 </div>
 </div>
@@ -780,49 +780,49 @@ statistical physics and condensed matter theory.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">num_itr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">LR</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">H</span><span class="p">:</span> <span class="n">Hamiltonian</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def train_model(num_itr: int, LR: float, num_qubits: int, depth: int, H: Hamiltonian) -&gt; None:
 
-    <span class="n">cir</span> <span class="o">=</span> <span class="n">construct_cir</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+    cir = construct_cir(num_qubits, depth)
 
-    <span class="c1"># calculate the eigenvalues and eigenvectors of the Hamiltonian</span>
-    <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+    # calculate the eigenvalues and eigenvectors of the Hamiltonian
+    eigenvalues = torch.linalg.eigvalsh(H.matrix)
 
-    <span class="c1"># take the minimum eigenvalue as the ground state energy</span>
-    <span class="n">lambda_0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">))</span>
+    # take the minimum eigenvalue as the ground state energy
+    lambda_0 = torch.min(torch.real(eigenvalues))
 
-    <span class="c1"># the expectation value operator of the Hamiltonian H</span>
-    <span class="n">exp_val</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    # the expectation value operator of the Hamiltonian H
+    exp_val = ExpecVal(H)
 
-    <span class="n">loss_list</span><span class="p">,</span> <span class="n">time_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    loss_list, time_list = [], []
 
-    <span class="c1"># cir is a Circuit type</span>
-    <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">LR</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">cir</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+    # cir is a Circuit type
+    opt = torch.optim.Adam(lr=LR, params=cir.parameters())
 
-    <span class="c1"># activate scheduler</span>
-    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    # activate scheduler
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, &quot;min&quot;, factor=0.5)
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training:&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">itr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_itr</span><span class="p">):</span>
-        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    print(&quot;Training:&quot;)
+    for itr in range(num_itr):
+        start_time = time.time()
+        opt.zero_grad()
 
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fcn</span><span class="p">(</span><span class="n">cir</span><span class="p">,</span> <span class="n">exp_val</span><span class="p">)</span>  <span class="c1"># compute loss</span>
+        loss = loss_fcn(cir, exp_val)  # compute loss
 
-        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># compute gradients</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update parameters</span>
-        <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>  <span class="c1"># activate scheduler</span>
+        loss.backward()  # compute gradients
+        opt.step()  # update parameters
+        scheduler.step(loss)  # activate scheduler
 
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-        <span class="n">loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-        <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+        loss = loss.item()
+        loss_list.append(loss)
+        time_list.append(time.time() - start_time)
 
-        <span class="k">if</span> <span class="n">itr</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">itr</span> <span class="o">==</span> <span class="n">num_itr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;iter: </span><span class="si">{</span><span class="n">itr</span><span class="si">}</span><span class="s2">, loss: </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, lr: </span><span class="si">{</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2E</span><span class="si">}</span><span class="s2">, avg_time: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">time_list</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span>
-            <span class="p">)</span>
-            <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
+        if itr % 20 == 0 or itr == num_itr - 1:
+            print(
+                f&quot;iter: {itr}, loss: {loss:.8f}, lr: {scheduler.get_last_lr()[0]:.2E}, avg_time: {np.mean(time_list):.4f}s&quot;
+            )
+            time_list = []
 
-    <span class="n">display_results</span><span class="p">(</span><span class="n">loss_list</span><span class="p">,</span> <span class="n">lambda_0</span><span class="p">,</span> <span class="n">cir</span><span class="p">)</span>
+    display_results(loss_list, lambda_0, cir)
 </code></pre></div>
 </div>
 </div>
@@ -831,17 +831,17 @@ statistical physics and condensed matter theory.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits in the system</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits in the system
 
-<span class="n">NUM_ITR</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># number of iterations for training</span>
-<span class="n">LR</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># learning rate for training</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># depth of the circuit</span>
+NUM_ITR = 200  # number of iterations for training
+LR = 0.05  # learning rate for training
+depth = 2  # depth of the circuit
 
-<span class="n">edges</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
-<span class="n">vertices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">hamiltonian</span> <span class="o">=</span> <span class="n">ising_hamiltonian</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>  <span class="c1"># the Ising Hamiltonian</span>
+edges = -torch.tensor([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
+vertices = torch.tensor([1, 1, 1])
+hamiltonian = ising_hamiltonian(edges, vertices)  # the Ising Hamiltonian
 
-<span class="n">train_model</span><span class="p">(</span><span class="n">NUM_ITR</span><span class="p">,</span> <span class="n">LR</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">hamiltonian</span><span class="p">)</span>
+train_model(NUM_ITR, LR, num_qubits, depth, hamiltonian)
 </code></pre></div>
 </div>
 </div>
@@ -949,7 +949,7 @@ Training process:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
 </code></pre></div>
 </div>
 </div>
@@ -1025,7 +1025,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    7.4.7.
+    8.1.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1041,7 +1041,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["latest"], "title": "latest", "version": "latest"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
