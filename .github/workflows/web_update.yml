@@ -20,6 +20,8 @@ jobs:
     steps:  
       - name: Checkout  # Step to checkout the repository's code.
         uses: actions/checkout@v4  # Uses the actions/checkout action to access the repository code.
+        with:
+          fetch-depth: 0  # Fetches all history for the repository.
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
