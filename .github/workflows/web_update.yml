@@ -32,6 +32,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+      - name: Install Pandoc  # Step to install Pandoc for document conversion.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
       - name: Install dependencies  # Step to install dependencies.
         run: |
           pip install quairkit sphinx_immaterial nbsphinx
