@@ -35,20 +35,26 @@ git fetch --all --tags
 
 # Loop through all tags and generate Sphinx documentation for each with specific conditions
 for tag in "${tags[@]}"; do
-    # Skip the "latest" version if it exists in the tags
+    # Skip the "latest" tag
     if [ "$tag" == "latest" ]; then
         continue
     fi
 
+    echo "Switching to tag $tag..."
+    git checkout $tag
+    if [ $? -ne 0 ]; then
+        echo "Failed to switch to tag $tag. Skipping..."
+        continue
+    fi
+
+    # Generate the Sphinx documentation for the tag
     case $tag in
         v0.1.0)
-            git checkout $tag
             python docs/update_quairkit_rst.py
             sphinx-build docs/sphinx_src docs/api/$tag
             rm -rf docs/sphinx_src
             ;;
         v0.2.0 | *)
-            git checkout $tag
             python docs/update_quairkit_rst.py
             cp -r tutorials docs/sphinx_src/
             sphinx-build docs/sphinx_src docs/api/$tag
