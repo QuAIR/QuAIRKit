@@ -28,4 +28,4 @@ The library of torch functions used in QuAIRKit.
 #
 # -----------------------------------------------------------------
 
-from . import check, linalg, qinfo
+from . import check, linalg, matrix, qinfo, representation

@@ -31,12 +31,12 @@ def _is_square(mat: torch.Tensor) -> bool:
     return mat.ndim >= 2 and mat.shape[-1] == mat.shape[-2]
 
 
-def _is_hermitian(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_hermitian(mat: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
     return (mat - utils.linalg._dagger(mat)).norm(dim=(-2, -1)) < eps
 
 
-def _is_positive(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_positive(mat: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
     
     herm_check = _is_hermitian(mat, eps)
@@ -45,8 +45,7 @@ def _is_positive(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor
     return herm_check & pos_check
 
 
-def _is_state_vector(vec: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
-    # assume the input is of shape [..., d, 1] or [d, 1]
+def _is_state_vector(vec: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     vec = vec.to(torch.complex128)
     eps = min(eps * vec.shape[-2], 1e-4)
     
@@ -54,7 +53,7 @@ def _is_state_vector(vec: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Te
     return (vec_bra @ vec - (1 + 0j)).norm(dim=(-2, -1)) < eps
 
 
-def _is_density_matrix(rho: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_density_matrix(rho: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     rho = rho.to(torch.complex128)
     eps = min(eps * rho.shape[-1], 1e-4)
     
@@ -63,12 +62,12 @@ def _is_density_matrix(rho: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.
     return is_trace_one & is_pos
 
 
-def _is_projector(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_projector(mat: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
     return (mat @ mat - mat).norm(dim=(-2, -1)) < eps
 
 
-def _is_isometry(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_isometry(mat: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     mat = mat.to(torch.complex128)
     dim = mat.shape[-1]
     eps = min(eps * dim, 1e-2)
@@ -77,11 +76,11 @@ def _is_isometry(mat: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor
     return (utils.linalg._dagger(mat) @ mat - identity).norm(dim=(-2, -1)) < eps
 
 
-def _is_unitary(mat: torch.Tensor, eps: Optional[float] = 1e-4) -> torch.Tensor:
+def _is_unitary(mat: torch.Tensor, eps: float = 1e-4) -> torch.Tensor:
     return _is_isometry(mat, eps) & _is_hermitian(utils.linalg._dagger(mat) @ mat, eps)
 
 
-def _is_ppt(density_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_ppt(density_op: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     density_op = density_op.to(torch.complex128)
     return utils.qinfo._negativity(density_op) <= eps
 
@@ -102,7 +101,7 @@ def _is_linear(
     func: Callable[[torch.Tensor], torch.Tensor],
     generator: Union[List[int], Callable[[], torch.Tensor]],
     input_dtype: torch.dtype,
-    eps: Optional[float] = 1e-5,
+    eps: float = 1e-5,
 ) -> torch.Tensor:
     list_err = []
     for _ in range(5):
@@ -117,7 +116,7 @@ def _is_linear(
     return torch.mean(torch.concat(list_err)) < eps
 
 
-def _is_povm(set_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_povm(set_op: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     dim, batch_shape, set_op = set_op.shape[-1], list(set_op.shape[:-3]), set_op.view([-1] + list(set_op.shape[-3:]))
     
     pos_check = _is_positive(set_op.view([-1, dim, dim]), eps)
@@ -129,7 +128,7 @@ def _is_povm(set_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
     return (pos_check & complete_check).view(batch_shape)
 
 
-def _is_pvm(set_op: torch.Tensor, eps: Optional[float] = 1e-6) -> torch.Tensor:
+def _is_pvm(set_op: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     set_op = set_op.to(torch.complex128)
     
     povm_check = _is_povm(set_op, eps)

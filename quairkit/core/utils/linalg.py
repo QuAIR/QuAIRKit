@@ -32,6 +32,7 @@ def _abs_norm(mat: torch.Tensor) -> float:
     norms = torch.norm(torch.abs(mat), dim=(-2, -1))
     return norms.item() if mat.ndim == 2 else norms.tolist()
 
+
 def _p_norm_herm(mat: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
     eigval = torch.linalg.eigvalsh(mat)
     norm = torch.abs(eigval).pow(p).sum(dim = len(list(mat.shape[:-2]))).pow(1 / p)
@@ -219,16 +220,6 @@ def _partial_trace_discontiguous(
     return _partial_trace(rho, traced_qubits, system_dim)
 
 
-def _zero(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
-    dtype = torch.float64 if dtype is None else dtype
-    return torch.tensor([0], dtype=dtype)
-
-
-def _one(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
-    dtype = torch.float64 if dtype is None else dtype
-    return torch.tensor([1], dtype=dtype)
-
-
 def _density_to_vector(rho: torch.Tensor) -> torch.Tensor: 
 
     # Handle a batch of density matrices
@@ -251,30 +242,34 @@ def _density_to_vector(rho: torch.Tensor) -> torch.Tensor:
     return eigvec[torch.arange(len(max_eigval_indices)), : ,max_eigval_indices].squeeze().unsqueeze(-1)
 
 
-
-def _trace(mat: torch.Tensor, axis1: Optional[int]=-2, axis2: Optional[int]=-1) -> torch.Tensor:
+def _trace(mat: torch.Tensor, axis1: int = -2, axis2: int =- 1) -> torch.Tensor:
     dia_elements = torch.diagonal(mat, offset=0 ,dim1=axis1, dim2=axis2)
-    return torch.sum(dia_elements, dim=-1, keepdim=False)
+    return torch.sum(dia_elements, dim=-1)
 
+
+def _kron(matrix_A: torch.Tensor, matrix_B: torch.Tensor) -> torch.Tensor:
+    r"""(batched) Kronecker product
+    
+    Args:
+        matrix_A: input (batched) matrix
+        matrix_B: input (batched) matrix
+    
+    Returns:
+        The Kronecker product of the two (batched) matrices
+    
+    Note:
+        See https://discuss.pytorch.org/t/kronecker-product/3919/11
+    """
+    mat_dim = torch.Size([matrix_A.shape[-2] * matrix_B.shape[-2], matrix_A.shape[-1] * matrix_B.shape[-1]])
+    output = matrix_A.unsqueeze(-1).unsqueeze(-3) * matrix_B.unsqueeze(-2).unsqueeze(-4)
+    batch_dim = output.shape[:-4]
+    return output.reshape(batch_dim + mat_dim)
 
 
 def _nkron( 
-    matrix_A: torch.Tensor, matrix_B: torch.Tensor, *args: torch.Tensor
+    matrix_1st: torch.Tensor, *args: torch.Tensor
 ) -> torch.Tensor:
-    batch_dim = list(matrix_A.shape[:-2])
-    batch_size = [int(np.prod(batch_dim))] 
-    
-    matrix_A = matrix_A.reshape(batch_size + list(matrix_A.shape[-2:]))
-    matrix_B = matrix_B.reshape(batch_size + list(matrix_B.shape[-2:]))
-    
-    def batch_kron(a, b):
-        siz1 = torch.Size([a.shape[-2] * b.shape[-2], a.shape[-1] * b.shape[-1]])
-        res = a.unsqueeze(-1).unsqueeze(-3) * b.unsqueeze(-2).unsqueeze(-4)
-        siz0 = res.shape[:-4]
-        return res.reshape(siz0 + siz1)
-        
-    initial_kron = torch.stack([torch.kron(matrix_A[i], matrix_B[i]) for i in range(matrix_A.size(0))])
-    return reduce(batch_kron, args, initial_kron).squeeze()
+    return reduce(_kron, args, matrix_1st).squeeze()
 
 
 def _partial_transpose(state: torch.Tensor, transpose_idx: List[int], system_dim: List[int]) -> torch.Tensor: 
@@ -472,8 +467,6 @@ class __Logm(torch.autograd.Function):
         return _adjoint(A, G, _logm_scipy)
 
 
-
-
 class __Sqrtm(torch.autograd.Function):
     @staticmethod
     def forward(ctx, A):
@@ -491,7 +484,6 @@ class __Sqrtm(torch.autograd.Function):
     def backward(ctx, G):
         (A,) = ctx.saved_tensors
         return _adjoint(A, G, _sqrtm_scipy)
-
 
 
 _logm = __Logm.apply
@@ -623,6 +615,5 @@ def _prob_sample(distributions: torch.Tensor, shots: int = 1024,
     
     keys = [f'{i:0{num_bits}b}' if binary else str(i) for i in range(num_elements)]
     
-    results = dict(OrderedDict((key, counts[:, i]) for i, key in enumerate(keys)))
-    
-    return results
+    results = OrderedDict((key, counts[:, i]) for i, key in enumerate(keys))
+    return dict(results)

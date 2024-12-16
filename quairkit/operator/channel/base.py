@@ -34,7 +34,7 @@ class Channel(Operator):
     r"""Basic class for quantum channels.
 
     Args:
-        type_repr: type of a representation. should be ``'choi'``, ``'kraus'``, ``'stinespring'``.
+        type_repr: type of a representation, should be ``'choi'``, ``'kraus'``, ``'stinespring'`` or ``'gate'``.
         representation: the representation of this channel. Defaults to ``None`` i.e. not specified.
         system_idx: indices of the system on which this channel acts on. Defaults to ``None``.
             i.e. list(range(number of acted systems)).
@@ -148,7 +148,7 @@ class Channel(Operator):
         if check_legality:
             identity = torch.eye(input_dim).to(device=mat.device).expand_as(mat)
             err = torch.norm(torch.abs(utils.linalg._dagger(mat) @ mat - identity)).item()
-            if err > min(1e-6 * input_dim, 0.01):
+            if err > min(1e-5 * input_dim, 0.01):
                 warnings.warn(
                     f"\nThe input gate matrix may not be a unitary: norm(U * U^d - I) = {err}.", UserWarning)
         

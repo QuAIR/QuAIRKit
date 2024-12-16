@@ -17,17 +17,14 @@ r"""
 Gate matrices.
 """
 
-import math
-from functools import reduce
 from typing import Callable, Optional
 
-import numpy as np
 import torch
 
 from .. import database
-from ..core import get_dtype
-from ..core.intrinsic import _get_complex_dtype
-from ..core.utils.linalg import _one, _unitary_transformation, _zero
+from ..core import get_dtype, utils
+from ..core.intrinsic import (_ArrayLike, _ParamLike, _SingleParamLike,
+                              _type_fetch, _type_transform)
 
 __all__ = [
     "phase",
@@ -79,9 +76,20 @@ def phase(dim: int) -> torch.Tensor:
 
     Returns:
         Phase operator for qudit
+
+    .. code-block:: python
+
+        dim = 2
+        phase_operator = phase(dim)
+        print(f'The phase_operator is:\n{phase_operator}')
+         
+    :: 
+    
+        The phase_operator is:
+        tensor([[ 1.+0.0000e+00j,  0.+0.0000e+00j],
+                [ 0.+0.0000e+00j, -1.+1.2246e-16j]])
     """
-    w = np.exp(2 * np.pi * 1j / dim)
-    return torch.from_numpy(np.diag([w ** i for i in range(dim)])).to(get_dtype())
+    return utils.matrix._phase(dim, get_dtype())
 
 
 def shift(dim: int) -> torch.Tensor:
@@ -92,11 +100,25 @@ def shift(dim: int) -> torch.Tensor:
 
     Returns:
         Shift operator for qudit
+
+    .. code-block:: python
+
+        dim = 2
+        shift_operator = shift(dim)
+        print(f'The shift_operator is:\n{shift_operator}')
+    
+    ::
+    
+        The shift_operator is:
+        tensor([[0.+0.j, 1.+0.j],
+                [1.+0.j, 0.+0.j]])
+
+        
     """
-    return torch.roll(torch.eye(dim), 1, dims=0).to(get_dtype())
+    return utils.matrix._shift(dim, get_dtype())
 
 
-def grover_matrix(oracle: torch.Tensor) -> torch.Tensor:
+def grover_matrix(oracle: _ArrayLike, dtype: Optional[torch.dtype] = None) -> _ArrayLike:
     r"""Construct the Grover operator based on ``oracle``.
 
     Args:
@@ -108,24 +130,29 @@ def grover_matrix(oracle: torch.Tensor) -> torch.Tensor:
     .. math::
 
         G = A (2 |0^n \rangle\langle 0^n| - I^n) A^\dagger \cdot (I - 2|1 \rangle\langle 1|) \otimes I^{n-1}
+        
+    .. code-block:: python
+
+        oracle = torch.tensor([[0, 1], [1, 0]], dtype=torch.cfloat)
+        grover_op = grover_matrix(oracle)
+        print(f'The grover_matrix is:\n{grover_op}')
+        
+    ::
+    
+        The grover_matrix is:
+        tensor([[-1.+0.j,  0.+0.j],
+                [ 0.+0.j, -1.+0.j]])
 
     """
-    complex_dtype = oracle.dtype
-    dimension = oracle.shape[0]
-    ket_zero = torch.eye(dimension, 1).to(complex_dtype)
-
-    diffusion_op = (2 + 0j) * ket_zero @ ket_zero.T - torch.eye(dimension).to(complex_dtype)
-    reflection_op = torch.kron(torch.tensor([[1, 0], [0, -1]], dtype=complex_dtype), torch.eye(dimension // 2))
-
-    return oracle @ diffusion_op @ oracle.conj().T @ reflection_op
+    oracle = _type_transform(oracle, "tensor")
+    return utils.matrix._grover(oracle)
 
 
-def qft_matrix(num_qubits: int, dtype: torch.dtype=get_dtype()) -> torch.Tensor:
+def qft_matrix(num_qubits: int) -> torch.Tensor:
     r"""Construct the quantum fourier transpose (QFT) gate.
 
     Args:
         num_qubits: number of qubits :math:`n` st. :math:`N = 2^n`.
-        dtype: the data type you used, default type is torch.complex64
 
     Returns:
         a gate in below matrix form, here :math:`\omega_N = \text{exp}(\frac{2 \pi i}{N})`
@@ -141,26 +168,25 @@ def qft_matrix(num_qubits: int, dtype: torch.dtype=get_dtype()) -> torch.Tensor:
                 1 & \omega_N^{N-1} & .. & \omega_N^{(N-1)^2}
             \end{bmatrix}
         \end{align}
+    
+    .. code-block:: python
+    
+        num_qubits = 1
+        qft_gate = qft_matrix(num_qubits)
+        print(f'The QTF gate is:\n{qft_gate}')
+        
+    ::
+    
+        The QTF gate is:
+        tensor([[ 0.7071+0.0000e+00j,  0.7071+0.0000e+00j],
+                [ 0.7071+0.0000e+00j, -0.7071+8.6596e-17j]])
+
 
     """
-    N = 2 ** num_qubits
-    omega_N = np.exp(1j * 2 * math.pi / N)
-
-    qft_mat = np.ones([N, N]).astype('complex128')
-    for i in range(1, N):
-        for j in range(1, N):
-            qft_mat[i, j] = omega_N ** ((i * j) % N)
-
-    return torch.tensor(qft_mat / math.sqrt(N)).to(dtype)
+    return utils.matrix._qft(num_qubits, get_dtype())
 
 
-# ------------------------------------------------- Split line -------------------------------------------------
-r"""
-    Belows are single-qubit matrices.
-"""
-
-
-def h(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def h() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -171,23 +197,24 @@ def h(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 1&-1
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of H gate.
 
+    .. code-block:: python
+    
+        H = h()
+        print(f'The Hadamard gate is:\n{H}')
+        
+    ::
+    
+        The Hadamard gate is:
+        tensor([[ 0.7071+0.j,  0.7071+0.j],
+                [ 0.7071+0.j, -0.7071+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    element = math.sqrt(2) / 2
-    gate_matrix = [
-        [element, element],
-        [element, -element],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._h(get_dtype())
 
 
-def s(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def s() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -198,22 +225,24 @@ def s(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 0&i
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of S gate.
 
+    .. code-block:: python
+    
+        S = s()
+        print(f'The S gate is:\n{S}')
+        
+    ::
+    
+        The S gate is:
+        tensor([[1.+0.j, 0.+0.j],
+                [0.+0.j, 0.+1.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0],
-        [0, 1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._s(get_dtype())
 
 
-def sdg(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def sdg() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -224,22 +253,24 @@ def sdg(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 0&-i
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of Sdg gate.
-
+    
+    .. code-block:: python
+    
+        Sdg = sdg()
+        print(f'The dagger of S gate is:\n{Sdg}')
+        
+    ::
+    
+        The dagger of S gate is:
+        tensor([[1.+0.j, 0.+0.j],
+                [0.+0.j, -0.-1.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0],
-        [0, -1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._sdg(get_dtype())
 
 
-def t(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def t() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -249,22 +280,26 @@ def t(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 0&e^\frac{i\pi}{4}
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of T gate.
 
+    .. code-block:: python
+    
+        T = t()
+        print(f'The T gate is:\n{T}')
+        
+    ::
+    
+        The T gate is:
+        tensor([[1.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.7071+0.7071j]])
+
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0],
-        [0, math.sqrt(2) / 2 + math.sqrt(2) / 2 * 1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    
+    return utils.matrix._t(get_dtype())
 
 
-def tdg(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def tdg() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -275,23 +310,27 @@ def tdg(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 0&e^{-\frac{i\pi}{4}}
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
-        the matrix of Sdg gate.
+        the matrix of Tdg gate.
+
+    .. code-block:: python
+    
+        Tdg = tdg()
+        print(f'The dagger of T gate is:\n{Tdg}')
+        
+    ::
+    
+        The dagger of T gate is:
+        tensor([[1.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.7071-0.7071j]])
 
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0],
-        [0, math.sqrt(2) / 2 - math.sqrt(2) / 2 * 1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    
+    return utils.matrix._tdg(get_dtype())
 
 
-def eye(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
-    r"""Generate the matrix
+def eye(dim: int = 2) -> torch.Tensor:
+    r"""Generate the matrix (when dim = 2)
 
     .. math::
 
@@ -301,16 +340,26 @@ def eye(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
             \end{bmatrix}
 
     Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
+        dim: the dimension of the identity matrix. Defaults to the qubit case.
 
     Returns:
         the matrix of X gate.
 
+    .. code-block:: python
+   
+        I = eye()
+        print(f'The Identity Matrix is:\n{I}')
+        
+    ::
+    
+        The Identity Matrix is:
+        tensor([[1.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j]])
     """
-    return torch.eye(2, dtype=get_dtype() if dtype is None else dtype)
+    return utils.matrix._eye(dim, get_dtype())
 
 
-def x(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def x() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -320,22 +369,24 @@ def x(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 1 & 0
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of X gate.
 
+    .. code-block:: python
+    
+        X = x()
+        print(f'The Pauli X Matrix is:\n{X}')
+        
+    ::
+    
+        The Pauli X Matrix is:
+        tensor([[0.+0.j, 1.+0.j],
+                [1.+0.j, 0.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [0, 1],
-        [1, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._x(get_dtype())
 
 
-def y(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def y() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -345,22 +396,24 @@ def y(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 i & 0
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of Y gate.
 
+    .. code-block:: python
+   
+        Y = y()
+        print(f'The Pauli Y Matrix is:\n{Y}')
+        
+    ::
+    
+        The Pauli Y Matrix is:
+        tensor([[0.+0.j, -0.-1.j],
+                [0.+1.j, 0.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [0, -1j],
-        [1j, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._y(get_dtype())
 
 
-def z(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def z() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -370,22 +423,24 @@ def z(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 0 & -1
             \end{bmatrix}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of Z gate.
 
+    .. code-block:: python
+    
+        Z = z()
+        print(f'The Pauli Z Matrix is:\n{Z}')
+        
+    ::
+    
+        The Pauli Z Matrix is:
+        tensor([[ 1.+0.j,  0.+0.j],
+                [ 0.+0.j, -1.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0],
-        [0, -1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._z(get_dtype())
 
 
-def p(theta: torch.Tensor) -> torch.Tensor:
+def p(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -401,17 +456,24 @@ def p(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of P gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        p_matrix = p(theta)
+        print(f'The P Gate is:\n{p_matrix}')
+        
+    ::
+    
+        The P Gate is:
+        tensor([[1.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.7071+0.7071j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        _one(dtype), _zero(dtype),
-        _zero(dtype), torch.cos(theta) + 1j * torch.sin(theta),
-    ]
-    return torch.cat(gate_matrix).view([2, 2]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._p(theta)
+    return _type_transform(mat, type_str)
 
 
-def rx(theta: torch.Tensor) -> torch.Tensor:
+def rx(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -427,17 +489,24 @@ def rx(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of R_X gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        R_x = rx(theta)
+        print(f'The R_x Gate is:\n{R_x}')
+        
+    ::
+    
+        The R_x Gate is:
+        tensor([[0.9239+0.0000j, 0.0000-0.3827j],
+                [0.0000-0.3827j, 0.9239+0.0000j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        torch.cos(theta / 2).reshape([1]), -1j * torch.sin(theta / 2).reshape([1]),
-        -1j * torch.sin(theta / 2).reshape([1]), torch.cos(theta / 2).reshape([1]),
-    ]
-    return torch.cat(gate_matrix).view([2, 2]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._rx(theta)
+    return _type_transform(mat, type_str)
 
 
-def ry(theta: torch.Tensor) -> torch.Tensor:
+def ry(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -453,17 +522,24 @@ def ry(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of R_Y gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        R_y = ry(theta)
+        print(f'The R_y Gate is:\n{R_y}')
+        
+    ::
+    
+        The R_y Gate is:
+        tensor([[ 0.9239+0.j, -0.3827+0.j],
+                [ 0.3827+0.j,  0.9239+0.j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        torch.cos(theta / 2), (-torch.sin(theta / 2)),
-        torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix).view([2, 2]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._ry(theta)
+    return _type_transform(mat, type_str)
 
 
-def rz(theta: torch.Tensor) -> torch.Tensor:
+def rz(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -479,17 +555,25 @@ def rz(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of R_Z gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        R_z = rz(theta)
+        print(f'The R_z Gate is:\n{R_z}')
+    
+    ::
+    
+        The R_z Gate is:
+        tensor([[0.9239-0.3827j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.9239+0.3827j]])
+        
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        torch.exp(-1j * theta / 2), _zero(dtype),
-        _zero(dtype), torch.exp(1j * theta / 2)
-    ]
-    return torch.cat(gate_matrix).view([2, 2]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._rz(theta)
+    return _type_transform(mat, type_str)
 
 
-def u3(theta: torch.Tensor) -> torch.Tensor:
+def u3(theta: _ParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -508,26 +592,24 @@ def u3(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of U_3 gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([[torch.pi / 4], [torch.pi / 3], [torch.pi / 6]])
+        u3_matrix = u3(theta)
+        print(f'The U_3 Gate is:\n{u3_matrix}')
+        
+    ::
+    
+        The U_3 Gate is:
+        tensor([[ 9.2388e-01+0.0000j, -3.3141e-01-0.1913j],
+                [ 1.9134e-01+0.3314j, -4.0384e-08+0.9239j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([3, 1])
-    theta, phi, lam = theta[0], theta[1], theta[2]
-    gate_matrix = [
-        torch.cos(theta / 2),
-        -torch.exp(1j * lam) * torch.sin(theta / 2),
-        torch.exp(1j * phi) * torch.sin(theta / 2),
-        torch.exp(1j * (phi + lam)) * torch.cos(theta / 2)
-    ]
-    return torch.cat(gate_matrix).view([2, 2]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._u3(theta)
+    return _type_transform(mat, type_str)
 
 
-# ------------------------------------------------- Split line -------------------------------------------------
-r"""
-    Belows are multi-qubit matrices.
-"""
-
-
-def cnot(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def cnot() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -543,24 +625,26 @@ def cnot(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 \end{bmatrix}
         \end{align}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of CNOT gate.
-
+        
+    .. code-block:: python
+    
+        CNOT=cnot()
+        print(f'The CNOT Gate is:\n{CNOT}')
+        
+    ::
+    
+        The CNOT Gate is:
+        tensor([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j],
+                [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, 1],
-        [0, 0, 1, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._cnot(get_dtype())
 
 
-def cy(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def cy() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -576,24 +660,26 @@ def cy(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 \end{bmatrix}
         \end{align}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of CY gate.
 
+    .. code-block:: python
+    
+        CY=cy()
+        print(f'The CY Gate is:\n{CY}')
+        
+    ::
+    
+        The CY Gate is:
+        tensor([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, -0.-1.j],
+                [0.+0.j, 0.+0.j, 0.+1.j, 0.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, -1j],
-        [0, 0, 1j, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._cy(get_dtype())
 
 
-def cz(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def cz() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -609,24 +695,27 @@ def cz(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                 \end{bmatrix}
         \end{align}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of CZ gate.
 
+    .. code-block:: python
+    
+        CZ=cz()
+        print(f'The CZ Gate is:\n{CZ}')
+        
+    ::
+    
+        The CZ Gate is:
+        tensor([[ 1.+0.j,  0.+0.j,  0.+0.j,  0.+0.j],
+                [ 0.+0.j,  1.+0.j,  0.+0.j,  0.+0.j],
+                [ 0.+0.j,  0.+0.j,  1.+0.j,  0.+0.j],
+                [ 0.+0.j,  0.+0.j,  0.+0.j, -1.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, -1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._cz(get_dtype())
 
 
-def swap(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+
+def swap() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -647,18 +736,23 @@ def swap(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
     Returns:
         the matrix of SWAP gate.
 
+    .. code-block:: python
+    
+        SWAP=swap()
+        print(f'The SWAP Gate is:\n{SWAP}')
+        
+    ::
+    
+        The SWAP Gate is:
+        tensor([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 0, 1, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, 1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._swap(get_dtype())
 
 
-def cp(theta: torch.Tensor) -> torch.Tensor:
+def cp(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -679,19 +773,26 @@ def cp(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of CP gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        CP = cp(theta)
+        print(f'The CP Gate is:\n{CP}')
+        
+    ::
+    
+        The CP Gate is:
+        tensor([[1.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 1.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 1.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.7071+0.7071j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        _one(dtype), _zero(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), _one(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), _zero(dtype), _one(dtype), _zero(dtype),
-        _zero(dtype), _zero(dtype), _zero(dtype), torch.cos(theta) + 1j * torch.sin(theta),
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._cp(theta)
+    return _type_transform(mat, type_str)
 
 
-def crx(theta: torch.Tensor) -> torch.Tensor:
+def crx(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -713,19 +814,26 @@ def crx(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of CR_X gate.
 
+    .. code-block:: python
+        
+        theta = torch.tensor([torch.pi / 4])
+        CR_X = crx(theta)
+        print(f'The CR_X Gate is:\n{CR_X}')
+        
+    ::
+    
+        The CR_X Gate is:
+        tensor([[1.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 1.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.0000j, 0.0000-0.3827j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.0000-0.3827j, 0.9239+0.0000j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        _one(dtype), _zero(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), _one(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), _zero(dtype), torch.cos(theta / 2), -1j * torch.sin(theta / 2),
-        _zero(dtype), _zero(dtype), -1j * torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._crx(theta)
+    return _type_transform(mat, type_str)
 
 
-def cry(theta: torch.Tensor) -> torch.Tensor:
+def cry(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -746,20 +854,28 @@ def cry(theta: torch.Tensor) -> torch.Tensor:
 
     Returns:
         the matrix of CR_Y gate.
+        
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        CR_Y = cry(theta)
+        print(f'The CR_Y Gate is:\n{CR_Y}')
+        
+    ::
+    
+        The CR_Y Gate is:
+        tensor([[ 1.0000+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j],
+                [ 0.0000+0.j,  1.0000+0.j,  0.0000+0.j,  0.0000+0.j],
+                [ 0.0000+0.j,  0.0000+0.j,  0.9239+0.j, -0.3827+0.j],
+                [ 0.0000+0.j,  0.0000+0.j,  0.3827+0.j,  0.9239+0.j]])
 
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    gate_matrix = [
-        _one(dtype), _zero(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), _one(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), _zero(dtype), torch.cos(theta / 2), (-torch.sin(theta / 2)),
-        _zero(dtype), _zero(dtype), torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._cry(theta)
+    return _type_transform(mat, type_str)
 
 
-def crz(theta: torch.Tensor) -> torch.Tensor:
+def crz(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -781,21 +897,26 @@ def crz(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of CR_Z gate.
 
-    """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    one, zero = _one(dtype).to(device=theta.device), _zero(dtype).to(device=theta.device)
+    .. code-block:: python
     
-    gate_matrix = [
-        one, zero, zero, zero,
-        zero, one, zero, zero,
-        zero, zero, torch.cos(theta / 2) - 1j * torch.sin(theta / 2), zero,
-        zero, zero, zero,torch.cos(theta / 2) + 1j * torch.sin(theta / 2),
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+        theta = torch.tensor([torch.pi / 4])
+        CR_Z = crz(theta)
+        print(f'The CR_Z Gate is:\n{CR_Z}')
+        
+    ::
+    
+        The CR_Z Gate is:
+        tensor([[1.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 1.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.9239-0.3827j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.3827j]])
+    """
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._crz(theta)
+    return _type_transform(mat, type_str)
 
 
-def cu(theta: torch.Tensor) -> torch.Tensor:
+def cu(theta: _ParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -812,34 +933,32 @@ def cu(theta: torch.Tensor) -> torch.Tensor:
         \end{align}
 
     Args:
-        theta: the parameter of this matrix. The shape of param is [3,1]
+        theta: the parameter of this matrix. The shape of param is [4,1]
 
     Returns:
         the matrix of CU gate.
+        
+    .. code-block:: python
+    
+        theta = torch.tensor([[torch.pi / 4], [torch.pi / 3], [torch.pi / 6],[torch.pi / 6]])
+        CU = cu(theta)
+        print(f'The CU Gate is:\n{CU}')
+        
+    ::
+    
+        The CU Gate is:
+        tensor([[ 1.0000e+00+0.0000j,  0.0000e+00+0.0000j,  0.0000e+00+0.0000j,0.0000e+00+0.0000j],
+                [ 0.0000e+00+0.0000j,  1.0000e+00+0.0000j,  0.0000e+00+0.0000j,0.0000e+00+0.0000j],
+                [ 0.0000e+00+0.0000j,  0.0000e+00+0.0000j,  8.0010e-01+0.4619j,-1.9134e-01-0.3314j],
+                [ 0.0000e+00+0.0000j,  0.0000e+00+0.0000j, -1.6728e-08+0.3827j,-4.6194e-01+0.8001j]])
 
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([4, 1])
-    one, zero = _one(dtype).to(device=theta.device), _zero(dtype).to(device=theta.device)
-    
-    param1 = (torch.cos(theta[3]) + 1j * torch.sin(theta[3])) * \
-             (torch.cos(theta[0] / 2))
-    param2 = (torch.cos(theta[2] + theta[3]) + 1j * torch.sin(theta[2] + theta[3])) * \
-             (-torch.sin(theta[0] / 2))
-    param3 = (torch.cos(theta[1] + theta[3]) + 1j * torch.sin(theta[1] + theta[3])) * \
-        torch.sin(theta[0] / 2)
-    param4 = (torch.cos(theta[1] + theta[2] + theta[3]) + 1j * \
-        torch.sin(theta[1] + theta[2] + theta[3])) * torch.cos(theta[0] / 2)
-    gate_matrix = [
-        one, zero, zero, zero,
-        zero, one, zero, zero,
-        zero, zero, param1, param2,
-        zero, zero, param3, param4,
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._cu(theta)
+    return _type_transform(mat, type_str)
 
 
-def rxx(theta: torch.Tensor) -> torch.Tensor:
+def rxx(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -860,21 +979,26 @@ def rxx(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of RXX gate.
 
+    .. code-block:: python
+        
+        theta = torch.tensor([torch.pi / 4])
+        R_XX = rxx(theta)
+        print(f'The R_XX Gate is:\n{R_XX}')
+        
+    ::
+    
+        The R_XX Gate is:
+        tensor([[0.9239+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000-0.3827j],
+                [0.0000+0.0000j, 0.9239+0.0000j, 0.0000-0.3827j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000-0.3827j, 0.9239+0.0000j, 0.0000+0.0000j],
+                [0.0000-0.3827j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.0000j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    param1 = torch.cos(theta / 2)
-    param2 = -1j * torch.sin(theta / 2)
-    gate_matrix = [
-        param1, _zero(dtype), _zero(dtype), param2,
-        _zero(dtype), param1, param2, _zero(dtype),
-        _zero(dtype), param2, param1, _zero(dtype),
-        param2, _zero(dtype), _zero(dtype), param1,
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._rxx(theta)
+    return _type_transform(mat, type_str)
 
 
-def ryy(theta: torch.Tensor) -> torch.Tensor:
+def ryy(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -895,22 +1019,26 @@ def ryy(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of RYY gate.
 
+    .. code-block:: python
+    
+        theta = torch.tensor([torch.pi / 4])
+        R_YY = ryy(theta)
+        print(f'The R_YY Gate is:\n{R_YY}')
+     
+    ::
+    
+        The R_YY Gate is:
+        tensor([[0.9239+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.3827j],
+                [0.0000+0.0000j, 0.9239+0.0000j, 0.0000-0.3827j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000-0.3827j, 0.9239+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.3827j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.0000j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    param1 = torch.cos(theta / 2)
-    param2 = -1j * torch.sin(theta / 2)
-    param3 = 1j * torch.sin(theta / 2)
-    gate_matrix = [
-        param1, _zero(dtype), _zero(dtype), param3,
-        _zero(dtype), param1, param2, _zero(dtype),
-        _zero(dtype), param2, param1, _zero(dtype),
-        param3, _zero(dtype), _zero(dtype), param1,
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._ryy(theta)
+    return _type_transform(mat, type_str)
 
 
-def rzz(theta: torch.Tensor) -> torch.Tensor:
+def rzz(theta: _SingleParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     .. math::
@@ -931,21 +1059,26 @@ def rzz(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of RZZ gate.
 
+    .. code-block:: python
+        
+        theta = torch.tensor([torch.pi / 4])
+        R_ZZ = rzz(theta)
+        print(f'The R_ZZ Gate is:\n{R_ZZ}')
+        
+    ::
+    
+        The R_ZZ Gate is:
+        tensor([[0.9239-0.3827j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.9239+0.3827j, 0.0000+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.3827j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239-0.3827j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([1])
-    param1 = torch.cos(theta / 2) - 1j * torch.sin(theta / 2)
-    param2 = torch.cos(theta / 2) + 1j * torch.sin(theta / 2)
-    gate_matrix = [
-        param1, _zero(dtype), _zero(dtype), _zero(dtype),
-        _zero(dtype), param2, _zero(dtype), _zero(dtype),
-        _zero(dtype), _zero(dtype), param2, _zero(dtype),
-        _zero(dtype), _zero(dtype), _zero(dtype), param1,
-    ]
-    return torch.cat(gate_matrix).view([4, 4]).to(dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._rzz(theta)
+    return _type_transform(mat, type_str)
 
 
-def ms(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def ms() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -960,26 +1093,26 @@ def ms(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
                     \end{bmatrix}
         \end{align}
 
-    Args:
-        dtype: the dtype of this matrix. Defaults to ``None``.
-
     Returns:
         the matrix of MS gate.
 
+    .. code-block:: python
+        
+        MS = ms()
+        print(f'The MS Gate is:\n{MS}')
+        
+    ::
+    
+        The MS Gate is:
+        tensor([[0.7071+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.7071j],
+                [0.0000+0.0000j, 0.7071+0.0000j, 0.0000+0.7071j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.0000+0.7071j, 0.7071+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.7071j, 0.0000+0.0000j, 0.0000+0.0000j, 0.7071+0.0000j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    val1 = math.sqrt(2) / 2
-    val2 = 1j / math.sqrt(2)
-    gate_matrix = [
-        [val1, 0, 0, val2],
-        [0, val1, val2, 0],
-        [0, val2, val1, 0],
-        [val2, 0, 0, val1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._ms(get_dtype())
 
 
-def cswap(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def cswap() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -1004,22 +1137,28 @@ def cswap(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
     Returns:
         the matrix of CSWAP gate.
 
+    .. code-block:: python
+        
+        CSWAP = cswap()
+        print(f'The CSWAP Gate is:\n{CSWAP}')
+        
+    ::
+    
+        The CSWAP Gate is:
+        tensor([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j]])
+
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._cswap(get_dtype())
 
 
-def toffoli(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
+def toffoli() -> torch.Tensor:
     r"""Generate the matrix
 
     .. math::
@@ -1044,22 +1183,27 @@ def toffoli(dtype: Optional[torch.dtype] = None) -> torch.Tensor:
     Returns:
         the matrix of Toffoli gate.
 
+    .. code-block:: python
+        
+        Toffoli = toffoli()
+        print(f'The Toffoli Gate is:\n{Toffoli}')
+        
+    ::
+    
+        The Toffoli Gate is:
+        tensor([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gate_matrix = [
-        [1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 1, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return utils.matrix._toffoli(get_dtype())
 
 
-def universal2(theta: torch.Tensor) -> torch.Tensor:
+def universal2(theta: _ParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     Args:
@@ -1068,104 +1212,81 @@ def universal2(theta: torch.Tensor) -> torch.Tensor:
     Returns:
         the matrix of universal two qubits gate.
 
+    .. code-block:: python
+
+        theta = torch.tensor([
+        0.5, 1.0, 1.5, 2.0, 2.5,
+        3.0, 3.5, 4.0, 4.5, 5.0,
+        5.5, 6.0, 6.5, 7.0, 7.5])
+        Universal2 = universal2(theta)
+
+        print(f'The matrix of universal two qubits gate is:\n{Universal2}')
+        
+    ::
+    
+        The matrix of universal two qubits gate is:
+        tensor([[-0.2858-0.0270j,  0.4003+0.3090j, -0.6062+0.0791j,  0.5359+0.0323j],
+                [-0.0894-0.1008j, -0.5804+0.0194j,  0.3156+0.1677j,  0.7090-0.1194j],
+                [-0.8151-0.2697j,  0.2345-0.1841j,  0.3835-0.1154j, -0.0720+0.0918j],
+                [-0.2431+0.3212j, -0.1714+0.5374j,  0.1140+0.5703j, -0.2703+0.3289j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([15])
-    unitary = torch.eye(2 ** 2).to(dtype)
-    _cnot_gate = cnot(dtype)
-
-    unitary = _unitary_transformation(unitary, u3(theta[[0, 1, 2]]), qubit_idx=0, num_qubits=2)
-    unitary = _unitary_transformation(unitary, u3(theta[[3, 4, 5]]), qubit_idx=1, num_qubits=2)
-    unitary = _unitary_transformation(unitary, _cnot_gate, qubit_idx=[1, 0], num_qubits=2)
-
-    unitary = _unitary_transformation(unitary, rz(theta[[6]]), qubit_idx=0, num_qubits=2)
-    unitary = _unitary_transformation(unitary, ry(theta[[7]]), qubit_idx=1, num_qubits=2)
-    unitary = _unitary_transformation(unitary, _cnot_gate, qubit_idx=[0, 1], num_qubits=2)
-
-    unitary = _unitary_transformation(unitary, ry(theta[[8]]), qubit_idx=1, num_qubits=2)
-    unitary = _unitary_transformation(unitary, _cnot_gate, qubit_idx=[1, 0], num_qubits=2)
-
-    unitary = _unitary_transformation(unitary, u3(theta[[9, 10, 11]]), qubit_idx=0, num_qubits=2)
-    unitary = _unitary_transformation(unitary, u3(theta[[12, 13, 14]]), qubit_idx=1, num_qubits=2)
-
-    return unitary
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._universal2(theta)
+    return _type_transform(mat, type_str)
 
 
-def universal3(theta: torch.Tensor) -> torch.Tensor:
+def universal3(theta: _ParamLike) -> _ArrayLike:
     r"""Generate the matrix
 
     Args:
         theta: the parameter of this matrix. The shape of param is [81]
 
     Returns:
-        the matrix of universal three qubits gate. 
+        the matrix of universal three qubits gate.
 
+    .. code-block:: python
+
+        theta = torch.tensor([
+        0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
+        1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0,
+        2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0,
+        3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0,
+        4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5.0,
+        5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 6.0,
+        6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 7.0,
+        7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8.0,
+        8.1])
+        Universal3 = universal3(theta)
+
+        print(f'The matrix of universal three qubits gate is:\n{Universal3}')
+        
+    ::
+    
+        The matrix of universal three qubits gate is:
+        tensor([[-0.0675-0.0941j, -0.4602+0.0332j,  0.2635+0.0044j,  0.0825+0.3465j,
+                -0.0874-0.3635j, -0.1177-0.4195j, -0.2735+0.3619j, -0.1760-0.1052j],
+                [ 0.0486+0.0651j, -0.1123+0.0494j,  0.1903+0.0057j, -0.2080+0.2926j,
+                -0.2099+0.0630j, -0.1406+0.5173j, -0.1431-0.3538j, -0.5460-0.1847j],
+                [ 0.0827-0.0303j,  0.1155+0.1111j,  0.5391-0.0701j, -0.4229-0.2655j,
+                -0.1546+0.1943j, -0.0455+0.1744j, -0.3242+0.3539j,  0.3118-0.0041j],
+                [-0.1222+0.3984j,  0.1647-0.1817j,  0.3294-0.1486j, -0.0293-0.1503j,
+                0.0100-0.6481j,  0.2424+0.1575j,  0.2485+0.0232j, -0.1053+0.1873j],
+                [-0.4309-0.0791j, -0.2071-0.0482j, -0.4331+0.0866j, -0.5454-0.1778j,
+                -0.1401-0.0230j,  0.0170+0.0299j,  0.0078+0.2231j, -0.2324+0.3369j],
+                [ 0.0330+0.3056j,  0.2612+0.6464j, -0.2138-0.1748j, -0.2322-0.0598j,
+                0.1387-0.1573j,  0.0914-0.2963j, -0.2712-0.1351j, -0.1272-0.1940j],
+                [ 0.0449-0.3844j,  0.1135+0.2846j, -0.0251+0.3854j,  0.0442-0.0149j,
+                -0.3671-0.1774j,  0.5158+0.1148j,  0.2151+0.1433j, -0.0188-0.3040j],
+                [-0.4124-0.4385j,  0.2306+0.0894j,  0.0104-0.2180j, -0.0180+0.2869j,
+                -0.1030-0.2991j, -0.1473+0.0931j, -0.1686-0.3451j,  0.3825+0.1480j]])
     """
-    dtype = _get_complex_dtype(theta.dtype)
-    theta = theta.view([81])
-    unitary = torch.eye(2 ** 3).to(dtype)
-    _h, _s, _cnot = h(dtype), s(dtype), cnot(dtype)
-
-    psi = torch.reshape(theta[:60], shape=[4, 15])
-    phi = torch.reshape(theta[60:], shape=[7, 3])
-
-    def __block_u(_unitary, _theta):
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, ry(_theta[0]), qubit_idx=1, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 1], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, ry(_theta[1]), qubit_idx=1, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 1], num_qubits=3)
-
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _h, qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 0], num_qubits=3)
-
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, rz(_theta[2]), qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 2], num_qubits=3)
-        return _unitary
-
-    def __block_v(_unitary, _theta):
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[2, 0], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[2, 1], num_qubits=3)
-
-        _unitary = _unitary_transformation(_unitary, ry(_theta[0]), qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, ry(_theta[1]), qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 2], num_qubits=3)
-
-        _unitary = _unitary_transformation(_unitary, _s, qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[2, 0], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 1], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[1, 0], num_qubits=3)
-
-        _unitary = _unitary_transformation(_unitary, _h, qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 2], num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, rz(_theta[2]), qubit_idx=2, num_qubits=3)
-        _unitary = _unitary_transformation(_unitary, _cnot, qubit_idx=[0, 2], num_qubits=3)
-        return _unitary
-
-    unitary = _unitary_transformation(unitary, universal2(psi[0]), qubit_idx=[0, 1], num_qubits=3)
-    unitary = _unitary_transformation(unitary, u3(phi[0, 0:3]), qubit_idx=2, num_qubits=3)
-    unitary = __block_u(unitary, phi[1])
-
-    unitary = _unitary_transformation(unitary, universal2(psi[1]), qubit_idx=[0, 1], num_qubits=3)
-    unitary = _unitary_transformation(unitary, u3(phi[2, 0:3]), qubit_idx=2, num_qubits=3)
-    unitary = __block_v(unitary, phi[3])
-
-    unitary = _unitary_transformation(unitary, universal2(psi[2]), qubit_idx=[0, 1], num_qubits=3)
-    unitary = _unitary_transformation(unitary, u3(phi[4, 0:3]), qubit_idx=2, num_qubits=3)
-    unitary = __block_u(unitary, phi[5])
-
-    unitary = _unitary_transformation(unitary, universal2(psi[3]), qubit_idx=[0, 1], num_qubits=3)
-    unitary = _unitary_transformation(unitary, u3(phi[6, 0:3]), qubit_idx=2, num_qubits=3)
-    return unitary
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    mat = utils.matrix._universal3(theta)
+    return _type_transform(mat, type_str)
 
 
-def universal_qudit(theta: torch.Tensor, dimension: int) -> torch.Tensor:
+def universal_qudit(theta: _ParamLike, dimension: int) -> _ArrayLike:
+    
     r"""Generalized GellMann matrix basis were used to construct the universal gate for qudits
 
     Args:
@@ -1173,22 +1294,36 @@ def universal_qudit(theta: torch.Tensor, dimension: int) -> torch.Tensor:
         dimension: the dimension of the qudit
 
     Returns:
-        the matrix of d-dimensional unitary gate 
+        the matrix of d-dimensional unitary gate
 
     References:
         [wolfram mathworld](https://mathworld.wolfram.com/GeneralizedGell-MannMatrix.html)
+
+    .. code-block:: python
+    
+        dimension = 2
+        theta = torch.linspace(0.1, 2.5, dimension**2 - 1)
+        u_qudit_matrix = universal_qudit(theta, dimension)
+        print(f'The matrix of 2-dimensional unitary gate is:\n{u_qudit_matrix}')
+        
+    ::
+    
+        The matrix of 2-dimensional unitary gate is:
+        tensor([[-0.9486+0.2806j,  0.1459+0.0112j],
+                [-0.1459+0.0112j, -0.9486-0.2806j]])
     """
-    complex_dtype = _get_complex_dtype(theta.dtype)
+    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
+    
     theta = theta.view([(dimension ** 2) - 1, 1, 1])
+    hamiltonian = torch.sum(torch.mul(theta, database.set.gell_mann(dimension)), dim=0)
+    mat = torch.matrix_exp(1j * hamiltonian)
+    
+    return _type_transform(mat, type_str)
 
-    generalized_gellmann_matrix = database.set.gell_mann(dimension).to(complex_dtype)
-    hamiltonian = torch.eye(dimension) + torch.sum(torch.mul(theta, generalized_gellmann_matrix), dim=0)
-    return torch.matrix_exp(1j * hamiltonian)
 
-
-# ------------------------------------------------- Split line -------------------------------------------------
-def Uf(f:Callable[[torch.Tensor], torch.Tensor], n:int) -> torch.Tensor:
-    r"""Construct the unitary matrix maps :math:`|x\rangle|y\rangle` to :math:`|x\rangle|y\oplus f(x)\rangle` based on a boolean function :math:`f`.
+def Uf(f: Callable[[torch.Tensor], torch.Tensor], n: int) -> torch.Tensor:
+    r"""Construct the unitary matrix maps :math:`|x\rangle|y\rangle` to :math:`|x\rangle|y\oplus f(x)\rangle` 
+    based on a boolean function :math:`f`.
 
     Args:
         f: a boolean function :math:`f` that maps :math:`\{ 0,1 \}^{n}` to :math:`\{ 0,1 \}`;
@@ -1201,28 +1336,59 @@ def Uf(f:Callable[[torch.Tensor], torch.Tensor], n:int) -> torch.Tensor:
 
         U: U|x\rangle|y\rangle = |x\rangle|y\oplus f(x)\rangle
 
+    .. code-block:: python
+
+        n=2
+
+        def xor_function(x: torch.Tensor) -> torch.Tensor:
+            real_x = x.real
+            return torch.tensor(int(real_x[0].item()) ^ int(real_x[1].item()))
+
+        f = xor_function
+        unitary_matrix = Uf(f, n)
+
+        print(f'Unitary matrix in form is:\n{unitary_matrix}')
+    
+    ::
+    
+        Unitary matrix in form is:
+        tensor([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j],
+                [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j]])
+        
+    Note:
+        for a boolean function 'f', 'x = torch.zeros(n)' is a legitimate input, 
+        but 'x = torch.zeros((n,1))' is an illegitimate input
+    
     """
-    # note that for a boolean function 'f', 'x = torch.zeros(n)' is a legitimate input, but 'x = torch.zeros((n,1))' is an illegitimate input
+    dtype = get_dtype()  # get the default dtype
 
-    dtype = get_dtype() # get the default dtype
-
-    U = torch.zeros((2**(n+1), 2**(n+1)), dtype=dtype) # initialize the unitary matrix
+    U = torch.zeros(
+        (2 ** (n + 1), 2 ** (n + 1)), dtype=dtype
+    )  # initialize the unitary matrix
 
     for i in range(2**n):
-        temp_bin_i_str = bin(i)[2:].zfill(n) # binary form of 'i' (type: string)
-        temp_array = torch.zeros(n,dtype=dtype)
+        temp_bin_i_str = bin(i)[2:].zfill(n)  # binary form of 'i' (type: string)
+        temp_array = torch.zeros(n, dtype=dtype)
         for j in range(n):
-            temp_array[j] = complex(temp_bin_i_str[j]) # convert the type of `i`(binary form) into torch.tensor
+            temp_array[j] = complex(
+                temp_bin_i_str[j]
+            )  # convert the type of `i`(binary form) into torch.tensor
 
-        f_value = f(temp_array) # compute f(i)
-        f_value_int = int(f_value) # ensure that the type of 'f(i)' is int
-        U[(i*2+f_value_int), (i*2)] = 1 # assignment (y=0)
-        U[(i*2+((f_value_int+1)%2)), ((i*2)+1)] = 1 # assignment (y=1)
+        f_value = f(temp_array)  # compute f(i)
+        f_value_int = int(f_value)  # ensure that the type of 'f(i)' is int
+        U[(i * 2 + f_value_int), (i * 2)] = 1  # assignment (y=0)
+        U[(i * 2 + ((f_value_int + 1) % 2)), ((i * 2) + 1)] = 1  # assignment (y=1)
 
     return U
 
 
-def Of(f:Callable[[torch.Tensor], torch.Tensor], n:int) -> torch.Tensor:
+def Of(f: Callable[[torch.Tensor], torch.Tensor], n: int) -> torch.Tensor:
     r"""Construct the unitary matrix maps :math:`|x\rangle` to :math:`(-1)^{f(x)}|x\rangle` based on a boolean function :math:`f`.
 
     Args:
@@ -1236,29 +1402,50 @@ def Of(f:Callable[[torch.Tensor], torch.Tensor], n:int) -> torch.Tensor:
 
         U: U|x\rangle = (-1)^{f(x)}|x\rangle
 
+    .. code-block:: python
+
+        n=2
+        def xor_function(x: torch.Tensor) -> torch.Tensor:
+            real_x = x.real
+            return torch.tensor(int(real_x[0].item()) ^ int(real_x[1].item()))
+
+        f = xor_function
+        unitary_matrix = Of(f, n)
+        print(f'Unitary matrix in form is:\n{unitary_matrix}')
+        
+    ::
+    
+        Unitary matrix in form is:
+        tensor([[ 1.+0.j,  0.+0.j,  0.+0.j,  0.+0.j],
+                [ 0.+0.j, -1.+0.j,  0.+0.j,  0.+0.j],
+                [ 0.+0.j,  0.+0.j, -1.+0.j,  0.+0.j],
+                [ 0.+0.j,  0.+0.j,  0.+0.j,  1.+0.j]])
+        
+    Note:
+        for a boolean function 'f', 'x = torch.zeros(n)' is a legitimate input, but 'x = torch.zeros((n,1))' is an illegitimate input
+    
     """
-    # note that for a boolean function 'f', 'x = torch.zeros(n)' is a legitimate input, but 'x = torch.zeros((n,1))' is an illegitimate input
-
-    dtype = get_dtype() # get the default dtype
-
-    U = torch.zeros((2**n, 2**n), dtype=dtype) # initialize the unitary matrix
+    dtype = get_dtype()  # get the default dtype
+    U = torch.zeros((2**n, 2**n), dtype=dtype)  # initialize the unitary matrix
 
     for i in range(2**n):
-        temp_bin_i_str = bin(i)[2:].zfill(n) # # binary form of 'i' (type: string)
+        temp_bin_i_str = bin(i)[2:].zfill(n)  # binary form of 'i' (type: string)
         temp_array = torch.zeros(n, dtype=dtype)
         for j in range(n):
-            temp_array[j] = complex(temp_bin_i_str[j]) # # convert the type of `i`(binary form) into torch.tensor
+            temp_array[j] = complex(
+                temp_bin_i_str[j]
+            )  # convert the type of `i`(binary form) into torch.tensor
 
-        f_value = f(temp_array) # compute f(i)
-        f_value_int = int(f_value) # ensure that the type of 'f(i)' is int
-        U[i,i] = (-1)**(f_value_int) # assignment
+        f_value = f(temp_array)  # compute f(i)
+        f_value_int = int(f_value)  # ensure that the type of 'f(i)' is int
+        U[i, i] = (-1) ** (f_value_int)  # assignment
 
     return U
 
 
-for name, func in list(globals().items()): 
-    if callable(func) and '_' not in name:
+for name, func in list(locals().items()):
+    if callable(func) and "_" not in name:
         # Add '_gate' to the name for functions without an underscore
-        new_name = f'{name}_gate'
+        new_name = f"{name}_gate"
         globals()[new_name] = func
         __all__ += [new_name]

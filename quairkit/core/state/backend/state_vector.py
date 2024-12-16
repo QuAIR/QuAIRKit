@@ -34,15 +34,21 @@ class PureState(State):
         data: tensor array in vector representation for quantum pure state(s).
         sys_dim: a list of dimensions for each system.
         system_seq: the system order of this state. Defaults to be from 1 to n.
+        probability: tensor array for state distributions. Defaults to be 1.
 
     Note:
         The data is stored in the vector-form with shape :math:`(-1, d)`
 
     """
-    def __init__(self, data: torch.Tensor, sys_dim: List[int], system_seq: Optional[List[int]] = None):
+    def __init__(self, data: torch.Tensor, sys_dim: List[int], 
+                 system_seq: Optional[List[int]] = None,
+                 probability: Optional[List[torch.Tensor]] = None):
         dim = int(np.prod(sys_dim))
+        self._prob = [] if probability is None else probability
         
-        self._batch_dim = list(data.shape[:-2])
+        non_batch_len = 2 + len(self._prob)
+        self._batch_dim = list(data.shape[:-non_batch_len])
+        
         data = data.reshape([-1, dim])
         super().__init__(data, sys_dim, system_seq)
         
@@ -51,21 +57,42 @@ class PureState(State):
     def __getitem__(self, key: Union[int, slice]) -> 'PureState':
         assert self.batch_dim, \
             f"This state is not batched and hence cannot be indexed: received key {key}."
-        return PureState(self.ket[key], self.system_dim, self.system_seq)
+        return PureState(self.ket[key], self.system_dim, self.system_seq, 
+                         [prob.clone() for prob in self._prob])
     
-    def index_select(self, dim: int, index: torch.Tensor) -> 'PureState':
-        dim = dim - 2 if dim < 0 else dim 
-        return PureState(torch.index_select(self.ket, dim=dim, index=index).squeeze().unsqueeze(-1), 
-                         self.system_dim, self.system_seq)
+    def prob_select(self, outcome_idx: torch.Tensor, prob_idx: int = -1) -> 'PureState':
+        num_prob = len(self._prob)
+        if prob_idx > 0:
+            prob_idx -= num_prob
+
+        new_prob = []
+        for idx, prob in enumerate(self._prob):
+            if num_prob > prob_idx + idx:
+                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx).squeeze(prob_idx))
+            elif num_prob < prob_idx + idx:
+                new_prob.append(prob.clone())
+            elif outcome_idx.numel() != 1:
+                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx))
+
+        data_idx = prob_idx - 2
+        data = self.ket.index_select(dim=data_idx, index=outcome_idx).squeeze(data_idx)
+        return PureState(data, self.system_dim, self.system_seq, new_prob)
     
     def expand(self, batch_dim: List[int]) -> 'PureState':
+        if self._prob != []:
+            raise NotImplementedError(
+                "Batch expansion of pure state with probabilistic computation is not supported."
+            )
+        
         expand_state = self.clone()
         expand_state._batch_dim = batch_dim
+        expand_state._prob = []
         
         if np.prod(batch_dim) == np.prod(self._batch_dim):
             return expand_state
         
-        expand_state._data = expand_state._data.expand(batch_dim + [-1]).reshape([-1, self.dim])
+        non_batch_len = 1 + len(self._prob)
+        expand_state._data = self._data.expand(batch_dim + [-1] * non_batch_len).reshape([-1, self.dim])
         return expand_state
     
     @property
@@ -99,18 +126,21 @@ class PureState(State):
     @property
     def ket(self) -> torch.Tensor:
         self.reset_sequence()
-        return self._data.view(self._batch_dim + [self.dim, 1]).clone()
+        return self._data.view(self.batch_dim + [self.dim, 1]).clone()
 
     @property
     def density_matrix(self) -> torch.Tensor:
-        return torch.matmul(self.ket, self.bra)
+        ket = self.ket
+        return torch.matmul(ket, ket.mH)
     
     def _trace(self, sys_idx: List[int]) -> MixedState:
-        state = MixedState(self.density_matrix, self.system_dim, self.system_seq)
+        state = MixedState(self.density_matrix, self.system_dim, self.system_seq, 
+                           [prob.clone() for prob in self._prob])
         return state._trace(sys_idx)
     
     def _transpose(self, sys_idx: List[int]) -> MixedState:
-        state = MixedState(self.density_matrix, self.system_dim, self.system_seq)
+        state = MixedState(self.density_matrix, self.system_dim, self.system_seq, 
+                           [prob.clone() for prob in self._prob])
         return state._transpose(sys_idx)
 
     @property
@@ -121,8 +151,8 @@ class PureState(State):
         return torch.div(self._data, torch.norm(self._data, dim=-1))
 
     def clone(self) -> 'PureState':
-        data = self._data.view(self._batch_dim + [self.dim, 1]).clone()
-        state = PureState(data, self.system_dim, self.system_seq)
+        data = self._data.view(self.batch_dim + [self.dim, 1]).clone()
+        state = PureState(data, self.system_dim, self.system_seq, [prob.clone() for prob in self._prob])
         state._switch_unitary_matrix = self._switch_unitary_matrix
         return state
 
@@ -158,59 +188,98 @@ class PureState(State):
             self._evolve_keep_dim(unitary, sys_idx)
             return
         
-        applied_dim = unitary.shape[-1]
+        applied_dim, dim = unitary.shape[-1], self.dim
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
-        data = self._data.view([self.dim, -1, applied_dim, self.dim // applied_dim])
-        self._data = torch.matmul(unitary, data).view([-1, self.dim])
+        data = self._data.view([dim, -1, applied_dim, dim // applied_dim])
+        self._data = torch.matmul(unitary, data).view([-1, dim])
         
-    def _evolve(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
+    def _evolve(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
         if self._switch_unitary_matrix:
             self._record_unitary(unitary, sys_idx)
             return
+        dim, _shape = self.dim, self._squeeze_shape
+        
+        if on_batch:
+            self._batch_dim = self._batch_dim or list(unitary.shape[:-2])
+            evolve_axis = [-1, 1]
+        else:
+            evolve_axis = [1, -1]
+        
+        applied_dim = unitary.shape[-1]
+        self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
+        
+        unitary = unitary.view(evolve_axis + [applied_dim, applied_dim])
+        data = self._data.view(_shape + [applied_dim, dim // applied_dim])
+        self._data = torch.matmul(unitary, data).view([-1, dim])
+    
+    def _evolve_probabilistic(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
+        dim, _shape = self.dim, self._squeeze_shape
         self._batch_dim = self._batch_dim or list(unitary.shape[:-2])
         
         applied_dim = unitary.shape[-1]
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
-        data = self._data.view([-1, applied_dim, self.dim // applied_dim])
-        self._data = torch.matmul(unitary, data).view([-1, self.dim])
+        unitary = unitary.view([1, -1, applied_dim, applied_dim])
+        data = self._data.view(_shape + [applied_dim, dim // applied_dim])
+        self._data = torch.matmul(unitary, data).view([-1, dim])
 
     def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
-        self._batch_dim = (self._batch_dim or list(unitary.shape[:-3])) + list(unitary.shape[-3:-2])
-        unitary = unitary.view((list(unitary.shape[:-2]) or [-1]) + list(unitary.shape[-2:]))
+        unitary_batch_dim = list(unitary.shape[:-2])
+        dim, _shape = self.dim, self._squeeze_shape
+        self._batch_dim = (self._batch_dim or unitary_batch_dim[:-1]) + list(unitary_batch_dim[-1:])
         
-        applied_dim = unitary.shape[-1]
+        applied_dim, num_unitary = unitary.shape[-1], int(np.prod(unitary_batch_dim[-1:]))
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
-        data = self._data.view([-1, 1, applied_dim, self.dim // applied_dim])
-        self._data = torch.matmul(unitary, data).view([-1, self.dim])
+        unitary = unitary.view([-1, 1] + [num_unitary, applied_dim, applied_dim])
+        data = self._data.view(_shape + [1, applied_dim, dim // applied_dim])
+        self._data = torch.matmul(unitary, data).view([-1, dim])
     
     def _expec_val(self, obs: torch.Tensor, sys_idx: List[int]) -> torch.Tensor:
+        dim = self.dim
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
         applied_dim, num_obs = obs.shape[-1], obs.shape[-3]
-        state = self._data.view([-1, 1, applied_dim, self.dim // applied_dim])
-        measured_state = torch.matmul(obs, state).view([-1, num_obs, self.dim])
+        state = self._data.view([-1, 1, applied_dim, dim // applied_dim])
+        measured_state = torch.matmul(obs, state).view([-1, num_obs, dim])
+
+        return torch.linalg.vecdot(self._data.unsqueeze(-2), measured_state).view(self.batch_dim + [num_obs])
     
-        return torch.linalg.vecdot(self._data.unsqueeze(-2), measured_state).view(self._batch_dim + [num_obs])
+    def _expec_state(self, prob_idx: List[int]) -> 'PureState':
+        dim, num_prob = self.dim, len(self._prob)
+        batch_prob_len = len(self._prob[-1].shape[:-num_prob])
+        prob = self._joint_probability(prob_idx)
+        
+        states = self._data.view([-1] + self._prob_dim + [dim])
+        prob = prob.view(list(prob.shape) + [1] * (self._prob[-1].dim() - prob.dim() + 1))
+        prob_state = torch.mul(prob, states)
+        
+        sum_idx = [idx + 1 for idx in prob_idx]
+        expectation = prob_state.sum(sum_idx)
+
+        new_prob = []
+        if len(prob_idx) != num_prob:
+            new_prob = [prob.clone() for idx, prob in enumerate(self._prob) if idx not in prob_idx]
+            expectation = expectation.view(self._batch_dim + list(new_prob[-1].shape[batch_prob_len:]) + [dim, 1])
+        else:
+            expectation = expectation.view(self._batch_dim + [dim, 1])
+        return PureState(expectation, self.system_dim, self.system_seq, new_prob)
     
     def _measure(self, measure_op: torch.Tensor, sys_idx: List[int]) -> Tuple[torch.Tensor, 'PureState']:
-        origin_batch_dim, origin_data = self._batch_dim.copy(), self._data.clone()
-        self._evolve_keep_dim(measure_op, sys_idx)
-        data = self._data.view([-1, self.dim, 1])
+        new_state = self.clone()
+        new_state._evolve_keep_dim(measure_op, sys_idx)
         
-        prob = data.mH @ data
-        collapsed_state = data / torch.sqrt(prob)
-        collapsed_state[collapsed_state != collapsed_state] = 0
+        data = new_state._data.view([-1, self.dim, 1])
+        measure_prob = (data.mH @ data).real
+        collapsed_data = data / torch.sqrt(measure_prob)
+        collapsed_data[collapsed_data != collapsed_data] = 0
         
-        new_batch_dim = self._batch_dim
-        collapsed_state = PureState(collapsed_state.view(new_batch_dim + [self.dim, 1]),
-                                     self.system_dim, self.system_seq)
-        prob = prob.view(new_batch_dim)
-        
-        self._batch_dim, self._data = origin_batch_dim, origin_data
-        return prob.real, collapsed_state
+        measure_prob = measure_prob.view(new_state._batch_dim[:-1] + self._prob_dim + [-1])
+        new_state._data = collapsed_data.view([-1, self.dim])
+        new_state._batch_dim = new_state._batch_dim[:-1]
+        new_state._prob.append(measure_prob)
+        return measure_prob, new_state
 
     def _transform(self, *args) -> None:
         raise NotImplementedError(
@@ -218,7 +287,8 @@ class PureState(State):
                 Please call the 'transform' function directly instead of '_transform'.")
     
     def transform(self, op: torch.Tensor, sys_idx: List[int] = None, repr_type: str = 'kraus') -> MixedState:
-        state = MixedState(self.density_matrix, self.system_dim, self.system_seq)
+        state = MixedState(self.density_matrix, self.system_dim, self.system_seq, 
+                           [prob.clone() for prob in self._prob])
         return state.transform(op, sys_idx, repr_type)
     
     def sqrt(self) -> torch.Tensor:

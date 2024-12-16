@@ -22,9 +22,9 @@ from typing import Iterable, List, Optional, Tuple, Union
 import matplotlib
 import torch
 
-from ...database.matrix import (cnot, cp, crx, cry, crz, cswap, cu, cy, cz, ms,
-                                rxx, ryy, rzz, swap, toffoli, universal2,
-                                universal3)
+from ...core.utils.matrix import (_cnot, _cp, _crx, _cry, _crz, _cswap, _cu,
+                                  _cy, _cz, _ms, _rxx, _ryy, _rzz, _swap,
+                                  _toffoli, _universal2, _universal3)
 from .base import Gate, ParamGate
 from .visual import (_cnot_display, _crx_like_display, _cswap_display,
                      _cx_like_display, _oracle_like_display, _rxx_like_display,
@@ -55,7 +55,7 @@ class CNOT(Gate):
     
     """
 
-    __matrix = cnot(torch.complex128)
+    __matrix = _cnot(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -145,7 +145,7 @@ class CY(Gate):
     
     """
 
-    __matrix = cy(torch.complex128)
+    __matrix = _cy(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -189,7 +189,7 @@ class CZ(Gate):
     
     """
 
-    __matrix = cz(torch.complex128)
+    __matrix = _cz(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -232,7 +232,7 @@ class SWAP(Gate):
     
     """
 
-    __matrix = swap(torch.complex128)
+    __matrix = _swap(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -288,7 +288,7 @@ class CP(ParamGate):
         }
 
         super().__init__(
-            cp, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _cp, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -333,7 +333,7 @@ class CRX(ParamGate):
         }
 
         super().__init__(
-            crx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _crx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -378,7 +378,7 @@ class CRY(ParamGate):
         }
 
         super().__init__(
-            cry, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _cry, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x, )
@@ -423,7 +423,7 @@ class CRZ(ParamGate):
         }
 
         super().__init__(
-            crz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _crz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -467,7 +467,7 @@ class CU(ParamGate):
             'plot_width': 1.65,
         }
         super().__init__(
-            cu, param, 4, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _cu, param, 4, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -510,7 +510,7 @@ class RXX(ParamGate):
             'plot_width': 1.0,
         }
         super().__init__(
-            rxx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _rxx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _rxx_like_display(self, ax, x)
@@ -554,7 +554,7 @@ class RYY(ParamGate):
         }
 
         super().__init__(
-            ryy, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _ryy, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _rxx_like_display(self, ax, x)
@@ -597,7 +597,7 @@ class RZZ(ParamGate):
             'plot_width': 1.0,
         }
         super().__init__(
-            rzz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _rzz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _rxx_like_display(self, ax, x)
@@ -625,7 +625,7 @@ class MS(Gate):
     
     """
 
-    __matrix = ms(torch.complex128)
+    __matrix = _ms(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
@@ -671,7 +671,7 @@ class CSWAP(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first three qubits.
     
     """
-    __matrix = cswap(torch.complex128)
+    __matrix = _cswap(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
@@ -716,7 +716,7 @@ class CCX(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first three qubits.
     
     """
-    __matrix = toffoli(torch.complex128)
+    __matrix = _toffoli(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
@@ -764,7 +764,7 @@ class UniversalTwoQubits(ParamGate):
             'plot_width': 0.8,
         }
         super().__init__(
-            universal2, param, 15, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _universal2, param, 15, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _oracle_like_display(self, ax, x)
@@ -793,7 +793,7 @@ class UniversalThreeQubits(ParamGate):
             'plot_width': 0.8,
         }
         super().__init__(
-            universal3, param, 81, param_sharing, qubits_idx, [2, 2, 2], check_legality=False, gate_info=gate_info)
+            _universal3, param, 81, param_sharing, qubits_idx, [2, 2, 2], check_legality=False, gate_info=gate_info)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _oracle_like_display(self, ax, x)

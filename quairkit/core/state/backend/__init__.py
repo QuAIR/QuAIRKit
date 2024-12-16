@@ -50,28 +50,29 @@ class State(ABC):
         system_seq: the system order of this state. Defaults to be from 0 to n - 1.
 
     """
-    def __init__(self, data: torch.Tensor, sys_dim: List[int], system_seq: Optional[List[int]] = None):
+    def __init__(self, data: torch.Tensor, sys_dim: List[int], 
+                 system_seq: Optional[List[int]] = None):
         self._data, self._sys_dim = data.contiguous().to(dtype=base.get_dtype(), device=base.get_device()), sys_dim
         self._system_seq = list(range(len(sys_dim))) if system_seq is None else system_seq
 
         self.is_swap_back = True # TODO: depreciated, will be removed in the future
         self._keep_dim = False
-
+    
     @abstractmethod
     def __getitem__(self, key: Union[int, slice]) -> 'State':
         r"""Indexing of the State class
         """
     
     @abstractmethod
-    def index_select(self, dim: int, index: torch.Tensor) -> 'State':
-        r"""Indexing elements from the State batch along the given dimension.
+    def prob_select(self, outcome_idx: torch.Tensor, prob_idx: int = -1) -> 'State':
+        r"""Indexing probability outcome from the State batch along the given dimension.
         
         Args:
-            dim: the dimension in which we index
-            index: the 1-D tensor containing the indices to index
-        
-        Note:
-            Here `dim` refers to the dimension in batch_dim, dimensions for data are not considered.
+            outcome_idx: the 1-D tensor containing the outcomes to index
+            prob_idx: the int that indexing which probability distribution. Defaults to be the last distribution.
+
+        Returns:
+            States that are selected by the specific probability outcomes.
         
         """
         
@@ -107,12 +108,13 @@ class State(ABC):
         return self.clone()
 
     def __str__(self) -> str:
-        split_line = '\n---------------------------------------------------\n'
+        split_line = "\n-----------------------------------------------------\n"
         s = f"{split_line} Backend: {self.backend}\n"
         s += f" System dimension: {self._sys_dim}\n"
         s += f" System sequence: {self._system_seq}\n"
 
         data = np.round(self.numpy(), decimals=2)
+        interrupt_num = 5
         if not self.batch_dim:
             s += str(data.squeeze(0))
             s += split_line
@@ -121,6 +123,13 @@ class State(ABC):
         s += f" Batch size: {self.batch_dim}\n"
         for i, mat in enumerate(data):
             s += f"\n # {i}:\n{mat}"
+            
+            if i > interrupt_num:
+                break_line = ("\n----------skipped for the rest of " + 
+                              f"{list(data.shape)[0] - interrupt_num} states----------\n")
+                s+= break_line
+                return s
+        
         s += split_line
         return s
 
@@ -165,14 +174,43 @@ class State(ABC):
             'The data property is depreciated, use ket or density_matrix instead', DeprecationWarning)
         return self._data
     
+    def _joint_probability(self, prob_idx: List[int]) -> torch.Tensor:
+        r"""The joint probability distribution of these states' occurrences
+        
+        Args:
+            prob_idx: the indices of probability distributions
+
+        """
+        result_prob = torch.tensor(1.0)
+        for idx in sorted(prob_idx):
+            selected_prob = self._prob[idx]
+            result_prob = result_prob.view(list(result_prob.shape) + [1] * (selected_prob.dim() - result_prob.dim()))
+            result_prob = torch.mul(result_prob, selected_prob)
+        return result_prob
+    
+    @property
+    def probability(self) -> torch.Tensor:
+        r"""The probability distribution(s) of these states' occurrences
+        """
+        return self._joint_probability(range(len(self._prob)))
+    
+    @property
+    def _prob_dim(self) -> List[int]:
+        r"""Current probability dimensions
+        """
+        return list(self._prob[-1].shape[-len(self._prob):]) if self._prob else []
+    
     @property
     def batch_dim(self) -> List[int]:
         r"""The batch dimension of this state
         """
-        if hasattr(self, '_batch_dim'):
-            return self._batch_dim
-        else:
-            raise KeyError(f"The state class {self.backend} does not have batch functional")
+        return self._batch_dim + self._prob_dim
+    
+    @property
+    def _squeeze_shape(self) -> List[int]:
+        r"""The squeezed shape of this state batch
+        """
+        return [-1, int(np.prod(self._prob_dim))]
     
     @property
     def shape(self) -> torch.Size:
@@ -195,7 +233,7 @@ class State(ABC):
     def numel(self) -> int:
         r"""The number of elements in this data
         """
-        return int(np.prod(self.batch_dim)) if self.batch_dim else 1
+        return int(np.prod(self.batch_dim))
 
     @property
     def dim(self) -> int:
@@ -383,17 +421,18 @@ class State(ABC):
         return new_state
 
     def reset_sequence(self) -> None:
-        r"""reset the system order to default sequence i.e. from 1 to n.
+        r"""reset the system order to default sequence i.e. from 0 to n - 1.
         """
         self.system_seq = list(range(self.num_systems))
     
     @abstractmethod
-    def _evolve(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
+    def _evolve(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
         r"""Evolve this state with unitary operators.
 
         Args:
             unitary: the unitary operator.
             sys_idx: the system indices to be acted on.
+            on_batch: whether this unitary operator evolves on batch axis. Defaults to True.
         
         Note:
             The difference between `State.evolve` and `State._evolve` is that the former returns a new state 
@@ -465,6 +504,14 @@ class State(ABC):
             - (n), (n) -> (n)
             - (m), (n) -> error
         
+        """
+    
+    @abstractmethod
+    def _expec_state(self, prob_idx: List[int]) -> 'State':
+        r"""The expectation with respect to the specific probability distribution(s) of states
+        
+        Args:
+            prob_idx: indices of probability distributions. Defaults to all distributions.
         """
     
     @abstractmethod
@@ -583,7 +630,7 @@ class State(ABC):
         for i in range(num_terms):
             qubits_idx = list_qubits_idx[i]
             if qubits_idx == ['']:
-                expec_val_each_term.append(list_coef[i] * self.trace)
+                expec_val_each_term.append(list_coef[i] * self.trace())
                 continue
             matrix = list_matrices[i]
             
@@ -596,9 +643,31 @@ class State(ABC):
         
         expec_val_each_term = torch.stack(expec_val_each_term)
         return expec_val_each_term if decompose else torch.sum(expec_val_each_term, dim=0)
+    
+    def expec_state(self, prob_idx: Optional[Union[int, List[int]]] = None) -> 'State':
+        r"""The expectation with respect to the specific probability distribution(s) of states
+        
+        Args:
+            prob_idx: indices of probability distributions. Defaults to all distributions.
+        
+        Returns:
+            The expected State obtained from the taken probability distributions.
+        
+        """
+        if self._prob == []:
+            return self.clone()
+        num_prob = len(self._prob)
+        
+        if prob_idx is None:
+            prob_idx = list(range(num_prob))
+        elif isinstance(prob_idx, int):
+            prob_idx = [prob_idx]
+        else:
+            prob_idx = [num_prob + idx if idx < 0 else idx for idx in sorted(prob_idx)]
+        return self._expec_state(prob_idx)
 
-    def measure(self, measured_op: torch.Tensor = None, sys_idx: Optional[Union[int, List[int]]] = None, 
-                is_povm: Optional[bool] = False, keep_state: Optional[bool] = False
+    def measure(self, measured_op: Optional[torch.Tensor] = None, sys_idx: Optional[Union[int, List[int]]] = None, 
+                is_povm: bool = False, keep_state: bool = False
                 ) -> Union[torch.Tensor, Tuple[torch.Tensor, 'State']]:
         r"""Measure the quantum state
 

@@ -132,8 +132,8 @@ class Measure(Operator):
                 f"received shape {measure_op.shape}, expected {expected_shape}"
             )
         if ((measure_batch_dim := list(measure_op.shape[:-3])) and 
-            state.batch_dim and 
-            (state.batch_dim != measure_batch_dim)):
+            state._batch_dim and 
+            (state._batch_dim != measure_batch_dim)):
             raise ValueError(
                 f"The batch dimensions of input state do not match with measurement operator: "
                 f"expected None or {measure_batch_dim}, received {state.batch_dim}"
@@ -187,6 +187,6 @@ class Measure(Operator):
                                   for res in desired_result]
             
             prob_array = torch.index_select(prob_array, dim=-1, index=torch.tensor(desired_result))
-            measured_state = measured_state.index_select(dim=-1, index=torch.tensor(desired_result))
+            measured_state = measured_state.prob_select(torch.tensor(desired_result))
         
         return (prob_array, measured_state) if keep_state else prob_array

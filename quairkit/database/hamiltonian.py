@@ -39,6 +39,29 @@ def ising_hamiltonian(edges: torch.Tensor, vertices: torch.Tensor) -> Hamiltonia
 
     Returns:
         H_{Ising}
+        
+    .. code-block:: python
+        
+        edges = torch.tensor([[0, 1, 0.5],  
+                              [1, 0, 0.2], 
+                             [0.5, 0.2, 0]])
+                             
+        vertices = torch.tensor([0.3, 0.4, 0.1]) 
+
+        hamiltonian = ising_hamiltonian(edges, vertices)
+        
+        print(f'The Ising_Hamiltonian is \n {hamiltonian}.')
+        
+    ::
+    
+        The Ising_Hamiltonian is 
+        1.0 Z0, Z1
+        0.5 Z0, Z2
+        0.20000000298023224 Z1, Z2
+        0.30000001192092896 X0
+        0.4000000059604645 X1
+        0.10000000149011612 X2.
+
     """
     h_list = []
     shape_of_edges = edges.shape
@@ -65,6 +88,8 @@ def ising_hamiltonian(edges: torch.Tensor, vertices: torch.Tensor) -> Hamiltonia
     return Hamiltonian(h_list)
 
 
+
+
 def xy_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
     r"""Compute the Ising Hamiltonian
 
@@ -79,6 +104,32 @@ def xy_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
 
     Returns:
         H_{XY}
+        
+    .. code-block:: python
+    
+        edges = torch.tensor([[
+            [0, 0.7, 0],  
+            [0.7, 0, 0.2],
+            [0, 0.2, 0]
+        ],
+        [
+            [0, 0.5, 0],  
+            [0.5, 0, 0.3],
+            [0, 0.3, 0]
+        ]])
+
+        H_XY = xy_hamiltonian(edges)
+
+        print(f'The XY Hamiltonian is:\n{H_XY}')
+        
+    ::
+    
+        The XY Hamiltonian is:
+        0.699999988079071 X0, X1
+        0.5 Y0, Y1
+        0.20000000298023224 X1, X2
+        0.30000001192092896 Y1, Y2
+    
     """
     h_list = []
     shape_of_edges = edges.shape
@@ -112,6 +163,41 @@ def heisenberg_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
 
     Returns:
         H_{Heisenberg}
+        
+    .. code-block:: python
+    
+        edges = torch.tensor([
+            [
+                [0, 0.5, 0],  
+                [0.5, 0, 0.2],
+                [0, 0.2, 0]
+            ],
+            [
+                [0, 0.3, 0],  
+                [0.3, 0, 0.4],
+                [0, 0.4, 0]
+            ],
+            [
+                [0, 0.7, 0],  
+                [0.7, 0, 0.1],
+                [0, 0.1, 0]
+            ]
+        ])
+
+        H_Heisenberg = heisenberg_hamiltonian(edges)
+
+        print(f'The Heisenberg Hamiltonian is:\n{H_Heisenberg}')
+        
+    ::
+    
+        The Heisenberg Hamiltonian is:
+        0.5 X0, X1
+        0.30000001192092896 Y0, Y1
+        0.699999988079071 Z0, Z1
+        0.20000000298023224 X1, X2
+        0.4000000059604645 Y1, Y2
+        0.10000000149011612 Z1, Z2
+
     """
     h_list = []
     shape_of_edges = edges.shape

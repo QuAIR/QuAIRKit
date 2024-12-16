@@ -265,36 +265,43 @@ def _get_complex_dtype(float_dtype: torch.dtype) -> torch.dtype:
     return complex_dtype
 
 
-def _type_fetch(data: Union[np.ndarray, torch.Tensor, State, Any], 
+_ArrayLike = Union[np.ndarray, torch.Tensor]
+_StateLike = Union[np.ndarray, torch.Tensor, State]
+_ParamLike = Union[np.ndarray, torch.Tensor, Iterable[float]]
+_SingleParamLike = Union[_ParamLike, float]
+_General = Union[_ArrayLike, _StateLike, _SingleParamLike]
+
+
+def _type_fetch(data: _General, 
                 ndim: Optional[int]= None) -> Union[str, Tuple[str, List[int]]]:
     r"""Fetch the type of ``data``
 
     Args:
         data: the input data, and datatype of which should be either ``numpy.ndarray``,
-    ''torch.Tensor'' or ``quairkit.State``
+            ``torch.Tensor``, ``quairkit.State``, ``Iterable[float]`` or ``float``
+            where the last two types will be considered as "tensor".
         ndim: the number of dimensions to be removed, used for batched data
 
     Returns:
-        When ``ndim`` is not none, the returned tuple contains the following variables:
-        - a string of datatype of ``data``, can be either ``"numpy"``, ``"tensor"`` or ``"state"``
+        When ndim is not none, the returned tuple contains the following variables:
+        - a string of datatype of ``data``, can be either ``"numpy"``, ``"tensor"``, ``"state"``, or ``"other"``
         - the batch dimension
-        When ``ndim`` is none, the returned variable is just the string.
-
-    Raises:
-        TypeError: cannot recognize the current type of input data.
+        When ndim is none, the returned variable is just the string.
 
     """
     if isinstance(data, np.ndarray):
         return "numpy" if ndim is None else ("numpy", list(data.shape[:-ndim]))
-    
+
     if isinstance(data, torch.Tensor):
-        return "tensor" if ndim is None else ("tensor", list(data.shape[:-ndim]))
+        return "tensor" if ndim is None else list(data.shape[:-ndim])
     
     if isinstance(data, State):
         return "state" if ndim is None else ("state", list(data.batch_dim))
 
-    raise TypeError(
-        f"cannot recognize the current type {type(data)} of input data.")
+    assert ndim is None, \
+        ("Cannot obtain batch dimension for data type other than " +
+         f"np.ndarray, torch.Tensor or quairkit.State: received {type(data)}")
+    return "other"
 
 
 def _density_to_vector(rho: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
@@ -325,13 +332,14 @@ def _density_to_vector(rho: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray
     return state.detach().numpy() if type_str == "numpy" else state
 
 
-def _type_transform(data: Union[np.ndarray, torch.Tensor, State], output_type: str, 
-                    system_dim: Optional[Union[List[int], int]] = None) -> Union[np.ndarray, torch.Tensor, State]:
+def _type_transform(data: _General, output_type: str, 
+                    system_dim: Optional[Union[List[int], int]] = None) -> _StateLike:
     r""" transform the datatype of ``input`` to ``output_type``
 
     Args:
-        data: data to be transformed
-        output_type: datatype of the output data, type is either ``"numpy"``, ``"tensor"`` or ``"state"``
+        data: data to be transformed, can be and datatype of which should be either ``numpy.ndarray``,
+            ``quairkit.State``, ``float``, ``Iterable[float]`` or ``torch.Tensor``
+        output_type: datatype of the output data, type is either ``"numpy"``, ``"state"``, ``"tensor"``
         system_dim: dimension of the system, used for transforming to state. Defaults to qubit case.
 
     Returns:
@@ -342,11 +350,16 @@ def _type_transform(data: Union[np.ndarray, torch.Tensor, State], output_type: s
 
     """
     current_type = _type_fetch(data)
+    
+    if current_type == "other":
+        current_type = "tensor"
+        data = torch.tensor(data)
 
-    support_type = {"numpy", "tensor", "state"}
-    if output_type not in support_type:
-        raise ValueError(
-            f"does not support transformation to type {output_type}")
+    if output_type == "other":
+        output_type = "tensor"
+    else:
+        assert output_type in {"numpy", "tensor", "state"}, \
+            f"does not support transformation from {current_type} to type {output_type}"
 
     if current_type == output_type:
         return data

@@ -19,12 +19,12 @@ The source file of the oracle class and the control oracle class.
 
 import math
 from functools import partial
-from typing import Callable, Iterable, List, Optional, Union
+from typing import Callable, Dict, Iterable, List, Optional, Union
 
 import matplotlib
 import torch
 
-from ...core import get_device, get_dtype
+from ...core import get_device, get_dtype, utils
 from ...database.set import gell_mann
 from .base import Gate, ParamGate
 from .visual import _c_oracle_like_display, _oracle_like_display
@@ -41,7 +41,7 @@ class Oracle(Gate):
     """
     def __init__(
             self, oracle: torch.Tensor, system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            acted_system_dim: Union[List[int], int] = 2, gate_info: dict = None,
+            acted_system_dim: Union[List[int], int] = 2, gate_info: Dict = None,
     ):
         super().__init__(oracle, system_idx, acted_system_dim, gate_info=gate_info)
     
@@ -54,27 +54,36 @@ class ControlOracle(Gate):
 
     Args:
         oracle: Unitary oracle to be implemented.
-        system_idx: Indices of the systems on which the gates are applied.
+        system_idx: Indices of the systems on which the gates are applied. The first element in the list is the control system, 
+            defaulting to :math:`|d-1\rangle \langle d-1|` as the control qubit, 
+            while the remaining elements represent the oracle system.
         acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
+        proj: Projector matrix for the control qubit. Defaults to ``None``.
     """
-    
     def __init__(
-            self, oracle: torch.Tensor, system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            acted_system_dim: Union[List[int], int] = 2, gate_info: dict = None,
+            self, oracle: torch.Tensor, system_idx: List[Union[List[int], int]],
+            acted_system_dim: Union[List[int], int] = 2, proj: Union[torch.Tensor] = None, gate_info: Dict = None,
     ) -> None:
-        ctrl_dim = acted_system_dim if isinstance(acted_system_dim, int) else acted_system_dim[0]
-        
-        #TODO: support more control types
-        _zero, _other = torch.zeros([ctrl_dim, ctrl_dim]), torch.eye(ctrl_dim)
-        _zero[0, 0] += 1
-        _other -= _zero
-        
-        _eye = torch.eye(oracle.shape[-1])
-        if len(oracle.shape) > 2:
-            _zero, _other = _zero.unsqueeze(0), _other.unsqueeze(0)
-            _eye = _eye.expand_as(oracle)
-        oracle = torch.kron(_zero, _eye) + torch.kron(_other, oracle)
+        if isinstance(acted_system_dim, int):
+            ctrl_dim = acted_system_dim
+        elif isinstance(system_idx[0], int):
+            ctrl_dim = acted_system_dim[0]
+        else:
+            ctrl_dim = math.prod(acted_system_dim[:len(system_idx[0])])
+            system_idx = system_idx[0] + system_idx[1:]
+
+        if proj is None:
+            proj = torch.zeros([ctrl_dim, ctrl_dim])
+            proj[-1, -1] += 1
+        else:
+            assert proj.shape == (ctrl_dim, ctrl_dim), \
+                f"Input project does not match the control dimension: expected {ctrl_dim}, received {proj.shape}"
+            assert utils.check._is_projector(proj), \
+                "Input matrix is not a projector."
+
+        _eye = torch.eye(oracle.shape[-1]).expand_as(oracle)
+        oracle = utils.linalg._kron(torch.eye(ctrl_dim) - proj, _eye) + utils.linalg._kron(proj, oracle)
 
         default_gate_info = {
             'gatename': 'cO',
@@ -108,7 +117,7 @@ class ParamOracle(ParamGate):
             self, generator: Callable[[torch.Tensor], torch.Tensor], param: Union[torch.Tensor, float, List[float]] = None,
             num_acted_param: int = 1, param_sharing: bool = False,
             system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            acted_system_dim: Union[List[int], int] = 2, gate_info: dict = None
+            acted_system_dim: Union[List[int], int] = 2, gate_info: Dict = None
     ):
         super().__init__(generator, param, num_acted_param, param_sharing, system_idx, acted_system_dim, gate_info)
 

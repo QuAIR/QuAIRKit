@@ -17,6 +17,8 @@ r"""
 Common functions for the State class.
 """
 
+import warnings
+from functools import reduce
 from typing import Dict, List, Optional, Type, Union
 
 import numpy as np
@@ -48,7 +50,8 @@ def __state_convert(input_state: State, backend: Optional[str], system_dim: Unio
     assert input_state.dim == int(np.prod(system_dim)), \
         f"The state dimension {input_state.dim} does not match with the input system dimension: {system_dim}."
     initializer = __state_dict[backend]
-    return initializer(input_state.fit(backend), system_dim)
+    return initializer(input_state.fit(backend), system_dim, list(range(len(system_dim))), 
+                       [prob.clone() for prob in input_state._prob])
 
 
 def __fetch_default_init(list_dim: List[int]) -> Type[State]:
@@ -69,10 +72,11 @@ def __fetch_default_init(list_dim: List[int]) -> Type[State]:
 
 def to_state(
         data: Union[torch.Tensor, np.ndarray, State], 
-        system_dim: Optional[Union[int, List[int]]] = 2,
+        system_dim: Union[int, List[int]] = 2,
         dtype: Optional[str] = None,
         state_backend: Optional[str] = None,
-        eps: Optional[float] = 1e-4
+        eps: Optional[float] = 1e-4,
+        prob: Optional[List[torch.Tensor]] = None
 ) -> State:
     r"""The function to generate a specified state instance.
 
@@ -84,6 +88,7 @@ def to_state(
         dtype: Used to specify the data dtype of the data. Defaults to the global setup.
         state_backend: The backend of the state. Specified only when the input data is an instance of the State class.
         eps: The tolerance for checking the validity of the input state. Can be adjusted to ``None`` to disable the check.
+        prob: The (list of) probability distribution of the state. The length of the list denotes the number of distributions.
 
     Returns:
         The generated quantum state.
@@ -117,7 +122,7 @@ def to_state(
             f"the backend is not recognized or implemented: receive {get_backend()}")
     num_systems = initializer.check(data, system_dim, eps)
     system_dim = [system_dim] * num_systems if isinstance(system_dim, int) else system_dim
-    return initializer(data, system_dim)
+    return initializer(data, system_dim, list(range(num_systems)), prob)
 
 
 def image_to_density_matrix(image_filepath: str) -> State:
@@ -148,21 +153,41 @@ def image_to_density_matrix(image_filepath: str) -> State:
     return to_state(rho)
 
 
+def __kron_state(state_1st: State, state_2nd: State) -> State:
+    r"""Calculate the tensor product of two states.
+    """
+    system_dim = state_1st.system_dim + state_2nd.system_dim
+    system_seq = state_1st.system_seq + [x + state_1st.num_systems for x in state_2nd.system_seq]
+    
+    if state_1st._prob:
+        prob = state_1st._prob
+        if state_2nd._prob:
+            warnings.warn(
+                "Detect tensor product of two probabilistic states: will discard prob info of the 2nd one", UserWarning)
+    else:
+        prob = state_2nd._prob
+    
+    if state_1st.backend == 'state_vector' and state_2nd.backend == 'state_vector':
+        data = utils.linalg._kron(state_1st.ket, state_2nd.ket)
+        return PureState(data, system_dim, system_seq, prob)
+    else:
+        data = utils.linalg._kron(state_1st.density_matrix, state_2nd.density_matrix)
+        return MixedState(data, system_dim, system_seq, prob)
 
-def tensor_state(state_a: State, state_b: State, *args: State) -> State:
+
+def tensor_state(state_1st: State, *args: State) -> State:
     r"""calculate tensor product (kronecker product) between at least two state. This function automatically returns State instance
 
     Args:
-        state_a: State
-        state_b: State
+        state_a: the first state
         args: other states
 
     Returns:
         tensor product state of input states
 
     Note:
-        Need to be careful with the backend of states; 
+        Need to be careful with the backend of states; Support broadcasting for batch states.
         Use ``quairkit.linalg.NKron`` if the input datatype is ``torch.Tensor`` or ``numpy.ndarray``.
 
     """
-    return to_state(utils.qinfo._nkron(state_a.density_matrix, state_b.density_matrix, [st.density_matrix for st in args]))
+    return reduce(__kron_state, args, state_1st) if args else state_1st

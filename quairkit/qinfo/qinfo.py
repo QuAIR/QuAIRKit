@@ -20,8 +20,9 @@ from typing import Callable, List, Optional, Tuple, Union
 import numpy as np
 import torch
 
-from ..core import State, utils
-from ..core.intrinsic import _is_sample_linear, _type_fetch, _type_transform
+from ..core import utils
+from ..core.intrinsic import (_ArrayLike, _is_sample_linear, _SingleParamLike,
+                              _StateLike, _type_fetch, _type_transform)
 from ..database import pauli_basis, phase_space_point
 from ..operator import Channel
 
@@ -32,8 +33,11 @@ __all__ = [
     "decomp_ctrl_1qubit",
     "diamond_norm",
     "gate_fidelity",
+    "general_state_fidelity",
+    "link",
     "logarithmic_negativity",
     "mana",
+    "mutual_information",
     "negativity",
     "pauli_str_convertor",
     "purity",
@@ -47,11 +51,11 @@ __all__ = [
 
 
 def channel_repr_convert(
-    representation: Union[torch.Tensor, np.ndarray, List[torch.Tensor], List[np.ndarray]],
+    representation: Union[_ArrayLike, List[torch.Tensor], List[np.ndarray]],
     source: str,
     target: str,
     tol: float = 1e-6,
-) -> Union[torch.Tensor, np.ndarray]:
+) -> _ArrayLike:
     r"""convert the given representation of a channel to the target implementation
 
     Args:
@@ -119,12 +123,10 @@ def channel_repr_convert(
 
 
 def create_choi_repr(
-    linear_map: Callable[
-        [Union[torch.Tensor, np.ndarray]], Union[torch.Tensor, np.ndarray]
-    ],
+    linear_map: Callable[[_ArrayLike], _ArrayLike],
     input_dim: int,
-    input_dtype: torch.dtype = None,
-) -> torch.Tensor:
+    input_dtype: Optional[torch.dtype] = None,
+) -> _ArrayLike:
     r"""Create the Choi representation of a linear map with input checks.
 
     This function verifies if the map is linear and if the output is a square matrix.
@@ -152,7 +154,7 @@ def create_choi_repr(
 
     # Check if the output is a square matrix
     sample = linear_map(torch.randn(input_dim, input_dim, dtype=input_dtype))
-    if sample.shape[0] != sample.shape[1]:
+    if sample.shape[-2] != sample.shape[-1]:
         warnings.warn(
             f"The output of this linear map is not a square matrix: received {sample.shape}",
             RuntimeWarning,
@@ -162,13 +164,11 @@ def create_choi_repr(
     return _type_transform(
         utils.qinfo._create_choi_repr(
             linear_map=linear_map, input_dim=input_dim, input_dtype=input_dtype
-        ),
-        type_str,
-    )
+        ), type_str)
 
 
 def decomp_1qubit(
-    unitary: Union[np.ndarray, torch.Tensor], return_global: bool = False
+    unitary: _ArrayLike, return_global: bool = False
 ) -> Union[Tuple[np.ndarray, ...], Tuple[torch.Tensor, ...]]:
     r"""Decompose a single-qubit unitary operator into Z-Y-Z rotation angles.
 
@@ -198,7 +198,7 @@ def decomp_1qubit(
 
 
 def decomp_ctrl_1qubit(
-    unitary: Union[np.ndarray, torch.Tensor]
+    unitary: _ArrayLike
 ) -> Union[Tuple[np.ndarray, ...], Tuple[torch.Tensor, ...]]:
     r"""Decompose a controlled single-qubit unitary operator into its components.
 
@@ -271,8 +271,8 @@ def diamond_norm(
 
 
 def gate_fidelity(
-    U: Union[np.ndarray, torch.Tensor], V: Union[np.ndarray, torch.Tensor]
-) -> Union[np.ndarray, torch.Tensor]:
+    U: _ArrayLike, V: _ArrayLike
+) -> _ArrayLike:
     r"""calculate the fidelity between gates
 
     .. math::
@@ -300,11 +300,130 @@ def gate_fidelity(
         if type_u == "numpy" and type_v == "numpy"
         else fidelity
     )
+    
+
+def general_state_fidelity(rho: _StateLike, sigma: _StateLike) -> _ArrayLike:
+    r"""Calculate the fidelity measure of two general states.
+    
+    .. math::
+
+        F_*(\rho, \sigma) = F(\rho, \sigma) + \sqrt{(1 - \text{tr}[\rho])(1 - \text{tr}[\sigma])}
+    
+    where :math:`F(\rho, \sigma)` is the state fidelity without square.
+    
+    Args:
+        rho: a subnormalized quantum state.
+        sigma: a subnormalized quantum state.
+    
+    Returns:
+        The general state fidelity of the input subnormalized states.
+    
+    """
+    type_rho, type_sigma = _type_fetch(rho), _type_fetch(sigma)
+    rho = _type_transform(rho, "state").density_matrix
+    sigma = _type_transform(sigma, "state").density_matrix
+    
+    fidelity = utils.qinfo._general_state_fidelity(rho, sigma) 
+    
+    return (
+        fidelity.detach().numpy()
+        if type_rho == "numpy" and type_sigma == "numpy"
+        else fidelity
+    )
+
+
+def link(
+    JE: Tuple[_ArrayLike, str, Union[List[int], int], Union[List[int], int]],
+    JF: Tuple[_ArrayLike, str, Union[List[int], int], Union[List[int], int]],
+) -> Tuple[_ArrayLike, str, List[int], List[int]]:
+    r"""Calculate the link product of two Choi matrices of quantum channels.
+    
+    Args:
+        JE: Tuple containing the Choi representation of channel E, its label, input dimensions, and output dimensions.
+        JF: Tuple containing the Choi representation of channel F, its label, input dimensions, and output dimensions.
+    
+    Returns:
+        The resulting Choi matrix after the link product, its label, and input/output dimensions.
+    
+    Note:
+        The identification convention for input label is exemplified by "AB->CD", where the same letter in different cases (uppercase vs lowercase) is recognized as the same system, and an apostrophe indicates a different system. When input and output dimensions are specified as an int, it implies that each system has the same dimensionality.
+    
+    """
+    JE_matrix_type = _type_fetch(JE[0])
+    JE_matrix = _type_transform(JE[0], "tensor")
+
+    JF_matrix_type = _type_fetch(JF[0])
+    JF_matrix = _type_transform(JF[0], "tensor")
+
+    # Allow lowercase and recognize characters with apostrophes
+    def map_to_lower_if_apostrophe(s: str) -> str:
+        result = ""
+        i = 0
+        while i < len(s):
+            if i + 1 < len(s) and s[i + 1] == "'":
+                result += s[i].lower()  # Convert to lowercase if followed by an apostrophe
+                i += 1  # Skip the apostrophe
+            else:
+                result += s[i].upper()  # Convert to uppercase otherwise
+            i += 1
+        return result
+
+    JE_entry_exit = map_to_lower_if_apostrophe(JE[1])
+    JF_entry_exit = map_to_lower_if_apostrophe(JF[1])
+
+    JE_entry, JE_exit = JE_entry_exit.split("->")
+    JF_entry, JF_exit = JF_entry_exit.split("->")
+
+    # Check if the input and output dimensions are integers or lists
+    JE_dims = (
+        [JE[2]] * len(JE_entry) if isinstance(JE[2], int) else JE[2],
+        [JE[3]] * len(JE_exit) if isinstance(JE[3], int) else JE[3],
+    )
+    JF_dims = (
+        [JF[2]] * len(JF_entry) if isinstance(JF[2], int) else JF[2],
+        [JF[3]] * len(JF_exit) if isinstance(JF[3], int) else JF[3],
+    )
+
+    # Check the shape of the input choi matrices
+    expected_JE_shape = (np.prod(JE_dims[0] + JE_dims[1]), np.prod(JE_dims[0] + JE_dims[1]))
+    expected_JF_shape = (np.prod(JF_dims[0] + JF_dims[1]), np.prod(JF_dims[0] + JF_dims[1]))
+
+    assert (
+        JE_matrix.shape == expected_JE_shape
+    ), f"JE_matrix shape mismatch: expected {expected_JE_shape}, got {JE_matrix.shape}"
+    assert (
+        JF_matrix.shape == expected_JF_shape
+    ), f"JF_matrix shape mismatch: expected {expected_JF_shape}, got {JF_matrix.shape}"
+
+    # Check if the overlapping subsystems have the same dimension
+    overlap_subsystem = set(JE_exit).intersection(set(JF_entry))
+    for subsystem in overlap_subsystem:
+        JE_subsystem_index = JE_exit.index(subsystem)
+        JF_subsystem_index = JF_entry.index(subsystem)
+
+        JE_subsystem_dim = JE[3][JE_subsystem_index]
+        JF_subsystem_dim = JF[2][JF_subsystem_index]
+
+        assert (
+            JE_subsystem_dim == JF_subsystem_dim
+        ), f"JE and JF overlap system '{subsystem}' dimension mismatch: JE has dimension {JE_subsystem_dim}, JF has dimension {JF_subsystem_dim}."
+
+    # Update JE and JF tuples with processed labels and dimensions
+    JE = (JE_matrix, JE_entry_exit) + JE_dims
+    JF = (JF_matrix, JF_entry_exit) + JF_dims
+
+    result = utils.qinfo._link(JE, JF)
+
+    # Transform the result back to the original type
+    if JE_matrix_type == "numpy" and JF_matrix_type == "numpy":
+        result = (_type_transform(result[0], "numpy"),) + result[1:]
+
+    return result
 
 
 def logarithmic_negativity(
-    density_op: Union[np.ndarray, torch.Tensor, State]
-) -> Union[np.ndarray, torch.Tensor]:
+    density_op: _StateLike
+) -> _ArrayLike:
     r"""Calculate the Logarithmic Negativity :math:`E_N = ||\rho^{T_A}||` of the input quantum state.
 
     Args:
@@ -322,8 +441,8 @@ def logarithmic_negativity(
     return log_neg.detach().numpy() if type_str == "numpy" else log_neg
 
 
-def mana(matrix: Union[np.ndarray, torch.Tensor, State], input_str: str,
-         out_dim: Optional[int]=None) -> Union[np.ndarray, torch.Tensor, State]:
+def mana(matrix: _StateLike, input_str: str,
+         out_dim: Optional[int]=None) -> _StateLike:
     r"""Compute the mana of states or channels
 
     Args:
@@ -353,9 +472,30 @@ def mana(matrix: Union[np.ndarray, torch.Tensor, State], input_str: str,
     raise ValueError("Invalid input. Please enter 'state' or 'channel'.")
 
 
-def negativity( #Todo
-    density_op: Union[np.ndarray, torch.Tensor, State]
-) -> Union[np.ndarray, torch.Tensor]:
+def mutual_information(state: _StateLike, dim_A: int, dim_B: int) -> _ArrayLike:
+    r"""Compute the mutual information of a bipartite state.
+    
+    Args:
+        state: input bipartite quantum state with system AB.
+        dim_A: Dimension of system A.
+        dim_B: Dimension of system B.
+        
+    Returns:
+        The mutual information of the input quantum state
+    
+    """
+    type_str = _type_fetch(state)
+    rho = _type_transform(state, "state").density_matrix
+    
+    assert rho.shape[0] == dim_A * dim_B, \
+        f"The shape of the input quantum state is not compatible with the given dimensions: received {rho.shape}, expected ({dim_A * dim_B}, {dim_A * dim_B})"
+    
+    mi = utils.qinfo._mutual_information(rho, dim_A, dim_B)
+    
+    return mi.detach().numpy() if type_str == "numpy" else mi
+
+
+def negativity(density_op: _StateLike) -> _ArrayLike:
     r"""Compute the Negativity :math:`N = ||\frac{\rho^{T_A}-1}{2}||` of the input quantum state.
 
     Args:
@@ -393,9 +533,7 @@ def pauli_str_convertor(observable: List) -> List:
     return [[1, term] for term in observable]
 
 
-def purity(
-    rho: Union[np.ndarray, torch.Tensor, State]
-) -> Union[np.ndarray, torch.Tensor]:
+def purity(rho: _StateLike) -> _ArrayLike:
     r"""Calculate the purity of a quantum state.
 
     .. math::
@@ -417,10 +555,10 @@ def purity(
 
 
 def relative_entropy(
-    rho: Union[np.ndarray, torch.Tensor, State],
-    sigma: Union[np.ndarray, torch.Tensor, State],
+    rho: _StateLike,
+    sigma: _StateLike,
     base: Optional[int] = 2,
-) -> Union[np.ndarray, torch.Tensor]:
+) -> _ArrayLike:
     r"""Calculate the relative entropy of two quantum states.
 
     .. math::
@@ -449,7 +587,7 @@ def relative_entropy(
     )
 
 
-def stab_nullity(unitary: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def stab_nullity(unitary: _ArrayLike) -> _ArrayLike:
     r"""Tool for calculation of unitary-stabilizer nullity.
 
     Args:
@@ -498,7 +636,7 @@ def stab_nullity(unitary: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, 
      )
 
 
-def stab_renyi(density: Union[np.ndarray, torch.Tensor,State],alpha: Union[np.ndarray, torch.Tensor, float]) -> Union[np.ndarray, torch.Tensor]:
+def stab_renyi(density: _StateLike, alpha: _SingleParamLike) -> _ArrayLike:
     r"""Tool for calculation of stabilizer renyi entropy.
 
     Args:
@@ -553,11 +691,8 @@ def stab_renyi(density: Union[np.ndarray, torch.Tensor,State],alpha: Union[np.nd
     return renyi.detach().numpy() if type_str == "numpy" else renyi 
 
 
-def state_fidelity(
-    rho: Union[np.ndarray, torch.Tensor, State],
-    sigma: Union[np.ndarray, torch.Tensor, State],
-) -> Union[np.ndarray, torch.Tensor]:
-    r"""Calculate the fidelity of two quantum states.
+def state_fidelity(rho: _StateLike, sigma: _StateLike) -> _ArrayLike:
+    r"""Calculate the fidelity of two quantum states, no extra square is taken.
 
     .. math::
         F(\rho, \sigma) = \text{tr}(\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}})
@@ -568,6 +703,10 @@ def state_fidelity(
 
     Returns:
         The fidelity between the input quantum states.
+    
+    Note:
+        The fidelity equation is based on Equation (9.53) in Quantum Computation & Quantum Information, 10th edition.
+        
     """
     type_rho, type_sigma = _type_fetch(rho), _type_fetch(sigma)
     rho = _type_transform(rho, "state").density_matrix
@@ -582,10 +721,7 @@ def state_fidelity(
     )
 
 
-def trace_distance(
-    rho: Union[np.ndarray, torch.Tensor, State],
-    sigma: Union[np.ndarray, torch.Tensor, State],
-) -> Union[np.ndarray, torch.Tensor]:
+def trace_distance(rho: _StateLike, sigma: _StateLike) -> _ArrayLike:
     r"""Calculate the trace distance of two quantum states.
 
     .. math::
@@ -609,9 +745,7 @@ def trace_distance(
     )
 
 
-def von_neumann_entropy(
-    rho: Union[np.ndarray, torch.Tensor, State], base: Optional[int] = 2
-) -> Union[np.ndarray, torch.Tensor]:
+def von_neumann_entropy(rho: _StateLike, base: int = 2) -> _ArrayLike:
     r"""Calculate the von Neumann entropy of a quantum state.
 
     .. math::

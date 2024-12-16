@@ -346,4 +346,4 @@ class ReplacementChannel(Channel):
             self, sigma: State,
             system_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('choi', replacement_choi(sigma), system_idx, acted_system_dim=sigma.dim)
+        super().__init__('choi', replacement_choi(sigma.density_matrix), system_idx, acted_system_dim=sigma.dim)

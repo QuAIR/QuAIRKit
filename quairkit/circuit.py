@@ -30,7 +30,6 @@ from .ansatz import (ComplexBlockLayer, ComplexEntangledLayer, Layer,
                      LinearEntangledLayer, OperatorList, QAOALayer,
                      RealBlockLayer, RealEntangledLayer, SuperpositionLayer,
                      WeakSuperpositionLayer)
-from .core import Backend, get_backend, get_dtype, get_float_dtype, to_state
 from .core.intrinsic import _alias, _cnot_idx_fetch, _format_circuit_idx
 from .core.state import State
 from .database import std_basis, zero_state
@@ -39,12 +38,14 @@ from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CX, CY, CZ, MS,
                        BitFlip, BitPhaseFlip, ChoiRepr, Collapse,
                        ControlOracle, Depolarizing, Gate,
                        GeneralizedAmplitudeDamping, GeneralizedDepolarizing, H,
-                       KrausRepr, Oracle, P, ParamOracle, PauliChannel,
-                       PhaseDamping, PhaseFlip, ResetChannel, S, Sdg,
-                       StinespringRepr, T, Tdg, ThermalRelaxation,
+                       KrausRepr, OneWayLOCC, Oracle, P, ParamOracle,
+                       PauliChannel, PhaseDamping, PhaseFlip, ResetChannel, S,
+                       Sdg, StinespringRepr, T, Tdg, ThermalRelaxation,
                        UniversalThreeQubits, UniversalTwoQubits, X, Y, Z)
 from .operator.gate import _circuit_plot
 from .operator.gate.custom import UniversalQudits
+
+__all__ = ['Circuit']
 
 
 class Circuit(OperatorList):
@@ -68,6 +69,7 @@ class Circuit(OperatorList):
         # alias
         self.toffoli = self.ccx
         self.cx = self.cnot
+        self.collapse = self.measure
 
         # TODO recover the gather logic for CNOT
         # preparing cnot index in 'cycle' case
@@ -1163,7 +1165,7 @@ class Circuit(OperatorList):
             self, oracle: torch.Tensor, system_idx: Union[List[int], int],
             gate_name: Optional[str] = 'O', latex_name: Optional[str] = None, plot_width: Optional[float] = None
     ) -> None:
-        """Add an oracle gate.
+        r"""Add an oracle gate.
 
         Args:
             oracle: Unitary oracle to be implemented.
@@ -1185,27 +1187,31 @@ class Circuit(OperatorList):
 
     @_alias({"system_idx": "qubits_idx"})
     def control_oracle(
-            self, oracle: torch.Tensor, system_idx: List[int],
+            self, oracle: torch.Tensor, system_idx: List[Union[List[int], int]], proj: Union[torch.Tensor] = None,
             gate_name: Optional[str] = 'O', latex_name: Optional[str] = None, plot_width: Optional[float] = None
     ) -> None:
-        """Add a controlled oracle gate.
+        r"""Add a controlled oracle gate.
 
         Args:
             oracle: Unitary oracle to be implemented.
-            system_idx: Indices of the systems on which the gates are applied.
+            system_idx: Indices of the systems on which the gates are applied. The first element in the list is the control system, 
+                defaulting to the $|d-1\rangle \langle d-1|$ state as the control qubit, 
+                while the remaining elements represent the oracle system.
+            proj: Projector matrix for the control qubit. Defaults to ``None``
             gate_name: name of this oracle.
             latex_name: latex name of this oracle, default to be the gate name.
             plot_width: width of this gate in circuit plot, default to be proportional with the gate name.
         """
-        system_idx = self.__info_update(system_idx, len(system_idx))
+        _system_idx = sum(([item] if isinstance(item, int) else item for item in system_idx), [])
+        _system_idx = self.__info_update(_system_idx, len(_system_idx))
         gate_info = {
             'gatename': f"c{gate_name}",
             'texname': f"${gate_name}$" if latex_name is None else latex_name,
             'plot_width': 0.6 * len(gate_name) if plot_width is None else plot_width}
         
-        acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
+        acted_system_dim = [self.__system_dim[idx] for idx in _system_idx]
         self.append(ControlOracle(
-            oracle, system_idx, acted_system_dim, gate_info))
+            oracle, system_idx, acted_system_dim, proj, gate_info))
         
     @_alias({"system_idx": "qubits_idx"})
     def param_oracle(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int,
@@ -1234,26 +1240,24 @@ class Circuit(OperatorList):
         self.append(ParamOracle(
             generator, param, num_acted_param, False, system_idx, acted_system_dim, gate_info))
 
-    def collapse(self, system_idx: Union[Iterable[int], int, str] = None,
-                 desired_result: Union[int, str] = None, if_print: bool = False,
-                 measure_basis: Optional[torch.Tensor] = None) -> None:
+    @_alias({"system_idx": "qubits_idx", "post_selection": "desired_result"})
+    def measure(self, system_idx: Union[Iterable[int], int, str] = None,
+                post_selection: Union[int, str] = None, if_print: bool = False,
+                measure_basis: Optional[torch.Tensor] = None) -> None:
         r"""
         Args:
-            system_idx: list of systems to be collapsed. Defaults to all qubits.
-            desired_result: The desired result you want to collapse. Defaults to ``None`` meaning randomly choose one.
+            system_idx: list of systems to be measured. Defaults to all qubits.
+            post_selection: the post selection result after measurement. Defaults to ``None`` meaning preserving all measurement outcomes.
             if_print: whether print the information about the collapsed state. Defaults to ``False``.
             measure_basis: The basis of the measurement. The quantum state will collapse to the corresponding eigenstate.
 
-        Raises:
-            NotImplementedError: If the basis of measurement is not z. Other bases will be implemented in future.
-            TypeError: cannot get probability of state when the backend is unitary_matrix.
-
         Note:
-            When desired_result is `None`, Collapse does not support gradient calculation
+            When desired_result is `None`, collapse is equivalent to mid-circuit measurement.
+        
         """
         system_idx = self.__info_update(system_idx, None)
         self.append(Collapse(
-            system_idx, desired_result, if_print, measure_basis))
+            system_idx, post_selection, if_print, measure_basis))
 
     def superposition_layer(
             self, qubits_idx: Iterable[int] = None
@@ -1363,7 +1367,7 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
         qubits_idx = self.__info_update(qubits_idx, 1)
-        self.append(BitFlip(prob, qubits_idx, self.num_qubits))
+        self.append(BitFlip(prob, qubits_idx))
 
     def phase_flip(
             self, prob: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -1375,8 +1379,7 @@ class Circuit(OperatorList):
             qubits_idx: Indices of the qubits on which the channels are applied. Defaults to 'full'.
         """
         qubits_idx = self.__info_update(qubits_idx, 1)
-        self.append(PhaseFlip(prob, qubits_idx,
-                    self.num_qubits))
+        self.append(PhaseFlip(prob, qubits_idx))
 
     def bit_phase_flip(
             self, prob: Union[torch.Tensor, float], qubits_idx: Union[Iterable[int], int, str] = 'full'
@@ -1538,6 +1541,20 @@ class Circuit(OperatorList):
         acted_system_dim = [self.__system_dim[idx] for idx in system_idx]
         self.append(StinespringRepr(stinespring_repr, system_idx, acted_system_dim))
 
+    def locc(self, local_unitary: torch.Tensor, system_idx: List[Union[List[int], int]]) -> None:
+        r"""Add a one-way local operation and classical communication (LOCC) protocol comprised of unitary operations.
+
+        Args:
+            measure_idx: Indices of the measured systems.
+            system_idx: Indices of the systems on which the protocol is applied. The first element represents the measure system(s) and the remaining elements represent the local system(s).
+        
+        """
+        _system_idx = (list(system_idx[0]) if isinstance(system_idx[0], int) else system_idx[0]) + system_idx[1:]
+        _system_idx = self.__info_update(_system_idx, len(_system_idx))
+        
+        acted_system_dim = [self.__system_dim[idx] for idx in _system_idx]
+        self.append(OneWayLOCC(local_unitary, system_idx, acted_system_dim))
+    
     def __str__(self):
         history = self.gate_history
         num_systems = self.__num_system

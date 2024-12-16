@@ -49,18 +49,39 @@ def pauli_basis(num_qubits: int) -> torch.Tensor:
     Returns:
          The Pauli basis of :math:`\mathbb{C}^{2^n \times 2^n}`, where each tensor is accessible along the first dimension.
 
+    .. code-block:: python
+    
+        num_qubits = 1
+        basis = pauli_basis(num_qubits)
+        print(f'The Pauli basis is:\n{basis}')
+        
+    ::
+    
+        The Pauli basis is:
+        tensor([[[ 0.7071+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j,  0.7071+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.7071+0.0000j],
+                [ 0.7071+0.0000j,  0.0000+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.0000-0.7071j],
+                [ 0.0000+0.7071j,  0.0000+0.0000j]],
+
+                [[ 0.7071+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j, -0.7071+0.0000j]]])
+
     """
-    single_pauli_basis = torch.stack([database.matrix.eye(torch.complex128), 
-                                      database.matrix.x(torch.complex128), 
-                                      database.matrix.y(torch.complex128), 
-                                      database.matrix.z(torch.complex128)]) * math.sqrt(2) / 2
+    single_pauli_basis = torch.stack([database.matrix.eye(), 
+                                      database.matrix.x(), 
+                                      database.matrix.y(), 
+                                      database.matrix.z()]) * math.sqrt(2) / 2
     if num_qubits == 1:
         return single_pauli_basis
     return reduce(
         lambda result, index: torch.kron(result, index),
         [single_pauli_basis for _ in range(num_qubits - 2)],
         torch.kron(single_pauli_basis, single_pauli_basis),
-    ).to(get_dtype())
+    )
 
 
 def pauli_group(num_qubits: int) -> torch.Tensor:
@@ -71,6 +92,27 @@ def pauli_group(num_qubits: int) -> torch.Tensor:
 
     Returns:
          The Pauli group of :math:`\mathbb{C}^{2^n \times 2^n}`, where each tensor is accessible along the first dimension.
+
+    .. code-block:: python
+        
+        num_qubits = 1
+        group = pauli_group(num_qubits)
+        print(f'The Pauli group is:\n{group}')
+        
+    ::
+    
+        The Pauli group is:
+        tensor([[[ 1.0000+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j,  1.0000+0.0000j]],
+
+                [[ 0.0000+0.0000j,  1.0000+0.0000j],
+                [ 1.0000+0.0000j,  0.0000+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.0000-1.0000j],
+                [ 0.0000+1.0000j,  0.0000+0.0000j]],
+
+                [[ 1.0000+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j, -1.0000+0.0000j]]])
 
     """
     return pauli_basis(num_qubits) * (math.sqrt(2) ** num_qubits)
@@ -84,6 +126,33 @@ def pauli_str_basis(pauli_str: Union[str, List[str]]) -> State:
     
     Returns:
         The state basis of the observable given by the Pauli string
+        
+    .. code-block:: python
+        
+        pauli_str = ['x','z']
+        state_basis = pauli_str_basis(pauli_str)
+        print(f'The state basis of the observable is:\n{state_basis}')
+        
+    ::
+    
+        The state basis of the observable is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2]
+        System sequence: [0]
+        Batch size: [2, 2]
+
+        # 0:
+        [0.71+0.j 0.71+0.j]
+        # 1:
+        [ 0.71+0.j -0.71+0.j]
+        # 2:
+        [1.+0.j 0.+0.j]
+        # 3:
+        [0.+0.j 1.+0.j]
+        ---------------------------------------------------
+
     
     """
     x_basis = torch.tensor([[1, 1], 
@@ -113,7 +182,28 @@ def pauli_str_povm(pauli_str: Union[str, List[str]]) -> torch.Tensor:
     Returns:
         The POVM of the observable given by the Pauli string
     
-    """
+    .. code-block:: python
+    
+        pauli_str = ['x','y']
+        POVM = pauli_str_povm(pauli_str)
+        print(f'The POVM of the observable is:\n{POVM}')
+        
+    ::
+    
+        The POVM of the observable is:
+        tensor([[[[ 0.5000+0.0000j,  0.5000+0.0000j],
+                [ 0.5000+0.0000j,  0.5000+0.0000j]],
+
+                [[ 0.5000+0.0000j, -0.5000+0.0000j],
+                [-0.5000+0.0000j,  0.5000+0.0000j]]],
+
+
+                [[[ 0.5000+0.0000j,  0.0000-0.5000j],
+                [ 0.0000+0.5000j,  0.5000+0.0000j]],
+
+                [[ 0.5000+0.0000j,  0.0000+0.5000j],
+                [ 0.0000-0.5000j,  0.5000+0.0000j]]]])
+            """
     return pauli_str_basis(pauli_str).density_matrix
 
 
@@ -126,9 +216,32 @@ def qft_basis(num_qubits: int) -> State:
     Returns:
         A tensor where the first index gives the eigenvector of the QFT matrix.
     
+    .. code-block:: python
+    
+        num_qubits = 2
+        qft_state = qft_basis(num_qubits)
+        print(f'The eigenvectors of the QFT matrix is:\n{qft_state}')
+        
+    ::
+    
+        The eigenvectors of the QFT matrix is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2]
+        System sequence: [0]
+        Batch size: [2]
+
+        # 0:
+        [0.92+0.j 0.38+0.j]
+        # 1:
+        [-0.38-0.j  0.92+0.j]
+        ---------------------------------------------------
+
+
     """
     #TODO numerically unstable, needs a more precise implementation instead of using eig decomposition
-    _, eigvec = torch.linalg.eig(database.matrix.qft_matrix(num_qubits, dtype=torch.complex128))
+    _, eigvec = torch.linalg.eig(database.matrix.qft_matrix(num_qubits))
     return to_state(eigvec.T.unsqueeze(-1).to(get_dtype()))
 
 
@@ -144,6 +257,29 @@ def std_basis(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
     Returns:
         A tensor where the first index gives the computational vector
     
+    .. code-block:: python
+    
+        num_systems = 2
+        system_dim=[1,2]
+        basis = std_basis(num_systems,system_dim)
+        print(f'The standard basis states are:\n{basis}')
+        
+    ::
+    
+        The standard basis states are:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [1, 2]
+        System sequence: [0, 1]
+        Batch size: [2]
+
+        # 0:
+        [1.+0.j 0.+0.j]
+        # 1:
+        [0.+0.j 1.+0.j]
+        ---------------------------------------------------
+
     """
     dim = system_dim ** num_systems if isinstance(system_dim, int) else math.prod(system_dim)
     return to_state(torch.eye(dim).unsqueeze(-1).to(get_dtype()), system_dim)
@@ -156,6 +292,30 @@ def bell_basis() -> State:
     Returns:
         A tensor of shape (4, 4, 1), representing the four Bell basis states.
     
+     .. code-block:: python
+     
+        basis=bell_basis()
+        print(f'The Bell basis for a 2-qubit system are:\n{basis}')
+        
+    ::
+    
+        The Bell basis for a 2-qubit system are:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        Batch size: [4]
+
+        # 0:
+        [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+        # 1:
+        [ 0.71+0.j  0.  +0.j  0.  +0.j -0.71+0.j]
+        # 2:
+        [0.  +0.j 0.71+0.j 0.71+0.j 0.  +0.j]
+        # 3:
+        [ 0.  +0.j  0.71+0.j -0.71+0.j  0.  +0.j]
+        ---------------------------------------------------
     """
     mat = torch.tensor([
         [ 1,  0,  0,  1],   # |Φ+⟩ = (|00⟩ + |11⟩) / √2
@@ -168,13 +328,35 @@ def bell_basis() -> State:
 
 def heisenberg_weyl(dim: int) -> torch.Tensor:
     r"""Generate Heisenberg-Weyl operator for qudit. 
-        The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) \pi i a b/ d}Z^a X^b.
+        The Heisenberg-Weyl operators are defined as :math:`T(a,b) = e^{-(d+1) \pi i a b/ d}Z^a X^b`.
 
     Args:
         dim: dimension of qudit
 
     Returns:
         Heisenberg-Weyl operator for qudit
+        
+    .. code-block:: python
+     
+        dim=2
+        operator=heisenberg_weyl(dim)
+        print(f'The Heisenberg-Weyl operator for qudit is:\n{operator}')
+        
+    ::
+    
+        The Heisenberg-Weyl operator for qudit is:
+        tensor([[[ 1.0000e+00+0.0000e+00j,  0.0000e+00+0.0000e+00j],
+                [ 0.0000e+00+0.0000e+00j,  1.0000e+00+0.0000e+00j]],
+
+                [[ 1.0000e+00+0.0000e+00j,  0.0000e+00+0.0000e+00j],
+                [ 0.0000e+00+0.0000e+00j, -1.0000e+00+1.2246e-16j]],
+
+                [[ 0.0000e+00+0.0000e+00j,  1.0000e+00+0.0000e+00j],
+                [ 1.0000e+00+0.0000e+00j,  0.0000e+00+0.0000e+00j]],
+
+                [[-0.0000e+00+0.0000e+00j, -1.8370e-16+1.0000e+00j],
+                [ 6.1232e-17-1.0000e+00j, -0.0000e+00+0.0000e+00j]]],
+            dtype=torch.complex128)
     """
     complex_dtype = get_dtype() 
     _phase = database.matrix.phase(dim)
@@ -208,6 +390,27 @@ def phase_space_point(dim: int) -> torch.Tensor:
 
     Returns:
         Phase space point operator for qudit
+        
+    .. code-block:: python
+     
+        dim=2
+        operator=phase_space_point(dim)
+        print(f'The phase space point operator for qudit is:\n{operator}')
+        
+    ::
+    
+        The phase space point operator for qudit is:
+        tensor([[[ 1.0000+0.0000e+00j,  0.5000+5.0000e-01j],
+                [ 0.5000-5.0000e-01j,  0.0000+6.1232e-17j]],
+
+                [[ 1.0000+0.0000e+00j, -0.5000-5.0000e-01j],
+                [-0.5000+5.0000e-01j,  0.0000+6.1232e-17j]],
+
+                [[ 0.0000+6.1232e-17j,  0.5000-5.0000e-01j],
+                [ 0.5000+5.0000e-01j,  1.0000+0.0000e+00j]],
+
+                [[ 0.0000+6.1232e-17j, -0.5000+5.0000e-01j],
+                [-0.5000-5.0000e-01j,  1.0000+0.0000e+00j]]], dtype=torch.complex128)
     """
 
     hw = heisenberg_weyl(dim)
@@ -249,6 +452,24 @@ def gell_mann(dim: int) -> torch.Tensor:
 
     Returns:
         A set of Gell-Mann matrices.
+        
+    .. code-block:: python
+     
+        dim=2
+        matrices=gell_mann(dim)
+        print(f'The Gell-Mann matrices are:\n{matrices}')
+    
+    ::
+    
+        The Gell-Mann matrices are:
+        tensor([[[ 0.+0.j,  1.+0.j],
+                [ 1.+0.j,  0.+0.j]],
+
+                [[ 0.+0.j, -0.-1.j],
+                [ 0.+1.j,  0.+0.j]],
+
+                [[ 1.+0.j,  0.+0.j],
+                [ 0.+0.j, -1.+0.j]]])
     """
     list_gell_mann = [
         __gell_mann(idx1, idx2, dim).unsqueeze(0)

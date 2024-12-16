@@ -22,9 +22,10 @@ from typing import List, Union
 import numpy as np
 import torch
 
-from ..core import State, get_dtype, to_state
-from ..core.intrinsic import _get_float_dtype
-from ..core.utils.linalg import _one, _zero
+from ..core import State, get_dtype, to_state, utils
+from ..core.intrinsic import (_ArrayLike, _get_float_dtype, _SingleParamLike,
+                              _StateLike, _type_fetch, _type_transform)
+from ..core.utils.matrix import _one, _zero
 from .set import pauli_basis
 
 __all__ = [
@@ -46,7 +47,7 @@ __all__ = [
 ]
 
 
-def bit_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+def bit_flip_kraus(prob: _SingleParamLike) -> List[_ArrayLike]:
     r"""Kraus representation of a bit flip channel with form
 
     .. math::
@@ -61,26 +62,31 @@ def bit_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = No
     Returns:
         a list of Kraus operators
 
+    .. code-block:: python
+    
+        prob = torch.tensor([0.5])
+        kraus_operators = bit_flip_kraus(prob)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[0.7071+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.7071+0.j]],
+
+                [[0.0000+0.j, 0.7071+0.j],
+                [0.7071+0.j, 0.0000+0.j]]], dtype=torch.complex128)
+        
     """
-    dtype = get_dtype() if dtype is None else dtype
-    prob = prob if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=_get_float_dtype(dtype))
-    prob = prob.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(1 - prob).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - prob).to(dtype),
-        ],
-        [
-            _zero(dtype), torch.sqrt(prob).to(dtype),
-            torch.sqrt(prob).to(dtype), _zero(dtype),
-        ]
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    mat = utils.representation._bit_flip_kraus(prob)
+    return _type_transform(mat, type_str)
 
 
-def phase_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+    
+
+
+def phase_flip_kraus(prob: _SingleParamLike) -> List[_ArrayLike]:
     r"""Kraus representation of a phase flip channel with form
 
     .. math::
@@ -94,26 +100,28 @@ def phase_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = 
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        prob = torch.tensor([0.1])
+        kraus_operators = phase_flip_kraus(prob)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+    
+    ::
+    
+        The Kraus operators are:
+        tensor([[[ 0.9487+0.j,  0.0000+0.j],
+                [ 0.0000+0.j,  0.9487+0.j]],
+
+                [[ 0.3162+0.j,  0.0000+0.j],
+                [ 0.0000+0.j, -0.3162+0.j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    prob = prob if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=_get_float_dtype(dtype))
-    prob = prob.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(1 - prob).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - prob).to(dtype),
-        ],
-        [
-            torch.sqrt(prob).to(dtype), _zero(dtype),
-            _zero(dtype), (-torch.sqrt(prob)).to(dtype),
-        ]
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    mat = utils.representation._phase_flip_kraus(prob)
+    return _type_transform(mat, type_str)
 
 
-def bit_phase_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+def bit_phase_flip_kraus(prob: _SingleParamLike ) -> List[_ArrayLike]:
     r"""Kraus representation of a bit-phase flip channel with form
 
     .. math::
@@ -127,26 +135,29 @@ def bit_phase_flip_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: st
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        prob = torch.tensor([0.1])
+        kraus_operators = bit_phase_flip_kraus(prob)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[0.9487+0.0000j, 0.0000+0.0000j],
+                [0.0000+0.0000j, 0.9487+0.0000j]],
+
+                [[0.0000+0.0000j, 0.0000-0.3162j],
+                [0.0000+0.3162j, 0.0000+0.0000j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    prob = prob if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=_get_float_dtype(dtype))
-    prob = prob.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(1 - prob).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - prob).to(dtype),
-        ],
-        [
-            _zero(dtype), -1j * torch.sqrt(prob),
-            1j * torch.sqrt(prob), _zero(dtype),
-        ]
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    mat = utils.representation._bit_phase_flip_kraus(prob)
+    return _type_transform(mat, type_str)
 
 
-def amplitude_damping_kraus(gamma: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+
+def amplitude_damping_kraus(gamma: _SingleParamLike ) -> List[_ArrayLike]:
     r"""Kraus representation of an amplitude damping channel with form
 
     .. math::
@@ -168,29 +179,32 @@ def amplitude_damping_kraus(gamma: Union[float, np.ndarray, torch.Tensor], dtype
 
     Returns:
         a list of Kraus operators
-    """
-    dtype = get_dtype() if dtype is None else dtype
-    gamma = gamma if isinstance(gamma, torch.Tensor) else torch.tensor(gamma, dtype=_get_float_dtype(dtype))
-    gamma = gamma.view([1])
-    kraus_oper = [
-        [
-            _one(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - gamma).to(dtype),
-        ],
-        [
-            _zero(dtype), torch.sqrt(gamma).to(dtype),
-            _zero(dtype), _zero(dtype)],
+        
+    .. code-block:: python
+    
+        gamma = torch.tensor(0.2)
+        kraus_operators = amplitude_damping_kraus(gamma)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[1.0000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.8944+0.j]],
 
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+                [[0.0000+0.j, 0.4472+0.j],
+                [0.0000+0.j, 0.0000+0.j]]], dtype=torch.complex128)
+    """
+    type_str, gamma = _type_fetch(gamma), _type_transform(gamma, "tensor")
+    mat = utils.representation._amplitude_damping_kraus(gamma)
+    return _type_transform(mat, type_str)
+    
 
 
 def generalized_amplitude_damping_kraus(
-        gamma: Union[float, np.ndarray, torch.Tensor],
-        prob: Union[float, np.ndarray, torch.Tensor], dtype: str = None
-) -> List[torch.Tensor]:
+        gamma: _SingleParamLike,
+        prob: _SingleParamLike 
+) -> List[_ArrayLike]:
     r"""Kraus representation of a generalized amplitude damping channel with form
 
     .. math::
@@ -207,36 +221,38 @@ def generalized_amplitude_damping_kraus(
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        gamma = torch.tensor(0.2)
+        prob = torch.tensor(0.1)
+        kraus_operators = generalized_amplitude_damping_kraus(gamma,prob)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[0.3162+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.2828+0.j]],
+
+                [[0.0000+0.j, 0.1414+0.j],
+                [0.0000+0.j, 0.0000+0.j]],
+
+                [[0.8485+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.9487+0.j]],
+
+                [[0.0000+0.j, 0.0000+0.j],
+                [0.4243+0.j, 0.0000+0.j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    float_dtype = _get_float_dtype(dtype)
-    gamma = gamma if isinstance(gamma, torch.Tensor) else torch.tensor(gamma, dtype=float_dtype)
-    prob = prob if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=float_dtype)
-    gamma, prob = gamma.view([1]), prob.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(prob).to(dtype), _zero(dtype),
-            _zero(dtype), (torch.sqrt(prob).to(dtype) * torch.sqrt(1 - gamma)).to(dtype),
-        ],
-        [
-            _zero(dtype), (torch.sqrt(prob) * torch.sqrt(gamma)).to(dtype),
-            _zero(dtype), _zero(dtype),
-        ],
-        [
-            (torch.sqrt(1 - prob) * torch.sqrt(1 - gamma)).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - prob).to(dtype),
-        ],
-        [
-            _zero(dtype), _zero(dtype),
-            (torch.sqrt(1 - prob) * torch.sqrt(gamma)).to(dtype), _zero(dtype),
-        ],
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, gamma, prob = _type_fetch(gamma), _type_transform(gamma, "tensor"),_type_transform(prob, "tensor")
+    mat = utils.representation._generalized_amplitude_damping_kraus(gamma,prob)
+    return _type_transform(mat, type_str)
+    
+    
 
 
-def phase_damping_kraus(gamma: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+def phase_damping_kraus(gamma: _SingleParamLike ) -> List[_ArrayLike]:
+    
     r"""Kraus representation of a phase damping channel with form
 
     .. math::
@@ -258,26 +274,28 @@ def phase_damping_kraus(gamma: Union[float, np.ndarray, torch.Tensor], dtype: st
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        gamma = torch.tensor(0.2)
+        kraus_operators = phase_damping_kraus(gamma)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+    
+    ::
+    
+        The Kraus operators are:
+        tensor([[[1.0000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.8944+0.j]],
+
+                [[0.0000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.4472+0.j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    gamma = gamma if isinstance(gamma, torch.Tensor) else torch.tensor(gamma, dtype=_get_float_dtype(dtype))
-    gamma = gamma.view([1])
-    kraus_oper = [
-        [
-            _one(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - gamma).to(dtype),
-        ],
-        [
-            _zero(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(gamma).to(dtype),
-        ]
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, gamma = _type_fetch(gamma), _type_transform(gamma, "tensor")
+    mat = utils.representation._phase_damping_kraus(gamma)
+    return _type_transform(mat, type_str)
 
 
-def depolarizing_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+def depolarizing_kraus(prob: _SingleParamLike ) -> List[_ArrayLike]:
     r"""Kraus representation of a depolarizing channel with form
 
     .. math::
@@ -293,34 +311,35 @@ def depolarizing_kraus(prob: Union[float, np.ndarray, torch.Tensor], dtype: str 
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        prob = torch.tensor(0.1)
+        kraus_operators = depolarizing_kraus(prob)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[ 0.9618+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j,  0.9618+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.1581+0.0000j],
+                [ 0.1581+0.0000j,  0.0000+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.0000-0.1581j],
+                [ 0.0000+0.1581j,  0.0000+0.0000j]],
+
+                [[ 0.1581+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j, -0.1581+0.0000j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    prob = prob if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=_get_float_dtype(dtype))
-    prob = prob.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(1 - 3 * prob / 4).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(1 - 3 * prob / 4).to(dtype),
-        ],
-        [
-            _zero(dtype), torch.sqrt(prob / 4).to(dtype),
-            torch.sqrt(prob / 4).to(dtype), _zero(dtype),
-        ],
-        [
-            _zero(dtype), -1j * torch.sqrt(prob / 4).to(dtype),
-            1j * torch.sqrt(prob / 4).to(dtype), _zero(dtype),
-        ],
-        [
-            torch.sqrt(prob / 4).to(dtype), _zero(dtype),
-            _zero(dtype), (-1 * torch.sqrt(prob / 4)).to(dtype),
-        ],
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    mat = utils.representation._depolarizing_kraus(prob)
+    return _type_transform(mat, type_str)
 
 
-def generalized_depolarizing_kraus(prob: float, num_qubits: int, dtype: str = None) -> List[torch.Tensor]:
+
+def generalized_depolarizing_kraus(prob: _SingleParamLike, num_qubits: int,dtype: torch.dtype=torch.complex128 ) -> List[_ArrayLike]:
     r"""Kraus representation of a generalized depolarizing channel with form
 
     .. math::
@@ -335,22 +354,48 @@ def generalized_depolarizing_kraus(prob: float, num_qubits: int, dtype: str = No
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        prob = torch.tensor(0.1)
+        num_qubits=1
+        kraus_operators = generalized_depolarizing_kraus(prob,num_qubits)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[ 1.3601+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j,  1.3601+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.2236+0.0000j],
+                [ 0.2236+0.0000j,  0.0000+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.0000-0.2236j],
+                [ 0.0000+0.2236j,  0.0000+0.0000j]],
+
+                [[ 0.2236+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j, -0.2236+0.0000j]]])
     """
-    dtype = get_dtype() if dtype is None else dtype
-    prob = prob if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=_get_float_dtype(dtype))
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    dtype = get_dtype() 
     prob = prob.view([1])
 
     basis = [ele.to(dtype) * (2 ** num_qubits + 0j) for ele in pauli_basis(num_qubits)]
     I, other_elements = basis[0], basis[1:]
 
     dim = 4 ** num_qubits
-    return torch.stack(
-        [I * (torch.sqrt(1 - (dim - 1) * prob / dim) + 0j)] +
-        [ele * (torch.sqrt(prob / dim) + 0j) for ele in other_elements]
-    )
+    mat= torch.stack([I * (torch.sqrt(1 - (dim - 1) * prob / dim) + 0j)] +
+    [ele * (torch.sqrt(prob / dim) + 0j) for ele in other_elements])
+    
+    return _type_transform(mat, type_str)
+    
+    
 
 
-def pauli_kraus(prob: Union[List[float], np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+
+
+def pauli_kraus(prob: _SingleParamLike ) -> List[_ArrayLike]:
     r"""Kraus representation of a pauli channel
 
     Args:
@@ -359,40 +404,35 @@ def pauli_kraus(prob: Union[List[float], np.ndarray, torch.Tensor], dtype: str =
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        prob_list = torch.tensor([0.1, 0.2, 0.3])  
+        kraus_operators = pauli_kraus(prob_list)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[ 0.6325+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j,  0.6325+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.3162+0.0000j],
+                [ 0.3162+0.0000j,  0.0000+0.0000j]],
+
+                [[ 0.0000+0.0000j,  0.0000-0.4472j],
+                [ 0.0000+0.4472j,  0.0000+0.0000j]],
+
+                [[ 0.5477+0.0000j,  0.0000+0.0000j],
+                [ 0.0000+0.0000j, -0.5477+0.0000j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    float_dtype = _get_float_dtype(dtype)
-    prob = prob.to(float_dtype) if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=float_dtype)
-    prob_x, prob_y, prob_z = prob[0].view([1]), prob[1].view([1]), prob[2].view([1])
-    prob_sum = torch.sum(prob)
-    assert prob_sum <= 1, \
-        f"The sum of input probabilities should not be greater than 1: received {prob_sum.item()}"
-    prob_i = 1 - prob_sum
-    prob_i = prob_i.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(prob_i).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(prob_i).to(dtype),
-        ],
-        [
-            _zero(dtype), torch.sqrt(prob_x).to(dtype),
-            torch.sqrt(prob_x).to(dtype), _zero(dtype),
-        ],
-        [
-            _zero(dtype), -1j * torch.sqrt(prob_y).to(dtype),
-            1j * torch.sqrt(prob_y).to(dtype), _zero(dtype),
-        ],
-        [
-            torch.sqrt(prob_z).to(dtype), _zero(dtype),
-            _zero(dtype), (-torch.sqrt(prob_z)).to(dtype),
-        ],
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    mat = utils.representation._pauli_kraus(prob)
+    return _type_transform(mat, type_str)
+    
 
 
-def reset_kraus(prob: Union[List[float], np.ndarray, torch.Tensor], dtype: str = None) -> List[torch.Tensor]:
+def reset_kraus(prob: _SingleParamLike ) -> List[_ArrayLike]:
     r"""Kraus representation of a reset channel with form
 
     .. math::
@@ -425,47 +465,40 @@ def reset_kraus(prob: Union[List[float], np.ndarray, torch.Tensor], dtype: str =
 
     Returns:
         a list of Kraus operators
+        
+    .. code-block:: python
+    
+        prob_list = torch.tensor([0.1, 0.2])  
+        kraus_operators = reset_kraus(prob_list)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[0.3162+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.0000+0.j]],
+
+                [[0.0000+0.j, 0.3162+0.j],
+                [0.0000+0.j, 0.0000+0.j]],
+
+                [[0.0000+0.j, 0.0000+0.j],
+                [0.4472+0.j, 0.0000+0.j]],
+
+                [[0.0000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.4472+0.j]],
+
+                [[0.8367+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.8367+0.j]]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-    float_dtype = _get_float_dtype(dtype)
-    prob = prob.to(float_dtype) if isinstance(prob, torch.Tensor) else torch.tensor(prob, dtype=float_dtype)
-    prob_0, prob_1 = prob[0].view([1]), prob[1].view([1])
-    prob_sum = torch.sum(prob)
-    assert prob_sum <= 1, \
-        f"The sum of input probabilities should not be greater than 1: received {prob_sum.item()}"
-    prob_i = 1 - prob_sum
-    prob_i = prob_i.view([1])
-    kraus_oper = [
-        [
-            torch.sqrt(prob_0).to(dtype), _zero(dtype),
-            _zero(dtype), _zero(dtype),
-        ],
-        [
-            _zero(dtype), torch.sqrt(prob_0).to(dtype),
-            _zero(dtype), _zero(dtype),
-        ],
-        [
-            _zero(dtype), _zero(dtype),
-            torch.sqrt(prob_1).to(dtype), _zero(dtype),
-        ],
-        [
-            _zero(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(prob_1).to(dtype),
-        ],
-        [
-            torch.sqrt(prob_i).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(prob_i).to(dtype),
-        ],
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
+    type_str, prob = _type_fetch(prob), _type_transform(prob, "tensor")
+    mat = utils.representation._reset_kraus(prob)
+    return _type_transform(mat, type_str)
 
 
 def thermal_relaxation_kraus(
-        const_t: Union[List[float], np.ndarray, torch.Tensor],
-        exec_time: Union[List[float], np.ndarray, torch.Tensor], dtype: str = None
-) -> List[torch.Tensor]:
+        const_t: _SingleParamLike,
+        exec_time: _SingleParamLike 
+) -> List[_ArrayLike]:
     r"""Kraus representation of a thermal relaxation channel
 
     Args:
@@ -475,44 +508,39 @@ def thermal_relaxation_kraus(
 
     Returns:
         a list of Kraus operators.
+        
+    .. code-block:: python
+    
+        const_t = torch.tensor([50, 30])  
+        exec_time = torch.tensor([100])   
+        kraus_operators = thermal_relaxation_kraus(const_t, exec_time)
+        print(f'The Kraus operators are:\n{kraus_operators}')
+        
+    ::
+    
+        The Kraus operators are:
+        tensor([[[ 0.9987+0.j,  0.0000+0.j],
+                [ 0.0000+0.j,  0.9987+0.j]],
+
+                [[ 0.0258+0.j,  0.0000+0.j],
+                [ 0.0000+0.j, -0.0258+0.j]],
+
+                [[ 0.0447+0.j,  0.0000+0.j],
+                [ 0.0000+0.j,  0.0000+0.j]],
+
+                [[ 0.0000+0.j,  0.0447+0.j],
+                [ 0.0000+0.j,  0.0000+0.j]]], dtype=torch.complex128)
+        
     """
-    dtype = get_dtype() if dtype is None else dtype
-    float_dtype = _get_float_dtype(dtype)
+    type_str, const_t,exec_time = _type_fetch(const_t), _type_transform(const_t, "tensor"),_type_transform(exec_time, "tensor")
+    mat = utils.representation._thermal_relaxation_kraus(const_t,exec_time)
+    return _type_transform(mat, type_str)
+
     
-    const_t = const_t.to(float_dtype) if isinstance(const_t, torch.Tensor) else torch.tensor(const_t, dtype=float_dtype)
-    t1, t2 = const_t[0].view([1]), const_t[1].view([1])
-    assert t2 <= t1, \
-        f"The relaxation time T2 and T1 must satisfy T2 <= T1: received T2 {t2} and T1{t1}"
-    
-    exec_time = exec_time.to(float_dtype) / 1000 if isinstance(exec_time, torch.Tensor) else torch.tensor(exec_time / 1000, dtype=float_dtype)
-    prob_reset = 1 - torch.exp(-exec_time / t1)
-    prob_z = (1 - prob_reset) * (1 - torch.exp(-exec_time / t2) * torch.exp(exec_time / t1)) / 2
-    prob_z = _zero(float_dtype) if torch.abs(prob_z) <= 0 else prob_z
-    prob_i = 1 - prob_reset - prob_z
-    kraus_oper = [
-        [
-            torch.sqrt(prob_i).to(dtype), _zero(dtype),
-            _zero(dtype), torch.sqrt(prob_i).to(dtype),
-        ],
-        [
-            torch.sqrt(prob_z).to(dtype), _zero(dtype),
-            _zero(dtype), (-torch.sqrt(prob_z)).to(dtype),
-        ],
-        [
-            torch.sqrt(prob_reset).to(dtype), _zero(dtype),
-            _zero(dtype), _zero(dtype),
-        ],
-        [
-            _zero(dtype), torch.sqrt(prob_reset).to(dtype),
-            _zero(dtype), _zero(dtype),
-        ],
-    ]
-    for idx, oper in enumerate(kraus_oper):
-        kraus_oper[idx] = torch.cat(oper).view([2, 2])
-    return torch.stack(kraus_oper)
 
 
-def replacement_choi(sigma: Union[np.ndarray, torch.Tensor, State], dtype: str = None) -> torch.Tensor:
+
+def replacement_choi(sigma: _StateLike ) -> _StateLike:
     r"""Choi representation of a replacement channel
 
     Args:
@@ -521,12 +549,24 @@ def replacement_choi(sigma: Union[np.ndarray, torch.Tensor, State], dtype: str =
 
     Returns:
         a Choi operator.
+        
+    .. code-block:: python
+    
+        sigma= torch.tensor([[0.8, 0.0], [0.0, 0.2]])  
+        choi_operator = replacement_choi(sigma)
+        print(f'The Choi operator is :\n{choi_operator}')
+        
+    ::
+    
+        The Choi operator is :
+        tensor([[0.8000+0.j, 0.0000+0.j, 0.0000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.2000+0.j, 0.0000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.0000+0.j, 0.8000+0.j, 0.0000+0.j],
+                [0.0000+0.j, 0.0000+0.j, 0.0000+0.j, 0.2000+0.j]], dtype=torch.complex128)
     """
-    dtype = get_dtype() if dtype is None else dtype
-
-    # sanity check
-    sigma = sigma if isinstance(sigma, State) else to_state(sigma)
-    sigma = sigma.density_matrix
-
-    dim = sigma.shape[0]
-    return torch.kron(torch.eye(dim), sigma).to(dtype)
+    
+    type_str, sigma = _type_fetch(sigma), _type_transform(sigma, "tensor")
+    mat = utils.representation._replacement_choi(sigma)
+    return mat if type_str == "numpy" else mat
+    
+    

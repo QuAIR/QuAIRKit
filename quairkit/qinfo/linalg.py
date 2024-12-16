@@ -22,8 +22,9 @@ import torch
 
 from quairkit.core import utils
 
-from ..core import State, get_dtype, tensor_state, to_state, utils
-from ..core.intrinsic import (_format_system_dim, _is_sample_linear,
+from ..core import get_dtype, tensor_state, to_state, utils
+from ..core.intrinsic import (_ArrayLike, _format_system_dim,
+                              _is_sample_linear, _SingleParamLike, _StateLike,
                               _type_fetch, _type_transform)
 from ..database import pauli_basis
 
@@ -36,7 +37,9 @@ __all__ = [
     "gradient",
     "hessian",
     "herm_transform",
+    "kron_power",
     "logm",
+    "nkron",
     "NKron",
     "p_norm",
     "partial_trace",
@@ -52,7 +55,7 @@ __all__ = [
 ]
 
 
-def abs_norm(mat: Union[np.ndarray, torch.Tensor, State]) -> float:
+def abs_norm(mat: _StateLike) -> float:
     r"""tool for calculation of matrix norm
 
     Args:
@@ -68,8 +71,8 @@ def abs_norm(mat: Union[np.ndarray, torch.Tensor, State]) -> float:
 
 
 def block_enc_herm(
-    mat: Union[np.ndarray, torch.Tensor], num_block_qubits: int = 1
-) -> Union[np.ndarray, torch.Tensor]:
+    mat: _ArrayLike, num_block_qubits: int = 1
+) -> _ArrayLike:
     r"""generate a (qubitized) block encoding of hermitian ``mat``
 
     Args:
@@ -92,12 +95,10 @@ def block_enc_herm(
 
 
 def create_matrix(
-    linear_map: Callable[
-        [Union[torch.Tensor, np.ndarray]], Union[torch.Tensor, np.ndarray]
-    ],
+    linear_map: Callable[[_ArrayLike], _ArrayLike],
     input_dim: int,
-    input_dtype: torch.dtype = None,
-) -> Union[torch.Tensor, np.ndarray]:
+    input_dtype: Optional[torch.dtype] = None,
+) -> _ArrayLike:
     r"""Create a matrix representation of a linear map without needing to specify the output dimension.
 
     This function constructs a matrix representation for a given linear map and input dimension.
@@ -128,7 +129,7 @@ def create_matrix(
     )
 
 
-def dagger(mat: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def dagger(mat: _ArrayLike) -> _ArrayLike:
     r"""tool for calculation of matrix dagger
 
     Args:
@@ -147,8 +148,8 @@ def dagger(mat: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tens
 
 
 def direct_sum(
-    A: Union[np.ndarray, torch.Tensor], B: Union[np.ndarray, torch.Tensor]
-) -> Union[np.ndarray, torch.Tensor]:
+    A: _ArrayLike, B: _ArrayLike
+) -> _ArrayLike:
     r"""calculate the direct sum of A and B
 
     Args:
@@ -169,7 +170,7 @@ def direct_sum(
     return _type_transform(mat, type_A) if type_A == type_B else mat
 
 
-def gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: Union[torch.Tensor, np.ndarray], n: int) -> Union[torch.Tensor, np.ndarray]:
+def gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayLike, n: int) -> _ArrayLike:
     r"""
     Computes the gradient of a given loss function with respect to its input variable.
 
@@ -194,7 +195,7 @@ def gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: Union[t
     return _type_transform(utils.linalg._gradient(loss_function, var, n), type_str)
 
 
-def hessian(loss_function: Callable[[torch.Tensor], torch.Tensor], var: Union[torch.Tensor, np.ndarray]) -> Union[torch.Tensor, np.ndarray]:
+def hessian(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayLike) -> _ArrayLike:
     r"""
     Computes the Hessian matrix of a given loss function with respect to its input variables.
 
@@ -219,9 +220,9 @@ def hessian(loss_function: Callable[[torch.Tensor], torch.Tensor], var: Union[to
 
 def herm_transform(
     fcn: Callable[[float], float],
-    mat: Union[torch.Tensor, np.ndarray, State],
+    mat: _StateLike,
     ignore_zero: Optional[bool] = False,
-) -> torch.Tensor:
+) -> _ArrayLike:
     r"""function transformation for Hermitian matrix
 
     Args:
@@ -249,7 +250,22 @@ def herm_transform(
     return mat.detach().numpy() if type_str == "numpy" else mat
 
 
-def logm(mat: Union[np.ndarray, torch.Tensor, State]) -> Union[np.ndarray, torch.Tensor]:
+def kron_power(matrix: _StateLike, n: int) -> _ArrayLike:
+    r"""Calculate Kronecker product of identical matirces
+    
+    Args:
+        matrix: the matrix to be powered
+        n: the number of identical matrices
+    
+    Returns:
+        Kronecker product of n identical matrices
+    """
+    if n == 0:
+        return np.array([[1.0]]) if isinstance(matrix, np.ndarray) else torch.tensor([[1.0]])
+    return nkron(matrix, *[matrix for _ in range(n - 1)])
+
+
+def logm(mat: _StateLike) -> _ArrayLike:
     r"""Calculate log of a matrix
 
     Args:
@@ -269,17 +285,12 @@ def logm(mat: Union[np.ndarray, torch.Tensor, State]) -> Union[np.ndarray, torch
     return _type_transform(utils.linalg._logm(mat), type_str)
 
 
-def NKron(
-    matrix_A: Union[torch.Tensor, np.ndarray],
-    matrix_B: Union[torch.Tensor, np.ndarray],
-    *args: Union[torch.Tensor, np.ndarray],
-) -> Union[torch.Tensor, np.ndarray]:
-    r"""calculate Kronecker product of at least two density matrices
+def nkron(matrix_1st: _StateLike, *args: _StateLike) -> _StateLike:
+    r"""calculate Kronecker product of matirces
 
     Args:
-        matrix_A: density matrix
-        matrix_B: density matrix
-        args: other density matrices
+        matrix_1: the first matrix 
+        args: other matrices
 
     Returns:
         Kronecker product of matrices
@@ -296,27 +307,30 @@ def NKron(
     Note:
         ``result`` from above code block should be A \otimes B \otimes C
     """
-    type_A, type_B = _type_fetch(matrix_A), _type_fetch(matrix_B)
-    type_list = [type_A, type_B] + [_type_fetch(arg) for arg in args]
+    if not args:
+        return matrix_1st
+    
+    type_1st = _type_fetch(matrix_1st)
+    type_list = [type_1st] + [_type_fetch(arg) for arg in args]
 
     if all(type_arg == "state" for type_arg in type_list):
-        return tensor_state(matrix_A, matrix_B, *args)
+        return tensor_state(matrix_1st, *args)
 
     if all(type_arg == "numpy" for type_arg in type_list):
         return_type = "numpy"
     else:
         return_type = "tensor"
 
-    matrix_A = _type_transform(matrix_A, "tensor")
-    matrix_B = _type_transform(matrix_B, "tensor")
+    matrix_1st = _type_transform(matrix_1st, "tensor")
     args = [_type_transform(mat, "tensor") for mat in args]
-    result = utils.linalg._nkron(matrix_A, matrix_B, *args)
+    result = utils.linalg._nkron(matrix_1st, *args)
 
     return _type_transform(result, return_type)
 
+NKron = nkron
 
-def p_norm(mat: Union[np.ndarray, torch.Tensor, State],
-           p: Union[np.ndarray, torch.Tensor, float]) -> Union[np.ndarray, torch.Tensor]:
+
+def p_norm(mat: _StateLike, p: _SingleParamLike) -> _ArrayLike:
     r"""tool for calculation of Schatten p-norm
 
     Args:
@@ -337,9 +351,9 @@ def p_norm(mat: Union[np.ndarray, torch.Tensor, State],
 
 
 def partial_trace(
-    state: Union[np.ndarray, torch.Tensor, State], trace_idx: Union[List[int], int], 
+    state: _StateLike, trace_idx: Union[List[int], int], 
     system_dim: Union[List[int], int] = 2
-) -> Union[np.ndarray, torch.Tensor, State]:
+) -> _StateLike:
     r"""Calculate the partial trace of the quantum state
 
     Args:
@@ -368,8 +382,8 @@ def partial_trace(
 
 
 def partial_trace_discontiguous(
-    state: Union[np.ndarray, torch.Tensor, State], preserve_qubits: List[int] = None
-) -> Union[np.ndarray, torch.Tensor, State]:
+    state: _StateLike, preserve_qubits: List[int] = None
+) -> _StateLike:
     r"""Calculate the partial trace of the quantum state with arbitrarily selected subsystem
 
     Args:
@@ -396,9 +410,9 @@ def partial_trace_discontiguous(
 
 
 def partial_transpose(
-    state: Union[np.ndarray, torch.Tensor, State], transpose_idx: Union[List[int], int], 
+    state: _StateLike, transpose_idx: Union[List[int], int], 
     system_dim: Union[List[int], int] = 2
-) -> Union[np.ndarray, torch.Tensor]:
+) -> _ArrayLike:
     r"""Calculate the partial transpose :math:`\rho^{T_A}` of the input quantum state.
 
     Args:
@@ -427,9 +441,7 @@ def partial_transpose(
     return state.detach().numpy() if type_str == "numpy" else state
 
 
-def pauli_decomposition(
-    mat: Union[np.ndarray, torch.Tensor]
-) -> Union[np.ndarray, torch.Tensor]:
+def pauli_decomposition(mat: _ArrayLike) -> _ArrayLike:
     r"""Decompose the matrix by the Pauli basis.
 
     Args:
@@ -454,10 +466,8 @@ def pauli_decomposition(
 
 
 def permute_systems(
-    state: Union[np.ndarray, torch.Tensor, State],
-    perm_list: List[int],
-    system_dim: Union[List[int], int] = 2,
-) -> Union[np.ndarray, torch.Tensor, State]:
+    state: _StateLike, perm_list: List[int], system_dim: Union[List[int], int] = 2,
+) -> _StateLike:
     r"""Permute quantum system based on a permute list
 
     Args:
@@ -479,7 +489,7 @@ def permute_systems(
     return _type_transform(perm_mat, type_str)
 
 
-def prob_sample(distribution: torch.Tensor, shots: int = 1024,
+def prob_sample(distribution: _ArrayLike, shots: int = 1024,
                 binary: bool = True, proportional: bool = False) -> Dict[str, Union[int, float]]:
     r"""Sample from a probability distribution.
 
@@ -507,7 +517,7 @@ def prob_sample(distribution: torch.Tensor, shots: int = 1024,
 
 
 def schmidt_decompose(
-    psi: Union[np.ndarray, torch.Tensor, State], sys_A: List[int] = None
+    psi: _StateLike, sys_A: List[int] = None
 ) -> Union[
     Tuple[torch.Tensor, torch.Tensor, torch.Tensor],
     Tuple[np.ndarray, np.ndarray, np.ndarray],
@@ -545,7 +555,7 @@ def schmidt_decompose(
     )
 
 
-def sqrtm(mat: Union[np.ndarray, torch.Tensor, State]) -> Union[np.ndarray, torch.Tensor]:
+def sqrtm(mat: _StateLike) -> _ArrayLike:
     r"""Calculate square root of a matrix
 
     Args:
@@ -563,7 +573,7 @@ def sqrtm(mat: Union[np.ndarray, torch.Tensor, State]) -> Union[np.ndarray, torc
     return _type_transform(utils.linalg._sqrtm(mat), type_str)
 
 
-def trace(mat: Union[np.ndarray, torch.Tensor, State], axis1: Optional[int]=-2, axis2: Optional[int]=-1) -> Union[np.ndarray, torch.Tensor]:
+def trace(mat: _StateLike, axis1: int = -2, axis2: int = -1) -> _ArrayLike:
     r"""Return the sum along diagonals of the tensor.
 
     If :math:`mat` is 2-D tensor, the sum along its diagonal is returned.
@@ -602,7 +612,7 @@ def trace(mat: Union[np.ndarray, torch.Tensor, State], axis1: Optional[int]=-2, 
     return _type_transform(trace_mat, type_str)
 
 
-def trace_norm(mat: Union[np.ndarray, torch.Tensor, State]) -> Union[np.ndarray, torch.Tensor]:
+def trace_norm(mat: _StateLike) -> _ArrayLike:
     r"""tool for calculation of trace norm
 
     Args:

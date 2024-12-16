@@ -35,6 +35,11 @@ class TraceDistance(Operator):
     def __init__(self, target_state: State):
         super().__init__()
         self.target_state = target_state
+        
+    def __call__(self, state: State) -> torch.Tensor:
+        r"""Same as forward of Neural Network
+        """
+        return self.forward(state)
 
     def forward(self, state: State) -> torch.Tensor:
         r"""Compute the trace distance between the input state and the target state.
@@ -74,6 +79,11 @@ class StateFidelity(Operator):
     def __init__(self, target_state: State):
         super().__init__()
         self.target_state = target_state
+        
+    def __call__(self, state: State) -> torch.Tensor:
+        r"""Same as forward of Neural Network
+        """
+        return self.forward(state)
 
     def forward(self, state: State) -> torch.Tensor:
         r"""Compute the state fidelity between the input state and the target state.

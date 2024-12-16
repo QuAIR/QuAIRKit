@@ -17,13 +17,14 @@ r"""
 The source file of the class for the special quantum operator.
 """
 
-from typing import Iterable, Optional, Union
+from typing import Iterable, List, Optional, Union
 
 import numpy as np
 import torch
 
 from ..core import Operator, State
 from ..core.intrinsic import _alias, _digit_to_int, _int_to_digit
+from . import Channel, Gate
 
 
 class ResetState(Operator):
@@ -46,9 +47,10 @@ class Collapse(Operator):
 
     Args:
         system_idx: list of systems to be collapsed.
-        desired_result: The desired result you want to collapse. Defaults to ``None`` meaning randomly choose one.
+        desired_result: The desired result you want to collapse. Defaults to ``None`` meaning preserving all results, 
+        and activate probabilistic computation.
         if_print: whether print the information about the collapsed state. Defaults to ``False``.
-        measure_basis: The basis of the measurement. The quantum state will collapse to the corresponding eigenstate.
+        measure_basis: The basis of the measurement. Defaults to the computational basis.
 
     Raises:
         NotImplementedError: If the basis of measurement is not z. Other bases will be implemented in future.
@@ -73,6 +75,11 @@ class Collapse(Operator):
 
         self.measure_basis = measure_basis
         
+    def __call__(self, state: State) -> State:
+        r"""Same as forward of Neural Network
+        """
+        return self.forward(state)
+        
     def forward(self, state: State) -> State:
         r"""Compute the collapse of the input state.
 
@@ -83,17 +90,14 @@ class Collapse(Operator):
             The collapsed quantum state.
         """
         system_dim = [state.system_dim[idx] for idx in self.system_idx]
-        dim = int(np.prod(system_dim))
+        desired_result = self.desired_result
 
         prob_array, measured_state = state.measure(self.measure_basis, self.system_idx, keep_state=True)
         
-        desired_result = self.desired_result
         if desired_result is None:
-            assert measured_state.batch_dim is None, \
-                    f"batch computation is not supported for random collapse: received {desired_result}"
-            desired_result = np.random.choice(range(dim), p=prob_array)
-            digits_str = _int_to_digit(desired_result, base=system_dim)
-        elif isinstance(desired_result, str):
+            return measured_state
+        
+        if isinstance(desired_result, str):
             digits_str = desired_result
             desired_result = _digit_to_int(desired_result, system_dim)
         else:
@@ -111,4 +115,100 @@ class Collapse(Operator):
             prob = prob_collapse.mean().item()
             print(f"systems {self.system_idx} collapse to the state {state_str} with (average) probability {prob}")
 
-        return measured_state.index_select(dim=-1, index=desired_result)
+        return measured_state.prob_select(desired_result)
+
+
+class OneWayLOCC(Operator):
+    r"""A one-way LOCC protocol, where quantum measurement is modelled by a PVM and all channels are unitary channels.
+    
+    Args:
+        list_unitary: a batched tensor that represents all unitaries.
+        system_idx: Indices of the systems on which the protocol is applied. The first element in the list 
+        indexes systems to be measured.
+        acted_system_dim: dimension of systems that unitary channels act on. Can be a list of system dimensions 
+        or an int representing the dimension of all systems. Defaults to be qubit case.
+        measure_basis: The basis of the measurement. Defaults to the computational basis.
+    
+    """
+    @_alias({'system_idx': 'qubits_idx'})
+    def __init__(
+        self, list_unitary: torch.Tensor, system_idx: Union[Iterable[int], int] = None,
+        acted_system_dim: Union[List[int], int] = 2, measure_basis: Optional[torch.Tensor] = None
+    ):
+        super().__init__()
+        measure_idx, act_idx = system_idx[0], system_idx[1:]
+        acted_system_dim = acted_system_dim if isinstance(acted_system_dim, int) else acted_system_dim[len(measure_idx):]
+        
+        self.measure = Collapse(measure_idx, measure_basis=measure_basis)
+        self.list_gate = Gate(list_unitary, act_idx, acted_system_dim)
+        
+    def __call__(self, state: State) -> State:
+        r"""Same as forward of Neural Network
+        """
+        return self.forward(state)
+    
+    def forward(self, state: State) -> State:
+        r"""Compute the input state passing through the LOCC protocol.
+
+        Args:
+            state: The input state.
+
+        Returns:
+            The collapsed quantum state.
+        
+        """
+        matrix, sys_idx = self.list_gate.matrix, self.list_gate.system_idx[0]
+        
+        measured_state = self.measure(state)
+        measured_state._evolve(matrix, sys_idx, on_batch=False)
+        return measured_state
+
+
+class QuasiOperation(Operator):
+    r"""A quantum protocol containing quasi-operations.
+    
+    Args:
+        list_channels: a batched tensor that represents all unitaries.
+        quasi_prob: the quasi-probability distribution for this quasi-operation.
+        system_idx: indices of the systems on which the protocol is applied. 
+        type_repr: one of ``'choi'``, ``'kraus'``, ``'stinespring'`` or ``'gate'``. Defaults to ``'gate'``.
+        acted_system_dim: dimension of systems that these channels act on. Can be a list of system dimensions 
+        or an int representing the dimension of all systems. Defaults to be qubit case.
+    """
+    def __init__(
+        self, list_channels: torch.Tensor, quasi_prob: torch.Tensor, 
+        system_idx: Union[Iterable[int], int] = None,
+        type_repr: str = 'gate', acted_system_dim: Union[List[int], int] = 2
+    ):
+        super().__init__()
+        
+        # TODO: support other types of representations
+        if type_repr != 'gate':
+            raise NotImplementedError("Only 'gate' type is supported for now.")
+        
+        assert np.abs((s := quasi_prob.sum().item()) - 1) < 1e-4, \
+            f"The quasi-probability distribution should sum to 1: received sum {s}"
+        
+        if type_repr == 'gate':
+            self.channel = Gate(list_channels, system_idx, acted_system_dim)
+        else:
+            self.channel = Channel(type_repr, list_channels, system_idx, acted_system_dim)
+        self.prob = quasi_prob.view([-1])
+    
+    def forward(self, state: State) -> State:
+        r"""Compute the input state passing through the quasi-operation.
+        
+        Args:
+            state: The input state.
+        
+        Returns:
+            The collapsed quantum state.
+        """
+        state, prob = state.clone(), self.prob
+        
+        if state._prob:
+            last_prob = state._prob[-1]
+            prob = prob.view([1] * last_prob.ndim() + [-1])
+        state._prob.append(self.prob)
+        state._evolve(self.channel.matrix, self.channel.system_idx[0], on_batch=False)
+        return state

@@ -52,6 +52,25 @@ def zero_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State
 
     Returns:
        The generated quantum state.
+       
+    .. code-block:: python
+    
+        num_systems = 2
+        system_dim=[2,3]
+        state = zero_state(num_systems,system_dim)
+        print(f'The zero state is:\n{state}')
+        
+    ::
+    
+        The zero state is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 3]
+        System sequence: [0, 1]
+        [1.+0.j 0.+0.j 0.+0.j 0.+0.j 0.+0.j 0.+0.j]
+        ---------------------------------------------------
+
     """
     return computational_state(num_systems, 0, system_dim)
 
@@ -67,6 +86,25 @@ def one_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
 
     Returns:
        The generated quantum state.
+       
+    .. code-block:: python
+    
+        num_systems = 2
+        system_dim=[1,3]
+        state = one_state(num_systems,system_dim)
+        print(f'The one state is:\n{state}')
+        
+    ::
+    
+        The one state is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [1, 3]
+        System sequence: [0, 1]
+        [0.+0.j 1.+0.j 0.+0.j]
+        ---------------------------------------------------
+
     """
     return computational_state(num_systems, 1, system_dim)
 
@@ -79,12 +117,31 @@ def computational_state(num_systems: int, index: int,
 
     Args:
         num_systems: number of systems in this state. Alias of ``num_qubits``.
-        index:  Index :math:`i` of the computational basis state :math`|e_{i}rangle` .
+        index:  Index :math:`i` of the computational basis state :math:`|e_{i}rangle` .
         system_dim: dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        num_systems = 2
+        system_dim=[2,3]
+        index=4
+        state = computational_state(num_systems,index,system_dim)
+        print(f'The state is:\n{state}')
+        
+    ::
+    
+        The state is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 3]
+        System sequence: [0, 1]
+        [0.+0.j 0.+0.j 0.+0.j 0.+0.j 1.+0.j 0.+0.j]
+        ---------------------------------------------------
     """
     dim = _format_total_dim(num_systems, system_dim)
     
@@ -110,6 +167,24 @@ def bell_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State
 
     Returns:
         The generated quantum state.
+    
+    .. code-block:: python
+    
+        num_systems = 2
+        system_dim=[2,2]
+        state = bell_state(num_systems,system_dim)
+        print(f'The Bell state is:\n{state}')
+        
+    ::
+    
+        The Bell state is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+        ---------------------------------------------------
     """
     assert num_systems % 2 == 0, \
         f"Number of systems must be even to form a Bell state. Received: {num_systems}"
@@ -148,6 +223,26 @@ def bell_diagonal_state(prob: List[float]) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        prob=[0.2,0.3,0.4,0.1]
+        state = bell_diagonal_state(prob)
+        print(f'The Bell diagonal state is:\n{state}')
+        
+    ::
+    
+        The Bell diagonal state is:
+
+        ---------------------------------------------------
+        Backend: density_matrix
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [[ 0.3+0.j  0. +0.j  0. +0.j -0.1+0.j]
+        [ 0. +0.j  0.2+0.j  0.1+0.j  0. +0.j]
+        [ 0. +0.j  0.1+0.j  0.2+0.j  0. +0.j]
+        [-0.1+0.j  0. +0.j  0. +0.j  0.3+0.j]]
+        ---------------------------------------------------
     """
     p1, p2, p3, p4 = prob
     assert 0 <= p1 <= 1 and 0 <= p2 <= 1 and 0 <= p3 <= 1 and 0 <= p4 <= 1, \
@@ -189,6 +284,24 @@ def w_state(num_qubits: int) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        num_qubits = 2
+        W_state =w_state(num_qubits)
+        print(f'The W-state is:\n{W_state}')
+        
+    ::
+    
+        The W-state is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [0.  +0.j 0.71+0.j 0.71+0.j 0.  +0.j]
+        ---------------------------------------------------
+
     """
     dim = 2 ** num_qubits
     coeff = 1 / math.sqrt(num_qubits)
@@ -211,6 +324,23 @@ def ghz_state(num_qubits: int) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        num_qubits = 2
+        GHZ_state =ghz_state(num_qubits)
+        print(f'The GHZ-state is:\n{GHZ_state}')
+        
+    ::
+    
+        The GHZ-state is:
+
+        ---------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+        ---------------------------------------------------
     """
     dim = 2 ** num_qubits
     data = torch.zeros(dim)
@@ -231,6 +361,24 @@ def completely_mixed_computational(num_qubits: int) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        num_qubits = 1
+        state =completely_mixed_computational(num_qubits)
+        print(f'The density matrix of the completely mixed state is:\n{state}')
+        
+    ::
+    
+        The density matrix of the completely mixed state is:
+
+        ---------------------------------------------------
+        Backend: density_matrix
+        System dimension: [2]
+        System sequence: [0]
+        [[0.5+0.j 0. +0.j]
+        [0. +0.j 0.5+0.j]]
+        ---------------------------------------------------
     """
     data = torch.eye(2 ** num_qubits) / (2 ** num_qubits)
     return to_state(data)
@@ -254,6 +402,27 @@ def r_state(prob: float) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        prob = 0.5
+        R_state =r_state(prob)
+        print(f'The R-state is:\n{R_state}')
+        
+    ::
+    
+        The R-state is:
+
+        ---------------------------------------------------
+        Backend: density_matrix
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [[0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]
+        [0.  +0.j 0.25+0.j 0.25+0.j 0.  +0.j]
+        [0.  +0.j 0.25+0.j 0.25+0.j 0.  +0.j]
+        [0.  +0.j 0.  +0.j 0.  +0.j 0.5 +0.j]]
+        ---------------------------------------------------
+
     """
     assert 0 <= prob <= 1, "Probability must be in [0, 1]"
 
@@ -287,6 +456,27 @@ def s_state(prob: float) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        prob = 0.5
+        S_state =s_state(prob)
+        print(f'The S-state is:\n{S_state}')
+        
+    ::
+    
+        The S-state is:
+
+        ---------------------------------------------------
+        Backend: density_matrix
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [[0.75+0.j 0.  +0.j 0.  +0.j 0.25+0.j]
+        [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]
+        [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]
+        [0.25+0.j 0.  +0.j 0.  +0.j 0.25+0.j]]
+        ---------------------------------------------------
+
     """
     assert 0 <= prob <= 1, "Probability must be in [0, 1]"
     
@@ -317,6 +507,27 @@ def isotropic_state(num_qubits: int, prob: float) -> State:
 
     Returns:
         The generated quantum state.
+        
+    .. code-block:: python
+    
+        num_qubits=2
+        prob = 0.5
+        state =isotropic_state(num_qubits,prob)
+        print(f'The isotropic state is:\n{state}')
+        
+    ::
+    
+        The isotropic state is:
+
+        ---------------------------------------------------
+        Backend: density_matrix
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        [[0.38+0.j 0.  +0.j 0.  +0.j 0.25+0.j]
+        [0.  +0.j 0.12+0.j 0.  +0.j 0.  +0.j]
+        [0.  +0.j 0.  +0.j 0.12+0.j 0.  +0.j]
+        [0.25+0.j 0.  +0.j 0.  +0.j 0.38+0.j]]
+        ---------------------------------------------------
     """
     assert 0 <= prob <= 1, "Probability must be in [0, 1]"
 

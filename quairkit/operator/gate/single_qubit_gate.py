@@ -21,7 +21,8 @@ from typing import Iterable, Optional, Union
 
 import torch
 
-from ...database.matrix import h, p, rx, ry, rz, s, sdg, t, tdg, u3, x, y, z
+from ...core.utils.matrix import (_h, _p, _rx, _ry, _rz, _s, _sdg, _t, _tdg,
+                                  _u3, _x, _y, _z)
 from .base import Gate, ParamGate
 
 
@@ -42,7 +43,7 @@ class H(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = h(torch.complex128)
+    __matrix = _h(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
@@ -77,7 +78,7 @@ class S(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = s(torch.complex128)
+    __matrix = _s(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -112,7 +113,7 @@ class Sdg(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = sdg(torch.complex128)
+    __matrix = _sdg(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -147,7 +148,7 @@ class T(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = t(torch.complex128)
+    __matrix = _t(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -182,7 +183,7 @@ class Tdg(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = tdg(torch.complex128)
+    __matrix = _tdg(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -217,7 +218,7 @@ class X(Gate):
 
     """
 
-    __matrix = x(torch.complex128)
+    __matrix = _x(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -251,7 +252,7 @@ class Y(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = y(torch.complex128)
+    __matrix = _y(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -285,7 +286,7 @@ class Z(Gate):
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
     """
-    __matrix = z(torch.complex128)
+    __matrix = _z(torch.complex128)
 
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -334,7 +335,7 @@ class P(ParamGate):
         }
 
         super().__init__(
-            p, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _p, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class RX(ParamGate):
@@ -368,7 +369,7 @@ class RX(ParamGate):
         }
 
         super().__init__(
-            rx, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _rx, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class RY(ParamGate):
@@ -401,7 +402,7 @@ class RY(ParamGate):
             'plot_width': 0.9,
         }
         super().__init__(
-            ry, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _ry, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class RZ(ParamGate):
@@ -435,7 +436,7 @@ class RZ(ParamGate):
         }
 
         super().__init__(
-            rz, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _rz, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
 
 
 class U3(ParamGate):
@@ -472,4 +473,4 @@ class U3(ParamGate):
         }
 
         super().__init__(
-            u3, param, 3, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _u3, param, 3, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)

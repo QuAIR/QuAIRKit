@@ -22,8 +22,8 @@ import torch
 from quairkit.core import utils
 from quairkit.core.intrinsic import _is_sample_linear
 
-from ..core import State, utils
-from ..core.intrinsic import _type_transform
+from ..core import utils
+from ..core.intrinsic import _ArrayLike, _StateLike, _type_transform
 
 __all__ = [
     "is_choi",
@@ -40,7 +40,7 @@ __all__ = [
 ]
 
 
-def is_choi(op: Union[np.ndarray, torch.Tensor]) -> Union[bool, List[bool]]:
+def is_choi(op: _ArrayLike) -> Union[bool, List[bool]]:
     r"""Check if the input op is a Choi operator of a physical operation.
         Support batch input.
 
@@ -63,7 +63,7 @@ def is_choi(op: Union[np.ndarray, torch.Tensor]) -> Union[bool, List[bool]]:
 
 
 def is_density_matrix(
-    rho: Union[np.ndarray, torch.Tensor], eps: Optional[float] = 1e-6
+    rho: _ArrayLike, eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Verify whether ``rho`` is a legal quantum density matrix
         Support batch input
@@ -85,7 +85,7 @@ def is_density_matrix(
 
 
 def is_hermitian(
-    mat: Union[np.ndarray, torch.Tensor], eps: Optional[float] = 1e-6
+    mat: _ArrayLike, eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Verify whether ``mat`` is Hermitian.
         Support batch input.
@@ -135,7 +135,7 @@ def is_linear(
 
 
 def is_positive(
-    mat: Union[np.ndarray, torch.Tensor], eps: Optional[float] = 1e-6
+    mat: _ArrayLike, eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Verify whether ``mat`` is a positive semi-definite matrix.
         Support batch input.
@@ -159,7 +159,7 @@ def is_positive(
 
 def is_povm(
     set_op: Union[torch.Tensor, np.ndarray],
-    eps: Optional[float] = 1e-6
+    eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Check if a set of operators forms a positive operator-valued measure (POVM).
 
@@ -176,7 +176,7 @@ def is_povm(
 
 
 def is_projector(
-    mat: Union[np.ndarray, torch.Tensor], eps: Optional[float] = 1e-6
+    mat: _ArrayLike, eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Verify whether ``mat`` is a projector.
         Support batch input.
@@ -198,7 +198,7 @@ def is_projector(
     return utils.check._is_projector(mat, eps).tolist()
 
 
-def is_ppt(density_op: Union[np.ndarray, torch.Tensor, State]) -> Union[bool, List[bool]]:
+def is_ppt(density_op: _StateLike) -> Union[bool, List[bool]]:
     r"""Check if the input quantum state is PPT.
         Support batch input.
 
@@ -215,7 +215,7 @@ def is_ppt(density_op: Union[np.ndarray, torch.Tensor, State]) -> Union[bool, Li
 
 def is_pvm(
     set_op: Union[torch.Tensor, np.ndarray],
-    eps: Optional[float] = 1e-6
+    eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Check if a set of operators forms a projection-valued measure (PVM).
 
@@ -232,7 +232,7 @@ def is_pvm(
 
 
 def is_state_vector(
-    vec: Union[np.ndarray, torch.Tensor], eps: Optional[float] = 1e-6
+    vec: _ArrayLike, eps: float = 1e-6
 ) -> Union[bool, List[bool]]:
     r"""Verify whether ``vec`` is a legal quantum state vector.
         Support batch input.
@@ -256,7 +256,7 @@ def is_state_vector(
 
 
 def is_unitary(
-    mat: Union[np.ndarray, torch.Tensor], eps: Optional[float] = 1e-4
+    mat: _ArrayLike, eps: Optional[float] = 1e-4
 ) -> Union[bool, List[bool]]:
     r"""Verify whether ``mat`` is a unitary.
         Support batch input.

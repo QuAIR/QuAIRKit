@@ -55,7 +55,12 @@ for tag in "${tags[@]}"; do
             sphinx-build docs/sphinx_src docs/api/$tag
             rm -rf docs/sphinx_src
             ;;
-        v0.2.0 | *)
+        v0.2.0)
+            python docs/update_quairkit_rst.py
+            sphinx-build docs/sphinx_src docs/api/$tag
+            rm -rf docs/sphinx_src
+            ;;
+        v0.3.0 | *)
             python docs/update_quairkit_rst.py
             cp -r tutorials docs/sphinx_src/
             sphinx-build docs/sphinx_src docs/api/$tag
