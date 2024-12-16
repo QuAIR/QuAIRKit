@@ -579,12 +579,12 @@ print(f&quot;Matrix B is:\n{B}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Matrix A is:
-tensor([[-0.1954+0.2146j,  0.1822+0.9394j],
-        [-0.1701-0.9417j,  0.2599+0.1293j]])
+tensor([[-0.6831+0.1926j,  0.1419+0.6900j],
+        [ 0.5660+0.4195j, -0.4625+0.5383j]])
 
 Matrix B is:
-tensor([[ 0.1297-0.5157j, -0.4703-0.7043j],
-        [ 0.4578+0.7125j, -0.5246-0.0871j]])
+tensor([[ 0.0309-0.3380j,  0.6674-0.6628j],
+        [ 0.9406+0.0033j, -0.2593-0.2190j]])
 </pre></div></div>
 </div>
 <p>Users can use functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to implement specific operations on these two matrices. - Calculate the trace of a matrix by <code class="docutils literal notranslate"><span class="pre">trace</span></code>. - Calculate the direct sum of matrix A and B with <code class="docutils literal notranslate"><span class="pre">direct_sum</span></code>. Direct sum is an operation that combines two matrices into a larger matrix where A and B occupy diagonal blocks of the resulting matrix, and the remaining entries are zero. - Calculate the Kronecker products of at least two matrices by <code class="docutils literal notranslate"><span class="pre">NKron</span></code>. - Implement conjugate transpose of a matrix by
@@ -610,24 +610,24 @@ print(f&quot;The decomposition of single-qubit unitary operator A to Z-Y-Z rotat
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The trace of matrix A is (0.06443467586598006+0.343978055135579j)
+The trace of matrix A is (-1.1456075082500372+0.7309499027665167j)
 The direct sum of matrix A and B is:
-tensor([[-0.1954+0.2146j,  0.1822+0.9394j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [-0.1701-0.9417j,  0.2599+0.1293j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.1297-0.5157j, -0.4703-0.7043j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.4578+0.7125j, -0.5246-0.0871j]])
+tensor([[-0.6831+0.1926j,  0.1419+0.6900j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.5660+0.4195j, -0.4625+0.5383j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.0309-0.3380j,  0.6674-0.6628j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.9406+0.0033j, -0.2593-0.2190j]])
 
 The tensor product of matrix A and B is:
-tensor([[ 0.0853+0.1286j,  0.2431+0.0367j,  0.5081+0.0279j,  0.5760-0.5702j],
-        [-0.2424-0.0410j,  0.1212-0.0956j, -0.5859+0.5599j, -0.0138-0.5087j],
-        [-0.5077-0.0344j, -0.5832+0.5627j,  0.1004-0.1172j, -0.0311-0.2439j],
-        [ 0.5930-0.5524j,  0.0073+0.5088j,  0.0268+0.2444j, -0.1251-0.0905j]])
+tensor([[ 0.0440+0.2368j, -0.3282+0.5813j,  0.2376-0.0267j,  0.5521+0.3665j],
+        [-0.6432+0.1789j,  0.2193+0.0996j,  0.1312+0.6495j,  0.1143-0.2100j],
+        [ 0.1593-0.1784j,  0.6558-0.0952j,  0.1677+0.1730j,  0.0481+0.6659j],
+        [ 0.5310+0.3964j, -0.0549-0.2327j, -0.4369+0.5048j,  0.2378-0.0383j]])
 
 The conjugate transpose of matrix A is:
-tensor([[-0.1954-0.2146j, -0.1701+0.9417j],
-        [ 0.1822-0.9394j,  0.2599-0.1293j]])
+tensor([[-0.6831-0.1926j,  0.5660-0.4195j],
+        [ 0.1419-0.6900j, -0.4625-0.5383j]])
 
-The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(-4.0590), tensor(2.5525), tensor(2.2114))
+The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(-2.2289), tensor(1.5634), tensor(1.6428))
 </pre></div></div>
 </div>
 <h2 id="Functions-in-quantum-information">Functions in quantum information<a class="headerlink" href="#Functions-in-quantum-information" title="Link to this heading">¶</a></h2>
@@ -650,16 +650,16 @@ print(f&quot;The second quantum state is:\n {state2}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The first quantum state is:
- tensor([[ 0.7755+0.0000j,  0.0727-0.0237j, -0.1560-0.2811j, -0.2145-0.1373j],
-        [ 0.0727+0.0237j,  0.0075+0.0000j, -0.0060-0.0311j, -0.0159-0.0194j],
-        [-0.1560+0.2811j, -0.0060+0.0311j,  0.1333+0.0000j,  0.0929-0.0501j],
-        [-0.2145+0.1373j, -0.0159+0.0194j,  0.0929+0.0501j,  0.0836+0.0000j]])
+ tensor([[ 0.2031+0.0000j,  0.1826+0.0889j, -0.1991+0.0240j,  0.0808-0.2717j],
+        [ 0.1826-0.0889j,  0.2032+0.0000j, -0.1685+0.1088j, -0.0463-0.2798j],
+        [-0.1991-0.0240j, -0.1685-0.1088j,  0.1980+0.0000j, -0.1114+0.2568j],
+        [ 0.0808+0.2717j, -0.0463+0.2798j, -0.1114-0.2568j,  0.3958+0.0000j]])
 
 The second quantum state is:
- tensor([[0.3182-0.1243j],
-        [0.0199-0.5031j],
-        [0.1631-0.3059j],
-        [0.3035-0.6461j]])
+ tensor([[ 0.6765+0.3616j],
+        [-0.4727-0.1993j],
+        [ 0.2708-0.0502j],
+        [-0.1490-0.2245j]])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -694,18 +694,18 @@ print(f&quot;The Schatten {p}-norm of state 1 is:\n{pnorm}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The von Neumann entropy between state 1 is:
-1.3013920171748103e-15
+-3.844111804577901e-15
 torch.float64
 The trace distance between state 1 and state 2  is:
-0.9986828156358498
+0.989130913609007
 The state fidelity between state 1 and state 2 is:
-0.05130919865131176
+0.1470375336229326
 The purity of state 1 is:
-0.9999999999999994
+1.0000000000000009
 The relative entropy of state 1 and state 2 is:
-55.26619734246961
+53.29869042772144
 The Schatten 2-norm of state 1 is:
-0.9999999999999998
+1.0000000000000004
 </pre></div></div>
 </div>
 <h2 id="Validation-functions">Validation functions<a class="headerlink" href="#Validation-functions" title="Link to this heading">¶</a></h2>
@@ -782,13 +782,13 @@ State fidelity dtype (State): &lt;class &#39;torch.Tensor&#39;&gt;
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.2.0
-torch: 2.4.1+cpu
+quairkit: 0.3.0
+torch: 2.5.1+cpu
 numpy: 1.26.0
 scipy: 1.14.1
-matplotlib: 3.9.2
+matplotlib: 3.10.0
 ---------SYSTEM---------
-Python version: 3.10.15
+Python version: 3.10.16
 OS: Windows
 OS version: 10.0.26100
 ---------DEVICE---------

@@ -1730,7 +1730,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_density_matrix.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_density_matrix.rho" title="Permalink to this definition">¶</a></dt><dd><p>density matrix candidate</p>
 </dd>
-<dt id="quairkit.qinfo.check.is_density_matrix.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_density_matrix.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error, default to be <cite>None</cite> i.e. no testing for data correctness</p>
+<dt id="quairkit.qinfo.check.is_density_matrix.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_density_matrix.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error, default to be <cite>None</cite> i.e. no testing for data correctness</p>
 </dd>
 </dl>
 </dd>
@@ -1755,7 +1755,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_hermitian.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_hermitian.mat" title="Permalink to this definition">¶</a></dt><dd><p>hermitian candidate <span class="math notranslate nohighlight">\(P\)</span></p>
 </dd>
-<dt id="quairkit.qinfo.check.is_hermitian.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_hermitian.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error</p>
+<dt id="quairkit.qinfo.check.is_hermitian.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_hermitian.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error</p>
 </dd>
 </dl>
 </dd>
@@ -1810,7 +1810,7 @@ a callable that returns a numpy.ndarray, or a callable that returns a torch.Tens
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_positive.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_positive.mat" title="Permalink to this definition">¶</a></dt><dd><p>positive operator candidate <span class="math notranslate nohighlight">\(P\)</span></p>
 </dd>
-<dt id="quairkit.qinfo.check.is_positive.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_positive.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error</p>
+<dt id="quairkit.qinfo.check.is_positive.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_positive.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error</p>
 </dd>
 </dl>
 </dd>
@@ -1833,7 +1833,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_povm.set_op"><span class="sig-name descname">set_op</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_povm.set_op" title="Permalink to this definition">¶</a></dt><dd><p>A set of operators indexed by the first dimension</p>
 </dd>
-<dt id="quairkit.qinfo.check.is_povm.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_povm.eps" title="Permalink to this definition">¶</a></dt><dd><p>An optional tolerance value. Default value is 1e-6.</p>
+<dt id="quairkit.qinfo.check.is_povm.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_povm.eps" title="Permalink to this definition">¶</a></dt><dd><p>An optional tolerance value. Default value is 1e-6.</p>
 </dd>
 </dl>
 </dd>
@@ -1858,7 +1858,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_projector.mat"><span class="sig-name descname">mat</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_projector.mat" title="Permalink to this definition">¶</a></dt><dd><p>projector candidate <span class="math notranslate nohighlight">\(P\)</span></p>
 </dd>
-<dt id="quairkit.qinfo.check.is_projector.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_projector.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error</p>
+<dt id="quairkit.qinfo.check.is_projector.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_projector.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error</p>
 </dd>
 </dl>
 </dd>
@@ -1905,7 +1905,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_pvm.set_op"><span class="sig-name descname">set_op</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | ndarray</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_pvm.set_op" title="Permalink to this definition">¶</a></dt><dd><p>A set of operators indexed by the first dimension</p>
 </dd>
-<dt id="quairkit.qinfo.check.is_pvm.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_pvm.eps" title="Permalink to this definition">¶</a></dt><dd><p>An optional tolerance value. Default value is 1e-6.</p>
+<dt id="quairkit.qinfo.check.is_pvm.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_pvm.eps" title="Permalink to this definition">¶</a></dt><dd><p>An optional tolerance value. Default value is 1e-6.</p>
 </dd>
 </dl>
 </dd>
@@ -1930,7 +1930,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.check.is_state_vector.vec"><span class="sig-name descname">vec</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_state_vector.vec" title="Permalink to this definition">¶</a></dt><dd><p>state vector candidate <span class="math notranslate nohighlight">\(x\)</span></p>
 </dd>
-<dt id="quairkit.qinfo.check.is_state_vector.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float | None</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_state_vector.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error, default to be <cite>None</cite> i.e. no testing for data correctness</p>
+<dt id="quairkit.qinfo.check.is_state_vector.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.check.is_state_vector.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error, default to be <cite>None</cite> i.e. no testing for data correctness</p>
 </dd>
 </dl>
 </dd>

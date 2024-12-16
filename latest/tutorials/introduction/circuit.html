@@ -658,7 +658,7 @@ the sequence of events and are usually not physical cables QuAIRKit uses the <co
 <li><p><a class="reference internal" href="#Other-properties"><span class="std std-ref">Other properties</span></a></p></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import numpy as np
@@ -675,7 +675,7 @@ from quairkit.qinfo import *
 <h2 id="Constructing-quantum-circuits">Constructing quantum circuits<a class="headerlink" href="#Constructing-quantum-circuits" title="Link to this heading">¶</a></h2>
 <p>In QuAIRKit, circuits can be generated with or without specifying the total number of qubits.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
@@ -694,7 +694,7 @@ cir = Circuit()  # Create a dynamic circuit (without specifying the number of qu
 <li><p><code class="docutils literal notranslate"><span class="pre">List[List[int]]</span></code>: The multi-qubit operation is added across different groups of specified qubits.</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.h(0)  # Add Hadamard gate to qubit 0
@@ -741,7 +741,7 @@ the total number of qubit of the circuit is 2
 \end{bmatrix}, \tag{1}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(I_{2}\)</span> is the <span class="math notranslate nohighlight">\(2\times 2\)</span> identity. We can verify this equality by <code class="docutils literal notranslate"><span class="pre">Circuit.unitary_matrix</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;the unitary matrix of the circuit:\n{cir.unitary_matrix()}&quot;)
@@ -762,7 +762,7 @@ tensor([[ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j, -0.7071+0.j],
 </div>
 <p>We can add more different types of gates, and change the total number of qubits of the circuit.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.swap([[1, 2], [0, 2]])  # Add SWAP gate to qubit 1 and 2, and qubit 0 and 2
@@ -800,7 +800,7 @@ the total number of qubit of the circuit is 3
 <p>When the number of qubits is not specified, the total number of qubits will be changed as operations are added to the circuit. However, please note that, in this case, one cannot add the first operation without specifying the location.</p>
 <p>For parametrized gates, <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> can add the gate with randomly generated parameters, or you can specify them as keyword arguments.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.rx() # Add Rx gate to all qubits with random parameters
@@ -844,7 +844,7 @@ the diagram of a quantum circuit with parametrized gates:
 \end{bmatrix}, \tag{2}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N=2^{n}\)</span> is the dimension of the Hilbert space and <span class="math notranslate nohighlight">\(\omega=e^{2\pi i/N}\)</span>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=2)  # construct a 2-qubit quantum Fourier transformation (QFT) operator
@@ -874,7 +874,7 @@ the diagram of a quantum circuit with a custom gate:
 </div>
 <p>Users can also implement custom gates using <code class="docutils literal notranslate"><span class="pre">Circuit.append</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=3)  # construct a 3-qubit quantum Fourier transformation (QFT) operator
@@ -905,7 +905,7 @@ the diagram of a quantum circuit with custom gates:
 </div>
 <p>Furthermore, in QuAIRKit, adding a controlled custom gate is supported.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.control_oracle(random_unitary(num_qubits=2), qubits_idx=[0, 1, 2], gate_name=&quot;O&quot;)
@@ -933,7 +933,7 @@ the diagram of a quantum circuit with a controlled custom gate:
 <h3 id="Add-quantum-channels">Add quantum channels<a class="headerlink" href="#Add-quantum-channels" title="Link to this heading">¶</a></h3>
 <p>Similar construction semantic applies to quantum channels such as depolarizing channel, bit-phase flip channel and so on. However, the related plot logic is not supported yet.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.depolarizing(prob=0.1, qubits_idx=[0])  # add a depolarizing channel (with probability 0.1) to qubit 0
@@ -944,7 +944,7 @@ cir.bit_phase_flip(0.2)  # Add bit-phase flip channels (with probability 0.2) to
 <h3 id="Add-custom-quantum-channels">Add custom quantum channels<a class="headerlink" href="#Add-custom-quantum-channels" title="Link to this heading">¶</a></h3>
 <p>One can also add a custom quantum channel to a <code class="docutils literal notranslate"><span class="pre">Circuit</span></code>, where the quantum channel can be in Choi, Kraus, or Stinespring representations. We show how to add a custom channel using these three different representations.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits=3)
@@ -961,7 +961,7 @@ cir.stinespring_channel(random_stin_repr, system_idx=1)  # add random channel in
 </div>
 <p>Similarly, you can implement custom channels using <code class="docutils literal notranslate"><span class="pre">Circuit.append</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>choi_op = random_channel(num_systems=2, target=&quot;choi&quot;)
@@ -979,7 +979,7 @@ cir.append(stine_repr)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1014,7 +1014,7 @@ Circuit(
 <h3 id="Add-circuit-templates">Add circuit templates<a class="headerlink" href="#Add-circuit-templates" title="Link to this heading">¶</a></h3>
 <p>QuAIRKit provides predefined circuit templates, or ansatz consisting of a sequence of gates applied to qubits. Note that the templates are only available for the circuits with a known number of qubits.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
@@ -1051,7 +1051,7 @@ the diagram of a quantum circuit with different kinds of layers:
 <h3 id="Operator-management">Operator management<a class="headerlink" href="#Operator-management" title="Link to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> is essentially a list of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> objects. Thus, one can access the operations by indexing the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The matrix of the gate at the 5th position is\n&quot;, cir[4].matrix)
@@ -1064,17 +1064,17 @@ the diagram of a quantum circuit with different kinds of layers:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The matrix of the gate at the 5th position is
- tensor([[[ 0.7492+0.j, -0.6624+0.j],
-         [ 0.6624+0.j,  0.7492+0.j]],
+ tensor([[[ 0.0254+0.j, -0.9997+0.j],
+         [ 0.9997+0.j,  0.0254+0.j]],
 
-        [[ 0.8098+0.j, -0.5868+0.j],
-         [ 0.5868+0.j,  0.8098+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)
+        [[ 0.0516+0.j, -0.9987+0.j],
+         [ 0.9987+0.j,  0.0516+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)
 </pre></div></div>
 </div>
 <p>Note that the order here is from left to right.</p>
 <p>Users can also add or remove the operations for advanced setup.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(num_qubits=3)
@@ -1132,7 +1132,7 @@ The quantum circuit after removing gates is:
 <h3 id="Circuit-execution">Circuit execution<a class="headerlink" href="#Circuit-execution" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object can be executed by calling the object itself, and you can apply the circuit to a specific initial state.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>output_state = cir()  # Run the circuit with initial state |0&gt;
@@ -1150,43 +1150,43 @@ print(&quot;the output state for inputting state rho is:&quot;, output_state)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 the output state for inputting zero state is:
----------------------------------------------------
+-----------------------------------------------------
  Backend: state_vector
  System dimension: [2, 2, 2]
  System sequence: [2, 1, 0]
-[0.67-0.62j 0.13-0.12j 0.  +0.j   0.  +0.j   0.35-0.07j 0.07-0.01j
+[0.61-0.06j 0.78-0.07j 0.  +0.j   0.  +0.j   0.06+0.01j 0.08+0.01j
  0.  +0.j   0.  +0.j  ]
----------------------------------------------------
+-----------------------------------------------------
 
 the output state for inputting state rho is:
----------------------------------------------------
+-----------------------------------------------------
  Backend: density_matrix
  System dimension: [2, 2, 2]
  System sequence: [2, 1, 0]
-[[ 0.13+0.j   -0.03-0.03j -0.02+0.06j  0.02-0.01j -0.01+0.05j  0.04+0.1j
-  -0.04-0.03j  0.06-0.03j]
- [-0.03+0.03j  0.18-0.j   -0.03-0.02j -0.13+0.01j -0.07+0.j    0.01-0.01j
-   0.  -0.02j -0.09-0.02j]
- [-0.02-0.06j -0.03+0.02j  0.1 +0.j    0.05+0.01j  0.  -0.02j  0.02-0.03j
-   0.04+0.03j -0.  -0.03j]
- [ 0.02+0.01j -0.13-0.01j  0.05-0.01j  0.15+0.j    0.03+0.01j -0.05+0.03j
-   0.02-0.02j  0.08+0.03j]
- [-0.01-0.05j -0.07-0.j    0.  +0.02j  0.03-0.01j  0.11+0.j    0.04-0.01j
-  -0.06+0.04j  0.03-0.j  ]
- [ 0.04-0.1j   0.01+0.01j  0.02+0.03j -0.05-0.03j  0.04+0.01j  0.12+0.j
-  -0.05+0.04j -0.03-0.07j]
- [-0.04+0.03j  0.  +0.02j  0.04-0.03j  0.02+0.02j -0.06-0.04j -0.05-0.04j
-   0.09+0.j   -0.01+0.02j]
- [ 0.06+0.03j -0.09+0.02j -0.  +0.03j  0.08-0.03j  0.03+0.j   -0.03+0.07j
-  -0.01-0.02j  0.13+0.j  ]]
----------------------------------------------------
+[[ 0.21+0.j   -0.02+0.j    0.08-0.09j -0.01+0.07j  0.06+0.13j  0.02+0.04j
+  -0.02-0.07j -0.06-0.j  ]
+ [-0.02-0.j    0.11+0.j   -0.03-0.01j -0.06+0.12j  0.03+0.03j  0.07+0.j
+   0.04+0.03j  0.09-0.03j]
+ [ 0.08+0.09j -0.03+0.01j  0.11+0.j   -0.03+0.02j -0.03+0.08j -0.02+0.04j
+   0.  -0.03j -0.03-0.02j]
+ [-0.01-0.07j -0.06-0.12j -0.03-0.02j  0.23+0.j    0.09-0.1j  -0.01-0.09j
+  -0.02-0.04j -0.09-0.06j]
+ [ 0.06-0.13j  0.03-0.03j -0.03-0.08j  0.09+0.1j   0.13+0.j    0.06-0.03j
+  -0.03-0.01j -0.01-0.02j]
+ [ 0.02-0.04j  0.07-0.j   -0.02-0.04j -0.01+0.09j  0.06+0.03j  0.06+0.j
+   0.01+0.01j  0.05-0.02j]
+ [-0.02+0.07j  0.04-0.03j  0.  +0.03j -0.02+0.04j -0.03+0.01j  0.01-0.01j
+   0.05-0.j    0.03-0.04j]
+ [-0.06+0.j    0.09+0.03j -0.03+0.02j -0.09+0.06j -0.01+0.02j  0.05+0.02j
+   0.03+0.04j  0.09-0.j  ]]
+-----------------------------------------------------
 
 </pre></div></div>
 </div>
 <h2 id="Other-properties">Other properties<a class="headerlink" href="#Other-properties" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> Class has other properties for further information and manipulation. For example, it includes properties like <code class="docutils literal notranslate"><span class="pre">depth</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_history</span></code>, <code class="docutils literal notranslate"><span class="pre">unitary_matrix</span></code> and so on.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the circuit depth is&quot;, cir.depth, &quot;\n&quot;)
@@ -1204,14 +1204,14 @@ print(&quot;the qubit history of the circuit is&quot;, cir.system_history)
 <div class="highlight"><pre>
 the circuit depth is 2
 
-the gate history of the circuit is [{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[0.3819]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.7412]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.9501]])}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.5337]])}]
+the gate history of the circuit is [{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[1.8177]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1988]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.0056]])}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1836]])}]
 
-the qubit history of the circuit is [[[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[0.3819]], grad_fn=&lt;SelectBackward0&gt;)}, 0]], [[{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.9501]])}, 2]], [[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.7412]], grad_fn=&lt;SelectBackward0&gt;)}, 1], [{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.5337]])}, 3]]]
+the qubit history of the circuit is [[[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[1.8177]], grad_fn=&lt;SelectBackward0&gt;)}, 0]], [[{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.0056]])}, 2]], [[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1988]], grad_fn=&lt;SelectBackward0&gt;)}, 1], [{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1836]])}, 3]]]
 </pre></div></div>
 </div>
 <p>Additionally, one can update the parameters of parameterized gates (if they exist) using the <code class="docutils literal notranslate"><span class="pre">update_param</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the trainable parameters of entire circuit are&quot;, cir.param)
@@ -1226,7 +1226,7 @@ print(&quot;the updated trainable parameters of entire circuit are&quot;, cir.pa
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the trainable parameters of entire circuit are tensor([0.3819, 0.7412])
+the trainable parameters of entire circuit are tensor([1.8177, 0.1988])
 the updated trainable parameters of entire circuit are tensor([1., 1.])
 </pre></div></div>
 </div>
@@ -1274,7 +1274,7 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 </tbody>
 </table>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
@@ -1288,13 +1288,13 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.2.0
-torch: 2.4.1+cpu
+quairkit: 0.3.0
+torch: 2.5.1+cpu
 numpy: 1.26.0
 scipy: 1.14.1
-matplotlib: 3.9.2
+matplotlib: 3.10.0
 ---------SYSTEM---------
-Python version: 3.10.15
+Python version: 3.10.16
 OS: Windows
 OS version: 10.0.26100
 ---------DEVICE---------

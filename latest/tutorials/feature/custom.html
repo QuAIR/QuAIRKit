@@ -591,16 +591,16 @@ print(&#39;The Kraus representations of the first two RY gates are: \n&#39;, fir
 <div class="highlight"><pre>
 The parameters of first two RY gates are
  [Parameter containing:
-tensor([[[0.4804]],
+tensor([[[ 1.3114]],
 
-        [[0.0517]]], requires_grad=True)]
+        [[-0.8210]]], requires_grad=True)]
 The Kraus representations of the first two RY gates are:
- tensor([[[[ 0.9713+0.j, -0.2379+0.j],
-          [ 0.2379+0.j,  0.9713+0.j]]],
+ tensor([[[[ 0.7926+0.j, -0.6097+0.j],
+          [ 0.6097+0.j,  0.7926+0.j]]],
 
 
-        [[[ 0.9997+0.j, -0.0258+0.j],
-          [ 0.0258+0.j,  0.9997+0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
+        [[[ 0.9169+0.j,  0.3991+0.j],
+          [-0.3991+0.j,  0.9169+0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
 </pre></div></div>
 </div>
 <p>In addition to parameter manipulations, the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class also provides built-in interface for parameterized gate customizations. For example, suppose one wants to implement a controlled-U3 parameterized gate with control on the <span class="math notranslate nohighlight">\(\vert{11}\rangle\)</span> state</p>
@@ -636,7 +636,7 @@ print(&#39;The parameters of this circuit are\n&#39;, list(cir.parameters()))
 <div class="highlight"><pre>
 The parameters of this circuit are
  [Parameter containing:
-tensor([[[5.0111, 5.7265, 0.4270]]], requires_grad=True)]
+tensor([[[2.1875, 0.4630, 2.6166]]], requires_grad=True)]
 </pre></div></div>
 </div>
 <h2 id="Setup-via-torch.nn.Module">Setup via torch.nn.Module<a class="headerlink" href="#Setup-via-torch.nn.Module" title="Link to this heading">¶</a></h2>
@@ -800,13 +800,13 @@ shape of the gradient tensor for the theta parameters torch.Size([2, 100, 15])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.2.0
-torch: 2.4.1+cpu
+quairkit: 0.3.0
+torch: 2.5.1+cpu
 numpy: 1.26.0
 scipy: 1.14.1
-matplotlib: 3.9.2
+matplotlib: 3.10.0
 ---------SYSTEM---------
-Python version: 3.10.15
+Python version: 3.10.16
 OS: Windows
 OS version: 10.0.26100
 ---------DEVICE---------

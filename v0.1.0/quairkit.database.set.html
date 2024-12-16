@@ -694,7 +694,7 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.set.heisenberg_weyl" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.heisenberg_weyl (Python function) — The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) pi i a b/ d}Z^a X^b." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>heisenberg_<wbr>weyl</span>
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.heisenberg_weyl (Python function) — The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) \pi i a b/ d}Z^a X^b." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>heisenberg_<wbr>weyl</span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.set.heisenberg_weyl">
@@ -1253,7 +1253,7 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.set.heisenberg_weyl" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.heisenberg_weyl (Python function) — The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) pi i a b/ d}Z^a X^b." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>heisenberg_<wbr>weyl</span>
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.set.heisenberg_weyl (Python function) — The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) \pi i a b/ d}Z^a X^b." class="md-ellipsis">quairkit.<wbr>database.<wbr>set.<wbr>heisenberg_<wbr>weyl</span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.set.heisenberg_weyl">
@@ -1425,6 +1425,25 @@
 <dd class="field-odd"><p><em>Tensor</em></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">basis</span> <span class="o">=</span> <span class="n">pauli_basis</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The Pauli basis is:</span><span class="se">\n</span><span class="si">{</span><span class="n">basis</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">Pauli</span> <span class="n">basis</span> <span class="ow">is</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[[</span> <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">-</span><span class="mf">0.7071</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.7071</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]]])</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1445,6 +1464,25 @@
 <dd class="field-odd"><p><em>Tensor</em></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">pauli_group</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The Pauli group is:</span><span class="se">\n</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">Pauli</span> <span class="n">group</span> <span class="ow">is</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[[</span> <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">-</span><span class="mf">1.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">1.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]]])</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1465,6 +1503,30 @@
 <dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">pauli_str</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]</span>
+<span class="n">state_basis</span> <span class="o">=</span> <span class="n">pauli_str_basis</span><span class="p">(</span><span class="n">pauli_str</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The state basis of the observable is:</span><span class="se">\n</span><span class="si">{</span><span class="n">state_basis</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">state</span> <span class="n">basis</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span> <span class="ow">is</span><span class="p">:</span>
+
+<span class="o">---------------------------------------------------</span>
+<span class="n">Backend</span><span class="p">:</span> <span class="n">state_vector</span>
+<span class="n">System</span> <span class="n">dimension</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">System</span> <span class="n">sequence</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Batch</span> <span class="n">size</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># 0:</span>
+<span class="p">[</span><span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 1:</span>
+<span class="p">[</span> <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="o">-</span><span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 2:</span>
+<span class="p">[</span><span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 3:</span>
+<span class="p">[</span><span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="o">---------------------------------------------------</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1485,6 +1547,26 @@
 <dd class="field-odd"><p><em>Tensor</em></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">pauli_str</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<span class="n">POVM</span> <span class="o">=</span> <span class="n">pauli_str_povm</span><span class="p">(</span><span class="n">pauli_str</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The POVM of the observable is:</span><span class="se">\n</span><span class="si">{</span><span class="n">POVM</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">POVM</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span> <span class="ow">is</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[[[</span> <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]]],</span>
+
+
+        <span class="p">[[[</span> <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">-</span><span class="mf">0.5000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.5000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">0.5000</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000</span><span class="o">-</span><span class="mf">0.5000</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">+</span><span class="mf">0.0000</span><span class="n">j</span><span class="p">]]]])</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1505,6 +1587,26 @@
 <dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">qft_state</span> <span class="o">=</span> <span class="n">qft_basis</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The eigenvectors of the QFT matrix is:</span><span class="se">\n</span><span class="si">{</span><span class="n">qft_state</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">eigenvectors</span> <span class="n">of</span> <span class="n">the</span> <span class="n">QFT</span> <span class="n">matrix</span> <span class="ow">is</span><span class="p">:</span>
+
+<span class="o">---------------------------------------------------</span>
+<span class="n">Backend</span><span class="p">:</span> <span class="n">state_vector</span>
+<span class="n">System</span> <span class="n">dimension</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">System</span> <span class="n">sequence</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Batch</span> <span class="n">size</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># 0:</span>
+<span class="p">[</span><span class="mf">0.92</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.38</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 1:</span>
+<span class="p">[</span><span class="o">-</span><span class="mf">0.38</span><span class="o">-</span><span class="mf">0.</span><span class="n">j</span>  <span class="mf">0.92</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="o">---------------------------------------------------</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1528,6 +1630,27 @@ or an int representing the dimension of all systems. Defaults to be qubit case.<
 <dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_systems</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">basis</span> <span class="o">=</span> <span class="n">std_basis</span><span class="p">(</span><span class="n">num_systems</span><span class="p">,</span><span class="n">system_dim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The standard basis states are:</span><span class="se">\n</span><span class="si">{</span><span class="n">basis</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">standard</span> <span class="n">basis</span> <span class="n">states</span> <span class="n">are</span><span class="p">:</span>
+
+<span class="o">---------------------------------------------------</span>
+<span class="n">Backend</span><span class="p">:</span> <span class="n">state_vector</span>
+<span class="n">System</span> <span class="n">dimension</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">System</span> <span class="n">sequence</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">Batch</span> <span class="n">size</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># 0:</span>
+<span class="p">[</span><span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 1:</span>
+<span class="p">[</span><span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="o">---------------------------------------------------</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1537,19 +1660,43 @@ or an int representing the dimension of all systems. Defaults to be qubit case.<
 with each basis state accessible along the first dimension of a tensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.set.bell_basis-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.bell_basis-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p>A tensor of shape (4, 4, 1), representing the four Bell basis states.</p>
+<dd class="field-odd"><p><p>A tensor of shape (4, 4, 1), representing the four Bell basis states.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">basis</span><span class="o">=</span><span class="n">bell_basis</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The Bell basis for a 2-qubit system are:</span><span class="se">\n</span><span class="si">{</span><span class="n">basis</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</p>
 </dd>
 <dt class="field-even" id="quairkit.database.set.bell_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.bell_basis-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.html#quairkit.core.state.backend.State" title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit."><em>State</em></a></p>
 </dd>
 </dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">Bell</span> <span class="n">basis</span> <span class="k">for</span> <span class="n">a</span> <span class="mi">2</span><span class="o">-</span><span class="n">qubit</span> <span class="n">system</span> <span class="n">are</span><span class="p">:</span>
+
+<span class="o">---------------------------------------------------</span>
+<span class="n">Backend</span><span class="p">:</span> <span class="n">state_vector</span>
+<span class="n">System</span> <span class="n">dimension</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">System</span> <span class="n">sequence</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">Batch</span> <span class="n">size</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+
+<span class="c1"># 0:</span>
+<span class="p">[</span><span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 1:</span>
+<span class="p">[</span> <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span>  <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span>  <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="o">-</span><span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 2:</span>
+<span class="p">[</span><span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 3:</span>
+<span class="p">[</span> <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span>  <span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="o">-</span><span class="mf">0.71</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span>  <span class="mf">0.</span>  <span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="o">---------------------------------------------------</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.database.set.heisenberg_weyl">
 <span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">heisenberg_weyl</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.heisenberg_weyl.dim" title="quairkit.database.set.heisenberg_weyl.dim (Python parameter) — dimension of qudit"><span class="n"><span class="pre">dim</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.heisenberg_weyl" title="Link to this definition">¶</a></dt>
 <dd><dl class="simple">
-<dt>Generate Heisenberg-Weyl operator for qudit.</dt><dd><p>The Heisenberg-Weyl operators are defined as T(a,b) = e^{-(d+1) pi i a b/ d}Z^a X^b.</p>
+<dt>Generate Heisenberg-Weyl operator for qudit.</dt><dd><p>The Heisenberg-Weyl operators are defined as <span class="math notranslate nohighlight">\(T(a,b) = e^{-(d+1) \pi i a b/ d}Z^a X^b\)</span>.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -1566,6 +1713,26 @@ with each basis state accessible along the first dimension of a tensor.</p>
 <dd class="field-odd"><p><em>Tensor</em></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">dim</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">operator</span><span class="o">=</span><span class="n">heisenberg_weyl</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The Heisenberg-Weyl operator for qudit is:</span><span class="se">\n</span><span class="si">{</span><span class="n">operator</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">Heisenberg</span><span class="o">-</span><span class="n">Weyl</span> <span class="n">operator</span> <span class="k">for</span> <span class="n">qudit</span> <span class="ow">is</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[[</span> <span class="mf">1.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">1.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0000e+00</span><span class="o">+</span><span class="mf">1.2246e-16</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">1.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span><span class="o">-</span><span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.8370e-16</span><span class="o">+</span><span class="mf">1.0000e+00</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">6.1232e-17</span><span class="o">-</span><span class="mf">1.0000e+00</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0000e+00</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">]]],</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1586,6 +1753,25 @@ with each basis state accessible along the first dimension of a tensor.</p>
 <dd class="field-odd"><p><em>Tensor</em></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">dim</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">operator</span><span class="o">=</span><span class="n">phase_space_point</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The phase space point operator for qudit is:</span><span class="se">\n</span><span class="si">{</span><span class="n">operator</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">phase</span> <span class="n">space</span> <span class="n">point</span> <span class="n">operator</span> <span class="k">for</span> <span class="n">qudit</span> <span class="ow">is</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[[</span> <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">+</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.5000</span><span class="o">-</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">6.1232e-17</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5000</span><span class="o">-</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.5000</span><span class="o">+</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.0000</span><span class="o">+</span><span class="mf">6.1232e-17</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">6.1232e-17</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.5000</span><span class="o">-</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.5000</span><span class="o">+</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.0000</span><span class="o">+</span><span class="mf">6.1232e-17</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5000</span><span class="o">+</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.5000</span><span class="o">-</span><span class="mf">5.0000e-01</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.0000</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">]]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function objdesc">
@@ -1608,6 +1794,22 @@ when dim = 3.</p>
 <dd class="field-odd"><p><em>Tensor</em></p>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">dim</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">matrices</span><span class="o">=</span><span class="n">gell_mann</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The Gell-Mann matrices are:</span><span class="se">\n</span><span class="si">{</span><span class="n">matrices</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">Gell</span><span class="o">-</span><span class="n">Mann</span> <span class="n">matrices</span> <span class="n">are</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[[</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">,</span>  <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.</span><span class="o">-</span><span class="mf">1.</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">1.</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]],</span>
+
+        <span class="p">[[</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]]])</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 

@@ -508,19 +508,19 @@ print(f&quot;Quantum circuit output: {cir()}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Quantum circuit output:
----------------------------------------------------
+-----------------------------------------------------
  Backend: state_vector
  System dimension: [2, 2]
  System sequence: [1, 0]
  Batch size: [3]
 
  # 0:
-[ 0.95+0.j    0.  -0.29j  0.  -0.14j -0.04+0.j  ]
+[ 0.87+0.j    0.  -0.11j  0.  -0.47j -0.06+0.j  ]
  # 1:
-[ 0.87+0.j    0.  -0.46j  0.  -0.17j -0.09+0.j  ]
+[ 0.87+0.j    0.  -0.38j  0.  -0.3j  -0.13+0.j  ]
  # 2:
-[ 0.98+0.j    0.  -0.05j  0.  -0.19j -0.01+0.j  ]
----------------------------------------------------
+[ 0.92+0.j    0.  -0.16j  0.  -0.36j -0.06+0.j  ]
+-----------------------------------------------------
 
 </pre></div></div>
 </div>
@@ -551,19 +551,19 @@ print(f&quot;Quantum circuit output: {cir_ora()}&quot;)
 <div class="highlight"><pre>
 The shape of oracle unitary: torch.Size([3, 2, 2])
 Quantum circuit output:
----------------------------------------------------
+-----------------------------------------------------
  Backend: state_vector
  System dimension: [2, 2]
  System sequence: [1, 0]
  Batch size: [3]
 
  # 0:
-[-0.41+0.38j  0.  +0.j   -0.11-0.82j  0.  +0.j  ]
+[-0.94-0.08j  0.  +0.j   -0.06+0.32j  0.  +0.j  ]
  # 1:
-[0.51+0.52j 0.  +0.j   0.69+0.06j 0.  +0.j  ]
+[ 0.13-0.86j  0.  +0.j   -0.15+0.47j  0.  +0.j  ]
  # 2:
-[ 0.84-0.01j  0.  +0.j   -0.25+0.48j  0.  +0.j  ]
----------------------------------------------------
+[-0.69-0.53j  0.  +0.j   -0.16-0.46j  0.  +0.j  ]
+-----------------------------------------------------
 
 </pre></div></div>
 </div>
@@ -592,28 +592,28 @@ output_state = cir_kra()
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Kraus channel:
----------------------------------------------------
+-----------------------------------------------------
  Backend: density_matrix
  System dimension: [2, 2]
  System sequence: [0, 1]
  Batch size: [3]
 
  # 0:
-[[0.66+0.j 0.  +0.j 0.3 -0.j 0.  +0.j]
- [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]
- [0.3 +0.j 0.  +0.j 0.34+0.j 0.  +0.j]
- [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]]
+[[ 0.52+0.j    0.  +0.j   -0.5 -0.06j  0.  +0.j  ]
+ [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
+ [-0.5 +0.06j  0.  +0.j    0.48+0.j    0.  +0.j  ]
+ [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
  # 1:
-[[0.82+0.j   0.  +0.j   0.3 -0.08j 0.  +0.j  ]
+[[0.23+0.j   0.  +0.j   0.31+0.28j 0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
- [0.3 +0.08j 0.  +0.j   0.18+0.j   0.  +0.j  ]
+ [0.31-0.28j 0.  +0.j   0.77+0.j   0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
  # 2:
-[[ 0.35+0.j    0.  +0.j   -0.43+0.17j  0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [-0.43-0.17j  0.  +0.j    0.65+0.j    0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
----------------------------------------------------
+[[0.61+0.j   0.  +0.j   0.07-0.48j 0.  +0.j  ]
+ [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
+ [0.07+0.48j 0.  +0.j   0.39+0.j   0.  +0.j  ]
+ [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
+-----------------------------------------------------
 
 </pre></div></div>
 </div>
@@ -640,28 +640,28 @@ print(f&quot;Choi channel: {cir_cho()}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Choi channel:
----------------------------------------------------
+-----------------------------------------------------
  Backend: density_matrix
  System dimension: [2, 2]
  System sequence: [0, 1]
  Batch size: [3]
 
  # 0:
-[[0.07+0.j   0.11-0.24j 0.  +0.j   0.  +0.j  ]
- [0.11+0.24j 0.93+0.j   0.  +0.j   0.  +0.j  ]
- [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
- [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
+[[ 0.5 +0.j   -0.23-0.44j  0.  +0.j    0.  +0.j  ]
+ [-0.23+0.44j  0.5 +0.j    0.  +0.j    0.  +0.j  ]
+ [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
+ [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
  # 1:
-[[ 0.54+0.j   -0.44-0.23j  0.  +0.j    0.  +0.j  ]
- [-0.44+0.23j  0.46+0.j    0.  +0.j    0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
+[[ 0.32+0.j  -0.26+0.3j  0.  +0.j   0.  +0.j ]
+ [-0.26-0.3j  0.68+0.j   0.  +0.j   0.  +0.j ]
+ [ 0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j ]
+ [ 0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j ]]
  # 2:
-[[ 0.27+0.j   -0.14+0.42j  0.  +0.j    0.  +0.j  ]
- [-0.14-0.42j  0.73+0.j    0.  +0.j    0.  +0.j  ]
+[[ 0.42+0.j   -0.06-0.41j  0.  +0.j    0.  +0.j  ]
+ [-0.06+0.41j  0.58+0.j    0.  +0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
----------------------------------------------------
+-----------------------------------------------------
 
 </pre></div></div>
 </div>
@@ -715,22 +715,22 @@ print(f&quot;Output state: {batch_cir(rho)}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Output state:
----------------------------------------------------
+-----------------------------------------------------
  Backend: density_matrix
  System dimension: [2]
  System sequence: [0]
  Batch size: [3]
 
  # 0:
-[[0.44-0.j   0.04+0.05j]
- [0.04-0.05j 0.56+0.j  ]]
+[[0.5 -0.j   0.08+0.04j]
+ [0.08-0.04j 0.5 +0.j  ]]
  # 1:
-[[0.27+0.j   0.25+0.22j]
- [0.25-0.22j 0.73+0.j  ]]
+[[0.49+0.j   0.18+0.21j]
+ [0.18-0.21j 0.51+0.j  ]]
  # 2:
-[[0.45+0.j   0.13+0.03j]
- [0.13-0.03j 0.55+0.j  ]]
----------------------------------------------------
+[[0.49-0.j   0.18+0.22j]
+ [0.18-0.22j 0.51+0.j  ]]
+-----------------------------------------------------
 
 </pre></div></div>
 </div>
@@ -750,7 +750,7 @@ print(f&quot;Hamiltonian: {H.pauli_str}&quot;)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Hamiltonian: [[-0.09066232223158144, &#39;Z0&#39;], [-0.7931476010024183, &#39;X1&#39;], [0.7190023895147757, &#39;Y0&#39;]]
+Hamiltonian: [[-0.5048868288610004, &#39;Y0&#39;], [-0.26312841520515695, &#39;X0&#39;], [-0.28006427149436375, &#39;Z1&#39;]]
 </pre></div></div>
 </div>
 <p>One can call the <code class="docutils literal notranslate"><span class="pre">expec_val</span></code> of <code class="docutils literal notranslate"><span class="pre">State</span></code> class, or implement the neural network module <code class="docutils literal notranslate"><span class="pre">ExpecVal</span></code> on batched states.</p>
@@ -779,34 +779,34 @@ print(
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Output state:
----------------------------------------------------
+-----------------------------------------------------
  Backend: density_matrix
  System dimension: [2, 2]
  System sequence: [0, 1]
  Batch size: [3]
 
  # 0:
-[[0.66+0.j 0.  +0.j 0.3 -0.j 0.  +0.j]
- [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]
- [0.3 +0.j 0.  +0.j 0.34+0.j 0.  +0.j]
- [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j]]
+[[ 0.52+0.j    0.  +0.j   -0.5 -0.06j  0.  +0.j  ]
+ [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
+ [-0.5 +0.06j  0.  +0.j    0.48+0.j    0.  +0.j  ]
+ [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
  # 1:
-[[0.82+0.j   0.  +0.j   0.3 -0.08j 0.  +0.j  ]
+[[0.23+0.j   0.  +0.j   0.31+0.28j 0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
- [0.3 +0.08j 0.  +0.j   0.18+0.j   0.  +0.j  ]
+ [0.31-0.28j 0.  +0.j   0.77+0.j   0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
  # 2:
-[[ 0.35+0.j    0.  +0.j   -0.43+0.17j  0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [-0.43-0.17j  0.  +0.j    0.65+0.j    0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
----------------------------------------------------
+[[0.61+0.j   0.  +0.j   0.07-0.48j 0.  +0.j  ]
+ [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
+ [0.07+0.48j 0.  +0.j   0.39+0.j   0.  +0.j  ]
+ [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
+-----------------------------------------------------
 
-expectation value: tensor([-0.0246,  0.0647, -0.2120])
-expectation value: tensor([-0.0246,  0.0647, -0.2120])
-expectation value of each Pauli term: tensor([[-0.0292, -0.0574,  0.0271],
-        [-0.0000, -0.0000, -0.0000],
-        [ 0.0047,  0.1221, -0.2391]])
+expectation value: tensor([-0.0830, -0.1589, -0.8059])
+expectation value: tensor([-0.0830, -0.1589, -0.8059])
+expectation value of each Pauli term: tensor([[-0.0638,  0.2860, -0.4882],
+        [ 0.2609, -0.1648, -0.0377],
+        [-0.2801, -0.2801, -0.2801]])
 </pre></div></div>
 </div>
 <p>Similarly, to measure the output state, one can call the <code class="docutils literal notranslate"><span class="pre">measure</span></code> of <code class="docutils literal notranslate"><span class="pre">State</span></code> class, or implement the neural network module <code class="docutils literal notranslate"><span class="pre">Measure</span></code> on batched states. The following code measures the second qubit of the output state.</p>
@@ -835,12 +835,12 @@ print(f&quot;expectation value: {output_state.measure(pvm, [0])}&quot;)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The shape of PVM: torch.Size([2, 2, 2])
-expectation value: tensor([[0.3801, 0.6199],
-        [0.3868, 0.6132],
-        [0.4948, 0.5052]])
-expectation value: tensor([[0.3801, 0.6199],
-        [0.3868, 0.6132],
-        [0.4948, 0.5052]])
+expectation value: tensor([[0.4802, 0.5198],
+        [0.8258, 0.1742],
+        [0.2648, 0.7352]])
+expectation value: tensor([[0.4802, 0.5198],
+        [0.8258, 0.1742],
+        [0.2648, 0.7352]])
 </pre></div></div>
 </div>
 <p>One can also keep the collapsed states after the measurement by setting <code class="docutils literal notranslate"><span class="pre">keep_state</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
@@ -887,13 +887,13 @@ expectation value: tensor([[0.3801, 0.6199],
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.2.0
-torch: 2.4.1+cpu
+quairkit: 0.3.0
+torch: 2.5.1+cpu
 numpy: 1.26.0
 scipy: 1.14.1
-matplotlib: 3.9.2
+matplotlib: 3.10.0
 ---------SYSTEM---------
-Python version: 3.10.15
+Python version: 3.10.16
 OS: Windows
 OS version: 10.0.26100
 ---------DEVICE---------

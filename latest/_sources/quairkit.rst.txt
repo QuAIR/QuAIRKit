@@ -5,6 +5,7 @@ quairkit
     :maxdepth: 2
 
     quairkit.ansatz
+    quairkit.application
     quairkit.circuit
     quairkit.core
     quairkit.database
