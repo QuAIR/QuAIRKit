@@ -1,0 +1,1131 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="batch.html">
+      
+      
+        <link rel="next" href="qudit.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Neural network setup customization - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Setup-via-quairkit.Circuit" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Neural network setup customization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)">tutorials</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.feature.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)">tutorials.<wbr>feature</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.feature.rst (reference label)">tutorials.<wbr>feature</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="batch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/batch.ipynb (reference label)">Batch computation</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/custom.ipynb (reference label)">Neural network setup customization</span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/custom.ipynb (reference label)">Neural network setup customization</span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Setup-via-quairkit.Circuit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/custom.ipynb#setup-via-quairkit.circuit (reference label)">Setup via quairkit.<wbr>Circuit</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Setup-via-torch.nn.Module" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/custom.ipynb#setup-via-torch.nn.module (reference label)">Setup via torch.<wbr>nn.<wbr>Module</span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qudit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/qudit.ipynb (reference label)">Introduction to qudit quantum computing</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)">tutorials.<wbr>research</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Setup-via-quairkit.Circuit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/custom.ipynb#setup-via-quairkit.circuit (reference label)">Setup via quairkit.<wbr>Circuit</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Setup-via-torch.nn.Module" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/custom.ipynb#setup-via-torch.nn.module (reference label)">Setup via torch.<wbr>nn.<wbr>Module</span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Neural-network-setup-customization">Neural network setup customization<a class="headerlink" href="#Neural-network-setup-customization" title="Link to this heading">¶</a></h1>
+<p>In the previous tutorial, we demonstrated how to build a quantum neural network, specifically a single quantum circuit, to solve the VQE problem. But what if you want to set up a neural network that includes multiple quantum circuits with shared parameters for gradient analysis, along with a classical neural network for post-processing information? This tutorial introduces a general framework in QuAIRKit for customizing quantum neural networks or classical-quantum hybrid neural networks, as well
+as managing parameters effectively.</p>
+<p><strong>Table of contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Setup-via-quairkit.Circuit"><span class="std std-ref">Setup via quairkit.Circuit</span></a></p></li>
+<li><p><a class="reference internal" href="#Setup-via-torch.nn.Module"><span class="std std-ref">Setup via torch.nn.Module</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+
+import quairkit as qkit
+from quairkit import Circuit, State, Hamiltonian
+from quairkit.database import *
+from quairkit.loss import *
+from quairkit.qinfo import *
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>class Network(torch.nn.Module):
+    r&quot;&quot;&quot;A customized hybrid quantum-classical neural network.
+
+    Args:
+        batch_size: The batch dimension of input data.
+        H: The Hamiltonian for measuring the neural network.
+
+    Note:
+        contains the following layers:
+        - two quantum circuits
+        - A fully connected (dense) layer that takes batch_size inputs and outputs 10 features
+        - A second dense layer that takes the 10 features from fc1 and reduces them to a single output
+
+    &quot;&quot;&quot;
+    def __init__(self):
+        super().__init__()
+        self.theta = torch.nn.Parameter(torch.rand([3, 1, 1]))
+
+        cir1 = Circuit(3)
+        cir1.complex_entangled_layer(depth=3)
+        self.cir1 = cir1
+
+
+        cir2 = Circuit(3)
+        cir2.universal_qudits(list(range(3)))
+        cir2.ry(param=self.theta.clone())
+        self.cir2 = cir2
+
+
+    def forward(self, x):
+        x = self.cir1(x)
+        x = self.cir2(x)
+        return x
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net = Network()
+print([param.shape for param in net.parameters()])
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[torch.Size([3, 1, 1]), torch.Size([3, 1, 3]), torch.Size([3, 1, 3]), torch.Size([3, 1, 3]), torch.Size([1, 1, 63])]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>input_state = random_state(3)
+
+output_state = net(input_state)
+loss = trace_distance(output_state, input_state)
+
+loss.backward()
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print([(param.grad is None) for param in net.parameters()])
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[False, False, False, False, False]
+</pre></div></div>
+</div>
+<h2 id="Setup-via-quairkit.Circuit">Setup via quairkit.Circuit<a class="headerlink" href="#Setup-via-quairkit.Circuit" title="Link to this heading">¶</a></h2>
+<p>If you are satisfied with QuAIRKit’s built-in circuit ansatzes and parameter gate structures, and have no special needs for parameter generation or management, we recommend constructing a neural network model using the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class.</p>
+<p>Previous tutorials have covered how to construct a quantum circuit or insert a gate/channel. Here, we focus on the built-in parameter management functionality provided by <code class="docutils literal notranslate"><span class="pre">Circuit</span></code>. Let’s start with the following circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(2)
+cir.real_entangled_layer() # a layer of Ry and CNOT
+cir.complex_block_layer() # a layer of U3 and CNOT
+
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_custom_8_0.png" src="../../_images/tutorials_feature_custom_8_0.png" />
+</div>
+</div>
+<p>The parameters of the circuit can be revised by <code class="docutils literal notranslate"><span class="pre">update_param</span></code>. If the parameter gate has no input about parameters, the default parameters are uniformly sampled from 0 to <span class="math notranslate nohighlight">\(2\pi\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>new_cir = Circuit(4)
+
+new_cir.h() # a layer of Hadamard
+new_cir.real_entangled_layer([0, 1])
+new_cir.complex_block_layer([1, 2])
+new_cir.ry(param=torch.pi / 4) # a layer of fixed Ry
+
+new_cir.plot()
+new_cir.update_param(cir.param)
+
+print(&#39;circuit after updating the parameters&#39;)
+new_cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_custom_10_0.png" src="../../_images/tutorials_feature_custom_10_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+circuit after updating the parameters
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_custom_10_2.png" src="../../_images/tutorials_feature_custom_10_2.png" />
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class also provides adjustable options for uniform sampling and Gaussian sampling methods.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.randomize_param(0, 0.1, method=&#39;uniform&#39;) # use uniform sampling to generate the parameters.
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_custom_12_0.png" src="../../_images/tutorials_feature_custom_12_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.randomize_param(1, 1.1, method=&#39;normal&#39;) # use Gaussian sampling to generate the parameters.
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_custom_13_0.png" src="../../_images/tutorials_feature_custom_13_0.png" />
+</div>
+</div>
+<p>What if you just want to manipulate the parameter of a particular gate? One can visit all elements of the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> through indexing. In this way, users can also access or modify the parameter of the specific gate.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Circuit(
+  (0): RealEntangledLayer(
+    (0): RY()
+    (1): CNOT()
+  )
+  (1): ComplexBlockLayer(
+    (0): U3()
+    (1): CNOT()
+    (2): U3()
+  )
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>first_gate = cir[0][0]
+print(&#39;The parameters of first two RY gates are\n&#39;, list(first_gate.parameters()))
+print(&#39;The Kraus representations of the first two RY gates are: \n&#39;, first_gate.kraus_repr)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The parameters of first two RY gates are
+ [Parameter containing:
+tensor([[[1.0819]],
+
+        [[2.2331]]], requires_grad=True)]
+The Kraus representations of the first two RY gates are:
+ tensor([[[[ 0.8572+0.j, -0.5150+0.j],
+          [ 0.5150+0.j,  0.8572+0.j]]],
+
+
+        [[[ 0.4388+0.j, -0.8986+0.j],
+          [ 0.8986+0.j,  0.4388+0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
+</pre></div></div>
+</div>
+<p>In addition to parameter manipulations, the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class also provides built-in interface for parameterized gate customizations. For example, suppose one wants to implement a controlled-U3 parameterized gate with control on the <span class="math notranslate nohighlight">\(\vert{11}\rangle\)</span> state</p>
+<div class="math notranslate nohighlight">
+\[\left(I^{\otimes 2} - \vert 11 \rangle\langle 11 \vert\right) \otimes I +  \vert 11 \rangle\langle 11 \vert \otimes \operatorname{U3}({\bm \theta})
+.\]</div>
+<p>Such three-qubit gate could be implemented via the following code</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def ccu3(theta: torch.Tensor) -&gt; torch.Tensor:
+    proj = computational_state(num_system=2, index=3).density_matrix
+    return torch.kron((torch.eye(2) - proj), torch.eye(2)) + torch.kron(proj, u3(theta))
+</code></pre></div>
+</div>
+</div>
+<p>By providing the gate function, and the size of parameters, <code class="docutils literal notranslate"><span class="pre">param_oracle</span></code> would take care of any other messes, including the parameter management.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(4)
+
+cir.param_oracle(ccu3, num_acted_param=3, system_idx=[1, 2, 3], gate_name=&#39;ccu3&#39;)
+# this is equivalent to below code
+# cir.param_oracle(u3, num_acted_param=3, system_idx=[[1, 2], 3], control_idx=-1, gate_name=&#39;ccu3&#39;)
+
+print(&#39;The parameters of this circuit are\n&#39;, list(cir.parameters()))
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The parameters of this circuit are
+ [Parameter containing:
+tensor([[[0.7188, 5.4694, 0.8267]]], requires_grad=True)]
+</pre></div></div>
+</div>
+<h2 id="Setup-via-torch.nn.Module">Setup via torch.nn.Module<a class="headerlink" href="#Setup-via-torch.nn.Module" title="Link to this heading">¶</a></h2>
+<p>For more general machine learning tasks, such as classical-quantum hybrid machine learning, or if you’re a machine learning researcher aligning with common practices, we recommend setting up the quantum neural network in the same way as a classical neural network—by creating a child class from <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p>
+<p>Next, we will demonstrate how to construct a classical-quantum hybrid neural network using <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>. We’ll start by considering the quantum side, which involves inputting quantum data followed by a parameterized universal gate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def create_cir(training_data: torch.Tensor, param: torch.Tensor) -&gt; Circuit:
+    r&quot;&quot;&quot;Create a quantum neural network circuit.
+
+    Args:
+        training_data: The input data.
+        param: The parameters for the quantum layers.
+
+    &quot;&quot;&quot;
+    circuit = Circuit(2)
+    circuit.oracle(training_data, system_idx=[0, 1])
+    circuit.u3(param=param)
+    return circuit
+</code></pre></div>
+</div>
+</div>
+<p>The overall structure of our example neural network is as follows: The network first accepts a quantum state, which is passed through two quantum layers containing the training data. Quantum measurements are then performed to obtain expectation values with respect to the given Hamiltonian. These expectation values are subsequently passed through two classical fully connected layers to produce the final result.</p>
+<figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="../../_images/network.png" style="width: 700px;" /></p>
+<figcaption><p>Fig.1: Depiction of below quantum-classical hybrid neural network with batch_size 100.</p>
+</figcaption></figure><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>class Network(torch.nn.Module):
+    r&quot;&quot;&quot;A customized hybrid quantum-classical neural network.
+
+    Args:
+        batch_size: The batch dimension of input data.
+        H: The Hamiltonian for measuring the neural network.
+
+    Note:
+        contains the following layers:
+        - two quantum circuits
+        - A fully connected (dense) layer that takes batch_size inputs and outputs 10 features
+        - A second dense layer that takes the 10 features from fc1 and reduces them to a single output
+
+    &quot;&quot;&quot;
+    def __init__(self, batch_size: int, H: Hamiltonian):
+        super().__init__()
+
+        self.training_data = random_unitary(2, size=(2, batch_size))
+        self.theta = torch.nn.Parameter(torch.poisson(torch.rand(2, batch_size, 6)))
+        self.measure = ExpecVal(H)
+
+        self.fc1 = torch.nn.Linear(batch_size, 10)
+        self.fc2 = torch.nn.Linear(10, 1)
+
+    def forward(self, input_state: State) -&gt; torch.Tensor:
+        r&quot;&quot;&quot;Perform the forward propagation of the neural network.
+
+        Args:
+            input_state: The input quantum state of the neural network.
+
+        Note:
+            If the `Network` does not require custom parameters,
+            one can move the creation of `cir1` and `cir2` directly into
+            the `__init__` method to improve runtime efficiency.
+        &quot;&quot;&quot;
+        cir1 = create_cir(self.training_data[0], self.theta[0])
+        cir2 = create_cir(self.training_data[1], self.theta[1])
+
+        state1 = cir1(input_state)
+        state2 = cir2(state1)
+        expectation = self.measure(state2)
+
+        x = torch.relu(self.fc1(expectation))
+        x = torch.sigmoid(self.fc2(x))
+        return x
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>BATCH_SIZE = 100
+ham = random_hamiltonian_generator(2)
+net = Network(BATCH_SIZE, ham)
+</code></pre></div>
+</div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">Network</span></code> class, the parameters can be directly accessed through self-defined attributes, making it more convenient to modify parameters as needed.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net.theta = torch.nn.Parameter(torch.ones_like(net.theta))
+</code></pre></div>
+</div>
+</div>
+<p>Here is an example of passing a randomly-generated two-qubit quantum state through the network.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>psi = random_state(2)
+loss = net(psi)
+
+loss.backward()
+
+print(&quot;shape of the gradient tensor for the theta parameters&quot;, net.theta.grad.shape)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+shape of the gradient tensor for the theta parameters torch.Size([2, 100, 6])
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td></td>
+<td><p>Identity gate</p></td>
+</tr>
+<tr class="row-odd"><td><p>$ <span class="math">\vert 11</span> :nbsphinx-math:<a href="#id1"><span class="problematic" id="id2">`</span></a>rangle`$</p></td>
+<td></td>
+<td><p>The fourth two-qubit computational state</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\operatorname{U3}\)</span></p></td>
+<td></td>
+<td><p>Universal single-qubit gate (up to a global phase)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\({\bm \theta}\)</span></p></td>
+<td></td>
+<td><p>Trainable parameters</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.0
+torch: 2.7.0+cpu
+numpy: 1.26.0
+scipy: 1.14.1
+matplotlib: 3.10.0
+---------SYSTEM---------
+Python version: 3.10.16
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>
