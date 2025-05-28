@@ -1,6 +1,0 @@
-quairkit.core.operator
-======================
-
-.. automodule:: quairkit.core.operator
-    :members:
-

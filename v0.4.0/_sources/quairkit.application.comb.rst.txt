@@ -1,7 +1,0 @@
-quairkit.application.comb
-=========================
-
-.. toctree::
-    :maxdepth: 2
-
-    quairkit.application.comb.comb

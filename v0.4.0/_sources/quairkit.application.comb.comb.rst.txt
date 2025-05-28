@@ -1,6 +1,0 @@
-quairkit.application.comb.comb
-==============================
-
-.. automodule:: quairkit.application.comb.comb
-    :members:
-

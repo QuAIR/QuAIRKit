@@ -1,6 +1,0 @@
-quairkit.core.state.backend.density_matrix
-==========================================
-
-.. automodule:: quairkit.core.state.backend.density_matrix
-    :members:
-
