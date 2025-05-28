@@ -1,0 +1,1366 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="comb.html">
+      
+      
+        <link rel="next" href="trotter.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Rediscovering Simon’s algorithm with PQC - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rediscovering Simon’s algorithm with PQC
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)">tutorials</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)">tutorials.<wbr>feature</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.research.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)">tutorials.<wbr>research</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.research.rst (reference label)">tutorials.<wbr>research</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bp.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/bp.ipynb (reference label)">Analyze Barren Plateau in Quantum Neural Networks</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comb.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/comb.ipynb (reference label)">Training quantum process transformation with PQC</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/simon.ipynb (reference label)">Rediscovering Simon’s algorithm with PQC</span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/simon.ipynb (reference label)">Rediscovering Simon’s algorithm with PQC</span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#introduction (reference label)">Introduction</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Simon's-problem-(classical-version)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#simon&#39;s-problem-(classical-version) (reference label)">Simon’s problem <wbr>(classical version)</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Simon's-problem-(quantum-version)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#simon&#39;s-problem-(quantum-version) (reference label)">Simon’s problem <wbr>(quantum version)</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Simon's-algorithm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#simon&#39;s-algorithm (reference label)">Simon’s algorithm</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simon’s algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Implement-Simon's-algorithm-with-QuAIRKit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#implement-simon&#39;s-algorithm-with-quairkit (reference label)">Implement Simon’s algorithm with Qu<wbr>AIRKit</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Using-PQC-to-rediscover-Simon's-algorithm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#using-pqc-to-rediscover-simon&#39;s-algorithm (reference label)">Using PQC to rediscover Simon’s algorithm</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using PQC to rediscover Simon’s algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Begin-experiment" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#begin-experiment (reference label)">Begin experiment</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#references (reference label)">References</span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trotter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/trotter.ipynb (reference label)">Hamiltonian simulation via Trotter decomposition</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#introduction (reference label)">Introduction</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Simon's-problem-(classical-version)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#simon&#39;s-problem-(classical-version) (reference label)">Simon’s problem <wbr>(classical version)</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Simon's-problem-(quantum-version)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#simon&#39;s-problem-(quantum-version) (reference label)">Simon’s problem <wbr>(quantum version)</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Simon's-algorithm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#simon&#39;s-algorithm (reference label)">Simon’s algorithm</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simon’s algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Implement-Simon's-algorithm-with-QuAIRKit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#implement-simon&#39;s-algorithm-with-quairkit (reference label)">Implement Simon’s algorithm with Qu<wbr>AIRKit</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Using-PQC-to-rediscover-Simon's-algorithm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#using-pqc-to-rediscover-simon&#39;s-algorithm (reference label)">Using PQC to rediscover Simon’s algorithm</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using PQC to rediscover Simon’s algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Begin-experiment" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#begin-experiment (reference label)">Begin experiment</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/simon.ipynb#references (reference label)">References</span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Rediscovering-Simon's-algorithm-with-PQC">Rediscovering Simon’s algorithm with PQC<a class="headerlink" href="#Rediscovering-Simon's-algorithm-with-PQC" title="Link to this heading">¶</a></h1>
+<p><strong>Table of contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction"><span class="std std-ref">Introduction</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Simon's-problem-(classical-version)"><span class="std std-ref">Simon’s problem (classical version)</span></a></p></li>
+<li><p><a class="reference internal" href="#Simon's-problem-(quantum-version)"><span class="std std-ref">Simon’s problem (quantum version)</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Simon's-algorithm"><span class="std std-ref">Simon’s algorithm</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Implement-Simon's-algorithm-with-QuAIRKit"><span class="std std-ref">Implement Simon’s algorithm with QuAIRKit</span></a></p></li>
+<li><p><a class="reference internal" href="#Begin-experiment"><span class="std std-ref">Begin experiment</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#References"><span class="std std-ref">References</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>from typing import Callable
+import numpy as np
+
+import torch
+import quairkit as qkit
+from quairkit import Circuit
+from quairkit.database import *
+from quairkit.loss import *
+from quairkit.qinfo import *
+
+import time
+</code></pre></div>
+</div>
+</div>
+<h2 id="Introduction">Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<p>Simon’s algorithm is a quantum algorithm for obtaining the period of a vectorial Boolean function with polynomial time complexity, achieving exponential speedup over classical algorithms [1].</p>
+<p>Although Simon’s algorithm has few general applications, it inspired the discovery of Shor’s algorithm. In fact, the two problems solved by these two algorithms are both special cases of the abelian hidden subgroup problem. Before presenting Simon’s algorithm, let’s first review Simon’s problem.</p>
+<h3 id="Simon's-problem-(classical-version)">Simon’s problem (classical version)<a class="headerlink" href="#Simon's-problem-(classical-version)" title="Link to this heading">¶</a></h3>
+<p>Input: a function <span class="math notranslate nohighlight">\(f: \{0, 1\}^n \to \{0, 1\}^n\)</span> that satisfies for all <span class="math notranslate nohighlight">\(n\)</span>-bit string <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>: <span class="math notranslate nohighlight">\(f(x) = f(y)\)</span> if and only if <span class="math notranslate nohighlight">\(x = y\)</span> or <span class="math notranslate nohighlight">\(x = y \oplus s\)</span> for some <span class="math notranslate nohighlight">\(n\)</span>-bit string <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>Output: determine <span class="math notranslate nohighlight">\(s \in \{0, 1\}^n\)</span>.</p>
+<p>Any classical algorithm solving this should require <span class="math notranslate nohighlight">\(\Omega(2^{n/2})\)</span> queries, while Simon’s algorithm solves it in $:nbsphinx-math:<a href="#id1"><span class="problematic" id="id2">`</span></a>mathcal{O}`(n) $ quantum queries [2].</p>
+<p>Such function <span class="math notranslate nohighlight">\(f\)</span> can be randomly generated via the following function.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def simon_function(n: int, s: int) -&gt; Callable[[int], int]:
+    r&quot;&quot;&quot;Generates a function f such that :math:`f(x) = f(y)` if and only if :math:`y = x` or :math:`y = x \oplus s`.
+
+    Args:
+        n: the number of bits in the input and output strings.
+        s: an integer represented by an n-bit string representing the secret string in Simon&#39;s problem.
+
+    Returns:
+        A matrix f mapping integers to integers satisfying Simon&#39;s problem properties.
+    &quot;&quot;&quot;
+    # generate a random permutation of 0, 1, ..., 2^n-1
+    all_x = np.arange(2 ** n)
+    np.random.shuffle(all_x)
+
+    mapping = {}
+    outputs_used = set()
+
+    # generate a mapping, which implements function f
+    for x in all_x:
+        if x in mapping:
+            continue
+
+        # Generate a random output not used before
+        while True:
+            fx = np.random.randint(2 ** n)
+            if fx not in outputs_used:
+                outputs_used.add(fx)
+                break
+
+        # since f(x) = f(x \oplus s)
+        mapping[x] = fx
+        mapping[x ^ s] = fx
+
+    # Define the function f using the mapping
+    def f(input_int: int) -&gt; int:
+        return mapping[input_int]
+
+    return f
+</code></pre></div>
+</div>
+</div>
+<p>Below is an example of a function <span class="math notranslate nohighlight">\(f\)</span> for <span class="math notranslate nohighlight">\(n = 2\)</span> and <span class="math notranslate nohighlight">\(s = 11\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>n = 2
+s_str = &#39;11&#39;
+# get function f with n and s_str
+example_f = simon_function(n, int(s_str, 2))
+# print the value of f(x) for every x
+print(&quot; x | f(x)&quot;)
+for x in range(2 ** n):
+    result = bin(example_f(x))[2:].zfill(n)
+    x = bin(x)[2:].zfill(n)
+    print(f&quot;{x} | {result}&quot;)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ x | f(x)
+00 | 11
+01 | 10
+10 | 10
+11 | 11
+</pre></div></div>
+</div>
+<p>We can find that <span class="math notranslate nohighlight">\(f(00) = f(00 \oplus 11)\)</span>, <span class="math notranslate nohighlight">\(f(01)=f(01\oplus 11)\)</span>, etc.</p>
+<p>Now, let’s go over the quantum version of Simon’s problem.</p>
+<h3 id="Simon's-problem-(quantum-version)">Simon’s problem (quantum version)<a class="headerlink" href="#Simon's-problem-(quantum-version)" title="Link to this heading">¶</a></h3>
+<p>Input: an access to unitary <span class="math notranslate nohighlight">\(U_f\)</span> that implements the function <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>Output: an <span class="math notranslate nohighlight">\(n\)</span>-bit string <span class="math notranslate nohighlight">\(y\)</span> such that <span class="math notranslate nohighlight">\(y \cdot s = 0\)</span>, where <span class="math notranslate nohighlight">\(\cdot\)</span> is the inner product over <span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span>, i.e. the bitwise inner product of <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>Now it’s time to present the steps of Simon’s algorithm.</p>
+<h2 id="Simon's-algorithm">Simon’s algorithm<a class="headerlink" href="#Simon's-algorithm" title="Link to this heading">¶</a></h2>
+<p>We begin to show how to find this hidden integer <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<ol class="arabic">
+<li><p>Initialize <span class="math notranslate nohighlight">\(2n\)</span> qubits as two quantum registers of length <span class="math notranslate nohighlight">\(n\)</span>, simplified as <span class="math notranslate nohighlight">\(\ket{0}^{\otimes n}\ket{0}^{\otimes n}=\ket{0}\ket{0}\)</span>.</p></li>
+<li><p>Apply Hadamard gates to first register to get</p>
+<div class="math notranslate nohighlight">
+\[(H^{\otimes n} \otimes I) \ket{0}\ket{0} = \frac{1}{2^{n/2}} \sum_{x=0}^{2^n-1}\ket{x}\ket{0}.\tag{1}\]</div>
+</li>
+<li><p>Query the blackbox unitary <span class="math notranslate nohighlight">\(U_f\)</span> to get</p>
+<div class="math notranslate nohighlight">
+\[U_f\,\frac{1}{2^{n/2}} \sum_{x=0}^{2^n-1}\ket{x}\ket{0} = \frac{1}{2^{n/2}} \sum_{x=0}^{2^n-1}\ket{x}\ket{f(x)}.\tag{2}\]</div>
+</li>
+<li><p>Apply Hadamard gates to first register again, and the state becomes</p>
+<div class="math notranslate nohighlight">
+\[(H^{\otimes n} \otimes I)\, \frac{1}{2^{n/2}} \sum_{x=0}^{2^n-1}\ket{x}\ket{f(x)}
+=\frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{x=0}^{2^n-1} (-1)^{x \cdot y}\ket{y} \ket{f(x)}.\tag{3}\]</div>
+<p>Here we consider the amplitude of <span class="math notranslate nohighlight">\(\ket{y} \ket{f(x)}\)</span>. Due to <span class="math notranslate nohighlight">\(f(x)=f(x\oplus s)\)</span>, sum the only two terms that attribute to the amplitude of <span class="math notranslate nohighlight">\(\ket{y} \ket{f(x)}\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{2^n}\Bigl( (-1)^{x\cdot y} +(-1)^{(x\oplus s)\cdot y}\Bigr).\tag{4}\]</div>
+<p>With the distributive law as <span class="math notranslate nohighlight">\((x\oplus s)\cdot y=x\cdot y \oplus s\cdot y\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{1}{2^n}\Bigl( (-1)^{x\cdot y} +(-1)^{(x\oplus s)\cdot y}\Bigr)
+&amp; = \frac{1}{2^n}\bigl( (-1)^{x\cdot y} +(-1)^{x\cdot y \oplus s\cdot y}\bigr)\\
+&amp; = \frac{1}{2^n}\bigl( (-1)^{x\cdot y} +(-1)^{x\cdot y} (-1)^{s\cdot y}\bigr)\\
+&amp; = \frac{1}{2^n}(-1)^{x\cdot y} \bigl( 1 + (-1)^{s\cdot y} \bigr).
+\end{aligned}\end{split}\]</div>
+<p>This shows that no outcome <span class="math notranslate nohighlight">\(y\)</span> with <span class="math notranslate nohighlight">\(s\cdot y=1\)</span> is observable, whereas outcomes satisfying <span class="math notranslate nohighlight">\(s\cdot y=0\)</span> occur with probability <span class="math notranslate nohighlight">\(2^{2-2n}\)</span>.</p>
+</li>
+<li><p>Repeat Step 1 to 4 to obtain a list of <span class="math notranslate nohighlight">\(y\)</span> satisfying <span class="math notranslate nohighlight">\(s\cdot y=0\)</span>, which can be used to get <span class="math notranslate nohighlight">\(s\)</span> by solving a system of linear equations.</p></li>
+</ol>
+<h3 id="Implement-Simon's-algorithm-with-QuAIRKit">Implement Simon’s algorithm with QuAIRKit<a class="headerlink" href="#Implement-Simon's-algorithm-with-QuAIRKit" title="Link to this heading">¶</a></h3>
+<p>First, we should construct a <span class="math notranslate nohighlight">\(U_f\)</span> for later usage. Here is an example that implements the oracle for this <span class="math notranslate nohighlight">\(f\)</span>: | <span class="math notranslate nohighlight">\(x\)</span> | <span class="math notranslate nohighlight">\(f(x)\)</span> | |——|———| | <span class="math notranslate nohighlight">\(00\)</span> | <span class="math notranslate nohighlight">\(00\)</span>| | <span class="math notranslate nohighlight">\(01\)</span> | <span class="math notranslate nohighlight">\(01\)</span>| | <span class="math notranslate nohighlight">\(10\)</span> | <span class="math notranslate nohighlight">\(00\)</span>| | <span class="math notranslate nohighlight">\(11\)</span> | <span class="math notranslate nohighlight">\(01\)</span>|</p>
+<p>We can find <span class="math notranslate nohighlight">\(f(x)=f(x\oplus 10)\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def oracle_example() -&gt; Circuit:
+    r&quot;&quot;&quot;generate this oracle with n = 2 and s = &#39;10&#39;.
+
+    Returns:
+        the circuit for Simon&#39;s problem with n = 2 and s = &#39;10&#39;.
+
+    &quot;&quot;&quot;
+    n = 2
+    qc = Circuit(2 * n)
+    qc.cx([0, 1])  # the effect of this oracle is exactly only a cnot gate.
+    return qc
+</code></pre></div>
+</div>
+</div>
+<p>Then, we construct the Simon’s circuit in Step 1 to Step 4.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def simon_circuit(n: int, oracle: Circuit) -&gt; Circuit:
+    r&quot;&quot;&quot; Simon&#39;s circuit for corresponding oracle.
+
+    Args:
+        n: the number of qubits in the Simon&#39;s problem.
+        oracle: the oracle circuit implementing the Simon&#39;s problem.
+
+    Returns:
+        A circuit implementing Simon&#39;s algorithm.
+
+    &quot;&quot;&quot;
+    simon_cir = Circuit(2 * n)  # Step 1
+    simon_cir.h(list(range(n)))  # Step 2
+    simon_cir.extend(oracle)  # Step 3
+    simon_cir.h(list(range(n)))  # Step 4
+    return simon_cir
+</code></pre></div>
+</div>
+</div>
+<p>We can plot the circuit like this.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># plot this circuit
+print(&quot;the diagram of the quantum circuit in this case:&quot;)
+cir = simon_circuit(2, oracle_example())
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of the quantum circuit in this case:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_research_simon_18_1.png" src="../../_images/tutorials_research_simon_18_1.png" />
+</div>
+</div>
+<h2 id="Using-PQC-to-rediscover-Simon's-algorithm">Using PQC to rediscover Simon’s algorithm<a class="headerlink" href="#Using-PQC-to-rediscover-Simon's-algorithm" title="Link to this heading">¶</a></h2>
+<p>Parameterized quantum circuits (PQC) are circuits with tunable parameters, like rotation angles. They are central to hybrid algorithms like QAOA.</p>
+<p>We begin by using PQC to rediscover Simon’s problem.</p>
+<p>Define <span class="math notranslate nohighlight">\(P^\perp(s) = \sum_{y: y \cdot s = 0} \ket{y}\bra{y}\)</span>. We expect the measurement outcome of this circuit to be orthogonal to <span class="math notranslate nohighlight">\(s\)</span>. That is, applying the projector <span class="math notranslate nohighlight">\(I - P^\perp(s)\)</span> to the output state should output 0. Then the loss function is defined as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal{L}(\theta) &amp;= \textrm{Average probability of measurement outcome } \in \{y: y \cdot s \neq 0 \} \\
+&amp;= \frac{1}{N} \sum_{i=0}^{N - 1} \left| \left(I - P^\perp(s_i)\right) \cdot C_\theta(f_i) \ket{0} \right|^2
+,
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_\theta(f_i)\)</span> is the output unitary of the parameterized comb <span class="math notranslate nohighlight">\(C_\theta\)</span> with input unitary <span class="math notranslate nohighlight">\(U_{f_i}\)</span>.</p>
+<p>We first randomly generate <code class="docutils literal notranslate"><span class="pre">list_f</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_data = 1000  # number of data
+
+# Generate a batch of random secret strings and corresponding functions.
+dim = 2 ** n
+list_s = np.random.randint(dim, size=num_data)
+list_f = [simon_function(n, s) for s in list_s]
+</code></pre></div>
+</div>
+</div>
+<p>Prepare the corresponding batch of unitaries, <code class="docutils literal notranslate"><span class="pre">list_Uf</span></code>, using the previously generated functions. Note that <code class="docutils literal notranslate"><span class="pre">Uf</span></code> can implement the unitary of a given function <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>list_Uf = torch.stack([Uf(f, n) for f in list_f])
+</code></pre></div>
+</div>
+</div>
+<p>The corresponding Simon’s circuit is constructed as follows. Note that a batch of unitaries is taken as input for training.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>simon_cir = Circuit(2 * n)  # Step 1
+simon_cir.h(list(range(n)))  # Step 2
+simon_cir.oracle(list_Uf, list(range(2 * n)), latex_name=r&#39;$U_f$&#39;)  # Step 3
+simon_cir.h(list(range(n)))  # Step 4
+</code></pre></div>
+</div>
+</div>
+<p>To save memory for large <span class="math notranslate nohighlight">\(n\)</span>, rather than perform direct matrix multiplication, we use batched projection-valued measurement to compute the loss function. See the measurement tutorial in QuAIRKit for more usage details.</p>
+<p>In the following, these PVMs are constructed as measuring ‘0’ gives <span class="math notranslate nohighlight">\(P^\perp(s_i)\)</span> and ‘1’ for the others. Then the loss function is computed by the average probability of getting ‘1’.</p>
+<p>First, we construct the projector <span class="math notranslate nohighlight">\(P^\perp_s\)</span> for a given s.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def prep_proj(s: int) -&gt; torch.Tensor:
+    r&quot;&quot;&quot;Generate P^\perp_s for a given s.
+
+    Args:
+        s: an integer representing an $n$-bit string.
+
+    Returns:
+        torch.Tensor: the projection matrix P^\perp_s.
+    &quot;&quot;&quot;
+    assert 0 &lt;= s &lt; dim
+
+    D = torch.zeros(dim)  # initialize D as a zero vector
+    # iterate over all y in the range of dim
+    for y in range(dim):
+        dot_product = (y &amp; s).bit_count() % 2
+        # if the product is 0, then the item in D is 1
+        if dot_product == 0:
+            D[y] = 1
+    return torch.diag(D)
+</code></pre></div>
+</div>
+</div>
+<p>Then we generate the corresponding POVM.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>prep = torch.stack([prep_proj(s) for s in list_s])
+# Generate a batch of POVMs.
+pvm = torch.stack([prep, torch.eye(dim) - prep]).permute([1, 0, 2, 3])
+</code></pre></div>
+</div>
+</div>
+<p>Now, we define the loss function with this POVM.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>M = Measure(pvm)
+
+def loss_fcn(circuit: Circuit) -&gt; torch.Tensor:
+    r&quot;&quot;&quot;Compute the loss function for the given circuit.
+
+    Args:
+        circuit: the quantum circuit to be evaluated.
+
+    Returns:
+        the loss value for the given circuit.
+
+    &quot;&quot;&quot;
+    output_state = circuit()
+    prob = M(output_state, system_idx=list(range(n)), desired_result=&#39;0&#39;)
+    # The loss is the probability of measuring |0&gt; in the first n qubits.
+    return 1 - prob.mean()
+</code></pre></div>
+</div>
+</div>
+<p>We first verify that the loss function for the original circuit in Simon’s algorithm is 0</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The loss of simon&#39;s circuit is &quot;+str(loss_fcn(simon_cir))+&quot;.&quot;)  # loss of simon&#39;s circuit
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The loss of simon&#39;s circuit is tensor(5.9605e-08).
+</pre></div></div>
+</div>
+<h3 id="Begin-experiment">Begin experiment<a class="headerlink" href="#Begin-experiment" title="Link to this heading">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>LR = 0.1  # learning rate
+NUM_ITR = 100  # number of iterations
+</code></pre></div>
+</div>
+</div>
+<p>The ansatz of PQC is selected as the universal two-qubit gate. We will show that these gates will be trained to be the Hadamard gates.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># construct the circuit
+cir = Circuit(2 * n)  # Step 1
+cir.universal_two_qubits(list(range(n)))  # the ansatz, or to say Step 2
+cir.oracle(list_Uf, list(range(2 * n)), latex_name=r&#39;U_f&#39;)  # oracle, or to say Step 3
+cir.universal_two_qubits(list(range(n)))  # the ansatz, or to say Step 4
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>loss_list, time_list = [], []  # record loss
+
+opt = torch.optim.Adam(lr=LR, params=cir.parameters()) # cir is a Circuit type
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, &#39;min&#39;, factor=0.5) # activate scheduler
+
+# training
+for itr in range(NUM_ITR):
+    start_time = time.time()
+    opt.zero_grad()
+
+    loss = loss_fcn(cir) # compute loss
+
+    loss.backward()  # backward propagation
+    opt.step()
+    scheduler.step(loss) # activate scheduler
+
+    # get loss
+    loss = loss.item()
+    loss_list.append(loss)
+    time_list.append(time.time() - start_time)
+
+    # print loss
+    if itr % 20 == 0 or itr == NUM_ITR - 1:
+        print(f&quot;iter: {itr}, loss: {loss:.8f}, lr: {scheduler.get_last_lr()[0]:.2E}, avg_time: {np.mean(time_list):.4f}s&quot;)
+        time_list = []
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+iter: 0, loss: 0.53780347, lr: 1.00E-01, avg_time: 0.0305s
+iter: 20, loss: 0.02629673, lr: 1.00E-01, avg_time: 0.0221s
+iter: 40, loss: 0.00260812, lr: 1.00E-01, avg_time: 0.0226s
+iter: 60, loss: 0.00031328, lr: 1.00E-01, avg_time: 0.0207s
+iter: 80, loss: 0.00003481, lr: 5.00E-02, avg_time: 0.0201s
+iter: 99, loss: 0.00000507, lr: 5.00E-02, avg_time: 0.0212s
+</pre></div></div>
+</div>
+<p>And we can see the circuit like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the diagram of the quantum circuit after trained:&quot;)
+cir.plot()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of the quantum circuit after trained:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_research_simon_40_1.png" src="../../_images/tutorials_research_simon_40_1.png" />
+</div>
+</div>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] M. A. Shafique, A. Munir and I. Latif, “Quantum Computing: Circuits, Algorithms, and Applications,” in IEEE Access, vol. 12, pp. 22296-22314, 2024, doi: 10.1109/ACCESS.2024.3362955.</p>
+<p>[2] J. Eisert, M.M. Wolf. “Quantum computing.” arXiv preprint arXiv:quant-ph/0401019 (2004).</p>
+<p>[3] Peter Shor, <a class="reference external" href="https://math.mit.edu/~shor/435-LN/Lecture_18.pdf">Lecture Note 18</a>, 2022</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f\)</span></p></td>
+<td></td>
+<td><p>boolean function</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td></td>
+<td><p>number of bits</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(s\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span>-bit string</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td></td>
+<td><p>Hadamard gate</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(U_f\)</span></p></td>
+<td><p>unitary matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(P^\perp(s)\)</span></p></td>
+<td></td>
+<td><p>projector onto space orthogonal to <span class="math notranslate nohighlight">\(s\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<td></td>
+<td><p>parameters of circuit</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span></p></td>
+<td></td>
+<td><p>loss function w.r.t. <span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(C_\theta(f_i)\)</span></p></td>
+<td></td>
+<td><p>output unitary of the parameterized comb <span class="math notranslate nohighlight">\(C_\theta\)</span> with input unitary <span class="math notranslate nohighlight">\(U_{f_i}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td></td>
+<td><p>identity matrix</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.0
+torch: 2.7.0+cpu
+numpy: 1.26.0
+scipy: 1.14.1
+matplotlib: 3.10.0
+---------SYSTEM---------
+Python version: 3.10.16
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>
