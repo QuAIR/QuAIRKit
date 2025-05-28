@@ -25,7 +25,7 @@ import numpy as np
 import torch
 from scipy import sparse
 
-from . import get_dtype
+from . import get_device, get_dtype
 
 
 class Hamiltonian:
@@ -185,7 +185,7 @@ class Hamiltonian:
     def matrix(self) -> torch.Tensor:
         r"""The matrix form of the Hamiltonian.
         """
-        return torch.from_numpy(self.construct_h_matrix()).to(dtype=get_dtype())
+        return torch.from_numpy(self.construct_h_matrix()).to(device=get_device(), dtype=get_dtype())
 
     @property
     def sites(self) -> List:

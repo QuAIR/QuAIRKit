@@ -2,6 +2,37 @@
 
 QuAIRKit is a Python research framework for quantum computing, quantum information, and quantum machine learning algorithm development. It focuses on flexible design, real-time simulation and rapid verification of quantum and classical algorithms.
 
+<p align="center">
+  <!-- docs -->
+  <a href="https://quairkit.com/QuAIRKit/latest/index.html">
+    <img src="https://img.shields.io/badge/docs-link-green.svg?style=flat-square&logo=read-the-docs"/>
+  </a>
+  <!-- PyPI -->
+  <a href="https://pypi.org/project/quairkit/">
+    <img src="https://img.shields.io/badge/pypi-v0.4.0-orange.svg?style=flat-square&logo=pypi"/>
+  </a>
+  <!-- Python -->
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python"/>
+  </a>
+  <!-- License -->
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square&logo=apache"/>
+  </a>
+  <!-- Platform -->
+  <a href="https://github.com/PaddlePaddle/Quantum">
+    <img src="https://img.shields.io/badge/OS-MacOS%20|%20Windows%20|%20Linux-lightgrey.svg?style=flat-square"/>
+  </a>
+</p>
+
+
+QuAIRKit provides the following functionalities,
+
+- Quantum neural network algorithm simulation
+- Quantum circuit simulation & visualization
+- Quantum channel simulation
+- Quantum algorithm/information tools
+
 ## Installation
 
 The minimum Python environment for QuAIRKit is `3.8`. We recommend installing QuAIRKit with Python `3.10`.
@@ -23,10 +54,35 @@ or download all the files and finish the installation locally,
 ```bash
 git clone https://github.com/QuAIR/QuAIRKit
 cd QuAIRKit
-pip install -e .
+pip install -e . --config-settings editable_mode=strict
+```
+
+## Setup
+
+After installation, you can import QuAIRKit in your Python code as follows:
+
+```python
+import quairkit as qkit
+import torch # library for tensor manipulation
+
+from quairkit import Circuit # standard quantum circuit interface
+
+from quairkit.database import ... # common matrices, sets, Hamiltonian, states, etc.
+from quairkit.qinfo import ... # common functions in quantum information processing
+from quairkit.loss import ... # common loss operators in neural network training
+```
+
+QuAIRKit provides global setup functions to set the default data type, device and random seed.
+
+```python
+qkit.set_dtype('complex128') # default data type is 'complex64'
+qkit.set_device('cuda') # make sure CUDA is setup with torch
+qkit.set_seed(73) # set seeds for all random number generators
 ```
 
 ## Features
+
+QuAIRKit provides a wide range of features for quantum computing, quantum information processing and quantum machine learning. Below are some of the key features:
 
 ### Batch computation
 
@@ -35,18 +91,15 @@ QuAIRKit supports batch computations for quantum circuit simulations, state meas
 Below is an example of batch computation for quantum circuit simulation. Here a zero state is passed through four different quantum circuits, and compared with the target state.
 
 ```python
-import quairkit as qkit
-from quairkit.database import *
-from quairkit.qinfo import *
-
 target_state = zero_state(1)
 unitary_data = pauli_group(1)
 
-cir = qkit.Circuit(1)
+cir = Circuit(1)
 cir.oracle(unitary_data, 0)
 cir.ry(param=[0, 1, 2, 3])
 
-print(state_fidelity(cir(), target_state)) # zero-state input by default
+output_state = cir() # zero-state input by default
+print(state_fidelity(cir(), target_state)) 
 ```
 
 ```text
@@ -64,17 +117,17 @@ Above output is equivalent to
 
 ### Qudit computation
 
-QuAIRKit also supports batch computations for quantum circuit simulations and most of the quantum information processing tools in qudit quantum computing. Note that qudit computation can be used with batch computation, as shown below
+QuAIRKit also supports batch computations for quantum circuit simulations and most of the quantum information processing tools in qudit quantum computing, as shown below
 
 ```python
 # claim three systems, with 1 qubit and 1 qutrit
-cir = qkit.Circuit(2, system_dim=[2, 3])
+cir = Circuit(2, system_dim=[2, 3])
 
-# apply the Heisenberg-Weyl operators on all systems
+# apply 6^2 Heisenberg-Weyl operators on all systems
 cir.oracle(heisenberg_weyl(6), [0, 1])
 
-# apply the H gate on the first system, controlled by the second system
-cir.control_oracle(h(), [1, 0])
+# apply the H gate on the qubit, controlled by the qutrit
+cir.oracle(h(), [1, 0], control_idx=0)
 
 # trace out the qutrit system and get the qubit state
 traced_state = cir().trace(1)
@@ -99,26 +152,68 @@ The 6th and 7th state for the batched qubit state is
 ---------------------------------------------------
 ```
 
-### Fast construction
+### Probabilistic computation
 
-QuAIRKit provides a fast and flexible way to construct quantum circuits, by self-managing the parameters. All parameters would be created randomly if not specified. QuAIRKit also supports built-in layer ansatzes, such as `complex_entangled_layer`.
+QuAIRKit supports probabilistic quantum circuit simulation, which allows you to simulate quantum circuits with probabilistic operations, such as measurement, partial post-selection, LOCC. This is useful in quantum communication protocols or quantum algorithm design. This functional is also compatible with batch computation and qudit computation.
+
+Below is the implementation of a qubit teleportation protocol in QuAIRKit.
 
 ```python
-cir = qkit.Circuit(3)
+M1_locc = torch.stack([eye(), x()]) # apply X gate for measure outcome 1
+M2_locc = torch.stack([eye(), z()]) # apply Z gate for measure outcome 1
 
-cir.h() # apply Hadamard gate on all qubits
-cir.complex_entangled_layer(depth=3) # apply complex entangled layers of depth 3
-cir.universal_three_qubits() # apply universal three-qubit gate with random parameters
+# setup protocol
+cir = Circuit(3)
+cir.cnot([0, 1])
+cir.h(0)
+cir.locc(M1_locc, [1, 2]) # measure on qubit 1, apply local operations on qubit 2
+cir.locc(M2_locc, [0, 2]) # measure on qubit 0, apply local operations on qubit 2
+
+# test with 100 random single-qubit (mixed) states
+psi = random_state(1, size=100)
+input_state = nkron(psi, bell_state(2))
+output_state = cir(input_state).trace([0, 1]) # discard first two qubits
+
+fid = state_fidelity(output_state, psi).mean().item()
+print('The average fidelity of the teleportation protocol is', fid)
 ```
 
-`qkit.Circuit` is a child class of `torch.nn.Module`, so you can access its parameters and other attributes directly, or use it as a layer in a hybrid neural network.
+```text
+The average fidelity of the teleportation protocol is 0.9999999999998951
+```
 
-### Implicit transition
+### Other functionalities
+
+#### Plot circuit with LaTeX
+
+Circuit in QuAIRKIt can be plotted with Quantikz, a LaTeX package for quantum circuit visualization, which is useful for academic presentation. You can use the `plot` function to visualize the circuit. Make sure you have up-to-date LaTeX installed on your system, so that the `quantikz` package is available.
+
+```python
+cir: Circuit = ...
+
+cir.plot(print_code=True)  # plot the circuit with LaTeX code
+```
+
+#### Fast construction
+
+QuAIRKit provides a fast and flexible way to construct quantum circuits, by self-managing the parameters. All parameters would be created randomly if not specified. QuAIRKit also supports built-in layer ansatz, such as `complex_entangled_layer`.
+
+```python
+cir = Circuit(2)
+
+cir.rx() # apply Hadamard gate on all qubits
+cir.complex_entangled_layer(depth=2) # apply complex entangled layers of depth 2
+cir.universal_two_qubits() # apply universal two-qubit gate with random parameters
+```
+
+`Circuit` is a child class of `torch.nn.Module`, so you can access its parameters and other attributes directly, or use it as a layer in a hybrid neural network.
+
+#### Implicit transition
 
 If you want to perform noise simulation or mixed-state-related tools, there is no need to specify the backend, or import other libraries. Just call the function, and QuAIRKit will transit the backend for you.
 
 ```python
-cir = qkit.Circuit(3)
+cir = Circuit(3)
 
 cir.complex_entangled_layer(depth=3)
 print(cir().backend)
@@ -136,50 +231,24 @@ density_matrix
 density_matrix
 ```
 
-### Global setup
-
-QuAIRKit provides global setup functions to set the default data type, device and random seed.
-
-```python
-qkit.set_dtype('complex128') # default data type is complex64
-qkit.set_device('cuda') # make sure CUDA is setup with torch
-qkit.set_seed(73) # set seeds for all random number generators
-```
-
-## Overall Structure
-
-QuAIRKit provides the following functionalities,
-
-- Quantum neural network algorithm simulation
-- Quantum circuit simulation & visualization
-- Quantum channel simulation
-- Quantum algorithm/information tools
-
-### Modules
-
-`quairkit`: QuAIRKit source code
-
-- `database`: module of useful matrices & sets
-- `loss`: module of quantum loss functions
-- `qinfo`: library of quantum algorithms & information tools
-- `circuit`: quantum circuit interface
-
-### Tutorials
+## Tutorials
 
 - [Introduction](tutorials/introduction)
-  - [Hamiltonian in QuAIRKit](tutorials/introduction/Hamiltonian.ipynb)
-  - [Constructing Quantum Circuits in QuAIRKit](tutorials/introduction/circuit.ipynb)
+  - [Constructing quantum circuits in QuAIRKit](tutorials/introduction/circuit.ipynb)
+  - [Manipulation of quantum states in QuAIRKit](tutorials/introduction/state.ipynb)
   - [Measuring quantum states in QuAIRKit](tutorials/introduction/measure.ipynb)
-  - [Quantum gates and quantum channels](tutorials/introduction/operator.ipynb)
+  - [Hamiltonian in QuAIRKit](tutorials/introduction/Hamiltonian.ipynb)
   - [Quantum information tools](tutorials/introduction/qinfo.ipynb)
-  - [Manipulation of Quantum States in QuAIRKit](tutorials/introduction/state.ipynb)
+  - [Quantum gates and quantum channels](tutorials/introduction/operator.ipynb)
   - [Training parameterized quantum circuits](tutorials/introduction/training.ipynb)
 
 - [Feature](tutorials/feature)
-  - [Batch Computation](tutorials/feature/batch.ipynb)
+  - [Batch computation](tutorials/feature/batch.ipynb)
   - [Neural network setup customization](tutorials/feature/custom.ipynb)
   - [Introduction to qudit quantum computing](tutorials/feature/qudit.ipynb)
 
-## Acknowledgement
-
-We appreciate the kind support from the [Sourcery AI](https://sourcery.ai/) that greatly enhances the coding & review quality of the QuAIRKit project.
+- [Research](tutorials/research)
+  - [Analyze Barren Plateau in quantum neural networks](tutorials/research/bp.ipynb)
+  - [Hamiltonian simulation via Trotter decomposition](tutorials/research/trotter.ipynb)
+  - [Rediscovering Simon's algorithm with PQC](tutorials/research/simon.ipynb)
+  - [Training quantum process transformation with PQC](tutorials/research/comb.ipynb)

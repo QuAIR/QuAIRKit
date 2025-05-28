@@ -17,5 +17,6 @@ r"""
 The module of variational ansatzes.
 """
 
-from .container import OperatorList
+from .container import Layer, OperatorList
 from .layer import *
+from .trotter import TrotterLayer

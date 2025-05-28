@@ -20,3 +20,10 @@ The library of functions in quantum information theory and quantum computing.
 from .check import *
 from .linalg import *
 from .qinfo import *
+
+from .check import __all__ as check_fcn
+from .linalg import __all__ as linalg_fcn
+from .qinfo import __all__ as qinfo_fcn
+
+__all__ = check_fcn + linalg_fcn + qinfo_fcn
+

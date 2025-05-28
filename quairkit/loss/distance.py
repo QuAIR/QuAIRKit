@@ -30,9 +30,34 @@ class TraceDistance(Operator):
 
     Args:
         target_state: The target state to be used to compute the trace distance.
+    
+    .. code-block:: python
 
+        from quairkit.database import one_state, bell_state, random_state
+        
+        # Single state example
+        target_state = one_state(1)  # Define target
+        input_state = bell_state(1)  # Define input
+        trace_distance = TraceDistance(target_state)
+        result = trace_distance(input_state)
+        print('Single state distance:', result)  # Output: tensor(0.7071)
+        
+        # Batched states example
+        target_state_batch = random_state(num_systems=1, size=2)  # Batch of 2 targets
+        input_state_batch = random_state(num_systems=1, size=2)   # Batch of 2 inputs
+        trace_distance = TraceDistance(target_state_batch)
+        batch_result = trace_distance(input_state_batch)
+        print('Batched distances:', batch_result)  # Output: tensor([0.7912, 0.7283])
+    
+    ::
+    
+        Single state distance: tensor(0.7071)
+        Batched distances: tensor([0.7912, 0.7283])
+    
     """
     def __init__(self, target_state: State):
+        r"""Output target state.
+        """
         super().__init__()
         self.target_state = target_state
         
@@ -54,6 +79,7 @@ class TraceDistance(Operator):
 
         Returns:
             The trace distance between the input state and the target state.
+        
         """
         assert (
             state.num_systems == self.target_state.num_systems
@@ -75,8 +101,34 @@ class StateFidelity(Operator):
 
     Args:
         target_state: The target state to be used to compute the state fidelity.
+        
+    .. code-block:: python
+    
+            from quairkit.database import one_state, bell_state, random_state
+        
+            # Single state example
+            target_state = one_state(1)  # Define target
+            input_state = bell_state(1)  # Define input
+            fidelity_calculator = StateFidelity(target_state)
+            result = fidelity_calculator(input_state)
+            print('Single state fidelity:', result)  # Output: tensor(0.7071)
+            
+            # Batched states example
+            target_batch = random_state(num_systems=1, size=2)  # Batch of 2 targets
+            input_batch = random_state(num_systems=1, size=2)   # Batch of 2 inputs
+            fidelity_calculator = StateFidelity(target_batch)
+            batch_result = fidelity_calculator(input_batch)
+            print('Batched fidelities:', batch_result)  # Output: tensor([0.5658, 0.7090])
+                    
+        ::
+        
+            Single state fidelity: tensor(0.7071)
+            Batched fidelities: tensor([0.5658, 0.7090])
+
     """
     def __init__(self, target_state: State):
+        r"""Output target state.
+        """
         super().__init__()
         self.target_state = target_state
         
@@ -98,6 +150,7 @@ class StateFidelity(Operator):
 
         Returns:
             The state fidelity between the input state and the target state.
+        
         """
         assert (
             state.num_systems == self.target_state.num_systems

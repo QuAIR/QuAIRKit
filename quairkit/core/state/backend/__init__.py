@@ -448,12 +448,13 @@ class State(ABC):
         """
         
     @abstractmethod
-    def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
+    def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
         r"""Evolve this state with unitary operators, while record the size of unitary batch
         
         Args:
             unitary: the unitary operator.
             sys_idx: the system indices to be acted on.
+            on_batch: whether this unitary operator evolves on batch axis. Defaults to True.
             
         Note:
             Support the following transformation
@@ -466,13 +467,54 @@ class State(ABC):
         """
     
     @abstractmethod
-    def _transform(self, op: torch.Tensor, sys_idx: List[int], repr_type: str) -> None:
+    def _evolve_ctrl(self, unitary: torch.Tensor, index: int, sys_idx: List[Union[int, List[int]]]) -> None:
+        r"""Evolve this state with unitary operators controlled by a computational state
+        
+        Args:
+            unitary: the unitary operator.
+            index: the index of the computational state that activates the unitary.
+            sys_idx: indices of the systems on which the whole unitary is applied. The first element in the list is 
+                a list that gives the control system, while the remaining elements are int that give the applied system.
+        
+        Note:
+            Support the following transformation
+            - (), () -> ()
+            - (), (n) -> (n)
+            - (n), () -> (n)
+            - (n), (n) -> (n)
+            - (m), (n) -> error
+        
+        """
+    
+    @abstractmethod
+    def _evolve_ctrl(self, unitary: torch.Tensor, index: int, sys_idx: List[Union[int, List[int]]]) -> None:
+        r"""Evolve this state with unitary operators controlled by a computational state
+        
+        Args:
+            unitary: the unitary operator.
+            index: the index of the computational state that activates the unitary.
+            sys_idx: indices of the systems on which the whole unitary is applied. The first element in the list is 
+                a list that gives the control system, while the remaining elements are int that give the applied system.
+        
+        Note:
+            Support the following transformation
+            - (), () -> ()
+            - (), (n) -> (n)
+            - (n), () -> (n)
+            - (n), (n) -> (n)
+            - (m), (n) -> error
+        
+        """
+    
+    @abstractmethod
+    def _transform(self, op: torch.Tensor, sys_idx: List[int], repr_type: str, on_batch: bool = True) -> None:
         r"""Apply a general linear operator to the state.
 
         Args:
             op: the input operator.
             sys_idx: the subsystem indices to be applied.
             repr_type: the representation type of input operator.
+            on_batch: whether this operator evolves on batch axis. Defaults to True.
 
         Note:
             The difference between `State.transform` and `State._transform` is that the former returns a new state 
@@ -600,6 +642,19 @@ class State(ABC):
         new_state = self.clone()
         new_state._transform(op, sys_idx, repr_type)
         return new_state
+    
+    def product_trace(self, trace_state: 'State', trace_idx: List[int]) -> 'State':
+        r"""Partial trace over this state, when this state is a product state
+        
+        Args:
+            trace_state: the state for the subsystem to be traced out.
+            trace_idx: the subsystem indices to be traced out.
+        
+        Note:
+            This function only works when the state is a product state represented by PureState
+        
+        """
+        return self.trace(trace_idx)
 
     def expec_val(self, hamiltonian: Hamiltonian, shots: Optional[int] = 0, 
                   decompose: Optional[bool] = False) -> Union[torch.Tensor, List[torch.Tensor]]:

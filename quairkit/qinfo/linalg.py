@@ -56,7 +56,7 @@ __all__ = [
 
 
 def abs_norm(mat: _StateLike) -> float:
-    r"""tool for calculation of matrix norm
+    r"""Tool for calculation of matrix norm.
 
     Args:
         mat: matrix
@@ -64,6 +64,16 @@ def abs_norm(mat: _StateLike) -> float:
     Returns:
         norm of input matrix
 
+    Examples:
+        .. code-block:: python
+
+            abs_nor = abs_norm(eye(2) / 2)
+            print(f'The abs norm is:\n{abs_nor}')
+
+        ::
+
+            The abs norm is:
+            0.7071067690849304
     """
     mat = _type_transform(mat, "tensor")
     mat = mat.to(get_dtype())
@@ -73,15 +83,28 @@ def abs_norm(mat: _StateLike) -> float:
 def block_enc_herm(
     mat: _ArrayLike, num_block_qubits: int = 1
 ) -> _ArrayLike:
-    r"""generate a (qubitized) block encoding of hermitian ``mat``
+    r"""Generate a (qubitized) block encoding of Hermitian ``mat``.
 
     Args:
         mat: matrix to be block encoded
         num_block_qubits: ancilla qubits used in block encoding
 
     Returns:
-        a unitary that is a block encoding of ``mat``
+        a unitary that is a block encoding of ``mat``.
 
+    Examples:
+        .. code-block:: python
+
+            block_enc = block_enc_herm(x())
+            print(f'The block encoding of X is:\n{block_enc}')
+
+        ::
+
+            The block encoding of X is:
+            tensor([[0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                    [1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                    [0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j],
+                    [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j]])
     """
     type_mat = _type_fetch(mat)
     mat = _type_transform(mat, "tensor")
@@ -112,7 +135,21 @@ def create_matrix(
         A matrix representing the linear map.
 
     Raises:
-        RuntimeWarning: the input`linear_map` may not be linear.
+        RuntimeWarning: the input `linear_map` may not be linear.
+
+    Examples:
+        .. code-block:: python
+
+            def f(X):
+                return X[0] + X[1]
+
+            mat_repr = create_matrix(f, input_dim=2)
+            print(f'The matrix representation is:\n{mat_repr}')
+
+        ::
+
+            The matrix representation is:
+            tensor([1.+0.j, 1.+0.j])
     """
     linear_map, generator, input_dtype, type_str = _is_sample_linear(
         func=linear_map, info=[input_dim, 1], input_dtype=input_dtype
@@ -130,7 +167,7 @@ def create_matrix(
 
 
 def dagger(mat: _ArrayLike) -> _ArrayLike:
-    r"""tool for calculation of matrix dagger
+    r"""Tool for calculation of matrix dagger.
 
     Args:
         mat: matrix
@@ -138,6 +175,17 @@ def dagger(mat: _ArrayLike) -> _ArrayLike:
     Returns:
         The dagger of matrix
 
+    Examples:
+        .. code-block:: python
+
+            dag = dagger(t())
+            print(f'The dagger of this matrix is:\n{dag}')
+
+        ::
+
+            The dagger of this matrix is:
+            tensor([[1.0000-0.0000j, 0.0000-0.0000j],
+                    [0.0000-0.0000j, 0.7071-0.7071j]])
     """
     type_mat = _type_fetch(mat)
     mat = _type_transform(mat, "tensor")
@@ -150,16 +198,28 @@ def dagger(mat: _ArrayLike) -> _ArrayLike:
 def direct_sum(
     A: _ArrayLike, B: _ArrayLike
 ) -> _ArrayLike:
-    r"""calculate the direct sum of A and B
+    r"""Calculate the direct sum of A and B.
 
     Args:
         A: :math:`m \times n` matrix
         B: :math:`p \times q` matrix
 
     Returns:
-        a direct sum of A and B, with shape :math:`(m + p) \times (n + q)`
+        A direct sum of A and B, with shape :math:`(m + p) \times (n + q)`
 
+    Examples:
+        .. code-block:: python
 
+            dir_sum = direct_sum(x(), y())
+            print(f'The direct sum is:\n{dir_sum}')
+
+        ::
+
+            The direct sum is:
+            tensor([[0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                    [1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+                    [0.+0.j, 0.+0.j, 0.+0.j, -0.-1.j],
+                    [0.+0.j, 0.+0.j, 0.+1.j, 0.+0.j]])
     """
     type_A, type_B = _type_fetch(A), _type_fetch(B)
     A, B = _type_transform(A, "tensor"), _type_transform(B, "tensor")
@@ -171,16 +231,39 @@ def direct_sum(
 
 
 def gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayLike, n: int) -> _ArrayLike:
-    r"""
-    Computes the gradient of a given loss function with respect to its input variable.
+    r"""Compute the gradient of a given loss function with respect to its input variable.
 
     Args:
-        loss_function : A loss function to compute the gradient.
-        var : A vector of shape (m,1) as the input variables for the loss function.
-        n : The number of iterations for gradient computation.
+        loss_function: A loss function to compute the gradient.
+        var: A vector of shape (m, 1) as the input variables for the loss function.
+        n: The number of iterations for gradient computation.
 
     Returns:
-        torch.Tensor: The gradient vector of shape (m,1).
+        torch.Tensor: The gradient vector of shape (m, 1).
+
+    Examples:
+        .. code-block:: python
+
+            def quadratic_loss(x: torch.Tensor) -> torch.Tensor:
+                # loss function is: L(x) = x₁² + 2x₂² + 3x₃²
+                return x[0]**2 + 2 * x[1]**2 + 3 * x[2]**3
+
+            var = torch.tensor([[1.0], [2.0], [3.0]], requires_grad=True)
+            grad = gradient(quadratic_loss, var, n=1)
+
+            print(f"Input variable is:\n{var}")
+            print(f"Computed gradient is:\n{grad}")
+
+        ::
+
+            Input variable is:
+            tensor([[1.],
+                    [2.],
+                    [3.]], requires_grad=True)
+            Computed gradient is:
+            tensor([[ 2.],
+                    [ 8.],
+                    [81.]], grad_fn=<CopySlices>)
     """
     type_str = _type_fetch(var)
     var = _type_transform(var, "tensor")
@@ -196,15 +279,38 @@ def gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayL
 
 
 def hessian(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayLike) -> _ArrayLike:
-    r"""
-    Computes the Hessian matrix of a given loss function with respect to its input variables.
+    r"""Compute the Hessian matrix of a given loss function with respect to its input variables.
 
     Args:
-        loss_function : The loss function to compute the Hessian.
-        var : A matrix of shape (n, m) as input variables for the loss function.
+        loss_function: The loss function to compute the Hessian.
+        var: A matrix of shape (n, m) as input variables for the loss function.
 
     Returns:
         torch.Tensor: Hessian matrix of shape (m, n, n).
+
+    Examples:
+        .. code-block:: python
+
+            def quadratic_loss(x: torch.Tensor) -> torch.Tensor:
+                # loss function is: L(x) = x₁² + 2x₂² + 3x₃²
+                return x[0]**2 + 2 * x[1]**2 + 3 * x[2]**3
+
+            var = torch.tensor([[1.0], [2.0], [3.0]], requires_grad=True)
+            hes = hessian(quadratic_loss, var)
+
+            print(f"Input variable is:\n{var}")
+            print(f"Computed Hessian is:\n{hes}")
+
+        ::
+
+            Input variable is:
+            tensor([[1.],
+                    [2.],
+                    [3.]], requires_grad=True)
+            Computed Hessian is:
+            tensor([[[ 2.,  0.,  0.],
+                     [ 0.,  4.,  0.],
+                     [ 0.,  0., 54.]]])
     """
     shape = var.shape
     # Check if the input is a square matrix
@@ -223,16 +329,27 @@ def herm_transform(
     mat: _StateLike,
     ignore_zero: Optional[bool] = False,
 ) -> _ArrayLike:
-    r"""function transformation for Hermitian matrix
+    r"""Function transformation for a Hermitian matrix.
 
     Args:
-        fcn: function :math:`f` that can be expanded by Taylor series
-        mat: hermitian matrix :math:`H`
-        ignore_zero: whether ignore eigenspaces with zero eigenvalue, defaults to be ``False``
+        fcn: A function :math:`f` that can be expanded by Taylor series.
+        mat: Hermitian matrix :math:`H`.
+        ignore_zero: Whether to ignore eigenspaces with zero eigenvalue. Defaults to False.
 
-    Returns
+    Returns:
         :math:`f(H)`
 
+    Examples:
+        .. code-block:: python
+
+            fH = herm_transform(math.exp, eye(2))
+            print(f'The result is:\n{fH}')
+
+        ::
+
+            The result is:
+            tensor([[2.7183+0.j, 0.0000+0.j],
+                    [0.0000+0.j, 2.7183+0.j]])
     """
     type_str = _type_fetch(mat)
     mat = (
@@ -251,14 +368,28 @@ def herm_transform(
 
 
 def kron_power(matrix: _StateLike, n: int) -> _ArrayLike:
-    r"""Calculate Kronecker product of identical matirces
+    r"""Calculate the Kronecker product of identical matrices.
     
     Args:
-        matrix: the matrix to be powered
-        n: the number of identical matrices
-    
+        matrix: The matrix to be powered.
+        n: The number of identical matrices.
+
     Returns:
-        Kronecker product of n identical matrices
+        Kronecker product of n identical matrices.
+
+    Examples:
+        .. code-block:: python
+
+            kp = kron_power(x(), 2)
+            print(f'The Kronecker product of 2 X is:\n{kp}')
+
+        ::
+
+            The Kronecker product of 2 X is:
+            tensor([[0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j],
+                    [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j],
+                    [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
+                    [1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j]])
     """
     if n == 0:
         return np.array([[1.0]]) if isinstance(matrix, np.ndarray) else torch.tensor([[1.0]])
@@ -266,15 +397,25 @@ def kron_power(matrix: _StateLike, n: int) -> _ArrayLike:
 
 
 def logm(mat: _StateLike) -> _ArrayLike:
-    r"""Calculate log of a matrix
+    r"""Calculate the logarithm of a matrix.
 
     Args:
         mat: Input matrix.
 
     Returns:
+        The matrix of natural base logarithms.
+        
+    Examples:
+        .. code-block:: python
 
-        The matrix of natural base logarithms
+            lgm = logm(x())
+            print(f'The log of X is:\n{lgm}')
 
+        ::
+
+            The log of X is:
+            tensor([[-1.8562e-16+1.5708j,  1.8562e-16-1.5708j],
+                    [ 1.8562e-16-1.5708j, -1.8562e-16+1.5708j]])
     """
     type_str = _type_fetch(mat)
     if type_str == "state":
@@ -286,26 +427,48 @@ def logm(mat: _StateLike) -> _ArrayLike:
 
 
 def nkron(matrix_1st: _StateLike, *args: _StateLike) -> _StateLike:
-    r"""calculate Kronecker product of matirces
+    r"""Calculate the Kronecker product of matrices.
 
     Args:
-        matrix_1: the first matrix 
-        args: other matrices
+        matrix_1st: The first matrix.
+        args: Other matrices.
 
     Returns:
-        Kronecker product of matrices
+        Kronecker product of the given matrices.
 
-    .. code-block:: python
+    Examples:
+        .. code-block:: python
 
-        from quairkit.state import density_op_random
-        from quairkit.linalg import NKron
-        A = density_op_random(2)
-        B = density_op_random(2)
-        C = density_op_random(2)
-        result = NKron(A, B, C)
+            A = random_state(1)
+            B = random_state(1)
+            C = random_state(1)
+            result = nkron(A, B, C)
+            print(f'The result is:\n{result}')
 
-    Note:
-        ``result`` from above code block should be A \otimes B \otimes C
+        ::
+
+            The result is:
+            -----------------------------------------------------
+             Backend: density_matrix
+             System dimension: [2, 2, 2]
+             System sequence: [0, 1, 2]
+            [[ 0.02+0.j    0.01-0.01j -0.01+0.j   -0.-0.01j  0.04+0.04j  0.05-0.01j
+              -0.04-0.03j -0.04+0.02j]
+             [ 0.01+0.01j  0.01-0.j   -0.01-0.01j -0.01+0.j   -0.01+0.05j  0.04+0.03j
+              -0.-0.04j -0.03-0.02j]
+             [-0.01-0.j   -0.01+0.01j  0.02+0.j    0.01-0.02j -0.03-0.04j -0.04+0.j
+               0.06+0.06j  0.07-0.02j]
+             [-0.-0.01j -0.01-0.j    0.01+0.02j  0.02-0.j    0.02-0.04j -0.02-0.03j
+              -0.01+0.08j  0.05+0.05j]
+             [ 0.04-0.04j -0.01-0.05j -0.03+0.04j  0.02+0.04j  0.21-0.j    0.1-0.16j
+              -0.16+0.03j -0.06+0.14j]
+             [ 0.05+0.01j  0.04-0.03j -0.04-0.j   -0.02+0.03j  0.1+0.16j  0.18-0.j
+              -0.11-0.11j -0.14+0.03j]
+             [-0.04+0.03j -0.-0.04j  0.06-0.06j -0.01-0.08j -0.16-0.03j -0.11+0.11j
+               0.29-0.j    0.15-0.23j]
+             [-0.04-0.02j -0.03+0.02j  0.07+0.02j  0.05-0.05j -0.06-0.14j -0.14-0.03j
+               0.15+0.23j  0.25-0.j  ]]
+            -----------------------------------------------------
     """
     if not args:
         return matrix_1st
@@ -331,7 +494,7 @@ NKron = nkron
 
 
 def p_norm(mat: _StateLike, p: _SingleParamLike) -> _ArrayLike:
-    r"""tool for calculation of Schatten p-norm
+    r"""Calculate the Schatten p-norm of a matrix.
 
     Args:
         mat: matrix
@@ -340,6 +503,16 @@ def p_norm(mat: _StateLike, p: _SingleParamLike) -> _ArrayLike:
     Returns:
         p-norm of input matrix
 
+    Examples:
+        .. code-block:: python
+
+            p_nor = p_norm(x(), p=2)
+            print(f'The 2-norm of X is:\n{p_nor}')
+
+        ::
+
+            The 2-norm of X is:
+            1.4142135381698608
     """
     type_mat = _type_fetch(mat)
     mat = _type_transform(mat, "tensor")
@@ -354,16 +527,32 @@ def partial_trace(
     state: _StateLike, trace_idx: Union[List[int], int], 
     system_dim: Union[List[int], int] = 2
 ) -> _StateLike:
-    r"""Calculate the partial trace of the quantum state
+    r"""Calculate the partial trace of the quantum state.
 
     Args:
         state: Input quantum state.
         trace_idx: The system indices to be traced out.
-        system_dim: The dimension of all systems. Defaults to be the qubit case.
+        system_dim: The dimension of all systems. Defaults to the qubit case.
 
     Returns:
         Partial trace of the quantum state with arbitrarily selected subsystem.
 
+    Examples:
+        .. code-block:: python
+
+            pt = partial_trace(bell_state(2), 0, [2, 2])
+            print(f'The partial trace of Bell state is:\n{pt}')
+
+        ::
+
+            The partial trace of Bell state is:
+            -----------------------------------------------------
+             Backend: density_matrix
+             System dimension: [2]
+             System sequence: [0]
+            [[0.5+0.j 0. +0.j]
+             [0. +0.j 0.5+0.j]]
+            -----------------------------------------------------
     """
     type_str = _type_fetch(state)
     if type_str == "state":
@@ -384,18 +573,31 @@ def partial_trace(
 def partial_trace_discontiguous(
     state: _StateLike, preserve_qubits: List[int] = None
 ) -> _StateLike:
-    r"""Calculate the partial trace of the quantum state with arbitrarily selected subsystem
+    r"""Calculate the partial trace of the quantum state with arbitrarily selected subsystem.
 
     Args:
         state: Input quantum state.
-        preserve_qubits: Remaining qubits, default is None, indicate all qubits remain.
+        preserve_qubits: Remaining qubits; if None, all qubits are preserved.
 
     Returns:
         Partial trace of the quantum state with arbitrarily selected subsystem.
 
-    Note:
-        suitable only when the systems are qubits.
-    
+    Examples:
+        .. code-block:: python
+
+            ptdis = partial_trace_discontiguous(bell_state(2), [0])
+            print(f'The partial trace of Bell state is:\n{ptdis}')
+
+        ::
+
+            The partial trace of Bell state is:
+            -----------------------------------------------------
+             Backend: density_matrix
+             System dimension: [2]
+             System sequence: [0]
+            [[0.5+0.j 0. +0.j]
+             [0. +0.j 0.5+0.j]]
+            -----------------------------------------------------
     """
     type_str = _type_fetch(state)
     if type_str == "state":
@@ -416,12 +618,31 @@ def partial_transpose(
     r"""Calculate the partial transpose :math:`\rho^{T_A}` of the input quantum state.
 
     Args:
-        state: input quantum state.
+        state: Input quantum state.
         transpose_idx: The system indices to be transposed.
-        system_dim: The dimension of all systems. Defaults to be the qubit case.
+        system_dim: The dimension of all systems. Defaults to the qubit case.
 
     Returns:
         The partial transpose of the input quantum state.
+
+    Examples:
+        .. code-block:: python
+
+            pt = partial_transpose(bell_state(2), [0])
+            print(f'The partial transpose of Bell state is:\n{pt}')
+
+        ::
+
+            The partial transpose of Bell state is:
+            -----------------------------------------------------
+             Backend: density_matrix
+             System dimension: [2, 2]
+             System sequence: [0, 1]
+            [[0.5+0.j 0. +0.j 0. +0.j 0. +0.j]
+             [0. +0.j 0. +0.j 0.5+0.j 0. +0.j]
+             [0. +0.j 0.5+0.j 0. +0.j 0. +0.j]
+             [0. +0.j 0. +0.j 0. +0.j 0.5+0.j]]
+            -----------------------------------------------------
     """
     type_str = _type_fetch(state)
     if type_str == "state":
@@ -445,11 +666,21 @@ def pauli_decomposition(mat: _ArrayLike) -> _ArrayLike:
     r"""Decompose the matrix by the Pauli basis.
 
     Args:
-        mat: the matrix to be decomposed
+        mat: The matrix to be decomposed.
 
     Returns:
-        The list of coefficients corresponding to Pauli basis.
+        A list of coefficients corresponding to the Pauli basis.
 
+    Examples:
+        .. code-block:: python
+
+            pauli_dec = pauli_decomposition(random_state(1).density_matrix)
+            print(f'The decomposition is:\n{pauli_dec}')
+
+        ::
+
+            The decomposition is:
+            tensor([ 0.7071+0.j,  0.5076+0.j,  0.4494+0.j, -0.0572+0.j])
     """
     type_str = _type_fetch(mat)
     mat = _type_transform(mat, "tensor")
@@ -468,15 +699,38 @@ def pauli_decomposition(mat: _ArrayLike) -> _ArrayLike:
 def permute_systems(
     state: _StateLike, perm_list: List[int], system_dim: Union[List[int], int] = 2,
 ) -> _StateLike:
-    r"""Permute quantum system based on a permute list
+    r"""Permute quantum systems based on a permutation list.
 
     Args:
-        mat: A given matrix representation which is usually a quantum state.
-        perm_list: The permute list. e.g. input ``[0,2,1,3]`` will permute the 2nd and 3rd subsystems.
+        state: A matrix representation of a quantum state.
+        perm_list: The permutation list. For example, [0, 2, 1, 3] will swap the 2nd and 3rd subsystems.
         system_dim: A list of dimension sizes of each subsystem.
 
     Returns:
-        The permuted matrix
+        The permuted matrix.
+
+    Examples:
+        .. code-block:: python
+
+            result = permute_systems(random_state(3), [2, 1, 0])
+            print(f'The permuted matrix is:\n{result}')
+
+        ::
+
+            The permuted matrix is:
+            -----------------------------------------------------
+             Backend: density_matrix
+             System dimension: [2, 2, 2]
+             System sequence: [0, 1, 2]
+            [[ 0.06+0.j   -0.02+0.j   -0.02-0.07j -0.03-0.j    0.06+0.01j -0.02+0.03j
+              -0.01-0.06j  0.01+0.01j]
+             [-0.02-0.j    0.13+0.j   -0.05+0.01j -0.02-0.01j  0.06-0.06j -0.01-0.03j
+              -0.+0.08j   0.03-0.03j]
+             [-0.02+0.07j -0.05-0.01j  0.24+0.j    0.06+0.03j -0.09+0.05j  0.01-0.05j
+               0.04-0.05j -0.13+0.04j]
+             [-0.03+0.j   -0.02+0.01j  0.06-0.03j  0.1+0.j    -0.07+0.02j  0.02-0.05j
+              -0.01+0.01j -0.03+0.j  ]]
+            -----------------------------------------------------
     """
     type_str = _type_fetch(state)
     if type_str == "state":
@@ -497,23 +751,35 @@ def prob_sample(distribution: _ArrayLike, shots: int = 1024,
         distribution: The probability distribution.
         shots: The number of shots. Defaults to 1024.
         binary: Whether the sampled result is recorded as binary. Defaults to True.
-        proportional: Whether the counts are shown in proportion
+        proportional: Whether the counts are shown in proportion.
 
     Returns:
         A dictionary containing the ordered sampled results and their counts.
 
+    Examples:
+        .. code-block:: python
+
+            dist = torch.abs(haar_state_vector(3))
+            result = prob_sample(dist / torch.sum(dist))
+            print(f'The sample result is:\n{result}')
+
+        ::
+
+            The sample result is:
+            {'0': tensor([1024, 1024, 1024])}
     """
     assert shots > 0, \
         f"The number of shots must be a positive integer, received {shots}"
     distribution = _type_transform(distribution, "tensor")
 
-    prob_sum = distribution.sum(dim=-1)
-    if torch.any(torch.abs(prob_sum - 1) > 1e-3):
+    prob_sum = distribution.sum(dim=-1, keepdim=True)
+    if torch.any(torch.abs(err := prob_sum - 1) > 1e-5):
         warnings.warn(
-            "The sum of the probability distribution is not 1" +
-            f": error {prob_sum}. Automatically normalized.", RuntimeWarning
+            "The sum of (some) probability distribution is not close to 1" +
+            f" and automatically normalized: received error\n{err}. ", RuntimeWarning
         )
-    return utils.linalg._prob_sample(distribution / distribution.sum(dim=1, keepdim=True), shots, binary, proportional)
+        distribution = distribution / prob_sum
+    return utils.linalg._prob_sample(distribution, shots, binary, proportional)
 
 
 def schmidt_decompose(
@@ -522,26 +788,42 @@ def schmidt_decompose(
     Tuple[torch.Tensor, torch.Tensor, torch.Tensor],
     Tuple[np.ndarray, np.ndarray, np.ndarray],
 ]:
-    r"""Calculate the Schmidt decomposition of a quantum state :math:`\lvert\psi\rangle=\sum_ic_i\lvert i_A\rangle\otimes\lvert i_B \rangle`.
+    r"""Calculate the Schmidt decomposition of a quantum state.
+
+    For a state :math:`\lvert\psi\rangle=\sum_i c_i \lvert i_A\rangle\otimes\lvert i_B \rangle`.
 
     Args:
-        psi: State vector form of the quantum state, with shape (2**n)
-        sys_A: Qubit indices to be included in subsystem A (other qubits are included in subsystem B), default are the first half qubits of :math:`\lvert \psi\rangle`
+        psi: State vector form of the quantum state, with shape :math:`(2**n)`.
+        sys_A: Qubit indices to be included in subsystem A. By default, the first half of the qubits belong to subsystem A.
 
     Returns:
-        contains elements
+        A tuple containing:
+            - A one-dimensional array of Schmidt coefficients with shape (k).
+            - A high-dimensional array of bases for subsystem A with shape (k, 2**m, 1).
+            - A high-dimensional array of bases for subsystem B with shape (k, 2**m, 1).
 
-        * A one dimensional array composed of Schmidt coefficients, with shape ``(k)``
-        * A high dimensional array composed of bases for subsystem A :math:`\lvert i_A\rangle`, with shape ``(k, 2**m, 1)``
-        * A high dimensional array composed of bases for subsystem B :math:`\lvert i_B\rangle` , with shape ``(k, 2**m, 1)``
+    Examples:
+        .. code-block:: python
+
+            # Example usage (assuming a proper state vector 'psi'):
+            c, u, v = schmidt_decompose(psi)
+            print("Schmidt coefficients:", c)
+            print("Subsystem A bases:", u)
+            print("Subsystem B bases:", v)
+
+        ::
+
+            Schmidt coefficients: tensor([...])
+            Subsystem A bases: tensor([...])
+            Subsystem B bases: tensor([...])
     """
     type_psi = _type_fetch(psi)
-    # TODO
+    # TODO: Provide a complete example when psi is defined.
     psi = _type_transform(psi, "state_vector").ket
 
     assert math.log2(
         psi.numel()
-    ).is_integer(), "The dimensional of input state must be an integral power of 2."
+    ).is_integer(), "The dimension of input state must be an integral power of 2."
 
     c, u, v = utils.linalg._schmidt_decompose(psi, sys_A)
     return (
@@ -556,13 +838,25 @@ def schmidt_decompose(
 
 
 def sqrtm(mat: _StateLike) -> _ArrayLike:
-    r"""Calculate square root of a matrix
+    r"""Calculate the square root of a matrix.
 
     Args:
         mat: Input matrix.
 
     Returns:
-        The square root of the matrix
+        The square root of the matrix.
+
+    Examples:
+        .. code-block:: python
+
+            sqrt = sqrtm(x())
+            print(f'The square root of X is:\n{sqrt}')
+
+        ::
+
+            The square root of X is:
+            tensor([[0.5000+0.5000j, 0.5000-0.5000j],
+                    [0.5000-0.5000j, 0.5000+0.5000j]])
     """
     type_str = _type_fetch(mat)
     if type_str == "state":
@@ -574,30 +868,34 @@ def sqrtm(mat: _StateLike) -> _ArrayLike:
 
 
 def trace(mat: _StateLike, axis1: int = -2, axis2: int = -1) -> _ArrayLike:
-    r"""Return the sum along diagonals of the tensor.
+    r"""Return the sum along the diagonals of the tensor.
 
-    If :math:`mat` is 2-D tensor, the sum along its diagonal is returned.
-
-    If :math:`mat` has more than two dimensions, then the axes specified by ``axis1`` and ``axis2`` are used to determine the 2-D sub-tensors whose traces are returned. The shape of the resulting tensor is the same as the shape of :math:`mat` with ``axis1`` and ``axis2`` removed.
+    If :math:`mat` is a 2-D tensor, the sum along its diagonal is returned.
+    For tensors with more than two dimensions, the axes specified by ``axis1`` and ``axis2``
+    determine the 2-D sub-tensors whose traces will be taken.
 
     Args:
-        mat: Input tensor, from which the diagonals are taken.
-        axis1: The first axis of the 2-D sub-tensors along which the diagonals should be taken. Defaults to -2.
-        axis2: The second axis of the 2-D sub-tensors along which the diagonals should be taken. Defaults to -1.
+        mat: Input tensor from which the diagonal is taken.
+        axis1: The first axis for the 2-D sub-tensor. Defaults to -2.
+        axis2: The second axis for the 2-D sub-tensor. Defaults to -1.
 
     Returns:
-        The sum along the diagonals. If :math:`mat` is 2-D tensor, the sum along its diagonal is returned. If :math:`mat` has larger dimensions, then a tensor of sums along diagonals is returned.
+        The trace (sum along the diagonal) of the tensor.
 
-    Raises:
-        ValueError: The 2-D tensor from which the diagonals should be taken is not square.
+    Examples:
+        .. code-block:: python
 
-    Note:
-        The 2-D tensor/array from which the diagonals is taken should be square.
+            tr = trace(x())
+            print(f'The trace of X is:\n{tr}')
+
+        ::
+
+            The trace of X is:
+            0j
     """
-
     if mat.shape[axis1] != mat.shape[axis2]:
         raise ValueError(
-            f"The 2-D tensor from which the diagonals should be taken is not square, as {mat.shape[axis1]} != {mat.shape[axis2]}."
+            f"The 2-D tensor from which the diagonal is taken is not square, as {mat.shape[axis1]} != {mat.shape[axis2]}."
         )
 
     type_str = _type_fetch(mat)
@@ -613,13 +911,23 @@ def trace(mat: _StateLike, axis1: int = -2, axis2: int = -1) -> _ArrayLike:
 
 
 def trace_norm(mat: _StateLike) -> _ArrayLike:
-    r"""tool for calculation of trace norm
+    r"""Calculate the trace norm of a matrix.
 
     Args:
         mat: matrix
 
     Returns:
-        trace norm of input matrix
+        Trace norm of the input matrix
 
+    Examples:
+        .. code-block:: python
+
+            tr_norm = trace_norm(x())
+            print(f'The trace norm of X is:\n{tr_norm}')
+
+        ::
+
+            The trace norm of X is:
+            2.0
     """
     return p_norm(mat, 1)

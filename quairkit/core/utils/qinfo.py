@@ -89,7 +89,6 @@ def _stinespring_to_choi(stinespring_repr: torch.Tensor) -> torch.Tensor:
 
 
 def _trace_distance(rho: torch.Tensor, sigma: torch.Tensor) -> torch.Tensor:
-    batch_dim = list(rho.shape[:-2]) or list(sigma.shape[:-2])
     list_eigval = torch.linalg.eigvalsh(rho - sigma)
     dist = 0.5 * torch.sum(torch.abs(list_eigval), axis=-1)
     return dist.view(rho.shape[:-2] or sigma.shape[:-2])
@@ -112,12 +111,12 @@ def _purity(rho: torch.Tensor) -> torch.Tensor:
     return purity.view(rho.shape[:-2])
 
 
-def _von_neumann_entropy(rho: torch.Tensor, base: Optional[int] = 2) -> torch.Tensor:
-    entropy =  -1 * math.log(math.e, 2) * utils.linalg._trace(rho @ utils.linalg._logm(rho)).real
+def _von_neumann_entropy(rho: torch.Tensor, base: Optional[Union[int, float]] = 2) -> torch.Tensor:
+    entropy = -1 * math.log(math.e, base) * utils.linalg._trace(rho @ utils.linalg._logm(rho)).real
     return entropy.view(rho.shape[:-2])
 
 
-def _relative_entropy(rho: torch.Tensor, sig: torch.Tensor, base: Optional[int] = 2) -> torch.Tensor:
+def _relative_entropy(rho: torch.Tensor, sig: torch.Tensor, base: Optional[Union[int, float]] = 2) -> torch.Tensor:
     entropy = math.log(math.e, base) * utils.linalg._trace(rho @ utils.linalg._logm(rho) - rho @ utils.linalg._logm(sig)).real
     return entropy.view(rho.shape[:-2] or sig.shape[:-2])
 

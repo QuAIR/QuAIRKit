@@ -16,3 +16,5 @@
 r"""
 The module of LOCCNet.
 """
+
+from .locc import OneWayLOCCNet

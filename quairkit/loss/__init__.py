@@ -17,5 +17,10 @@ r"""
 The module of the pre-provided loss.
 """
 
-from .measure import ExpecVal, Measure
-from .distance import TraceDistance, StateFidelity
+from .measure import *
+from .distance import *
+
+from .measure import __all__ as meas_fcn
+from .distance import __all__ as dist_fcn
+
+__all__ = meas_fcn + dist_fcn

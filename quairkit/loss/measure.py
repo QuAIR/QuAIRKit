@@ -40,7 +40,32 @@ class ExpecVal(Operator):
 
     Args:
         hamiltonian: The input observable.
+        
+    .. code-block:: python
+
+        from quairkit.database import random_hamiltonian_generator, random_state
+
+        observable = random_hamiltonian_generator(1)
+        print(f'The input observable is:\n{observable}')
+        expec_val = ExpecVal(observable)
+
+        input_state = random_state(num_systems=1, rank=2)
+        print('The expectation value of the observable:',expec_val(input_state, decompose=True))
+
+        input_state_batch = random_state(num_systems=1, size=2)
+        print('The expectation value of the observable:',expec_val(input_state_batch, decompose=False))
+                
+    ::
+    
+        The input observable is:
+        -0.28233465254251144 Z0
+        0.12440505341821817 X0
+        -0.2854054036807161 Y0
+        The expectation value of the observable: tensor([-0.1162,  0.0768, -0.0081])
+        The expectation value of the observable: tensor([0.1748, 0.0198])
+
     """
+    
     def __init__(self, hamiltonian: Hamiltonian):
         super().__init__()
         self.hamiltonian = hamiltonian
@@ -61,7 +86,8 @@ class ExpecVal(Operator):
             NotImplementedError: The backend is wrong or not supported.
 
         Returns:
-            The expectation value. If the backend is QuLeaf, it is computed by sampling.
+            The expectation value.
+
         """
         return state.expec_val(self.hamiltonian, decompose=decompose)
 
@@ -77,8 +103,84 @@ class Measure(Operator):
         - a string composed of 'i', 'x', 'y', and 'z'
         - a projection-valued measurement (PVM) in torch.Tensor
     
+    .. code-block:: python
+    
+        from quairkit.database import random_state, std_basis
+
+        # Define measurement basis using a string (e.g., 'xy' denotes eigen-basis of X ⊗ Y)
+        op = Measure("xy")
+        # Define measurement basis using a list for multiple measurement setups (e.g., 'xy' and 'yz')
+        op = Measure(["xy", "yz"])
+        # Define a custom measurement basis using a user-specified PVM tensor
+        pvm_tensor = std_basis(2).density_matrix
+        op = Measure(pvm_tensor)
+        # Use default computational basis
+        op = Measure()
+
+        state = random_state(num_qubits=2)
+
+        # Full measurement: probability distribution over all measurement outcomes.
+        result = op(state)
+        print("Probabilities for measuring all qubits:", result)
+
+        # Measurement on a targeted subsystem (e.g., the first qubit)
+        result = op(state, system_idx=0)
+        print("Probabilities for measuring the first qubit:", result)
+
+        # Compute probability for a specific full-system outcome ('10')
+        result = op(state, desired_result='10')
+        print("Probability for measuring all qubits with outcome 10:", result)
+
+        # Compute probabilities for selected outcomes (e.g., outcomes corresponding to indices 0 and 3)
+        result = op(state, desired_result=[0, 3])
+        print("Probabilities for measuring all qubits with outcomes 00 and 11:", result)
+
+        # Retrieve both the probability and the post-measurement state.
+        prob, post_state = op(state, keep_state=True)
+        print("Post-measurement state:", post_state)
+
+        # Batched measurement on multiple states.
+        state_batch = random_state(num_systems=2, size=2)
+        result = op(state_batch)
+        print(f"Probabilities for measuring two states:\n{result}")
+                
+    ::
+    
+        Probabilities for measuring all qubits: tensor([0.1273, 0.0956, 0.3312, 0.4459])
+        Probabilities for measuring the first qubit: tensor([0.2229, 0.7771])
+        Probability for measuring all qubits with outcome 10: tensor([0.3312])
+        Probabilities for measuring all qubits with outcomes 00 and 11: tensor([0.1273, 0.4459])
+        Post-measurement state:
+        -----------------------------------------------------
+        Backend: state_vector
+        System dimension: [2, 2]
+        System sequence: [0, 1]
+        Batch size: [4]
+
+        # 0:
+        [1.+0.j 0.+0.j 0.+0.j 0.+0.j]
+        # 1:
+        [0.+0.j 1.+0.j 0.+0.j 0.+0.j]
+        # 2:
+        [0.+0.j 0.+0.j 1.+0.j 0.+0.j]
+        # 3:
+        [0.+0.j 0.+0.j 0.+0.j 1.+0.j]
+        -----------------------------------------------------
+        
+        Probabilities for measuring two states:
+        tensor([[0.2846, 0.1826, 0.2665, 0.2663],
+                [0.1513, 0.4921, 0.1676, 0.1891]])
     """
+    
     def __init__(self, measure_op: Optional[Union[str, List[str], torch.Tensor]] = None) -> None:
+        r"""
+        
+        Note:
+            the allowable input for `measure_op` are:
+            - None, i.e., a 'computational' basis
+            - a string composed of 'i', 'x', 'y', and 'z'
+            - a projection-valued measurement (PVM) in torch.Tensor
+        """
         super().__init__()
 
         self.measure_basis = None
@@ -160,7 +262,7 @@ class Measure(Operator):
 
         Returns:
             The probability of the measurement.
-        
+
         """
         num_systems = state.num_systems
         if system_idx == 'full':
@@ -177,7 +279,7 @@ class Measure(Operator):
         if measure_all_sys:
             measured_state = self.measure_basis.expand_as(measured_state)
         
-        if desired_result:
+        if desired_result or desired_result == 0:
             if isinstance(desired_result, int):
                 desired_result = [desired_result]
             elif isinstance(desired_result, str):

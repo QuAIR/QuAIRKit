@@ -19,4 +19,4 @@ The module of operators in QuAIRKit.
 
 from .channel import *
 from .gate import *
-from .special import *
+from .special import Collapse, OneWayLOCC, QuasiOperation, ResetState

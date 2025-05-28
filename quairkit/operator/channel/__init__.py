@@ -18,6 +18,8 @@ The module of the quantum channels.
 """
 
 from .base import Channel
-from .common import *
-from .custom import *
-from ...database.representation import *
+from .common import (AmplitudeDamping, BitFlip, BitPhaseFlip, Depolarizing,
+                     GeneralizedAmplitudeDamping, GeneralizedDepolarizing,
+                     PauliChannel, PhaseDamping, PhaseFlip, ReplacementChannel,
+                     ResetChannel, ThermalRelaxation)
+from .custom import ChoiRepr, KrausRepr, StinespringRepr

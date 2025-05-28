@@ -60,17 +60,16 @@ class MixedState(State):
                           [prob.clone() for prob in self._prob])
     
     def prob_select(self, outcome_idx: torch.Tensor, prob_idx: int = -1) -> 'MixedState':
+        num_prob = len(self._prob)
         if prob_idx > 0:
             prob_idx -= len(self._prob) 
 
         new_prob = []
         for idx, prob in enumerate(self._prob):
-            if len(self._prob) > prob_idx + idx:
-                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx).squeeze(prob_idx))
-            elif len(self._prob) < prob_idx + idx:
+            if num_prob + prob_idx > idx:
                 new_prob.append(prob.clone())
-            elif outcome_idx.numel() != 1:
-                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx))
+            else:
+                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx).squeeze(prob_idx))
 
         data_idx = prob_idx - 2
         data = self.density_matrix.index_select(dim=data_idx, index=outcome_idx).squeeze(data_idx)
@@ -179,7 +178,7 @@ class MixedState(State):
         perm_map = utils.linalg._perm_of_list(self._system_seq, target_seq)
         current_system_dim = [self._sys_dim[x] for x in self._system_seq]
 
-        self._data = utils.linalg._base_transpose_for_dm(self._data, perm_map, current_system_dim).contiguous()
+        self._data = utils.linalg._permute_dm(self._data, perm_map, current_system_dim).contiguous()
         self._system_seq = target_seq
     
     def _evolve(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
@@ -198,17 +197,51 @@ class MixedState(State):
         data = torch.matmul(unitary, data)
         
         data = data.view(_shape + [dim, applied_dim, dim // applied_dim])
-        self._data = torch.matmul(unitary.unsqueeze(-3).conj().clone(), data).view([-1, dim, dim])
+        self._data = torch.matmul(unitary.unsqueeze(-3).conj(), data).view([-1, dim, dim])
     
-    def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
+    def _evolve_ctrl(self, unitary: torch.Tensor, index: int, 
+                     sys_idx: List[Union[int, List[int]]], on_batch: bool = True) -> None:
+        dim, _shape = self.dim, self._squeeze_shape
+        if on_batch:
+            self._batch_dim = self._batch_dim or list(unitary.shape[:-2])
+            evolve_axis = [-1, 1]
+        else:
+            evolve_axis = [1, -1]
+        
+        ctrl_idx = sys_idx[0]
+        ctrl_dim = np.prod([self.system_dim[idx] for idx in ctrl_idx])
+        
+        sys_idx = ctrl_idx + sys_idx[1:]
+        self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
+        
+        applied_dim = unitary.shape[-1]
+        unitary = unitary.view(evolve_axis + [applied_dim, applied_dim])
+        
+        other_dim = dim // ctrl_dim
+        data = self._data.squeeze().expand(self.batch_dim + [dim, dim])
+        
+        data = data.view(_shape + [ctrl_dim, applied_dim, (other_dim ** 2) * ctrl_dim // applied_dim])
+        data[:, :, index] = torch.matmul(unitary, data[:, :, index].clone())
+        
+        data = data.view(_shape + [dim, ctrl_dim, applied_dim, other_dim // applied_dim])
+        data[:, :, :, index] = torch.matmul(unitary.unsqueeze(-3).conj(), data[:, :, :, index].clone())
+        
+        self._data = data.view([-1, dim, dim])
+    
+    def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
         unitary_batch_dim = list(unitary.shape[:-2])
         dim, _shape = self.dim, self._squeeze_shape
-        self._batch_dim = (self._batch_dim or unitary_batch_dim[:-1]) + unitary_batch_dim[-1:]
+        
+        if on_batch:
+            self._batch_dim = (self._batch_dim or unitary_batch_dim[:-1]) + unitary_batch_dim[-1:]
+            evolve_axis = [-1, 1]
+        else:
+            evolve_axis = [1, -1]
         
         applied_dim, num_unitary = unitary.shape[-1], int(np.prod(unitary_batch_dim[-1:]))
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
-        unitary = unitary.view([-1, 1] + [num_unitary, applied_dim, applied_dim])
+        unitary = unitary.view(evolve_axis + [num_unitary, applied_dim, applied_dim])
         data = self._data.view(_shape + [1, applied_dim, (dim ** 2) // applied_dim])
         data = torch.matmul(unitary, data)
         
@@ -262,26 +295,34 @@ class MixedState(State):
         new_state._prob.append(measure_prob)
         return measure_prob, new_state
     
-    def __kraus_transform(self, list_kraus: torch.Tensor, sys_idx: List[int]) -> None:
-        r"""Apply the Kraus operators to the state.
+    def __kraus_transform(self, list_kraus: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
+        r"""Apply the Kraus operator to the state.
         
         Args:
             list_kraus: the Kraus operators.
             sys_idx: the system index list.
+            on_batch: whether this operator evolves on batch axis. Defaults to True.
+        
         """
         self._evolve_keep_dim(list_kraus, sys_idx)
         self._batch_dim, rank = self._batch_dim[:-1], self._batch_dim[-1]
         self._data = self._data.view([-1, rank, self.dim, self.dim]).sum(dim=-3)
     
-    def __choi_transform(self, choi: torch.Tensor, sys_idx: List[int]) -> None:
+    def __choi_transform(self, choi: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
         r"""Apply the Choi operator to the state.
         
         Args:
             choi: the Choi operator.
             sys_idx: the system index list.
+            on_batch: whether this operator evolves on batch axis. Defaults to True.
+        
         """
         _shape = self._squeeze_shape
-        self._batch_dim = self._batch_dim or list(choi.shape[:-2])
+        if on_batch:
+            self._batch_dim = self._batch_dim or list(choi.shape[:-2])
+            transform_axis = [-1, 1]
+        else:
+            transform_axis = [1, -1]
         
         refer_sys_idx = [x for x in self._system_seq if x not in sys_idx]
         dim_refer = int(np.prod([self.system_dim[x] for x in refer_sys_idx]))
@@ -290,7 +331,7 @@ class MixedState(State):
         
         self.system_seq = refer_sys_idx + sys_idx
         data = self._data.view(_shape + [dim_refer, dim_in, dim_refer, dim_in])
-        choi = choi.view([-1, 1] + [dim_in, dim_in * (dim_out ** 2)])
+        choi = choi.view(transform_axis + [dim_in, dim_in * (dim_out ** 2)])
         
         data = torch.matmul(data.transpose(-1, -3).reshape(_shape + [(dim_refer ** 2) * dim_in, dim_in]), choi)
         data = torch.transpose(data.view(_shape + [dim_in, dim_refer, dim_out, dim_in, dim_out]), -3, -4)

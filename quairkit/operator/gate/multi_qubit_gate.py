@@ -51,73 +51,31 @@ class CNOT(Gate):
 
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
-        cnot_idx: CNOT gate index. Defaults to ``None``.
     
     """
 
     __matrix = _cnot(torch.complex128)
 
     def __init__(
-            self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
-            cnot_idx: Optional[List[int]] = None
+        self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'cnot',
-            'texname': r'$CNOT$',
+            "name": "ctrl-x",
+            "tex": r'\targ{}',
+            "api": "cnot",
+            "num_ctrl_system": 1,
+            "label": '1',
             'plot_width': 0.2,
         }
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2], check_legality=False, gate_info=gate_info)
-
-        self.cnot_idx = cnot_idx
-
+    
     @property
     def matrix(self) -> torch.Tensor:
         return CNOT.__matrix.to(self.device, dtype=self.dtype)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _cnot_display(self, ax, x, )
-
-    # TODO: recover gather logic
-    # def forward(self, state: State) -> State:
-
-    #     if self.cnot_idx is None:
-    #         self.cnot_idx = _cnot_idx_fetch(num_qubits=state.num_qubits, qubits_idx=self.qubits_idx)
-        
-    #     state.reset_sequence()
-    #     data = state._data # TODO:_data will be depreciated
-
-    #     if state.backend == 'state_vector':
-    #         for _ in range(self.depth):
-    #             # whether to use batch in state_vector backend. len(state.shape) equals 1 means not using batch
-    #             if data.ndim == 1:
-    #                 data = data.gather(0, torch.tensor(self.cnot_idx, dtype=torch.int64))
-    #             else:
-    #                 raise NotImplementedError
-    #                 # data = torch.reshape(data, [-1, 2 ** state.num_qubits]).T
-    #                 # data = _torch_gather(data, index=torch.tensor(self.cnot_idx)).T
-
-    #     elif state.backend == 'density_matrix':
-    #         for _ in range(self.depth):
-    #             # left swap
-    #             # whether to use batch in density_matrix backend. len(state.shape) is greater than 2 means using batch
-    #             if data.ndim > 2:
-    #                 raise NotImplementedError
-    #                 # data = torch.reshape(data, [-1, 2 ** num_qubits, 2 ** num_qubits])
-    #                 # data = torch.transpose(data, perm=[1, 2, 0])
-                
-    #             cnot_idx = torch.tensor(self.cnot_idx, dtype=torch.int64)
-    #             cnot_idx = cnot_idx.unsqueeze(1).expand(data.shape)
-    #             data = data.gather(0, index=cnot_idx)
-
-    #             # right swap
-    #             # TODO: somehow change it to gather dim 1 for efficiency
-    #             data = data.T.gather(0, index=cnot_idx).T
-    #             # data = data.gather(1, index=cnot_idx)
-
-    #     state._data = data
-    #     return state
-
 
 CX = CNOT
 
@@ -151,8 +109,11 @@ class CY(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'cy',
-            'texname': r'$Y$',
+            "name": "ctrl-y",
+            "tex": r'Y',
+            "api": "cy",
+            "num_ctrl_system": 1,
+            "label": '1',
             'plot_width': 0.4,
         }
         super().__init__(
@@ -195,8 +156,11 @@ class CZ(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'cz',
-            'texname': r'$Z$',
+            "name": "ctrl-z",
+            "tex": r'Z',
+            "api": "cz",
+            "num_ctrl_system": 1,
+            "label": '1',
             'plot_width': 0.4,
         }
         super().__init__(
@@ -238,8 +202,9 @@ class SWAP(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'swap',
-            'texname': r'$SWAP$',
+            "name": "qubit-swap",
+            "api": "swap",
+            "permute": [1, 0],
             'plot_width': 0.2,
         }
         super().__init__(
@@ -282,13 +247,16 @@ class CP(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'cp',
-            'texname': r'$P$',
+            "name": "ctrl-p",
+            "tex": r'P',
+            "api": "cp",
+            "num_ctrl_system": 1,
+            "label": '1',
             'plot_width': 0.9,
         }
 
         super().__init__(
-            _cp, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _cp, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -327,13 +295,17 @@ class CRX(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'crx',
-            'texname': r'$R_{x}$',
+            "name": "ctrl-rx",
+            "tex": r'R_{x}',
+            "api": "crx",
+            "num_ctrl_system": 1,
+            "label": '1',
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
 
         super().__init__(
-            _crx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _crx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -372,13 +344,17 @@ class CRY(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'cry',
-            'texname': r'$R_{y}$',
+            "name": "ctrl-ry",
+            "tex": r'R_{y}',
+            "api": "cry",
+            "num_ctrl_system": 1,
+            "label": '1',
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
 
         super().__init__(
-            _cry, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _cry, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x, )
@@ -417,13 +393,17 @@ class CRZ(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'crz',
-            'texname': r'$R_{z}$',
+            "name": "ctrl-rz",
+            "tex": r'R_{z}',
+            "api": "crz",
+            "num_ctrl_system": 1,
+            "label": '1',
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
 
         super().__init__(
-            _crz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _crz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -462,12 +442,16 @@ class CU(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'cu',
-            'texname': r'$U$',
+            "name": "ctrl-u4",
+            "tex": r'U',
+            "api": "cu",
+            "num_ctrl_system": 1,
+            "label": '1',
+            "param_sharing": param_sharing,
             'plot_width': 1.65,
         }
         super().__init__(
-            _cu, param, 4, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _cu, param, 4, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _crx_like_display(self, ax, x)
@@ -505,12 +489,14 @@ class RXX(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'rxx',
-            'texname': r'$R_{xx}$',
+            "name": "rxx",
+            "tex": r'R_{xx}',
+            "api": "rxx",
+            "param_sharing": param_sharing,
             'plot_width': 1.0,
         }
         super().__init__(
-            _rxx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _rxx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _rxx_like_display(self, ax, x)
@@ -548,13 +534,15 @@ class RYY(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'ryy',
-            'texname': r'$R_{yy}$',
+            "name": "ryy",
+            "tex": r'R_{yy}',
+            "api": "ryy",
+            "param_sharing": param_sharing,
             'plot_width': 1.0,
         }
 
         super().__init__(
-            _ryy, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _ryy, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _rxx_like_display(self, ax, x)
@@ -592,12 +580,14 @@ class RZZ(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'rzz',
-            'texname': r'$R_{zz}$',
+            "name": "rzz",
+            "tex": r'R_{zz}',
+            "api": "rzz",
+            "param_sharing": param_sharing,
             'plot_width': 1.0,
         }
         super().__init__(
-            _rzz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
+            _rzz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _rxx_like_display(self, ax, x)
@@ -631,8 +621,9 @@ class MS(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
-            'gatename': 'ms',
-            'texname': r'$MS$',
+            "name": "ms",
+            "tex": r'\text{MS}',
+            "api": "ms",
             'plot_width': 0.6,
         }
         super().__init__(
@@ -677,8 +668,11 @@ class CSWAP(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
-            'gatename': 'cswap',
-            'texname': r'$CSWAP$',
+            "name": "ctrl-swap",
+            "api": "cswap",
+            "num_ctrl_system": 1,
+            "label": '1',
+            "permute": [1, 0],
             'plot_width': 0.2,
         }
         super().__init__(
@@ -722,8 +716,11 @@ class CCX(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
-            'gatename': 'ccx',
-            'texname': r'$Toffoli$',
+            "name": "toffoli",
+            "tex": r'\targ{}',
+            "api": "ccx",
+            "num_ctrl_system": 2,
+            "label": '11',
             'plot_width': 0.2,
         }
 
@@ -739,63 +736,3 @@ class CCX(Gate):
 
 
 Toffoli = CCX
-
-
-class UniversalTwoQubits(ParamGate):
-    r"""A collection of universal two-qubit gates. One of such a gate requires 15 parameters.
-
-    Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
-        param: Parameters of the gates. Defaults to ``None``.
-        param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
-
-    Raises:
-        ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
-    
-    """
-
-    def __init__(
-            self, qubits_idx: Optional[Union[Iterable, str]] = None,
-            param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
-    ):
-        gate_info = {
-            'gatename': 'uni2',
-            'texname': r'$\text{UNI}_4$',
-            'plot_width': 0.8,
-        }
-        super().__init__(
-            _universal2, param, 15, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _oracle_like_display(self, ax, x)
-
-
-class UniversalThreeQubits(ParamGate):
-    r"""A collection of universal three-qubit gates. One of such a gate requires 81 parameters.
-
-    Args:
-        qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first three qubits.
-        param: Parameters of the gates. Defaults to ``None``.
-        param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
-
-    Raises:
-        ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
-    
-    """
-
-    def __init__(
-            self, qubits_idx: Optional[Union[Iterable, str]] = None,
-            param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
-    ):
-        gate_info = {
-            'gatename': 'uni3',
-            'texname': r'$\text{UNI}_8$',
-            'plot_width': 0.8,
-        }
-        super().__init__(
-            _universal3, param, 81, param_sharing, qubits_idx, [2, 2, 2], check_legality=False, gate_info=gate_info)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _oracle_like_display(self, ax, x)
-
-

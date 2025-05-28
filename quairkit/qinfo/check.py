@@ -53,6 +53,17 @@ def is_choi(op: _ArrayLike) -> Union[bool, List[bool]]:
 
     Note:
         The operation op is (default) applied to the second system.
+
+    .. code-block:: python
+
+        ischoi = is_choi(eye(4) / 4)
+        print(f'The operation is choi or not:\n{ischoi}')
+
+    ::
+
+        The operation is choi or not:
+        True
+
     """
     op = _type_transform(op, "tensor")
 
@@ -74,6 +85,17 @@ def is_density_matrix(
 
     Returns:
         determine whether ``rho`` is a PSD matrix with trace 1
+
+
+    .. code-block:: python
+
+        is_dens_mat = is_density_matrix(eye(4) / 4)
+        print(f'The operation is density matrix or not:\n{is_dens_mat}')
+
+    ::
+
+        The operation is density matrix or not:
+        True
 
     """
     rho = _type_transform(rho, "tensor")
@@ -98,6 +120,16 @@ def is_hermitian(
         determine whether :math:`P - P^\dagger = 0`
         For batch input, return a boolean array with the same batch dimensions as input.
 
+    .. code-block:: python
+
+        is_hermit = is_hermitian(x())
+        print(f'The operation is hermitian or not:\n{is_hermit}')
+
+    ::
+
+        The operation is hermitian or not:
+        True
+
     """
     mat = _type_transform(mat, "tensor")
 
@@ -113,7 +145,7 @@ def is_linear(
     input_dtype: torch.dtype = None,
     eps: Optional[float] = 1e-5,
 ) -> bool:
-    """Check if the provided function 'func' is linear.
+    r"""Check if the provided function 'func' is linear.
 
     Args:
         func: A callable function to be tested. This function should accept and return either a torch.Tensor or a numpy.ndarray.
@@ -127,6 +159,20 @@ def is_linear(
     Raises:
         TypeError: If 'func' is not callable, does not accept a torch.Tensor or numpy.ndarray as input, or does not return a torch.Tensor or numpy.ndarray.
                    If 'info' is not a valid type (not a list of integers or a callable returning a torch.Tensor or numpy.ndarray).
+
+    .. code-block:: python
+
+       def f(X):
+            return torch.trace(X)
+
+        is_lin = is_linear(f, info=[2, 2])
+        print(f'The function f is linear or not:\n{is_lin}')
+
+    ::
+
+        The function f is linear or not:
+        True
+
     """
     func, generator, input_dtype, _ = _is_sample_linear(func, info, input_dtype)
     return utils.check._is_linear(
@@ -147,6 +193,17 @@ def is_positive(
     Returns:
         determine whether :math:`P` is Hermitian and eigenvalues are non-negative
         For batch input, return a boolean array with the same batch dimensions as input.
+
+
+    .. code-block:: python
+
+        is_pos = is_positive(x())
+        print(f'The operator is positive or not:\n{is_pos}')
+
+    ::
+
+        The operator is positive or not:
+        False
 
     """
     mat = _type_transform(mat, "tensor")
@@ -170,6 +227,16 @@ def is_povm(
     Returns:
         whether the operators form a POVM.
 
+    .. code-block:: python
+
+        is_pov = is_povm(x())
+        print(f'The operator is POVM or not:\n{is_pov}')
+
+    ::
+
+        The operator is POVM or not:
+        False
+
     """
     set_op = _type_transform(set_op, "tensor")
     return utils.check._is_povm(set_op, eps)
@@ -188,6 +255,16 @@ def is_projector(
     Returns:
         determine whether :math:`PP - P = 0`
         For batch input, return a boolean array with the same batch dimensions as input.
+
+    .. code-block:: python
+
+        is_proj = is_projector(x())
+        print(f'The operator is projector or not:\n{is_proj}')
+
+    ::
+
+        The operator is projector or not:
+        False
 
     """
     mat = _type_transform(mat, "tensor")
@@ -208,6 +285,17 @@ def is_ppt(density_op: _StateLike) -> Union[bool, List[bool]]:
     Returns:
         Whether the input quantum state is PPT. 
         For batch input, return a boolean array with the same batch dimensions as input.
+
+    .. code-block:: python
+
+        is_pt = is_ppt(bell_state(2))
+        print(f'The input quantum state is PPT or not:\n{is_pt}')
+
+    ::
+
+        The input quantum state is PPT or not:
+        False
+
     """
     density_op = _type_transform(density_op, "state").density_matrix
     return utils.check._is_ppt(density_op).tolist()
@@ -226,6 +314,16 @@ def is_pvm(
     Returns:
         bool or List[bool]: True if the operators form a PVM; otherwise, False.
 
+    .. code-block:: python
+
+        is_pv = is_pvm(eye(4).reshape(1, 4, 4))
+        print(f'The operator is PVM or not:\n{is_pv}')
+
+    ::
+
+        The operator is PVM or not:
+        False
+
     """
     set_op = _type_transform(set_op, "tensor")
     return utils.check._is_pvm(set_op, eps)
@@ -243,6 +341,17 @@ def is_state_vector(
 
     Returns:
         determine whether :math:`x^\dagger x = 1`
+
+    .. code-block:: python
+
+        st = torch.rand(5)
+        is_st_vec = is_state_vector(st / st.norm())
+        print(f'The vector is state vector or not:\n{is_st_vec}')
+
+    ::
+
+        The vector is state vector or not:
+        True
 
     """
     vec = _type_transform(vec, "tensor")
@@ -268,6 +377,16 @@ def is_unitary(
     Returns:
         determine whether :math:`PP^\dagger - I = 0`
         For batch input, return a boolean array with the same batch dimensions as input.
+
+    .. code-block:: python
+
+        is_unit = is_unitary(random_unitary(1))
+        print(f'The operator is unitary or not:\n{is_unit}')
+
+    ::
+
+        The operator is unitary or not:
+        True
 
     """
     mat = _type_transform(mat, "tensor")

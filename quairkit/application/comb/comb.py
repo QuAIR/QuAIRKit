@@ -313,13 +313,13 @@ class PQCombNet:
                     cir.control_oracle(
                         torch.eye(self.slot_dim),
                         [len(self.ancilla_dim_list) - 1, len(self.ancilla_dim_list)],
-                        latex_name=(r"$U$" if index % 2 == 0 else r"$U^{\dagger}$"),
+                        latex_name=(r"U" if index % 2 == 0 else r"U^{\dagger}"),
                     )
                 else:
                     cir.oracle(
                         torch.eye(self.slot_dim),
                         len(self.ancilla_dim_list),
-                        latex_name=(r"$U$"),
+                        latex_name=(r"U"),
                     )
         cir.plot()
 
@@ -655,13 +655,13 @@ def _apply_V_circuits(
     """
     for index, V_circuit in enumerate(self._V_circuit_list):
         cir_loss.oracle(
-            V_circuit.unitary_matrix(),
+            V_circuit.matrix,
             (
                 V_list_applied_index[index]
                 if self.train_mode == "comb"
                 else V_list_applied_index
             ),
-            latex_name=f"$\\mathcal{{V}}_{{{index}}}$",
+            latex_name=f"\\mathcal{{V}}_{{{index}}}",
         )
         if self.train_mode != "comb" and index < self.num_slots:
             _apply_controlled_U(self, cir_loss, unitary_set, index)
@@ -682,13 +682,13 @@ def _apply_controlled_U(
         cir_loss.control_oracle(
             unitary_set if index % 2 == 0 else utils.linalg._dagger(unitary_set),
             [len(self.ancilla_dim_list) - 1, len(self.ancilla_dim_list)],
-            latex_name=(r"$U$" if index % 2 == 0 else r"$U^{\dagger}$"),
+            latex_name=(r"U" if index % 2 == 0 else r"U^{\dagger}"),
         )
     else:
         cir_loss.oracle(
             unitary_set,
             len(self.ancilla_dim_list),
-            latex_name=(r"$U$"),
+            latex_name=(r"U"),
         )
 
 
@@ -990,7 +990,7 @@ def _train_swap_circuit(
         [len(self.system_dim_list) - 2, len(self.system_dim_list) - 1],
     )
 
-    ideal_unitary_matrix = ideal_swap_cir.unitary_matrix()
+    ideal_unitary_matrix = ideal_swap_cir.matrix
     ideal_choi_ket = (
         ideal_unitary_matrix.kron(torch.eye(self.system_dim))
         @ bell_state(2, self.system_dim).ket
@@ -999,7 +999,7 @@ def _train_swap_circuit(
     # define the loss function as 1 minus the fidelity between the Choi matrices of the actual and desired circuits
     def swap_loss_func():
         actual_choi_ket = (
-            actual_swap_cir.unitary_matrix().kron(torch.eye(self.system_dim))
+            actual_swap_cir.matrix.kron(torch.eye(self.system_dim))
             @ bell_state(2, self.system_dim).ket
         )
         # calculate the fidelity between the actual and desired density matrices

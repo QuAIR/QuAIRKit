@@ -49,8 +49,9 @@ class H(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
-            'gatename': 'h',
-            'texname': r'$H$',
+            "name": "h",
+            "tex": r'H',
+            "api": "h", 
             'plot_width': 0.4,
         }
         super().__init__(
@@ -84,8 +85,9 @@ class S(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 's',
-            'texname': r'$S$',
+            "name": "s",
+            "tex": r'S',
+            "api": "s",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -119,8 +121,9 @@ class Sdg(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'sdg',
-            'texname': r'$S^\dagger$',
+            "name": "sdg",
+            "tex": r'S^\dagger',
+            "api": "sdg",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -154,8 +157,9 @@ class T(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 't',
-            'texname': r'$T$',
+            "name": "t",
+            "tex": r'T',
+            "api": "t",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -189,8 +193,9 @@ class Tdg(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'tdg',
-            'texname': r'$T^\dagger$',
+            "name": "tdg",
+            "tex": r'T^\dagger',
+            "api": "tdg",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -224,8 +229,9 @@ class X(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'x',
-            'texname': r'$X$',
+            "name": "x",
+            "tex": r'X',
+            "api": "x",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -258,8 +264,9 @@ class Y(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'y',
-            'texname': r'$Y$',
+            "name": "y",
+            "tex": r'Y',
+            "api": "y",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -292,8 +299,9 @@ class Z(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            'gatename': 'z',
-            'texname': r'$Z$',
+            "name": "z",
+            "tex": r'Z',
+            "api": "z",
             'plot_width': 0.4,
         }
         super().__init__(
@@ -329,13 +337,14 @@ class P(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'p',
-            'texname': r'$P$',
+            "name": "p",
+            "tex": r'P',
+            "api": "p",
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
-
         super().__init__(
-            _p, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _p, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info, support_batch=True)
 
 
 class RX(ParamGate):
@@ -363,13 +372,14 @@ class RX(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'rx',
-            'texname': r'$R_{x}$',
+            "name": "rx",
+            "tex": r'R_{x}',
+            "api": "rx",
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
-
         super().__init__(
-            _rx, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _rx, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info, support_batch=True)
 
 
 class RY(ParamGate):
@@ -397,12 +407,14 @@ class RY(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'ry',
-            'texname': r'$R_{y}$',
+            "name": "ry",
+            "tex": r'R_{y}',
+            "api": "ry",
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
         super().__init__(
-            _ry, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _ry, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info, support_batch=True)
 
 
 class RZ(ParamGate):
@@ -430,13 +442,14 @@ class RZ(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'rz',
-            'texname': r'$R_{z}$',
+            "name": "rz",
+            "tex": r'R_{z}',
+            "api": "rz",
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
-
         super().__init__(
-            _rz, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _rz, param, 1, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info, support_batch=True)
 
 
 class U3(ParamGate):
@@ -467,10 +480,12 @@ class U3(ParamGate):
             param: Optional[Union[torch.Tensor, Iterable[float]]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            'gatename': 'u',
-            'texname': r'$U$',
+            "name": "u3",
+            "tex": r'U',
+            "api": "u3",
+            "param_sharing": param_sharing,
             'plot_width': 1.65,
         }
 
         super().__init__(
-            _u3, param, 3, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info)
+            _u3, param, 3, param_sharing, qubits_idx, check_legality=False, gate_info=gate_info, support_batch=True)

@@ -67,13 +67,11 @@ class PureState(State):
 
         new_prob = []
         for idx, prob in enumerate(self._prob):
-            if num_prob > prob_idx + idx:
-                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx).squeeze(prob_idx))
-            elif num_prob < prob_idx + idx:
+            if num_prob + prob_idx > idx:
                 new_prob.append(prob.clone())
-            elif outcome_idx.numel() != 1:
-                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx))
-
+            else:
+                new_prob.append(prob.index_select(dim=prob_idx, index=outcome_idx).squeeze(prob_idx))
+        
         data_idx = prob_idx - 2
         data = self.ket.index_select(dim=data_idx, index=outcome_idx).squeeze(data_idx)
         return PureState(data, self.system_dim, self.system_seq, new_prob)
@@ -133,15 +131,17 @@ class PureState(State):
         ket = self.ket
         return torch.matmul(ket, ket.mH)
     
-    def _trace(self, sys_idx: List[int]) -> MixedState:
-        state = MixedState(self.density_matrix, self.system_dim, self.system_seq, 
+    def to_mixed(self) -> MixedState:
+        r"""Convert the pure state to mixed state computation.
+        """
+        return MixedState(self.density_matrix, self.system_dim, self.system_seq, 
                            [prob.clone() for prob in self._prob])
-        return state._trace(sys_idx)
+    
+    def _trace(self, sys_idx: List[int]) -> MixedState:
+        return self.to_mixed()._trace(sys_idx)
     
     def _transpose(self, sys_idx: List[int]) -> MixedState:
-        state = MixedState(self.density_matrix, self.system_dim, self.system_seq, 
-                           [prob.clone() for prob in self._prob])
-        return state._transpose(sys_idx)
+        return self.to_mixed()._transpose(sys_idx)
 
     @property
     def rank(self) -> int:
@@ -174,7 +174,7 @@ class PureState(State):
         perm_map = utils.linalg._perm_of_list(self._system_seq, target_seq)
         current_system_dim = [self._sys_dim[x] for x in self._system_seq]
         
-        self._data = utils.linalg._base_transpose(self._data, perm_map, current_system_dim).contiguous()
+        self._data = utils.linalg._permute_sv(self._data, perm_map, current_system_dim).contiguous()
         self._system_seq = target_seq
         
     def _record_unitary(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
@@ -182,7 +182,7 @@ class PureState(State):
         unitary matrix of the circuit.
         
         Note:
-            This function is for calling `Circuit.unitary_matrix()` only
+            This function is for calling `Circuit.matrix` only
         """
         if self._batch_dim == [self.dim]:
             self._evolve_keep_dim(unitary, sys_idx)
@@ -213,26 +213,52 @@ class PureState(State):
         data = self._data.view(_shape + [applied_dim, dim // applied_dim])
         self._data = torch.matmul(unitary, data).view([-1, dim])
     
-    def _evolve_probabilistic(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
-        dim, _shape = self.dim, self._squeeze_shape
-        self._batch_dim = self._batch_dim or list(unitary.shape[:-2])
+    def _evolve_ctrl(self, unitary: torch.Tensor, index: int, sys_idx: List[Union[int, List[int]]], on_batch: bool = True) -> None:
+        ctrl_idx = sys_idx[0]
+        ctrl_dim = np.prod([self.system_dim[idx] for idx in ctrl_idx])
         
-        applied_dim = unitary.shape[-1]
+        sys_idx = ctrl_idx + sys_idx[1:]
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
-        unitary = unitary.view([1, -1, applied_dim, applied_dim])
-        data = self._data.view(_shape + [applied_dim, dim // applied_dim])
-        self._data = torch.matmul(unitary, data).view([-1, dim])
-
-    def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
+        if self._switch_unitary_matrix:
+            proj = torch.zeros([ctrl_dim, ctrl_dim])
+            proj[index, index] = 1
+            unitary = torch.kron(proj, unitary) + torch.kron(torch.eye(ctrl_dim) - proj, torch.eye(unitary.shape[-1]).expand_as(unitary))
+            self._record_unitary(unitary, sys_idx)
+            return
+        dim, _shape = self.dim, self._squeeze_shape
+        
+        if on_batch:
+            self._batch_dim = self._batch_dim or list(unitary.shape[:-2])
+            evolve_axis = [-1, 1]
+        else:
+            evolve_axis = [1, -1]
+        
+        applied_dim = unitary.shape[-1]
+        unitary = unitary.view(evolve_axis + [applied_dim, applied_dim])
+        
+        other_dim = dim // ctrl_dim
+        data = self._data.squeeze().expand(self.batch_dim + [dim])
+        
+        data = data.view(_shape + [ctrl_dim, applied_dim, other_dim // applied_dim])
+        data[:, :, index] = torch.matmul(unitary, data[:, :, index].clone())
+        
+        self._data = data.view([-1, dim])
+        
+    def _evolve_keep_dim(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
         unitary_batch_dim = list(unitary.shape[:-2])
         dim, _shape = self.dim, self._squeeze_shape
-        self._batch_dim = (self._batch_dim or unitary_batch_dim[:-1]) + list(unitary_batch_dim[-1:])
+        
+        if on_batch:
+            self._batch_dim = (self._batch_dim or unitary_batch_dim[:-1]) + unitary_batch_dim[-1:]
+            evolve_axis = [-1, 1]
+        else:
+            evolve_axis = [1, -1]
         
         applied_dim, num_unitary = unitary.shape[-1], int(np.prod(unitary_batch_dim[-1:]))
         self.system_seq = sys_idx + [x for x in self._system_seq if x not in sys_idx]
         
-        unitary = unitary.view([-1, 1] + [num_unitary, applied_dim, applied_dim])
+        unitary = unitary.view(evolve_axis + [num_unitary, applied_dim, applied_dim])
         data = self._data.view(_shape + [1, applied_dim, dim // applied_dim])
         self._data = torch.matmul(unitary, data).view([-1, dim])
     
@@ -283,13 +309,37 @@ class PureState(State):
 
     def _transform(self, *args) -> None:
         raise NotImplementedError(
-            "The state vector backend does not support the channel conversion. \
+            "The state vector backend does not internally support the channel conversion. \
                 Please call the 'transform' function directly instead of '_transform'.")
     
     def transform(self, op: torch.Tensor, sys_idx: List[int] = None, repr_type: str = 'kraus') -> MixedState:
-        state = MixedState(self.density_matrix, self.system_dim, self.system_seq, 
-                           [prob.clone() for prob in self._prob])
-        return state.transform(op, sys_idx, repr_type)
+        return self.to_mixed().transform(op, sys_idx, repr_type)
+    
+    def product_trace(self, trace_state: 'PureState', trace_idx: List[int]) -> 'PureState':
+        r"""Partial trace over this state, when this state is a product state
+        """
+        remain_seq, remain_system_dim, trace_system_dim = [], [], []
+        for x in self._system_seq:
+            if x in trace_idx:
+                trace_system_dim.append(self.system_dim[x])
+            else:
+                remain_seq.append(x)
+                remain_system_dim.append(self.system_dim[x])
+
+        assert trace_state.system_dim == trace_system_dim, \
+                f"Traced state does not match with the target trace system: received {trace_state.system_dim}, expect {trace_system_dim}."
+        assert trace_state.numel() in [1, self.numel()], \
+            f"# of traced state mismatch: received {trace_state.numel()}, expect 1 or {self.numel()}."
+
+        trace_state = trace_state.ket.squeeze(-1)
+        self.system_seq = trace_idx + remain_seq
+
+        data = self._data.view(self.batch_dim + [self.dim])
+        data = utils.linalg._ptrace_1(data, trace_state).unsqueeze(-1)
+        # convert remaining sequence
+        value_to_index = {value: index for index, value in enumerate(sorted(remain_seq))}
+        remain_seq = [value_to_index[i] for i in remain_seq]
+        return PureState(data, remain_system_dim, remain_seq, self._prob)
     
     def sqrt(self) -> torch.Tensor:
         return self.density_matrix

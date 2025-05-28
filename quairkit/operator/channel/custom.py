@@ -31,18 +31,27 @@ class ChoiRepr(Channel):
     Args:
         choi_repr: Choi operator of this channel.
         system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
-        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions
             or an int representing the dimension of all systems. Defaults to be qubit case.
-    
+
     """
-    @_alias({'system_idx': 'qubits_idx'})
+
+    @_alias({"system_idx": "qubits_idx"})
     def __init__(
         self,
         choi_repr: torch.Tensor,
         system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-        acted_system_dim: Union[List[int], int] = 2
+        acted_system_dim: Union[List[int], int] = 2,
     ):
-        super().__init__('choi', choi_repr, system_idx, acted_system_dim)
+        channel_info = {
+            "name": "channel",
+            "tex": r'\mathcal{N}',
+            "api": "choi_channel",
+            "kwargs": {"choi_repr": choi_repr},
+        }
+        super().__init__(
+            "choi", choi_repr, system_idx, acted_system_dim, channel_info=channel_info
+        )
 
 
 class KrausRepr(Channel):
@@ -51,17 +60,27 @@ class KrausRepr(Channel):
     Args:
         kraus_repr: list of Kraus operators of this channel.
         system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
-        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions
             or an int representing the dimension of all systems. Defaults to be qubit case.
-    
+
     """
-    @_alias({'system_idx': 'qubits_idx'})
+
+    @_alias({"system_idx": "qubits_idx"})
     def __init__(
-        self, kraus_repr: Union[torch.Tensor, List[torch.Tensor]], 
+        self,
+        kraus_repr: Union[torch.Tensor, List[torch.Tensor]],
         system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-        acted_system_dim: Union[List[int], int] = 2
+        acted_system_dim: Union[List[int], int] = 2,
     ):
-        super().__init__('kraus', kraus_repr, system_idx, acted_system_dim)
+        channel_info = {
+            "name": "channel",
+            "tex": r'\mathcal{N}',
+            "api": "kraus_channel",
+            "kwargs": {"kraus_repr": kraus_repr},
+        }
+        super().__init__(
+            "kraus", kraus_repr, system_idx, acted_system_dim, channel_info=channel_info
+        )
 
 
 class StinespringRepr(Channel):
@@ -70,15 +89,28 @@ class StinespringRepr(Channel):
     Args:
         stinespring_mat: Stinespring matrix that represents this channel.
         system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
-        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
+        acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions
             or an int representing the dimension of all systems. Defaults to be qubit case.
-    
+
     """
-    @_alias({'system_idx': 'qubits_idx'})
+
+    @_alias({"system_idx": "qubits_idx"})
     def __init__(
         self,
         stinespring_mat: torch.Tensor,
         system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-        acted_system_dim: Union[List[int], int] = 2
+        acted_system_dim: Union[List[int], int] = 2,
     ):
-        super().__init__('stinespring', stinespring_mat, system_idx, acted_system_dim)
+        channel_info = {
+            "name": "channel",
+            "tex": r'\mathcal{N}',
+            "api": "stinespring_channel",
+            "kwargs": {"stinespring_channel": stinespring_mat},
+        }
+        super().__init__(
+            "stinespring",
+            stinespring_mat,
+            system_idx,
+            acted_system_dim,
+            channel_info=channel_info,
+        )

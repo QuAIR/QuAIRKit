@@ -77,7 +77,7 @@ def to_state(
         state_backend: Optional[str] = None,
         eps: Optional[float] = 1e-4,
         prob: Optional[List[torch.Tensor]] = None
-) -> State:
+) -> Union[PureState, MixedState]:
     r"""The function to generate a specified state instance.
 
     Args:
@@ -179,7 +179,7 @@ def tensor_state(state_1st: State, *args: State) -> State:
     r"""calculate tensor product (kronecker product) between at least two state. This function automatically returns State instance
 
     Args:
-        state_a: the first state
+        state_1st: the first state
         args: other states
 
     Returns:

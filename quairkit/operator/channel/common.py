@@ -52,7 +52,15 @@ class BitFlip(Channel):
             self, prob: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', bit_flip_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
+        p = np.round(prob.item() if isinstance(prob, torch.Tensor) else prob, decimals=2)
+        channel_info = {
+            'name': 'bit_flip',
+            'tex': r'\mathcal{E}_{p = ' + str(p) + r'}^{\textrm{\tiny{(BF)}}}',
+            'api': 'bit_flip',
+            'kwargs': {'prob': prob}
+        }
+        super().__init__('kraus', bit_flip_kraus(prob), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class PhaseFlip(Channel):
@@ -73,7 +81,15 @@ class PhaseFlip(Channel):
             self, prob: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', phase_flip_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
+        p = np.round(prob.item() if isinstance(prob, torch.Tensor) else prob, decimals=2)
+        channel_info = {
+            'name': 'phase_flip',
+            'tex': r'\mathcal{E}_{p = ' + str(p) + r'}^{\textrm{\tiny{(PF)}}}',
+            'api': 'phase_flip',
+            'kwargs': {'prob': prob}
+        }
+        super().__init__('kraus', phase_flip_kraus(prob), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class BitPhaseFlip(Channel):
@@ -94,7 +110,15 @@ class BitPhaseFlip(Channel):
             self, prob: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', bit_phase_flip_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
+        p = np.round(prob.item() if isinstance(prob, torch.Tensor) else prob, decimals=2)
+        channel_info = {
+            'name': 'bit_phase_flip',
+            'tex': r'\mathcal{E}_{p = ' + str(p) + r'}^{\textrm{\tiny{(BPF)}}}',
+            'api': 'bit_phase_flip',
+            'kwargs': {'prob': prob}
+        }
+        super().__init__('kraus', bit_phase_flip_kraus(prob), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class AmplitudeDamping(Channel):
@@ -123,7 +147,15 @@ class AmplitudeDamping(Channel):
             self, gamma: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', amplitude_damping_kraus(gamma), qubits_idx, acted_system_dim=2, check_legality=False)
+        g = np.round(gamma.item() if isinstance(gamma, torch.Tensor) else gamma, decimals=2)
+        channel_info = {
+            'name': 'amplitude_damping',
+            'tex': r'\mathcal{E}_{\gamma = ' + str(g) + r'}^{\textrm{\tiny{(AD)}}}',
+            'api': 'amplitude_damping',
+            'kwargs': {'gamma': gamma}
+        }
+        super().__init__('kraus', amplitude_damping_kraus(gamma), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class GeneralizedAmplitudeDamping(Channel):
@@ -151,8 +183,17 @@ class GeneralizedAmplitudeDamping(Channel):
             self, gamma: Union[torch.Tensor, float], prob: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
+        g = np.round(gamma.item() if isinstance(gamma, torch.Tensor) else gamma, decimals=2)
+        p = np.round(prob.item() if isinstance(prob, torch.Tensor) else prob, decimals=2)
+        channel_info = {
+            'name': 'generalized_amplitude_damping',
+            'tex': r'\mathcal{E}_{\gamma = ' + str(g) + r', p = ' + str(p) + r'}^{\textrm{\tiny{(GAD)}}}',
+            'api': 'generalized_amplitude_damping',
+            'kwargs': {'gamma': gamma, 'prob': prob}
+        }
         super().__init__(
-            'kraus', generalized_amplitude_damping_kraus(gamma, prob), qubits_idx, acted_system_dim=2, check_legality=False)
+            'kraus', generalized_amplitude_damping_kraus(gamma, prob), qubits_idx, 
+            acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class PhaseDamping(Channel):
@@ -181,7 +222,15 @@ class PhaseDamping(Channel):
             self, gamma: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', phase_damping_kraus(gamma), qubits_idx, acted_system_dim=2, check_legality=False)
+        g = np.round(gamma.item() if isinstance(gamma, torch.Tensor) else gamma, decimals=2)
+        channel_info = {
+            'name': 'phase_damping',
+            'tex': r'\mathcal{E}_{\gamma = ' + str(g) + r'}^{\textrm{\tiny{(PD)}}}',
+            'api': 'phase_damping',
+            'kwargs': {'gamma': gamma}
+        }
+        super().__init__('kraus', phase_damping_kraus(gamma), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class Depolarizing(Channel):
@@ -211,7 +260,15 @@ class Depolarizing(Channel):
             self, prob: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', depolarizing_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
+        p = np.round(prob.item() if isinstance(prob, torch.Tensor) else prob, decimals=2)
+        channel_info = {
+            'name': 'depolarizing',
+            'tex': r'\mathcal{D}_{p = ' + str(p) + r'}',
+            'api': 'depolarizing',
+            'kwargs': {'prob': prob}
+        }
+        super().__init__('kraus', depolarizing_kraus(prob), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class GeneralizedDepolarizing(Channel):
@@ -234,13 +291,20 @@ class GeneralizedDepolarizing(Channel):
             self, prob: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str], num_qubits: int = None
     ):
+        p = np.round(prob.item() if isinstance(prob, torch.Tensor) else prob, decimals=2)
+        channel_info = {
+            'name': 'generalized_depolarizing',
+            'tex': r'\mathcal{D}_{p = ' + str(p) + r'}',
+            'api': 'generalized_depolarizing',
+            'kwargs': {'prob': prob}
+        }
         if qubits_idx in ['full', 'cycle']:
             raise NotImplementedError(
                 'The generalized depolarizing channel should act on all qubits of the system')
         num_acted_qubits = np.size(np.array(qubits_idx))
         super().__init__(
             'kraus', generalized_depolarizing_kraus(prob, num_acted_qubits), qubits_idx, 
-            acted_system_dim=2, check_legality=False)
+            acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class PauliChannel(Channel):
@@ -258,7 +322,14 @@ class PauliChannel(Channel):
             self, prob: Union[torch.Tensor, Iterable[float]],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', pauli_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
+        channel_info = {
+            'name': 'pauli_channel',
+            'tex': r'\mathcal{N}',
+            'api': 'pauli_channel',
+            'kwargs': {'prob': prob}
+        }
+        super().__init__('kraus', pauli_kraus(prob), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class ResetChannel(Channel):
@@ -303,7 +374,14 @@ class ResetChannel(Channel):
             self, prob: Union[torch.Tensor, Iterable[float]],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('kraus', reset_kraus(prob), qubits_idx, acted_system_dim=2, check_legality=False)
+        channel_info = {
+            'name': 'reset_channel',
+            'tex': r'\mathcal{N}',
+            'api': 'reset_channel',
+            'kwargs': {'prob': prob}
+        }
+        super().__init__('kraus', reset_kraus(prob), qubits_idx, 
+                         acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class ThermalRelaxation(Channel):
@@ -323,9 +401,15 @@ class ThermalRelaxation(Channel):
             self, const_t: Union[torch.Tensor, Iterable[float]], exec_time: Union[torch.Tensor, float],
             qubits_idx: Union[Iterable[int], int, str] = None
     ):
+        channel_info = {
+            'name': 'thermal_relaxation',
+            'tex': r'\mathcal{N}',
+            'api': 'thermal_relaxation',
+            'kwargs': {'const_t': const_t, 'exec_time': exec_time}
+        }
         super().__init__(
             'kraus', thermal_relaxation_kraus(const_t, exec_time),
-            qubits_idx, acted_system_dim=2, check_legality=False)
+            qubits_idx, acted_system_dim=2, check_legality=False, channel_info=channel_info)
 
 
 class ReplacementChannel(Channel):
@@ -346,4 +430,9 @@ class ReplacementChannel(Channel):
             self, sigma: State,
             system_idx: Union[Iterable[int], int, str] = None
     ):
-        super().__init__('choi', replacement_choi(sigma.density_matrix), system_idx, acted_system_dim=sigma.dim)
+        channel_info = {
+            'name': 'replace_channel',
+            'tex': r'\mathcal{N}',
+        }
+        super().__init__('choi', replacement_choi(sigma.density_matrix), system_idx, 
+                         acted_system_dim=sigma.dim, channel_info=channel_info)

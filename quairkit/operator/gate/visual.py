@@ -130,7 +130,7 @@ def _circuit_plot(
     _fig = plt.figure(facecolor='w', edgecolor='w', dpi=dpi)
     _axes = _fig.add_subplot(1, 1, 1,)
 
-    for gate in circuit.children():
+    for gate in circuit.operators():
         if not isinstance(gate, qkit.operator.Gate):
             raise NotImplementedError
         _x += gate.display_in_circuit(_axes, _x)
@@ -314,8 +314,8 @@ def _base_gate_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
     
     for act_qubits in gate.system_idx:   # get vertical position
         _single_qubit_gate_display(ax, x, act_qubits[0]*h, h, w, tex_name)
@@ -336,8 +336,8 @@ def _base_param_gate_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
 
     for param_idx, act_qubits in enumerate(gate.system_idx):
         theta = gate.theta[0, 0] if gate.param_sharing else gate.theta[param_idx, 0]
@@ -359,8 +359,8 @@ def _cx_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
 
     for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w       # the center of block
@@ -384,8 +384,8 @@ def _crx_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
 
     for param_idx, act_qubits in enumerate(gate.system_idx):
         theta = gate.theta[0, 0] if gate.param_sharing else gate.theta[param_idx, 0]
@@ -411,8 +411,8 @@ def _oracle_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
 
     for act_qubits in gate.system_idx:
         if len(act_qubits) == 1:
@@ -437,8 +437,8 @@ def _c_oracle_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
 
     for act_qubits in gate.system_idx:
         assert _is_continuous_list(act_qubits[1:]), 'Discontinuous oracle cannot be plotted.'
@@ -468,8 +468,8 @@ def _rxx_like_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
-    tex_name = gate.gate_info['texname']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
+    tex_name = '$' + gate.info['tex'] + '$'
 
     for param_idx, act_qubits in enumerate(gate.system_idx):
         assert _is_continuous_list(act_qubits), 'Discontinuous oracle cannot be plotted.'
@@ -494,7 +494,7 @@ def _cnot_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
     parallel = _index_no_intersection_(gate.system_idx)
     
     for act_qubits in gate.system_idx:
@@ -522,7 +522,7 @@ def _swap_display(gate, ax: matplotlib.axes.Axes,  x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
     parallel = _index_no_intersection_(gate.system_idx)
     
     for act_qubits in gate.system_idx:
@@ -550,7 +550,7 @@ def _cswap_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
 
     for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w
@@ -575,7 +575,7 @@ def _tofolli_display(gate, ax: matplotlib.axes.Axes, x: float,) -> float:
     '''
     x_start = x
     h = __CIRCUIT_PLOT_PARAM['circuit_height']
-    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.gate_info['plot_width']
+    w = __CIRCUIT_PLOT_PARAM['scale'] * gate.info['plot_width']
 
     for act_qubits in gate.system_idx:
         x_c = x + 0.5 * w

@@ -23,7 +23,7 @@ from typing import Iterable, List, Optional, Union
 
 import torch
 
-from ...core import MixedState, Operator, State, utils
+from ...core import MixedState, Operator, OperatorInfoType, State, utils
 from ...core.intrinsic import _format_operator_idx
 from ...core.utils.qinfo import (_choi_to_kraus, _choi_to_stinespring,
                                  _kraus_to_choi, _kraus_to_stinespring,
@@ -41,6 +41,7 @@ class Channel(Operator):
         acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to ``None``.
         check_legality: whether check the completeness of the representation if provided. Defaults to ``True``.
+        channel_info: additional information of this channel. Defaults to ``None``.
 
     Raises:
         ValueError: Unsupported channel representation for ``type_repr``.
@@ -52,9 +53,10 @@ class Channel(Operator):
     
     """
     def __init__(
-            self, type_repr: str, representation: Optional[Union[torch.Tensor]] = None,
-            system_idx: Optional[Union[Iterable[Iterable[int]], Iterable[int], int]] = None,
-            acted_system_dim: Optional[Union[List[int], int]] = None, check_legality: Optional[bool] = True,
+        self, type_repr: str, representation: Optional[Union[torch.Tensor]] = None,
+        system_idx: Optional[Union[Iterable[Iterable[int]], Iterable[int], int]] = None,
+        acted_system_dim: Optional[Union[List[int], int]] = None, check_legality: Optional[bool] = True,
+        channel_info: dict = None
     ) -> None:
         type_repr = type_repr.lower()
         if type_repr not in ['choi', 'kraus', 'gate', 'stinespring']:
@@ -63,6 +65,7 @@ class Channel(Operator):
                 f"require 'choi', 'kraus', 'gate', or 'stinespring', not {type_repr}")
         self.type_repr = type_repr
         super().__init__()
+        self._info.update(channel_info or {})
         
         if representation is None:
             assert not isinstance(acted_system_dim, int), \
@@ -103,6 +106,8 @@ class Channel(Operator):
                     check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'choi'``
         """
+        self._info['type'] = 'channel'
+        
         input_dim = math.isqrt(choi_repr.shape[-1])
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
@@ -118,6 +123,8 @@ class Channel(Operator):
                      check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'kraus'``
         """
+        self._info['type'] = 'channel'
+        
         if len(kraus_repr.shape) == 2:
             kraus_repr = kraus_repr.unsqueeze(0)
 
@@ -142,6 +149,8 @@ class Channel(Operator):
                     check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'gate'``
         """
+        self._info['type'] = 'gate'
+        
         input_dim = mat.shape[-1]
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
@@ -159,7 +168,10 @@ class Channel(Operator):
                            acted_system_dim: Union[List[int], int, None], 
                            check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'Stinespring'``
+        
         """
+        self._info['type'] = 'channel'
+        
         input_dim = stinespring_repr.shape[-1]
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
@@ -250,17 +262,25 @@ class Channel(Operator):
             return self.__stinespring_repr
         else:
             return _kraus_to_stinespring(self.kraus_repr)
+        
+    @property
+    def info(self) -> OperatorInfoType:
+        r"""Information of this channel
+        """
+        info = super().info
+        info.update({
+            'system_idx': self.system_idx,
+        })
+        return info
 
     def forward(self, state: State) -> State:
         if state.backend == 'state_vector':
-            state = MixedState(state.fit('density_matrix'), state.system_dim, state.system_seq)
-        else:
-            state = state.clone()
+            state = state.to_mixed() 
         
         for system_idx in self.system_idx:
             if self.type_repr == 'choi':
                 state._transform(self.choi_repr, system_idx, 'choi')
             else:
                 state._transform(self.kraus_repr, system_idx, 'kraus')
-        
+
         return state

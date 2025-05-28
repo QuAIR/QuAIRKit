@@ -22,7 +22,7 @@ from typing import Iterable, List, Optional, Union
 import numpy as np
 import torch
 
-from ..core import Operator, State
+from ..core import Operator, OperatorInfoType, State, utils
 from ..core.intrinsic import _alias, _digit_to_int, _int_to_digit
 from . import Channel, Gate
 
@@ -47,21 +47,20 @@ class Collapse(Operator):
 
     Args:
         system_idx: list of systems to be collapsed.
+        acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
+            or an int representing the dimension of all systems. Defaults to be qubit case. Used for collapse function.
         desired_result: The desired result you want to collapse. Defaults to ``None`` meaning preserving all results, 
-        and activate probabilistic computation.
+            and activate probabilistic computation.
         if_print: whether print the information about the collapsed state. Defaults to ``False``.
         measure_basis: The basis of the measurement. Defaults to the computational basis.
 
     Raises:
         NotImplementedError: If the basis of measurement is not z. Other bases will be implemented in future.
-        
-    Note:
-        When desired_result is `None`, Collapse does not support gradient calculation
+    
     """
     @_alias({"system_idx": "qubits_idx"})
-    def __init__(self, system_idx: Union[int, Iterable[int]],
-                 desired_result: Union[int, str] = None, if_print: bool = False,
-                 measure_basis: Optional[torch.Tensor] = None):
+    def __init__(self, system_idx: Union[int, Iterable[int]], acted_system_dim: List[int], 
+                 desired_result: Union[int, str] = None, if_print: bool = False, measure_basis: Optional[torch.Tensor] = None):
         super().__init__()
         self.measure_basis = []
 
@@ -69,16 +68,50 @@ class Collapse(Operator):
             self.system_idx = [system_idx]
         else:
             self.system_idx = list(system_idx)
-
-        self.desired_result = desired_result
+        
         self.if_print = if_print
-
+    
+        if measure_basis:
+            assert len(measure_basis) > 1, \
+                "The input measurement op should be a list of measurement operators."
+            assert utils.check.is_pvm(measure_basis), \
+                "The input measurement op do not form a projection-valued measurement."
         self.measure_basis = measure_basis
+        self.system_dim = acted_system_dim
+        
+        if desired_result is None:
+            digits_str = None
+        else:
+            if isinstance(desired_result, str):
+                desired_result = _digit_to_int(desired_result, acted_system_dim)
+            digits_str = _int_to_digit(desired_result, acted_system_dim)
+            desired_result = torch.tensor(desired_result)
+        
+        self.desired_result = desired_result
+        self.digits_str = digits_str
+
+        _info = {"name": "measure",
+                 "system_idx": self.system_idx,
+                 "type": "channel",
+                 "kwargs": {"basis": measure_basis, "if_print": if_print}}
+        if desired_result is not None:
+            _info["label"] = digits_str
+        self._info.update(_info)
         
     def __call__(self, state: State) -> State:
         r"""Same as forward of Neural Network
         """
         return self.forward(state)
+    
+    @property
+    def info(self) -> OperatorInfoType:
+        r"""Information of this channel
+        """
+        info = super().info
+        info.update({
+            'system_idx': self.system_idx,
+        })
+        return info
         
     def forward(self, state: State) -> State:
         r"""Compute the collapse of the input state.
@@ -89,22 +122,14 @@ class Collapse(Operator):
         Returns:
             The collapsed quantum state.
         """
-        system_dim = [state.system_dim[idx] for idx in self.system_idx]
-        desired_result = self.desired_result
-
         prob_array, measured_state = state.measure(self.measure_basis, self.system_idx, keep_state=True)
         
+        desired_result = self.desired_result
         if desired_result is None:
             return measured_state
         
-        if isinstance(desired_result, str):
-            digits_str = desired_result
-            desired_result = _digit_to_int(desired_result, system_dim)
-        else:
-            digits_str = _int_to_digit(desired_result, base=system_dim)
-        desired_result = torch.tensor(desired_result)
+        digits_str = self.digits_str
         state_str = '>'.join(f'|{d}' for d in digits_str) + '>'
-        
         prob_collapse = prob_array.index_select(-1, desired_result)
         assert torch.all(prob_collapse > 1e-10).item(), (
             f"It is computationally infeasible for some states in systems {self.system_idx} "
@@ -122,30 +147,67 @@ class OneWayLOCC(Operator):
     r"""A one-way LOCC protocol, where quantum measurement is modelled by a PVM and all channels are unitary channels.
     
     Args:
-        list_unitary: a batched tensor that represents all unitaries.
-        system_idx: Indices of the systems on which the protocol is applied. The first element in the list 
-        indexes systems to be measured.
-        acted_system_dim: dimension of systems that unitary channels act on. Can be a list of system dimensions 
-        or an int representing the dimension of all systems. Defaults to be qubit case.
-        measure_basis: The basis of the measurement. Defaults to the computational basis.
+        gate: a Gate operator.
+        measure_basis: basis of the measurement. Defaults to the computational basis.
+        label: name of the measured label. Defaults to ``'M'``.
+        latex_name: latex name of the applied operator. Defaults to ``'O'``.
     
     """
     @_alias({'system_idx': 'qubits_idx'})
     def __init__(
-        self, list_unitary: torch.Tensor, system_idx: Union[Iterable[int], int] = None,
-        acted_system_dim: Union[List[int], int] = 2, measure_basis: Optional[torch.Tensor] = None
+        self, gate: Gate,
+        measure_idx: List[int], measure_dim: Union[List[int], int],
+        measure_basis: Optional[torch.Tensor] = None, label: str = 'M', latex_name: str = 'O'
     ):
         super().__init__()
-        measure_idx, act_idx = system_idx[0], system_idx[1:]
-        acted_system_dim = acted_system_dim if isinstance(acted_system_dim, int) else acted_system_dim[len(measure_idx):]
+        num_measure_system = len(measure_idx)
+        measure_dim = [measure_dim] * num_measure_system if isinstance(measure_dim, int) else measure_dim
         
-        self.measure = Collapse(measure_idx, measure_basis=measure_basis)
-        self.list_gate = Gate(list_unitary, act_idx, acted_system_dim)
+        assert (batch_dim := gate.matrix.shape[0]) == np.prod(measure_dim), \
+            f"Batch dimension mismatch: expected {np.prod(measure_dim)}, received {batch_dim} unitaries"
+        
+        self.measure = Collapse(measure_idx, measure_dim, measure_basis=measure_basis)
+        self.list_gate = gate
+        
+        self._info.update({'name': "locc",
+                           'system_idx': measure_idx + gate.system_idx,
+                           'tex': latex_name,
+                           'label': label,
+                           'type': "locc",
+                           'num_ctrl_system': len(measure_idx),
+                           'kwargs': {'measure_basis': measure_basis,
+                                      'label_name': label}})
         
     def __call__(self, state: State) -> State:
         r"""Same as forward of Neural Network
         """
         return self.forward(state)
+    
+    @property
+    def system_idx(self) -> List[int]:
+        r"""The system indices of the LOCC protocol.
+        """
+        return self.measure.system_idx + self.list_gate.system_idx[0]
+    
+    @system_idx.setter
+    def system_idx(self, value: List[int]):
+        r"""Set the system indices of the LOCC protocol.
+        """
+        assert len(value) == len(self.system_idx), \
+             f"Length of system_idx should be {len(self.system_idx)}, but got {len(value)}"
+        num_measure_system = len(self.measure.system_idx)
+        self.measure.system_idx = value[:num_measure_system]
+        self.list_gate.system_idx = [value[num_measure_system:]]
+    
+    @property
+    def info(self) -> OperatorInfoType:
+        r"""Information of this channel
+        """
+        info = super().info
+        info.update({
+            'system_idx': self.system_idx,
+        })
+        return info
     
     def forward(self, state: State) -> State:
         r"""Compute the input state passing through the LOCC protocol.
@@ -160,6 +222,9 @@ class OneWayLOCC(Operator):
         matrix, sys_idx = self.list_gate.matrix, self.list_gate.system_idx[0]
         
         measured_state = self.measure(state)
+        
+        dim = len(matrix.shape[:-2])
+        matrix = matrix.repeat(measured_state._prob_dim[:-dim] + [1] * (dim + 2))
         measured_state._evolve(matrix, sys_idx, on_batch=False)
         return measured_state
 
@@ -173,7 +238,7 @@ class QuasiOperation(Operator):
         system_idx: indices of the systems on which the protocol is applied. 
         type_repr: one of ``'choi'``, ``'kraus'``, ``'stinespring'`` or ``'gate'``. Defaults to ``'gate'``.
         acted_system_dim: dimension of systems that these channels act on. Can be a list of system dimensions 
-        or an int representing the dimension of all systems. Defaults to be qubit case.
+            or an int representing the dimension of all systems. Defaults to be qubit case.
     """
     def __init__(
         self, list_channels: torch.Tensor, quasi_prob: torch.Tensor, 

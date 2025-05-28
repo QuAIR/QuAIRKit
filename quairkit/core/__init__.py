@@ -20,4 +20,5 @@ Core functionalities of QuAIRKit.
 from .base import *
 from .hamiltonian import *
 from .intrinsic import *
+from .operator import *
 from .state import *

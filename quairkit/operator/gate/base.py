@@ -22,7 +22,7 @@ from typing import Any, Callable, Iterable, List, Union
 import matplotlib
 import torch
 
-from ...core import State, get_float_dtype, intrinsic, utils
+from ...core import OperatorInfoType, State, get_float_dtype, intrinsic, utils
 from ..channel import Channel
 from .visual import _base_gate_display, _base_param_gate_display
 
@@ -48,16 +48,8 @@ class Gate(Channel):
             "Received None for matrix and integer for acted_system_dim: "
             "either one of them must be specified to initialize a Gate instance.")
         
-        super().__init__('gate', matrix, system_idx, acted_system_dim, check_legality)
+        super().__init__('gate', matrix, system_idx, acted_system_dim, check_legality, gate_info)
         
-        default_gate_info = {
-            'gatename': 'O',
-            'texname': r'$O$',
-            'plot_width': 0.9,
-        }
-        if gate_info is not None:
-            default_gate_info.update(gate_info)
-        self.gate_info = default_gate_info
         self.__matrix = matrix if matrix is None else matrix.to(dtype=self.dtype, device=self.device)
     
     def __call__(self, state: State) -> State:
@@ -75,25 +67,6 @@ class Gate(Channel):
             raise ValueError(
                 "Need to specify the matrix form in this Gate instance.")
         return self.__matrix
-
-    def gate_history_generation(self) -> None:
-        r""" determine self.gate_history
-
-        """
-        gate_history = []
-        for system_idx in self.system_idx:
-            gate_info = {
-                'gate': self.gate_info['gatename'], 'which_system': system_idx, 'theta': None}
-            gate_history.append(gate_info)
-        self.gate_history = gate_history
-
-    def set_gate_info(self, **kwargs: Any) -> None:
-        r'''the interface to set `self.gate_info`
-
-        Args:
-            kwargs: parameters to set `self.gate_info`
-        '''
-        self.gate_info.update(kwargs)
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float) -> float:
         r'''The display function called by circuit instance when plotting.
@@ -140,8 +113,6 @@ class Gate(Channel):
         return state
 
     def forward(self, state: State) -> State:
-        state = state.clone()
-
         if self.num_acted_system == 1 and self.dim == 2:
             state = self._single_qubit_combine_with_threshold6(
                 state=state, matrices=[self.matrix for _ in self.system_idx])
@@ -158,7 +129,7 @@ class ParamGate(Gate):
     Args:
         generator: function that generates the unitary matrix of this gate.
         param: input parameters of quantum parameterized gates. Defaults to ``None`` i.e. randomized.
-        qubits_idx: indices of the qubits on which this gate acts on. Defaults to ``None``.
+        system_idx: indices of the qubits on which this gate acts on. Defaults to ``None``.
             i.e. list(range(num_acted_qubits)).
         num_acted_param: the number of parameters required for a single operation.
         param_sharing: whether all operations are shared by the same parameter set.
@@ -167,14 +138,16 @@ class ParamGate(Gate):
         check_legality: whether check the completeness of the matrix if provided. Defaults to ``True``.
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit.
             Defaults to ``None``.
+        support_batch: whether generator support batch inputs. Defaults to ``False``.
     """
 
     def __init__(
-            self, generator: Callable[[torch.Tensor], torch.Tensor],
-            param: Union[torch.Tensor, float, List[float]] = None,
-            num_acted_param: int = 1, param_sharing: bool = False,
-            system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
-            acted_system_dim: Union[List[int], int] = 2, check_legality: bool = True, gate_info: dict = None,
+        self, generator: Callable[[torch.Tensor], torch.Tensor],
+        param: Union[torch.Tensor, float, List[float]] = None,
+        num_acted_param: int = 1, param_sharing: bool = False,
+        system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
+        acted_system_dim: Union[List[int], int] = 2, check_legality: bool = True, gate_info: dict = None,
+        support_batch: bool = False
     ):
         # if # of acted system is unknown, generate an example matrix to run Gate.__init__
         ex_matrix = generator(torch.randn(
@@ -185,30 +158,35 @@ class ParamGate(Gate):
         intrinsic._theta_generation(self, param, self.system_idx, num_acted_param, param_sharing)
         self.param_sharing = param_sharing
         self.__generator = generator
+        self.__support_batch = support_batch
     
     def __call__(self, state: State) -> State:
         return self.forward(state)
 
     @property
     def matrix(self) -> Union[torch.Tensor, List[torch.Tensor]]:
-        theta = self.theta.expand(len(self.system_idx), -1, -1) if self.param_sharing else self.theta
+        theta = self.theta.repeat(len(self.system_idx), 1, 1) if self.param_sharing else self.theta
+        
+        if self.__support_batch:
+            return self.__generator(theta).squeeze().to(device=self.device)
+        
         matrices_list = [
             torch.stack([self.__generator(param) for param in theta[param_idx]])
             for param_idx in range(len(self.system_idx))
         ]
         matrices_list = torch.stack(matrices_list)
         return matrices_list.squeeze().to(device=self.device)
-
-    def gate_history_generation(self) -> None:
-        r""" determine self.gate_history when gate is parameterized
+    
+    @property
+    def info(self) -> OperatorInfoType:
+        r"""Information of this gate.
         """
-        gate_history = []
-        for idx, system_idx in enumerate(self.system_idx):
-            param = self.theta if self.param_sharing else self.theta[idx]
-            gate_info = {
-                'gate': self.gate_info['gatename'], 'which_system': system_idx, 'theta': param}
-            gate_history.append(gate_info)
-        self.gate_history = gate_history
+        info = super().info
+        info.update({
+            'param': self.theta,
+            'matrix': None if self.theta.shape[1] > 1 else self.matrix,
+        })
+        return info
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         r'''The display function called by circuit instance when plotting.
@@ -226,7 +204,7 @@ class ParamGate(Gate):
         return _base_param_gate_display(self, ax, x)
 
     def forward(self, state: State) -> State:
-        dim, state = self.dim, state.clone()
+        dim = self.dim
         matrices_list = self.matrix.view([-1, self.theta.shape[-2], dim, dim]).squeeze(-3)
         
         # if self.num_acted_system == 1:

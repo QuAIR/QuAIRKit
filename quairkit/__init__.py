@@ -87,7 +87,7 @@ os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 from .core import set_backend, set_device, set_dtype, set_seed
 from .core import get_backend, get_device, get_dtype, get_seed, get_float_dtype
-from .core import Hamiltonian, State, Operator, visual, to_state
+from .core import Hamiltonian, State, Operator, to_state
 from . import ansatz
 from . import database
 from . import operator
@@ -97,7 +97,7 @@ from .circuit import Circuit
 from . import application
 
 name = "quairkit"
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 def print_info() -> None:

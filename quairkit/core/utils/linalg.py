@@ -187,6 +187,21 @@ def _trace_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
     return _trace(mat, axis1=-2, axis2=-4).reshape(batch_dims + [dim2, dim2])
 
 
+def _ptrace_1(xy: torch.Tensor, x: torch.Tensor) -> torch.Tensor:
+    r"""Tracing out the first system of the product unit vector xy
+    
+    Args:
+        x: the unit vector of the first system.
+    
+    """
+    dim_x = x.shape[-1]
+    batch_dims, dim_y = list(xy.shape[:-1]), int(xy.shape[-1] // dim_x)
+    
+    xy, x = xy.view([-1, dim_x, dim_y]), x.view([-1, dim_x, 1])
+    y = (xy * x.conj()).sum(dim=-2)
+    return y.view(batch_dims + [dim_y])
+
+
 def _transpose_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
     r"""Transpose the first system of the matrix
     
@@ -269,7 +284,7 @@ def _kron(matrix_A: torch.Tensor, matrix_B: torch.Tensor) -> torch.Tensor:
 def _nkron( 
     matrix_1st: torch.Tensor, *args: torch.Tensor
 ) -> torch.Tensor:
-    return reduce(_kron, args, matrix_1st).squeeze()
+    return reduce(_kron, args, matrix_1st)
 
 
 def _partial_transpose(state: torch.Tensor, transpose_idx: List[int], system_dim: List[int]) -> torch.Tensor: 
@@ -289,7 +304,7 @@ def _permute_systems(mat: torch.Tensor, perm_list: List[int], dim_list: List[int
         return mat
     original_shape = mat.shape
     mat = mat.view([-1] + list(mat.shape[-2:]))
-    return _base_transpose_for_dm(mat, perm_list, dim_list).view(original_shape).contiguous()
+    return _permute_dm(mat, perm_list, dim_list).view(original_shape).contiguous()
 
 
 def _schmidt_decompose(
@@ -378,28 +393,6 @@ def _logm_scipy(A: torch.Tensor) -> torch.Tensor:
     return logmA.squeeze().to(A.device, dtype=A.dtype)
 
 
-def _sqrtm_scipy(A: torch.Tensor) -> torch.Tensor:
-    r"""Calculate square root of a matrix
-    Args:
-        A: Input matrix.
-    Returns:
-        The square root of the matrix
-    """
-    batch_dim = list(A.shape[:-2])
-    batch_size = [int(np.prod(batch_dim))] 
-    
-    A = A.reshape(batch_size + list(A.shape[-2:]))
-    
-    batch_dims = A.shape[0]
-    sqrtmA = torch.zeros(A.shape, dtype=torch.complex128)
-    for i in range(batch_dims):
-        sqrtmA[i,:,:] = torch.from_numpy(
-            scipy.linalg.sqrtm(A[i,:,:].cpu(), disp=False)[0].astype("complex128")
-        )
-    
-    return sqrtmA.squeeze().to(A.device, dtype=A.dtype)
-
-
 
 def _perm_of_list(origin: List[int], target: List[int]) -> List[int]:
     r"""Find the permutation mapping the original list to the target list
@@ -408,7 +401,7 @@ def _perm_of_list(origin: List[int], target: List[int]) -> List[int]:
     return [perm_map[val] for val in target]
 
 
-def _base_transpose(state: torch.Tensor, perm: Union[List, Tuple],
+def _permute_sv(state: torch.Tensor, perm: Union[List, Tuple],
                     system_dim: List[int]) -> torch.Tensor:
     r"""speed-up logic using using np.transpose + torch.gather.
 
@@ -428,7 +421,7 @@ def _base_transpose(state: torch.Tensor, perm: Union[List, Tuple],
     return state.gather(1, index=base_idx)
 
 
-def _base_transpose_for_dm(state: torch.Tensor, perm: Union[List, Tuple],
+def _permute_dm(state: torch.Tensor, perm: Union[List, Tuple],
                            system_dim: List[int]) -> torch.Tensor:
     r"""speed-up logic using using np.transpose + torch.gather.
 
@@ -467,27 +460,14 @@ class __Logm(torch.autograd.Function):
         return _adjoint(A, G, _logm_scipy)
 
 
-class __Sqrtm(torch.autograd.Function):
-    @staticmethod
-    def forward(ctx, A):
-        assert A.size(-1) == A.size(-2)  # Square matrix
-        assert A.dtype in (
-            torch.float32,
-            torch.float64,
-            torch.complex64,
-            torch.complex128,
-        )
-        ctx.save_for_backward(A)
-        return _sqrtm_scipy(A)
-
-    @staticmethod
-    def backward(ctx, G):
-        (A,) = ctx.saved_tensors
-        return _adjoint(A, G, _sqrtm_scipy)
-
-
 _logm = __Logm.apply
-_sqrtm = __Sqrtm.apply
+
+
+def _sqrtm(A: torch.Tensor) -> torch.Tensor:
+    w, v = torch.linalg.eigh(A)
+    w = torch.clamp(w, min=1e-20)
+    sqrt_w = torch.sqrt(w)
+    return (v * sqrt_w.unsqueeze(-2)) @ v.mH
 
 
 def _create_matrix(
@@ -603,6 +583,9 @@ def _gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: torch.
 
 def _prob_sample(distributions: torch.Tensor, shots: int = 1024, 
                  binary: bool = True, proportional: bool = False) -> Dict[str, torch.Tensor]:
+    batch_dim =list(distributions.shape[:-1])
+    distributions = distributions.view([-1, distributions.shape[-1]])
+    
     num_elements = distributions.size(-1)
     num_bits = num_elements.bit_length() - 1
     
@@ -614,6 +597,6 @@ def _prob_sample(distributions: torch.Tensor, shots: int = 1024,
         counts = counts / shots
     
     keys = [f'{i:0{num_bits}b}' if binary else str(i) for i in range(num_elements)]
-    
-    results = OrderedDict((key, counts[:, i]) for i, key in enumerate(keys))
+    results = OrderedDict((key, counts[:, i].view(batch_dim)) 
+                          for i, key in enumerate(keys))
     return dict(results)

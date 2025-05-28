@@ -25,7 +25,7 @@ __all__ = ["ising_hamiltonian", "xy_hamiltonian", "heisenberg_hamiltonian"]
 
 
 def ising_hamiltonian(edges: torch.Tensor, vertices: torch.Tensor) -> Hamiltonian:
-    r"""Compute the Ising Hamiltonian
+    r"""Compute the Ising Hamiltonian.
 
     .. math::
 
@@ -34,40 +34,40 @@ def ising_hamiltonian(edges: torch.Tensor, vertices: torch.Tensor) -> Hamiltonia
         \end{align}
 
     Args:
-            edges: A tensor E shape=[V, V], where E[u][v] is \gamma_{uv}.
-            vertices: A tensor E shape=[V], where V[k] is \beta_{k}.
+        edges: A tensor E shape=[V, V], where E[u][v] is \gamma_{uv}.
+        vertices: A tensor V shape=[V], where V[k] is \beta_{k}.
 
     Returns:
-        H_{Ising}
-        
-    .. code-block:: python
-        
-        edges = torch.tensor([[0, 1, 0.5],  
-                              [1, 0, 0.2], 
-                             [0.5, 0.2, 0]])
-                             
-        vertices = torch.tensor([0.3, 0.4, 0.1]) 
+        Hamiltonian representation of the Ising Hamiltonian.
 
-        hamiltonian = ising_hamiltonian(edges, vertices)
-        
-        print(f'The Ising_Hamiltonian is \n {hamiltonian}.')
-        
-    ::
-    
-        The Ising_Hamiltonian is 
-        1.0 Z0, Z1
-        0.5 Z0, Z2
-        0.20000000298023224 Z1, Z2
-        0.30000001192092896 X0
-        0.4000000059604645 X1
-        0.10000000149011612 X2.
+    Examples:
+        .. code-block:: python
 
+            import torch
+            from quairkit.database.hamiltonian import ising_hamiltonian
+
+            edges = torch.tensor([[0, 1, 0.5],
+                                  [1, 0, 0.2],
+                                  [0.5, 0.2, 0]])
+            vertices = torch.tensor([0.3, 0.4, 0.1])
+            hamiltonian = ising_hamiltonian(edges, vertices)
+            print(f'The Ising_Hamiltonian is \n {hamiltonian}')
+
+        ::
+
+            The Ising_Hamiltonian is 
+            1.0 Z0, Z1
+            0.5 Z0, Z2
+            0.20000000298023224 Z1, Z2
+            0.30000001192092896 X0
+            0.4000000059604645 X1
+            0.10000000149011612 X2
     """
     h_list = []
     shape_of_edges = edges.shape
 
     assert len(shape_of_edges) == 2, \
-    f'The input variable edges should be a 2-dimension torch.tensor, but receive {len(shape_of_edges)}-dimension'
+        f'The input variable edges should be a 2-dimension torch.tensor, but receive {len(shape_of_edges)}-dimension'
 
     edges_param_list = edges.tolist()
     vertices_param_list = vertices.tolist()
@@ -88,10 +88,8 @@ def ising_hamiltonian(edges: torch.Tensor, vertices: torch.Tensor) -> Hamiltonia
     return Hamiltonian(h_list)
 
 
-
-
 def xy_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
-    r"""Compute the Ising Hamiltonian
+    r"""Compute the XY Hamiltonian.
 
     .. math::
 
@@ -100,42 +98,45 @@ def xy_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
         \end{align}
 
     Args:
-            edges: A tensor E shape=[2, V, V], where E[0][u][v] is \alpha_{uv} and E[1][u][v] is \beta_{uv}.
+        edges: A tensor E shape=[2, V, V], where E[0][u][v] is \alpha_{uv} and E[1][u][v] is \beta_{uv}.
 
     Returns:
-        H_{XY}
-        
-    .. code-block:: python
-    
-        edges = torch.tensor([[
-            [0, 0.7, 0],  
-            [0.7, 0, 0.2],
-            [0, 0.2, 0]
-        ],
-        [
-            [0, 0.5, 0],  
-            [0.5, 0, 0.3],
-            [0, 0.3, 0]
-        ]])
+        Hamiltonian representation of the XY Hamiltonian.
 
-        H_XY = xy_hamiltonian(edges)
+    Examples:
+        .. code-block:: python
 
-        print(f'The XY Hamiltonian is:\n{H_XY}')
-        
-    ::
-    
-        The XY Hamiltonian is:
-        0.699999988079071 X0, X1
-        0.5 Y0, Y1
-        0.20000000298023224 X1, X2
-        0.30000001192092896 Y1, Y2
-    
+            import torch
+            from quairkit.database.hamiltonian import xy_hamiltonian
+
+            edges = torch.tensor([
+                [
+                    [0, 0.7, 0],
+                    [0.7, 0, 0.2],
+                    [0, 0.2, 0]
+                ],
+                [
+                    [0, 0.5, 0],
+                    [0.5, 0, 0.3],
+                    [0, 0.3, 0]
+                ]
+            ])
+            H_XY = xy_hamiltonian(edges)
+            print(f'The XY Hamiltonian is:\n{H_XY}')
+
+        ::
+
+            The XY Hamiltonian is:
+            0.699999988079071 X0, X1
+            0.5 Y0, Y1
+            0.20000000298023224 X1, X2
+            0.30000001192092896 Y1, Y2
     """
     h_list = []
     shape_of_edges = edges.shape
 
     assert len(shape_of_edges) == 3, \
-    f'The input variable edges should be a 3-dimension torch.tensor, but receive {len(shape_of_edges)}-dimension'
+        f'The input variable edges should be a 3-dimension torch.tensor, but receive {len(shape_of_edges)}-dimension'
 
     edges_param_list = edges.tolist()
 
@@ -150,60 +151,64 @@ def xy_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
 
 
 def heisenberg_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
-    r"""Compute the Heisenberg Hamiltonian
+    r"""Compute the Heisenberg Hamiltonian.
 
     .. math::
 
         \begin{align}
-            H_{Heisenberg}= \sum_{(u,v) \in E(u>v)}(\alpha_{uv}X_u X_v + \beta_{uv}Y_u Y_v, + \gamma_{uv}Z_u Z_v)
+            H_{Heisenberg}= \sum_{(u,v) \in E(u>v)}(\alpha_{uv}X_u X_v + \beta_{uv}Y_u Y_v + \gamma_{uv}Z_u Z_v)
         \end{align}
 
     Args:
-            edges: A tensor E shape=[3, V, V], where E[0][u][v] is \alpha_{uv}, E[1][u][v] is \beta_{uv} and E[2][u][v] is \gamma_{uv}.
+        edges: A tensor E shape=[3, V, V], where
+               E[0][u][v] is \alpha_{uv},
+               E[1][u][v] is \beta_{uv}, and
+               E[2][u][v] is \gamma_{uv}.
 
     Returns:
-        H_{Heisenberg}
-        
-    .. code-block:: python
-    
-        edges = torch.tensor([
-            [
-                [0, 0.5, 0],  
-                [0.5, 0, 0.2],
-                [0, 0.2, 0]
-            ],
-            [
-                [0, 0.3, 0],  
-                [0.3, 0, 0.4],
-                [0, 0.4, 0]
-            ],
-            [
-                [0, 0.7, 0],  
-                [0.7, 0, 0.1],
-                [0, 0.1, 0]
-            ]
-        ])
+        Hamiltonian representation of the Heisenberg Hamiltonian.
 
-        H_Heisenberg = heisenberg_hamiltonian(edges)
+    Examples:
+        .. code-block:: python
 
-        print(f'The Heisenberg Hamiltonian is:\n{H_Heisenberg}')
-        
-    ::
-    
-        The Heisenberg Hamiltonian is:
-        0.5 X0, X1
-        0.30000001192092896 Y0, Y1
-        0.699999988079071 Z0, Z1
-        0.20000000298023224 X1, X2
-        0.4000000059604645 Y1, Y2
-        0.10000000149011612 Z1, Z2
+            import torch
+            from quairkit.database.hamiltonian import heisenberg_hamiltonian
 
+            edges = torch.tensor([
+                [
+                    [0, 0.5, 0],
+                    [0.5, 0, 0.2],
+                    [0, 0.2, 0]
+                ],
+                [
+                    [0, 0.3, 0],
+                    [0.3, 0, 0.4],
+                    [0, 0.4, 0]
+                ],
+                [
+                    [0, 0.7, 0],
+                    [0.7, 0, 0.1],
+                    [0, 0.1, 0]
+                ]
+            ])
+            H_Heisenberg = heisenberg_hamiltonian(edges)
+            print(f'The Heisenberg Hamiltonian is:\n{H_Heisenberg}')
+
+        ::
+
+            The Heisenberg Hamiltonian is:
+            0.5 X0, X1
+            0.30000001192092896 Y0, Y1
+            0.699999988079071 Z0, Z1
+            0.20000000298023224 X1, X2
+            0.4000000059604645 Y1, Y2
+            0.10000000149011612 Z1, Z2
     """
     h_list = []
     shape_of_edges = edges.shape
 
     assert len(shape_of_edges) == 3, \
-    f'The input variable edges should be a 3-dimension torch.tensor, but receive {len(shape_of_edges)}-dimension'
+        f'The input variable edges should be a 3-dimension torch.tensor, but receive {len(shape_of_edges)}-dimension'
 
     edges_param_list = edges.tolist()
 
@@ -218,7 +223,7 @@ def heisenberg_hamiltonian(edges: torch.Tensor) -> Hamiltonian:
                 (
                     (alpha, f'X{i},X{j}'),
                     (beta, f'Y{i},Y{j}'),
-                    (gamma, f'Z{i},Z{j}'),
+                    (gamma, f'Z{i},Z{j}')
                 )
             )
     return Hamiltonian(h_list)

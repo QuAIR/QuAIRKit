@@ -1,5 +1,5 @@
 # !/usr/bin/env python3
-# Copyright (c) 2023 QuAIR team. All Rights Reserved.
+# Copyright (c) 2025 QuAIR team. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,10 @@
 # limitations under the License.
 
 r"""
-The module of the quantum gates.
+    Common settings for the unit test
 """
 
-from .base import Gate, ParamGate
-from .custom import (ControlOracle, ControlParamOracle, Oracle, ParamOracle,
-                     Permutation, UniversalQudits)
-from .multi_qubit_gate import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CX, CY,
-                               CZ, MS, RXX, RYY, RZZ, SWAP, Toffoli)
-from .single_qubit_gate import RX, RY, RZ, U3, H, P, S, Sdg, T, Tdg, X, Y, Z
-from .visual import _circuit_plot
+TOL32 = 1e-6
+TOL64 = 1e-10
+
+REPEAT_ITR = 10

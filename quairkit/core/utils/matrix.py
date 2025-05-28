@@ -14,10 +14,11 @@
 # limitations under the License.
 
 r"""
-Gate matrices.
+Built-in Gate matrices.
 """
 
 import math
+from typing import List, Union
 
 import numpy as np
 import torch
@@ -146,51 +147,51 @@ def _z(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
 
 
 def _p(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
     gate_matrix = [
         _1, _0,
         _0, torch.cos(theta) + 1j * torch.sin(theta),
     ]
-    return torch.cat(gate_matrix).view([2, 2])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
 
 
 def _rx(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     gate_matrix = [
         torch.cos(theta / 2), -1j * torch.sin(theta / 2),
         -1j * torch.sin(theta / 2), torch.cos(theta / 2),
     ]
-    return torch.cat(gate_matrix).view([2, 2])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
 
 
 def _ry(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     gate_matrix = [
         torch.cos(theta / 2), -torch.sin(theta / 2),
         torch.sin(theta / 2), torch.cos(theta / 2),
     ]
-    return torch.cat(gate_matrix).view([2, 2]) + 0j
+    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2]) + 0j
 
 
 def _rz(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0 = torch.zeros_like(theta)
     gate_matrix = [
         torch.exp(-1j * theta / 2), _0,
         _0, torch.exp(1j * theta / 2),
     ]
-    return torch.cat(gate_matrix).view([2, 2])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
 
 
 def _u3(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([3, 1])
-    theta, phi, lam = theta[0], theta[1], theta[2]
+    theta = theta.view([-1, 3, 1])
+    theta, phi, lam = theta[:, 0], theta[:, 1], theta[:, 2]
     gate_matrix = [
         torch.cos(theta / 2), -torch.exp(1j * lam) * torch.sin(theta / 2),
         torch.exp(1j * phi) * torch.sin(theta / 2), torch.exp(1j * (phi + lam)) * torch.cos(theta / 2),
     ]
-    return torch.cat(gate_matrix).view([2, 2])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
 
 
 
@@ -242,7 +243,7 @@ def _swap(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
 
 
 def _cp(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
     gate_matrix = [
         _1, _0, _0, _0,
@@ -250,11 +251,11 @@ def _cp(theta: torch.Tensor) -> torch.Tensor:
         _0, _0, _1, _0,
         _0, _0, _0, torch.cos(theta) + 1j * torch.sin(theta),
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _crx(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
     gate_matrix = [
         _1, _0, _0, _0, 
@@ -262,11 +263,11 @@ def _crx(theta: torch.Tensor) -> torch.Tensor:
         _0, _0, torch.cos(theta / 2), -1j * torch.sin(theta / 2),
         _0, _0, -1j * torch.sin(theta / 2), torch.cos(theta / 2),
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _cry(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
     gate_matrix = [
         _1, _0, _0, _0,
@@ -274,11 +275,11 @@ def _cry(theta: torch.Tensor) -> torch.Tensor:
         _0, _0, torch.cos(theta / 2), -torch.sin(theta / 2),
         _0, _0, torch.sin(theta / 2), torch.cos(theta / 2),
     ]
-    return torch.cat(gate_matrix).view([4, 4]) + 0j
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4]) + 0j
 
 
 def _crz(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
     gate_matrix = [
         _1, _0, _0, _0,
@@ -286,47 +287,47 @@ def _crz(theta: torch.Tensor) -> torch.Tensor:
         _0, _0, torch.cos(theta / 2) - 1j * torch.sin(theta / 2), _0,
         _0, _0, _0, torch.cos(theta / 2) + 1j * torch.sin(theta / 2),
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _cu(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([4, 1])
-    _0, _1 = torch.zeros_like(theta[-1]), torch.ones_like(theta[-1])
+    theta = theta.view([-1, 4, 1])
+    _0, _1 = torch.zeros_like(theta[:, -1]), torch.ones_like(theta[:, -1])
 
-    param1 = torch.cos(theta[0] / 2) * (torch.cos(theta[3]) + 1j * torch.sin(theta[3]))
-    param2 = -torch.sin(theta[0] / 2) * (torch.cos(theta[2] + theta[3]) + 1j * torch.sin(theta[2] + theta[3]))
-    param3 = torch.sin(theta[0] / 2) * (torch.cos(theta[1] + theta[3]) + 1j * torch.sin(theta[1] + theta[3])) 
-    param4 = torch.cos(theta[0] / 2) * (
-        torch.cos(theta[1] + theta[2] + theta[3])
-        + 1j * torch.sin(theta[1] + theta[2] + theta[3])
+    entry22 = torch.cos(theta[:, 0] / 2) * (torch.cos(theta[:, 3]) + 1j * torch.sin(theta[:, 3]))
+    entry23 = -torch.sin(theta[:, 0] / 2) * (torch.cos(theta[:, 2] + theta[:, 3]) + 1j * torch.sin(theta[:, 2] + theta[:, 3]))
+    entry32 = torch.sin(theta[:, 0] / 2) * (torch.cos(theta[:, 1] + theta[:, 3]) + 1j * torch.sin(theta[:, 1] + theta[:, 3])) 
+    entry33 = torch.cos(theta[:, 0] / 2) * (
+        torch.cos(theta[:, 1] + theta[:, 2] + theta[:, 3])
+        + 1j * torch.sin(theta[:, 1] + theta[:, 2] + theta[:, 3])
     )
     
     gate_matrix = [
         _1, _0, _0, _0,
         _0, _1, _0, _0,
-        _0, _0, param1, param2,
-        _0, _0, param3, param4,
+        _0, _0, entry22, entry23,
+        _0, _0, entry32, entry33,
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _rxx(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0 = torch.zeros_like(theta)
-    param1 = torch.cos(theta / 2)
-    param2 = -1j * torch.sin(theta / 2)
+    _cos = torch.cos(theta / 2)
+    _sin = -1j * torch.sin(theta / 2)
     
     gate_matrix = [
-        param1, _0, _0, param2,
-        _0, param1, param2, _0,
-        _0, param2, param1, _0,
-        param2, _0, _0, param1,
+        _cos, _0, _0, _sin,
+        _0, _cos, _sin, _0,
+        _0, _sin, _cos, _0,
+        _sin, _0, _0, _cos,
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _ryy(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0 = torch.zeros_like(theta)
     
     param1 = torch.cos(theta / 2)
@@ -339,11 +340,11 @@ def _ryy(theta: torch.Tensor) -> torch.Tensor:
         _0, param2, param1, _0,
         param3, _0, _0, param1,
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _rzz(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([1])
+    theta = theta.view([-1, 1])
     _0 = torch.zeros_like(theta)
     
     param1 = torch.cos(theta / 2) - 1j * torch.sin(theta / 2)
@@ -355,7 +356,7 @@ def _rzz(theta: torch.Tensor) -> torch.Tensor:
         _0, _0, param2, _0,
         _0, _0, _0, param1,
     ]
-    return torch.cat(gate_matrix).view([4, 4])
+    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
 
 
 def _ms(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
@@ -568,3 +569,20 @@ def _universal3(theta: torch.Tensor) -> torch.Tensor:
         unitary, _u3(phi[6, 0:3]), qubit_idx=2, num_qubits=3
     )
     return unitary
+
+
+def _permutation(perm: List[int], system_dim: List[int]) -> torch.Tensor:
+    num_system, dimension = len(perm), np.prod(system_dim)
+    mat = torch.eye(dimension).view(2 * system_dim)
+    idx = perm + list(range(num_system, 2 * num_system))
+    return torch.permute(mat, idx).reshape([dimension, dimension])
+
+
+def _param_generator(theta: torch.Tensor, generator: torch.Tensor) -> torch.Tensor:
+    r"""Generate a unitary with the given parameters and generators.
+    Such unitary is universal when generator forms a basis of the unitary group.
+    """
+    num_param = generator.shape[0]
+    theta = theta.view([-1, num_param, 1, 1])
+    hamiltonian = torch.sum(torch.mul(theta, generator), dim=-3)
+    return torch.matrix_exp(1j * hamiltonian)
