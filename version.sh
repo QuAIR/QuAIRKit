@@ -19,14 +19,13 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 # Initialize the version_info list for Python configuration
 version_info_content="html_theme_options['version_info'] = ["
 
-# Populate the version_info list with tag data
+# Add the "latest" version to the version_info list first
+version_info_content+="{'version': 'latest', 'title': 'latest', 'aliases': ['latest']}"
+
+# Populate the version_info list with tag data, appending after "latest"
 for i in "${!tags[@]}"; do
     tag="${tags[$i]}"
-    if [ $i -eq 0 ]; then
-        version_info_content+="{'version': '$tag', 'title': '$tag', 'aliases': ['$tag']}"
-    else
-        version_info_content+=", {'version': '$tag', 'title': '$tag', 'aliases': ['$tag']}"
-    fi
+    version_info_content+=", {'version': '$tag', 'title': '$tag', 'aliases': ['$tag']}"
 done
 
 # Close the version_info list
@@ -43,7 +42,7 @@ for tag in "${tags[@]}"; do
     fi
 
     echo "Switching to tag $tag..."
-    git checkout "$tag"
+    git checkout $tag
     if [ $? -ne 0 ]; then
         echo "Failed to switch to tag $tag. Skipping..."
         continue
@@ -56,18 +55,13 @@ for tag in "${tags[@]}"; do
             sphinx-build docs/sphinx_src docs/api/$tag
             rm -rf docs/sphinx_src
             ;;
-        v0.2.0)
-            python docs/update_quairkit_rst.py
-            sphinx-build docs/sphinx_src docs/api/$tag
-            rm -rf docs/sphinx_src
-            ;;
-        v0.3.0 | *)
+        v0.2.0 | *)
             python docs/update_quairkit_rst.py
             cp -r tutorials docs/sphinx_src/
             sphinx-build docs/sphinx_src docs/api/$tag
             rm -rf docs/sphinx_src
             ;;
-        v0.4.0 | *)
+        v0.3.0 | *)
             python docs/update_quairkit_rst.py
             cp -r tutorials docs/sphinx_src/
             sphinx-build docs/sphinx_src docs/api/$tag

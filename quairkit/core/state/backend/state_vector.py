@@ -240,8 +240,8 @@ class PureState(State):
         other_dim = dim // ctrl_dim
         data = self._data.squeeze().expand(self.batch_dim + [dim])
         
-        data = data.view(_shape + [ctrl_dim, applied_dim, other_dim // applied_dim])
-        data[:, :, index] = torch.matmul(unitary, data[:, :, index].clone())
+        data = data.view(_shape + [ctrl_dim, applied_dim, other_dim // applied_dim]).clone()
+        data[:, :, index] = torch.matmul(unitary, data[:, :, index])
         
         self._data = data.view([-1, dim])
         
