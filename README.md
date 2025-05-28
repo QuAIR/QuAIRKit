@@ -174,7 +174,7 @@ psi = random_state(1, size=100)
 input_state = nkron(psi, bell_state(2))
 output_state = cir(input_state).trace([0, 1]) # discard first two qubits
 
-fid = state_fidelity(output_state, psi).mean().item()
+fid = state_fidelity(output_state.expec_state(), psi).mean().item()
 print('The average fidelity of the teleportation protocol is', fid)
 ```
 
