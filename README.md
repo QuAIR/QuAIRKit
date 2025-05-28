@@ -252,3 +252,7 @@ density_matrix
   - [Hamiltonian simulation via Trotter decomposition](tutorials/research/trotter.ipynb)
   - [Rediscovering Simon's algorithm with PQC](tutorials/research/simon.ipynb)
   - [Training quantum process transformation with PQC](tutorials/research/comb.ipynb)
+
+## Acknowledgements
+
+We appreciate the kind support from the [Sourcery AI](https://sourcery.ai) that greatly enhances the coding & review quality of the QuAIRKit project.
