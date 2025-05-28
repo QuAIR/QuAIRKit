@@ -8,3 +8,4 @@ tutorials
     tutorials/*
     tutorials.feature
     tutorials.introduction
+    tutorials.research

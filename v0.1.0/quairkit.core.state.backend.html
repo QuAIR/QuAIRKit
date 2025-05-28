@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -7,6 +8,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+      
+      
+      
+        <link rel="prev" href="quairkit.core.state.html">
+      
+      
+        <link rel="next" href="quairkit.core.state.backend.density_matrix.html">
       
       
       <link rel="icon" href="_static/favicon.svg">
@@ -19,15 +27,13 @@
     
       
         
-        
-          
-          
-          <meta name="theme-color" content="#4cae4f">
-        
       
       
 
+
     
+    
+      
     
     
       
@@ -36,8 +42,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -52,9 +58,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -74,15 +79,18 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -101,10 +109,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -112,24 +124,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -141,7 +156,7 @@
         <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -173,12 +188,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     QuAIRKit
   </label>
@@ -187,7 +203,7 @@
       <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -199,15 +215,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.ansatz.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>ansatz</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>ansatz
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -215,15 +238,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.circuit.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>circuit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>circuit
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -231,165 +261,239 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.core.html"><span class="md-ellipsis">quairkit.<wbr>core</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
           
-            <label for="__nav_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.core" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">quairkit.<wbr>core</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.core.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            quairkit.<wbr>core
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.base.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>base</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>base
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.hamiltonian.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>hamiltonian</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>hamiltonian
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.core.state.html"><span class="md-ellipsis">quairkit.<wbr>core.<wbr>state</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
           
-            <label for="__nav_3_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.core.state" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.core.state.html" class="md-nav__link ">
               
   
   
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state
     
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            quairkit.<wbr>core.<wbr>state
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
     
   
+    
+  
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__current-nested md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_1" type="checkbox" id="__nav_3_3_1" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index md-nav__link--active">
-          <a href="#"><span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" checked>
+        
           
-            <label for="__nav_3_3_1">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.core.state.backend" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_3_1">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="#" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state.<wbr>backend
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link md-nav__link--active" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            quairkit.<wbr>core.<wbr>state.<wbr>backend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.state.backend.density_matrix.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>density_<wbr>matrix</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>density_<wbr>matrix
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.state.backend.state_vector.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>state_<wbr>vector</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>state_<wbr>vector
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -397,15 +501,31 @@
     <li class="md-nav__item md-nav__item--active md-nav__current-toc">
       
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend</span>
+          
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state.<wbr>backend
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state.<wbr>backend
+    
+  </span>
+  
+
       </a>
       
         
@@ -424,7 +544,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit." class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>State</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit.">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>State</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.core.state.backend.State">
@@ -432,7 +557,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -440,21 +568,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.__init__.data" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.__init__.data (Python parameter) — tensor array for quantum state(s)." class="md-ellipsis">data</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.__init__.data (Python parameter) — tensor array for quantum state(s).">data</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.__init__.sys_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.__init__.sys_dim (Python parameter) — a list of dimensions for each system." class="md-ellipsis">sys_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.__init__.sys_dim (Python parameter) — a list of dimensions for each system.">sys_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.__init__.system_seq" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.__init__.system_seq (Python parameter) — the system order of this state." class="md-ellipsis">system_<wbr>seq</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.__init__.system_seq (Python parameter) — the system order of this state.">system_<wbr>seq</span>
+    </span>
   </a>
   
 </li>
@@ -466,7 +609,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.prob_select (Python method) — Indexing probability outcome from the State batch along the given dimension." class="md-ellipsis">prob_<wbr>select</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.prob_select (Python method) — Indexing probability outcome from the State batch along the given dimension.">prob_<wbr>select</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="prob_select">
@@ -474,7 +622,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -482,14 +633,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select.outcome_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.prob_select.outcome_idx (Python parameter) — the 1-D tensor containing the outcomes to index" class="md-ellipsis">outcome_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.prob_select.outcome_idx (Python parameter) — the 1-D tensor containing the outcomes to index">outcome_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select.prob_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.prob_select.prob_idx (Python parameter) — the int that indexing which probability distribution." class="md-ellipsis">prob_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.prob_select.prob_idx (Python parameter) — the int that indexing which probability distribution.">prob_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -501,14 +662,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -520,7 +687,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expand (Python method) — Expand the batch dimension of the State." class="md-ellipsis">expand</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand (Python method) — Expand the batch dimension of the State.">expand</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expand">
@@ -528,7 +700,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -536,7 +711,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand.batch_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expand.batch_dim (Python parameter) — the new batch dimension" class="md-ellipsis">batch_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand.batch_dim (Python parameter) — the new batch dimension">batch_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -553,7 +733,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand_as" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expand_as (Python method) — Expand this tensor to the same size as other." class="md-ellipsis">expand_<wbr>as</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand_as (Python method) — Expand this tensor to the same size as other.">expand_<wbr>as</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expand_as">
@@ -561,7 +746,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand_as-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -569,7 +757,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand_as.other" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expand_as.other (Python parameter) — the state/tensor to be expanded to." class="md-ellipsis">other</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand_as.other (Python parameter) — the state/tensor to be expanded to.">other</span>
+    </span>
   </a>
   
 </li>
@@ -586,14 +779,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.backend" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.backend (Python property) — The backend of this state." class="md-ellipsis">backend</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.backend (Python property) — The backend of this state.">backend</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.check (Python method) — Assert whether the input data is valid for the specific State class." class="md-ellipsis">check</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check (Python method) — Assert whether the input data is valid for the specific State class.">check</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="check">
@@ -601,7 +804,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -609,21 +815,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check.data" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.check.data (Python parameter) — tensor array for quantum state(s)." class="md-ellipsis">data</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check.data (Python parameter) — tensor array for quantum state(s).">data</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check.sys_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.check.sys_dim (Python parameter) — (list of) dimension(s) of the systems, can be a list of integers or an integer." class="md-ellipsis">sys_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check.sys_dim (Python parameter) — (list of) dimension(s) of the systems, can be a list of integers or an integer.">sys_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check.eps" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.check.eps (Python parameter) — the tolerance for the numerical check." class="md-ellipsis">eps</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check.eps (Python parameter) — the tolerance for the numerical check.">eps</span>
+    </span>
   </a>
   
 </li>
@@ -635,14 +856,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -654,119 +881,204 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.data" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.data (Python property) — The data tensor of this state" class="md-ellipsis">data</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.data (Python property) — The data tensor of this state">data</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.probability" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.probability (Python property) — The probability distribution(s) of these states&#39; occurrences" class="md-ellipsis">probability</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.probability (Python property) — The probability distribution(s) of these states&#39; occurrences">probability</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.batch_dim" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.batch_dim (Python property) — The batch dimension of this state" class="md-ellipsis">batch_<wbr>dim</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.batch_dim (Python property) — The batch dimension of this state">batch_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.shape" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.shape (Python property) — The shape of this state" class="md-ellipsis">shape</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.shape (Python property) — The shape of this state">shape</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.dtype" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.dtype (Python property) — The data type of this state" class="md-ellipsis">dtype</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.dtype (Python property) — The data type of this state">dtype</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.device" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.device (Python property) — The device of this state" class="md-ellipsis">device</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.device (Python property) — The device of this state">device</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numel" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.numel (Python method) — The number of elements in this data" class="md-ellipsis">numel</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.numel (Python method) — The number of elements in this data">numel</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.dim" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.dim (Python property) — The dimension of this state" class="md-ellipsis">dim</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.dim (Python property) — The dimension of this state">dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.system_dim" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.system_dim (Python property) — The list of dimensions for each system" class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.system_dim (Python property) — The list of dimensions for each system">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.are_qubits" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.are_qubits (Python method) — Whether all systems are qubits" class="md-ellipsis">are_<wbr>qubits</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.are_qubits (Python method) — Whether all systems are qubits">are_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.are_qutrits" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.are_qutrits (Python method) — Whether all systems are qutrits" class="md-ellipsis">are_<wbr>qutrits</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.are_qutrits (Python method) — Whether all systems are qutrits">are_<wbr>qutrits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.num_systems" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.num_systems (Python property) — The number of systems" class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.num_systems (Python property) — The number of systems">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.num_qubits" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.num_qubits (Python property) — The number of qubits of this state, when all systems are qubits" class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.num_qubits (Python property) — The number of qubits of this state, when all systems are qubits">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.ket" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.ket (Python property) — The ket form of this state" class="md-ellipsis">ket</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.ket (Python property) — The ket form of this state">ket</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.bra" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.bra (Python property) — Dagger of the ket form." class="md-ellipsis">bra</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.bra (Python property) — Dagger of the ket form.">bra</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.density_matrix" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.density_matrix (Python property) — The density matrix representation of this state." class="md-ellipsis">density_<wbr>matrix</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.density_matrix (Python property) — The density matrix representation of this state.">density_<wbr>matrix</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.vec" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.vec (Python property) — \textrm{vec}(|i \rangle\langle j|)=|j, i \rangle" class="md-ellipsis">vec</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.vec (Python property) — \textrm{vec}(|i \rangle\langle j|)=|j, i \rangle">vec</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="vec">
@@ -774,7 +1086,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.vec-type" class="md-nav__link">
-    <span class="md-ellipsis">Type</span>
+    
+    <span class="md-ellipsis">
+      Type
+    </span>
   </a>
   
 </li>
@@ -786,21 +1101,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.rank" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.rank (Python property) — The rank of the state." class="md-ellipsis">rank</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.rank (Python property) — The rank of the state.">rank</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.normalize" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.normalize (Python method) — Normalize this state" class="md-ellipsis">normalize</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.normalize (Python method) — Normalize this state">normalize</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numpy" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.numpy (Python method) — Get the data in numpy." class="md-ellipsis">numpy</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.numpy (Python method) — Get the data in numpy.">numpy</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="numpy">
@@ -808,14 +1138,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numpy-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numpy-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -827,14 +1163,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.clone" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.clone (Python method) — Return a copy of the quantum state." class="md-ellipsis">clone</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.clone (Python method) — Return a copy of the quantum state.">clone</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.fit (Python method) — Convert the data to the specified backend." class="md-ellipsis">fit</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.fit (Python method) — Convert the data to the specified backend.">fit</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="fit">
@@ -842,7 +1188,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -850,7 +1199,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit.state_backend" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.fit.state_backend (Python parameter) — the target backend of the state." class="md-ellipsis">state_<wbr>backend</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.fit.state_backend (Python parameter) — the target backend of the state.">state_<wbr>backend</span>
+    </span>
   </a>
   
 </li>
@@ -862,14 +1216,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -881,7 +1241,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.to (Python method) — Change the property of the data tensor, and return a copy of this State" class="md-ellipsis">to</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.to (Python method) — Change the property of the data tensor, and return a copy of this State">to</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="to">
@@ -889,7 +1254,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -897,14 +1265,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to.dtype" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.to.dtype (Python parameter) — the new data type of the state." class="md-ellipsis">dtype</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.to.dtype (Python parameter) — the new data type of the state.">dtype</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to.device" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.to.device (Python parameter) — the new device of the state." class="md-ellipsis">device</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.to.device (Python parameter) — the new device of the state.">device</span>
+    </span>
   </a>
   
 </li>
@@ -921,14 +1299,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.system_seq" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.system_seq (Python property) — The system order of this state" class="md-ellipsis">system_<wbr>seq</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.system_seq (Python property) — The system order of this state">system_<wbr>seq</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.permute" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.permute (Python method) — Permute the systems order of the state." class="md-ellipsis">permute</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.permute (Python method) — Permute the systems order of the state.">permute</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="permute">
@@ -936,7 +1324,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.permute-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -944,7 +1335,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.permute.target_seq" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.permute.target_seq (Python parameter) — the target systems order." class="md-ellipsis">target_<wbr>seq</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.permute.target_seq (Python parameter) — the target systems order.">target_<wbr>seq</span>
+    </span>
   </a>
   
 </li>
@@ -961,14 +1357,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.reset_sequence" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.reset_sequence (Python method) — reset the system order to default sequence i.e. from 0 to n - 1." class="md-ellipsis">reset_<wbr>sequence</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.reset_sequence (Python method) — reset the system order to default sequence i.e. from 0 to n - 1.">reset_<wbr>sequence</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.evolve (Python method) — Evolve this state with unitary operators." class="md-ellipsis">evolve</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.evolve (Python method) — Evolve this state with unitary operators.">evolve</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="evolve">
@@ -976,7 +1382,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -984,14 +1393,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.evolve.unitary (Python parameter) — the unitary operator." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.evolve.unitary (Python parameter) — the unitary operator.">unitary</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve.sys_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.evolve.sys_idx (Python parameter) — the system indices to be acted on." class="md-ellipsis">sys_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.evolve.sys_idx (Python parameter) — the system indices to be acted on.">sys_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1003,14 +1422,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1022,7 +1447,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.transform (Python method) — Apply a general linear operator to the state." class="md-ellipsis">transform</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform (Python method) — Apply a general linear operator to the state.">transform</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="transform">
@@ -1030,7 +1460,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1038,21 +1471,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform.op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transform.op (Python parameter) — the input operator." class="md-ellipsis">op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform.op (Python parameter) — the input operator.">op</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform.sys_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transform.sys_idx (Python parameter) — the qubit indices to be applied." class="md-ellipsis">sys_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform.sys_idx (Python parameter) — the qubit indices to be applied.">sys_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform.repr_type" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transform.repr_type (Python parameter) — the representation type of input operator." class="md-ellipsis">repr_<wbr>type</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform.repr_type (Python parameter) — the representation type of input operator.">repr_<wbr>type</span>
+    </span>
   </a>
   
 </li>
@@ -1064,14 +1512,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1083,7 +1537,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expec_val (Python method) — The expectation value of the observable with respect to the quantum state." class="md-ellipsis">expec_<wbr>val</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_val (Python method) — The expectation value of the observable with respect to the quantum state.">expec_<wbr>val</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expec_val">
@@ -1091,7 +1550,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1099,14 +1561,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val.hamiltonian" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expec_val.hamiltonian (Python parameter) — Input observable." class="md-ellipsis">hamiltonian</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_val.hamiltonian (Python parameter) — Input observable.">hamiltonian</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val.decompose" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expec_val.decompose (Python parameter) — If decompose is True, it will return the expectation value of each term." class="md-ellipsis">decompose</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_val.decompose (Python parameter) — If decompose is True, it will return the expectation value of each term.">decompose</span>
+    </span>
   </a>
   
 </li>
@@ -1118,14 +1590,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1137,7 +1615,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expec_state (Python method) — The expectation with respect to the specific probability distribution(s) of states" class="md-ellipsis">expec_<wbr>state</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_state (Python method) — The expectation with respect to the specific probability distribution(s) of states">expec_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expec_state">
@@ -1145,7 +1628,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1153,7 +1639,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state.prob_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expec_state.prob_idx (Python parameter) — indices of probability distributions." class="md-ellipsis">prob_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_state.prob_idx (Python parameter) — indices of probability distributions.">prob_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1165,14 +1656,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1184,7 +1681,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.measure (Python method) — Measure the quantum state" class="md-ellipsis">measure</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure (Python method) — Measure the quantum state">measure</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="measure">
@@ -1192,7 +1694,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1200,28 +1705,48 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.measured_op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.measured_op (Python parameter) — measurement operator." class="md-ellipsis">measured_<wbr>op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.measured_op (Python parameter) — measurement operator.">measured_<wbr>op</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.sys_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.sys_idx (Python parameter) — the system indices to be measured." class="md-ellipsis">sys_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.sys_idx (Python parameter) — the system indices to be measured.">sys_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.is_povm" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.is_povm (Python parameter) — whether the measurement is a POVM." class="md-ellipsis">is_<wbr>povm</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.is_povm (Python parameter) — whether the measurement is a POVM.">is_<wbr>povm</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.keep_state" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.keep_state (Python parameter) — whether to keep the state after measurement." class="md-ellipsis">keep_<wbr>state</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.keep_state (Python parameter) — whether to keep the state after measurement.">keep_<wbr>state</span>
+    </span>
   </a>
   
 </li>
@@ -1233,21 +1758,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1259,21 +1793,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.sqrt" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.sqrt (Python method) — Matrix square root of the state." class="md-ellipsis">sqrt</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.sqrt (Python method) — Matrix square root of the state.">sqrt</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.log" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.log (Python method) — Matrix logarithm of the state." class="md-ellipsis">log</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.log (Python method) — Matrix logarithm of the state.">log</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.trace (Python method) — (Partial) trace of the state" class="md-ellipsis">trace</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.trace (Python method) — (Partial) trace of the state">trace</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="trace">
@@ -1281,7 +1830,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1289,7 +1841,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace.trace_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.trace.trace_idx (Python parameter) — the subsystem indices to be traced out." class="md-ellipsis">trace_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.trace.trace_idx (Python parameter) — the subsystem indices to be traced out.">trace_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1301,14 +1858,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1320,7 +1883,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.transpose (Python method) — (Partial) transpose of the state" class="md-ellipsis">transpose</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transpose (Python method) — (Partial) transpose of the state">transpose</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="transpose">
@@ -1328,7 +1896,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1336,7 +1907,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose.transpose_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transpose.transpose_idx (Python parameter) — the subsystem indices to be transposed." class="md-ellipsis">transpose_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transpose.transpose_idx (Python parameter) — the subsystem indices to be transposed.">transpose_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1348,14 +1924,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1372,14 +1954,20 @@
       
         <li class="md-nav__item">
   <a href="quairkit.core.state.backend.density_matrix.html" class="md-nav__link">
-    <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>density_<wbr>matrix</span>
+    
+    <span class="md-ellipsis">
+      quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>density_<wbr>matrix
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="quairkit.core.state.backend.state_vector.html" class="md-nav__link">
-    <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>state_<wbr>vector</span>
+    
+    <span class="md-ellipsis">
+      quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>state_<wbr>vector
+    </span>
   </a>
   
 </li>
@@ -1391,48 +1979,68 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.state.state.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>state</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>state.<wbr>state
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.visual.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core.<wbr>visual</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core.<wbr>visual
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -1440,15 +2048,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>database</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1456,15 +2071,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.loss.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>loss</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>loss
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1472,15 +2094,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>operator</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>operator
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1488,15 +2117,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.qinfo.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>qinfo</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>qinfo
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1527,7 +2163,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit." class="md-ellipsis">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>State</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State (Python class) — The abstract base class for quantum states in QuAIRKit.">quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>State</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.core.state.backend.State">
@@ -1535,7 +2176,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1543,21 +2187,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.__init__.data" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.__init__.data (Python parameter) — tensor array for quantum state(s)." class="md-ellipsis">data</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.__init__.data (Python parameter) — tensor array for quantum state(s).">data</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.__init__.sys_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.__init__.sys_dim (Python parameter) — a list of dimensions for each system." class="md-ellipsis">sys_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.__init__.sys_dim (Python parameter) — a list of dimensions for each system.">sys_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.__init__.system_seq" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.__init__.system_seq (Python parameter) — the system order of this state." class="md-ellipsis">system_<wbr>seq</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.__init__.system_seq (Python parameter) — the system order of this state.">system_<wbr>seq</span>
+    </span>
   </a>
   
 </li>
@@ -1569,7 +2228,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.prob_select (Python method) — Indexing probability outcome from the State batch along the given dimension." class="md-ellipsis">prob_<wbr>select</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.prob_select (Python method) — Indexing probability outcome from the State batch along the given dimension.">prob_<wbr>select</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="prob_select">
@@ -1577,7 +2241,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1585,14 +2252,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select.outcome_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.prob_select.outcome_idx (Python parameter) — the 1-D tensor containing the outcomes to index" class="md-ellipsis">outcome_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.prob_select.outcome_idx (Python parameter) — the 1-D tensor containing the outcomes to index">outcome_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select.prob_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.prob_select.prob_idx (Python parameter) — the int that indexing which probability distribution." class="md-ellipsis">prob_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.prob_select.prob_idx (Python parameter) — the int that indexing which probability distribution.">prob_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1604,14 +2281,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.prob_select-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1623,7 +2306,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expand (Python method) — Expand the batch dimension of the State." class="md-ellipsis">expand</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand (Python method) — Expand the batch dimension of the State.">expand</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expand">
@@ -1631,7 +2319,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1639,7 +2330,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand.batch_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expand.batch_dim (Python parameter) — the new batch dimension" class="md-ellipsis">batch_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand.batch_dim (Python parameter) — the new batch dimension">batch_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -1656,7 +2352,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand_as" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expand_as (Python method) — Expand this tensor to the same size as other." class="md-ellipsis">expand_<wbr>as</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand_as (Python method) — Expand this tensor to the same size as other.">expand_<wbr>as</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expand_as">
@@ -1664,7 +2365,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand_as-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1672,7 +2376,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expand_as.other" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expand_as.other (Python parameter) — the state/tensor to be expanded to." class="md-ellipsis">other</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expand_as.other (Python parameter) — the state/tensor to be expanded to.">other</span>
+    </span>
   </a>
   
 </li>
@@ -1689,14 +2398,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.backend" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.backend (Python property) — The backend of this state." class="md-ellipsis">backend</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.backend (Python property) — The backend of this state.">backend</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.check (Python method) — Assert whether the input data is valid for the specific State class." class="md-ellipsis">check</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check (Python method) — Assert whether the input data is valid for the specific State class.">check</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="check">
@@ -1704,7 +2423,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1712,21 +2434,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check.data" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.check.data (Python parameter) — tensor array for quantum state(s)." class="md-ellipsis">data</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check.data (Python parameter) — tensor array for quantum state(s).">data</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check.sys_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.check.sys_dim (Python parameter) — (list of) dimension(s) of the systems, can be a list of integers or an integer." class="md-ellipsis">sys_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check.sys_dim (Python parameter) — (list of) dimension(s) of the systems, can be a list of integers or an integer.">sys_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check.eps" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.check.eps (Python parameter) — the tolerance for the numerical check." class="md-ellipsis">eps</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.check.eps (Python parameter) — the tolerance for the numerical check.">eps</span>
+    </span>
   </a>
   
 </li>
@@ -1738,14 +2475,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.check-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1757,119 +2500,204 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.data" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.data (Python property) — The data tensor of this state" class="md-ellipsis">data</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.data (Python property) — The data tensor of this state">data</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.probability" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.probability (Python property) — The probability distribution(s) of these states&#39; occurrences" class="md-ellipsis">probability</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.probability (Python property) — The probability distribution(s) of these states&#39; occurrences">probability</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.batch_dim" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.batch_dim (Python property) — The batch dimension of this state" class="md-ellipsis">batch_<wbr>dim</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.batch_dim (Python property) — The batch dimension of this state">batch_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.shape" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.shape (Python property) — The shape of this state" class="md-ellipsis">shape</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.shape (Python property) — The shape of this state">shape</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.dtype" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.dtype (Python property) — The data type of this state" class="md-ellipsis">dtype</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.dtype (Python property) — The data type of this state">dtype</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.device" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.device (Python property) — The device of this state" class="md-ellipsis">device</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.device (Python property) — The device of this state">device</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numel" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.numel (Python method) — The number of elements in this data" class="md-ellipsis">numel</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.numel (Python method) — The number of elements in this data">numel</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.dim" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.dim (Python property) — The dimension of this state" class="md-ellipsis">dim</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.dim (Python property) — The dimension of this state">dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.system_dim" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.system_dim (Python property) — The list of dimensions for each system" class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.system_dim (Python property) — The list of dimensions for each system">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.are_qubits" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.are_qubits (Python method) — Whether all systems are qubits" class="md-ellipsis">are_<wbr>qubits</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.are_qubits (Python method) — Whether all systems are qubits">are_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.are_qutrits" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.are_qutrits (Python method) — Whether all systems are qutrits" class="md-ellipsis">are_<wbr>qutrits</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.are_qutrits (Python method) — Whether all systems are qutrits">are_<wbr>qutrits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.num_systems" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.num_systems (Python property) — The number of systems" class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.num_systems (Python property) — The number of systems">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.num_qubits" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.num_qubits (Python property) — The number of qubits of this state, when all systems are qubits" class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.num_qubits (Python property) — The number of qubits of this state, when all systems are qubits">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.ket" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.ket (Python property) — The ket form of this state" class="md-ellipsis">ket</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.ket (Python property) — The ket form of this state">ket</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.bra" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.bra (Python property) — Dagger of the ket form." class="md-ellipsis">bra</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.bra (Python property) — Dagger of the ket form.">bra</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.density_matrix" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.density_matrix (Python property) — The density matrix representation of this state." class="md-ellipsis">density_<wbr>matrix</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.density_matrix (Python property) — The density matrix representation of this state.">density_<wbr>matrix</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.vec" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.vec (Python property) — \textrm{vec}(|i \rangle\langle j|)=|j, i \rangle" class="md-ellipsis">vec</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.vec (Python property) — \textrm{vec}(|i \rangle\langle j|)=|j, i \rangle">vec</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="vec">
@@ -1877,7 +2705,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.vec-type" class="md-nav__link">
-    <span class="md-ellipsis">Type</span>
+    
+    <span class="md-ellipsis">
+      Type
+    </span>
   </a>
   
 </li>
@@ -1889,21 +2720,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.rank" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.rank (Python property) — The rank of the state." class="md-ellipsis">rank</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.rank (Python property) — The rank of the state.">rank</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.normalize" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.normalize (Python method) — Normalize this state" class="md-ellipsis">normalize</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.normalize (Python method) — Normalize this state">normalize</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numpy" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.numpy (Python method) — Get the data in numpy." class="md-ellipsis">numpy</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.numpy (Python method) — Get the data in numpy.">numpy</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="numpy">
@@ -1911,14 +2757,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numpy-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.numpy-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1930,14 +2782,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.clone" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.clone (Python method) — Return a copy of the quantum state." class="md-ellipsis">clone</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.clone (Python method) — Return a copy of the quantum state.">clone</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.fit (Python method) — Convert the data to the specified backend." class="md-ellipsis">fit</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.fit (Python method) — Convert the data to the specified backend.">fit</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="fit">
@@ -1945,7 +2807,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1953,7 +2818,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit.state_backend" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.fit.state_backend (Python parameter) — the target backend of the state." class="md-ellipsis">state_<wbr>backend</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.fit.state_backend (Python parameter) — the target backend of the state.">state_<wbr>backend</span>
+    </span>
   </a>
   
 </li>
@@ -1965,14 +2835,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.fit-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1984,7 +2860,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.to (Python method) — Change the property of the data tensor, and return a copy of this State" class="md-ellipsis">to</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.to (Python method) — Change the property of the data tensor, and return a copy of this State">to</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="to">
@@ -1992,7 +2873,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2000,14 +2884,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to.dtype" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.to.dtype (Python parameter) — the new data type of the state." class="md-ellipsis">dtype</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.to.dtype (Python parameter) — the new data type of the state.">dtype</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.to.device" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.to.device (Python parameter) — the new device of the state." class="md-ellipsis">device</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.to.device (Python parameter) — the new device of the state.">device</span>
+    </span>
   </a>
   
 </li>
@@ -2024,14 +2918,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.system_seq" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="quairkit.core.state.backend.State.system_seq (Python property) — The system order of this state" class="md-ellipsis">system_<wbr>seq</span>
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.system_seq (Python property) — The system order of this state">system_<wbr>seq</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.permute" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.permute (Python method) — Permute the systems order of the state." class="md-ellipsis">permute</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.permute (Python method) — Permute the systems order of the state.">permute</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="permute">
@@ -2039,7 +2943,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.permute-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2047,7 +2954,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.permute.target_seq" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.permute.target_seq (Python parameter) — the target systems order." class="md-ellipsis">target_<wbr>seq</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.permute.target_seq (Python parameter) — the target systems order.">target_<wbr>seq</span>
+    </span>
   </a>
   
 </li>
@@ -2064,14 +2976,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.reset_sequence" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.reset_sequence (Python method) — reset the system order to default sequence i.e. from 0 to n - 1." class="md-ellipsis">reset_<wbr>sequence</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.reset_sequence (Python method) — reset the system order to default sequence i.e. from 0 to n - 1.">reset_<wbr>sequence</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.evolve (Python method) — Evolve this state with unitary operators." class="md-ellipsis">evolve</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.evolve (Python method) — Evolve this state with unitary operators.">evolve</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="evolve">
@@ -2079,7 +3001,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2087,14 +3012,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.evolve.unitary (Python parameter) — the unitary operator." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.evolve.unitary (Python parameter) — the unitary operator.">unitary</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve.sys_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.evolve.sys_idx (Python parameter) — the system indices to be acted on." class="md-ellipsis">sys_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.evolve.sys_idx (Python parameter) — the system indices to be acted on.">sys_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -2106,14 +3041,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.evolve-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2125,7 +3066,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.transform (Python method) — Apply a general linear operator to the state." class="md-ellipsis">transform</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform (Python method) — Apply a general linear operator to the state.">transform</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="transform">
@@ -2133,7 +3079,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2141,21 +3090,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform.op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transform.op (Python parameter) — the input operator." class="md-ellipsis">op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform.op (Python parameter) — the input operator.">op</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform.sys_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transform.sys_idx (Python parameter) — the qubit indices to be applied." class="md-ellipsis">sys_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform.sys_idx (Python parameter) — the qubit indices to be applied.">sys_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform.repr_type" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transform.repr_type (Python parameter) — the representation type of input operator." class="md-ellipsis">repr_<wbr>type</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transform.repr_type (Python parameter) — the representation type of input operator.">repr_<wbr>type</span>
+    </span>
   </a>
   
 </li>
@@ -2167,14 +3131,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transform-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2186,7 +3156,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expec_val (Python method) — The expectation value of the observable with respect to the quantum state." class="md-ellipsis">expec_<wbr>val</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_val (Python method) — The expectation value of the observable with respect to the quantum state.">expec_<wbr>val</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expec_val">
@@ -2194,7 +3169,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2202,14 +3180,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val.hamiltonian" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expec_val.hamiltonian (Python parameter) — Input observable." class="md-ellipsis">hamiltonian</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_val.hamiltonian (Python parameter) — Input observable.">hamiltonian</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val.decompose" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expec_val.decompose (Python parameter) — If decompose is True, it will return the expectation value of each term." class="md-ellipsis">decompose</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_val.decompose (Python parameter) — If decompose is True, it will return the expectation value of each term.">decompose</span>
+    </span>
   </a>
   
 </li>
@@ -2221,14 +3209,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_val-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2240,7 +3234,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.expec_state (Python method) — The expectation with respect to the specific probability distribution(s) of states" class="md-ellipsis">expec_<wbr>state</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_state (Python method) — The expectation with respect to the specific probability distribution(s) of states">expec_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="expec_state">
@@ -2248,7 +3247,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2256,7 +3258,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state.prob_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.expec_state.prob_idx (Python parameter) — indices of probability distributions." class="md-ellipsis">prob_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.expec_state.prob_idx (Python parameter) — indices of probability distributions.">prob_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -2268,14 +3275,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.expec_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2287,7 +3300,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.measure (Python method) — Measure the quantum state" class="md-ellipsis">measure</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure (Python method) — Measure the quantum state">measure</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="measure">
@@ -2295,7 +3313,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2303,28 +3324,48 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.measured_op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.measured_op (Python parameter) — measurement operator." class="md-ellipsis">measured_<wbr>op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.measured_op (Python parameter) — measurement operator.">measured_<wbr>op</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.sys_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.sys_idx (Python parameter) — the system indices to be measured." class="md-ellipsis">sys_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.sys_idx (Python parameter) — the system indices to be measured.">sys_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.is_povm" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.is_povm (Python parameter) — whether the measurement is a POVM." class="md-ellipsis">is_<wbr>povm</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.is_povm (Python parameter) — whether the measurement is a POVM.">is_<wbr>povm</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure.keep_state" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.measure.keep_state (Python parameter) — whether to keep the state after measurement." class="md-ellipsis">keep_<wbr>state</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.measure.keep_state (Python parameter) — whether to keep the state after measurement.">keep_<wbr>state</span>
+    </span>
   </a>
   
 </li>
@@ -2336,21 +3377,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.measure-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2362,21 +3412,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.sqrt" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.sqrt (Python method) — Matrix square root of the state." class="md-ellipsis">sqrt</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.sqrt (Python method) — Matrix square root of the state.">sqrt</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.log" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.log (Python method) — Matrix logarithm of the state." class="md-ellipsis">log</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.log (Python method) — Matrix logarithm of the state.">log</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.trace (Python method) — (Partial) trace of the state" class="md-ellipsis">trace</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.trace (Python method) — (Partial) trace of the state">trace</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="trace">
@@ -2384,7 +3449,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2392,7 +3460,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace.trace_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.trace.trace_idx (Python parameter) — the subsystem indices to be traced out." class="md-ellipsis">trace_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.trace.trace_idx (Python parameter) — the subsystem indices to be traced out.">trace_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -2404,14 +3477,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.trace-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2423,7 +3502,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="quairkit.core.state.backend.State.transpose (Python method) — (Partial) transpose of the state" class="md-ellipsis">transpose</span>
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transpose (Python method) — (Partial) transpose of the state">transpose</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="transpose">
@@ -2431,7 +3515,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2439,7 +3526,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose.transpose_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.core.state.backend.State.transpose.transpose_idx (Python parameter) — the subsystem indices to be transposed." class="md-ellipsis">transpose_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.State.transpose.transpose_idx (Python parameter) — the subsystem indices to be transposed.">transpose_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -2451,14 +3543,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.core.state.backend.State.transpose-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2484,6 +3582,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset" role="main">
+                
+                
                   
 
 
@@ -2777,9 +3877,9 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.core.state.backend.State.to-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.State.to-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.core.state.backend.State.to.dtype"><span class="sig-name descname">dtype</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.to.dtype" title="Permalink to this definition">¶</a></dt><dd><p>the new data type of the state.</p>
+<dt id="quairkit.core.state.backend.State.to.dtype"><span class="sig-name descname">dtype</span><span class="p"> : </span><span class="desctype"><span class="desctype">str</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.to.dtype" title="Permalink to this definition">¶</a></dt><dd><p>the new data type of the state.</p>
 </dd>
-<dt id="quairkit.core.state.backend.State.to.device"><span class="sig-name descname">device</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.to.device" title="Permalink to this definition">¶</a></dt><dd><p>the new device of the state.</p>
+<dt id="quairkit.core.state.backend.State.to.device"><span class="sig-name descname">device</span><span class="p"> : </span><span class="desctype"><span class="desctype">str</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.to.device" title="Permalink to this definition">¶</a></dt><dd><p>the new device of the state.</p>
 </dd>
 </dl>
 </dd>
@@ -2823,7 +3923,7 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.core.state.backend.State.evolve.unitary"><span class="sig-name descname">unitary</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.evolve.unitary" title="Permalink to this definition">¶</a></dt><dd><p>the unitary operator.</p>
 </dd>
-<dt id="quairkit.core.state.backend.State.evolve.sys_idx"><span class="sig-name descname">sys_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.evolve.sys_idx" title="Permalink to this definition">¶</a></dt><dd><p>the system indices to be acted on. Defaults to all systems.</p>
+<dt id="quairkit.core.state.backend.State.evolve.sys_idx"><span class="sig-name descname">sys_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.evolve.sys_idx" title="Permalink to this definition">¶</a></dt><dd><p>the system indices to be acted on. Defaults to all systems.</p>
 </dd>
 </dl>
 </dd>
@@ -2849,7 +3949,7 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.core.state.backend.State.transform.op"><span class="sig-name descname">op</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.transform.op" title="Permalink to this definition">¶</a></dt><dd><p>the input operator.</p>
 </dd>
-<dt id="quairkit.core.state.backend.State.transform.sys_idx"><span class="sig-name descname">sys_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.transform.sys_idx" title="Permalink to this definition">¶</a></dt><dd><p>the qubit indices to be applied. Defaults to all systems.</p>
+<dt id="quairkit.core.state.backend.State.transform.sys_idx"><span class="sig-name descname">sys_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.transform.sys_idx" title="Permalink to this definition">¶</a></dt><dd><p>the qubit indices to be applied. Defaults to all systems.</p>
 </dd>
 <dt id="quairkit.core.state.backend.State.transform.repr_type"><span class="sig-name descname">repr_type</span><span class="p"> : </span><span class="desctype"><span class="desctype">str</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.transform.repr_type" title="Permalink to this definition">¶</a></dt><dd><p>the representation type of input operator. Defaults to ‘kraus’.</p>
 </dd>
@@ -2897,7 +3997,7 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.core.state.backend.State.expec_state-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.State.expec_state-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.core.state.backend.State.expec_state.prob_idx"><span class="sig-name descname">prob_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.expec_state.prob_idx" title="Permalink to this definition">¶</a></dt><dd><p>indices of probability distributions. Defaults to all distributions.</p>
+<dt id="quairkit.core.state.backend.State.expec_state.prob_idx"><span class="sig-name descname">prob_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.expec_state.prob_idx" title="Permalink to this definition">¶</a></dt><dd><p>indices of probability distributions. Defaults to all distributions.</p>
 </dd>
 </dl>
 </dd>
@@ -2919,7 +4019,7 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.core.state.backend.State.measure.measured_op"><span class="sig-name descname">measured_op</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.measure.measured_op" title="Permalink to this definition">¶</a></dt><dd><p>measurement operator. Defaults to the computational basis.</p>
 </dd>
-<dt id="quairkit.core.state.backend.State.measure.sys_idx"><span class="sig-name descname">sys_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.measure.sys_idx" title="Permalink to this definition">¶</a></dt><dd><p>the system indices to be measured. Defaults to all systems.</p>
+<dt id="quairkit.core.state.backend.State.measure.sys_idx"><span class="sig-name descname">sys_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.measure.sys_idx" title="Permalink to this definition">¶</a></dt><dd><p>the system indices to be measured. Defaults to all systems.</p>
 </dd>
 <dt id="quairkit.core.state.backend.State.measure.is_povm"><span class="sig-name descname">is_povm</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.measure.is_povm" title="Permalink to this definition">¶</a></dt><dd><p>whether the measurement is a POVM.</p>
 </dd>
@@ -2966,7 +4066,7 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.core.state.backend.State.trace-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.State.trace-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.core.state.backend.State.trace.trace_idx"><span class="sig-name descname">trace_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.trace.trace_idx" title="Permalink to this definition">¶</a></dt><dd><p>the subsystem indices to be traced out. Defaults to all systems.</p>
+<dt id="quairkit.core.state.backend.State.trace.trace_idx"><span class="sig-name descname">trace_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.trace.trace_idx" title="Permalink to this definition">¶</a></dt><dd><p>the subsystem indices to be traced out. Defaults to all systems.</p>
 </dd>
 </dl>
 </dd>
@@ -2986,7 +4086,7 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.core.state.backend.State.transpose-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.State.transpose-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.core.state.backend.State.transpose.transpose_idx"><span class="sig-name descname">transpose_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.transpose.transpose_idx" title="Permalink to this definition">¶</a></dt><dd><p>the subsystem indices to be transposed. Defaults to all systems.</p>
+<dt id="quairkit.core.state.backend.State.transpose.transpose_idx"><span class="sig-name descname">transpose_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | None</span></span><a class="headerlink" href="#quairkit.core.state.backend.State.transpose.transpose_idx" title="Permalink to this definition">¶</a></dt><dd><p>the subsystem indices to be transposed. Defaults to all systems.</p>
 </dd>
 </dl>
 </dd>
@@ -3019,6 +4119,15 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
 
 
 
+
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
@@ -3029,42 +4138,6 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="quairkit.core.state.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.core.state" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              quairkit.core.state
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="quairkit.core.state.backend.density_matrix.html" class="md-footer__link md-footer__link--next" aria-label="Next: quairkit.core.state.backend.density_matrix" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              quairkit.core.state.backend.density_matrix
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   
   
@@ -3096,10 +4169,11 @@ If the state is mixed, the ket form is the vectorization of its density matrix r
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
       
-        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>

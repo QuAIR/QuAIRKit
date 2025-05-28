@@ -5,3 +5,4 @@ quairkit.application
     :maxdepth: 2
 
     quairkit.application.comb
+    quairkit.application.locc

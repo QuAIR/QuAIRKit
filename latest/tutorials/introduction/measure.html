@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -7,6 +8,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+      
+      
+      
+        <link rel="prev" href="circuit.html">
+      
+      
+        <link rel="next" href="operator.html">
       
       
       <link rel="icon" href="../../_static/favicon.svg">
@@ -19,15 +27,13 @@
     
       
         
-        
-          
-          
-          <meta name="theme-color" content="#4cae4f">
-        
       
       
 
+
     
+    
+      
     
     
       
@@ -36,9 +42,9 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -53,9 +59,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -72,22 +77,25 @@
       
     </div>
     
-      <div data-md-component="outdated" hidden>
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
         
       </div>
     
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -106,10 +114,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -117,24 +129,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -146,7 +161,7 @@
         <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -178,12 +193,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     QuAIRKit
   </label>
@@ -192,7 +208,7 @@
       <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -204,15 +220,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="../../quairkit.html" class="md-nav__link">
-        <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -220,136 +243,204 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../tutorials.html"><span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
           
-            <label for="__nav_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="tutorials" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)">tutorials</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
-        <span title="/tutorials.feature.rst (reference label)" class="md-ellipsis">tutorials.<wbr>feature</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)">tutorials.<wbr>feature</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../tutorials.introduction.html"><span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
           
-            <label for="__nav_2_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="tutorials.introduction" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.introduction.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="Hamiltonian.html" class="md-nav__link">
-        <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)" class="md-ellipsis">Hamiltonian in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)">Hamiltonian in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="circuit.html" class="md-nav__link">
-        <span title="/tutorials/introduction/circuit.ipynb (reference label)" class="md-ellipsis">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/circuit.ipynb (reference label)">Constructing quantum circuits in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
       
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span title="/tutorials/introduction/measure.ipynb (reference label)" class="md-ellipsis">Measuring quantum states in Qu<wbr>AIRKit</span>
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/measure.ipynb (reference label)">Measuring quantum states in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span title="/tutorials/introduction/measure.ipynb (reference label)" class="md-ellipsis">Measuring quantum states in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/measure.ipynb (reference label)">Measuring quantum states in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
       
         
@@ -368,14 +459,20 @@
       
         <li class="md-nav__item">
   <a href="#Quantum-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#quantum-measurement (reference label)" class="md-ellipsis">Quantum measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#quantum-measurement (reference label)">Quantum measurement</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#Perform-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#perform-measurement (reference label)" class="md-ellipsis">Perform measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#perform-measurement (reference label)">Perform measurement</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Perform measurement">
@@ -383,7 +480,10 @@
         
           <li class="md-nav__item">
   <a href="#Positive-operator-valued-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#positive-operator-valued-measurement (reference label)" class="md-ellipsis">Positive operator-<wbr>valued measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#positive-operator-valued-measurement (reference label)">Positive operator-<wbr>valued measurement</span>
+    </span>
   </a>
   
 </li>
@@ -395,21 +495,30 @@
       
         <li class="md-nav__item">
   <a href="#Batch-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#batch-measurement (reference label)" class="md-ellipsis">Batch measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#batch-measurement (reference label)">Batch measurement</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#Sampled-measurements" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#sampled-measurements (reference label)" class="md-ellipsis">Sampled measurements</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#sampled-measurements (reference label)">Sampled measurements</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#References" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#references (reference label)" class="md-ellipsis">References</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#references (reference label)">References</span>
+    </span>
   </a>
   
 </li>
@@ -421,78 +530,140 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="operator.html" class="md-nav__link">
-        <span title="/tutorials/introduction/operator.ipynb (reference label)" class="md-ellipsis">Quantum Gates and Quantum Channels</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/operator.ipynb (reference label)">Quantum gates and quantum channels</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="qinfo.html" class="md-nav__link">
-        <span title="/tutorials/introduction/qinfo.ipynb (reference label)" class="md-ellipsis">Quantum information tools</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/qinfo.ipynb (reference label)">Quantum information tools</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="state.html" class="md-nav__link">
-        <span title="/tutorials/introduction/state.ipynb (reference label)" class="md-ellipsis">Manipulation of Quantum States in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/state.ipynb (reference label)">Manipulation of quantum states in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="training.html" class="md-nav__link">
-        <span title="/tutorials/introduction/training.ipynb (reference label)" class="md-ellipsis">Training parameterized quantum circuits</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/training.ipynb (reference label)">Training parameterized quantum circuits</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
 
+              
             
-          
-        </ul>
-      </nav>
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)">tutorials.<wbr>research</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -523,14 +694,20 @@
       
         <li class="md-nav__item">
   <a href="#Quantum-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#quantum-measurement (reference label)" class="md-ellipsis">Quantum measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#quantum-measurement (reference label)">Quantum measurement</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#Perform-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#perform-measurement (reference label)" class="md-ellipsis">Perform measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#perform-measurement (reference label)">Perform measurement</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Perform measurement">
@@ -538,7 +715,10 @@
         
           <li class="md-nav__item">
   <a href="#Positive-operator-valued-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#positive-operator-valued-measurement (reference label)" class="md-ellipsis">Positive operator-<wbr>valued measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#positive-operator-valued-measurement (reference label)">Positive operator-<wbr>valued measurement</span>
+    </span>
   </a>
   
 </li>
@@ -550,21 +730,30 @@
       
         <li class="md-nav__item">
   <a href="#Batch-measurement" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#batch-measurement (reference label)" class="md-ellipsis">Batch measurement</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#batch-measurement (reference label)">Batch measurement</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#Sampled-measurements" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#sampled-measurements (reference label)" class="md-ellipsis">Sampled measurements</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#sampled-measurements (reference label)">Sampled measurements</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#References" class="md-nav__link">
-    <span title="/tutorials/introduction/measure.ipynb#references (reference label)" class="md-ellipsis">References</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/measure.ipynb#references (reference label)">References</span>
+    </span>
   </a>
   
 </li>
@@ -580,6 +769,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset" role="main">
+                
+                
                   
 
 
@@ -685,7 +876,7 @@ print(&quot;The probability distribution of outcome&quot;, prob)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of outcome tensor([0.6159, 0.3841])
+The probability distribution of outcome tensor([0.5075, 0.4925])
 </pre></div></div>
 </div>
 <p>Users can get the collapsed state by setting <code class="docutils literal notranslate"><span class="pre">keep_state</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
@@ -711,15 +902,15 @@ The collapsed state for each outcome is
  Batch size: [2]
 
  # 0:
-[[ 0.23+0.j   -0.08+0.21j  0.23+0.j   -0.08+0.21j]
- [-0.08-0.21j  0.27+0.j   -0.08-0.21j  0.27+0.j  ]
- [ 0.23+0.j   -0.08+0.21j  0.23+0.j   -0.08+0.21j]
- [-0.08-0.21j  0.27+0.j   -0.08-0.21j  0.27+0.j  ]]
+[[ 0.38+0.j   -0.  -0.03j  0.38+0.j   -0.  -0.03j]
+ [-0.  +0.03j  0.12+0.j   -0.  +0.03j  0.12+0.j  ]
+ [ 0.38+0.j   -0.  -0.03j  0.38+0.j   -0.  -0.03j]
+ [-0.  +0.03j  0.12+0.j   -0.  +0.03j  0.12+0.j  ]]
  # 1:
-[[ 0.26+0.j   -0.16+0.02j -0.26+0.j    0.16-0.02j]
- [-0.16-0.02j  0.24+0.j    0.16+0.02j -0.24+0.j  ]
- [-0.26+0.j    0.16-0.02j  0.26+0.j   -0.16+0.02j]
- [ 0.16+0.02j -0.24+0.j   -0.16-0.02j  0.24+0.j  ]]
+[[ 0.19+0.j   -0.07+0.08j -0.19+0.j    0.07-0.08j]
+ [-0.07-0.08j  0.31+0.j    0.07+0.08j -0.31+0.j  ]
+ [-0.19+0.j    0.07-0.08j  0.19+0.j   -0.07+0.08j]
+ [ 0.07+0.08j -0.31+0.j   -0.07-0.08j  0.31+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -745,15 +936,15 @@ print(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability for obtaining outcome 1 is tensor([0.3841]), with outcome state
+The probability for obtaining outcome 1 is tensor([0.4925]), with outcome state
 -----------------------------------------------------
  Backend: density_matrix
  System dimension: [2, 2]
  System sequence: [0, 1]
-[[ 0.26+0.j   -0.16+0.02j -0.26+0.j    0.16-0.02j]
- [-0.16-0.02j  0.24+0.j    0.16+0.02j -0.24+0.j  ]
- [-0.26+0.j    0.16-0.02j  0.26+0.j   -0.16+0.02j]
- [ 0.16+0.02j -0.24+0.j   -0.16-0.02j  0.24+0.j  ]]
+[[ 0.19+0.j   -0.07+0.08j -0.19+0.j    0.07-0.08j]
+ [-0.07-0.08j  0.31+0.j    0.07+0.08j -0.31+0.j  ]
+ [-0.19+0.j    0.07-0.08j  0.19+0.j   -0.07+0.08j]
+ [ 0.07+0.08j -0.31+0.j   -0.07-0.08j  0.31+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -778,7 +969,7 @@ print(&quot;The collapsed state for each outcome is&quot;, collapsed_state)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of outcome tensor([0.3633, 0.6367])
+The probability distribution of outcome tensor([0.1429, 0.8571])
 The collapsed state for each outcome is
 -----------------------------------------------------
  Backend: density_matrix
@@ -824,8 +1015,8 @@ except ValueError:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time for measuring with pvm: 0.0090117455s
-Time for measuring with povm: 0.0029997826s
+Time for measuring with pvm: 0.0000000000s
+Time for measuring with povm: 0.0000000000s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -834,9 +1025,9 @@ Time for measuring with povm: 0.0029997826s
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Traceback (most recent call last):
-  File &#34;C:\Users\Cloud\AppData\Local\Temp\ipykernel_21928\2671688636.py&#34;, line 11, in &lt;module&gt;
+  File &#34;C:\Users\Cloud\AppData\Local\Temp\ipykernel_18632\2671688636.py&#34;, line 11, in &lt;module&gt;
     rho.measure(pvm, is_povm=True, keep_state=True)
-  File &#34;c:\Users\Cloud\anaconda3\envs\quair_test\lib\site-packages\quairkit\core\state\backend\__init__.py&#34;, line 702, in measure
+  File &#34;c:\users\cloud\quairkit-dev\quairkit\core\state\backend\__init__.py&#34;, line 757, in measure
     raise ValueError(
 ValueError: `is_povm` and `keep_state` cannot be both True, since a general POVM does not distinguish states.
 </pre></div></div>
@@ -937,7 +1128,7 @@ The measured states for the first batch is
 [[ 0.5+0.j -0.5+0.j]
  [-0.5+0.j  0.5+0.j]]
 -----------------------------------------------------
- with prob distribution tensor([0.3633, 0.6367])
+ with prob distribution tensor([0.1429, 0.8571])
 </pre></div></div>
 </div>
 <p>or apply <code class="docutils literal notranslate"><span class="pre">Measure</span></code> to a batched state. Note that the batch dimension needs to be matched.</p>
@@ -970,11 +1161,11 @@ The measured states for the first batch is
  Batch size: [2]
 
  # 0:
-[0.68-0.18j 0.68-0.18j]
+[0.41-0.58j 0.41-0.58j]
  # 1:
-[ 0.63-0.32j -0.63+0.32j]
+[ 0.47+0.53j -0.47-0.53j]
 -----------------------------------------------------
- with prob distribution tensor([0.8764, 0.1236])
+ with prob distribution tensor([0.1383, 0.8617])
 </pre></div></div>
 </div>
 <h2 id="Sampled-measurements">Sampled measurements<a class="headerlink" href="#Sampled-measurements" title="Link to this heading">¶</a></h2>
@@ -983,7 +1174,13 @@ The measured states for the first batch is
 <div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span><code>{&#39;00&#39;: tensor([98, ...]), &#39;01&#39;: tensor([230, ...]), &#39;10&#39;: tensor([300, ...]), &#39;11&#39;: tensor([396, ...])}
 </code></pre></div>
 </div>
-<p>which means that: - <code class="docutils literal notranslate"><span class="pre">00</span></code> occurred 98 times, - <code class="docutils literal notranslate"><span class="pre">01</span></code> occurred 230 times, - <code class="docutils literal notranslate"><span class="pre">10</span></code> occurred 300 times, - <code class="docutils literal notranslate"><span class="pre">11</span></code> occurred 396 times.</p>
+<p>which means that:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">00</span></code> occurred 98 times,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">01</span></code> occurred 230 times,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">10</span></code> occurred 300 times,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">11</span></code> occurred 396 times.</p></li>
+</ul>
 <p>Users can also adjust the argument <code class="docutils literal notranslate"><span class="pre">binary</span></code> and <code class="docutils literal notranslate"><span class="pre">proportional</span></code> to change the output format:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">binary</span></code> is False: the dictionary index is in the decimal system.</p></li>
@@ -1014,18 +1211,18 @@ print(
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 3 probability distributions are
- tensor([[0.8764, 0.1236],
-        [0.3707, 0.6293],
-        [0.6343, 0.3657]])
+ tensor([[0.1383, 0.8617],
+        [0.7877, 0.2123],
+        [0.2835, 0.7165]])
 
 The outcomes of quantum measurements:
-{&#39;0&#39;: tensor([913, 349, 641]), &#39;1&#39;: tensor([111, 675, 383])}
+{&#39;0&#39;: tensor([136, 806, 271]), &#39;1&#39;: tensor([888, 218, 753])}
 
 The outcomes of quantum measurements with the decimal system of dictionary system:
- {&#39;0&#39;: tensor([908, 402, 645]), &#39;1&#39;: tensor([116, 622, 379])}
+ {&#39;0&#39;: tensor([146, 800, 309]), &#39;1&#39;: tensor([878, 224, 715])}
 
 The outcomes of quantum measurements in proportion:
- {&#39;0&#39;: tensor([0.8809, 0.3799, 0.6299]), &#39;1&#39;: tensor([0.1191, 0.6201, 0.3701])}
+ {&#39;0&#39;: tensor([0.1299, 0.7881, 0.2803]), &#39;1&#39;: tensor([0.8701, 0.2119, 0.7197])}
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1077,8 +1274,8 @@ The outcomes of quantum measurements in proportion:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.3.0
-torch: 2.5.1+cpu
+quairkit: 0.4.0
+torch: 2.7.0+cpu
 numpy: 1.26.0
 scipy: 1.14.1
 matplotlib: 3.10.0
@@ -1096,6 +1293,15 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 
 
 
+
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
@@ -1106,42 +1312,6 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="circuit.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Constructing Quantum Circuits in QuAIRKit" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Constructing Quantum Circuits in QuAIRKit
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="operator.html" class="md-footer__link md-footer__link--next" aria-label="Next: Quantum Gates and Quantum Channels" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Quantum Gates and Quantum Channels
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   
   
@@ -1173,10 +1343,11 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["latest"], "title": "latest", "version": "latest"}, {"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}], "versionPath": null}}</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}], "versionPath": null}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>

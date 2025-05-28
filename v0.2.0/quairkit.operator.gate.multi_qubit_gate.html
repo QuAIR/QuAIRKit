@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -7,6 +8,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+      
+      
+      
+        <link rel="prev" href="quairkit.operator.gate.custom.html">
+      
+      
+        <link rel="next" href="quairkit.operator.gate.single_qubit_gate.html">
       
       
       <link rel="icon" href="_static/favicon.svg">
@@ -19,15 +27,13 @@
     
       
         
-        
-          
-          
-          <meta name="theme-color" content="#4cae4f">
-        
       
       
 
+
     
+    
+      
     
     
       
@@ -36,8 +42,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -52,9 +58,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -71,22 +76,25 @@
       
     </div>
     
-      <div data-md-component="outdated" hidden>
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
         
       </div>
     
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -105,10 +113,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -116,24 +128,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -145,7 +160,7 @@
         <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -177,12 +192,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     QuAIRKit
   </label>
@@ -191,7 +207,7 @@
       <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -203,243 +219,369 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.html"><span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
           
-            <label for="__nav_1">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit" data-md-level="1">
-        <label class="md-nav__title" for="__nav_1">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.rst (reference label)">quairkit</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.ansatz.html" class="md-nav__link">
-        <span title="/quairkit.ansatz.rst (reference label)" class="md-ellipsis">quairkit.<wbr>ansatz</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.ansatz.rst (reference label)">quairkit.<wbr>ansatz</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.circuit.html" class="md-nav__link">
-        <span title="/quairkit.circuit.rst (reference label)" class="md-ellipsis">quairkit.<wbr>circuit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.circuit.rst (reference label)">quairkit.<wbr>circuit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.html" class="md-nav__link">
-        <span title="/quairkit.core.rst (reference label)" class="md-ellipsis">quairkit.<wbr>core</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.rst (reference label)">quairkit.<wbr>core</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.html" class="md-nav__link">
-        <span title="/quairkit.database.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.database.rst (reference label)">quairkit.<wbr>database</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.loss.html" class="md-nav__link">
-        <span title="/quairkit.loss.rst (reference label)" class="md-ellipsis">quairkit.<wbr>loss</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.rst (reference label)">quairkit.<wbr>loss</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6" type="checkbox" id="__nav_1_6" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.operator.html"><span title="/quairkit.operator.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6" checked>
+        
           
-            <label for="__nav_1_6">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.operator" data-md-level="2">
-        <label class="md-nav__title" for="__nav_1_6">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/quairkit.operator.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.operator.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.rst (reference label)">quairkit.<wbr>operator</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_1_6" id="__nav_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.operator.rst (reference label)">quairkit.<wbr>operator</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.channel.html" class="md-nav__link">
-        <span title="/quairkit.operator.channel.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>channel</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.channel.rst (reference label)">quairkit.<wbr>operator.<wbr>channel</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6_2" type="checkbox" id="__nav_1_6_2" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.operator.gate.html"><span title="/quairkit.operator.gate.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6_2" checked>
+        
           
-            <label for="__nav_1_6_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.operator.gate" data-md-level="3">
-        <label class="md-nav__title" for="__nav_1_6_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/quairkit.operator.gate.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.operator.gate.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.rst (reference label)">quairkit.<wbr>operator.<wbr>gate</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_1_6_2" id="__nav_1_6_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_6_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.operator.gate.rst (reference label)">quairkit.<wbr>operator.<wbr>gate</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.gate.base.html" class="md-nav__link">
-        <span title="/quairkit.operator.gate.base.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>base</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.base.rst (reference label)">quairkit.<wbr>operator.<wbr>gate.<wbr>base</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.gate.custom.html" class="md-nav__link">
-        <span title="/quairkit.operator.gate.custom.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>custom</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.custom.rst (reference label)">quairkit.<wbr>operator.<wbr>gate.<wbr>custom</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
       
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span title="/quairkit.operator.gate.multi_qubit_gate.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate</span>
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.multi_qubit_gate.rst (reference label)">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate</span>
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span title="/quairkit.operator.gate.multi_qubit_gate.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.multi_qubit_gate.rst (reference label)">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate</span>
+    
+  </span>
+  
+
       </a>
       
         
@@ -458,7 +600,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CNOT (Python class) — A collection of CNOT gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CNOT</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CNOT (Python class) — A collection of CNOT gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CNOT</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CNOT">
@@ -466,7 +613,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -474,14 +624,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.cnot_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.cnot_idx (Python parameter) — CNOT gate index." class="md-ellipsis">cnot_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.cnot_idx (Python parameter) — CNOT gate index.">cnot_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -498,14 +658,24 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CX" class="md-nav__link">
-    <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span><span title="quairkit.operator.gate.multi_qubit_gate.CX (Python attribute) — alias of CNOT" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CX</span>
+    
+      <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CX (Python attribute) — alias of CNOT">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CX</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CY" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CY (Python class) — A collection of controlled Y gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CY</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CY (Python class) — A collection of controlled Y gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CY</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CY">
@@ -513,7 +683,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CY-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -521,7 +694,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CY.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -538,7 +716,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CZ" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CZ (Python class) — A collection of controlled Z gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CZ</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CZ (Python class) — A collection of controlled Z gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CZ</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CZ">
@@ -546,7 +729,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CZ-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -554,7 +740,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CZ.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -571,7 +762,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.SWAP" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.SWAP (Python class) — A collection of SWAP gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>SWAP</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.SWAP (Python class) — A collection of SWAP gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>SWAP</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.SWAP">
@@ -579,7 +775,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.SWAP-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -587,7 +786,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.SWAP.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.SWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.SWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -604,7 +808,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CP (Python class) — A collection of controlled P gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CP</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP (Python class) — A collection of controlled P gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CP</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CP">
@@ -612,7 +821,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -620,21 +832,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -646,7 +873,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -658,7 +888,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX (Python class) — A collection of controlled rotation gates about the x-axis." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRX</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX (Python class) — A collection of controlled rotation gates about the x-axis.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRX</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CRX">
@@ -666,7 +901,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -674,21 +912,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -700,7 +953,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -712,7 +968,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY (Python class) — A collection of controlled rotation gates about the y-axis." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRY</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY (Python class) — A collection of controlled rotation gates about the y-axis.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRY</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CRY">
@@ -720,7 +981,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -728,21 +992,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -754,7 +1033,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -766,7 +1048,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ (Python class) — A collection of controlled rotation gates about the z-axis." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRZ</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ (Python class) — A collection of controlled rotation gates about the z-axis.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRZ</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CRZ">
@@ -774,7 +1061,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -782,21 +1072,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -808,7 +1113,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -820,7 +1128,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CU (Python class) — A collection of controlled single-qubit rotation gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CU</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU (Python class) — A collection of controlled single-qubit rotation gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CU</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CU">
@@ -828,7 +1141,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -836,21 +1152,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -862,7 +1193,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -874,7 +1208,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX (Python class) — A collection of RXX gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RXX</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX (Python class) — A collection of RXX gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RXX</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.RXX">
@@ -882,7 +1221,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -890,21 +1232,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -916,7 +1273,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -928,7 +1288,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY (Python class) — A collection of RYY gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RYY</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY (Python class) — A collection of RYY gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RYY</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.RYY">
@@ -936,7 +1301,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -944,21 +1312,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -970,7 +1353,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -982,7 +1368,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ (Python class) — A collection of RZZ gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RZZ</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ (Python class) — A collection of RZZ gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RZZ</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.RZZ">
@@ -990,7 +1381,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -998,21 +1392,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1024,7 +1433,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1036,7 +1448,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.MS" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.MS (Python class) — A collection of Mølmer-Sørensen (MS) gates for trapped ion devices." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>MS</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.MS (Python class) — A collection of Mølmer-Sørensen (MS) gates for trapped ion devices.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>MS</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.MS">
@@ -1044,7 +1461,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.MS-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1052,7 +1472,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.MS.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.MS.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.MS.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1069,7 +1494,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CSWAP" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CSWAP (Python class) — A collection of CSWAP (Fredkin) gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CSWAP</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CSWAP (Python class) — A collection of CSWAP (Fredkin) gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CSWAP</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CSWAP">
@@ -1077,7 +1507,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CSWAP-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1085,7 +1518,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CSWAP.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CSWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CSWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1102,7 +1540,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CCX" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CCX (Python class) — A collection of CCX (Toffoli) gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CCX</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CCX (Python class) — A collection of CCX (Toffoli) gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CCX</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CCX">
@@ -1110,7 +1553,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CCX-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1118,7 +1564,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CCX.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CCX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CCX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1135,14 +1586,24 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.Toffoli" class="md-nav__link">
-    <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span><span title="quairkit.operator.gate.multi_qubit_gate.Toffoli (Python attribute) — alias of CCX" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Toffoli</span>
+    
+      <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.Toffoli (Python attribute) — alias of CCX">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Toffoli</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits (Python class) — A collection of universal two-qubit gates. One of such a gate requires 15 parameters." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Two<wbr>Qubits</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits (Python class) — A collection of universal two-qubit gates. One of such a gate requires 15 parameters.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Two<wbr>Qubits</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits">
@@ -1150,7 +1611,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1158,21 +1622,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1184,7 +1663,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1196,7 +1678,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits (Python class) — A collection of universal three-qubit gates. One of such a gate requires 81 parameters." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Three<wbr>Qubits</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits (Python class) — A collection of universal three-qubit gates. One of such a gate requires 81 parameters.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Three<wbr>Qubits</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits">
@@ -1204,7 +1691,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1212,21 +1702,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1238,7 +1743,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1255,86 +1763,125 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.gate.single_qubit_gate.html" class="md-nav__link">
-        <span title="/quairkit.operator.gate.single_qubit_gate.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>single_<wbr>qubit_<wbr>gate</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.single_qubit_gate.rst (reference label)">quairkit.<wbr>operator.<wbr>gate.<wbr>single_<wbr>qubit_<wbr>gate</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.gate.visual.html" class="md-nav__link">
-        <span title="/quairkit.operator.gate.visual.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>visual</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.gate.visual.rst (reference label)">quairkit.<wbr>operator.<wbr>gate.<wbr>visual</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.special.html" class="md-nav__link">
-        <span title="/quairkit.operator.special.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator.<wbr>special</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.special.rst (reference label)">quairkit.<wbr>operator.<wbr>special</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.qinfo.html" class="md-nav__link">
-        <span title="/quairkit.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.rst (reference label)">quairkit.<wbr>qinfo</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -1342,15 +1889,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="tutorials.html" class="md-nav__link">
-        <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1381,7 +1935,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CNOT (Python class) — A collection of CNOT gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CNOT</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CNOT (Python class) — A collection of CNOT gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CNOT</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CNOT">
@@ -1389,7 +1948,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1397,14 +1959,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.cnot_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.cnot_idx (Python parameter) — CNOT gate index." class="md-ellipsis">cnot_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CNOT.__init__.cnot_idx (Python parameter) — CNOT gate index.">cnot_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1421,14 +1993,24 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CX" class="md-nav__link">
-    <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span><span title="quairkit.operator.gate.multi_qubit_gate.CX (Python attribute) — alias of CNOT" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CX</span>
+    
+      <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CX (Python attribute) — alias of CNOT">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CX</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CY" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CY (Python class) — A collection of controlled Y gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CY</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CY (Python class) — A collection of controlled Y gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CY</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CY">
@@ -1436,7 +2018,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CY-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1444,7 +2029,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CY.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1461,7 +2051,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CZ" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CZ (Python class) — A collection of controlled Z gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CZ</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CZ (Python class) — A collection of controlled Z gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CZ</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CZ">
@@ -1469,7 +2064,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CZ-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1477,7 +2075,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CZ.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1494,7 +2097,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.SWAP" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.SWAP (Python class) — A collection of SWAP gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>SWAP</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.SWAP (Python class) — A collection of SWAP gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>SWAP</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.SWAP">
@@ -1502,7 +2110,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.SWAP-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1510,7 +2121,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.SWAP.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.SWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.SWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1527,7 +2143,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CP (Python class) — A collection of controlled P gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CP</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP (Python class) — A collection of controlled P gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CP</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CP">
@@ -1535,7 +2156,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1543,21 +2167,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CP.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1569,7 +2208,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CP-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1581,7 +2223,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX (Python class) — A collection of controlled rotation gates about the x-axis." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRX</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX (Python class) — A collection of controlled rotation gates about the x-axis.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRX</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CRX">
@@ -1589,7 +2236,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1597,21 +2247,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1623,7 +2288,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRX-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1635,7 +2303,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY (Python class) — A collection of controlled rotation gates about the y-axis." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRY</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY (Python class) — A collection of controlled rotation gates about the y-axis.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRY</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CRY">
@@ -1643,7 +2316,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1651,21 +2327,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1677,7 +2368,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRY-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1689,7 +2383,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ (Python class) — A collection of controlled rotation gates about the z-axis." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRZ</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ (Python class) — A collection of controlled rotation gates about the z-axis.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CRZ</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CRZ">
@@ -1697,7 +2396,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1705,21 +2407,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CRZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1731,7 +2448,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CRZ-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1743,7 +2463,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CU (Python class) — A collection of controlled single-qubit rotation gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CU</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU (Python class) — A collection of controlled single-qubit rotation gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CU</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CU">
@@ -1751,7 +2476,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1759,21 +2487,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CU.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1785,7 +2528,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CU-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1797,7 +2543,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX (Python class) — A collection of RXX gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RXX</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX (Python class) — A collection of RXX gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RXX</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.RXX">
@@ -1805,7 +2556,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1813,21 +2567,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RXX.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1839,7 +2608,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RXX-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1851,7 +2623,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY (Python class) — A collection of RYY gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RYY</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY (Python class) — A collection of RYY gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RYY</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.RYY">
@@ -1859,7 +2636,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1867,21 +2647,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RYY.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1893,7 +2688,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RYY-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1905,7 +2703,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ (Python class) — A collection of RZZ gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RZZ</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ (Python class) — A collection of RZZ gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>RZZ</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.RZZ">
@@ -1913,7 +2716,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1921,21 +2727,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.RZZ.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -1947,7 +2768,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.RZZ-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1959,7 +2783,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.MS" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.MS (Python class) — A collection of Mølmer-Sørensen (MS) gates for trapped ion devices." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>MS</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.MS (Python class) — A collection of Mølmer-Sørensen (MS) gates for trapped ion devices.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>MS</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.MS">
@@ -1967,7 +2796,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.MS-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1975,7 +2807,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.MS.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.MS.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.MS.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -1992,7 +2829,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CSWAP" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CSWAP (Python class) — A collection of CSWAP (Fredkin) gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CSWAP</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CSWAP (Python class) — A collection of CSWAP (Fredkin) gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CSWAP</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CSWAP">
@@ -2000,7 +2842,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CSWAP-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2008,7 +2853,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CSWAP.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CSWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CSWAP.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -2025,7 +2875,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CCX" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.CCX (Python class) — A collection of CCX (Toffoli) gates." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CCX</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CCX (Python class) — A collection of CCX (Toffoli) gates.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>CCX</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.CCX">
@@ -2033,7 +2888,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CCX-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2041,7 +2899,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.CCX.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.CCX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.CCX.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
@@ -2058,14 +2921,24 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.Toffoli" class="md-nav__link">
-    <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span><span title="quairkit.operator.gate.multi_qubit_gate.Toffoli (Python attribute) — alias of CCX" class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Toffoli</span>
+    
+      <span aria-label="Python attribute" class="objinfo-icon objinfo-icon__alias" title="Python attribute">A</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.Toffoli (Python attribute) — alias of CCX">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Toffoli</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits (Python class) — A collection of universal two-qubit gates. One of such a gate requires 15 parameters." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Two<wbr>Qubits</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits (Python class) — A collection of universal two-qubit gates. One of such a gate requires 15 parameters.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Two<wbr>Qubits</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits">
@@ -2073,7 +2946,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2081,21 +2957,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -2107,7 +2998,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalTwoQubits-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -2119,7 +3013,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits (Python class) — A collection of universal three-qubit gates. One of such a gate requires 81 parameters." class="md-ellipsis">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Three<wbr>Qubits</span>
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits (Python class) — A collection of universal three-qubit gates. One of such a gate requires 81 parameters.">quairkit.<wbr>operator.<wbr>gate.<wbr>multi_<wbr>qubit_<wbr>gate.<wbr>Universal<wbr>Three<wbr>Qubits</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits">
@@ -2127,7 +3026,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2135,21 +3037,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.qubits_idx" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied." class="md-ellipsis">qubits_<wbr>idx</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied.">qubits_<wbr>idx</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param (Python parameter) — Parameters of the gates." class="md-ellipsis">param</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param (Python parameter) — Parameters of the gates.">param</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param_sharing" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter." class="md-ellipsis">param_<wbr>sharing</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits.__init__.param_sharing (Python parameter) — Whether gates in the same layer share a parameter.">param_<wbr>sharing</span>
+    </span>
   </a>
   
 </li>
@@ -2161,7 +3078,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.operator.gate.multi_qubit_gate.UniversalThreeQubits-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -2182,6 +3102,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset" role="main">
+                
+                
                   
 
 
@@ -2691,6 +3613,14 @@
 
 
 
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
@@ -2701,42 +3631,6 @@
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="quairkit.operator.gate.custom.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.operator.gate.custom" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              quairkit.operator.gate.custom
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="quairkit.operator.gate.single_qubit_gate.html" class="md-footer__link md-footer__link--next" aria-label="Next: quairkit.operator.gate.single_qubit_gate" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              quairkit.operator.gate.single_qubit_gate
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   
   
@@ -2768,10 +3662,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
     
       
-        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>

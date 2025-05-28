@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -7,6 +8,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+      
+      
+      
+        <link rel="prev" href="quairkit.database.set.html">
+      
+      
+        <link rel="next" href="quairkit.loss.html">
       
       
       <link rel="icon" href="_static/favicon.svg">
@@ -19,15 +27,13 @@
     
       
         
-        
-          
-          
-          <meta name="theme-color" content="#4cae4f">
-        
       
       
 
+
     
+    
+      
     
     
       
@@ -36,8 +42,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -52,9 +58,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -74,15 +79,18 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -101,10 +109,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -112,24 +124,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -141,7 +156,7 @@
         <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -173,12 +188,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     QuAIRKit
   </label>
@@ -187,7 +203,7 @@
       <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -199,15 +215,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.ansatz.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>ansatz</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>ansatz
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -215,15 +238,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.circuit.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>circuit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>circuit
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -231,15 +261,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>core</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>core
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -247,134 +284,207 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.database.html"><span class="md-ellipsis">quairkit.<wbr>database</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
           
-            <label for="__nav_4">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.database" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">quairkit.<wbr>database</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.database.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            quairkit.<wbr>database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.hamiltonian.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>database.<wbr>hamiltonian</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>hamiltonian
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.matrix.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>database.<wbr>matrix</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>matrix
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.random.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>database.<wbr>random</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>random
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.representation.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>database.<wbr>representation</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>representation
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.set.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>database.<wbr>set</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>set
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
       
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-ellipsis">quairkit.<wbr>database.<wbr>state</span>
+          
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>state
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span class="md-ellipsis">quairkit.<wbr>database.<wbr>state</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>database.<wbr>state
+    
+  </span>
+  
+
       </a>
       
         
@@ -393,7 +503,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.zero_state (Python function) — The function to generate a zero state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>zero_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.zero_state (Python function) — The function to generate a zero state.">quairkit.<wbr>database.<wbr>state.<wbr>zero_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.zero_state">
@@ -401,7 +516,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -409,14 +527,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.zero_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.zero_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.zero_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.zero_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -428,14 +556,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -447,7 +581,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.one_state (Python function) — The function to generate a one state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>one_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.one_state (Python function) — The function to generate a one state.">quairkit.<wbr>database.<wbr>state.<wbr>one_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.one_state">
@@ -455,7 +594,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -463,14 +605,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.one_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.one_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.one_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.one_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -482,14 +634,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -501,7 +659,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.computational_state (Python function) — Generate a computational state |e_{i}\rangle , whose i-th element is 1 and all the other elements are 0." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>computational_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state (Python function) — Generate a computational state |e_{i}\rangle , whose i-th element is 1 and all the other elements are 0.">quairkit.<wbr>database.<wbr>state.<wbr>computational_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.computational_state">
@@ -509,7 +672,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -517,21 +683,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.computational_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state.index" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.computational_state.index (Python parameter) — Index i of the computational basis state |e_{i}rangle ." class="md-ellipsis">index</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state.index (Python parameter) — Index i of the computational basis state |e_{i}rangle .">index</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.computational_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -543,14 +724,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -562,7 +749,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.bell_state (Python function) — Generate a bell state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_state (Python function) — Generate a bell state.">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.bell_state">
@@ -570,7 +762,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -578,14 +773,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.bell_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.bell_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -597,14 +802,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -616,7 +827,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.bell_diagonal_state (Python function) — Generate a bell diagonal state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>diagonal_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_diagonal_state (Python function) — Generate a bell diagonal state.">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>diagonal_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.bell_diagonal_state">
@@ -624,7 +840,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -632,7 +851,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.bell_diagonal_state.prob (Python parameter) — The prob of each bell state." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_diagonal_state.prob (Python parameter) — The prob of each bell state.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -644,21 +868,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -670,7 +903,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.w_state (Python function) — Generate a W-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>w_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.w_state (Python function) — Generate a W-state.">quairkit.<wbr>database.<wbr>state.<wbr>w_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.w_state">
@@ -678,7 +916,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -686,7 +927,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.w_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.w_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
@@ -698,21 +944,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -724,7 +979,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.ghz_state (Python function) — Generate a GHZ-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>ghz_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.ghz_state (Python function) — Generate a GHZ-state.">quairkit.<wbr>database.<wbr>state.<wbr>ghz_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.ghz_state">
@@ -732,7 +992,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -740,7 +1003,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.ghz_state.num_qubits (Python parameter) — The number of qubits contained izn the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.ghz_state.num_qubits (Python parameter) — The number of qubits contained izn the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
@@ -752,21 +1020,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -778,7 +1055,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.completely_mixed_computational (Python function) — Generate the density matrix of the completely mixed state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>completely_<wbr>mixed_<wbr>computational</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.completely_mixed_computational (Python function) — Generate the density matrix of the completely mixed state.">quairkit.<wbr>database.<wbr>state.<wbr>completely_<wbr>mixed_<wbr>computational</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.completely_mixed_computational">
@@ -786,7 +1068,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -794,7 +1079,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.completely_mixed_computational.num_qubits (Python parameter) — The number of qubits contained in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.completely_mixed_computational.num_qubits (Python parameter) — The number of qubits contained in the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
@@ -806,21 +1096,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -832,7 +1131,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.r_state (Python function) — Generate an R-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>r_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.r_state (Python function) — Generate an R-state.">quairkit.<wbr>database.<wbr>state.<wbr>r_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.r_state">
@@ -840,7 +1144,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -848,7 +1155,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.r_state.prob (Python parameter) — The parameter of the R-state to be generated." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.r_state.prob (Python parameter) — The parameter of the R-state to be generated.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -860,21 +1172,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -886,7 +1207,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.s_state (Python function) — Generate the S-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>s_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.s_state (Python function) — Generate the S-state.">quairkit.<wbr>database.<wbr>state.<wbr>s_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.s_state">
@@ -894,7 +1220,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -902,7 +1231,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.s_state.prob (Python parameter) — The parameter of the S-state to be generated." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.s_state.prob (Python parameter) — The parameter of the S-state to be generated.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -914,21 +1248,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -940,7 +1283,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.isotropic_state (Python function) — Generate the isotropic state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>isotropic_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.isotropic_state (Python function) — Generate the isotropic state.">quairkit.<wbr>database.<wbr>state.<wbr>isotropic_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.isotropic_state">
@@ -948,7 +1296,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -956,14 +1307,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.isotropic_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.isotropic_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.isotropic_state.prob (Python parameter) — The parameter of the isotropic state to be generated." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.isotropic_state.prob (Python parameter) — The parameter of the isotropic state to be generated.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -975,21 +1336,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1006,10 +1376,11 @@
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -1017,15 +1388,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.loss.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>loss</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>loss
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1033,15 +1411,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>operator</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>operator
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1049,15 +1434,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.qinfo.html" class="md-nav__link">
-        <span class="md-ellipsis">quairkit.<wbr>qinfo</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    quairkit.<wbr>qinfo
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1088,7 +1480,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.zero_state (Python function) — The function to generate a zero state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>zero_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.zero_state (Python function) — The function to generate a zero state.">quairkit.<wbr>database.<wbr>state.<wbr>zero_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.zero_state">
@@ -1096,7 +1493,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1104,14 +1504,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.zero_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.zero_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.zero_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.zero_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -1123,14 +1533,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.zero_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1142,7 +1558,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.one_state (Python function) — The function to generate a one state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>one_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.one_state (Python function) — The function to generate a one state.">quairkit.<wbr>database.<wbr>state.<wbr>one_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.one_state">
@@ -1150,7 +1571,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1158,14 +1582,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.one_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.one_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.one_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.one_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -1177,14 +1611,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.one_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1196,7 +1636,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.computational_state (Python function) — Generate a computational state |e_{i}\rangle , whose i-th element is 1 and all the other elements are 0." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>computational_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state (Python function) — Generate a computational state |e_{i}\rangle , whose i-th element is 1 and all the other elements are 0.">quairkit.<wbr>database.<wbr>state.<wbr>computational_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.computational_state">
@@ -1204,7 +1649,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1212,21 +1660,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.computational_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state.index" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.computational_state.index (Python parameter) — Index i of the computational basis state |e_{i}rangle ." class="md-ellipsis">index</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state.index (Python parameter) — Index i of the computational basis state |e_{i}rangle .">index</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.computational_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.computational_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -1238,14 +1701,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.computational_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1257,7 +1726,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.bell_state (Python function) — Generate a bell state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_state (Python function) — Generate a bell state.">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.bell_state">
@@ -1265,7 +1739,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1273,14 +1750,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state.num_systems" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.bell_state.num_systems (Python parameter) — number of systems in this state." class="md-ellipsis">num_<wbr>systems</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_state.num_systems (Python parameter) — number of systems in this state.">num_<wbr>systems</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state.system_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.bell_state.system_dim (Python parameter) — dimension of systems." class="md-ellipsis">system_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_state.system_dim (Python parameter) — dimension of systems.">system_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -1292,14 +1779,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1311,7 +1804,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.bell_diagonal_state (Python function) — Generate a bell diagonal state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>diagonal_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_diagonal_state (Python function) — Generate a bell diagonal state.">quairkit.<wbr>database.<wbr>state.<wbr>bell_<wbr>diagonal_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.bell_diagonal_state">
@@ -1319,7 +1817,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1327,7 +1828,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.bell_diagonal_state.prob (Python parameter) — The prob of each bell state." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.bell_diagonal_state.prob (Python parameter) — The prob of each bell state.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -1339,21 +1845,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.bell_diagonal_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1365,7 +1880,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.w_state (Python function) — Generate a W-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>w_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.w_state (Python function) — Generate a W-state.">quairkit.<wbr>database.<wbr>state.<wbr>w_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.w_state">
@@ -1373,7 +1893,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1381,7 +1904,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.w_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.w_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
@@ -1393,21 +1921,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.w_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1419,7 +1956,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.ghz_state (Python function) — Generate a GHZ-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>ghz_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.ghz_state (Python function) — Generate a GHZ-state.">quairkit.<wbr>database.<wbr>state.<wbr>ghz_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.ghz_state">
@@ -1427,7 +1969,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1435,7 +1980,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.ghz_state.num_qubits (Python parameter) — The number of qubits contained izn the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.ghz_state.num_qubits (Python parameter) — The number of qubits contained izn the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
@@ -1447,21 +1997,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.ghz_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1473,7 +2032,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.completely_mixed_computational (Python function) — Generate the density matrix of the completely mixed state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>completely_<wbr>mixed_<wbr>computational</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.completely_mixed_computational (Python function) — Generate the density matrix of the completely mixed state.">quairkit.<wbr>database.<wbr>state.<wbr>completely_<wbr>mixed_<wbr>computational</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.completely_mixed_computational">
@@ -1481,7 +2045,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1489,7 +2056,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.completely_mixed_computational.num_qubits (Python parameter) — The number of qubits contained in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.completely_mixed_computational.num_qubits (Python parameter) — The number of qubits contained in the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
@@ -1501,21 +2073,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.completely_mixed_computational-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1527,7 +2108,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.r_state (Python function) — Generate an R-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>r_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.r_state (Python function) — Generate an R-state.">quairkit.<wbr>database.<wbr>state.<wbr>r_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.r_state">
@@ -1535,7 +2121,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1543,7 +2132,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.r_state.prob (Python parameter) — The parameter of the R-state to be generated." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.r_state.prob (Python parameter) — The parameter of the R-state to be generated.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -1555,21 +2149,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.r_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1581,7 +2184,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.s_state (Python function) — Generate the S-state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>s_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.s_state (Python function) — Generate the S-state.">quairkit.<wbr>database.<wbr>state.<wbr>s_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.s_state">
@@ -1589,7 +2197,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1597,7 +2208,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.s_state.prob (Python parameter) — The parameter of the S-state to be generated." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.s_state.prob (Python parameter) — The parameter of the S-state to be generated.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -1609,21 +2225,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.s_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1635,7 +2260,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.database.state.isotropic_state (Python function) — Generate the isotropic state." class="md-ellipsis">quairkit.<wbr>database.<wbr>state.<wbr>isotropic_<wbr>state</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.isotropic_state (Python function) — Generate the isotropic state.">quairkit.<wbr>database.<wbr>state.<wbr>isotropic_<wbr>state</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.database.state.isotropic_state">
@@ -1643,7 +2273,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1651,14 +2284,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state.num_qubits" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.isotropic_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state." class="md-ellipsis">num_<wbr>qubits</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.isotropic_state.num_qubits (Python parameter) — The number of qubits contained in the quantum state.">num_<wbr>qubits</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state.prob" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.database.state.isotropic_state.prob (Python parameter) — The parameter of the isotropic state to be generated." class="md-ellipsis">prob</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.state.isotropic_state.prob (Python parameter) — The parameter of the isotropic state to be generated.">prob</span>
+    </span>
   </a>
   
 </li>
@@ -1670,21 +2313,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.database.state.isotropic_state-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1705,6 +2357,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset" role="main">
+                
+                
                   
 
 
@@ -2189,6 +2843,14 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 
 
 
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
@@ -2199,42 +2861,6 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="quairkit.database.set.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.database.set" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              quairkit.database.set
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="quairkit.loss.html" class="md-footer__link md-footer__link--next" aria-label="Next: quairkit.loss" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              quairkit.loss
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   
   
@@ -2266,10 +2892,11 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
       
-        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>

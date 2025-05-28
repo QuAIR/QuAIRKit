@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -7,6 +8,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+      
+      
+      
+        <link rel="prev" href="quairkit.qinfo.linalg.html">
+      
+      
+        <link rel="next" href="tutorials.html">
       
       
       <link rel="icon" href="_static/favicon.svg">
@@ -19,15 +27,13 @@
     
       
         
-        
-          
-          
-          <meta name="theme-color" content="#4cae4f">
-        
       
       
 
+
     
+    
+      
     
     
       
@@ -36,8 +42,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -52,9 +58,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -71,22 +76,25 @@
       
     </div>
     
-      <div data-md-component="outdated" hidden>
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
         
       </div>
     
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -105,10 +113,14 @@
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -116,24 +128,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -145,7 +160,7 @@
         <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -177,12 +192,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     QuAIRKit
   </label>
@@ -191,7 +207,7 @@
       <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -203,211 +219,324 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.html"><span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
           
-            <label for="__nav_1">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit" data-md-level="1">
-        <label class="md-nav__title" for="__nav_1">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.rst (reference label)">quairkit</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.ansatz.html" class="md-nav__link">
-        <span title="/quairkit.ansatz.rst (reference label)" class="md-ellipsis">quairkit.<wbr>ansatz</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.ansatz.rst (reference label)">quairkit.<wbr>ansatz</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.circuit.html" class="md-nav__link">
-        <span title="/quairkit.circuit.rst (reference label)" class="md-ellipsis">quairkit.<wbr>circuit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.circuit.rst (reference label)">quairkit.<wbr>circuit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.core.html" class="md-nav__link">
-        <span title="/quairkit.core.rst (reference label)" class="md-ellipsis">quairkit.<wbr>core</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.rst (reference label)">quairkit.<wbr>core</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.database.html" class="md-nav__link">
-        <span title="/quairkit.database.rst (reference label)" class="md-ellipsis">quairkit.<wbr>database</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.database.rst (reference label)">quairkit.<wbr>database</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.loss.html" class="md-nav__link">
-        <span title="/quairkit.loss.rst (reference label)" class="md-ellipsis">quairkit.<wbr>loss</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.rst (reference label)">quairkit.<wbr>loss</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.operator.html" class="md-nav__link">
-        <span title="/quairkit.operator.rst (reference label)" class="md-ellipsis">quairkit.<wbr>operator</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.rst (reference label)">quairkit.<wbr>operator</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_7" type="checkbox" id="__nav_1_7" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="quairkit.qinfo.html"><span title="/quairkit.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7" checked>
+        
           
-            <label for="__nav_1_7">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="quairkit.qinfo" data-md-level="2">
-        <label class="md-nav__title" for="__nav_1_7">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/quairkit.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.qinfo.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.rst (reference label)">quairkit.<wbr>qinfo</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_1_7" id="__nav_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.qinfo.rst (reference label)">quairkit.<wbr>qinfo</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.qinfo.check.html" class="md-nav__link">
-        <span title="/quairkit.qinfo.check.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>check</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.check.rst (reference label)">quairkit.<wbr>qinfo.<wbr>check</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="quairkit.qinfo.linalg.html" class="md-nav__link">
-        <span title="/quairkit.qinfo.linalg.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>linalg</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.linalg.rst (reference label)">quairkit.<wbr>qinfo.<wbr>linalg</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
       
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span title="/quairkit.qinfo.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo</span>
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.qinfo.rst (reference label)">quairkit.<wbr>qinfo.<wbr>qinfo</span>
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span title="/quairkit.qinfo.qinfo.rst (reference label)" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.qinfo.rst (reference label)">quairkit.<wbr>qinfo.<wbr>qinfo</span>
+    
+  </span>
+  
+
       </a>
       
         
@@ -426,7 +555,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.channel_repr_convert (Python function) — convert the given representation of a channel to the target implementation" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>channel_<wbr>repr_<wbr>convert</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert (Python function) — convert the given representation of a channel to the target implementation">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>channel_<wbr>repr_<wbr>convert</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.channel_repr_convert">
@@ -434,7 +568,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -442,28 +579,48 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.representation" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.representation (Python parameter) — input representation" class="md-ellipsis">representation</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.representation (Python parameter) — input representation">representation</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.source" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.source (Python parameter) — input form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;" class="md-ellipsis">source</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.source (Python parameter) — input form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;">source</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.target" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.target (Python parameter) — target form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;" class="md-ellipsis">target</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.target (Python parameter) — target form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;">target</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.tol" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.tol (Python parameter) — error tolerance for the conversion from Choi, 10^{-6} by default" class="md-ellipsis">tol</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.tol (Python parameter) — error tolerance for the conversion from Choi, 10^{-6} by default">tol</span>
+    </span>
   </a>
   
 </li>
@@ -475,28 +632,40 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -508,7 +677,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.create_choi_repr (Python function) — Create the Choi representation of a linear map with input checks." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>create_<wbr>choi_<wbr>repr</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr (Python function) — Create the Choi representation of a linear map with input checks.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>create_<wbr>choi_<wbr>repr</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.create_choi_repr">
@@ -516,7 +690,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -524,21 +701,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr.linear_map" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.create_choi_repr.linear_map (Python parameter) — A function representing the linear map, which takes and returns a square matrix." class="md-ellipsis">linear_<wbr>map</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr.linear_map (Python parameter) — A function representing the linear map, which takes and returns a square matrix.">linear_<wbr>map</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr.input_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.create_choi_repr.input_dim (Python parameter) — The dimension of the space in which the linear map operates." class="md-ellipsis">input_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr.input_dim (Python parameter) — The dimension of the space in which the linear map operates.">input_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr.input_dtype" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.create_choi_repr.input_dtype (Python parameter) — The dtype of the input." class="md-ellipsis">input_<wbr>dtype</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr.input_dtype (Python parameter) — The dtype of the input.">input_<wbr>dtype</span>
+    </span>
   </a>
   
 </li>
@@ -550,21 +742,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -576,7 +777,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.decomp_1qubit (Python function) — Decompose a single-qubit unitary operator into Z-Y-Z rotation angles." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>1qubit</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit (Python function) — Decompose a single-qubit unitary operator into Z-Y-Z rotation angles.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>1qubit</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.decomp_1qubit">
@@ -584,7 +790,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -592,14 +801,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor.">unitary</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit.return_global" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned." class="md-ellipsis">return_<wbr>global</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned.">return_<wbr>global</span>
+    </span>
   </a>
   
 </li>
@@ -611,21 +830,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -637,7 +865,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit (Python function) — Decompose a controlled single-qubit unitary operator into its components." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>ctrl_<wbr>1qubit</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit (Python function) — Decompose a controlled single-qubit unitary operator into its components.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>ctrl_<wbr>1qubit</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.decomp_ctrl_1qubit">
@@ -645,7 +878,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -653,7 +889,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit.unitary (Python parameter) — A 2x2 unitary matrix representing the single-qubit gate, as either a numpy ndarray or a torch Tensor." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit.unitary (Python parameter) — A 2x2 unitary matrix representing the single-qubit gate, as either a numpy ndarray or a torch Tensor.">unitary</span>
+    </span>
   </a>
   
 </li>
@@ -665,21 +906,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -691,7 +941,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.diamond_norm (Python function) — Calculate the diamond norm of input." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>diamond_<wbr>norm</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm (Python function) — Calculate the diamond norm of input.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>diamond_<wbr>norm</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.diamond_norm">
@@ -699,7 +954,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -707,21 +965,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm.channel_repr" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.diamond_norm.channel_repr (Python parameter) — A Channel or a torch.Tensor instance." class="md-ellipsis">channel_<wbr>repr</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm.channel_repr (Python parameter) — A Channel or a torch.Tensor instance.">channel_<wbr>repr</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm.dim_io" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.diamond_norm.dim_io (Python parameter) — The input and output dimensions." class="md-ellipsis">dim_<wbr>io</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm.dim_io (Python parameter) — The input and output dimensions.">dim_<wbr>io</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm.kwargs" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.diamond_norm.kwargs (Python parameter) — Parameters to set cvx." class="md-ellipsis">kwargs</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm.kwargs (Python parameter) — Parameters to set cvx.">kwargs</span>
+    </span>
   </a>
   
 </li>
@@ -733,21 +1006,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -759,7 +1041,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — calculate the fidelity between gates" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — calculate the fidelity between gates">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.gate_fidelity">
@@ -767,7 +1054,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -775,14 +1065,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity.U" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — quantum gate U  in matrix form" class="md-ellipsis">U</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — quantum gate U  in matrix form">U</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity.V" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — quantum gate V  in matrix form" class="md-ellipsis">V</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — quantum gate V  in matrix form">V</span>
+    </span>
   </a>
   
 </li>
@@ -794,14 +1094,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -813,7 +1119,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general states." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general states.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.general_state_fidelity">
@@ -821,7 +1132,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -829,14 +1143,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — a subnormalized quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — a subnormalized quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — a subnormalized quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — a subnormalized quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
@@ -848,14 +1172,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -867,7 +1197,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.link (Python function) — Calculate the link product of two Choi matrices of quantum channels." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>link</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.link (Python function) — Calculate the link product of two Choi matrices of quantum channels.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>link</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.link">
@@ -875,7 +1210,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -883,14 +1221,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link.JE" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.link.JE (Python parameter) — Tuple containing the Choi representation of channel E, its label, input dimensions, and output dimensions." class="md-ellipsis">JE</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.link.JE (Python parameter) — Tuple containing the Choi representation of channel E, its label, input dimensions, and output dimensions.">JE</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link.JF" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.link.JF (Python parameter) — Tuple containing the Choi representation of channel F, its label, input dimensions, and output dimensions." class="md-ellipsis">JF</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.link.JF (Python parameter) — Tuple containing the Choi representation of channel F, its label, input dimensions, and output dimensions.">JF</span>
+    </span>
   </a>
   
 </li>
@@ -902,14 +1250,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -921,7 +1275,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.logarithmic_negativity (Python function) — Calculate the Logarithmic Negativity E_N = ||\rho^{T_A}|| of the input quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>logarithmic_<wbr>negativity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.logarithmic_negativity (Python function) — Calculate the Logarithmic Negativity E_N = ||\rho^{T_A}|| of the input quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>logarithmic_<wbr>negativity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.logarithmic_negativity">
@@ -929,7 +1288,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -937,7 +1299,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity.density_op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.logarithmic_negativity.density_op (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">density_<wbr>op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.logarithmic_negativity.density_op (Python parameter) — Density matrix form of the quantum state.">density_<wbr>op</span>
+    </span>
   </a>
   
 </li>
@@ -949,14 +1316,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -968,7 +1341,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.mana (Python function) — Compute the mana of states or channels" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mana</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana (Python function) — Compute the mana of states or channels">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mana</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.mana">
@@ -976,7 +1354,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -984,21 +1365,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana.matrix" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mana.matrix (Python parameter) — quantum state or channel, when &#34;channel&#34;, it should be the choi matrix of channel." class="md-ellipsis">matrix</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana.matrix (Python parameter) — quantum state or channel, when &#34;channel&#34;, it should be the choi matrix of channel.">matrix</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana.input_str" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mana.input_str (Python parameter) — &#34;state&#34; or &#34;channel&#34;" class="md-ellipsis">input_<wbr>str</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana.input_str (Python parameter) — &#34;state&#34; or &#34;channel&#34;">input_<wbr>str</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana.out_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mana.out_dim (Python parameter) — output system dimension, only need to compute mana of channel." class="md-ellipsis">out_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana.out_dim (Python parameter) — output system dimension, only need to compute mana of channel.">out_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -1010,14 +1406,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1029,7 +1431,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.mutual_information (Python function) — Compute the mutual information of a bipartite state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mutual_<wbr>information</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information (Python function) — Compute the mutual information of a bipartite state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mutual_<wbr>information</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.mutual_information">
@@ -1037,7 +1444,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1045,21 +1455,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information.state" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mutual_information.state (Python parameter) — input bipartite quantum state with system AB." class="md-ellipsis">state</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information.state (Python parameter) — input bipartite quantum state with system AB.">state</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information.dim_A" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mutual_information.dim_A (Python parameter) — Dimension of system A." class="md-ellipsis">dim_<wbr>A</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information.dim_A (Python parameter) — Dimension of system A.">dim_<wbr>A</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information.dim_B" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mutual_information.dim_B (Python parameter) — Dimension of system B." class="md-ellipsis">dim_<wbr>B</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information.dim_B (Python parameter) — Dimension of system B.">dim_<wbr>B</span>
+    </span>
   </a>
   
 </li>
@@ -1071,14 +1496,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1090,7 +1521,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.negativity (Python function) — Compute the Negativity N = ||\frac{\rho^{T_A}-1}{2}|| of the input quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>negativity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.negativity (Python function) — Compute the Negativity N = ||\frac{\rho^{T_A}-1}{2}|| of the input quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>negativity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.negativity">
@@ -1098,7 +1534,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1106,7 +1545,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity.density_op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.negativity.density_op (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">density_<wbr>op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.negativity.density_op (Python parameter) — Density matrix form of the quantum state.">density_<wbr>op</span>
+    </span>
   </a>
   
 </li>
@@ -1118,14 +1562,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1137,7 +1587,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.pauli_str_convertor (Python function) — Concatenate the input observable with coefficient 1." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>pauli_<wbr>str_<wbr>convertor</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.pauli_str_convertor (Python function) — Concatenate the input observable with coefficient 1.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>pauli_<wbr>str_<wbr>convertor</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.pauli_str_convertor">
@@ -1145,7 +1600,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1153,7 +1611,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor.observable" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.pauli_str_convertor.observable (Python parameter) — The observable to be concatenated with coefficient 1." class="md-ellipsis">observable</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.pauli_str_convertor.observable (Python parameter) — The observable to be concatenated with coefficient 1.">observable</span>
+    </span>
   </a>
   
 </li>
@@ -1165,14 +1628,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1184,7 +1653,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.purity (Python function) — Calculate the purity of a quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>purity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.purity (Python function) — Calculate the purity of a quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>purity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.purity">
@@ -1192,7 +1666,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1200,7 +1677,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
@@ -1212,14 +1694,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1231,7 +1719,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.relative_entropy (Python function) — Calculate the relative entropy of two quantum states." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>relative_<wbr>entropy</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy (Python function) — Calculate the relative entropy of two quantum states.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>relative_<wbr>entropy</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.relative_entropy">
@@ -1239,7 +1732,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1247,21 +1743,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.relative_entropy.rho (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy.rho (Python parameter) — Density matrix form of the quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.relative_entropy.sigma (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy.sigma (Python parameter) — Density matrix form of the quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy.base" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.relative_entropy.base (Python parameter) — The base of logarithm." class="md-ellipsis">base</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy.base (Python parameter) — The base of logarithm.">base</span>
+    </span>
   </a>
   
 </li>
@@ -1273,14 +1784,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1292,7 +1809,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.stab_nullity (Python function) — Tool for calculation of unitary-stabilizer nullity." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>nullity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_nullity (Python function) — Tool for calculation of unitary-stabilizer nullity.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>nullity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.stab_nullity">
@@ -1300,7 +1822,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1308,7 +1833,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.stab_nullity.unitary (Python parameter) — A batch of unitary matrices." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_nullity.unitary (Python parameter) — A batch of unitary matrices.">unitary</span>
+    </span>
   </a>
   
 </li>
@@ -1320,14 +1850,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1339,7 +1875,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.stab_renyi (Python function) — Tool for calculation of stabilizer renyi entropy." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>renyi</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_renyi (Python function) — Tool for calculation of stabilizer renyi entropy.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>renyi</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.stab_renyi">
@@ -1347,7 +1888,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1355,7 +1899,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi.density" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.stab_renyi.density (Python parameter) — A batch of density matrices." class="md-ellipsis">density</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_renyi.density (Python parameter) — A batch of density matrices.">density</span>
+    </span>
   </a>
   
 </li>
@@ -1367,14 +1916,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1386,7 +1941,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.state_fidelity (Python function) — Calculate the fidelity of two quantum states, no extra square is taken." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>state_<wbr>fidelity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.state_fidelity (Python function) — Calculate the fidelity of two quantum states, no extra square is taken.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>state_<wbr>fidelity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.state_fidelity">
@@ -1394,7 +1954,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1402,14 +1965,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — a quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — a quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — a quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — a quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
@@ -1421,14 +1994,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1440,7 +2019,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.trace_distance (Python function) — Calculate the trace distance of two quantum states." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>trace_<wbr>distance</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.trace_distance (Python function) — Calculate the trace distance of two quantum states.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>trace_<wbr>distance</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.trace_distance">
@@ -1448,7 +2032,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1456,14 +2043,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — a quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — a quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — a quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — a quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
@@ -1475,14 +2072,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1494,7 +2097,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.von_neumann_entropy (Python function) — Calculate the von Neumann entropy of a quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>von_<wbr>neumann_<wbr>entropy</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy (Python function) — Calculate the von Neumann entropy of a quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>von_<wbr>neumann_<wbr>entropy</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.von_neumann_entropy">
@@ -1502,7 +2110,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1510,14 +2121,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy.base" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.von_neumann_entropy.base (Python parameter) — The base of logarithm." class="md-ellipsis">base</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.base (Python parameter) — The base of logarithm.">base</span>
+    </span>
   </a>
   
 </li>
@@ -1529,14 +2150,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1553,18 +2180,20 @@
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -1572,15 +2201,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="tutorials.html" class="md-nav__link">
-        <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -1611,7 +2247,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.channel_repr_convert (Python function) — convert the given representation of a channel to the target implementation" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>channel_<wbr>repr_<wbr>convert</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert (Python function) — convert the given representation of a channel to the target implementation">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>channel_<wbr>repr_<wbr>convert</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.channel_repr_convert">
@@ -1619,7 +2260,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1627,28 +2271,48 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.representation" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.representation (Python parameter) — input representation" class="md-ellipsis">representation</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.representation (Python parameter) — input representation">representation</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.source" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.source (Python parameter) — input form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;" class="md-ellipsis">source</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.source (Python parameter) — input form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;">source</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.target" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.target (Python parameter) — target form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;" class="md-ellipsis">target</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.target (Python parameter) — target form, should be &#39;choi&#39;, &#39;kraus&#39; or &#39;stinespring&#39;">target</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert.tol" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.channel_repr_convert.tol (Python parameter) — error tolerance for the conversion from Choi, 10^{-6} by default" class="md-ellipsis">tol</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.channel_repr_convert.tol (Python parameter) — error tolerance for the conversion from Choi, 10^{-6} by default">tol</span>
+    </span>
   </a>
   
 </li>
@@ -1660,28 +2324,40 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.channel_repr_convert-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1693,7 +2369,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.create_choi_repr (Python function) — Create the Choi representation of a linear map with input checks." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>create_<wbr>choi_<wbr>repr</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr (Python function) — Create the Choi representation of a linear map with input checks.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>create_<wbr>choi_<wbr>repr</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.create_choi_repr">
@@ -1701,7 +2382,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1709,21 +2393,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr.linear_map" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.create_choi_repr.linear_map (Python parameter) — A function representing the linear map, which takes and returns a square matrix." class="md-ellipsis">linear_<wbr>map</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr.linear_map (Python parameter) — A function representing the linear map, which takes and returns a square matrix.">linear_<wbr>map</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr.input_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.create_choi_repr.input_dim (Python parameter) — The dimension of the space in which the linear map operates." class="md-ellipsis">input_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr.input_dim (Python parameter) — The dimension of the space in which the linear map operates.">input_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr.input_dtype" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.create_choi_repr.input_dtype (Python parameter) — The dtype of the input." class="md-ellipsis">input_<wbr>dtype</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.create_choi_repr.input_dtype (Python parameter) — The dtype of the input.">input_<wbr>dtype</span>
+    </span>
   </a>
   
 </li>
@@ -1735,21 +2434,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.create_choi_repr-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
@@ -1761,7 +2469,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.decomp_1qubit (Python function) — Decompose a single-qubit unitary operator into Z-Y-Z rotation angles." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>1qubit</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit (Python function) — Decompose a single-qubit unitary operator into Z-Y-Z rotation angles.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>1qubit</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.decomp_1qubit">
@@ -1769,7 +2482,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1777,14 +2493,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor.">unitary</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit.return_global" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned." class="md-ellipsis">return_<wbr>global</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned.">return_<wbr>global</span>
+    </span>
   </a>
   
 </li>
@@ -1796,21 +2522,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_1qubit-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1822,7 +2557,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit (Python function) — Decompose a controlled single-qubit unitary operator into its components." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>ctrl_<wbr>1qubit</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit (Python function) — Decompose a controlled single-qubit unitary operator into its components.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>decomp_<wbr>ctrl_<wbr>1qubit</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.decomp_ctrl_1qubit">
@@ -1830,7 +2570,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1838,7 +2581,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit.unitary (Python parameter) — A 2x2 unitary matrix representing the single-qubit gate, as either a numpy ndarray or a torch Tensor." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.decomp_ctrl_1qubit.unitary (Python parameter) — A 2x2 unitary matrix representing the single-qubit gate, as either a numpy ndarray or a torch Tensor.">unitary</span>
+    </span>
   </a>
   
 </li>
@@ -1850,21 +2598,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.decomp_ctrl_1qubit-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1876,7 +2633,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.diamond_norm (Python function) — Calculate the diamond norm of input." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>diamond_<wbr>norm</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm (Python function) — Calculate the diamond norm of input.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>diamond_<wbr>norm</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.diamond_norm">
@@ -1884,7 +2646,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1892,21 +2657,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm.channel_repr" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.diamond_norm.channel_repr (Python parameter) — A Channel or a torch.Tensor instance." class="md-ellipsis">channel_<wbr>repr</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm.channel_repr (Python parameter) — A Channel or a torch.Tensor instance.">channel_<wbr>repr</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm.dim_io" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.diamond_norm.dim_io (Python parameter) — The input and output dimensions." class="md-ellipsis">dim_<wbr>io</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm.dim_io (Python parameter) — The input and output dimensions.">dim_<wbr>io</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm.kwargs" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.diamond_norm.kwargs (Python parameter) — Parameters to set cvx." class="md-ellipsis">kwargs</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.diamond_norm.kwargs (Python parameter) — Parameters to set cvx.">kwargs</span>
+    </span>
   </a>
   
 </li>
@@ -1918,21 +2698,30 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-raises" class="md-nav__link">
-    <span class="md-ellipsis">Raises</span>
+    
+    <span class="md-ellipsis">
+      Raises
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.diamond_norm-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1944,7 +2733,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — calculate the fidelity between gates" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — calculate the fidelity between gates">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.gate_fidelity">
@@ -1952,7 +2746,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -1960,14 +2757,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity.U" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — quantum gate U  in matrix form" class="md-ellipsis">U</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — quantum gate U  in matrix form">U</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity.V" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — quantum gate V  in matrix form" class="md-ellipsis">V</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — quantum gate V  in matrix form">V</span>
+    </span>
   </a>
   
 </li>
@@ -1979,14 +2786,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.gate_fidelity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -1998,7 +2811,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general states." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general states.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.general_state_fidelity">
@@ -2006,7 +2824,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2014,14 +2835,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — a subnormalized quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — a subnormalized quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — a subnormalized quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — a subnormalized quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
@@ -2033,14 +2864,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.general_state_fidelity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2052,7 +2889,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.link (Python function) — Calculate the link product of two Choi matrices of quantum channels." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>link</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.link (Python function) — Calculate the link product of two Choi matrices of quantum channels.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>link</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.link">
@@ -2060,7 +2902,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2068,14 +2913,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link.JE" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.link.JE (Python parameter) — Tuple containing the Choi representation of channel E, its label, input dimensions, and output dimensions." class="md-ellipsis">JE</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.link.JE (Python parameter) — Tuple containing the Choi representation of channel E, its label, input dimensions, and output dimensions.">JE</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link.JF" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.link.JF (Python parameter) — Tuple containing the Choi representation of channel F, its label, input dimensions, and output dimensions." class="md-ellipsis">JF</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.link.JF (Python parameter) — Tuple containing the Choi representation of channel F, its label, input dimensions, and output dimensions.">JF</span>
+    </span>
   </a>
   
 </li>
@@ -2087,14 +2942,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.link-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2106,7 +2967,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.logarithmic_negativity (Python function) — Calculate the Logarithmic Negativity E_N = ||\rho^{T_A}|| of the input quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>logarithmic_<wbr>negativity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.logarithmic_negativity (Python function) — Calculate the Logarithmic Negativity E_N = ||\rho^{T_A}|| of the input quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>logarithmic_<wbr>negativity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.logarithmic_negativity">
@@ -2114,7 +2980,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2122,7 +2991,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity.density_op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.logarithmic_negativity.density_op (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">density_<wbr>op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.logarithmic_negativity.density_op (Python parameter) — Density matrix form of the quantum state.">density_<wbr>op</span>
+    </span>
   </a>
   
 </li>
@@ -2134,14 +3008,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.logarithmic_negativity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2153,7 +3033,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.mana (Python function) — Compute the mana of states or channels" class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mana</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana (Python function) — Compute the mana of states or channels">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mana</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.mana">
@@ -2161,7 +3046,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2169,21 +3057,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana.matrix" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mana.matrix (Python parameter) — quantum state or channel, when &#34;channel&#34;, it should be the choi matrix of channel." class="md-ellipsis">matrix</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana.matrix (Python parameter) — quantum state or channel, when &#34;channel&#34;, it should be the choi matrix of channel.">matrix</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana.input_str" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mana.input_str (Python parameter) — &#34;state&#34; or &#34;channel&#34;" class="md-ellipsis">input_<wbr>str</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana.input_str (Python parameter) — &#34;state&#34; or &#34;channel&#34;">input_<wbr>str</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana.out_dim" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mana.out_dim (Python parameter) — output system dimension, only need to compute mana of channel." class="md-ellipsis">out_<wbr>dim</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mana.out_dim (Python parameter) — output system dimension, only need to compute mana of channel.">out_<wbr>dim</span>
+    </span>
   </a>
   
 </li>
@@ -2195,14 +3098,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mana-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2214,7 +3123,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.mutual_information (Python function) — Compute the mutual information of a bipartite state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mutual_<wbr>information</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information (Python function) — Compute the mutual information of a bipartite state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>mutual_<wbr>information</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.mutual_information">
@@ -2222,7 +3136,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2230,21 +3147,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information.state" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mutual_information.state (Python parameter) — input bipartite quantum state with system AB." class="md-ellipsis">state</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information.state (Python parameter) — input bipartite quantum state with system AB.">state</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information.dim_A" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mutual_information.dim_A (Python parameter) — Dimension of system A." class="md-ellipsis">dim_<wbr>A</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information.dim_A (Python parameter) — Dimension of system A.">dim_<wbr>A</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information.dim_B" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.mutual_information.dim_B (Python parameter) — Dimension of system B." class="md-ellipsis">dim_<wbr>B</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.mutual_information.dim_B (Python parameter) — Dimension of system B.">dim_<wbr>B</span>
+    </span>
   </a>
   
 </li>
@@ -2256,14 +3188,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.mutual_information-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2275,7 +3213,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.negativity (Python function) — Compute the Negativity N = ||\frac{\rho^{T_A}-1}{2}|| of the input quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>negativity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.negativity (Python function) — Compute the Negativity N = ||\frac{\rho^{T_A}-1}{2}|| of the input quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>negativity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.negativity">
@@ -2283,7 +3226,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2291,7 +3237,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity.density_op" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.negativity.density_op (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">density_<wbr>op</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.negativity.density_op (Python parameter) — Density matrix form of the quantum state.">density_<wbr>op</span>
+    </span>
   </a>
   
 </li>
@@ -2303,14 +3254,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.negativity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2322,7 +3279,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.pauli_str_convertor (Python function) — Concatenate the input observable with coefficient 1." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>pauli_<wbr>str_<wbr>convertor</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.pauli_str_convertor (Python function) — Concatenate the input observable with coefficient 1.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>pauli_<wbr>str_<wbr>convertor</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.pauli_str_convertor">
@@ -2330,7 +3292,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2338,7 +3303,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor.observable" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.pauli_str_convertor.observable (Python parameter) — The observable to be concatenated with coefficient 1." class="md-ellipsis">observable</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.pauli_str_convertor.observable (Python parameter) — The observable to be concatenated with coefficient 1.">observable</span>
+    </span>
   </a>
   
 </li>
@@ -2350,14 +3320,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.pauli_str_convertor-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2369,7 +3345,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.purity (Python function) — Calculate the purity of a quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>purity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.purity (Python function) — Calculate the purity of a quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>purity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.purity">
@@ -2377,7 +3358,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2385,7 +3369,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
@@ -2397,14 +3386,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.purity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2416,7 +3411,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.relative_entropy (Python function) — Calculate the relative entropy of two quantum states." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>relative_<wbr>entropy</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy (Python function) — Calculate the relative entropy of two quantum states.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>relative_<wbr>entropy</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.relative_entropy">
@@ -2424,7 +3424,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2432,21 +3435,36 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.relative_entropy.rho (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy.rho (Python parameter) — Density matrix form of the quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.relative_entropy.sigma (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy.sigma (Python parameter) — Density matrix form of the quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy.base" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.relative_entropy.base (Python parameter) — The base of logarithm." class="md-ellipsis">base</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.relative_entropy.base (Python parameter) — The base of logarithm.">base</span>
+    </span>
   </a>
   
 </li>
@@ -2458,14 +3476,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.relative_entropy-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2477,7 +3501,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.stab_nullity (Python function) — Tool for calculation of unitary-stabilizer nullity." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>nullity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_nullity (Python function) — Tool for calculation of unitary-stabilizer nullity.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>nullity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.stab_nullity">
@@ -2485,7 +3514,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2493,7 +3525,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity.unitary" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.stab_nullity.unitary (Python parameter) — A batch of unitary matrices." class="md-ellipsis">unitary</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_nullity.unitary (Python parameter) — A batch of unitary matrices.">unitary</span>
+    </span>
   </a>
   
 </li>
@@ -2505,14 +3542,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_nullity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2524,7 +3567,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.stab_renyi (Python function) — Tool for calculation of stabilizer renyi entropy." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>renyi</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_renyi (Python function) — Tool for calculation of stabilizer renyi entropy.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>stab_<wbr>renyi</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.stab_renyi">
@@ -2532,7 +3580,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2540,7 +3591,12 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi.density" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.stab_renyi.density (Python parameter) — A batch of density matrices." class="md-ellipsis">density</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.stab_renyi.density (Python parameter) — A batch of density matrices.">density</span>
+    </span>
   </a>
   
 </li>
@@ -2552,14 +3608,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.stab_renyi-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2571,7 +3633,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.state_fidelity (Python function) — Calculate the fidelity of two quantum states, no extra square is taken." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>state_<wbr>fidelity</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.state_fidelity (Python function) — Calculate the fidelity of two quantum states, no extra square is taken.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>state_<wbr>fidelity</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.state_fidelity">
@@ -2579,7 +3646,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2587,14 +3657,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — a quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — a quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — a quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — a quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
@@ -2606,14 +3686,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.state_fidelity-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2625,7 +3711,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.trace_distance (Python function) — Calculate the trace distance of two quantum states." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>trace_<wbr>distance</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.trace_distance (Python function) — Calculate the trace distance of two quantum states.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>trace_<wbr>distance</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.trace_distance">
@@ -2633,7 +3724,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2641,14 +3735,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — a quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — a quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance.sigma" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — a quantum state." class="md-ellipsis">sigma</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — a quantum state.">sigma</span>
+    </span>
   </a>
   
 </li>
@@ -2660,14 +3764,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.trace_distance-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2679,7 +3789,12 @@
       
         <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="quairkit.qinfo.qinfo.von_neumann_entropy (Python function) — Calculate the von Neumann entropy of a quantum state." class="md-ellipsis">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>von_<wbr>neumann_<wbr>entropy</span>
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy (Python function) — Calculate the von Neumann entropy of a quantum state.">quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>von_<wbr>neumann_<wbr>entropy</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="quairkit.qinfo.qinfo.von_neumann_entropy">
@@ -2687,7 +3802,10 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy-parameters" class="md-nav__link">
-    <span class="md-ellipsis">Parameters</span>
+    
+    <span class="md-ellipsis">
+      Parameters
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Parameters">
@@ -2695,14 +3813,24 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy.rho" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state." class="md-ellipsis">rho</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state.">rho</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy.base" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="quairkit.qinfo.qinfo.von_neumann_entropy.base (Python parameter) — The base of logarithm." class="md-ellipsis">base</span>
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.base (Python parameter) — The base of logarithm.">base</span>
+    </span>
   </a>
   
 </li>
@@ -2714,14 +3842,20 @@
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy-returns" class="md-nav__link">
-    <span class="md-ellipsis">Returns</span>
+    
+    <span class="md-ellipsis">
+      Returns
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#quairkit.qinfo.qinfo.von_neumann_entropy-return-type" class="md-nav__link">
-    <span class="md-ellipsis">Return type</span>
+    
+    <span class="md-ellipsis">
+      Return type
+    </span>
   </a>
   
 </li>
@@ -2742,6 +3876,8 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset" role="main">
+                
+                
                   
 
 
@@ -2877,7 +4013,7 @@ Corollary 4.2 for the decomposition of a single-qubit unitary operation.</p>
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.qinfo.diamond_norm.channel_repr"><span class="sig-name descname">channel_repr</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.operator.channel.base.html#quairkit.operator.channel.base.Channel" title="quairkit.operator.channel.base.Channel (Python class) — Basic class for quantum channels.">Channel</a> | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.diamond_norm.channel_repr" title="Permalink to this definition">¶</a></dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">Channel</span></code> or a <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> instance.</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.diamond_norm.dim_io"><span class="sig-name descname">dim_io</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | Tuple[int, int] | None</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.diamond_norm.dim_io" title="Permalink to this definition">¶</a></dt><dd><p>The input and output dimensions.</p>
+<dt id="quairkit.qinfo.qinfo.diamond_norm.dim_io"><span class="sig-name descname">dim_io</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | Tuple[int, int]</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.diamond_norm.dim_io" title="Permalink to this definition">¶</a></dt><dd><p>The input and output dimensions.</p>
 </dd>
 <dt id="quairkit.qinfo.qinfo.diamond_norm.kwargs"><span class="o">**</span><span class="n sig-name">kwargs</span><a class="headerlink" href="#quairkit.qinfo.qinfo.diamond_norm.kwargs" title="Permalink to this definition">¶</a></dt><dd><p>Parameters to set cvx.</p>
 </dd>
@@ -3267,6 +4403,14 @@ then this function returns the observable <code class="docutils literal notransl
 
 
 
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
@@ -3277,42 +4421,6 @@ then this function returns the observable <code class="docutils literal notransl
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="quairkit.qinfo.linalg.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: quairkit.qinfo.linalg" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              quairkit.qinfo.linalg
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="tutorials.html" class="md-footer__link md-footer__link--next" aria-label="Next: tutorials" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              tutorials
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   
   
@@ -3344,10 +4452,11 @@ then this function returns the observable <code class="docutils literal notransl
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
     
       
-        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>

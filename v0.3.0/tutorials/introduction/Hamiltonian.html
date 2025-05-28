@@ -1,0 +1,1174 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../tutorials.introduction.html">
+      
+      
+        <link rel="next" href="circuit.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Hamiltonian in QuAIRKit - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction-to-Hamiltonian" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hamiltonian in QuAIRKit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)">tutorials</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)">tutorials.<wbr>feature</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.introduction.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)">Hamiltonian in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)">Hamiltonian in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction-to-Hamiltonian" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#introduction-to-hamiltonian (reference label)">Introduction to Hamiltonian</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Construction-of-Hamiltonian" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#construction-of-hamiltonian (reference label)">Construction of Hamiltonian</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Expection-value-of-the-Hamiltonian" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#expection-value-of-the-hamiltonian (reference label)">Expection value of the Hamiltonian</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#The-Hamiltonian-class" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#the-hamiltonian-class (reference label)">The Hamiltonian class</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#references (reference label)">References</span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="circuit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/circuit.ipynb (reference label)">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="measure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/measure.ipynb (reference label)">Measuring quantum states in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="operator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/operator.ipynb (reference label)">Quantum Gates and Quantum Channels</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qinfo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/qinfo.ipynb (reference label)">Quantum information tools</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="state.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/state.ipynb (reference label)">Manipulation of Quantum States in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="training.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/training.ipynb (reference label)">Training parameterized quantum circuits</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction-to-Hamiltonian" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#introduction-to-hamiltonian (reference label)">Introduction to Hamiltonian</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Construction-of-Hamiltonian" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#construction-of-hamiltonian (reference label)">Construction of Hamiltonian</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Expection-value-of-the-Hamiltonian" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#expection-value-of-the-hamiltonian (reference label)">Expection value of the Hamiltonian</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#The-Hamiltonian-class" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#the-hamiltonian-class (reference label)">The Hamiltonian class</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/hamiltonian.ipynb#references (reference label)">References</span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Hamiltonian-in-QuAIRKit">Hamiltonian in QuAIRKit<a class="headerlink" href="#Hamiltonian-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>QuAIRKit uses the <code class="docutils literal notranslate"><span class="pre">Hamiltonian</span></code> class to represent Hamiltonian. In this tutorial, users will learn how to construct Hamiltonian in QuAIRKit.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction-to-Hamiltonian"><span class="std std-ref">Introduction to Hamiltonian</span></a></p></li>
+<li><p><a class="reference internal" href="#Construction-of-Hamiltonian"><span class="std std-ref">Construction of Hamiltonian</span></a></p></li>
+<li><p><a class="reference internal" href="#Expection-value-of-the-Hamiltonian"><span class="std std-ref">Expection value of the Hamiltonian</span></a></p></li>
+<li><p><a class="reference internal" href="#The-Hamiltonian-class"><span class="std std-ref">The Hamiltonian class</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+
+import quairkit as qkit
+from quairkit.core.hamiltonian import *
+from quairkit.database.hamiltonian import *
+from quairkit.database.random import *
+from quairkit.loss import *
+</code></pre></div>
+</div>
+</div>
+<h2 id="Introduction-to-Hamiltonian">Introduction to Hamiltonian<a class="headerlink" href="#Introduction-to-Hamiltonian" title="Link to this heading">¶</a></h2>
+<p>In physics, Hamiltonian is often represented by the symbol <span class="math notranslate nohighlight">\(\hat{H}\)</span>, Hamiltonian <span class="math notranslate nohighlight">\(\hat{H}\)</span> is a mathematical representation of the total energy of a system. In quantum mechanics, Hamiltonian refers to the sum of the kinetic energy operator <span class="math notranslate nohighlight">\(\hat{T}\)</span> and potential energy operator <span class="math notranslate nohighlight">\(\hat{V}\)</span> of the system [1-2],</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = \hat{T} + \hat{V}. \tag{1}\]</div>
+<p>Its spectrum, namely, the system’s energy spectrum, or its set of energy eigenvalues <span class="math notranslate nohighlight">\(\{\lambda_k\}^{d-1}_{k=0}\)</span>, results in possible outcomes obtainable from a measurement of the system’s total energy. Matrix representation of a Hamiltonian operator <span class="math notranslate nohighlight">\(\hat{H}\)</span> is <span class="math notranslate nohighlight">\(H\)</span>. <span class="math notranslate nohighlight">\(H\)</span> satisfies the following conditions: <span class="math notranslate nohighlight">\(H = H^\dagger\)</span>, namely, Hamiltonian is a hermitian matrix.</p>
+<p>When the dimension of the Hilbert space is <span class="math notranslate nohighlight">\(d=2\)</span>, a set of Pauli matrices [1-3] defined as follows :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}I = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}, \quad X = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix}, \quad Y = \begin{pmatrix} 0 &amp; -i \\ i &amp; 0 \end{pmatrix}, \quad Z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}. \tag{2}\end{split}\]</div>
+<p>For single-qubit system, the Hamiltonian can be expressed via Pauli matrices [3] as:</p>
+<div class="math notranslate nohighlight">
+\[H = p_0 I + p_1 X + p_2 Y + p_3 Z, \tag{3}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_0\)</span>, <span class="math notranslate nohighlight">\(p_1\)</span>, <span class="math notranslate nohighlight">\(p_2\)</span>, and <span class="math notranslate nohighlight">\(p_3\)</span> are the real coefficients of the Pauli matrices. For <span class="math notranslate nohighlight">\(n\)</span>-qubit systems, the Hamiltonian might be expressed as a sum of tensor products of Pauli strings <span class="math notranslate nohighlight">\(P\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_{i=0} p_i \left (\bigotimes_{j = 0}^n P_j    \right), \tag{4}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_i\)</span> is the real coefficients of the Pauli matrices, and <span class="math notranslate nohighlight">\(P_j, \; P_j \in \{ \sigma_0, \sigma_1, \sigma_2, \sigma_3 \}\)</span>, is a Pauli matrix on the <span class="math notranslate nohighlight">\(j\)</span>-th qubit.</p>
+<h2 id="Construction-of-Hamiltonian">Construction of Hamiltonian<a class="headerlink" href="#Construction-of-Hamiltonian" title="Link to this heading">¶</a></h2>
+<p>There are four examples: Ising model, XY chain, Random Hamiltonian, and Heisenberg model.</p>
+<ul>
+<li><p>Ising model describes Hamiltonian with two-site interaction and external field:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i&lt;j} J_{ij}Z_i Z_j + \sum_{k} h_k X_k \tag{1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(J_{ij}\)</span> is the coupling strength between sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(h_k\)</span> is the magnetic field strength at vertex <span class="math notranslate nohighlight">\(k\)</span>. In QuAirKit, Ising model can be constructed via <code class="docutils literal notranslate"><span class="pre">ising_hamiltonian</span></code>.</p>
+</li>
+<li><p>XY chain refers to the Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{ i&lt;j}(J^x_{ij}X_i X_j + J^y_{ij}Y_i Y_j) \tag{2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(J^x_{ij}\)</span> and <span class="math notranslate nohighlight">\(J^y_{ij}\)</span> are the coupling strengths between sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. XY model is able to be implemented from <code class="docutils literal notranslate"><span class="pre">xy_hamiltonian</span></code>.</p>
+</li>
+<li><p>Heisenberg model serves as a good candidate to study the ferromagnetic phase transition:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i&lt;j}(J^x_{ij}X_i X_j + J^y_{ij}Y_i Y_j + J^z_{ij}Z_i Z_j) \tag{3}\]</div>
+<p>where <span class="math notranslate nohighlight">\(J^x_{ij}\)</span>, <span class="math notranslate nohighlight">\(J^y_{ij}\)</span>, and <span class="math notranslate nohighlight">\(J^z_{ij}\)</span> are the coupling strengths between sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. Heisenberg model can be implemented by <code class="docutils literal notranslate"><span class="pre">heisenberg_hamiltonian</span></code>.</p>
+</li>
+</ul>
+<p>QuAIRKit also supports random Hamiltonian, with given seed and number of qubits.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # initial setting with 3 qubits
+split_line = &#39;\n&#39; + &#39;-&#39; * 100 + &#39;\n&#39;  # a line of &#39;-&#39; for better readability
+
+gamma = torch.ones(num_qubits, num_qubits) * 0.5
+beta = torch.ones(num_qubits) * 0.3
+H = ising_hamiltonian(gamma, beta)
+print(&quot;The Pauli decomposition of the Hamiltonian for the Ising model is:\n&quot;, H, end=split_line)
+
+gamma = torch.ones(2, num_qubits, num_qubits) * 0.5
+H = xy_hamiltonian(gamma)
+print(&quot;The Pauli decomposition of the Hamiltonian for the XY chain is:\n&quot;, H, end=split_line)
+
+gamma = torch.ones(3, num_qubits, num_qubits) * 0.5
+H = heisenberg_hamiltonian(gamma)
+print(&quot;The Pauli decomposition of the Hamiltonian for the Heisenberg model is:\n&quot;, H, end=split_line)
+
+H = random_hamiltonian_generator(num_qubits)
+print(&quot;The Pauli decomposition of the random Hamiltonian is:\n&quot;, H, end=split_line)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Pauli decomposition of the Hamiltonian for the Ising model is:
+ 0.5 Z0, Z1
+0.5 Z0, Z2
+0.5 Z1, Z2
+0.30000001192092896 X0
+0.30000001192092896 X1
+0.30000001192092896 X2
+----------------------------------------------------------------------------------------------------
+The Pauli decomposition of the Hamiltonian for the XY chain is:
+ 0.5 X0, X1
+0.5 Y0, Y1
+0.5 X0, X2
+0.5 Y0, Y2
+0.5 X1, X2
+0.5 Y1, Y2
+----------------------------------------------------------------------------------------------------
+The Pauli decomposition of the Hamiltonian for the Heisenberg model is:
+ 0.5 X0, X1
+0.5 Y0, Y1
+0.5 Z0, Z1
+0.5 X0, X2
+0.5 Y0, Y2
+0.5 Z0, Z2
+0.5 X1, X2
+0.5 Y1, Y2
+0.5 Z1, Z2
+----------------------------------------------------------------------------------------------------
+The Pauli decomposition of the random Hamiltonian is:
+ 0.4181599354425789 X0, Z1, X2
+-0.3910227956714316 Y0
+0.17055199353235606 X0, Y1, Z2
+----------------------------------------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p>Users can customize a Hamiltonian matrix with given coefficients and the corresponding Pauli matrices.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>h_list = [[0.1, &quot;X0,Z1&quot;], [0.3, &quot;Z1&quot;], [0.5, &quot;Z2&quot;]]
+
+print(
+    &quot;For given Hamiltonian coefficients, &quot;
+    &quot;the coresponding Hamiltonian class is:\n&quot;,
+    Hamiltonian(h_list),
+)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+For given Hamiltonian coefficients, the coresponding Hamiltonian class is:
+ 0.1 X0, Z1
+0.3 Z1
+0.5 Z2
+</pre></div></div>
+</div>
+<h2 id="Expection-value-of-the-Hamiltonian">Expection value of the Hamiltonian<a class="headerlink" href="#Expection-value-of-the-Hamiltonian" title="Link to this heading">¶</a></h2>
+<p>The expectation value of <span class="math notranslate nohighlight">\(H\)</span> [1-3] with respect to state <span class="math notranslate nohighlight">\(\vert \psi\rangle\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\langle H \rangle := \langle \psi \vert H \vert \psi \rangle, \tag{4}\]</div>
+<p>which is also known as the energy of the system. A more general form of expectation value of <span class="math notranslate nohighlight">\(H\)</span> considers mixed state <span class="math notranslate nohighlight">\(\rho\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\langle H \rangle = \operatorname{tr}(H\rho). \tag{5}\]</div>
+<p>In QuAIRKit, <code class="docutils literal notranslate"><span class="pre">ExpecVal</span></code> or <code class="docutils literal notranslate"><span class="pre">State.expec_val</span></code> calculates the expectation value of <span class="math notranslate nohighlight">\(H\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits)
+print(&#39;Expection value of the Hamiltonian:&#39;, rho.expec_val(H), end=split_line)
+
+exp_H = ExpecVal(H)
+print(&#39;Expection value of the Hamiltonian:&#39;, exp_H(rho))
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Expection value of the Hamiltonian: tensor(0.0417)
+----------------------------------------------------------------------------------------------------
+Expection value of the Hamiltonian: tensor(0.0417)
+</pre></div></div>
+</div>
+<p>Moreover, for batch state, batch calculation of the expection value of a Hamiltonian is also provided.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits, size=10)  # 1000 random 3-qubit states
+
+print(
+    &quot;For 1000 random 3-qubit states, &quot;
+    &quot;a set of Expection value of a given Hamiltonian:\n&quot;,
+    rho.expec_val(H),
+    end=split_line,
+)
+# this is equivalent to below code
+# list_exp_H = []
+# for i in range(len(rho)):
+#     list_exp_H.append(rho[i].expec_val(H))
+# list_exp_H = torch.stack(list_exp_H)
+
+exp_H = ExpecVal(H)
+print(
+    &quot;For 1000 random 3-qubit states, &quot;
+    &quot;a set of Expection value of a given Hamiltonian:\n&quot;,
+    exp_H(rho),
+)
+# this is equivalent to below code
+# exp_H = ExpecVal(H)
+# list_exp_H = []
+# for i in range(len(rho)):
+#     list_exp_H.append(exp_H(rho[i]))
+# list_exp_H = torch.stack(list_exp_H)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+For 1000 random 3-qubit states, a set of Expection value of a given Hamiltonian:
+ tensor([ 0.0420,  0.0472, -0.5196,  0.0336, -0.2425, -0.2431,  0.0382, -0.0846,
+        -0.1158,  0.2608])
+----------------------------------------------------------------------------------------------------
+For 1000 random 3-qubit states, a set of Expection value of a given Hamiltonian:
+ tensor([ 0.0420,  0.0472, -0.5196,  0.0336, -0.2425, -0.2431,  0.0382, -0.0846,
+        -0.1158,  0.2608])
+</pre></div></div>
+</div>
+<h2 id="The-Hamiltonian-class">The Hamiltonian class<a class="headerlink" href="#The-Hamiltonian-class" title="Link to this heading">¶</a></h2>
+<p>There are some important properties involving <code class="docutils literal notranslate"><span class="pre">Hamiltonian</span></code> class.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_terms</span></code>: Number of terms.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pauli_str</span></code>: The Pauli string corresponding to the Hamiltonian.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coefficients</span></code>: The coefficients of the terms in the Hamiltonian.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrix</span></code>: The matrix form of the Hamiltonian.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pauli_words</span></code>: The Pauli word of each term, i.e. [‘ZIZ’, ‘IIX’].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_qubits</span></code>: Number of qubits in the Hamiltonian.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>H = random_hamiltonian_generator(num_qubits)
+print(&quot;The Pauli decomposition of the random Hamiltonian is:\n&quot;, H, end=split_line)
+
+print(&#39;Number of terms:&#39;, H.n_terms, end=split_line)
+
+print(&#39;The Pauli string corresponding to the Hamiltonian:\n&#39;, H.pauli_str, end=split_line)
+
+print(&#39;The coefficients of the terms in the Hamiltonian:\n&#39;, H.coefficients, end=split_line)
+
+print(&#39;The matrix form of the Hamiltonian:\n&#39;, H.matrix, end=split_line)
+
+print(&#39;The Pauli word of each term:&#39;, H.pauli_words, end=split_line)
+
+print(&#39;Number of qubits in the Hamiltonian:&#39;, H.n_qubits, end=split_line)
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Pauli decomposition of the random Hamiltonian is:
+ 0.5522232793578568 Z0, Z2
+0.2221371571298889 Y0
+0.21559535758899973 X0, Y1, Z2
+----------------------------------------------------------------------------------------------------
+Number of terms: 3
+----------------------------------------------------------------------------------------------------
+The Pauli string corresponding to the Hamiltonian:
+ [[0.5522232793578568, &#39;Z0,Z2&#39;], [0.2221371571298889, &#39;Y0&#39;], [0.21559535758899973, &#39;X0,Y1,Z2&#39;]]
+----------------------------------------------------------------------------------------------------
+The coefficients of the terms in the Hamiltonian:
+ [0.5522232793578568, 0.2221371571298889, 0.21559535758899973]
+----------------------------------------------------------------------------------------------------
+The matrix form of the Hamiltonian:
+ tensor([[ 0.5522+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0000-0.2221j,  0.0000+0.0000j,  0.0000-0.2156j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j, -0.5522+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000-0.2221j,  0.0000+0.0000j,  0.0000+0.2156j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.5522+0.0000j,  0.0000+0.0000j,
+          0.0000+0.2156j,  0.0000+0.0000j,  0.0000-0.2221j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.5522+0.0000j,
+          0.0000+0.0000j,  0.0000-0.2156j,  0.0000+0.0000j,  0.0000-0.2221j],
+        [ 0.0000+0.2221j,  0.0000+0.0000j,  0.0000-0.2156j,  0.0000+0.0000j,
+         -0.5522+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.2221j,  0.0000+0.0000j,  0.0000+0.2156j,
+          0.0000+0.0000j,  0.5522+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.2156j,  0.0000+0.0000j,  0.0000+0.2221j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000+0.0000j, -0.5522+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000-0.2156j,  0.0000+0.0000j,  0.0000+0.2221j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.5522+0.0000j]])
+----------------------------------------------------------------------------------------------------
+The Pauli word of each term: [&#39;ZIZ&#39;, &#39;YII&#39;, &#39;XYZ&#39;]
+----------------------------------------------------------------------------------------------------
+Number of qubits in the Hamiltonian: 3
+----------------------------------------------------------------------------------------------------
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Sakurai, J. J., and Jim Napolitano. Modern Quantum Mechanics. 3rd ed. Cambridge: Cambridge University Press, 2020. Print.</p>
+<p>[2] Griffiths, David J., and Darrell F. Schroeter. Introduction to Quantum Mechanics. 3rd ed. Cambridge: Cambridge University Press, 2018. Print.</p>
+<p>[3] Nielsen, Michael A., and Isaac L. Chuang. Quantum computation and quantum information. Vol. 2. Cambridge: Cambridge university press, 2001.</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\hat{H}\)</span></p></td>
+<td></td>
+<td><p>the Hamiltonian operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\hat{T}\)</span></p></td>
+<td></td>
+<td><p>the kinetic energy operator</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\hat{V}\)</span></p></td>
+<td></td>
+<td><p>the potential energy operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\operatorname{tr}\)</span></p></td>
+<td></td>
+<td><p>trace of a matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td></td>
+<td><p>the matrix representation of the Hamiltonian</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\lambda\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\lambda_k\)</span></p></td>
+<td><p>the eigenvalue of the Hamiltonian</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(d\)</span></p></td>
+<td></td>
+<td><p>the dimension of the Hilbert space</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\vert \psi \rangle\)</span></p></td>
+<td></td>
+<td><p>quantum pure state</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td></td>
+<td><p>quantum state</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma_0\)</span></p></td>
+<td><p>Identity matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(Y\)</span>, <span class="math notranslate nohighlight">\(Z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma_1\)</span>, <span class="math notranslate nohighlight">\(\sigma_2\)</span>, <span class="math notranslate nohighlight">\(\sigma_3\)</span></p></td>
+<td><p>Pauli matrices</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.3.0
+torch: 2.5.1+cpu
+numpy: 1.26.0
+scipy: 1.14.1
+matplotlib: 3.10.0
+---------SYSTEM---------
+Python version: 3.10.16
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

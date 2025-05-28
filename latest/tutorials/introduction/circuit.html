@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -9,25 +10,30 @@
       
       
       
+      
+        <link rel="prev" href="Hamiltonian.html">
+      
+      
+        <link rel="next" href="measure.html">
+      
+      
       <link rel="icon" href="../../_static/favicon.svg">
     
     
       
-        <title>Constructing Quantum Circuits in QuAIRKit - QuAIRKit</title>
+        <title>Constructing quantum circuits in QuAIRKit - QuAIRKit</title>
       
     
     
       
-        
-        
-          
-          
-          <meta name="theme-color" content="#4cae4f">
         
       
       
 
+
     
+    
+      
     
     
       
@@ -36,9 +42,9 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.4b4a8c74e2ff2ab5b.min.css?v=afa97f93" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.918c11dc96aaedbb3.min.css?v=3a27c74e" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -53,9 +59,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -72,22 +77,25 @@
       
     </div>
     
-      <div data-md-component="outdated" hidden>
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
         
       </div>
     
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -99,17 +107,21 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Constructing Quantum Circuits in QuAIRKit
+              Constructing quantum circuits in QuAIRKit
             
           </span>
         </div>
       </div>
     </div>
     
+      
+    
+    
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -117,24 +129,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -146,7 +161,7 @@
         <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -178,12 +193,13 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
     </a>
     QuAIRKit
   </label>
@@ -192,7 +208,7 @@
       <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     QuAIRKit
@@ -204,15 +220,22 @@
     
       
       
-      
-
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="../../quairkit.html" class="md-nav__link">
-        <span title="/quairkit.rst (reference label)" class="md-ellipsis">quairkit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)">quairkit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -220,121 +243,180 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../tutorials.html"><span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
           
-            <label for="__nav_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="tutorials" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/tutorials.rst (reference label)" class="md-ellipsis">tutorials</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)">tutorials</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)">tutorials</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
-        <span title="/tutorials.feature.rst (reference label)" class="md-ellipsis">tutorials.<wbr>feature</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)">tutorials.<wbr>feature</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
-      
-      
-      
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../tutorials.introduction.html"><span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span></a>
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
           
-            <label for="__nav_2_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="tutorials.introduction" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span title="/tutorials.introduction.rst (reference label)" class="md-ellipsis">tutorials.<wbr>introduction</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.introduction.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+    
+  </span>
+  
+
+            </a>
             
               
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.introduction.rst (reference label)">tutorials.<wbr>introduction</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="Hamiltonian.html" class="md-nav__link">
-        <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)" class="md-ellipsis">Hamiltonian in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)">Hamiltonian in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
       
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span title="/tutorials/introduction/circuit.ipynb (reference label)" class="md-ellipsis">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/circuit.ipynb (reference label)">Constructing quantum circuits in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span title="/tutorials/introduction/circuit.ipynb (reference label)" class="md-ellipsis">Constructing Quantum Circuits in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/circuit.ipynb (reference label)">Constructing quantum circuits in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
       
         
@@ -353,7 +435,10 @@
       
         <li class="md-nav__item">
   <a href="#Constructing-quantum-circuits" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#constructing-quantum-circuits (reference label)" class="md-ellipsis">Constructing quantum circuits</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#constructing-quantum-circuits (reference label)">Constructing quantum circuits</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Constructing quantum circuits">
@@ -361,49 +446,70 @@
         
           <li class="md-nav__item">
   <a href="#Add-operations" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-operations (reference label)" class="md-ellipsis">Add operations</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-operations (reference label)">Add operations</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-custom-gates" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-custom-gates (reference label)" class="md-ellipsis">Add custom gates</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-custom-gates (reference label)">Add custom gates</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-quantum-channels" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-quantum-channels (reference label)" class="md-ellipsis">Add quantum channels</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-quantum-channels (reference label)">Add quantum channels</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-custom-quantum-channels" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-custom-quantum-channels (reference label)" class="md-ellipsis">Add custom quantum channels</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-custom-quantum-channels (reference label)">Add custom quantum channels</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-circuit-templates" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-circuit-templates (reference label)" class="md-ellipsis">Add circuit templates</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-circuit-templates (reference label)">Add circuit templates</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Operator-management" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#operator-management (reference label)" class="md-ellipsis">Operator management</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#operator-management (reference label)">Operator management</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Circuit-execution" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#circuit-execution (reference label)" class="md-ellipsis">Circuit execution</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#circuit-execution (reference label)">Circuit execution</span>
+    </span>
   </a>
   
 </li>
@@ -415,14 +521,20 @@
       
         <li class="md-nav__item">
   <a href="#Other-properties" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#other-properties (reference label)" class="md-ellipsis">Other properties</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#other-properties (reference label)">Other properties</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#References" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#references (reference label)" class="md-ellipsis">References</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#references (reference label)">References</span>
+    </span>
   </a>
   
 </li>
@@ -434,93 +546,164 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="measure.html" class="md-nav__link">
-        <span title="/tutorials/introduction/measure.ipynb (reference label)" class="md-ellipsis">Measuring quantum states in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/measure.ipynb (reference label)">Measuring quantum states in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="operator.html" class="md-nav__link">
-        <span title="/tutorials/introduction/operator.ipynb (reference label)" class="md-ellipsis">Quantum Gates and Quantum Channels</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/operator.ipynb (reference label)">Quantum gates and quantum channels</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="qinfo.html" class="md-nav__link">
-        <span title="/tutorials/introduction/qinfo.ipynb (reference label)" class="md-ellipsis">Quantum information tools</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/qinfo.ipynb (reference label)">Quantum information tools</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="state.html" class="md-nav__link">
-        <span title="/tutorials/introduction/state.ipynb (reference label)" class="md-ellipsis">Manipulation of Quantum States in Qu<wbr>AIRKit</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/state.ipynb (reference label)">Manipulation of quantum states in Qu<wbr>AIRKit</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
   
     <li class="md-nav__item">
       <a href="training.html" class="md-nav__link">
-        <span title="/tutorials/introduction/training.ipynb (reference label)" class="md-ellipsis">Training parameterized quantum circuits</span>
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/training.ipynb (reference label)">Training parameterized quantum circuits</span>
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
   
 
+              
             
-          
-        </ul>
-      </nav>
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)">tutorials.<wbr>research</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
   
@@ -551,7 +734,10 @@
       
         <li class="md-nav__item">
   <a href="#Constructing-quantum-circuits" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#constructing-quantum-circuits (reference label)" class="md-ellipsis">Constructing quantum circuits</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#constructing-quantum-circuits (reference label)">Constructing quantum circuits</span>
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Constructing quantum circuits">
@@ -559,49 +745,70 @@
         
           <li class="md-nav__item">
   <a href="#Add-operations" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-operations (reference label)" class="md-ellipsis">Add operations</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-operations (reference label)">Add operations</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-custom-gates" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-custom-gates (reference label)" class="md-ellipsis">Add custom gates</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-custom-gates (reference label)">Add custom gates</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-quantum-channels" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-quantum-channels (reference label)" class="md-ellipsis">Add quantum channels</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-quantum-channels (reference label)">Add quantum channels</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-custom-quantum-channels" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-custom-quantum-channels (reference label)" class="md-ellipsis">Add custom quantum channels</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-custom-quantum-channels (reference label)">Add custom quantum channels</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Add-circuit-templates" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#add-circuit-templates (reference label)" class="md-ellipsis">Add circuit templates</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#add-circuit-templates (reference label)">Add circuit templates</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Operator-management" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#operator-management (reference label)" class="md-ellipsis">Operator management</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#operator-management (reference label)">Operator management</span>
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#Circuit-execution" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#circuit-execution (reference label)" class="md-ellipsis">Circuit execution</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#circuit-execution (reference label)">Circuit execution</span>
+    </span>
   </a>
   
 </li>
@@ -613,14 +820,20 @@
       
         <li class="md-nav__item">
   <a href="#Other-properties" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#other-properties (reference label)" class="md-ellipsis">Other properties</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#other-properties (reference label)">Other properties</span>
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#References" class="md-nav__link">
-    <span title="/tutorials/introduction/circuit.ipynb#references (reference label)" class="md-ellipsis">References</span>
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/circuit.ipynb#references (reference label)">References</span>
+    </span>
   </a>
   
 </li>
@@ -636,10 +849,12 @@
           
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset" role="main">
+                
+                
                   
 
 
-<h1 id="Constructing-Quantum-Circuits-in-QuAIRKit">Constructing Quantum Circuits in QuAIRKit<a class="headerlink" href="#Constructing-Quantum-Circuits-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<h1 id="Constructing-quantum-circuits-in-QuAIRKit">Constructing quantum circuits in QuAIRKit<a class="headerlink" href="#Constructing-quantum-circuits-in-QuAIRKit" title="Link to this heading">¶</a></h1>
 <p>A quantum circuit is a series of operations, including quantum gates, initializations of qubits to known values, measurements, that act on qubits to perform a quantum algorithm. Circuits are written such that the horizontal axis is time, starting at the left-hand side and ending at the right. Horizontal lines are qubits, and doubled lines represent classical bits. The items that are connected by these lines are operations performed on the qubits, such as measurements or gates. These lines define
 the sequence of events and are usually not physical cables QuAIRKit uses the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class to represent quantum circuits. In this tutorial, we will learn how to manipulate quantum circuits in QuAIRKit.</p>
 <p><strong>Table of contents</strong></p>
@@ -679,9 +894,7 @@ from quairkit.qinfo import *
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
-cir_static = Circuit(num_qubits)  # construct a circuit with specifying the number of qubits
-
-cir = Circuit()  # Create a dynamic circuit (without specifying the number of qubits)
+cir = Circuit(num_qubits)  # construct a circuit with specifying the number of qubits
 </code></pre></div>
 </div>
 </div>
@@ -726,10 +939,14 @@ the diagram of a quantum circuit:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the total number of qubit of the circuit is 2
+the total number of qubit of the circuit is 3
 </pre></div></div>
 </div>
-<p>As the quantum circuit (with the initialization and measurement stages omitted) just represents a unitary evolution, we can express the whole things a matrix. We must follows the following rules: - Composition across wires is achieved by the tensor product. - Composition along (sets of) wires is achieved by the normal matrix product, but <strong>right to left</strong>.</p>
+<p>As the quantum circuit (with the initialization and measurement stages omitted) just represents a unitary evolution, we can express the whole things a matrix. We must follows the following rules:</p>
+<ul class="simple">
+<li><p>Composition across wires is achieved by the tensor product.</p></li>
+<li><p>Composition along (sets of) wires is achieved by the normal matrix product, but <strong>right to left</strong>.</p></li>
+</ul>
 <p>For example, the circuit we just constructed is equal to</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}U = \text{CNOT} \times (X\otimes X) \times (H \otimes I_{2}) = \frac{1}{\sqrt{2}}
@@ -738,13 +955,13 @@ the total number of qubit of the circuit is 2
 1&amp;0&amp;-1&amp;0 \\
 1&amp;0&amp;1&amp;0 \\
 0&amp;1&amp;0&amp;1
-\end{bmatrix}, \tag{1}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(I_{2}\)</span> is the <span class="math notranslate nohighlight">\(2\times 2\)</span> identity. We can verify this equality by <code class="docutils literal notranslate"><span class="pre">Circuit.unitary_matrix</span></code>.</p>
+\end{bmatrix},\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(I_{2}\)</span> is the <span class="math notranslate nohighlight">\(2\times 2\)</span> identity. We can verify this equality by <code class="docutils literal notranslate"><span class="pre">Circuit.matrix</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;the unitary matrix of the circuit:\n{cir.unitary_matrix()}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;the unitary matrix of the circuit:\n{cir.matrix}&quot;)
 </code></pre></div>
 </div>
 </div>
@@ -754,10 +971,22 @@ the total number of qubit of the circuit is 2
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 the unitary matrix of the circuit:
-tensor([[ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j, -0.7071+0.j],
-        [ 0.7071+0.j,  0.0000+0.j, -0.7071+0.j,  0.0000+0.j],
-        [ 0.7071+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j],
-        [ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.7071+0.j]])
+tensor([[ 0.0000+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j,
+         -0.7071+0.j,  0.0000+0.j],
+        [ 0.0000+0.j,  0.0000+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.0000+0.j,
+          0.0000+0.j, -0.7071+0.j],
+        [ 0.7071+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j, -0.7071+0.j,  0.0000+0.j,
+          0.0000+0.j,  0.0000+0.j],
+        [ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j, -0.7071+0.j,
+          0.0000+0.j,  0.0000+0.j],
+        [ 0.7071+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j,
+          0.0000+0.j,  0.0000+0.j],
+        [ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j,  0.7071+0.j,
+          0.0000+0.j,  0.0000+0.j],
+        [ 0.0000+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.0000+0.j,  0.0000+0.j,
+          0.7071+0.j,  0.0000+0.j],
+        [ 0.0000+0.j,  0.0000+0.j,  0.0000+0.j,  0.7071+0.j,  0.0000+0.j,  0.0000+0.j,
+          0.0000+0.j,  0.7071+0.j]])
 </pre></div></div>
 </div>
 <p>We can add more different types of gates, and change the total number of qubits of the circuit.</p>
@@ -797,7 +1026,7 @@ the diagram of the quantum circuit with more gates:
 the total number of qubit of the circuit is 3
 </pre></div></div>
 </div>
-<p>When the number of qubits is not specified, the total number of qubits will be changed as operations are added to the circuit. However, please note that, in this case, one cannot add the first operation without specifying the location.</p>
+<p>When the number of qubits is not specified, the total number of qubits will be changed as operations are added to the circuit.</p>
 <p>For parametrized gates, <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> can add the gate with randomly generated parameters, or you can specify them as keyword arguments.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
@@ -808,7 +1037,7 @@ cir.rx([0, 1], param=np.arange(2)) # Add RX gate to the first two qubits with sp
 
 cir.u3([0]) # Add universal single qubit gate
 cir.universal_two_qubits([0, 1]) # Add universal two qubits gate
-cir.universal_three_qubits([0, 1, 2]) # Add universal three qubits gate
+# cir.universal_three_qubits([0, 1, 2]) # Add universal three qubits gate
 
 print(&quot;the diagram of a quantum circuit with parametrized gates:&quot;)
 cir.plot()
@@ -841,7 +1070,7 @@ the diagram of a quantum circuit with parametrized gates:
 1&amp;\omega^{2(N-1)}&amp;\omega^{2(N-2)}&amp;\dots&amp;\omega^{2}\\
 \vdots&amp;\vdots&amp;\vdots&amp;\dots&amp;\vdots\\
 1&amp;\omega^{(N-1)(N-1)}&amp;\omega^{(N-1)(N-2)}&amp;\dots&amp;\omega^{N-1}\\
-\end{bmatrix}, \tag{2}\end{split}\]</div>
+\end{bmatrix},\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N=2^{n}\)</span> is the dimension of the Hilbert space and <span class="math notranslate nohighlight">\(\omega=e^{2\pi i/N}\)</span>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
@@ -850,7 +1079,7 @@ the diagram of a quantum circuit with parametrized gates:
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=2)  # construct a 2-qubit quantum Fourier transformation (QFT) operator
 qft_inverse = dagger(qft_mat)  # get the inverse QFT
 
-cir.oracle(qft_inverse, qubits_idx=[0, 1], latex_name=r&#39;$\text{QFT}_{2}^{\dagger}$&#39;)  # add custom gate
+cir.oracle(qft_inverse, qubits_idx=[0, 1], latex_name=r&#39;\text{QFT}_{2}^{\dagger}&#39;)  # add custom gate
 
 print(&quot;the diagram of a quantum circuit with a custom gate:&quot;)
 cir.plot()
@@ -879,7 +1108,7 @@ the diagram of a quantum circuit with a custom gate:
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=3)  # construct a 3-qubit quantum Fourier transformation (QFT) operator
 qft_inverse = dagger(qft_mat)  # get the inverse QFT
-custom_unitary = Oracle(qft_inverse, gate_info={&#39;texname&#39;: r&#39;$QFT_{3}^{\dagger}$&#39;})
+custom_unitary = Oracle(qft_inverse, system_idx=list(range(3)), gate_info={&quot;tex&quot;: r&#39;QFT_{3}^{\dagger}&#39;})
 
 cir.append(custom_unitary)
 
@@ -908,7 +1137,7 @@ the diagram of a quantum circuit with custom gates:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.control_oracle(random_unitary(num_qubits=2), qubits_idx=[0, 1, 2], gate_name=&quot;O&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.oracle(random_unitary(num_qubits=2), qubits_idx=[0, 1, 2], control_idx=0, gate_name=&quot;O&quot;)
 
 print(&quot;the diagram of a quantum circuit with a controlled custom gate:&quot;)
 cir.plot()
@@ -994,23 +1223,31 @@ Circuit(
   (6): RX()
   (7): RX()
   (8): U3()
-  (9): UniversalTwoQubits()
-  (10): UniversalThreeQubits()
+  (9): Universal2(
+    (0): U3()
+    (1): CNOT()
+    (2): RZ()
+    (3): RY()
+    (4): CNOT()
+    (5): RY()
+    (6): CNOT()
+    (7): U3()
+  )
+  (10): Oracle()
   (11): Oracle()
-  (12): Oracle()
-  (13): ControlOracle()
-  (14): Depolarizing()
-  (15): BitPhaseFlip()
-  (16): ChoiRepr()
-  (17): KrausRepr()
-  (18): StinespringRepr()
-  (19): ChoiRepr()
-  (20): KrausRepr()
-  (21): StinespringRepr()
+  (12): ControlOracle()
+  (13): Depolarizing()
+  (14): BitPhaseFlip()
+  (15): ChoiRepr()
+  (16): KrausRepr()
+  (17): StinespringRepr()
+  (18): ChoiRepr()
+  (19): KrausRepr()
+  (20): StinespringRepr()
 )
 </pre></div></div>
 </div>
-<p>More available operations can be found in the <a class="reference external" href="www.quairkit.com">API document</a>.</p>
+<p>More available operations can be found in the <a class="reference external" href="https://www.quairkit.com">API document</a>.</p>
 <h3 id="Add-circuit-templates">Add circuit templates<a class="headerlink" href="#Add-circuit-templates" title="Link to this heading">¶</a></h3>
 <p>QuAIRKit provides predefined circuit templates, or ansatz consisting of a sequence of gates applied to qubits. Note that the templates are only available for the circuits with a known number of qubits.</p>
 <div class="nbinput docutils container">
@@ -1022,14 +1259,14 @@ cir = Circuit(num_qubits)
 
 cir.linear_entangled_layer(depth=1)  # add a linear entangled layer
 
-cir.real_block_layer(depth=2)  # add real block layers in depth 2
+cir.real_block_layer(depth=1)  # add real block layers in depth 2
 cir.real_entangled_layer(depth=1)  # add a real entangled layer
 
 cir.complex_block_layer(depth=1)  # add a complex block layer
 cir.complex_entangled_layer(depth=1)  # add a complex entangled layer
 
 print(&quot;the diagram of a quantum circuit with different kinds of layers:&quot;)
-cir.plot()
+cir.plot(style=&#39;compact&#39;)
 </code></pre></div>
 </div>
 </div>
@@ -1054,7 +1291,7 @@ the diagram of a quantum circuit with different kinds of layers:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The matrix of the gate at the 5th position is\n&quot;, cir[4].matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The unitary matrix of the first layer is\n&quot;, cir[0].matrix.detach().numpy())
 </code></pre></div>
 </div>
 </div>
@@ -1063,12 +1300,39 @@ the diagram of a quantum circuit with different kinds of layers:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The matrix of the gate at the 5th position is
- tensor([[[ 0.0254+0.j, -0.9997+0.j],
-         [ 0.9997+0.j,  0.0254+0.j]],
-
-        [[ 0.0516+0.j, -0.9987+0.j],
-         [ 0.9987+0.j,  0.0516+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)
+The unitary matrix of the first layer is
+ [[ 3.9579172e-04+0.01104751j -4.0776730e-03-0.11381783j
+  -2.5952011e-03-0.07243837j  2.6737250e-02+0.74630183j
+   3.3955753e-04+0.00947787j -3.4983149e-03-0.09764647j
+  -2.2264733e-03-0.06214624j  2.2938401e-02+0.64026636j]
+ [ 3.0225392e-02+0.10980688j  2.9337709e-03+0.0106582j
+  -1.9818747e-01-0.7200021j  -1.9236689e-02-0.06988563j
+   2.5930937e-02+0.0942054j   2.5169374e-03+0.00914387j
+  -1.7002876e-01-0.6177034j  -1.6503518e-02-0.0599562j ]
+ [ 6.3103452e-02+0.03566521j -6.5012807e-01-0.3674435j
+   9.6238526e-03+0.00543927j -9.9150464e-02-0.05603848j
+   5.4137636e-02+0.03059785j -5.5775714e-01-0.31523675j
+   8.2564829e-03+0.00466645j -8.5063055e-02-0.04807647j]
+ [ 5.4782182e-01+0.50751597j  5.3173292e-02+0.04926107j
+   8.3547831e-02+0.0774008j   8.1094122e-03+0.00751276j
+   4.6998671e-01+0.43540752j  4.5618366e-02+0.042262j
+   7.1677268e-02+0.06640361j  6.9572171e-03+0.00644534j]
+ [-2.5930937e-02+0.0942054j  -2.5169374e-03+0.00914387j
+   1.7002876e-01-0.6177034j   1.6503518e-02-0.0599562j
+   3.0225392e-02-0.10980688j  2.9337709e-03-0.0106582j
+  -1.9818747e-01+0.7200021j  -1.9236689e-02+0.06988563j]
+ [-3.3955753e-04+0.00947787j  3.4983149e-03-0.09764647j
+   2.2264733e-03-0.06214624j -2.2938401e-02+0.64026636j
+   3.9579172e-04-0.01104751j -4.0776730e-03+0.11381783j
+  -2.5952011e-03+0.07243837j  2.6737250e-02-0.74630183j]
+ [-4.6998671e-01+0.43540752j -4.5618366e-02+0.042262j
+  -7.1677268e-02+0.06640361j -6.9572171e-03+0.00644534j
+   5.4782182e-01-0.50751597j  5.3173292e-02-0.04926107j
+   8.3547831e-02-0.0774008j   8.1094122e-03-0.00751276j]
+ [-5.4137636e-02+0.03059785j  5.5775714e-01-0.31523675j
+  -8.2564829e-03+0.00466645j  8.5063055e-02-0.04807647j
+   6.3103452e-02-0.03566521j -6.5012807e-01+0.3674435j
+   9.6238526e-03-0.00543927j -9.9150464e-02+0.05603848j]]
 </pre></div></div>
 </div>
 <p>Note that the order here is from left to right.</p>
@@ -1154,8 +1418,8 @@ the output state for inputting zero state is:
  Backend: state_vector
  System dimension: [2, 2, 2]
  System sequence: [2, 1, 0]
-[0.61-0.06j 0.78-0.07j 0.  +0.j   0.  +0.j   0.06+0.01j 0.08+0.01j
- 0.  +0.j   0.  +0.j  ]
+[-0.29+0.17j -0.28+0.16j  0.  +0.j    0.  +0.j    0.62-0.16j  0.59-0.15j
+  0.  +0.j    0.  +0.j  ]
 -----------------------------------------------------
 
 the output state for inputting state rho is:
@@ -1163,37 +1427,55 @@ the output state for inputting state rho is:
  Backend: density_matrix
  System dimension: [2, 2, 2]
  System sequence: [2, 1, 0]
-[[ 0.21+0.j   -0.02+0.j    0.08-0.09j -0.01+0.07j  0.06+0.13j  0.02+0.04j
-  -0.02-0.07j -0.06-0.j  ]
- [-0.02-0.j    0.11+0.j   -0.03-0.01j -0.06+0.12j  0.03+0.03j  0.07+0.j
-   0.04+0.03j  0.09-0.03j]
- [ 0.08+0.09j -0.03+0.01j  0.11+0.j   -0.03+0.02j -0.03+0.08j -0.02+0.04j
-   0.  -0.03j -0.03-0.02j]
- [-0.01-0.07j -0.06-0.12j -0.03-0.02j  0.23+0.j    0.09-0.1j  -0.01-0.09j
-  -0.02-0.04j -0.09-0.06j]
- [ 0.06-0.13j  0.03-0.03j -0.03-0.08j  0.09+0.1j   0.13+0.j    0.06-0.03j
-  -0.03-0.01j -0.01-0.02j]
- [ 0.02-0.04j  0.07-0.j   -0.02-0.04j -0.01+0.09j  0.06+0.03j  0.06+0.j
-   0.01+0.01j  0.05-0.02j]
- [-0.02+0.07j  0.04-0.03j  0.  +0.03j -0.02+0.04j -0.03+0.01j  0.01-0.01j
-   0.05-0.j    0.03-0.04j]
- [-0.06+0.j    0.09+0.03j -0.03+0.02j -0.09+0.06j -0.01+0.02j  0.05+0.02j
-   0.03+0.04j  0.09-0.j  ]]
+[[ 0.07+0.j   -0.01-0.05j -0.01+0.06j  0.04+0.02j  0.09+0.02j -0.03-0.01j
+  -0.05-0.03j  0.17-0.01j]
+ [-0.01+0.05j  0.07+0.j   -0.  -0.01j -0.03+0.01j -0.04+0.09j  0.  -0.01j
+   0.02-0.06j -0.02+0.11j]
+ [-0.01-0.06j -0.  +0.01j  0.14+0.j   -0.02-0.06j -0.01-0.03j -0.03+0.05j
+  -0.06+0.01j -0.05-0.18j]
+ [ 0.04-0.02j -0.03-0.01j -0.02+0.06j  0.05-0.j    0.04-0.04j -0.02-0.02j
+  -0.01-0.j    0.1 -0.04j]
+ [ 0.09-0.02j -0.04-0.09j -0.01+0.03j  0.04+0.04j  0.15+0.j   -0.02-0.j
+  -0.09-0.j    0.2 -0.05j]
+ [-0.03+0.01j  0.  +0.01j -0.03-0.05j -0.02+0.02j -0.02+0.j    0.03-0.j
+   0.02+0.03j -0.07+0.05j]
+ [-0.05+0.03j  0.02+0.06j -0.06-0.01j -0.01+0.j   -0.09+0.j    0.02-0.03j
+   0.09+0.j   -0.09+0.1j ]
+ [ 0.17+0.01j -0.02-0.11j -0.05+0.18j  0.1 +0.04j  0.2 +0.05j -0.07-0.05j
+  -0.09-0.1j   0.42+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
 </div>
 <h2 id="Other-properties">Other properties<a class="headerlink" href="#Other-properties" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> Class has other properties for further information and manipulation. For example, it includes properties like <code class="docutils literal notranslate"><span class="pre">depth</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_history</span></code>, <code class="docutils literal notranslate"><span class="pre">unitary_matrix</span></code> and so on.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Circuit</span></code> Class has other properties for further information and manipulation. For example, it includes properties like <code class="docutils literal notranslate"><span class="pre">depth</span></code>, <code class="docutils literal notranslate"><span class="pre">operator_history</span></code>, <code class="docutils literal notranslate"><span class="pre">matrix</span></code> and so on.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Circuit(
+  (0): RY()
+  (1): RZ()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+</code></pre></div>
+</div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the circuit depth is&quot;, cir.depth, &quot;\n&quot;)
 
-print(&quot;the gate history of the circuit is&quot;, cir.gate_history, &quot;\n&quot;)
-
-print(&quot;the qubit history of the circuit is&quot;, cir.system_history)
+print(&quot;the gate history of the circuit is\n&quot;, cir.operator_history)
 </code></pre></div>
 </div>
 </div>
@@ -1204,14 +1486,26 @@ print(&quot;the qubit history of the circuit is&quot;, cir.system_history)
 <div class="highlight"><pre>
 the circuit depth is 2
 
-the gate history of the circuit is [{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[1.8177]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1988]], grad_fn=&lt;SelectBackward0&gt;)}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.0056]])}, {&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1836]])}]
+the gate history of the circuit is
+ [{&#39;name&#39;: &#39;ry&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{y}&#39;, &#39;api&#39;: &#39;ry&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[0], [2]], &#39;param&#39;: Parameter containing:
+tensor([[[1.5174]],
 
-the qubit history of the circuit is [[[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [0], &#39;theta&#39;: tensor([[1.8177]], grad_fn=&lt;SelectBackward0&gt;)}, 0]], [[{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [1], &#39;theta&#39;: tensor([[0.0056]])}, 2]], [[{&#39;gate&#39;: &#39;ry&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1988]], grad_fn=&lt;SelectBackward0&gt;)}, 1], [{&#39;gate&#39;: &#39;rz&#39;, &#39;which_system&#39;: [2], &#39;theta&#39;: tensor([[0.1836]])}, 3]]]
+        [[4.1111]]], requires_grad=True), &#39;matrix&#39;: tensor([[[ 0.7257+0.j, -0.6880+0.j],
+         [ 0.6880+0.j,  0.7257+0.j]],
+
+        [[-0.4660+0.j, -0.8848+0.j],
+         [ 0.8848+0.j, -0.4660+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)}, {&#39;name&#39;: &#39;rz&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{z}&#39;, &#39;api&#39;: &#39;rz&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[1], [2]], &#39;param&#39;: tensor([[[0.7843]],
+
+        [[0.2734]]]), &#39;matrix&#39;: tensor([[[0.9241-0.3822j, 0.0000+0.0000j],
+         [0.0000+0.0000j, 0.9241+0.3822j]],
+
+        [[0.9907-0.1363j, 0.0000+0.0000j],
+         [0.0000+0.0000j, 0.9907+0.1363j]]])}]
 </pre></div></div>
 </div>
 <p>Additionally, one can update the parameters of parameterized gates (if they exist) using the <code class="docutils literal notranslate"><span class="pre">update_param</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the trainable parameters of entire circuit are&quot;, cir.param)
@@ -1226,7 +1520,7 @@ print(&quot;the updated trainable parameters of entire circuit are&quot;, cir.pa
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the trainable parameters of entire circuit are tensor([1.8177, 0.1988])
+the trainable parameters of entire circuit are tensor([1.5174, 4.1111])
 the updated trainable parameters of entire circuit are tensor([1., 1.])
 </pre></div></div>
 </div>
@@ -1274,7 +1568,7 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 </tbody>
 </table>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
@@ -1288,8 +1582,8 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.3.0
-torch: 2.5.1+cpu
+quairkit: 0.4.0
+torch: 2.7.0+cpu
 numpy: 1.26.0
 scipy: 1.14.1
 matplotlib: 3.10.0
@@ -1307,6 +1601,15 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 
 
 
+
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
@@ -1317,42 +1620,6 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Hamiltonian.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hamiltonian in QuAIRKit" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Hamiltonian in QuAIRKit
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="measure.html" class="md-footer__link md-footer__link--next" aria-label="Next: Measuring quantum states in QuAIRKit" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Measuring quantum states in QuAIRKit
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   
   
@@ -1384,10 +1651,11 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["latest"], "title": "latest", "version": "latest"}, {"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}], "versionPath": null}}</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}], "versionPath": null}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>

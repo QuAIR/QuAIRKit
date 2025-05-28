@@ -6,5 +6,7 @@ quairkit.core
 
     quairkit.core.base
     quairkit.core.hamiltonian
+    quairkit.core.latex
+    quairkit.core.operator
     quairkit.core.state
-    quairkit.core.visual
+    quairkit.core.test
