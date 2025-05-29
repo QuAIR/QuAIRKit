@@ -598,13 +598,13 @@ as managing parameters effectively.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
-import quairkit as qkit
-from quairkit import Circuit, State, Hamiltonian
-from quairkit.database import *
-from quairkit.loss import *
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">Hamiltonian</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 </div>
 </div>
@@ -612,39 +612,39 @@ from quairkit.qinfo import *
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>class Network(torch.nn.Module):
-    r&quot;&quot;&quot;A customized hybrid quantum-classical neural network.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Network</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A customized hybrid quantum-classical neural network.</span>
 
-    Args:
-        batch_size: The batch dimension of input data.
-        H: The Hamiltonian for measuring the neural network.
+<span class="sd">    Args:</span>
+<span class="sd">        batch_size: The batch dimension of input data.</span>
+<span class="sd">        H: The Hamiltonian for measuring the neural network.</span>
 
-    Note:
-        contains the following layers:
-        - two quantum circuits
-        - A fully connected (dense) layer that takes batch_size inputs and outputs 10 features
-        - A second dense layer that takes the 10 features from fc1 and reduces them to a single output
+<span class="sd">    Note:</span>
+<span class="sd">        contains the following layers:</span>
+<span class="sd">        - two quantum circuits</span>
+<span class="sd">        - A fully connected (dense) layer that takes batch_size inputs and outputs 10 features</span>
+<span class="sd">        - A second dense layer that takes the 10 features from fc1 and reduces them to a single output</span>
 
-    &quot;&quot;&quot;
-    def __init__(self):
-        super().__init__()
-        self.theta = torch.nn.Parameter(torch.rand([3, 1, 1]))
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
 
-        cir1 = Circuit(3)
-        cir1.complex_entangled_layer(depth=3)
-        self.cir1 = cir1
-
-
-        cir2 = Circuit(3)
-        cir2.universal_qudits(list(range(3)))
-        cir2.ry(param=self.theta.clone())
-        self.cir2 = cir2
+        <span class="n">cir1</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">cir1</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cir1</span> <span class="o">=</span> <span class="n">cir1</span>
 
 
-    def forward(self, x):
-        x = self.cir1(x)
-        x = self.cir2(x)
-        return x
+        <span class="n">cir2</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">cir2</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+        <span class="n">cir2</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cir2</span> <span class="o">=</span> <span class="n">cir2</span>
+
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cir1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cir2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
 </code></pre></div>
 </div>
 </div>
@@ -652,8 +652,8 @@ from quairkit.qinfo import *
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net = Network()
-print([param.shape for param in net.parameters()])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">Network</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">param</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">()])</span>
 </code></pre></div>
 </div>
 </div>
@@ -669,12 +669,12 @@ print([param.shape for param in net.parameters()])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>input_state = random_state(3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">input_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
-output_state = net(input_state)
-loss = trace_distance(output_state, input_state)
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">output_state</span><span class="p">,</span> <span class="n">input_state</span><span class="p">)</span>
 
-loss.backward()
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -682,7 +682,7 @@ loss.backward()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print([(param.grad is None) for param in net.parameters()])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">([(</span><span class="n">param</span><span class="o">.</span><span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">()])</span>
 </code></pre></div>
 </div>
 </div>
@@ -701,11 +701,11 @@ loss.backward()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(2)
-cir.real_entangled_layer() # a layer of Ry and CNOT
-cir.complex_block_layer() # a layer of U3 and CNOT
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">real_entangled_layer</span><span class="p">()</span> <span class="c1"># a layer of Ry and CNOT</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">complex_block_layer</span><span class="p">()</span> <span class="c1"># a layer of U3 and CNOT</span>
 
-cir.plot()
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -721,18 +721,18 @@ cir.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>new_cir = Circuit(4)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">new_cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-new_cir.h() # a layer of Hadamard
-new_cir.real_entangled_layer([0, 1])
-new_cir.complex_block_layer([1, 2])
-new_cir.ry(param=torch.pi / 4) # a layer of fixed Ry
+<span class="n">new_cir</span><span class="o">.</span><span class="n">h</span><span class="p">()</span> <span class="c1"># a layer of Hadamard</span>
+<span class="n">new_cir</span><span class="o">.</span><span class="n">real_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">new_cir</span><span class="o">.</span><span class="n">complex_block_layer</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">new_cir</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># a layer of fixed Ry</span>
 
-new_cir.plot()
-new_cir.update_param(cir.param)
+<span class="n">new_cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">new_cir</span><span class="o">.</span><span class="n">update_param</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
 
-print(&#39;circuit after updating the parameters&#39;)
-new_cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;circuit after updating the parameters&#39;</span><span class="p">)</span>
+<span class="n">new_cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -763,8 +763,8 @@ circuit after updating the parameters
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.randomize_param(0, 0.1, method=&#39;uniform&#39;) # use uniform sampling to generate the parameters.
-cir.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">randomize_param</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)</span> <span class="c1"># use uniform sampling to generate the parameters.</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -779,8 +779,8 @@ cir.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.randomize_param(1, 1.1, method=&#39;normal&#39;) # use Gaussian sampling to generate the parameters.
-cir.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">randomize_param</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span> <span class="c1"># use Gaussian sampling to generate the parameters.</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -796,7 +796,7 @@ cir.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span>
 </code></pre></div>
 </div>
 </div>
@@ -823,9 +823,9 @@ Circuit(
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>first_gate = cir[0][0]
-print(&#39;The parameters of first two RY gates are\n&#39;, list(first_gate.parameters()))
-print(&#39;The Kraus representations of the first two RY gates are: \n&#39;, first_gate.kraus_repr)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">first_gate</span> <span class="o">=</span> <span class="n">cir</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The parameters of first two RY gates are</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">first_gate</span><span class="o">.</span><span class="n">parameters</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The Kraus representations of the first two RY gates are: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">first_gate</span><span class="o">.</span><span class="n">kraus_repr</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -857,9 +857,9 @@ The Kraus representations of the first two RY gates are:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def ccu3(theta: torch.Tensor) -&gt; torch.Tensor:
-    proj = computational_state(num_system=2, index=3).density_matrix
-    return torch.kron((torch.eye(2) - proj), torch.eye(2)) + torch.kron(proj, u3(theta))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">ccu3</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">computational_state</span><span class="p">(</span><span class="n">num_system</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">kron</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">proj</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">proj</span><span class="p">,</span> <span class="n">u3</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -868,13 +868,13 @@ The Kraus representations of the first two RY gates are:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(4)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-cir.param_oracle(ccu3, num_acted_param=3, system_idx=[1, 2, 3], gate_name=&#39;ccu3&#39;)
-# this is equivalent to below code
-# cir.param_oracle(u3, num_acted_param=3, system_idx=[[1, 2], 3], control_idx=-1, gate_name=&#39;ccu3&#39;)
+<span class="n">cir</span><span class="o">.</span><span class="n">param_oracle</span><span class="p">(</span><span class="n">ccu3</span><span class="p">,</span> <span class="n">num_acted_param</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">gate_name</span><span class="o">=</span><span class="s1">&#39;ccu3&#39;</span><span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># cir.param_oracle(u3, num_acted_param=3, system_idx=[[1, 2], 3], control_idx=-1, gate_name=&#39;ccu3&#39;)</span>
 
-print(&#39;The parameters of this circuit are\n&#39;, list(cir.parameters()))
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The parameters of this circuit are</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">parameters</span><span class="p">()))</span>
 </code></pre></div>
 </div>
 </div>
@@ -895,18 +895,18 @@ tensor([[[0.7188, 5.4694, 0.8267]]], requires_grad=True)]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def create_cir(training_data: torch.Tensor, param: torch.Tensor) -&gt; Circuit:
-    r&quot;&quot;&quot;Create a quantum neural network circuit.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_cir</span><span class="p">(</span><span class="n">training_data</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">param</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Circuit</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create a quantum neural network circuit.</span>
 
-    Args:
-        training_data: The input data.
-        param: The parameters for the quantum layers.
+<span class="sd">    Args:</span>
+<span class="sd">        training_data: The input data.</span>
+<span class="sd">        param: The parameters for the quantum layers.</span>
 
-    &quot;&quot;&quot;
-    circuit = Circuit(2)
-    circuit.oracle(training_data, system_idx=[0, 1])
-    circuit.u3(param=param)
-    return circuit
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">circuit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">u3</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">param</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">circuit</span>
 </code></pre></div>
 </div>
 </div>
@@ -917,51 +917,51 @@ tensor([[[0.7188, 5.4694, 0.8267]]], requires_grad=True)]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>class Network(torch.nn.Module):
-    r&quot;&quot;&quot;A customized hybrid quantum-classical neural network.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Network</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A customized hybrid quantum-classical neural network.</span>
 
-    Args:
-        batch_size: The batch dimension of input data.
-        H: The Hamiltonian for measuring the neural network.
+<span class="sd">    Args:</span>
+<span class="sd">        batch_size: The batch dimension of input data.</span>
+<span class="sd">        H: The Hamiltonian for measuring the neural network.</span>
 
-    Note:
-        contains the following layers:
-        - two quantum circuits
-        - A fully connected (dense) layer that takes batch_size inputs and outputs 10 features
-        - A second dense layer that takes the 10 features from fc1 and reduces them to a single output
+<span class="sd">    Note:</span>
+<span class="sd">        contains the following layers:</span>
+<span class="sd">        - two quantum circuits</span>
+<span class="sd">        - A fully connected (dense) layer that takes batch_size inputs and outputs 10 features</span>
+<span class="sd">        - A second dense layer that takes the 10 features from fc1 and reduces them to a single output</span>
 
-    &quot;&quot;&quot;
-    def __init__(self, batch_size: int, H: Hamiltonian):
-        super().__init__()
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">H</span><span class="p">:</span> <span class="n">Hamiltonian</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        self.training_data = random_unitary(2, size=(2, batch_size))
-        self.theta = torch.nn.Parameter(torch.poisson(torch.rand(2, batch_size, 6)))
-        self.measure = ExpecVal(H)
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_data</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">6</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measure</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
 
-        self.fc1 = torch.nn.Linear(batch_size, 10)
-        self.fc2 = torch.nn.Linear(10, 1)
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-    def forward(self, input_state: State) -&gt; torch.Tensor:
-        r&quot;&quot;&quot;Perform the forward propagation of the neural network.
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_state</span><span class="p">:</span> <span class="n">State</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Perform the forward propagation of the neural network.</span>
 
-        Args:
-            input_state: The input quantum state of the neural network.
+<span class="sd">        Args:</span>
+<span class="sd">            input_state: The input quantum state of the neural network.</span>
 
-        Note:
-            If the `Network` does not require custom parameters,
-            one can move the creation of `cir1` and `cir2` directly into
-            the `__init__` method to improve runtime efficiency.
-        &quot;&quot;&quot;
-        cir1 = create_cir(self.training_data[0], self.theta[0])
-        cir2 = create_cir(self.training_data[1], self.theta[1])
+<span class="sd">        Note:</span>
+<span class="sd">            If the `Network` does not require custom parameters,</span>
+<span class="sd">            one can move the creation of `cir1` and `cir2` directly into</span>
+<span class="sd">            the `__init__` method to improve runtime efficiency.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cir1</span> <span class="o">=</span> <span class="n">create_cir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">cir2</span> <span class="o">=</span> <span class="n">create_cir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-        state1 = cir1(input_state)
-        state2 = cir2(state1)
-        expectation = self.measure(state2)
+        <span class="n">state1</span> <span class="o">=</span> <span class="n">cir1</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
+        <span class="n">state2</span> <span class="o">=</span> <span class="n">cir2</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
+        <span class="n">expectation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">state2</span><span class="p">)</span>
 
-        x = torch.relu(self.fc1(expectation))
-        x = torch.sigmoid(self.fc2(x))
-        return x
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">expectation</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">x</span>
 </code></pre></div>
 </div>
 </div>
@@ -969,9 +969,9 @@ tensor([[[0.7188, 5.4694, 0.8267]]], requires_grad=True)]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>BATCH_SIZE = 100
-ham = random_hamiltonian_generator(2)
-net = Network(BATCH_SIZE, ham)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">ham</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">ham</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -980,7 +980,7 @@ net = Network(BATCH_SIZE, ham)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net.theta = torch.nn.Parameter(torch.ones_like(net.theta))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">theta</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -989,12 +989,12 @@ net = Network(BATCH_SIZE, ham)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>psi = random_state(2)
-loss = net(psi)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psi</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
 
-loss.backward()
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 
-print(&quot;shape of the gradient tensor for the theta parameters&quot;, net.theta.grad.shape)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;shape of the gradient tensor for the theta parameters&quot;</span><span class="p">,</span> <span class="n">net</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1038,7 +1038,7 @@ shape of the gradient tensor for the theta parameters torch.Size([2, 100, 6])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

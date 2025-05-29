@@ -852,14 +852,14 @@ the sequence of events and are usually not physical cables QuAIRKit uses the <co
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import numpy as np
-import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 
-import quairkit as qkit
-from quairkit import Circuit
-from quairkit.database import *
-from quairkit.operator import RZ, ChoiRepr, KrausRepr, StinespringRepr, Oracle
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.operator</span> <span class="kn">import</span> <span class="n">RZ</span><span class="p">,</span> <span class="n">ChoiRepr</span><span class="p">,</span> <span class="n">KrausRepr</span><span class="p">,</span> <span class="n">StinespringRepr</span><span class="p">,</span> <span class="n">Oracle</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 </div>
 </div>
@@ -869,10 +869,10 @@ from quairkit.qinfo import *
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
-cir_static = Circuit(num_qubits)  # construct a circuit with specifying the number of qubits
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits</span>
+<span class="n">cir_static</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># construct a circuit with specifying the number of qubits</span>
 
-cir = Circuit()  # Create a dynamic circuit (without specifying the number of qubits)
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">()</span>  <span class="c1"># Create a dynamic circuit (without specifying the number of qubits)</span>
 </code></pre></div>
 </div>
 </div>
@@ -888,12 +888,12 @@ cir = Circuit()  # Create a dynamic circuit (without specifying the number of qu
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.h(0)  # Add Hadamard gate to qubit 0
-cir.x([0, 1])  # Add X gate to qubit 0 and 1
-cir.cx([0, 1])  # Add CNOT gate to qubit 0 and 1
-print(&quot;the diagram of a quantum circuit:&quot;)
-cir.plot()
-print(f&quot;the total number of qubit of the circuit is {cir.num_qubits}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Add Hadamard gate to qubit 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">x</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># Add X gate to qubit 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># Add CNOT gate to qubit 0 and 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the total number of qubit of the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -939,7 +939,7 @@ the total number of qubit of the circuit is 2
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;the unitary matrix of the circuit:\n{cir.unitary_matrix()}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the unitary matrix of the circuit:</span><span class="se">\n</span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">unitary_matrix</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -960,12 +960,12 @@ tensor([[ 0.0000+0.j,  0.7071+0.j,  0.0000+0.j, -0.7071+0.j],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.swap([[1, 2], [0, 2]])  # Add SWAP gate to qubit 1 and 2, and qubit 0 and 2
-cir.z()  # Add Z gate to all qubits
-cir.cy()  # Add CY gate in cycle
-print(&quot;the diagram of the quantum circuit with more gates:&quot;)
-cir.plot()
-print(f&quot;the total number of qubit of the circuit is {cir.num_qubits}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">swap</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>  <span class="c1"># Add SWAP gate to qubit 1 and 2, and qubit 0 and 2</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">z</span><span class="p">()</span>  <span class="c1"># Add Z gate to all qubits</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span>  <span class="c1"># Add CY gate in cycle</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of the quantum circuit with more gates:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the total number of qubit of the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -998,15 +998,15 @@ the total number of qubit of the circuit is 3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.rx() # Add Rx gate to all qubits with random parameters
-cir.rx([0, 1], param=np.arange(2)) # Add RX gate to the first two qubits with specified parameters
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">rx</span><span class="p">()</span> <span class="c1"># Add Rx gate to all qubits with random parameters</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">rx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">param</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># Add RX gate to the first two qubits with specified parameters</span>
 
-cir.u3([0]) # Add universal single qubit gate
-cir.universal_two_qubits([0, 1]) # Add universal two qubits gate
-cir.universal_three_qubits([0, 1, 2]) # Add universal three qubits gate
+<span class="n">cir</span><span class="o">.</span><span class="n">u3</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># Add universal single qubit gate</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_two_qubits</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="c1"># Add universal two qubits gate</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_three_qubits</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="c1"># Add universal three qubits gate</span>
 
-print(&quot;the diagram of a quantum circuit with parametrized gates:&quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with parametrized gates:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1042,13 +1042,13 @@ the diagram of a quantum circuit with parametrized gates:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=2)  # construct a 2-qubit quantum Fourier transformation (QFT) operator
-qft_inverse = dagger(qft_mat)  # get the inverse QFT
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qft_mat</span> <span class="o">=</span> <span class="n">qft_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># construct a 2-qubit quantum Fourier transformation (QFT) operator</span>
+<span class="n">qft_inverse</span> <span class="o">=</span> <span class="n">dagger</span><span class="p">(</span><span class="n">qft_mat</span><span class="p">)</span>  <span class="c1"># get the inverse QFT</span>
 
-cir.oracle(qft_inverse, qubits_idx=[0, 1], latex_name=r&#39;$\text{QFT}_{2}^{\dagger}$&#39;)  # add custom gate
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">qft_inverse</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\text</span><span class="si">{QFT}</span><span class="s1">_</span><span class="si">{2}</span><span class="s1">^{\dagger}$&#39;</span><span class="p">)</span>  <span class="c1"># add custom gate</span>
 
-print(&quot;the diagram of a quantum circuit with a custom gate:&quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with a custom gate:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1072,14 +1072,14 @@ the diagram of a quantum circuit with a custom gate:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qft_mat = qft_matrix(num_qubits=3)  # construct a 3-qubit quantum Fourier transformation (QFT) operator
-qft_inverse = dagger(qft_mat)  # get the inverse QFT
-custom_unitary = Oracle(qft_inverse, gate_info={&#39;texname&#39;: r&#39;$QFT_{3}^{\dagger}$&#39;})
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qft_mat</span> <span class="o">=</span> <span class="n">qft_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># construct a 3-qubit quantum Fourier transformation (QFT) operator</span>
+<span class="n">qft_inverse</span> <span class="o">=</span> <span class="n">dagger</span><span class="p">(</span><span class="n">qft_mat</span><span class="p">)</span>  <span class="c1"># get the inverse QFT</span>
+<span class="n">custom_unitary</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">qft_inverse</span><span class="p">,</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;texname&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;$QFT_</span><span class="si">{3}</span><span class="s1">^{\dagger}$&#39;</span><span class="p">})</span>
 
-cir.append(custom_unitary)
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_unitary</span><span class="p">)</span>
 
-print(&quot;the diagram of a quantum circuit with custom gates:&quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with custom gates:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1103,10 +1103,10 @@ the diagram of a quantum circuit with custom gates:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.control_oracle(random_unitary(num_qubits=2), qubits_idx=[0, 1, 2], gate_name=&quot;O&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">control_oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">gate_name</span><span class="o">=</span><span class="s2">&quot;O&quot;</span><span class="p">)</span>
 
-print(&quot;the diagram of a quantum circuit with a controlled custom gate:&quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with a controlled custom gate:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1131,8 +1131,8 @@ the diagram of a quantum circuit with a controlled custom gate:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir.depolarizing(prob=0.1, qubits_idx=[0])  # add a depolarizing channel (with probability 0.1) to qubit 0
-cir.bit_phase_flip(0.2)  # Add bit-phase flip channels (with probability 0.2) to all qubits
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">depolarizing</span><span class="p">(</span><span class="n">prob</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># add a depolarizing channel (with probability 0.1) to qubit 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">bit_phase_flip</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># Add bit-phase flip channels (with probability 0.2) to all qubits</span>
 </code></pre></div>
 </div>
 </div>
@@ -1142,15 +1142,15 @@ cir.bit_phase_flip(0.2)  # Add bit-phase flip channels (with probability 0.2) to
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits=3)
-replacement_choi_repr = replacement_choi(rho)  # replacement channel in Choi representation
-cir.choi_channel(replacement_choi_repr, system_idx=[0, 1, 2])  # add replacement channel in Choi representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">replacement_choi_repr</span> <span class="o">=</span> <span class="n">replacement_choi</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>  <span class="c1"># replacement channel in Choi representation</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">choi_channel</span><span class="p">(</span><span class="n">replacement_choi_repr</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># add replacement channel in Choi representation</span>
 
-reset_kraus_repr = reset_kraus([0.1, 0.2])  # reset channel in Kraus representation
-cir.kraus_channel(reset_kraus_repr, system_idx=2)  # add reset channel in Kraus representation
+<span class="n">reset_kraus_repr</span> <span class="o">=</span> <span class="n">reset_kraus</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>  <span class="c1"># reset channel in Kraus representation</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">kraus_channel</span><span class="p">(</span><span class="n">reset_kraus_repr</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add reset channel in Kraus representation</span>
 
-random_stin_repr = random_channel(num_systems=1, target=&quot;stinespring&quot;)  # random single-qubit channel in Stinespring representation
-cir.stinespring_channel(random_stin_repr, system_idx=1)  # add random channel in Stinespring representation
+<span class="n">random_stin_repr</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span>  <span class="c1"># random single-qubit channel in Stinespring representation</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">stinespring_channel</span><span class="p">(</span><span class="n">random_stin_repr</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># add random channel in Stinespring representation</span>
 </code></pre></div>
 </div>
 </div>
@@ -1159,17 +1159,17 @@ cir.stinespring_channel(random_stin_repr, system_idx=1)  # add random channel in
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>choi_op = random_channel(num_systems=2, target=&quot;choi&quot;)
-choi_repr = ChoiRepr(choi_op, system_idx=[1, 2])
-cir.append(choi_repr)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">choi_op</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
+<span class="n">choi_repr</span> <span class="o">=</span> <span class="n">ChoiRepr</span><span class="p">(</span><span class="n">choi_op</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">choi_repr</span><span class="p">)</span>
 
-kraus_op = random_channel(num_systems=1, target=&quot;kraus&quot;)
-kraus_repr = KrausRepr(kraus_op, system_idx=0)
-cir.append(kraus_repr)
+<span class="n">kraus_op</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="n">kraus_repr</span> <span class="o">=</span> <span class="n">KrausRepr</span><span class="p">(</span><span class="n">kraus_op</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">)</span>
 
-stine_op = random_channel(num_systems=3, target=&quot;stinespring&quot;)
-stine_repr = StinespringRepr(stine_op, system_idx=[0, 1, 2])
-cir.append(stine_repr)
+<span class="n">stine_op</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span>
+<span class="n">stine_repr</span> <span class="o">=</span> <span class="n">StinespringRepr</span><span class="p">(</span><span class="n">stine_op</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stine_repr</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1212,19 +1212,19 @@ Circuit(
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
-cir = Circuit(num_qubits)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
 
-cir.linear_entangled_layer(depth=1)  # add a linear entangled layer
+<span class="n">cir</span><span class="o">.</span><span class="n">linear_entangled_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># add a linear entangled layer</span>
 
-cir.real_block_layer(depth=2)  # add real block layers in depth 2
-cir.real_entangled_layer(depth=1)  # add a real entangled layer
+<span class="n">cir</span><span class="o">.</span><span class="n">real_block_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add real block layers in depth 2</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">real_entangled_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># add a real entangled layer</span>
 
-cir.complex_block_layer(depth=1)  # add a complex block layer
-cir.complex_entangled_layer(depth=1)  # add a complex entangled layer
+<span class="n">cir</span><span class="o">.</span><span class="n">complex_block_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># add a complex block layer</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># add a complex entangled layer</span>
 
-print(&quot;the diagram of a quantum circuit with different kinds of layers:&quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with different kinds of layers:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1249,7 +1249,7 @@ the diagram of a quantum circuit with different kinds of layers:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The matrix of the gate at the 5th position is\n&quot;, cir[4].matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix of the gate at the 5th position is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1272,25 +1272,25 @@ The matrix of the gate at the 5th position is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(num_qubits=3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
-# Set parameters and customize quantum gates. Here we select Ry, Rx, Rz gates
-param = np.random.rand(2)
+<span class="c1"># Set parameters and customize quantum gates. Here we select Ry, Rx, Rz gates</span>
+<span class="n">param</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-# By default, randomly generates a set of parameters
-rz_gate = RZ(param=param, qubits_idx=[1, 2])
+<span class="c1"># By default, randomly generates a set of parameters</span>
+<span class="n">rz_gate</span> <span class="o">=</span> <span class="n">RZ</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
-# Add quantum gates
-cir.ry([0, 2])
-cir.rx([0, 1])
-cir.insert(index=2, module=rz_gate)  # index where to insert
+<span class="c1"># Add quantum gates</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">ry</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">rx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="n">rz_gate</span><span class="p">)</span>  <span class="c1"># index where to insert</span>
 
-print(&quot;The quantum circuit after adding gates is: &quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The quantum circuit after adding gates is: &quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-cir.pop(1)  # Remove Rx gate
-print(&quot;The quantum circuit after removing gates is:&quot;)
-cir.plot()
+<span class="n">cir</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Remove Rx gate</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The quantum circuit after removing gates is:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1330,12 +1330,12 @@ The quantum circuit after removing gates is:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>output_state = cir()  # Run the circuit with initial state |0&gt;
-print(&quot;the output state for inputting zero state is:&quot;, output_state)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">()</span>  <span class="c1"># Run the circuit with initial state |0&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the output state for inputting zero state is:&quot;</span><span class="p">,</span> <span class="n">output_state</span><span class="p">)</span>
 
-rho = random_state(num_qubits=3)
-output_state = cir(rho)  # Run the circuit with initial state sigma
-print(&quot;the output state for inputting state rho is:&quot;, output_state)
+<span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>  <span class="c1"># Run the circuit with initial state sigma</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the output state for inputting state rho is:&quot;</span><span class="p">,</span> <span class="n">output_state</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1384,11 +1384,11 @@ the output state for inputting state rho is:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the circuit depth is&quot;, cir.depth, &quot;\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the circuit depth is&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-print(&quot;the gate history of the circuit is&quot;, cir.gate_history, &quot;\n&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the gate history of the circuit is&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="o">.</span><span class="n">gate_history</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-print(&quot;the qubit history of the circuit is&quot;, cir.system_history)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the qubit history of the circuit is&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="o">.</span><span class="n">system_history</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1409,10 +1409,10 @@ the qubit history of the circuit is [[[{&#39;gate&#39;: &#39;ry&#39;, &#39;which
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the trainable parameters of entire circuit are&quot;, cir.param)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the trainable parameters of entire circuit are&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
 
-cir.update_param(torch.ones_like(cir.param))  # update the parameters of the circuit
-print(&quot;the updated trainable parameters of entire circuit are&quot;, cir.param)
+<span class="n">cir</span><span class="o">.</span><span class="n">update_param</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">param</span><span class="p">))</span>  <span class="c1"># update the parameters of the circuit</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the updated trainable parameters of entire circuit are&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1472,7 +1472,7 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

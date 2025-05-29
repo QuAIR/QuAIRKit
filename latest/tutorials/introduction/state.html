@@ -736,12 +736,12 @@ some set <span class="math notranslate nohighlight">\(\{|\psi_x \rangle\}_{x \in
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
-import quairkit as qkit
-from quairkit import Hamiltonian, to_state
-from quairkit.qinfo import *
-from quairkit.database import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Hamiltonian</span><span class="p">,</span> <span class="n">to_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 </div>
 </div>
@@ -751,16 +751,16 @@ from quairkit.database import *
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 2  # set the number of qubits
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># set the number of qubits</span>
 
-state = zero_state(num_qubits)  # |00&gt;
-print(f&quot;zero states with 2 qubits: {state}&quot;)
+<span class="n">state</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># |00&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zero states with 2 qubits: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-state = bell_state(num_qubits)  # (|00&gt; + |11&gt;) / sqrt(2)
-print(f&quot;Bell states: {state}&quot;)
+<span class="n">state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># (|00&gt; + |11&gt;) / sqrt(2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bell states: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-state = isotropic_state(num_qubits, prob=0.1)  # isotropic state
-print(f&quot;isotropic state: {state}&quot;)
+<span class="n">state</span> <span class="o">=</span> <span class="n">isotropic_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># isotropic state</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;isotropic state: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -803,9 +803,9 @@ isotropic state:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits, rank=1)  # random 2-qubit pure state
-state = random_state(num_qubits, is_real=True)  # random 2-qubit real state
-state = random_state(num_qubits, size=1000)  # 1000 random 2-qubit states
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># random 2-qubit pure state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">is_real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># random 2-qubit real state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># 1000 random 2-qubit states</span>
 </code></pre></div>
 </div>
 </div>
@@ -833,15 +833,15 @@ state = random_state(num_qubits, size=1000)  # 1000 random 2-qubit states
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>data = haar_state_vector(
-    num_qubits
-)  # randomly generate a state vector with 2 qubits following Haar random
-state = to_state(data)
-print(f&quot;A state vector with 2 qubits following Haar random{state}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">haar_state_vector</span><span class="p">(</span>
+    <span class="n">num_qubits</span>
+<span class="p">)</span>  <span class="c1"># randomly generate a state vector with 2 qubits following Haar random</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;A state vector with 2 qubits following Haar random</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-data = random_density_matrix(num_qubits)  # random 2-qubit density matrix
-state = to_state(data)
-print(f&quot;type of the state: {state.backend}&quot;)
+<span class="n">data</span> <span class="o">=</span> <span class="n">random_density_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># random 2-qubit density matrix</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;type of the state: </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -867,8 +867,8 @@ type of the state: density_matrix
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=1, rank=1, size=3)  # 3 random single-qubit pure states
-print(f&quot;3 random single-qubit pure states: {state}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 3 random single-qubit pure states</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;3 random single-qubit pure states: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -899,9 +899,9 @@ print(f&quot;3 random single-qubit pure states: {state}&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;Its density matrix is :\n&quot;, state.density_matrix)
-print(&quot;\nIts ket is :\n&quot;, state.ket)
-print(&quot;\nIts bra is :\n&quot;, state.bra)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Its density matrix is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">density_matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Its ket is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Its bra is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">bra</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -943,7 +943,7 @@ Its bra is :
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;\nThe state is :\n&quot;, state.numpy())
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The state is :</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
 </code></pre></div>
 </div>
 </div>
@@ -964,10 +964,10 @@ The state is :
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The trace of these states are&quot;, state.trace())
-print(&quot;The rank of these states are&quot;, state.rank)
-print(&quot;The size of these states are&quot;, state.dim)
-print(&quot;The shape of vectorization of these states are&quot;, state.vec.shape)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The trace of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">trace</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The rank of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The size of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The shape of vectorization of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -986,9 +986,9 @@ The shape of vectorization of these states are torch.Size([3, 4, 1])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The number of systems in these states are&quot;, state.num_systems)
-print(&quot;Are these states qubits?&quot;, state.are_qubits())
-print(&quot;Are these states qutrits?&quot;, state.are_qutrits())
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number of systems in these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">num_systems</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Are these states qubits?&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">are_qubits</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Are these states qutrits?&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">are_qutrits</span><span class="p">())</span>
 </code></pre></div>
 </div>
 </div>
@@ -1007,7 +1007,7 @@ Are these states qutrits? False
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;the second and third state in the batch: {state[1:]}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the second and third state in the batch: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1037,11 +1037,11 @@ the second and third state in the batch:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state_1 = zero_state(num_qubits=1).density_matrix
-data = random_density_matrix(num_qubits=1)
-state_2 = to_state(data).density_matrix
-print(f&quot;matrix multiplication:\n{state_1 @ state_2}&quot;)
-print(&quot;The overlap of state_1 and state_2 is :&quot;, trace(state_1 @ state_2))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state_1</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">random_density_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_2</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;matrix multiplication:</span><span class="se">\n</span><span class="si">{</span><span class="n">state_1</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">state_2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The overlap of state_1 and state_2 is :&quot;</span><span class="p">,</span> <span class="n">trace</span><span class="p">(</span><span class="n">state_1</span> <span class="o">@</span> <span class="n">state_2</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -1061,8 +1061,8 @@ The overlap of state_1 and state_2 is : tensor(0.1567+0.j)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>product_state = NKron(state_1, state_2)
-print(f&quot;tensor product:\n{product_state}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">product_state</span> <span class="o">=</span> <span class="n">NKron</span><span class="p">(</span><span class="n">state_1</span><span class="p">,</span> <span class="n">state_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tensor product:</span><span class="se">\n</span><span class="si">{</span><span class="n">product_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1083,11 +1083,11 @@ tensor([[0.1567+0.0000j, 0.2268-0.2841j, 0.0000+0.0000j, 0.0000+0.0000j],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=2, rank=1, size=1)  # random 2-qubit pure states
-print(f&quot;1 random 2-qubit pure states: {state}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># random 2-qubit pure states</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1 random 2-qubit pure states: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-state.system_seq = [1, 0]  # permutation
-print(f&quot;state after permutation: {state}&quot;)
+<span class="n">state</span><span class="o">.</span><span class="n">system_seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># permutation</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after permutation: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1119,14 +1119,14 @@ state after permutation:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The dtype of these states are&quot;, state.dtype)
-print(&quot;The device of these states are&quot;, state.device)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dtype of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The device of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
-new_state = state.clone().to(
-    dtype=torch.complex128, device=&quot;cpu&quot;
-)  # change to &quot;cuda&quot; if gpu is available
-print(&quot;The dtype of new states are&quot;, new_state.dtype)
-print(&quot;The device of new states are&quot;, new_state.device)
+<span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
+<span class="p">)</span>  <span class="c1"># change to &quot;cuda&quot; if gpu is available</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dtype of new states are&quot;</span><span class="p">,</span> <span class="n">new_state</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The device of new states are&quot;</span><span class="p">,</span> <span class="n">new_state</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1147,9 +1147,9 @@ The device of new states are cpu
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>unitary = random_unitary(num_qubits=1)
-state_evo = state.evolve(unitary, sys_idx=[1])
-print(f&quot;state after evolving with unitary: {state_evo}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_evo</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after evolving with unitary: </span><span class="si">{</span><span class="n">state_evo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1173,9 +1173,9 @@ state after evolving with unitary:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>kraus = random_channel(num_qubits=1)
-state_kra = state.transform(kraus, sys_idx=[0], repr_type=&quot;kraus&quot;)
-print(f&quot;state after transformation: {state}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">kraus</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_kra</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">kraus</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after transformation: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1198,9 +1198,9 @@ state after transformation:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>choi = random_channel(num_qubits=1, target=&quot;choi&quot;)
-state_cho = state.transform(choi, sys_idx=[1], repr_type=&quot;choi&quot;)
-print(f&quot;state after transformation: {state}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">choi</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
+<span class="n">state_cho</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">choi</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after transformation: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1224,11 +1224,11 @@ state after transformation:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>observable = Hamiltonian([(2, &quot;Z0&quot;)])
-print(
-    &quot;the expectation value under the given observable: &quot;,
-    state.expec_val(hamiltonian=observable),
-)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">observable</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Z0&quot;</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;the expectation value under the given observable: &quot;</span><span class="p">,</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">hamiltonian</span><span class="o">=</span><span class="n">observable</span><span class="p">),</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1245,7 +1245,7 @@ the expectation value under the given observable:  tensor(-0.3195)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;Theoretical value is :&quot;, state.measure())  # theoretical value
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Theoretical value is :&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">measure</span><span class="p">())</span>  <span class="c1"># theoretical value</span>
 </code></pre></div>
 </div>
 </div>
@@ -1301,7 +1301,7 @@ Theoretical value is : tensor([0.2273, 0.1929, 0.0403, 0.5396])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

@@ -787,17 +787,17 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>from typing import Callable
-import numpy as np
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-import torch
-import quairkit as qkit
-from quairkit import Circuit
-from quairkit.database import *
-from quairkit.loss import *
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 
-import time
+<span class="kn">import</span> <span class="nn">time</span>
 </code></pre></div>
 </div>
 </div>
@@ -813,44 +813,44 @@ import time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def simon_function(n: int, s: int) -&gt; Callable[[int], int]:
-    r&quot;&quot;&quot;Generates a function f such that :math:`f(x) = f(y)` if and only if :math:`y = x` or :math:`y = x \oplus s`.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">simon_function</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generates a function f such that :math:`f(x) = f(y)` if and only if :math:`y = x` or :math:`y = x \oplus s`.</span>
 
-    Args:
-        n: the number of bits in the input and output strings.
-        s: an integer represented by an n-bit string representing the secret string in Simon&#39;s problem.
+<span class="sd">    Args:</span>
+<span class="sd">        n: the number of bits in the input and output strings.</span>
+<span class="sd">        s: an integer represented by an n-bit string representing the secret string in Simon&#39;s problem.</span>
 
-    Returns:
-        A matrix f mapping integers to integers satisfying Simon&#39;s problem properties.
-    &quot;&quot;&quot;
-    # generate a random permutation of 0, 1, ..., 2^n-1
-    all_x = np.arange(2 ** n)
-    np.random.shuffle(all_x)
+<span class="sd">    Returns:</span>
+<span class="sd">        A matrix f mapping integers to integers satisfying Simon&#39;s problem properties.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># generate a random permutation of 0, 1, ..., 2^n-1</span>
+    <span class="n">all_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">all_x</span><span class="p">)</span>
 
-    mapping = {}
-    outputs_used = set()
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">outputs_used</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-    # generate a mapping, which implements function f
-    for x in all_x:
-        if x in mapping:
-            continue
+    <span class="c1"># generate a mapping, which implements function f</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_x</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">continue</span>
 
-        # Generate a random output not used before
-        while True:
-            fx = np.random.randint(2 ** n)
-            if fx not in outputs_used:
-                outputs_used.add(fx)
-                break
+        <span class="c1"># Generate a random output not used before</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">outputs_used</span><span class="p">:</span>
+                <span class="n">outputs_used</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>
+                <span class="k">break</span>
 
-        # since f(x) = f(x \oplus s)
-        mapping[x] = fx
-        mapping[x ^ s] = fx
+        <span class="c1"># since f(x) = f(x \oplus s)</span>
+        <span class="n">mapping</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">fx</span>
+        <span class="n">mapping</span><span class="p">[</span><span class="n">x</span> <span class="o">^</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">fx</span>
 
-    # Define the function f using the mapping
-    def f(input_int: int) -&gt; int:
-        return mapping[input_int]
+    <span class="c1"># Define the function f using the mapping</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">input_int</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">input_int</span><span class="p">]</span>
 
-    return f
+    <span class="k">return</span> <span class="n">f</span>
 </code></pre></div>
 </div>
 </div>
@@ -859,16 +859,16 @@ import time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>n = 2
-s_str = &#39;11&#39;
-# get function f with n and s_str
-example_f = simon_function(n, int(s_str, 2))
-# print the value of f(x) for every x
-print(&quot; x | f(x)&quot;)
-for x in range(2 ** n):
-    result = bin(example_f(x))[2:].zfill(n)
-    x = bin(x)[2:].zfill(n)
-    print(f&quot;{x} | {result}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">s_str</span> <span class="o">=</span> <span class="s1">&#39;11&#39;</span>
+<span class="c1"># get function f with n and s_str</span>
+<span class="n">example_f</span> <span class="o">=</span> <span class="n">simon_function</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">s_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1"># print the value of f(x) for every x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; x | f(x)&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">example_f</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -928,17 +928,17 @@ for x in range(2 ** n):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def oracle_example() -&gt; Circuit:
-    r&quot;&quot;&quot;generate this oracle with n = 2 and s = &#39;10&#39;.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">oracle_example</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Circuit</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;generate this oracle with n = 2 and s = &#39;10&#39;.</span>
 
-    Returns:
-        the circuit for Simon&#39;s problem with n = 2 and s = &#39;10&#39;.
+<span class="sd">    Returns:</span>
+<span class="sd">        the circuit for Simon&#39;s problem with n = 2 and s = &#39;10&#39;.</span>
 
-    &quot;&quot;&quot;
-    n = 2
-    qc = Circuit(2 * n)
-    qc.cx([0, 1])  # the effect of this oracle is exactly only a cnot gate.
-    return qc
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># the effect of this oracle is exactly only a cnot gate.</span>
+    <span class="k">return</span> <span class="n">qc</span>
 </code></pre></div>
 </div>
 </div>
@@ -947,22 +947,22 @@ for x in range(2 ** n):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def simon_circuit(n: int, oracle: Circuit) -&gt; Circuit:
-    r&quot;&quot;&quot; Simon&#39;s circuit for corresponding oracle.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">simon_circuit</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">oracle</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Circuit</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; Simon&#39;s circuit for corresponding oracle.</span>
 
-    Args:
-        n: the number of qubits in the Simon&#39;s problem.
-        oracle: the oracle circuit implementing the Simon&#39;s problem.
+<span class="sd">    Args:</span>
+<span class="sd">        n: the number of qubits in the Simon&#39;s problem.</span>
+<span class="sd">        oracle: the oracle circuit implementing the Simon&#39;s problem.</span>
 
-    Returns:
-        A circuit implementing Simon&#39;s algorithm.
+<span class="sd">    Returns:</span>
+<span class="sd">        A circuit implementing Simon&#39;s algorithm.</span>
 
-    &quot;&quot;&quot;
-    simon_cir = Circuit(2 * n)  # Step 1
-    simon_cir.h(list(range(n)))  # Step 2
-    simon_cir.extend(oracle)  # Step 3
-    simon_cir.h(list(range(n)))  # Step 4
-    return simon_cir
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">simon_cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># Step 1</span>
+    <span class="n">simon_cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>  <span class="c1"># Step 2</span>
+    <span class="n">simon_cir</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">oracle</span><span class="p">)</span>  <span class="c1"># Step 3</span>
+    <span class="n">simon_cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>  <span class="c1"># Step 4</span>
+    <span class="k">return</span> <span class="n">simon_cir</span>
 </code></pre></div>
 </div>
 </div>
@@ -971,10 +971,10 @@ for x in range(2 ** n):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># plot this circuit
-print(&quot;the diagram of the quantum circuit in this case:&quot;)
-cir = simon_circuit(2, oracle_example())
-cir.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># plot this circuit</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of the quantum circuit in this case:&quot;</span><span class="p">)</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">simon_circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">oracle_example</span><span class="p">())</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1009,12 +1009,12 @@ the diagram of the quantum circuit in this case:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_data = 1000  # number of data
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_data</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of data</span>
 
-# Generate a batch of random secret strings and corresponding functions.
-dim = 2 ** n
-list_s = np.random.randint(dim, size=num_data)
-list_f = [simon_function(n, s) for s in list_s]
+<span class="c1"># Generate a batch of random secret strings and corresponding functions.</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">n</span>
+<span class="n">list_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_data</span><span class="p">)</span>
+<span class="n">list_f</span> <span class="o">=</span> <span class="p">[</span><span class="n">simon_function</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">list_s</span><span class="p">]</span>
 </code></pre></div>
 </div>
 </div>
@@ -1023,7 +1023,7 @@ list_f = [simon_function(n, s) for s in list_s]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>list_Uf = torch.stack([Uf(f, n) for f in list_f])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">list_Uf</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">Uf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">list_f</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </div>
@@ -1032,10 +1032,10 @@ list_f = [simon_function(n, s) for s in list_s]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>simon_cir = Circuit(2 * n)  # Step 1
-simon_cir.h(list(range(n)))  # Step 2
-simon_cir.oracle(list_Uf, list(range(2 * n)), latex_name=r&#39;$U_f$&#39;)  # Step 3
-simon_cir.h(list(range(n)))  # Step 4
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">simon_cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># Step 1</span>
+<span class="n">simon_cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>  <span class="c1"># Step 2</span>
+<span class="n">simon_cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">list_Uf</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)),</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$U_f$&#39;</span><span class="p">)</span>  <span class="c1"># Step 3</span>
+<span class="n">simon_cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>  <span class="c1"># Step 4</span>
 </code></pre></div>
 </div>
 </div>
@@ -1046,25 +1046,25 @@ simon_cir.h(list(range(n)))  # Step 4
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def prep_proj(s: int) -&gt; torch.Tensor:
-    r&quot;&quot;&quot;Generate P^\perp_s for a given s.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prep_proj</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generate P^\perp_s for a given s.</span>
 
-    Args:
-        s: an integer representing an $n$-bit string.
+<span class="sd">    Args:</span>
+<span class="sd">        s: an integer representing an $n$-bit string.</span>
 
-    Returns:
-        torch.Tensor: the projection matrix P^\perp_s.
-    &quot;&quot;&quot;
-    assert 0 &lt;= s &lt; dim
+<span class="sd">    Returns:</span>
+<span class="sd">        torch.Tensor: the projection matrix P^\perp_s.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">dim</span>
 
-    D = torch.zeros(dim)  # initialize D as a zero vector
-    # iterate over all y in the range of dim
-    for y in range(dim):
-        dot_product = (y &amp; s).bit_count() % 2
-        # if the product is 0, then the item in D is 1
-        if dot_product == 0:
-            D[y] = 1
-    return torch.diag(D)
+    <span class="n">D</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>  <span class="c1"># initialize D as a zero vector</span>
+    <span class="c1"># iterate over all y in the range of dim</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+        <span class="n">dot_product</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span> <span class="o">%</span> <span class="mi">2</span>
+        <span class="c1"># if the product is 0, then the item in D is 1</span>
+        <span class="k">if</span> <span class="n">dot_product</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">D</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1073,9 +1073,9 @@ simon_cir.h(list(range(n)))  # Step 4
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>prep = torch.stack([prep_proj(s) for s in list_s])
-# Generate a batch of POVMs.
-pvm = torch.stack([prep, torch.eye(dim) - prep]).permute([1, 0, 2, 3])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">prep</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">prep_proj</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">list_s</span><span class="p">])</span>
+<span class="c1"># Generate a batch of POVMs.</span>
+<span class="n">pvm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">prep</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">-</span> <span class="n">prep</span><span class="p">])</span><span class="o">.</span><span class="n">permute</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </div>
@@ -1084,22 +1084,22 @@ pvm = torch.stack([prep, torch.eye(dim) - prep]).permute([1, 0, 2, 3])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>M = Measure(pvm)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">M</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>
 
-def loss_fcn(circuit: Circuit) -&gt; torch.Tensor:
-    r&quot;&quot;&quot;Compute the loss function for the given circuit.
+<span class="k">def</span> <span class="nf">loss_fcn</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the loss function for the given circuit.</span>
 
-    Args:
-        circuit: the quantum circuit to be evaluated.
+<span class="sd">    Args:</span>
+<span class="sd">        circuit: the quantum circuit to be evaluated.</span>
 
-    Returns:
-        the loss value for the given circuit.
+<span class="sd">    Returns:</span>
+<span class="sd">        the loss value for the given circuit.</span>
 
-    &quot;&quot;&quot;
-    output_state = circuit()
-    prob = M(output_state, system_idx=list(range(n)), desired_result=&#39;0&#39;)
-    # The loss is the probability of measuring |0&gt; in the first n qubits.
-    return 1 - prob.mean()
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_state</span> <span class="o">=</span> <span class="n">circuit</span><span class="p">()</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">M</span><span class="p">(</span><span class="n">output_state</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+    <span class="c1"># The loss is the probability of measuring |0&gt; in the first n qubits.</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">prob</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1108,7 +1108,7 @@ def loss_fcn(circuit: Circuit) -&gt; torch.Tensor:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;The loss of simon&#39;s circuit is &quot;+str(loss_fcn(simon_cir))+&quot;.&quot;)  # loss of simon&#39;s circuit
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The loss of simon&#39;s circuit is &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">loss_fcn</span><span class="p">(</span><span class="n">simon_cir</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>  <span class="c1"># loss of simon&#39;s circuit</span>
 </code></pre></div>
 </div>
 </div>
@@ -1125,8 +1125,8 @@ The loss of simon&#39;s circuit is tensor(5.9605e-08).
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>LR = 0.1  # learning rate
-NUM_ITR = 100  # number of iterations
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">LR</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># learning rate</span>
+<span class="n">NUM_ITR</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># number of iterations</span>
 </code></pre></div>
 </div>
 </div>
@@ -1135,11 +1135,11 @@ NUM_ITR = 100  # number of iterations
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># construct the circuit
-cir = Circuit(2 * n)  # Step 1
-cir.universal_two_qubits(list(range(n)))  # the ansatz, or to say Step 2
-cir.oracle(list_Uf, list(range(2 * n)), latex_name=r&#39;U_f&#39;)  # oracle, or to say Step 3
-cir.universal_two_qubits(list(range(n)))  # the ansatz, or to say Step 4
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># construct the circuit</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># Step 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_two_qubits</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>  <span class="c1"># the ansatz, or to say Step 2</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">list_Uf</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)),</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;U_f&#39;</span><span class="p">)</span>  <span class="c1"># oracle, or to say Step 3</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_two_qubits</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>  <span class="c1"># the ansatz, or to say Step 4</span>
 </code></pre></div>
 </div>
 </div>
@@ -1147,31 +1147,31 @@ cir.universal_two_qubits(list(range(n)))  # the ansatz, or to say Step 4
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>loss_list, time_list = [], []  # record loss
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">loss_list</span><span class="p">,</span> <span class="n">time_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>  <span class="c1"># record loss</span>
 
-opt = torch.optim.Adam(lr=LR, params=cir.parameters()) # cir is a Circuit type
-scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, &#39;min&#39;, factor=0.5) # activate scheduler
+<span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">LR</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">cir</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span> <span class="c1"># cir is a Circuit type</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1"># activate scheduler</span>
 
-# training
-for itr in range(NUM_ITR):
-    start_time = time.time()
-    opt.zero_grad()
+<span class="c1"># training</span>
+<span class="k">for</span> <span class="n">itr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_ITR</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
 
-    loss = loss_fcn(cir) # compute loss
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fcn</span><span class="p">(</span><span class="n">cir</span><span class="p">)</span> <span class="c1"># compute loss</span>
 
-    loss.backward()  # backward propagation
-    opt.step()
-    scheduler.step(loss) # activate scheduler
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># backward propagation</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="c1"># activate scheduler</span>
 
-    # get loss
-    loss = loss.item()
-    loss_list.append(loss)
-    time_list.append(time.time() - start_time)
+    <span class="c1"># get loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
 
-    # print loss
-    if itr % 20 == 0 or itr == NUM_ITR - 1:
-        print(f&quot;iter: {itr}, loss: {loss:.8f}, lr: {scheduler.get_last_lr()[0]:.2E}, avg_time: {np.mean(time_list):.4f}s&quot;)
-        time_list = []
+    <span class="c1"># print loss</span>
+    <span class="k">if</span> <span class="n">itr</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">itr</span> <span class="o">==</span> <span class="n">NUM_ITR</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iter: </span><span class="si">{</span><span class="n">itr</span><span class="si">}</span><span class="s2">, loss: </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, lr: </span><span class="si">{</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2E</span><span class="si">}</span><span class="s2">, avg_time: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">time_list</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+        <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
 </code></pre></div>
 </div>
 </div>
@@ -1193,8 +1193,8 @@ iter: 99, loss: 0.00000507, lr: 5.00E-02, avg_time: 0.0212s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&quot;the diagram of the quantum circuit after trained:&quot;)
-cir.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of the quantum circuit after trained:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1273,7 +1273,7 @@ the diagram of the quantum circuit after trained:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

@@ -597,14 +597,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
-import quairkit as qkit
-from quairkit import Circuit
-from quairkit.database import *
-from quairkit.loss import ExpecVal, Measure
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="n">ExpecVal</span><span class="p">,</span> <span class="n">Measure</span>
 
-qkit.set_dtype(&quot;complex128&quot;)
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s2">&quot;complex128&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -621,20 +621,20 @@ qkit.set_dtype(&quot;complex128&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 2
-batch_size = 3
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">3</span>
 
-list_x = torch.rand(num_qubits * batch_size * 1)  # num_acted_param=1
-cir = Circuit(num_qubits)
-cir.rx(param=list_x)  # set Rx gate
-print(f&quot;Quantum circuit output: {cir()}&quot;)
+<span class="n">list_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_qubits</span> <span class="o">*</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># num_acted_param=1</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">list_x</span><span class="p">)</span>  <span class="c1"># set Rx gate</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Quantum circuit output: </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-# this is equivalent to below code
-# list_x = list_x.view(num_qubits, batch_size, 1).permute([1, 0, 2])
-# for param in list_x:
-#     cir_1 = Circuit(num_qubits)
-#     cir_1.rx(param=param)
-#     print(f&quot;Quantum circuit output for adding one Rx gate: {cir_1()}&quot;)
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># list_x = list_x.view(num_qubits, batch_size, 1).permute([1, 0, 2])</span>
+<span class="c1"># for param in list_x:</span>
+<span class="c1">#     cir_1 = Circuit(num_qubits)</span>
+<span class="c1">#     cir_1.rx(param=param)</span>
+<span class="c1">#     print(f&quot;Quantum circuit output for adding one Rx gate: {cir_1()}&quot;)</span>
 </code></pre></div>
 </div>
 </div>
@@ -665,18 +665,18 @@ Quantum circuit output:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir_ora = Circuit(2)
-list_unitary = random_unitary(1, size=batch_size)
-print(f&quot;The shape of oracle unitary: {list_unitary.shape}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir_ora</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">list_unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The shape of oracle unitary: </span><span class="si">{</span><span class="n">list_unitary</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-cir_ora.oracle(list_unitary, [1])
-print(f&quot;Quantum circuit output: {cir_ora()}&quot;)
+<span class="n">cir_ora</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">list_unitary</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Quantum circuit output: </span><span class="si">{</span><span class="n">cir_ora</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-# this is equivalent to below code
-# for idx, unitary in enumerate(list_unitary):
-#     cir_ora2 = Circuit(2)
-#     cir_ora2.oracle(unitary, [1])
-#     print(f&quot;Quantum circuit {idx}: {cir_ora2()}&quot;)
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># for idx, unitary in enumerate(list_unitary):</span>
+<span class="c1">#     cir_ora2 = Circuit(2)</span>
+<span class="c1">#     cir_ora2.oracle(unitary, [1])</span>
+<span class="c1">#     print(f&quot;Quantum circuit {idx}: {cir_ora2()}&quot;)</span>
 </code></pre></div>
 </div>
 </div>
@@ -708,17 +708,17 @@ Quantum circuit output:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir_kra = Circuit(2)
-list_kraus = random_channel(num_qubits=1, size=batch_size)
-cir_kra.kraus_channel(list_kraus, [0])
-print(f&quot;Kraus channel: {cir_kra()}&quot;)
-output_state = cir_kra()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir_kra</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">list_kraus</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">cir_kra</span><span class="o">.</span><span class="n">kraus_channel</span><span class="p">(</span><span class="n">list_kraus</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus channel: </span><span class="si">{</span><span class="n">cir_kra</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">cir_kra</span><span class="p">()</span>
 
-# this is equivalent to below code
-# for idx, kraus in enumerate(list_kraus):
-#     cir_kra2 = Circuit(2)
-#     cir_kra2.kraus_channel(kraus, [0])
-#     print(f&quot;Kraus channel {idx}: {cir_kra2()}&quot;)
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># for idx, kraus in enumerate(list_kraus):</span>
+<span class="c1">#     cir_kra2 = Circuit(2)</span>
+<span class="c1">#     cir_kra2.kraus_channel(kraus, [0])</span>
+<span class="c1">#     print(f&quot;Kraus channel {idx}: {cir_kra2()}&quot;)</span>
 </code></pre></div>
 </div>
 </div>
@@ -757,16 +757,16 @@ Kraus channel:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir_cho = Circuit(2)
-list_choi = random_channel(num_qubits=1, target=&quot;choi&quot;, size=batch_size)
-cir_cho.choi_channel(list_choi, [1])
-print(f&quot;Choi channel: {cir_cho()}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir_cho</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">list_choi</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">cir_cho</span><span class="o">.</span><span class="n">choi_channel</span><span class="p">(</span><span class="n">list_choi</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi channel: </span><span class="si">{</span><span class="n">cir_cho</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-# this is equivalent to below code
-# for idx, choi in enumerate(list_choi):
-#     cir_cho2 = Circuit(2)
-#     cir_cho2.choi_channel(choi, [0])
-#     print(f&quot;Choi channel {idx}: {cir_cho2()}&quot;)
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># for idx, choi in enumerate(list_choi):</span>
+<span class="c1">#     cir_cho2 = Circuit(2)</span>
+<span class="c1">#     cir_cho2.choi_channel(choi, [0])</span>
+<span class="c1">#     print(f&quot;Choi channel {idx}: {cir_cho2()}&quot;)</span>
 </code></pre></div>
 </div>
 </div>
@@ -807,8 +807,8 @@ Choi channel:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>tr = output_state.trace()
-torch.allclose(tr, torch.ones_like(tr))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">tr</span> <span class="o">=</span> <span class="n">output_state</span><span class="o">.</span><span class="n">trace</span><span class="p">()</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">tr</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -829,19 +829,19 @@ True
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(1)
-list_x = torch.rand(batch_size)
-list_depo = torch.stack(
-    [depolarizing_kraus(torch.rand(1)) for _ in list(range(batch_size))]
-)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">list_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">list_depo</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">depolarizing_kraus</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">))]</span>
+<span class="p">)</span>
 
-batch_cir = Circuit(1)
-batch_cir.ry()
-batch_cir.rz(param=list_x)
-batch_cir.kraus_channel(list_depo, 0)
-batch_cir.ry()
-batch_cir.rz(param=list_x)
-print(f&quot;Output state: {batch_cir(rho)}&quot;)
+<span class="n">batch_cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">batch_cir</span><span class="o">.</span><span class="n">ry</span><span class="p">()</span>
+<span class="n">batch_cir</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">list_x</span><span class="p">)</span>
+<span class="n">batch_cir</span><span class="o">.</span><span class="n">kraus_channel</span><span class="p">(</span><span class="n">list_depo</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">batch_cir</span><span class="o">.</span><span class="n">ry</span><span class="p">()</span>
+<span class="n">batch_cir</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">list_x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output state: </span><span class="si">{</span><span class="n">batch_cir</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -876,8 +876,8 @@ Output state:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>H = random_hamiltonian_generator(num_qubits)
-print(f&quot;Hamiltonian: {H.pauli_str}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">H</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hamiltonian: </span><span class="si">{</span><span class="n">H</span><span class="o">.</span><span class="n">pauli_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -894,18 +894,18 @@ Hamiltonian: [[-0.5892395344236279, &#39;Z0,X1&#39;], [-0.32018888045615634, &#3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&quot;Output state: {output_state}&quot;)
-op = ExpecVal(H)
-print(f&quot;expectation value: {op(output_state)}&quot;)
-# this is equivalent to below code
-# for state in output_state:
-#     print(f&quot;expectation value of each: {op(state)}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output state: </span><span class="si">{</span><span class="n">output_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;expectation value: </span><span class="si">{</span><span class="n">op</span><span class="p">(</span><span class="n">output_state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># for state in output_state:</span>
+<span class="c1">#     print(f&quot;expectation value of each: {op(state)}&quot;)</span>
 
-print(f&quot;expectation value: {output_state.expec_val(H)}&quot;)
-# return the expectation value of each Pauli term
-print(
-    f&quot;expectation value of each Pauli term:\n{output_state.expec_val(H, decompose=True)}&quot;
-)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;expectation value: </span><span class="si">{</span><span class="n">output_state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">H</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># return the expectation value of each Pauli term</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;expectation value of each Pauli term:</span><span class="se">\n</span><span class="si">{</span><span class="n">output_state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">decompose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -950,18 +950,18 @@ tensor([[-0.0000, -0.0000, -0.0000],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>output_state = cir_kra()
-basis = random_unitary(1).unsqueeze(-1)
-pvm = basis @ basis.mH
-print(f&quot;The shape of PVM: {pvm.shape}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">output_state</span> <span class="o">=</span> <span class="n">cir_kra</span><span class="p">()</span>
+<span class="n">basis</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pvm</span> <span class="o">=</span> <span class="n">basis</span> <span class="o">@</span> <span class="n">basis</span><span class="o">.</span><span class="n">mH</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The shape of PVM: </span><span class="si">{</span><span class="n">pvm</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-op = Measure(pvm)
-print(f&quot;expectation value: {op(output_state, [0])}&quot;)
-# this is equivalent to below code
-# for state in output_state:
-#     print(f&quot;expectation value: {op(state, [0])}&quot;)
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;expectation value: </span><span class="si">{</span><span class="n">op</span><span class="p">(</span><span class="n">output_state</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># for state in output_state:</span>
+<span class="c1">#     print(f&quot;expectation value: {op(state, [0])}&quot;)</span>
 
-print(f&quot;expectation value: {output_state.measure(pvm, [0])}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;expectation value: </span><span class="si">{</span><span class="n">output_state</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1012,7 +1012,7 @@ expectation value: tensor([[0.7478, 0.2522],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

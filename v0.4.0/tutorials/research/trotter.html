@@ -661,19 +661,19 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
-import numpy as np
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-import quairkit as qkit
-from quairkit import Circuit, Hamiltonian
-from quairkit.database import *
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">Hamiltonian</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 
-import matplotlib.pyplot as plt
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-font_family = &#39;STIXGeneral&#39;
-plt.rcParams[&#39;mathtext.fontset&#39;] = &#39;cm&#39;
-plt.rcParams[&#39;font.family&#39;] = font_family
+<span class="n">font_family</span> <span class="o">=</span> <span class="s1">&#39;STIXGeneral&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.fontset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">font_family</span>
 </code></pre></div>
 </div>
 </div>
@@ -681,7 +681,7 @@ plt.rcParams[&#39;font.family&#39;] = font_family
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.set_dtype(&#39;complex128&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -712,8 +712,8 @@ plt.rcParams[&#39;font.family&#39;] = font_family
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>h = Hamiltonian([[1,&#39;Z0,Z1&#39;], [1,&#39;X0&#39;], [1,&#39;Y0,X1&#39;]])
-print(&#39;The hamiltonian is\n&#39;, h)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">h</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Z0,Z1&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;X0&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Y0,X1&#39;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The hamiltonian is</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -732,8 +732,8 @@ The hamiltonian is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(&#39;The matrix form of the hamiltonian is&#39;)
-h.matrix
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The matrix form of the hamiltonian is&#39;</span><span class="p">)</span>
+<span class="n">h</span><span class="o">.</span><span class="n">matrix</span>
 </code></pre></div>
 </div>
 </div>
@@ -762,12 +762,12 @@ tensor([[ 1.+0.j,  0.+0.j,  1.+0.j,  0.-1.j],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>t = 1
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">t</span> <span class="o">=</span> <span class="mi">1</span>
 
-cir = Circuit(2)
-cir.trotter(h, t, num_steps=2, order=1)
-print(f&#39;The circuit with the Trotter layer with number of steps=2 and order=1&#39;)
-cir.plot(&#39;detailed&#39;)
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The circuit with the Trotter layer with number of steps=2 and order=1&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;detailed&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -791,10 +791,10 @@ The circuit with the Trotter layer with number of steps=2 and order=1
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(3)
-cir.trotter(h, t, num_steps=5, qubits_idx=[0, 2])
-print(f&#39;The repeated section slices in a Trotter circuit.&#39;)
-cir.plot(&#39;compact&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The repeated section slices in a Trotter circuit.&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;compact&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -824,18 +824,18 @@ The repeated section slices in a Trotter circuit.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>ideal_gate = torch.linalg.matrix_exp(-1j * t * h.matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideal_gate</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">h</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
 
-num_steps = 2
-order = 2
+<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">order</span> <span class="o">=</span> <span class="mi">2</span>
 
-cir = Circuit(2)
-cir.trotter(h, t, num_steps=num_steps, order=order)
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
 
-trotter_gate = cir.matrix
-fidelity = gate_fidelity(ideal_gate, trotter_gate).item()
+<span class="n">trotter_gate</span> <span class="o">=</span> <span class="n">cir</span><span class="o">.</span><span class="n">matrix</span>
+<span class="n">fidelity</span> <span class="o">=</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">ideal_gate</span><span class="p">,</span> <span class="n">trotter_gate</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
-print(&#39;The fidelity of the circuit is&#39;, fidelity)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The fidelity of the circuit is&#39;</span><span class="p">,</span> <span class="n">fidelity</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -852,26 +852,26 @@ The fidelity of the circuit is 0.9935372665966202
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def get_fidelity(n_steps: int) -&gt; float:
-    r&quot;&quot;&quot;Compute the gate fidelity of the Trotter circuit with n_steps steps.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_fidelity</span><span class="p">(</span><span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the gate fidelity of the Trotter circuit with n_steps steps.</span>
 
-    Args:
-        n_steps: Number of Trotter steps.
+<span class="sd">    Args:</span>
+<span class="sd">        n_steps: Number of Trotter steps.</span>
 
-    Returns:
-        Gate fidelity of the Trotter circuit.
-    &quot;&quot;&quot;
-    t = 1
-    cir = Circuit(2)
-    cir.trotter(h, t, num_steps=n_steps)
-    return gate_fidelity(cir.matrix, ideal_gate).item()
+<span class="sd">    Returns:</span>
+<span class="sd">        Gate fidelity of the Trotter circuit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">ideal_gate</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
-print(&#39;The gate fidelity of Trotter circuit with different number of Trotter steps:&#39;)
-plt.axhline(1, ls=&#39;--&#39;, color=&#39;black&#39;)
-plt.semilogy(np.arange(1, 11), [get_fidelity(r) for r in np.arange(1, 11)], &#39;o-&#39;)
-plt.xlabel(&#39;Number of Trotter steps&#39;, fontsize=12)
-plt.ylabel(&#39;Gate fidelity&#39;, fontsize=12)
-plt.show()
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The gate fidelity of Trotter circuit with different number of Trotter steps:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="p">[</span><span class="n">get_fidelity</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Trotter steps&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Gate fidelity&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -941,7 +941,7 @@ The gate fidelity of Trotter circuit with different number of Trotter steps:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

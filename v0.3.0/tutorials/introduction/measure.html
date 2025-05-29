@@ -764,15 +764,15 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import time
-import traceback
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
 
-import quairkit as qkit
-from quairkit.database import *
-from quairkit.loss import *
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 
-qkit.set_dtype(&quot;complex128&quot;)
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s2">&quot;complex128&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -799,8 +799,8 @@ qkit.set_dtype(&quot;complex128&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>pvm = pauli_str_povm(&quot;x&quot;)
-print(f&quot;Projection-valued measure: \n{pvm}&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">pvm</span> <span class="o">=</span> <span class="n">pauli_str_povm</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Projection-valued measure: </span><span class="se">\n</span><span class="si">{</span><span class="n">pvm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -829,9 +829,9 @@ tensor([[[ 0.5000+0.j,  0.5000+0.j],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>op = Measure()  # computational measure
-op = Measure(&quot;x&quot;)  # x measure on a qubit
-op = Measure(pvm)  # measure with a pvm
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">()</span>  <span class="c1"># computational measure</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>  <span class="c1"># x measure on a qubit</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>  <span class="c1"># measure with a pvm</span>
 </code></pre></div>
 </div>
 </div>
@@ -840,10 +840,10 @@ op = Measure(pvm)  # measure with a pvm
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>op = Measure(pvm)
-rho = random_state(num_qubits=2, rank=2)
-prob = op(rho, qubits_idx=[0])  # measure rho
-print(&quot;The probability distribution of outcome&quot;, prob)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># measure rho</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The probability distribution of outcome&quot;</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -860,8 +860,8 @@ The probability distribution of outcome tensor([0.6159, 0.3841])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>prob, collapsed_state = op(rho, qubits_idx=[0], keep_state=True)
-print(&quot;The collapsed state for each outcome is&quot;, collapsed_state)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">prob</span><span class="p">,</span> <span class="n">collapsed_state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The collapsed state for each outcome is&quot;</span><span class="p">,</span> <span class="n">collapsed_state</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -896,14 +896,14 @@ The collapsed state for each outcome is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>x = &quot;1&quot;
-prob, collapsed_state = op(
-    rho, qubits_idx=[0], keep_state=True, desired_result=x
-)  # return the second outcome
-print(
-    f&quot;The probability for obtaining outcome {x} is {prob}, with outcome state&quot;,
-    collapsed_state,
-)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">collapsed_state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span>
+    <span class="n">rho</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desired_result</span><span class="o">=</span><span class="n">x</span>
+<span class="p">)</span>  <span class="c1"># return the second outcome</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The probability for obtaining outcome </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">prob</span><span class="si">}</span><span class="s2">, with outcome state&quot;</span><span class="p">,</span>
+    <span class="n">collapsed_state</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -930,13 +930,13 @@ The probability for obtaining outcome 1 is tensor([0.3841]), with outcome state
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits=1, rank=2)
-prob = rho.measure(pvm)  # same as Measure(pvm)(rho)
-print(&quot;The probability distribution of outcome&quot;, prob)
-prob, collapsed_state = rho.measure(
-    pvm, keep_state=True
-)  # same as Measure(pvm)(rho, keep_state=True)
-print(&quot;The collapsed state for each outcome is&quot;, collapsed_state)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>  <span class="c1"># same as Measure(pvm)(rho)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The probability distribution of outcome&quot;</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">collapsed_state</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span>
+    <span class="n">pvm</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>  <span class="c1"># same as Measure(pvm)(rho, keep_state=True)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The collapsed state for each outcome is&quot;</span><span class="p">,</span> <span class="n">collapsed_state</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -970,19 +970,19 @@ The collapsed state for each outcome is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>start_time = time.time()
-prob = rho.measure(pvm)
-print(f&quot;Time for measuring with pvm: {time.time() - start_time:.10f}s&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time for measuring with pvm: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">:</span><span class="s2">.10f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
 
 
-start_time = time.time()
-prob = rho.measure(pvm, is_povm=True)
-print(f&quot;Time for measuring with povm: {time.time() - start_time:.10f}s&quot;)
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">,</span> <span class="n">is_povm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time for measuring with povm: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">:</span><span class="s2">.10f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
 
-try:
-    rho.measure(pvm, is_povm=True, keep_state=True)
-except ValueError:
-    traceback.print_exc()
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">rho</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">,</span> <span class="n">is_povm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1053,13 +1053,13 @@ ValueError: `is_povm` and `keep_state` cannot be both True, since a general POVM
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>op = Measure([&quot;x&quot;, &quot;y&quot;, &quot;z&quot;])  # measure states by x, y, z basis, respectively
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">])</span>  <span class="c1"># measure states by x, y, z basis, respectively</span>
 
-list_pvm = pauli_str_povm([&quot;x&quot;, &quot;y&quot;, &quot;z&quot;])
+<span class="n">list_pvm</span> <span class="o">=</span> <span class="n">pauli_str_povm</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">])</span>
 
-print(f&quot;The tensor shape of the measurement: {list_pvm.shape}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The tensor shape of the measurement: </span><span class="si">{</span><span class="n">list_pvm</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-op = Measure(list_pvm)  # equivalent to Measure([&#39;x&#39;, &#39;y&#39;, &#39;z&#39;])
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">list_pvm</span><span class="p">)</span>  <span class="c1"># equivalent to Measure([&#39;x&#39;, &#39;y&#39;, &#39;z&#39;])</span>
 </code></pre></div>
 </div>
 </div>
@@ -1076,12 +1076,12 @@ The tensor shape of the measurement: torch.Size([3, 2, 2, 2])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>prob, collapsed_state = op(rho, keep_state=True)
-print(
-    &quot;The measured states for the first batch is&quot;,
-    collapsed_state[0],
-    f&quot;with prob distribution {prob[0]}&quot;,
-)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">prob</span><span class="p">,</span> <span class="n">collapsed_state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;The measured states for the first batch is&quot;</span><span class="p">,</span>
+    <span class="n">collapsed_state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="sa">f</span><span class="s2">&quot;with prob distribution </span><span class="si">{</span><span class="n">prob</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1112,15 +1112,15 @@ The measured states for the first batch is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>batch_size = 3
-list_rho = random_state(num_qubits=1, size=batch_size)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">list_rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
 
-prob, collapsed_state = op(list_rho, keep_state=True)
-print(
-    &quot;The measured states for the first batch is&quot;,
-    collapsed_state[0],
-    f&quot;with prob distribution {prob[0]}&quot;,
-)
+<span class="n">prob</span><span class="p">,</span> <span class="n">collapsed_state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">list_rho</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;The measured states for the first batch is&quot;</span><span class="p">,</span>
+    <span class="n">collapsed_state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="sa">f</span><span class="s2">&quot;with prob distribution </span><span class="si">{</span><span class="n">prob</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1166,18 +1166,18 @@ The measured states for the first batch is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>batch_size = 3
-print(f&quot;{batch_size} probability distributions are\n&quot;, prob)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2"> probability distributions are</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
 
-print(f&quot;\nThe outcomes of quantum measurements:\n{prob_sample(prob)}&quot;)
-print(
-    f&quot;\nThe outcomes of quantum measurements with the decimal system of dictionary system:\n&quot;,
-    prob_sample(prob, binary=False),
-)
-print(
-    f&quot;\nThe outcomes of quantum measurements in proportion:\n&quot;,
-    prob_sample(prob, proportional=True),
-)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The outcomes of quantum measurements:</span><span class="se">\n</span><span class="si">{</span><span class="n">prob_sample</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The outcomes of quantum measurements with the decimal system of dictionary system:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">prob_sample</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The outcomes of quantum measurements in proportion:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">prob_sample</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">proportional</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1239,7 +1239,7 @@ The outcomes of quantum measurements in proportion:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

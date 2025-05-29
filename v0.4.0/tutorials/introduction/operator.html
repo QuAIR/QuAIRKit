@@ -1052,14 +1052,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
-import quairkit as qkit
-from quairkit import *
-from quairkit.database.matrix import *
-from quairkit.database.random import *
-from quairkit.database.representation import *
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database.matrix</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database.random</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database.representation</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 </div>
 </div>
@@ -1068,8 +1068,8 @@ from quairkit.qinfo import *
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.set_dtype(&quot;complex128&quot;)
-print(&quot;dtype: &quot;,qkit.get_dtype())
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s2">&quot;complex128&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dtype: &quot;</span><span class="p">,</span><span class="n">qkit</span><span class="o">.</span><span class="n">get_dtype</span><span class="p">())</span>
 </code></pre></div>
 </div>
 </div>
@@ -1117,13 +1117,13 @@ Z =
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>X = torch.tensor([[0, 1], [1, 0]])  # Pauli X matrix
-Y = torch.tensor([[0, -1j], [1j, 0]])  # Pauli Y matrix
-Z = torch.tensor([[1, 0], [0, -1]])  # Pauli Z matrix
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>  <span class="c1"># Pauli X matrix</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>  <span class="c1"># Pauli Y matrix</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>  <span class="c1"># Pauli Z matrix</span>
 
-print(&quot;The matrix form of Pauli X gate is\n&quot;, X, &quot;\n&quot;)
-print(&quot;The matrix form of Pauli Y gate is\n&quot;, Y, &quot;\n&quot;)
-print(&quot;The matrix form of Pauli Z gate is\n&quot;, Z)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of Pauli X gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of Pauli Y gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of Pauli Z gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1175,17 +1175,17 @@ T =
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>sqrt_2 = torch.sqrt(torch.tensor(2))  # sqrt 2
-isq2 = 1 / sqrt_2  # 1 / sqrt 2
-# pi = torch.acos(torch.zeros(1)).item() * 2 # pi
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">sqrt_2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># sqrt 2</span>
+<span class="n">isq2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">sqrt_2</span>  <span class="c1"># 1 / sqrt 2</span>
+<span class="c1"># pi = torch.acos(torch.zeros(1)).item() * 2 # pi</span>
 
-H = isq2 * torch.tensor([[1, 1], [1, -1]])  # Hadamard gate
-S = torch.tensor([[1, 0], [0, 1j]])  # Phase gate
-T = torch.tensor([[1, 0], [0, torch.exp(torch.tensor(1j * torch.pi / 4))]])  # T gate
+<span class="n">H</span> <span class="o">=</span> <span class="n">isq2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>  <span class="c1"># Hadamard gate</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">]])</span>  <span class="c1"># Phase gate</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))]])</span>  <span class="c1"># T gate</span>
 
-print(&quot;The matrix form of Hadamard gate is\n&quot;, H)
-print(&quot;\nThe matrix form of Phase gate is\n&quot;, S)
-print(&quot;\nThe matrix form of T gate is\n&quot;, T)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of Hadamard gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The matrix form of Phase gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The matrix form of T gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1212,9 +1212,9 @@ The matrix form of T gate is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>H_qkit = h()  # built-in Hadamard gate
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">H_qkit</span> <span class="o">=</span> <span class="n">h</span><span class="p">()</span>  <span class="c1"># built-in Hadamard gate</span>
 
-print(&quot;The matrix form of built in Hadamard gate is\n&quot;, H_qkit)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of built in Hadamard gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H_qkit</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1259,15 +1259,15 @@ R_{z}(\theta) =
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>theta = torch.round(2*torch.pi*torch.rand(1), decimals=3) # the parameter of Pauli rotation operators
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># the parameter of Pauli rotation operators</span>
 
-Rx = rx(theta) # x-axis rotation gate
-Ry = ry(theta) # y-axis rotation gate
-Rz = rz(theta) # z-axis rotation gate
+<span class="n">Rx</span> <span class="o">=</span> <span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="c1"># x-axis rotation gate</span>
+<span class="n">Ry</span> <span class="o">=</span> <span class="n">ry</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="c1"># y-axis rotation gate</span>
+<span class="n">Rz</span> <span class="o">=</span> <span class="n">rz</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="c1"># z-axis rotation gate</span>
 
-print(f&#39;The matrix form of x-axis rotation gate with parameter {theta[0].numpy()} is\n{Rx}&#39;)
-print(f&#39;\nThe matrix form of y-axis rotation gate with parameter {theta[0].numpy()} is\n{Ry}&#39;)
-print(f&#39;\nThe matrix form of z-axis rotation gate with parameter {theta[0].numpy()} is\n{Rz}&#39;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The matrix form of x-axis rotation gate with parameter </span><span class="si">{</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is</span><span class="se">\n</span><span class="si">{</span><span class="n">Rx</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The matrix form of y-axis rotation gate with parameter </span><span class="si">{</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is</span><span class="se">\n</span><span class="si">{</span><span class="n">Ry</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The matrix form of z-axis rotation gate with parameter </span><span class="si">{</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is</span><span class="se">\n</span><span class="si">{</span><span class="n">Rz</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1326,13 +1326,13 @@ tensor([[0.9933-0.1157j, 0.0000+0.0000j],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>CNOT = cnot()  # controlled-NOT gate
-CZ = cz()  # controlled-Z gate
-SWAP = swap()  # swap gate
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">CNOT</span> <span class="o">=</span> <span class="n">cnot</span><span class="p">()</span>  <span class="c1"># controlled-NOT gate</span>
+<span class="n">CZ</span> <span class="o">=</span> <span class="n">cz</span><span class="p">()</span>  <span class="c1"># controlled-Z gate</span>
+<span class="n">SWAP</span> <span class="o">=</span> <span class="n">swap</span><span class="p">()</span>  <span class="c1"># swap gate</span>
 
-print(&quot;The matrix form of controlled-NOT gate is\n&quot;, CNOT, &quot;\n&quot;)
-print(&quot;The matrix form of controlled-Z gate is\n&quot;, CZ, &quot;\n&quot;)
-print(&quot;The matrix form of swap gate is\n&quot;, SWAP)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of controlled-NOT gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">CNOT</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of controlled-Z gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">CZ</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The matrix form of swap gate is</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">SWAP</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1372,14 +1372,14 @@ The matrix form of swap gate is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>pure_state = random_state(num_qubits=1, rank=1) # random single-qubit pure state
-mixed_state = random_state(num_qubits=1, rank=2) # random single-qubit mixed state
-unitary = random_unitary(num_qubits=1) # random single-qubit unitary
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">pure_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># random single-qubit pure state</span>
+<span class="n">mixed_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># random single-qubit mixed state</span>
+<span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># random single-qubit unitary</span>
 
-pure_state_evo = pure_state.evolve(unitary)
-mixed_state_evo = mixed_state.evolve(unitary)
-print(f&quot;pure output state after applying a unitary:\n {pure_state_evo.ket}\n&quot;)
-print(f&quot;mixed output state after applying a unitary:\n {mixed_state_evo.density_matrix}&quot;)
+<span class="n">pure_state_evo</span> <span class="o">=</span> <span class="n">pure_state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">)</span>
+<span class="n">mixed_state_evo</span> <span class="o">=</span> <span class="n">mixed_state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pure output state after applying a unitary:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">pure_state_evo</span><span class="o">.</span><span class="n">ket</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mixed output state after applying a unitary:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">mixed_state_evo</span><span class="o">.</span><span class="n">density_matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1402,11 +1402,11 @@ mixed output state after applying a unitary:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=2)
-unitary = random_unitary(num_qubits=1)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-state_evo = state.evolve(unitary, sys_idx=[0])
-print(f&quot;state after applying a unitary on the first qubit:\n {state_evo.density_matrix}&quot;)
+<span class="n">state_evo</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after applying a unitary on the first qubit:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_evo</span><span class="o">.</span><span class="n">density_matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1427,20 +1427,20 @@ state after applying a unitary on the first qubit:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=1, size=5)  # 5 random single-qubit states (batched states)
-unitary = random_unitary(num_qubits=1)
-state_evo = state.evolve(unitary)
-# this is equivalent to below code
-# batch_size = 5
-# state_list = []
-# unitary = random_unitary(num_qubits=1)
-# for i in range(batch_size):
-#     state_temp = random_state(num_qubits=1)
-#     state_evo_temp = state_temp.evolve(unitary)
-#     state_list.append(state_evo_temp.density_matrix)
-# state_evo = to_state(torch.stack(state_list, dim=0))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 5 random single-qubit states (batched states)</span>
+<span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state_evo</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># batch_size = 5</span>
+<span class="c1"># state_list = []</span>
+<span class="c1"># unitary = random_unitary(num_qubits=1)</span>
+<span class="c1"># for i in range(batch_size):</span>
+<span class="c1">#     state_temp = random_state(num_qubits=1)</span>
+<span class="c1">#     state_evo_temp = state_temp.evolve(unitary)</span>
+<span class="c1">#     state_list.append(state_evo_temp.density_matrix)</span>
+<span class="c1"># state_evo = to_state(torch.stack(state_list, dim=0))</span>
 
-print(f&quot;batched states after applying a unitary:\n {state_evo}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;batched states after applying a unitary:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_evo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1481,20 +1481,20 @@ batched states after applying a unitary:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=1)
-unitary = random_unitary(num_qubits=1, size=5) # 5 random single-qubit unitaries (batched unitaries)
-state_evo = state.evolve(unitary)
-# this is equivalent to below code
-# batch_size = 5
-# state_list = []
-# state = random_state(num_qubits=1)
-# for i in range(batch_size):
-#     unitary_temp = random_unitary(num_qubits=1)
-#     state_evo_temp = state.evolve(unitary_temp)
-#     state_list.append(state_evo_temp.density_matrix)
-# state_evo = to_state(torch.stack(state_list, dim=0))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 5 random single-qubit unitaries (batched unitaries)</span>
+<span class="n">state_evo</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">unitary</span><span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># batch_size = 5</span>
+<span class="c1"># state_list = []</span>
+<span class="c1"># state = random_state(num_qubits=1)</span>
+<span class="c1"># for i in range(batch_size):</span>
+<span class="c1">#     unitary_temp = random_unitary(num_qubits=1)</span>
+<span class="c1">#     state_evo_temp = state.evolve(unitary_temp)</span>
+<span class="c1">#     state_list.append(state_evo_temp.density_matrix)</span>
+<span class="c1"># state_evo = to_state(torch.stack(state_list, dim=0))</span>
 
-print(f&quot;state after applying batched unitaries:\n {state_evo}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after applying batched unitaries:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_evo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1535,15 +1535,15 @@ state after applying batched unitaries:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 2  # number of qubits
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># number of qubits</span>
 
-cir = Circuit(num_qubits)  # construct a quantum circuit
-cir.h(0)  # Add Hadamard gate to qubit 0
-cir.x([0, 1])  # Add X gate to qubit 0 and 1
-cir.cx([0, 1])  # Add CNOT gate to qubit 0 and 1
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># construct a quantum circuit</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Add Hadamard gate to qubit 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">x</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># Add X gate to qubit 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># Add CNOT gate to qubit 0 and 1</span>
 
-print(&quot;the diagram of the quantum circuit:&quot;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of the quantum circuit:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1567,10 +1567,10 @@ the diagram of the quantum circuit:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=2)
-output_state = cir(state)  # run the circuit on a state
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># run the circuit on a state</span>
 
-print(f&quot;output state after applying a quantum circuit:\n {output_state}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;output state after applying a quantum circuit:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">output_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1598,19 +1598,19 @@ output state after applying a quantum circuit:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=2, size=5)  # 5 random 2-qubit states (batched states)
-output_state = cir(state)  # run the circuit on batched states
-# this is equivalent to below code
-# batch_size = 5
-# state_list = []
-# for i in range(batch_size):
-#     state = random_state(num_qubits=2)
-#     output_state_temp = cir(state)
-#     state_list.append(output_state_temp.density_matrix)
-#     print(output_state_temp)
-# output_states = to_state(torch.stack(state_list, dim=0))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 5 random 2-qubit states (batched states)</span>
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># run the circuit on batched states</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># batch_size = 5</span>
+<span class="c1"># state_list = []</span>
+<span class="c1"># for i in range(batch_size):</span>
+<span class="c1">#     state = random_state(num_qubits=2)</span>
+<span class="c1">#     output_state_temp = cir(state)</span>
+<span class="c1">#     state_list.append(output_state_temp.density_matrix)</span>
+<span class="c1">#     print(output_state_temp)</span>
+<span class="c1"># output_states = to_state(torch.stack(state_list, dim=0))</span>
 
-print(f&quot;output batched states after applying a quantum circuit:\n {output_state}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;output batched states after applying a quantum circuit:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">output_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1775,19 +1775,19 @@ such that for all <span class="math notranslate nohighlight">\(\rho_{A} \in \mat
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># Kraus representation of a random channel
-kraus_repr = random_channel(num_qubits=1, target=&quot;kraus&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Kraus representation of a random channel</span>
+<span class="n">kraus_repr</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
 
-# Choi representation of the same random channel
-choi_repr = channel_repr_convert(kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;)
+<span class="c1"># Choi representation of the same random channel</span>
+<span class="n">choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
 
-# Stinespring representation of the same random channel
-stin_repr = channel_repr_convert(kraus_repr, source=&quot;kraus&quot;, target=&quot;stinespring&quot;)
+<span class="c1"># Stinespring representation of the same random channel</span>
+<span class="n">stin_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span>
 
 
-print(f&quot;Kraus representation of a quantum channel:\n {kraus_repr}\n&quot;)
-print(f&quot;Choi representation of the same quantum channel:\n {choi_repr}\n&quot;)
-print(f&quot;Stinespring representation of the same quantum channel:\n {stin_repr}\n&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a quantum channel:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi representation of the same quantum channel:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">choi_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stinespring representation of the same quantum channel:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">stin_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1837,14 +1837,14 @@ K_{1}=\sqrt{1-p}X=\sqrt{1-p}
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>probs = 0.5 # probability
-bit_flip_kraus_repr = bit_flip_kraus(probs) # Kraus representation
-bit_flip_choi_repr = channel_repr_convert(bit_flip_kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;) # Choi representation
-bit_flip_stin_repr = channel_repr_convert(bit_flip_kraus_repr, source=&quot;kraus&quot;, target=&quot;stinespring&quot;) # Stinespring representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">probs</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># probability</span>
+<span class="n">bit_flip_kraus_repr</span> <span class="o">=</span> <span class="n">bit_flip_kraus</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+<span class="n">bit_flip_choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">bit_flip_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span> <span class="c1"># Choi representation</span>
+<span class="n">bit_flip_stin_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">bit_flip_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span> <span class="c1"># Stinespring representation</span>
 
-print(f&quot;Kraus representation of a bit flip channel with probability {probs}:\n {bit_flip_kraus_repr}\n&quot;)
-print(f&quot;Choi representation of a bit flip channel with probability {probs}:\n {bit_flip_choi_repr}\n&quot;)
-print(f&quot;Stinespring representation of a bit flip channel with probability {probs}:\n {bit_flip_stin_repr}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a bit flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bit_flip_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi representation of a bit flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bit_flip_choi_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stinespring representation of a bit flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bit_flip_stin_repr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1891,14 +1891,14 @@ K_{1}=\sqrt{1-p}Z=\sqrt{1-p}
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>probs = 0.5 # probability
-phase_flip_kraus_repr = phase_flip_kraus(probs) # Kraus representation
-phase_flip_choi_repr = channel_repr_convert(phase_flip_kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;) # Choi representation
-phase_flip_stin_repr = channel_repr_convert(phase_flip_kraus_repr, source=&quot;kraus&quot;, target=&quot;stinespring&quot;) # Stinespring representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">probs</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># probability</span>
+<span class="n">phase_flip_kraus_repr</span> <span class="o">=</span> <span class="n">phase_flip_kraus</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+<span class="n">phase_flip_choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">phase_flip_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span> <span class="c1"># Choi representation</span>
+<span class="n">phase_flip_stin_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">phase_flip_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span> <span class="c1"># Stinespring representation</span>
 
-print(f&quot;Kraus representation of a phase flip channel with probability {probs}:\n {phase_flip_kraus_repr}\n&quot;)
-print(f&quot;Choi representation of a phase flip channel with probability {probs}:\n {phase_flip_choi_repr}\n&quot;)
-print(f&quot;Stinespring representation of a phase flip channel with probability {probs}:\n {phase_flip_stin_repr}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a phase flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">phase_flip_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi representation of a phase flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">phase_flip_choi_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stinespring representation of a phase flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">phase_flip_stin_repr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1945,14 +1945,14 @@ i&amp;0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>probs = 0.5 # probability
-bit_phase_flip_kraus_repr = bit_phase_flip_kraus(probs) # Kraus representation
-bit_phase_flip_choi_repr = channel_repr_convert(bit_phase_flip_kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;) # Choi representation
-bit_phase_flip_stin_repr = channel_repr_convert(bit_phase_flip_kraus_repr, source=&quot;kraus&quot;, target=&quot;stinespring&quot;) # Stinespring representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">probs</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># probability</span>
+<span class="n">bit_phase_flip_kraus_repr</span> <span class="o">=</span> <span class="n">bit_phase_flip_kraus</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+<span class="n">bit_phase_flip_choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">bit_phase_flip_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span> <span class="c1"># Choi representation</span>
+<span class="n">bit_phase_flip_stin_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">bit_phase_flip_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span> <span class="c1"># Stinespring representation</span>
 
-print(f&quot;Kraus representation of a bit-phase flip channel with probability {probs}:\n {bit_phase_flip_kraus_repr}\n&quot;)
-print(f&quot;Choi representation of a bit-phase flip channel with probability {probs}:\n {bit_phase_flip_choi_repr}\n&quot;)
-print(f&quot;Stinespring representation of a bit-phase flip channel with probability {probs}:\n {bit_phase_flip_stin_repr}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a bit-phase flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bit_phase_flip_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi representation of a bit-phase flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bit_phase_flip_choi_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stinespring representation of a bit-phase flip channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">bit_phase_flip_stin_repr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1993,14 +1993,14 @@ Stinespring representation of a bit-phase flip channel with probability 0.5:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>probs = 0.5 # probability
-depolarizing_kraus_repr = depolarizing_kraus(probs) # Kraus representation
-depolarizing_choi_repr = channel_repr_convert(depolarizing_kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;) # Choi representation
-depolarizing_stin_repr = channel_repr_convert(depolarizing_kraus_repr, source=&quot;kraus&quot;, target=&quot;stinespring&quot;) # Stinespring representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">probs</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># probability</span>
+<span class="n">depolarizing_kraus_repr</span> <span class="o">=</span> <span class="n">depolarizing_kraus</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+<span class="n">depolarizing_choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">depolarizing_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span> <span class="c1"># Choi representation</span>
+<span class="n">depolarizing_stin_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">depolarizing_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span> <span class="c1"># Stinespring representation</span>
 
-print(f&quot;Kraus representation of a depolarizing channel with probability {probs}:\n {depolarizing_kraus_repr}\n&quot;)
-print(f&quot;Choi representation of a depolarizing channel with probability {probs}:\n {depolarizing_choi_repr}\n&quot;)
-print(f&quot;Stinespring representation of a depolarizing channel with probability {probs}:\n {depolarizing_stin_repr}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a depolarizing channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">depolarizing_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi representation of a depolarizing channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">depolarizing_choi_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stinespring representation of a depolarizing channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">depolarizing_stin_repr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -2058,14 +2058,14 @@ K_{1} = \sqrt{\gamma}|0\rangle\langle 1| =
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>gamma = 0.5 # parameter gamma
-amplitude_damping_kraus_repr = amplitude_damping_kraus(gamma) # Kraus representation
-amplitude_damping_choi_repr = channel_repr_convert(amplitude_damping_kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;) # Choi representation
-amplitude_damping_stin_repr = channel_repr_convert(amplitude_damping_kraus_repr, source=&quot;kraus&quot;, target=&quot;stinespring&quot;) # Stinespring representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># parameter gamma</span>
+<span class="n">amplitude_damping_kraus_repr</span> <span class="o">=</span> <span class="n">amplitude_damping_kraus</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+<span class="n">amplitude_damping_choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">amplitude_damping_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span> <span class="c1"># Choi representation</span>
+<span class="n">amplitude_damping_stin_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">amplitude_damping_kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;stinespring&quot;</span><span class="p">)</span> <span class="c1"># Stinespring representation</span>
 
-print(f&quot;Kraus representation of a amplitude damping channel with parameter {gamma}:\n {amplitude_damping_kraus_repr}\n&quot;)
-print(f&quot;Choi representation of a amplitude damping channel with parameter {gamma}:\n {amplitude_damping_choi_repr}\n&quot;)
-print(f&quot;Stinespring representation of a amplitude damping channel with parameter {gamma}:\n {amplitude_damping_stin_repr}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a amplitude damping channel with parameter </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">amplitude_damping_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Choi representation of a amplitude damping channel with parameter </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">amplitude_damping_choi_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stinespring representation of a amplitude damping channel with parameter </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">amplitude_damping_stin_repr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -2100,15 +2100,15 @@ Stinespring representation of a amplitude damping channel with parameter 0.5:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[21]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=1)
-kraus_repr = random_channel(num_qubits=1, target=&quot;kraus&quot;) # random sigle-qubit quantum channel (Kraus representation)
-choi_repr = channel_repr_convert(kraus_repr, source=&quot;kraus&quot;, target=&quot;choi&quot;) # Choi representation
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kraus_repr</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span> <span class="c1"># random sigle-qubit quantum channel (Kraus representation)</span>
+<span class="n">choi_repr</span> <span class="o">=</span> <span class="n">channel_repr_convert</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span> <span class="c1"># Choi representation</span>
 
-state_kraus = state.transform(kraus_repr, repr_type=&quot;kraus&quot;)
-state_choi = state.transform(choi_repr, repr_type=&quot;choi&quot;)
+<span class="n">state_kraus</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">,</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="n">state_choi</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">choi_repr</span><span class="p">,</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;choi&quot;</span><span class="p">)</span>
 
-print(f&quot;state after applying a quantum channel in Kraus representation:\n {state_kraus.density_matrix}\n&quot;)
-print(f&quot;state after applying a quantum channel in Choi representation:\n {state_choi.density_matrix}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after applying a quantum channel in Kraus representation:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_kraus</span><span class="o">.</span><span class="n">density_matrix</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after applying a quantum channel in Choi representation:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_choi</span><span class="o">.</span><span class="n">density_matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -2131,11 +2131,11 @@ state after applying a quantum channel in Choi representation:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[22]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=2)
-kraus_repr = random_channel(num_qubits=1, target=&quot;kraus&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">kraus_repr</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
 
-state_trans = state.transform(kraus_repr, sys_idx=[0])
-print(f&quot;state after applying a quantum channel on the first qubit:\n {state_trans.density_matrix}&quot;)
+<span class="n">state_trans</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;state after applying a quantum channel on the first qubit:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_trans</span><span class="o">.</span><span class="n">density_matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -2160,20 +2160,20 @@ state after applying a quantum channel on the first qubit:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[23]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>state = random_state(num_qubits=1, size=5)  # 5 random single-qubit states (batched states)
-kraus_repr = random_channel(num_qubits=1, target=&quot;kraus&quot;)
-state_trans = state.transform(kraus_repr, repr_type=&quot;kraus&quot;)
-# this is equivalent to below code
-# batch_size = 5
-# state_list = []
-# kraus_repr = random_channel(num_qubits=1, target=&quot;kraus&quot;)
-# for i in range(batch_size):
-#     state_temp = random_state(num_qubits=1)
-#     state_trans_temp = state_temp.transform(kraus_repr, repr_type=&quot;kraus&quot;)
-#     state_list.append(state_trans_temp.density_matrix)
-# state_trans = to_state(torch.stack(state_list, dim=0))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 5 random single-qubit states (batched states)</span>
+<span class="n">kraus_repr</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="n">state_trans</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">kraus_repr</span><span class="p">,</span> <span class="n">repr_type</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># batch_size = 5</span>
+<span class="c1"># state_list = []</span>
+<span class="c1"># kraus_repr = random_channel(num_qubits=1, target=&quot;kraus&quot;)</span>
+<span class="c1"># for i in range(batch_size):</span>
+<span class="c1">#     state_temp = random_state(num_qubits=1)</span>
+<span class="c1">#     state_trans_temp = state_temp.transform(kraus_repr, repr_type=&quot;kraus&quot;)</span>
+<span class="c1">#     state_list.append(state_trans_temp.density_matrix)</span>
+<span class="c1"># state_trans = to_state(torch.stack(state_list, dim=0))</span>
 
-print(f&quot;batched states after applying a quantum channel:\n {state_evo}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;batched states after applying a quantum channel:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state_evo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -2300,7 +2300,7 @@ batched states after applying a quantum channel:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[24]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

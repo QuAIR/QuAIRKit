@@ -693,13 +693,13 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import quairkit as qkit
-from quairkit import Circuit
-from quairkit.database import *
-from quairkit.loss import *
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
 
-qkit.set_dtype(&#39;complex128&#39;)
-split_line = &#39;\n&#39; + &#39;-&#39; * 100 + &#39;\n&#39;  # a line of &#39;-&#39; for better readability
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+<span class="n">split_line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
 </code></pre></div>
 </div>
 </div>
@@ -711,19 +711,19 @@ split_line = &#39;\n&#39; + &#39;-&#39; * 100 + &#39;\n&#39;  # a line of &#39;-
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # number of qubits
-cir = Circuit(num_qubits)  # construct a circuit with specifying the number of qubits
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># construct a circuit with specifying the number of qubits</span>
 
-cir.complex_entangled_layer()  # add a complex entangled layer
+<span class="n">cir</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">()</span>  <span class="c1"># add a complex entangled layer</span>
 
-print(&#39;The diagram of the quantum circuit:&#39;)
-cir.plot()
-print(split_line)   # a line of &#39;-&#39; for better readability
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The diagram of the quantum circuit:&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">split_line</span><span class="p">)</span>   <span class="c1"># a line of &#39;-&#39; for better readability</span>
 
-print(f&#39;Are the systems composed of qubits? {cir().are_qubits()}&#39;, end=split_line)
-print(f&#39;The total number of qubits in the circuit is {cir.num_qubits}&#39;, end=split_line)
-print(f&#39;The total number of qutrits in the circuit is {cir.num_qutrits}&#39;, end=split_line)
-print(f&#39;The total number of systems in the circuit is {cir.num_systems}&#39;, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Are the systems composed of qubits? </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">are_qubits</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qubits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qutrits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qutrits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of systems in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -765,7 +765,7 @@ The total number of systems in the circuit is 3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>print(f&#39;The output state of the circuit is {cir()}&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The output state of the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -792,13 +792,13 @@ The output state of the circuit is
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(2, system_dim=3) # generate a random 2-qutrit state
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># generate a random 2-qutrit state</span>
 
-print(f&#39;The number of systems of the state is {rho.num_systems}&#39;, end=split_line)
-print(f&#39;The dimension of each system of the state is {rho.system_dim}&#39;, end=split_line)
-print(f&#39;Are the systems composed of qutrits? {rho.are_qutrits()}&#39;, split_line)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The number of systems of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The dimension of each system of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">system_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Are the systems composed of qutrits? </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">are_qutrits</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">split_line</span><span class="p">)</span>
 
-print(f&#39;Random 2-qutrit states: {rho}&#39;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Random 2-qutrit states: </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -846,12 +846,12 @@ Random 2-qutrit states:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(num_systems=2, system_dim=3)  # create a circuit with 2 systems, each of dimension 3
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># create a circuit with 2 systems, each of dimension 3</span>
 
-print(f&#39;Are the systems composed of qutrits? {cir().are_qutrits()}&#39;, end=split_line)
-print(f&#39;The total number of qubits in the circuit is {cir.num_qubits}&#39;, end=split_line)
-print(f&#39;The total number of qutrits in the circuit is {cir.num_qutrits}&#39;, end=split_line)
-print(f&#39;The total number of systems in the circuit is {cir.num_systems}&#39;, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Are the systems composed of qutrits? </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">are_qutrits</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qubits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qutrits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qutrits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of systems in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -877,12 +877,12 @@ The total number of systems in the circuit is 2
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_systems=3, system_dim=[2, 3, 6])   # generate a random state with 3 systems of dimensions [2, 3, 6]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>   <span class="c1"># generate a random state with 3 systems of dimensions [2, 3, 6]</span>
 
-print(f&#39;The number of systems of the state is {rho.num_systems}&#39;, end=split_line)
-print(f&#39;The dimension of each system of the state is {rho.system_dim}&#39;, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The number of systems of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The dimension of each system of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">system_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(f&#39;Random 3-qudit states: {rho}&#39;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Random 3-qudit states: </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -924,11 +924,11 @@ Random 3-qudit states:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(3, system_dim=[2, 3, 6])  # generate a random state with 3 systems of dimensions [2, 3, 6]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>  <span class="c1"># generate a random state with 3 systems of dimensions [2, 3, 6]</span>
 
-print(f&#39;The total number of qubits in the circuit is {cir.num_qubits}&#39;, end=split_line)
-print(f&#39;The total number of qutrits in the circuit is {cir.num_qutrits}&#39;, end=split_line)
-print(f&#39;The total number of systems in the circuit is {cir.num_systems}&#39;, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qubits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qutrits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qutrits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of systems in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -959,18 +959,18 @@ The total number of systems in the circuit is 3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># generate a random state with 3 systems of dimensions [2, 3, 6]
-cir = Circuit(3, system_dim=[2, 3, 6])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># generate a random state with 3 systems of dimensions [2, 3, 6]</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 
-# add a 3-dimension gate acting on the system 1
-cir.universal_qudits([1])
-# add a 6-dimension custom gate acting on the system 2
-cir.oracle(random_unitary(1, system_dim=6), system_idx=[2])
-# add a custom gate with the system 2 as control qudit acting on the 3 systems
-cir.control_oracle(random_unitary(2, system_dim=[3, 2]), system_idx=[2, 1, 0])
+<span class="c1"># add a 3-dimension gate acting on the system 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># add a 6-dimension custom gate acting on the system 2</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># add a custom gate with the system 2 as control qudit acting on the 3 systems</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">control_oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 
-print(&#39;The diagram of the qudit circuit:&#39;)
-cir.plot()
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The diagram of the qudit circuit:&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -995,18 +995,18 @@ The diagram of the qudit circuit:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems
-cir = Circuit(3, system_dim=[4, 3, 2])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
-rho = random_state(1, system_dim=4) # create a random state
+<span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># create a random state</span>
 
-# generate the replacement channel in Choi representation
-replacement_choi_repr = replacement_choi(rho)
-# add the replacement channel acting on the system 0
-cir.choi_channel(replacement_choi_repr, system_idx=[0])
+<span class="c1"># generate the replacement channel in Choi representation</span>
+<span class="n">replacement_choi_repr</span> <span class="o">=</span> <span class="n">replacement_choi</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+<span class="c1"># add the replacement channel acting on the system 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">choi_channel</span><span class="p">(</span><span class="n">replacement_choi_repr</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-print(&#39;The first system is replaced with state&#39;, rho)
-print(&#39;while the output state of first system is:&#39;, cir().trace([1, 2]))
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The first system is replaced with state&#39;</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;while the output state of first system is:&#39;</span><span class="p">,</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
 </code></pre></div>
 </div>
 </div>
@@ -1047,14 +1047,14 @@ while the output state of first system is:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>batch_size = 5  # the numbar of batch size
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># the numbar of batch size</span>
 
-# create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems
-cir = Circuit(3, system_dim=[2, 3, 6])
-cir.universal_qudits(system_idx=[0, 1])  # add a universal gate to qudit system 0 and 1
-cir.oracle(random_unitary(1, size=batch_size, system_dim=6), system_idx=[2])    # add an custom gate to qudit system 2
+<span class="c1"># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># add a universal gate to qudit system 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># add an custom gate to qudit system 2</span>
 
-print(&#39;The output state of the second system is:&#39;, cir().trace([0, 2]))
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The output state of the second system is:&#39;</span><span class="p">,</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
 </code></pre></div>
 </div>
 </div>
@@ -1100,18 +1100,18 @@ The output state of the second system is:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>op = Measure(&#39;x&#39;) # define Pauli X basis as the measurement basis
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="c1"># define Pauli X basis as the measurement basis</span>
 
-# measure the system 0 in the X basis for obtaining measurement result &#39;1&#39;
-prob, state = op(cir(), system_idx=[0], keep_state=True, desired_result=&#39;1&#39;)
-print(&quot;The first state for obtaining measurement result &#39;1&#39; for the system 0 is&quot;, state[0])
+<span class="c1"># measure the system 0 in the X basis for obtaining measurement result &#39;1&#39;</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">cir</span><span class="p">(),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The first state for obtaining measurement result &#39;1&#39; for the system 0 is&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 
-op = Measure()  # computational basis as the measurement basis
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">()</span>  <span class="c1"># computational basis as the measurement basis</span>
 
-# measure systems 1 and 2, and obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2
-prob, state = op(cir(), system_idx=[1, 2], desired_result=&#39;24&#39;, keep_state=True)
-print(&quot;The first state for obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2 is&quot;, state[0])
+<span class="c1"># measure systems 1 and 2, and obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">cir</span><span class="p">(),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;24&#39;</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The first state for obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2 is&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </div>
@@ -1159,19 +1159,19 @@ The first state for obtaining measurement result &#39;2&#39; for the system 1, a
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>batch_size = 5  # the numbar of batch size
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># the numbar of batch size</span>
 
-# create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems
-cir = Circuit(3, system_dim=[2, 3, 6])
+<span class="c1"># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 
-cir.universal_qudits(system_idx=[0, 1])  # add a universal gate to qudit system 0 and 1
-cir.oracle(random_unitary(1, size=batch_size, system_dim=6), system_idx=[2])    # add an custom gate to qudit system 2
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># add a universal gate to qudit system 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># add an custom gate to qudit system 2</span>
 
-# Collapse the second qudit to its first eigenstate and the third qudit to its third eigenstate
-cir.collapse([1, 2], desired_result=&#39;13&#39;, if_print=True)
+<span class="c1"># Collapse the second qudit to its first eigenstate and the third qudit to its third eigenstate</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">collapse</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-print(&quot;\n After collapsing the second qudit to its first eigenstate and the third qudit to its third eigenstate&quot;,
-      &quot;the state of the first system is:&quot;, cir().trace([1, 2]))
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> After collapsing the second qudit to its first eigenstate and the third qudit to its third eigenstate&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;the state of the first system is:&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
 </code></pre></div>
 </div>
 </div>
@@ -1213,7 +1213,7 @@ systems [1, 2] collapse to the state |1&gt;|3&gt; with (average) probability 0.0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

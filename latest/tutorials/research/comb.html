@@ -867,19 +867,19 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import time
-from typing import Callable
-import numpy as np
-import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 
 
-import quairkit as qkit
-from quairkit import Circuit
-from quairkit.database import *
-from quairkit.qinfo import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
 
-qkit.set_device(&quot;cpu&quot;)  # alternatively, switch to &quot;cuda:x&quot; for GPU
-qkit.set_dtype(&quot;complex128&quot;)
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>  <span class="c1"># alternatively, switch to &quot;cuda:x&quot; for GPU</span>
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s2">&quot;complex128&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -894,8 +894,8 @@ $ U^{-1} $ directly using the original unitary $ U $ without performing process 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># the target quantum process we want to simulate
-f: Callable[[torch.Tensor], torch.Tensor] = dagger
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># the target quantum process we want to simulate</span>
+<span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">dagger</span>
 </code></pre></div>
 </div>
 </div>
@@ -904,11 +904,11 @@ f: Callable[[torch.Tensor], torch.Tensor] = dagger
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_slots = 4
-num_aux_qubits = 3
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_slots</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">num_aux_qubits</span> <span class="o">=</span> <span class="mi">3</span>
 
-ancilla_systems = list(range(num_aux_qubits))
-all_systems = list(range(num_aux_qubits + 1))
+<span class="n">ancilla_systems</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_aux_qubits</span><span class="p">))</span>
+<span class="n">all_systems</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_aux_qubits</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -917,9 +917,9 @@ all_systems = list(range(num_aux_qubits + 1))
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_sample = 1000
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_sample</span> <span class="o">=</span> <span class="mi">1000</span>
 
-train_set = random_unitary(1, size=num_sample)
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_sample</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -929,12 +929,12 @@ train_set = random_unitary(1, size=num_sample)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>cir = Circuit(num_aux_qubits + 2)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_aux_qubits</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
 
-cir.universal_qudits(all_systems)
-for _ in range(num_slots):
-    cir.oracle(train_set, [num_aux_qubits], latex_name=r&#39;U_\textrm{in}&#39;) # input batch unitary
-    cir.universal_qudits(all_systems)
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">all_systems</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_slots</span><span class="p">):</span>
+    <span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="p">[</span><span class="n">num_aux_qubits</span><span class="p">],</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;U_\textrm</span><span class="si">{in}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># input batch unitary</span>
+    <span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">all_systems</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -943,8 +943,8 @@ for _ in range(num_slots):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>input_state = nkron(zero_state(num_aux_qubits), bell_state(2))
-expect_state = bell_state(2).evolve(f(train_set), 0)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">input_state</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">zero_state</span><span class="p">(</span><span class="n">num_aux_qubits</span><span class="p">),</span> <span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">expect_state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">train_set</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -966,18 +966,18 @@ expect_state = bell_state(2).evolve(f(train_set), 0)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>def loss_func(circuit: Circuit) -&gt; torch.Tensor:
-    r&quot;&quot;&quot;Compute the loss function according to Equation (2)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_func</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the loss function according to Equation (2)</span>
 
-    Args:
-        circuit: the quantum circuit to be trained
+<span class="sd">    Args:</span>
+<span class="sd">        circuit: the quantum circuit to be trained</span>
 
-    Returns:
-        the average trace distance between the output state and the expect state
+<span class="sd">    Returns:</span>
+<span class="sd">        the average trace distance between the output state and the expect state</span>
 
-    &quot;&quot;&quot;
-    output_state = circuit(input_state).trace(ancilla_systems)
-    return trace_distance(output_state, expect_state).mean()
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_state</span> <span class="o">=</span> <span class="n">circuit</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">ancilla_systems</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">output_state</span><span class="p">,</span> <span class="n">expect_state</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -986,31 +986,31 @@ expect_state = bell_state(2).evolve(f(train_set), 0)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>test_set = random_unitary(1, size=num_sample)
-test_state = random_state(1)
-test_input_state = nkron(zero_state(num_aux_qubits), test_state)
-test_expect_state = test_state.evolve(f(test_set), 0)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">test_set</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_sample</span><span class="p">)</span>
+<span class="n">test_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">test_input_state</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">zero_state</span><span class="p">(</span><span class="n">num_aux_qubits</span><span class="p">),</span> <span class="n">test_state</span><span class="p">)</span>
+<span class="n">test_expect_state</span> <span class="o">=</span> <span class="n">test_state</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">test_set</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
 
-def fidelity_func(circuit: Circuit) -&gt; torch.Tensor:
-    r&quot;&quot;&quot;Compute the fidelity between the output state and the expect state
+<span class="k">def</span> <span class="nf">fidelity_func</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the fidelity between the output state and the expect state</span>
 
-    Args:
-        circuit: the quantum circuit to be trained
+<span class="sd">    Args:</span>
+<span class="sd">        circuit: the quantum circuit to be trained</span>
 
-    Returns:
-        the average fidelity between the output state and the expect state
+<span class="sd">    Returns:</span>
+<span class="sd">        the average fidelity between the output state and the expect state</span>
 
-    &quot;&quot;&quot;
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    test_cir = Circuit(num_aux_qubits + 1)
-    test_cir.universal_qudits(all_systems)
-    for _ in range(num_slots):
-        test_cir.oracle(test_set, [num_aux_qubits])
-        test_cir.universal_qudits(all_systems)
-    test_cir.update_param(circuit.param)
+    <span class="n">test_cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_aux_qubits</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">test_cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">all_systems</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_slots</span><span class="p">):</span>
+        <span class="n">test_cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">test_set</span><span class="p">,</span> <span class="p">[</span><span class="n">num_aux_qubits</span><span class="p">])</span>
+        <span class="n">test_cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">all_systems</span><span class="p">)</span>
+    <span class="n">test_cir</span><span class="o">.</span><span class="n">update_param</span><span class="p">(</span><span class="n">circuit</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
 
-    output_state = test_cir(test_input_state).trace(ancilla_systems)
-    return state_fidelity(output_state, test_expect_state).mean()
+    <span class="n">output_state</span> <span class="o">=</span> <span class="n">test_cir</span><span class="p">(</span><span class="n">test_input_state</span><span class="p">)</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">ancilla_systems</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">state_fidelity</span><span class="p">(</span><span class="n">output_state</span><span class="p">,</span> <span class="n">test_expect_state</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1020,10 +1020,10 @@ def fidelity_func(circuit: Circuit) -&gt; torch.Tensor:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>lr = 0.05
-num_iter = 2000
-opt = torch.optim.Adam(cir.parameters(), lr=lr)
-scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, factor=0.5, patience=5)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">num_iter</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1031,25 +1031,25 @@ scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, factor=0.5, patience
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>time_list = []
-for itr in range(num_iter):
-    start_time = time.time()
-    opt.zero_grad()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">itr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iter</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
 
-    loss = loss_func(cir) # compute loss
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">cir</span><span class="p">)</span> <span class="c1"># compute loss</span>
 
-    loss.backward()
-    opt.step()
-    scheduler.step(loss) # activate scheduler
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="c1"># activate scheduler</span>
 
-    time_list.append(time.time() - start_time)
+    <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
 
-    if itr % (num_iter // 10) == 0 or itr == num_iter - 1:
-        fidelity = fidelity_func(cir).item()
-        print(f&quot;iter: {str(itr).zfill(len(str(num_iter)))}, &quot; +
-              f&quot;loss: {loss.item():.8f}, fidelity: {fidelity:.8f}, &quot; +
-              f&quot;lr: {scheduler.get_last_lr()[0]:.2E}, avg_time: {np.mean(time_list):.4f}s&quot;)
-        time_list = []
+    <span class="k">if</span> <span class="n">itr</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_iter</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">itr</span> <span class="o">==</span> <span class="n">num_iter</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">fidelity</span> <span class="o">=</span> <span class="n">fidelity_func</span><span class="p">(</span><span class="n">cir</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iter: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">itr</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num_iter</span><span class="p">)))</span><span class="si">}</span><span class="s2">, &quot;</span> <span class="o">+</span>
+              <span class="sa">f</span><span class="s2">&quot;loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, fidelity: </span><span class="si">{</span><span class="n">fidelity</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, &quot;</span> <span class="o">+</span>
+              <span class="sa">f</span><span class="s2">&quot;lr: </span><span class="si">{</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2E</span><span class="si">}</span><span class="s2">, avg_time: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">time_list</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+        <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
 </code></pre></div>
 </div>
 </div>
@@ -1094,7 +1094,7 @@ iter: 1999, loss: 0.02119630, fidelity: 0.99308737, lr: 7.81E-04, avg_time: 0.04
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>from quairkit.application import PQCombNet
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.application</span> <span class="kn">import</span> <span class="n">PQCombNet</span>
 </code></pre></div>
 </div>
 </div>
@@ -1104,15 +1104,15 @@ iter: 1999, loss: 0.02119630, fidelity: 0.99308737, lr: 7.81E-04, avg_time: 0.04
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net = PQCombNet(
-    target_function=dagger,  # Callable function, no default value
-    num_slots=num_slots,  # Number of slots, no default value
-    ancilla=num_aux_qubits,  # Number of ancilla qubits, no default value
-    train_unitary_info=num_sample,  # Default: 2000 (can be an integer or torch.Tensor for training data)
-    test_unitary_info=num_sample,  # Default: 10000 (can be an integer or torch.Tensor for test data)
-    train_mode=&quot;process&quot;,  # Default: &quot;process&quot; (alternatively &quot;pqc&quot;, which is gpu friendly)
-    seed=73,  # Default: None (fix seed for reproducibility)
-)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">PQCombNet</span><span class="p">(</span>
+    <span class="n">target_function</span><span class="o">=</span><span class="n">dagger</span><span class="p">,</span>  <span class="c1"># Callable function, no default value</span>
+    <span class="n">num_slots</span><span class="o">=</span><span class="n">num_slots</span><span class="p">,</span>  <span class="c1"># Number of slots, no default value</span>
+    <span class="n">ancilla</span><span class="o">=</span><span class="n">num_aux_qubits</span><span class="p">,</span>  <span class="c1"># Number of ancilla qubits, no default value</span>
+    <span class="n">train_unitary_info</span><span class="o">=</span><span class="n">num_sample</span><span class="p">,</span>  <span class="c1"># Default: 2000 (can be an integer or torch.Tensor for training data)</span>
+    <span class="n">test_unitary_info</span><span class="o">=</span><span class="n">num_sample</span><span class="p">,</span>  <span class="c1"># Default: 10000 (can be an integer or torch.Tensor for test data)</span>
+    <span class="n">train_mode</span><span class="o">=</span><span class="s2">&quot;process&quot;</span><span class="p">,</span>  <span class="c1"># Default: &quot;process&quot; (alternatively &quot;pqc&quot;, which is gpu friendly)</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">73</span><span class="p">,</span>  <span class="c1"># Default: None (fix seed for reproducibility)</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1121,7 +1121,7 @@ iter: 1999, loss: 0.02119630, fidelity: 0.99308737, lr: 7.81E-04, avg_time: 0.04
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net.train(base_lr=lr, max_epochs=num_iter, is_save_data=False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">base_lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="n">num_iter</span><span class="p">,</span> <span class="n">is_save_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1161,7 +1161,7 @@ Progress |███████████████████████�
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>net.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1179,27 +1179,27 @@ with the original parameterized circuit. we will show a simple example in this s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>from quairkit.operator import ParamOracle
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.operator</span> <span class="kn">import</span> <span class="n">ParamOracle</span>
 
-# Number of qubits in the circuit
-num_qubits_cir = num_aux_qubits + 1
+<span class="c1"># Number of qubits in the circuit</span>
+<span class="n">num_qubits_cir</span> <span class="o">=</span> <span class="n">num_aux_qubits</span> <span class="o">+</span> <span class="mi">1</span>
 
-# Circuit
-V0 = Circuit(num_qubits_cir)
-V0.real_entangled_layer(depth=2)
+<span class="c1"># Circuit</span>
+<span class="n">V0</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits_cir</span><span class="p">)</span>
+<span class="n">V0</span><span class="o">.</span><span class="n">real_entangled_layer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 
-# ParamOracle
-def V_generator(param):
-    return rx(param[0]) @ u3(param[1:4]) @ h()
+<span class="c1"># ParamOracle</span>
+<span class="k">def</span> <span class="nf">V_generator</span><span class="p">(</span><span class="n">param</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">rx</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">@</span> <span class="n">u3</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span> <span class="o">@</span> <span class="n">h</span><span class="p">()</span>
 
-V1 = ParamOracle(V_generator, system_idx=list(range(num_qubits_cir)), num_acted_param=4)
+<span class="n">V1</span> <span class="o">=</span> <span class="n">ParamOracle</span><span class="p">(</span><span class="n">V_generator</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_qubits_cir</span><span class="p">)),</span> <span class="n">num_acted_param</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-# torch.Tensor as a gate working on all the systems
-V2 = random_unitary(num_qubits_cir)  # Work on all the systems
+<span class="c1"># torch.Tensor as a gate working on all the systems</span>
+<span class="n">V2</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits_cir</span><span class="p">)</span>  <span class="c1"># Work on all the systems</span>
 
-# torch.Tensor as a gate working on parts of the systems
-V3 = random_unitary(num_qubits_cir - 1)
+<span class="c1"># torch.Tensor as a gate working on parts of the systems</span>
+<span class="n">V3</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits_cir</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1208,10 +1208,10 @@ V3 = random_unitary(num_qubits_cir - 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code># In this example, we replace the `index` 1 (the 2nd part of the PQCombNet) with our prepared structure
-net.update_V_circuit(index=1, new_V=V0)  # V1,V2,V3
-# we can visualize the new net after replacement
-net.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># In this example, we replace the `index` 1 (the 2nd part of the PQCombNet) with our prepared structure</span>
+<span class="n">net</span><span class="o">.</span><span class="n">update_V_circuit</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_V</span><span class="o">=</span><span class="n">V0</span><span class="p">)</span>  <span class="c1"># V1,V2,V3</span>
+<span class="c1"># we can visualize the new net after replacement</span>
+<span class="n">net</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -1235,7 +1235,7 @@ net.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>

@@ -755,13 +755,13 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>import torch
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
-import quairkit as qkit
-from quairkit.core.hamiltonian import *
-from quairkit.database.hamiltonian import *
-from quairkit.database.random import *
-from quairkit.loss import *
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit.core.hamiltonian</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database.hamiltonian</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database.random</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 </div>
 </div>
@@ -807,24 +807,24 @@ Z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}.\end{split}\]</div>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>num_qubits = 3  # initial setting with 3 qubits
-split_line = &#39;\n&#39; + &#39;-&#39; * 100 + &#39;\n&#39;  # a line of &#39;-&#39; for better readability
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># initial setting with 3 qubits</span>
+<span class="n">split_line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
 
-gamma = torch.ones(num_qubits, num_qubits) * 0.5
-beta = torch.ones(num_qubits) * 0.3
-H = ising_hamiltonian(gamma, beta)
-print(&quot;The Pauli decomposition of the Hamiltonian for the Ising model is:\n&quot;, H, end=split_line)
+<span class="n">gamma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">ising_hamiltonian</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the Hamiltonian for the Ising model is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-gamma = torch.ones(2, num_qubits, num_qubits) * 0.5
-H = xy_hamiltonian(gamma)
-print(&quot;The Pauli decomposition of the Hamiltonian for the XY chain is:\n&quot;, H, end=split_line)
+<span class="n">gamma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">xy_hamiltonian</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the Hamiltonian for the XY chain is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-gamma = torch.ones(3, num_qubits, num_qubits) * 0.5
-H = heisenberg_hamiltonian(gamma)
-print(&quot;The Pauli decomposition of the Hamiltonian for the Heisenberg model is:\n&quot;, H, end=split_line)
+<span class="n">gamma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">heisenberg_hamiltonian</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the Hamiltonian for the Heisenberg model is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-H = random_hamiltonian_generator(num_qubits)
-print(&quot;The Pauli decomposition of the random Hamiltonian is:\n&quot;, H, end=split_line)
+<span class="n">H</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the random Hamiltonian is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -872,13 +872,13 @@ The Pauli decomposition of the random Hamiltonian is:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>h_list = [[0.1, &quot;X0,Z1&quot;], [0.3, &quot;Z1&quot;], [0.5, &quot;Z2&quot;]]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">h_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;X0,Z1&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="s2">&quot;Z1&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Z2&quot;</span><span class="p">]]</span>
 
-print(
-    &quot;For given Hamiltonian coefficients, &quot;
-    &quot;the coresponding Hamiltonian class is:\n&quot;,
-    Hamiltonian(h_list),
-)
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;For given Hamiltonian coefficients, &quot;</span>
+    <span class="s2">&quot;the coresponding Hamiltonian class is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">h_list</span><span class="p">),</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -905,11 +905,11 @@ For given Hamiltonian coefficients, the coresponding Hamiltonian class is:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits)
-print(&#39;Expection value of the Hamiltonian:&#39;, rho.expec_val(H), end=split_line)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Expection value of the Hamiltonian:&#39;</span><span class="p">,</span> <span class="n">rho</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-exp_H = ExpecVal(H)
-print(&#39;Expection value of the Hamiltonian:&#39;, exp_H(rho))
+<span class="n">exp_H</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Expection value of the Hamiltonian:&#39;</span><span class="p">,</span> <span class="n">exp_H</span><span class="p">(</span><span class="n">rho</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -928,32 +928,32 @@ Expection value of the Hamiltonian: tensor(-0.0640)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>rho = random_state(num_qubits, size=10)  # 1000 random 3-qubit states
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 1000 random 3-qubit states</span>
 
-print(
-    &quot;For 1000 random 3-qubit states, &quot;
-    &quot;a set of Expection value of a given Hamiltonian:\n&quot;,
-    rho.expec_val(H),
-    end=split_line,
-)
-# this is equivalent to below code
-# list_exp_H = []
-# for i in range(len(rho)):
-#     list_exp_H.append(rho[i].expec_val(H))
-# list_exp_H = torch.stack(list_exp_H)
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;For 1000 random 3-qubit states, &quot;</span>
+    <span class="s2">&quot;a set of Expection value of a given Hamiltonian:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">rho</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">H</span><span class="p">),</span>
+    <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># list_exp_H = []</span>
+<span class="c1"># for i in range(len(rho)):</span>
+<span class="c1">#     list_exp_H.append(rho[i].expec_val(H))</span>
+<span class="c1"># list_exp_H = torch.stack(list_exp_H)</span>
 
-exp_H = ExpecVal(H)
-print(
-    &quot;For 1000 random 3-qubit states, &quot;
-    &quot;a set of Expection value of a given Hamiltonian:\n&quot;,
-    exp_H(rho),
-)
-# this is equivalent to below code
-# exp_H = ExpecVal(H)
-# list_exp_H = []
-# for i in range(len(rho)):
-#     list_exp_H.append(exp_H(rho[i]))
-# list_exp_H = torch.stack(list_exp_H)
+<span class="n">exp_H</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;For 1000 random 3-qubit states, &quot;</span>
+    <span class="s2">&quot;a set of Expection value of a given Hamiltonian:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">exp_H</span><span class="p">(</span><span class="n">rho</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="c1"># this is equivalent to below code</span>
+<span class="c1"># exp_H = ExpecVal(H)</span>
+<span class="c1"># list_exp_H = []</span>
+<span class="c1"># for i in range(len(rho)):</span>
+<span class="c1">#     list_exp_H.append(exp_H(rho[i]))</span>
+<span class="c1"># list_exp_H = torch.stack(list_exp_H)</span>
 </code></pre></div>
 </div>
 </div>
@@ -985,20 +985,20 @@ For 1000 random 3-qubit states, a set of Expection value of a given Hamiltonian:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>H = random_hamiltonian_generator(num_qubits)
-print(&quot;The Pauli decomposition of the random Hamiltonian is:\n&quot;, H, end=split_line)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">H</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the random Hamiltonian is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(&#39;Number of terms:&#39;, H.n_terms, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of terms:&#39;</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">n_terms</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(&#39;The Pauli string corresponding to the Hamiltonian:\n&#39;, H.pauli_str, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The Pauli string corresponding to the Hamiltonian:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">pauli_str</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(&#39;The coefficients of the terms in the Hamiltonian:\n&#39;, H.coefficients, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The coefficients of the terms in the Hamiltonian:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(&#39;The matrix form of the Hamiltonian:\n&#39;, H.matrix, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The matrix form of the Hamiltonian:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(&#39;The Pauli word of each term:&#39;, H.pauli_words, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The Pauli word of each term:&#39;</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">pauli_words</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 
-print(&#39;Number of qubits in the Hamiltonian:&#39;, H.n_qubits, end=split_line)
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of qubits in the Hamiltonian:&#39;</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">n_qubits</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1108,7 +1108,7 @@ Number of qubits in the Hamiltonian: 3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code>qkit.print_info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
