@@ -41,7 +41,7 @@ jobs:
 
       - name: Install dependencies  # Step to install dependencies.
         run: |
-          pip install quairkit sphinx_immaterial nbsphinx
+          pip install ipython quairkit sphinx_immaterial nbsphinx
 
       - name: Generate Sphinx Documentation for API Documentation  # Step to generate Sphinx documentation.
         run: bash ./version.sh
