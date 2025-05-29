@@ -26,12 +26,13 @@ dependencies = [
     "torch>=2.0.0",
     "numpy<2.0.0",
     "scipy",
+    "IPython",
     "matplotlib",
     "pdf2image",
     "pytest-xdist",
     "sphinx>=6.1.3",
     "readthedocs-sphinx-search",
-    "sphinx-rtd-theme>=1.3.0"
+    "sphinx-rtd-theme>=1.3.0",
 ]
 
 [project.urls]
