@@ -24,8 +24,10 @@ from typing import Callable, Dict, Iterable, List, Optional, Union
 import matplotlib
 import torch
 
-from ...core import OperatorInfoType, State, get_device, get_dtype, utils
+from ...core import (OperatorInfoType, StateSimulator, get_device, get_dtype,
+                     utils)
 from ...core.intrinsic import _int_to_digit
+from ...core.operator.base import OperatorInfoType
 from ...database.set import gell_mann
 from .base import Gate, ParamGate
 from .visual import _c_oracle_like_display, _oracle_like_display
@@ -46,7 +48,7 @@ class Oracle(Gate):
     ):
         default_gate_info = {
             "name": "oracle",
-            "tex": r'\text{O}',
+            "tex": r'\text{oracle}',
             "api": "oracle",
             'plot_width': 0.6,
         }
@@ -91,8 +93,8 @@ class ControlOracle(Gate):
         num_ctrl_system = len(ctrl_system_idx)
         ctrl_system_dim = [acted_system_dim] * num_ctrl_system if isinstance(acted_system_dim, int) else acted_system_dim[:num_ctrl_system]
         default_gate_info = {
-            "name": "ctrl-oracle",
-            "tex": r'\text{O}',
+            "name": "coracle",
+            "tex": r'\text{oracle}',
             "api": "control_oracle",
             "num_ctrl_system": len(ctrl_system_idx),
             "label": _int_to_digit(index, ctrl_system_dim).zfill(num_ctrl_system),
@@ -106,6 +108,24 @@ class ControlOracle(Gate):
         self.__index = index
         
     @property
+    def _apply_matrix(self) -> torch.Tensor:
+        r"""Unitary matrix of the control part
+        """
+        mat = self.__apply_matrix
+        return utils.linalg._dagger(mat) if self._is_dagger else mat
+    
+    
+    @property
+    def info(self) -> OperatorInfoType:
+        r"""Information of this gate.
+        """
+        info = super().info
+        if (perm := info.get('permute', None)) and len(perm) > 2:
+            perm = utils.linalg._perm_of_list(perm, list(range(len(perm))))
+            info['permute'] = perm
+        return info
+        
+    @property
     def matrix(self) -> torch.Tensor:
         ctrl_dim = math.prod(self.system_dim[:len(self.__system_idx[0])])
         index = self.__index
@@ -113,13 +133,13 @@ class ControlOracle(Gate):
         proj = torch.zeros([ctrl_dim, ctrl_dim])
         proj[index, index] = 1
         
-        matrix = self.__apply_matrix
+        matrix = self._apply_matrix
         _eye = torch.eye(matrix.shape[-1]).expand_as(matrix)
         return utils.linalg._kron(proj, matrix) + utils.linalg._kron(torch.eye(ctrl_dim) - proj, _eye)
     
-    def forward(self, state: State) -> State:
+    def forward(self, state: StateSimulator) -> StateSimulator:
         state = state.clone()
-        state._evolve_ctrl(self.__apply_matrix, self.__index, self.__system_idx)
+        state._evolve_ctrl(self._apply_matrix, self.__index, self.__system_idx)
         return state
     
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float,) -> float:
@@ -138,17 +158,17 @@ class ParamOracle(ParamGate):
             or an int representing the dimension of all systems. Defaults to be qubit case.
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
             Defaults to ``None``.
-        support_batch: whether the generator supports batched input. Defaults to ``False``.
+        support_batch: whether the generator supports batched input. Defaults to ``True``.
 
     """
     def __init__(
         self, generator: Callable[[torch.Tensor], torch.Tensor], system_idx: Union[List[int], int],
         param: Union[torch.Tensor, float, List[float]] = None, num_acted_param: int = 1,
-        acted_system_dim: Union[List[int], int] = 2, gate_info: Dict = None, support_batch: bool = False,
+        acted_system_dim: Union[List[int], int] = 2, gate_info: Dict = None, support_batch: bool = True,
     ):
         default_gate_info = {
-            "name": "ctrl-param-oracle",
-            "tex": r'P',
+            "name": "oracle",
+            "tex": r'\text{oracle}',
             "param_sharing": False,
             "api": "param_oracle",
             "kwargs": {"generator": generator},
@@ -172,21 +192,21 @@ class ControlParamOracle(ParamGate):
             or an int representing the dimension of all systems. Defaults to be qubit case.
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
             Defaults to ``None``.
-        support_batch: whether the generator supports batched input. Defaults to ``False``.
+        support_batch: whether the generator supports batched input. Defaults to ``True``.
 
     """
     def __init__(
         self, generator: Callable[[torch.Tensor], torch.Tensor], system_idx: Union[List[int], int], index: int, 
         param: Union[torch.Tensor, float, List[float]] = None, num_acted_param: int = 1,
-        acted_system_dim: Union[List[int], int] = 2, gate_info: Dict = None, support_batch: bool = False,
+        acted_system_dim: Union[List[int], int] = 2, gate_info: Dict = None, support_batch: bool = True,
     ):
         ctrl_system_idx = [system_idx[0]] if isinstance(system_idx[0], int) else system_idx[0]
         
         num_ctrl_system = len(ctrl_system_idx)
         ctrl_system_dim = [acted_system_dim] * num_ctrl_system if isinstance(acted_system_dim, int) else acted_system_dim[:num_ctrl_system]
         default_gate_info = {
-            "name": "ctrl-param-oracle",
-            "tex": r'P',
+            "name": "coracle",
+            "tex": r'\text{oracle}',
             "param_sharing": False,
             "api": "param_oracle",
             "num_ctrl_system": len(ctrl_system_idx),
@@ -212,7 +232,7 @@ class ControlParamOracle(ParamGate):
         _eye = torch.eye(matrix.shape[-1]).expand_as(matrix)
         return utils.linalg._kron(proj, matrix) + utils.linalg._kron(torch.eye(ctrl_dim) - proj, _eye)
     
-    def forward(self, state: State) -> State:
+    def forward(self, state: StateSimulator) -> StateSimulator:
         state = state.clone()
         state._evolve_ctrl(super().matrix, self.__index, self.__system_idx)
         return state
@@ -280,7 +300,6 @@ class Permutation(Gate):
         gate_info = {
             "name": "permute",
             "api": "permute",
-            "permute": perm,
             'plot_width': 0.2,
         }
         
@@ -291,8 +310,26 @@ class Permutation(Gate):
     def matrix(self) -> torch.Tensor:
         return utils.matrix._permutation(self.perm, self.system_dim)
     
-    def forward(self, state: State) -> State:
+    @property
+    def info(self) -> OperatorInfoType:
+        r"""Information of this gate.
+        """
+        info = super().info
+        info.update({
+            'permute': self.perm
+        })
+        return info
+    
+    def forward(self, state: StateSimulator) -> StateSimulator:
         perm, system_idx = self.perm, self.system_idx[0]
         key_map = {system_idx[i]: system_idx[perm[i]] for i in range(len(system_idx))}
         target_seq = [(key_map[idx] if idx in system_idx else idx) for idx in range(state.num_systems)]
         return state.permute(target_seq)
+    
+    def dagger(self) -> None:
+        self.system_idx = list(reversed(self.system_idx))
+        if len(self.perm) <= 2:
+            return
+        
+        perm = self.perm
+        self.perm = utils.linalg._perm_of_list(perm, list(range(len(perm))))

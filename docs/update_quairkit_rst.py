@@ -232,7 +232,7 @@ copyright = "2024, QuAIR"
 author = "QuAIR"
 
 # The full version, including alpha/beta/rc tags
-release = "0.4.0"
+release = "0.4.1"
 
 
 # -- General configuration ---------------------------------------------------

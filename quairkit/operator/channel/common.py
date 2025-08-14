@@ -434,5 +434,11 @@ class ReplacementChannel(Channel):
             'name': 'replace_channel',
             'tex': r'\mathcal{N}',
         }
+        self.replace_state = sigma.clone()
         super().__init__('choi', replacement_choi(sigma.density_matrix), system_idx, 
                          acted_system_dim=sigma.dim, channel_info=channel_info)
+        
+    def forward(self, state):
+        for system_idx in self.system_idx:
+            state = state._reset(system_idx, self.replace_state)
+        return state

@@ -1030,7 +1030,7 @@ def _train_swap_circuit(
         # update the parameters
         opt.step()
         # adjust the learning rate according to the loss value
-        scheduler.step(loss)
+        scheduler.step(loss.item())
 
         # print training information every 40 iterations or on the last iteration
         if itr % 100 == 0 or itr == max_epochs - 1:
@@ -1280,7 +1280,7 @@ def _train(
         opt.zero_grad()
         loss.backward()
         opt.step()
-        scheduler.step(loss)
+        scheduler.step(loss.item())
 
     fidelity = _average_fidelity(self, "test", projector).item()
 

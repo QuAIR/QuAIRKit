@@ -17,69 +17,155 @@ r"""
 QuAIRKit
 ========
 
-QuAIRKit is a Python research framework for quantum computing, quantum information,
-and quantum machine learning algorithm development. It focuses on flexible design,
-real-time simulation and rapid verification of quantum and classical algorithms.
+QuAIRKit is a Python SDK for algorithm development in quantum computing,
+quantum information, and quantum machine learning. It focuses on flexible
+design, real-time simulation, and rapid verification of quantum and classical
+algorithms.
+
+Links
+-----
+- Documentation: https://quairkit.com/QuAIRKit/latest/index.html
+- PyPI: https://pypi.org/project/quairkit/
+- Source: https://github.com/QuAIR/QuAIRKit
+- License: Apache-2.0
+
+Key features
+------------
+- Quantum algorithm simulation and optimization
+- Quantum circuit simulation and visualization
+- Quantum channel simulation
+- Quantum algorithm/information tools
+- Batch and probabilistic execution; qubit and qudit support
+- Seamless integration with PyTorch tensors and autograd
+- Optional third-party quantum cloud backends
 
 Installation
 ------------
+Minimum Python: 3.8 (recommended 3.10).
 
-The minimum Python environment for QuAIRKit is ``3.8``.
-We recommend installing QuAIRKit with Python ``3.10``.
+.. code-block:: bash
+
+    pip install quairkit
+
+Or using conda and an editable install:
 
 .. code-block:: bash
 
     conda create -n quair python=3.10
     conda activate quair
     conda install jupyter notebook
-
-We recommend the following way of installing QuAIRKit with pip,
-
-.. code-block:: bash
-
-    pip install quairkit
-
-or download all the files and finish the installation locally,
-
-.. code-block:: bash
-
     git clone https://github.com/QuAIR/QuAIRKit
     cd QuAIRKit
-    pip install -e .
+    pip install -e . --config-settings editable_mode=strict
 
-Functionality
+Quick start
+-----------
+Import and basic setup:
+
+.. code-block:: python
+
+    import quairkit as qkit
+    from quairkit import Circuit
+    from quairkit.database import zero_state, pauli_group
+    from quairkit.qinfo import state_fidelity
+
+    # Global defaults
+    qkit.set_dtype('complex128')  # default is 'complex64'
+    qkit.set_device('cpu')        # or 'cuda' if available
+    qkit.set_seed(73)
+
+    # Build and run a simple circuit (batched over I/X/Y/Z)
+    cir = Circuit(1)
+    cir.oracle(pauli_group(1), 0)
+    cir.ry(param=[0.0, 1.0, 2.0, 3.0])
+    out = cir(zero_state(1))
+    fid = state_fidelity(out, zero_state(1))
+
+Qudit computation
+-----------------
+Work with heterogeneous system dimensions:
+
+.. code-block:: python
+
+    from quairkit.database import heisenberg_weyl, h
+
+    cir = Circuit(2, system_dim=[2, 3])  # qubit + qutrit
+    cir.oracle(heisenberg_weyl(6), [0, 1])
+    cir.oracle(h(), [1, 0], control_idx=0)  # H on qubit, controlled by qutrit
+    rho_qubit = cir().trace(1)  # trace out qutrit
+
+Probabilistic / LOCC workflows
+------------------------------
+Model measurement, post-selection, and LOCC:
+
+.. code-block:: python
+
+    import torch
+    from quairkit.database import eye, x, z, bell_state, random_state, nkron
+    from quairkit.qinfo import state_fidelity
+
+    M1 = torch.stack([eye(), x()])  # apply X for outcome 1
+    M2 = torch.stack([eye(), z()])  # apply Z for outcome 1
+
+    cir = Circuit(3)
+    cir.cnot([0, 1])
+    cir.h(0)
+    cir.locc(M1, [1, 2])
+    cir.locc(M2, [0, 2])
+
+    psi = random_state(1, size=100)
+    inp = nkron(psi, bell_state(2))
+    out = cir(inp).trace([0, 1]).expec_state()
+    avg_fid = state_fidelity(out, psi).mean().item()
+
+Visualization
 -------------
+Render circuits via LaTeX/Quantikz:
 
-- Quantum neural network algorithm simulation
-- Quantum circuit simulation & visualization
-- Quantum channel simulation
-- Quantum algorithm/information tools
+.. code-block:: python
 
-Modules
--------
+    cir: Circuit = ...
+    cir.plot(print_code=True)
 
-``quairkit``: QuAIRKit source code
+Cloud backends
+--------------
+Integrate third-party quantum cloud providers for execution:
 
-- ``ansatz``: module of circuit templates
-- ``database``: module of useful matrices & sets
-- ``operator``: module of quantum operators
-- ``qinfo``: library of quantum algorithms & information tools
-- ``circuit``: quantum circuit interface
+.. code-block:: python
+
+    class YourState(qkit.StateOperator):
+        def _execute(self, qasm: str, shots: int):
+            '''Execute the qasm on your backend and return a counts dict.'''
+
+    qkit.set_backend(YourState)
+
+Noise and mixed-state tools
+---------------------------
+Backends are selected implicitly based on operations:
+
+.. code-block:: python
+
+    cir = Circuit(3)
+    cir.complex_entangled_layer(depth=3)
+    _ = cir()                     # state_vector backend
+    _ = cir().transpose([0, 1])   # switches to density_matrix
+    cir.depolarizing(prob=0.1)
+    _ = cir()                     # stays density_matrix
+
+Module overview
+---------------
+- quairkit.circuit: Quantum circuit interface (torch.nn.Module)
+- quairkit.database: Common matrices, sets, Hamiltonians, states, etc.
+- quairkit.qinfo: Quantum information and algorithm utilities
+- quairkit.loss: Loss operators for training
+- quairkit.ansatz: Layer templates and ansätze
 
 Tutorials
 ---------
+For notebooks and examples, see:
 
-Check out the tutorial folder on `GitHub <https://github.com/QuAIR/QuAIRKit>`_ for more information.
-
-Relations with Paddle Quantum
------------------------------
-
-`Paddle Quantum <https://github.com/PaddlePaddle/Quantum>`_ is the world's first cloud-integrated
-quantum machine learning platform based on Baidu PaddlePaddle. As most contributors to this project
-are also contributors to Paddle Quantum, QuAIRKit incorporates key architectural elements and
-interface designs from its predecessor. QuAIRKit focuses more on providing specialized tools and
-resources for researchers and developers engaged in cutting-edge quantum algorithm design and
-theoretical explorations in quantum information science.
+- https://quairkit.com/QuAIRKit/latest/index.html
+- https://github.com/QuAIR/QuAIRKit/tree/main/tutorials
 """
 
 import os
@@ -87,7 +173,7 @@ os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 from .core import set_backend, set_device, set_dtype, set_seed
 from .core import get_backend, get_device, get_dtype, get_seed, get_float_dtype
-from .core import Hamiltonian, State, Operator, to_state
+from .core import Hamiltonian, State, Operator, to_state, StateOperator
 from . import ansatz
 from . import database
 from . import operator
@@ -97,7 +183,7 @@ from .circuit import Circuit
 from . import application
 
 name = "quairkit"
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 def print_info() -> None:

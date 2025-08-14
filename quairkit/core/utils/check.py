@@ -119,7 +119,7 @@ def _is_linear(
 def _is_povm(set_op: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     dim, batch_shape, set_op = set_op.shape[-1], list(set_op.shape[:-3]), set_op.view([-1] + list(set_op.shape[-3:]))
     
-    pos_check = _is_positive(set_op.view([-1, dim, dim]), eps)
+    pos_check = _is_positive(set_op.reshape([-1, dim, dim]), eps)
     pos_check = torch.all(pos_check.view(set_op.shape[:-2]), dim=-1)
     
     oper_sum = set_op.sum(dim=-3)
@@ -137,7 +137,8 @@ def _is_pvm(set_op: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     proj_check = torch.all(proj_check, dim=-1)
     
     set_isometry = set_op.view(list(set_op.shape[:-2]) + [-1])
-    identity = torch.eye(set_isometry.shape[-2], device=set_isometry.device)
-    isometry_check = (set_isometry @ utils.linalg._dagger(set_isometry) - identity).norm(dim=(-2, -1)) < eps
+    cross_product = set_isometry @ utils.linalg._dagger(set_isometry)
+    cross_product.diagonal(dim1=-1, dim2=-2).zero_()
+    isometry_check = cross_product.norm(dim=(-2, -1)) < eps
 
     return povm_check & proj_check & isometry_check

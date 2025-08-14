@@ -1,7 +1,6 @@
-torch>=2.0.0
-numpy<2.0.0
-scipy
+torch>=2.4.0
 ipython
+scipy
 matplotlib
 pdf2image
 pytest-xdist

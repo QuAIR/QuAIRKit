@@ -1,6 +1,6 @@
 # QuAIRKit
 
-QuAIRKit is a Python research framework for quantum computing, quantum information, and quantum machine learning algorithm development. It focuses on flexible design, real-time simulation and rapid verification of quantum and classical algorithms.
+QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum information, and quantum machine learning. It focuses on flexible design, real-time simulation and rapid verification of quantum and classical algorithms.
 
 <p align="center">
   <!-- docs -->
@@ -9,7 +9,7 @@ QuAIRKit is a Python research framework for quantum computing, quantum informati
   </a>
   <!-- PyPI -->
   <a href="https://pypi.org/project/quairkit/">
-    <img src="https://img.shields.io/badge/pypi-v0.4.0-orange.svg?style=flat-square&logo=pypi"/>
+    <img src="https://img.shields.io/badge/pypi-v0.4.1-orange.svg?style=flat-square&logo=pypi"/>
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">
@@ -25,10 +25,9 @@ QuAIRKit is a Python research framework for quantum computing, quantum informati
   </a>
 </p>
 
-
 QuAIRKit provides the following functionalities,
 
-- Quantum neural network algorithm simulation
+- Quantum algorithm simulation & optimization
 - Quantum circuit simulation & visualization
 - Quantum channel simulation
 - Quantum algorithm/information tools
@@ -92,7 +91,7 @@ Below is an example of batch computation for quantum circuit simulation. Here a 
 
 ```python
 target_state = zero_state(1)
-unitary_data = pauli_group(1)
+unitary_data = pauli_group(1) # I, Pauli-X/Y/Z
 
 cir = Circuit(1)
 cir.oracle(unitary_data, 0)
@@ -190,9 +189,24 @@ Circuit in QuAIRKIt can be plotted with Quantikz, a LaTeX package for quantum ci
 
 ```python
 cir: Circuit = ...
-
 cir.plot(print_code=True)  # plot the circuit with LaTeX code
 ```
+
+See the [tutorial](tutorials/feature/plot.ipynb) for more details.
+
+#### Third-party Cloud Integration
+
+QuAIRKit supports third-party cloud integration, which allows you to run quantum circuits on real quantum devices with QuAIRKit interfaces. You can use the `set_backend` function to set the backend for measurement and computation of expectation value.
+
+```python
+class YourState(qkit.StateOperator):
+    def _execute(self, qasm: str, shots: int) -> Dict[str, int]:
+        r"""IMPLEMENT HERE to execute the circuit on the quantum cloud."""
+
+qkit.set_backend(YourState)
+```
+
+See the [tutorial](tutorials/feature/cloud.ipynb) for more details.
 
 #### Fast construction
 
@@ -201,7 +215,7 @@ QuAIRKit provides a fast and flexible way to construct quantum circuits, by self
 ```python
 cir = Circuit(2)
 
-cir.rx() # apply Hadamard gate on all qubits
+cir.rx() # apply Rx gates on all qubits with random parameters
 cir.complex_entangled_layer(depth=2) # apply complex entangled layers of depth 2
 cir.universal_two_qubits() # apply universal two-qubit gate with random parameters
 ```
@@ -226,9 +240,9 @@ print(cir().backend)
 ```
 
 ```text
-state_vector
-density_matrix
-density_matrix
+default-pure
+default-mixed
+default-mixed
 ```
 
 ## Tutorials
@@ -244,12 +258,15 @@ density_matrix
 
 - [Feature](tutorials/feature)
   - [Batch computation](tutorials/feature/batch.ipynb)
+  - [Drawing Quantum Circuits with QuAIRKit](tutorials/feature/plot.ipynb)
   - [Neural network setup customization](tutorials/feature/custom.ipynb)
   - [Introduction to qudit quantum computing](tutorials/feature/qudit.ipynb)
+  - [Running QuAIRKit with third-party quantum cloud platforms](tutorials/feature/cloud.ipynb)
 
 - [Research](tutorials/research)
   - [Analyze Barren Plateau in quantum neural networks](tutorials/research/bp.ipynb)
   - [Hamiltonian simulation via Trotter decomposition](tutorials/research/trotter.ipynb)
+  - [Quantum State Teleportation and Distribution](tutorials/research/locc.ipynb)
   - [Rediscovering Simon's algorithm with PQC](tutorials/research/simon.ipynb)
   - [Training quantum process transformation with PQC](tutorials/research/comb.ipynb)
 

@@ -17,13 +17,14 @@ r"""
 The source file of the basic class for the quantum channels.
 """
 
+import copy
 import math
 import warnings
 from typing import Iterable, List, Optional, Union
 
 import torch
 
-from ...core import MixedState, Operator, OperatorInfoType, State, utils
+from ...core import Operator, OperatorInfoType, StateSimulator, utils
 from ...core.intrinsic import _format_operator_idx
 from ...core.utils.qinfo import (_choi_to_kraus, _choi_to_stinespring,
                                  _kraus_to_choi, _kraus_to_stinespring,
@@ -81,7 +82,7 @@ class Channel(Operator):
             self.system_idx = _format_operator_idx(system_idx, num_acted_system)
         self.num_acted_system = num_acted_system
     
-    def __call__(self, state: State) -> State:
+    def __call__(self, state: StateSimulator) -> StateSimulator:
         return self.forward(state)
     
     def __register_dim(self, input_dim: int, acted_system_dim: Union[List[int], int, None]) -> int:
@@ -106,8 +107,6 @@ class Channel(Operator):
                     check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'choi'``
         """
-        self._info['type'] = 'channel'
-        
         input_dim = math.isqrt(choi_repr.shape[-1])
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
@@ -123,8 +122,6 @@ class Channel(Operator):
                      check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'kraus'``
         """
-        self._info['type'] = 'channel'
-        
         if len(kraus_repr.shape) == 2:
             kraus_repr = kraus_repr.unsqueeze(0)
 
@@ -149,8 +146,6 @@ class Channel(Operator):
                     check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'gate'``
         """
-        self._info['type'] = 'gate'
-        
         input_dim = mat.shape[-1]
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
@@ -168,10 +163,7 @@ class Channel(Operator):
                            acted_system_dim: Union[List[int], int, None], 
                            check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'Stinespring'``
-        
         """
-        self._info['type'] = 'channel'
-        
         input_dim = stinespring_repr.shape[-1]
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
@@ -269,12 +261,14 @@ class Channel(Operator):
         """
         info = super().info
         info.update({
-            'system_idx': self.system_idx,
+            'type': 'gate' if self.type_repr == 'gate' else 'channel',
+            'system_idx': copy.deepcopy(self.system_idx),
         })
         return info
 
-    def forward(self, state: State) -> State:
-        if state.backend == 'state_vector':
+    def forward(self, state: StateSimulator) -> StateSimulator:
+        # TODO support auto transform
+        if state.backend == 'default-pure':
             state = state.to_mixed() 
         
         for system_idx in self.system_idx:

@@ -27,11 +27,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from .ansatz import (ComplexBlockLayer, ComplexEntangledLayer, Layer,
-                     LinearEntangledLayer, OperatorList, RealBlockLayer,
+from .ansatz import (AmplitudeEncoding, AngleEncoding, BasisEncoding,
+                     ComplexBlockLayer, ComplexEntangledLayer, IQPEncoding,
+                     Layer, LinearEntangledLayer, OperatorList, RealBlockLayer,
                      RealEntangledLayer, TrotterLayer, Universal2, Universal3)
-from .core import Hamiltonian, intrinsic, latex, utils
+from .core import Hamiltonian, StateSimulator, intrinsic, latex, utils
 from .core.intrinsic import _alias
+from .database.state import zero_state
 from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CY, CZ, MS, RX,
                        RXX, RY, RYY, RZ, RZZ, SWAP, U3, AmplitudeDamping,
                        BitFlip, BitPhaseFlip, ChoiRepr, Collapse,
@@ -39,8 +41,9 @@ from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CY, CZ, MS, RX,
                        GeneralizedAmplitudeDamping, GeneralizedDepolarizing, H,
                        KrausRepr, OneWayLOCC, Oracle, P, ParamOracle,
                        PauliChannel, Permutation, PhaseDamping, PhaseFlip,
-                       ResetChannel, S, Sdg, StinespringRepr, T, Tdg,
-                       ThermalRelaxation, UniversalQudits, X, Y, Z)
+                       QuasiOperation, ResetChannel, ResetState, S, Sdg,
+                       StinespringRepr, T, Tdg, ThermalRelaxation,
+                       UniversalQudits, X, Y, Z)
 from .operator.gate import _circuit_plot
 
 __all__ = ['Circuit']
@@ -195,7 +198,8 @@ class Circuit(OperatorList):
 
         if latex:
             drawer, begin_code = self._get_drawer(style, decimal)   
-            drawer._fill_empty(list(range(self.num_systems if include_empty else max(drawer._code.keys()))))
+            drawer._fill_empty(list(range(self.num_systems if include_empty else 
+                                          (max(drawer._code.keys()) + 1))))
             drawer.add_end()
             _fig = drawer.plot(dpi, print_code, begin_code)
             
@@ -223,6 +227,40 @@ class Circuit(OperatorList):
             if output_plot:
                 return _fig
 
+    @property
+    def qasm(self) -> str:
+        r"""String representation of the circuit in qasm-like format.
+
+        Returns:
+            string representation of the operator list
+        """
+        qreg = f"qreg q[{self.num_systems}]; // Register dimension {self.system_dim}"
+        
+        physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
+        qasm_str = self.get_qasm(transpile=False)
+        self.system_idx = physical_idx
+        
+        return '\n'.join([qreg, qasm_str])
+    
+    @property
+    def qasm2(self) -> str:
+        r"""Transpile the circuit in OpenQASM 2.0 format.
+
+        Returns:
+            Transpilation of the circuit
+        """
+        
+        if any(dim != 2 for dim in self.system_dim):
+            raise ValueError("Only qubit systems are supported in OpenQASM 2.0")
+        
+        header = 'OPENQASM 2.0;\ninclude "qelib1.inc";'
+        qreg = f"qreg q[{self.num_systems}];"
+        
+        physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
+        qasm_str = self.get_qasm(transpile=True)
+        self.system_idx = physical_idx
+        
+        return '\n'.join([header, qreg, qasm_str])
 
     # ---------------------- below are common operators ---------------------- #
     def h(self, qubits_idx: Union[Iterable[int], int, str] = 'full') -> None:
@@ -1103,7 +1141,7 @@ class Circuit(OperatorList):
                 \lstick{} & \gate[2,style={draw=gray, dashed}]{\permute{2,1}} & {} & {} \\
                 \lstick{} & {} & {} & {}
         """
-        qubits_idx = self.register_idx(qubits_idx, 2)
+        qubits_idx = self.register_idx(qubits_idx, 3)
         self.append(CSWAP(qubits_idx))
 
     def ccx(self, qubits_idx: Union[Iterable[int], str] = 'cycle') -> None:
@@ -1216,12 +1254,13 @@ class Circuit(OperatorList):
                                     param, param_sharing))
     
     @_alias({"system_idx": "qubits_idx"})
-    def permute(self, perm: List[int], system_idx: List[int]) -> None:
+    def permute(self, perm: List[int], system_idx: List[int], control_idx: Optional[int] = None) -> None:
         r"""Add a permutation gate.
 
         Args:
             perm: A list representing the permutation of subsystems.
             system_idx: Indices of the systems on which the gates are applied.
+            control_idx: the index that controls the permutation. Defaults to None.
 
         Examples:
             .. code-block:: python
@@ -1238,61 +1277,37 @@ class Circuit(OperatorList):
                 \lstick{} & {} & {} & {} \\
                 \lstick{} & {} & {} & {}
         """
-        system_idx = self.register_idx(system_idx, len(system_idx))
-        self.append(Permutation(perm, system_idx, [self.system_dim[idx] for idx in system_idx]))
-        
-    @_alias({"system_idx": "qubits_idx"})
-    def control_permute(self, perm: List[int], system_idx: List[int], control_idx: int = -1) -> None:
-        r"""Add a controlled permutation gate.
-
-        Args:
-            perm: A list representing the permutation of subsystems.
-            system_idx: Indices of the systems on which the gates are applied.
-            control_idx: the index that controls the oracle. Defaults to -1, meaning the highest index.
-
-        Examples:
-            .. code-block:: python
-
-                qc = Circuit(4)
-                qc.control_permute([1, 0, 2], [3, 0, 1, 2], 1)
-                qc.measure()
-                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
-
-            ::
-
-                The latex code of this circuit is:
-                \lstick{} & \gate[3,style={draw=gray, dashed}]{\permute{2,1,3}} & \meter[4]{} & {} \\
-                \lstick{} & {} & {} & {} \\
-                \lstick{} & {} & {} & {} \\
-                \lstick{} & \ctrl[]{-1} & {} & {}
-        """
-        if isinstance(system_idx[0], int):
-            system_idx[0] = [system_idx[0]]
-        _system_idx = system_idx[0] + system_idx[1:]
-        _system_idx = self.register_idx(_system_idx, len(_system_idx))
-        acted_system_dim = [self.system_dim[idx] for idx in _system_idx]
-
-        ctrl_dim = math.prod(acted_system_dim[:len(system_idx[0])])
-        if control_idx == -1:
-            control_idx = ctrl_dim - 1
+        if control_idx is None:
+            system_idx = self.register_idx(system_idx, len(system_idx))
+            self.append(Permutation(perm, system_idx, [self.system_dim[idx] for idx in system_idx]))
         else:
-            assert control_idx < ctrl_dim, \
-                f"Control index out of range: expect < {ctrl_dim}, got {control_idx}."
-        
-        permutation = utils.matrix._permutation(perm, acted_system_dim[len(system_idx[0]):])
-        
-        gate_info = {
-            "name": "ctrl-permute",
-            "api": "control_permute",
-            "permute": perm,
-            'plot_width': 0.2,
-        }
-        self.append(ControlOracle(
-            permutation, system_idx, control_idx, acted_system_dim, gate_info))
+            if isinstance(system_idx[0], int):
+                system_idx[0] = [system_idx[0]]
+            _system_idx = system_idx[0] + system_idx[1:]
+            _system_idx = self.register_idx(_system_idx, len(_system_idx))
+            acted_system_dim = [self.system_dim[idx] for idx in _system_idx]
+
+            ctrl_dim = math.prod(acted_system_dim[:len(system_idx[0])])
+            if control_idx == -1:
+                control_idx = ctrl_dim - 1
+            else:
+                assert control_idx < ctrl_dim, \
+                    f"Control index out of range: expect < {ctrl_dim}, got {control_idx}."
+            
+            permutation = utils.matrix._permutation(perm, acted_system_dim[len(system_idx[0]):])
+            
+            gate_info = {
+                "name": "cpermute",
+                "api": "control_permute",
+                "permute": perm,
+                'plot_width': 0.2,
+            }
+            self.append(ControlOracle(
+                permutation, system_idx, control_idx, acted_system_dim, gate_info))
     
     @_alias({"system_idx": "qubits_idx"})
     def oracle(self, oracle: torch.Tensor, system_idx: Union[List[Union[List[int], int]], int], 
-               control_idx: Optional[int] = None, gate_name: Optional[str] = 'oracle',
+               control_idx: Optional[int] = None, gate_name: Optional[str] = None,
                latex_name: Optional[str] = None) -> None:
         r"""Add an oracle gate.
 
@@ -1316,10 +1331,11 @@ class Circuit(OperatorList):
                 The latex code of this circuit is:
                 \lstick{} & \gate[1]{$Identity$}
         """
-        gate_info = {
-            'name': gate_name,
-            'tex': r'\text{' + gate_name + r'}' if latex_name is None else latex_name
-        }
+        gate_info = {}
+        if gate_name is not None:
+            gate_info['name'] = gate_name
+        if latex_name is not None:
+            gate_info['tex'] = latex_name
         
         if control_idx is None:
             system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
@@ -1345,7 +1361,7 @@ class Circuit(OperatorList):
 
     @_alias({"system_idx": "qubits_idx"})
     def control_oracle(self, oracle: torch.Tensor, system_idx: List[Union[List[int], int]], control_idx: int = -1,
-                        gate_name: Optional[str] = 'oracle', latex_name: Optional[str] = None) -> None:
+                        gate_name: str = 'coracle', latex_name: Optional[str] = None) -> None:
         r"""Add a controlled oracle gate.
 
         Args:
@@ -1374,19 +1390,22 @@ class Circuit(OperatorList):
     @_alias({"system_idx": "qubits_idx"})
     def param_oracle(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int,
                      system_idx: Union[List[int], int], control_idx: Optional[int] = None,
-                     param: Union[torch.Tensor, float] = None, gate_name: Optional[str] = 'param-oracle',
-                     latex_name: Optional[str] = None, support_batch: bool = False) -> None:
+                     param: Union[torch.Tensor, float] = None, gate_name: Optional[str] = None,
+                     latex_name: Optional[str] = None, support_batch: bool = True) -> None:
         r"""Add a parameterized oracle gate.
 
         Args:
             generator: Function to generate the oracle.
-            num_acted_param: Number of parameters required.
+            num_acted_param: Number of parameters required for a single application.
             system_idx: Indices of the systems on which the gate acts.
             control_idx: The index that controls the oracle. Defaults to None.
             param: Input parameters for the gate. Defaults to None.
             gate_name: Name of the oracle.
             latex_name: LaTeX name of the gate.
             support_batch: Whether generator supports batched input.
+            
+        Note:
+            If the generator does not support batched input, you need to set `support_batch` to `False`.
 
         Examples:
             .. code-block:: python
@@ -1419,9 +1438,11 @@ class Circuit(OperatorList):
                 \lstick{} & \octrl[]{1} \\
                 \lstick{} & \gate[1]{ControlledRotation(0.36)}
         """
-        gate_info = {
-            'name': gate_name,
-            'tex': r'\text{' + gate_name + r'}' if latex_name is None else latex_name}
+        gate_info = {}
+        if gate_name is not None:
+            gate_info['name'] = gate_name
+        if latex_name is not None:
+            gate_info['tex'] = latex_name
         
         if control_idx is None:
             system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
@@ -1509,17 +1530,20 @@ class Circuit(OperatorList):
     @_alias({"system_idx": "qubits_idx"})
     def param_locc(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int, 
                    system_idx: List[Union[List[int], int]], param: Union[torch.Tensor, float] = None, 
-                   label: str = 'M', latex_name: str = 'U', support_batch: bool = False) -> None:
+                   label: str = 'M', latex_name: str = 'U', support_batch: bool = True) -> None:
         r"""Add a one-way LOCC protocol comprised of unitary operations, where the applied unitary is parameterized.
 
         Args:
             generator: Function to generate the oracle.
-            num_acted_param: Number of parameters required.
+            num_acted_param: Number of parameters required for a single application.
             system_idx: Systems on which the protocol is applied. The first element indicates the measure system.
             param: Input parameters for the gate. Defaults to None.
             label: Label for measurement. Defaults to 'M'.
             latex_name: LaTeX name for the applied operator. Defaults to 'U'.
             support_batch: Whether generator supports batched input.
+        
+        Note:
+            If the generator does not support batched input, you need to set `support_batch` to `False`.
 
         """
         if isinstance(system_idx[0], int):
@@ -1537,6 +1561,92 @@ class Circuit(OperatorList):
         param_gate = ParamOracle(
             generator, apply_idx, param, num_acted_param, apply_dim, support_batch=support_batch)
         self.append(OneWayLOCC(param_gate, measure_idx, measure_dim, label=label, latex_name=latex_name))
+        
+    @_alias({"system_idx": "qubits_idx"})
+    def quasi(self, list_unitary: torch.Tensor, probability: Iterable[float],
+              system_idx: List[Union[List[int], int]], latex_name: str = r'\mathcal{E}'):
+        r"""Add a quasi-probability operation, now only supports unitary operations.
+        
+        Args:
+            list_unitary: list of unitary operations, each of which corresponds to a probability outcome.
+            probability: (quasi-)probability distribution for applying unitary operations.
+            system_idx: Systems on which the operation is applied.
+            latex_name: LaTeX name for the applied operation. Defaults to '\mathcal{E}'.
+        
+        """
+        if not torch.is_tensor(list_unitary):
+            list_unitary = torch.tensor(list_unitary, dtype=self.dtype, device=self.device)
+        if not torch.is_tensor(probability): 
+            probability = torch.tensor(probability, dtype=self.dtype, device=self.device)
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.register_idx(system_idx, len(system_idx))
+        acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        
+        gate_info = {'name': 'quasi', 'tex': latex_name}
+        gate = Oracle(list_unitary, system_idx, acted_system_dim, gate_info)
+        self.append(QuasiOperation(gate, probability))
+        
+    @_alias({"system_idx": "qubits_idx"})
+    def param_quasi(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int, 
+                    probability: Iterable[float], system_idx: List[Union[List[int], int]], probability_param: bool = False,
+                    param: Union[torch.Tensor, float] = None, latex_name: str = r'\mathcal{E}', support_batch: bool = True):
+        r"""Add a quasi-probability operation, where the applied unitary is parameterized.
+        
+        Args:
+            generator: Function to generate the oracle.
+            num_acted_param: Number of parameters required for a single application.
+            probability: (quasi-)probability distribution for applying unitary operations.
+            probability_param: Whether the probability is parameterized. Defaults to False.
+            system_idx: Systems on which the operation is applied.
+            param: Input parameters for the gate. Defaults to None.
+            latex_name: LaTeX name for the applied operation. Defaults to '\mathcal{E}'.
+            support_batch: Whether generator supports batched input.
+        
+        """
+        if not torch.is_tensor(probability): 
+            probability = torch.tensor(probability, dtype=self.dtype, device=self.device)
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.register_idx(system_idx, len(system_idx))
+        acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        
+        gate_info = {'name': 'quasi', 'tex': latex_name}
+        if param is None:
+            float_dtype = intrinsic._get_float_dtype(self.dtype)
+            batch_size = (probability.numel() + 1) if probability_param else probability.numel()
+            expect_shape = intrinsic._format_param_shape([system_idx], num_acted_param, 
+                                                         param_sharing=False, batch_size=batch_size)
+            param = torch.nn.Parameter(torch.rand(expect_shape, dtype=float_dtype) * 2 * np.pi)
+        param_gate = ParamOracle(
+            generator, system_idx, param, num_acted_param, acted_system_dim, gate_info=gate_info, support_batch=support_batch)
+        
+        self.append(QuasiOperation(param_gate, probability, probability_param=probability_param))
+        
+    @_alias({"system_idx": "qubits_idx"})
+    def reset(self, system_idx: List[Union[List[int], int]], 
+              replace_state: Optional[StateSimulator] = None, state_label: Optional[str] = None) -> None:
+        r"""Reset the state of the specified systems to a given state.
+        
+        Args:
+            system_idx: list of systems to be reset.
+            replace_state: the state to replace the quantum state. Defaults to zero state.
+            state_label: LaTeX label of the reset state, used for printing. Defaults to r'\rho' or r'\ket{0}'.
+        
+        """
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        system_idx = self.register_idx(system_idx, len(system_idx))
+        acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        
+        
+
+        if replace_state:
+            assert acted_system_dim == replace_state.system_dim, \
+                f"The system dimension of the input state {acted_system_dim} does not match the replace state {replace_state.system_dim}."
+            state_label = state_label or r'\rho'
+        else:
+            num_systems = len(acted_system_dim)
+            replace_state = zero_state(num_systems=num_systems, system_dim=acted_system_dim)
+            state_label = state_label or r'\ket{0}'
+        self.append(ResetState(system_idx, acted_system_dim, replace_state, state_label))
 
     def linear_entangled_layer(self, qubits_idx: Optional[List[int]] = None, depth: int = 1,
                                param: Union[torch.Tensor, float] = None) -> None:
@@ -1652,7 +1762,118 @@ class Circuit(OperatorList):
         """
         qubits_idx = self.register_idx(qubits_idx, None)
         self.append(ComplexBlockLayer(qubits_idx, depth, param))
+    
+    def basis_encoding(self, number: int, qubits_idx: Optional[List[int]] = None) -> None:
+        r"""Prepares a basis encoding layer that performs :math:`|0\rangle^{\otimes n} \to |x\rangle`
+            
+        Args:
+            number: the integer to be encoded.
+            qubits_idx: Indices of the qubits on which the layer is applied. Defaults to ``None``.
+            
+        Examples:
+            .. code-block:: python
 
+                qc = Circuit(2)
+                qc.basic_encoding(3, [0, 1])
+                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+
+            ::
+
+                The latex code of this circuit is:
+                \lstick{} & \gate[1]{X}\gategroup[2,steps=1,style={inner sep=4pt,dashed,label={above:{Basis Encoding}}}]{} \\
+                \lstick{} & \gate[1]{X}
+        
+        """
+        qubits_idx = self.register_idx(qubits_idx, None)
+        self.append(BasisEncoding(number, qubits_idx))
+        
+    def amplitude_encoding(self, vector: torch.Tensor, qubits_idx: Optional[List[int]] = None) -> None:
+        r"""Prepares an amplitude encoding layer that performs :math:`|0\rangle^{\otimes n} \to \sum_{i=0}^{d-1} x_i |i\rangle`
+        
+        Args:
+            vector: Input normalized vector to be encoded.
+            qubits_idx: Indices of the qubits on which the encoding is applied. Defaults to ``None``.
+        
+        Examples:
+            .. code-block:: python
+
+                qc = Circuit(2)
+                vec = torch.tensor([1.0, 0.0, 0.0, 0.0])
+                qc.amplitude_encoding(vec, [0, 1])
+                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+
+            ::
+
+                The latex code of this circuit is:
+                \lstick{} & \gate[2]{\text{Amplitude Encoding}}\gategroup[2,steps=1,style={inner sep=4pt,dashed,label={above:{Amplitude Encoding}}}]{} \\
+                \lstick{} & {}
+        
+        """
+        qubits_idx = self.register_idx(qubits_idx, None)
+        if not isinstance(vector, torch.Tensor):
+            vector = torch.tensor(vector, dtype=self.dtype, device=self.device)
+        self.append(AmplitudeEncoding(vector, qubits_idx))
+        
+    def angle_encoding(self, angles: torch.Tensor, qubits_idx: Optional[List[int]] = None, rotation: str = 'RY') -> None:
+        r"""Prepares an angle encoding layer that encode angles via rotation gates.
+        
+        Args:
+            angles: Input vector of angles.
+            qubits_idx: Indices of the qubits on which the encoding is applied. Defaults to ``None``.
+            rotation: Type of rotation gate ('RY', 'RZ', or 'RX').
+            
+        Examples:
+            .. code-block:: python
+
+                qc = Circuit(2)
+                angles = torch.tensor([0.5, 1.0])
+                qc.angle_encoding(angles, [0, 1], rotation='RY')
+                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+
+            ::
+
+                The latex code of this circuit is:
+                \lstick{} & \gate[1]{R_{y}(0.50)}\gategroup[2,steps=1,style={inner sep=4pt,dashed,label={above:{Angle Encoding}}}]{} \\
+                \lstick{} & \gate[1]{R_{y}(1.00)}
+        
+        """
+        qubits_idx = self.register_idx(qubits_idx, None)
+        if not isinstance(angles, torch.Tensor):
+            angles = torch.tensor(angles, dtype=self.dtype, device=self.device)
+        self.append(AngleEncoding(angles, qubits_idx, rotation))
+    
+    def iqp_encoding(self, features: torch.Tensor, set_entanglement: List[List[int]], 
+                     qubits_idx: Optional[List[int]] = None, depth: int = 1) -> None:
+        r"""Prepares an instantaneous quantum polynomial (IQP) layer that encode angles via a type of rotation gates.
+        
+        Args:
+            features: Input vector for encoding.
+            set_entanglement: the set containing all pairs of qubits to be entangled using RZZ gates
+            qubits_idx: Indices of the qubits on which the encoding is applied. Defaults to ``None``.
+            depth: Number of depth. Defaults to 1.
+            
+        Examples:
+            .. code-block:: python
+
+                qc = Circuit(3)
+                features = torch.tensor([0.1, 0.2, 0.3])
+                entanglement = [[0, 1], [1, 2]]
+                qc.iqp_encoding(features, entanglement, [0, 1, 2], depth=1)
+                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+
+            ::
+
+                The latex code of this circuit is:
+                \lstick{} & \gate[1]{H}\gategroup[3,steps=8,style={inner sep=4pt,dashed,label={above:{IQP Encoding}}}]{} & \gate[1]{R_{z}(0.10)} & \ctrl[]{1} & {} & \ctrl[]{1} & {} & {} & {} \\
+                \lstick{} & \gate[1]{H} & \gate[1]{R_{z}(0.20)} & \targ{} & \gate[1]{R_{z}(0.02)} & \targ{} & \ctrl[]{1} & {} & \ctrl[]{1} \\
+                \lstick{} & \gate[1]{H} & \gate[1]{R_{z}(0.30)} & {} & {} & {} & \targ{} & \gate[1]{R_{z}(0.06)} & \targ{}
+        
+        """
+        qubits_idx = self.register_idx(qubits_idx, None)
+        if not isinstance(features, torch.Tensor):
+            features = torch.tensor(features, dtype=self.dtype, device=self.device)
+        self.append(IQPEncoding(features, set_entanglement, qubits_idx, depth))
+        
     def trotter(
         self, hamiltonian: Hamiltonian, time: float, qubits_idx: Optional[List[int]] = None, 
         num_steps: int = 1, order: int = 1, name: str = 'H'

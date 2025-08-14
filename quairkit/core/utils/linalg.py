@@ -195,11 +195,11 @@ def _ptrace_1(xy: torch.Tensor, x: torch.Tensor) -> torch.Tensor:
     
     """
     dim_x = x.shape[-1]
-    batch_dims, dim_y = list(xy.shape[:-1]), int(xy.shape[-1] // dim_x)
+    batch_dims, dim_y = list(xy.shape[:-2]), int(xy.shape[-1] // dim_x)
     
-    xy, x = xy.view([-1, dim_x, dim_y]), x.view([-1, dim_x, 1])
+    xy, x = xy.view(batch_dims + [-1, dim_x, dim_y]), x.view([-1, dim_x, 1])
     y = (xy * x.conj()).sum(dim=-2)
-    return y.view(batch_dims + [dim_y])
+    return y.squeeze(-2)
 
 
 def _transpose_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
@@ -600,3 +600,51 @@ def _prob_sample(distributions: torch.Tensor, shots: int = 1024,
     results = OrderedDict((key, counts[:, i].view(batch_dim)) 
                           for i, key in enumerate(keys))
     return dict(results)
+
+
+def _get_swap_indices(pos1: int, pos2: int, system_indices: List[List[int]], 
+                      system_dim: List[int], device: torch.device) -> torch.Tensor:
+    r"""Get the swapped indices given swap_indices, to rearrange the elements
+    
+    Args:
+        pos1: the 1st position to be swapped
+        pos2: the 2nd position to be swapped
+        system_indices: list of system indices for these swap operations,
+        system_dim: dimensions of subsystems
+    
+    Returns:
+        a list of swapped indices
+    
+    """
+    total_dim = np.prod(system_dim)
+    n = len(system_dim)
+
+    weights = [1] * n
+    for i in range(n - 2, -1, -1):
+        weights[i] = weights[i + 1] * system_dim[i + 1]
+
+    indices = torch.arange(total_dim, device=device)
+    
+    # Apply swap
+    for qubits_idx in reversed(system_indices):
+        i, j = qubits_idx
+        dim_i, dim_j = system_dim[i], system_dim[j]
+        weight_i, weight_j = weights[i], weights[j]
+
+        state_i = (indices // weight_i) % dim_i
+        state_j = (indices // weight_j) % dim_j
+        joint_state = state_i * dim_j + state_j
+
+        remainder = indices - state_i * weight_i - state_j * weight_j
+
+        new_joint_state = torch.where(
+            joint_state == pos1, pos2,
+            torch.where(joint_state == pos2, pos1, joint_state)
+        )
+
+        new_state_i = new_joint_state // dim_j
+        new_state_j = new_joint_state % dim_j
+
+        indices = remainder + new_state_i * weight_i + new_state_j * weight_j
+
+    return indices

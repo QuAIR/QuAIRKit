@@ -22,6 +22,7 @@ from typing import Iterable, List, Optional, Tuple, Union
 import matplotlib
 import torch
 
+from ...core import StateSimulator, utils
 from ...core.utils.matrix import (_cnot, _cp, _crx, _cry, _crz, _cswap, _cu,
                                   _cy, _cz, _ms, _rxx, _ryy, _rzz, _swap,
                                   _toffoli, _universal2, _universal3)
@@ -60,7 +61,7 @@ class CNOT(Gate):
         self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            "name": "ctrl-x",
+            "name": "cx",
             "tex": r'\targ{}',
             "api": "cnot",
             "num_ctrl_system": 1,
@@ -69,6 +70,7 @@ class CNOT(Gate):
         }
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
     
     @property
     def matrix(self) -> torch.Tensor:
@@ -76,6 +78,15 @@ class CNOT(Gate):
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _cnot_display(self, ax, x, )
+    
+    def forward(self, state: StateSimulator) -> StateSimulator:
+        if state._keep_dim:
+            return super().forward(state)
+        
+        state = state.clone()
+        swap_indices = utils.linalg._get_swap_indices(2, 3, self.system_idx, state.system_dim, self.device)
+        state._index_select(swap_indices)
+        return state
 
 CX = CNOT
 
@@ -109,7 +120,7 @@ class CY(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            "name": "ctrl-y",
+            "name": "cy",
             "tex": r'Y',
             "api": "cy",
             "num_ctrl_system": 1,
@@ -118,7 +129,8 @@ class CY(Gate):
         }
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2], check_legality=False, gate_info=gate_info)
-
+        self._is_hermitian = True
+    
     @property
     def matrix(self) -> torch.Tensor:
         return CY.__matrix.to(self.device, dtype=self.dtype)
@@ -156,7 +168,7 @@ class CZ(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            "name": "ctrl-z",
+            "name": "cz",
             "tex": r'Z',
             "api": "cz",
             "num_ctrl_system": 1,
@@ -165,7 +177,8 @@ class CZ(Gate):
         }
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2], check_legality=False, gate_info=gate_info)
-
+        self._is_hermitian = True
+    
     @property
     def matrix(self) -> torch.Tensor:
         return CZ.__matrix.to(self.device, dtype=self.dtype)
@@ -202,14 +215,15 @@ class SWAP(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
     ):
         gate_info = {
-            "name": "qubit-swap",
+            "name": "swap",
             "api": "swap",
             "permute": [1, 0],
             'plot_width': 0.2,
         }
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2], check_legality=False, gate_info=gate_info)
-
+        self._is_hermitian = True
+        
     @property
     def matrix(self) -> torch.Tensor:
         return SWAP.__matrix.to(self.device, dtype=self.dtype)
@@ -247,7 +261,7 @@ class CP(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            "name": "ctrl-p",
+            "name": "cp",
             "tex": r'P',
             "api": "cp",
             "num_ctrl_system": 1,
@@ -295,7 +309,7 @@ class CRX(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            "name": "ctrl-rx",
+            "name": "crx",
             "tex": r'R_{x}',
             "api": "crx",
             "num_ctrl_system": 1,
@@ -344,7 +358,7 @@ class CRY(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            "name": "ctrl-ry",
+            "name": "cry",
             "tex": r'R_{y}',
             "api": "cry",
             "num_ctrl_system": 1,
@@ -393,7 +407,7 @@ class CRZ(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            "name": "ctrl-rz",
+            "name": "crz",
             "tex": r'R_{z}',
             "api": "crz",
             "num_ctrl_system": 1,
@@ -442,7 +456,7 @@ class CU(ParamGate):
             param: Optional[Union[torch.Tensor, float]] = None, param_sharing: Optional[bool] = False
     ):
         gate_info = {
-            "name": "ctrl-u4",
+            "name": "cu4",
             "tex": r'U',
             "api": "cu",
             "num_ctrl_system": 1,
@@ -631,7 +645,8 @@ class MS(Gate):
 
     @property
     def matrix(self) -> torch.Tensor:
-        return MS.__matrix.to(self.device, dtype=self.dtype)
+        mat = MS.__matrix.to(self.device, dtype=self.dtype)
+        return utils.linalg._dagger(mat) if self._is_dagger else mat
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
         return _oracle_like_display(self, ax, x)
@@ -668,7 +683,7 @@ class CSWAP(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
-            "name": "ctrl-swap",
+            "name": "cswap",
             "api": "cswap",
             "num_ctrl_system": 1,
             "label": '1',
@@ -677,6 +692,7 @@ class CSWAP(Gate):
         }
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2, 2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -716,7 +732,7 @@ class CCX(Gate):
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None
     ):
         gate_info = {
-            "name": "toffoli",
+            "name": "ccx",
             "tex": r'\targ{}',
             "api": "ccx",
             "num_ctrl_system": 2,
@@ -726,6 +742,7 @@ class CCX(Gate):
 
         super().__init__(
             None, qubits_idx, acted_system_dim=[2, 2, 2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
 
     @property
     def matrix(self) -> torch.Tensor:

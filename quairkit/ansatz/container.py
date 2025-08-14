@@ -19,17 +19,18 @@ The source file of the Sequential class.
 
 import itertools
 import warnings
-from typing import Dict, Generator, Iterable, List, Optional, Tuple, Union
+from typing import Generator, Iterable, List, Optional, Union
 
 import numpy as np
 import torch
 from torch.nn.parameter import Parameter
 
-from ..core import (Operator, OperatorInfoType, State, get_backend, get_dtype,
-                    get_float_dtype)
+from ..core import get_device, get_dtype, get_float_dtype
 from ..core.intrinsic import (_display_png, _format_sequential_idx,
-                              _replace_indices)
+                              _replace_indices, _State)
 from ..core.latex import OperatorListDrawer
+from ..core.operator import Operator, OperatorInfoType
+from ..core.state import StateSimulator
 from ..database import std_basis, zero_state
 
 
@@ -49,8 +50,8 @@ class OperatorList(torch.nn.Sequential):
         self.__register_list(num_systems, system_dim, physical_idx)
 
         super().__init__()
-        self.backend = get_backend()
         self.dtype = get_dtype()
+        self.device = get_device()
     
     def __getitem__(self, key) -> Union[Operator, 'OperatorList']:
         return super().__getitem__(key)
@@ -191,12 +192,12 @@ class OperatorList(torch.nn.Sequential):
         
         self.add_systems(num_systems - old_num_systems)
 
-    def register_idx(self, operator_idx: Optional[Union[Iterable[int], int, str]], num_acted_system: int) -> List[List[int]]:
+    def register_idx(self, operator_idx: Optional[Union[Iterable[int], int, str]], num_acted_system: Optional[int]) -> List[List[int]]:
         r"""Update sequential according to input operator index information, or report error.
 
         Args:
             operator_idx: input system indices of the operator. None means acting on all systems.
-            num_acted_system: number of systems that one operator acts on.
+            num_acted_system: number of systems that one operator acts on. None means just check the input.
         
         Returns:
             the formatted system indices.
@@ -282,7 +283,7 @@ class OperatorList(torch.nn.Sequential):
             self.dtype = dtype
 
         for operator in self:
-            operator.to(backend=self.backend, dtype=self.dtype)
+            operator.to(dtype=self.dtype)
 
     @property
     def operator_history(self) -> List[Union[OperatorInfoType, List[OperatorInfoType]]]:
@@ -312,7 +313,7 @@ class OperatorList(torch.nn.Sequential):
         return torch.cat(list_params) if list_params else torch.tensor([])
 
     @property
-    def grad(self) -> np.ndarray:
+    def grad(self) -> torch.Tensor:
         r"""Gradients with respect to the flattened parameters.
         """
         assert self._modules, \
@@ -322,8 +323,8 @@ class OperatorList(torch.nn.Sequential):
             assert param.grad is not None, (
                 'The gradient is None, run the backward first before calling this property, '
                 'otherwise check where the gradient chain is broken.')
-            grad_list.append(param.grad.detach().numpy().flatten())
-        return np.concatenate(grad_list) if grad_list != [] else grad_list
+            grad_list.append(param.grad.detach().flatten())
+        return torch.cat(grad_list) if grad_list else torch.tensor([])
 
     def update_param(self, theta: Union[torch.Tensor, np.ndarray, float], 
                      idx: Optional[Union[int, None]] = None) -> None:
@@ -428,14 +429,12 @@ class OperatorList(torch.nn.Sequential):
                 
                 layer.register_parameter(name, new_param)
     
-    
-    
-    def __call__(self, state: Optional[State] = None) -> State:
+    def __call__(self, state: Optional[_State] = None) -> _State:
         r"""Same as forward of Neural Network
         """
         return self.forward(state)
 
-    def forward(self, state: Optional[State] = None) -> State:
+    def forward(self, state: Optional[_State] = None) -> _State:
         r"""Passing a physical input state.
 
         Args:
@@ -450,17 +449,18 @@ class OperatorList(torch.nn.Sequential):
             state = zero_state(self.num_systems, self.system_dim)
         
         if len(self) == 0:
-            warnings.warn(
-                "The operator list is empty: return the input state.", UserWarning)
-            return state
+            return state.clone()
 
         assert self.num_systems <= state.num_systems, \
             f"Insufficient system: received {state.num_systems}, expected >= {self.num_systems}"
         assert self.system_dim == (applied_dim := [state.system_dim[i] for i in self.system_idx]), \
             f"Dimension for systems {self.system_idx} does not agree: received {applied_dim}, expected {self.system_dim}"
-
+        
         state = state.clone()
-        state = super().forward(state)
+        if isinstance(state, StateSimulator):
+            state = super().forward(state)
+        else:
+            state.apply(self.operator_history)
         return state
     
     @property
@@ -469,14 +469,14 @@ class OperatorList(torch.nn.Sequential):
         """
         dim = int(np.prod(self.system_dim))
         input_basis = std_basis(self.num_systems, self.system_dim)
-        input_basis._switch_unitary_matrix = True
+        input_basis._keep_dim = True
         
         physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
         output = self.forward(input_basis)
         self.system_idx = physical_idx
         
-        assert output.backend == 'state_vector', \
-            f"The circuit seems to be a noisy circuit: expect 'state_vector', output {output_basis.backend}"
+        assert output.backend == 'default-pure', \
+            f"The circuit seems to be a noisy circuit: expect 'default-pure', output {output_basis.backend}"
         input_basis = input_basis.bra.view([dim, 1, 1, dim])
         output_basis = output.ket.view([dim, -1, dim, 1])
         return torch.sum(output_basis @ input_basis, dim=0).view(output.batch_dim[1:] + [dim, dim])
@@ -514,23 +514,41 @@ class OperatorList(torch.nn.Sequential):
                 system_depth[sys_idx] = np.max(system_depth[sys_idx]) + 1
         return int(np.max(system_depth))
     
-    @property
-    def qasm(self) -> str:
-        r"""String representation of the circuit in OpenQASM-like format.
-        
-        TODO: remove \n
+    def get_qasm(self, transpile: bool) -> str:
+        r"""Get the OpenQASM-like string representation of the circuit.
+
+        Args:
+            transpile: whether to transpile the circuit to OpenQASM 2.0 format. Defaults to ``True``.
+
+        Returns:
+            OpenQASM-like string representation of the circuit.
         """
         qasm_str = ''
         for op in self.children():
             if isinstance(op, OperatorList):
-                qasm_str += op.qasm
+                if qasm_str and qasm_str[-1] != '\n':
+                    qasm_str += '\n'
+                if isinstance(op, Layer):
+                    qasm_str += '\n// ' + op.get_latex_name('standard')
+                qasm_str += op.get_qasm(transpile) + '\n'
             else:
-                qasm_str += '\n' + op.info.qasm
-        return qasm_str 
-
+                qasm_str += '\n' + (op.info.qasm2 if transpile else op.info.qasm)
+        return qasm_str
+        
     def __str__(self):
-        return self.qasm
+        return self.__repr__()
 
+    def dagger(self) -> None:
+        r"""Reverse the entire operator list.
+
+        The dagger is obtained by reversing the order of operators and taking the dagger of each operator.
+        """
+        i, length = 0, len(self)
+        while i < length:
+            op = self.pop(i)
+            op.dagger()
+            self.insert(0, op)
+            i += 1
 
 class Layer(OperatorList):
     r"""Base class for built-in trainable quantum circuit ansatz.
@@ -554,6 +572,16 @@ class Layer(OperatorList):
         self.name = name
         self._depth = depth
         super().__init__(len(physical_idx), system_dim, physical_idx)
+        
+    @property
+    def depth(self) -> int:
+        r"""Depth of the layer.
+        
+        Note:
+            The depth of the layer is defined as the layer depth.
+            It is not the same as the depth of the circuit, which is defined as the maximum depth of all systems.
+        """
+        return self._depth
     
     def get_latex_name(self, style: str = 'standard') -> str:
         r"""Return the LaTeX name of the layer.

@@ -16,14 +16,14 @@
 import itertools
 import math
 from functools import reduce
-from typing import List, Union
+from typing import List, Optional, Union
 
 import numpy as np
 import torch
 from torch.linalg import matrix_power
 
 from .. import database
-from ..core import State, get_dtype, to_state, utils
+from ..core import StateSimulator, get_dtype, to_state, utils
 from ..core.intrinsic import _alias
 
 __all__ = [
@@ -118,7 +118,7 @@ def pauli_group(num_qubits: int) -> torch.Tensor:
     return pauli_basis(num_qubits) * (math.sqrt(2) ** num_qubits)
 
 
-def pauli_str_basis(pauli_str: Union[str, List[str]]) -> State:
+def pauli_str_basis(pauli_str: Union[str, List[str]]) -> StateSimulator:
     r"""Get the state basis with respect to the Pauli string.
     
     Args:
@@ -157,7 +157,7 @@ def pauli_str_basis(pauli_str: Union[str, List[str]]) -> State:
                             [1, -1]], dtype=torch.complex128) / math.sqrt(2)
     y_basis = torch.tensor([[1, 1j],
                             [1, -1j]], dtype=torch.complex128) / math.sqrt(2)
-    z_basis = torch.eye(2, dtype=torch.complex128)
+    z_basis = utils.matrix._eye(2)
     i_basis = z_basis
     locals_ = locals()
     
@@ -166,7 +166,13 @@ def pauli_str_basis(pauli_str: Union[str, List[str]]) -> State:
         basis = utils.linalg._nkron(*list_basis) if len(list_basis) > 1 else list_basis[0]
         return basis.unsqueeze(-1)
     
-    basis = __get_single_str(pauli_str) if isinstance(pauli_str, str) else torch.stack([__get_single_str(string) for string in pauli_str])
+    if isinstance(pauli_str, str):
+        basis = __get_single_str(pauli_str)
+    else:
+        pauli_len = len(pauli_str[0])
+        assert all(len(s) == pauli_len for s in pauli_str), \
+            "All Pauli strings must have the same length."
+        basis = torch.stack([__get_single_str(string) for string in pauli_str])
     return to_state(basis.to(dtype=get_dtype()))
 
 
@@ -205,7 +211,7 @@ def pauli_str_povm(pauli_str: Union[str, List[str]]) -> torch.Tensor:
     return pauli_str_basis(pauli_str).density_matrix
 
 
-def qft_basis(num_qubits: int) -> State:
+def qft_basis(num_qubits: int) -> StateSimulator:
     r"""Compute the eigenvectors (eigenbasis) of the Quantum Fourier Transform (QFT) matrix.
 
     Args:
@@ -242,11 +248,11 @@ def qft_basis(num_qubits: int) -> State:
 
 
 @_alias({"num_systems": "num_qubits"})
-def std_basis(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
+def std_basis(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> StateSimulator:
     r"""Generate all standard basis states for a given number of qubits.
 
     Args:
-        num_systems: number of systems in this state. Alias of ``num_qubits``.
+        num_systems: number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
         system_dim: dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
 
@@ -276,11 +282,14 @@ def std_basis(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
             [0.+0.j 1.+0.j]
             ---------------------------------------------------
     """
+    if num_systems is None:
+        num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
+  
     dim = system_dim ** num_systems if isinstance(system_dim, int) else math.prod(system_dim)
     return to_state(torch.eye(dim).unsqueeze(-1).to(get_dtype()), system_dim)
 
 
-def bell_basis() -> State:
+def bell_basis() -> StateSimulator:
     r"""Generate the Bell basis for a 2-qubit system, 
     with each basis state accessible along the first dimension of a tensor.
 

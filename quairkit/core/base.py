@@ -17,33 +17,19 @@ r"""
 The basic function of the QuAIRKit.
 """
 
-import enum
 import random
 import warnings
-from typing import Optional, Union
 
 import numpy as np
 import torch
 
-
-class Backend(enum.Enum):
-    r"""Backend classifier in the QuAIRKit.
-    """
-    Simulator = 'default'
-    QPU = 'qpu' # TODO: to be added
-
-    StateVector = 'state_vector' # TODO: depreciated in the future
-    DensityMatrix = 'density_matrix' # TODO: depreciated in the future
-
-
 DEFAULT_DEVICE = "cpu"
-DEFAULT_SIMULATOR = Backend.Simulator
 DEFAULT_DTYPE = torch.complex64
 SEED = None
 
 
-def set_device(device: "str") -> None:
-    r"""Set the device to save the tensor.
+def set_device(device: str) -> None:
+    r"""Set the classical device to save the tensor.
 
     Args:
         device: The name of the device.
@@ -53,39 +39,13 @@ def set_device(device: "str") -> None:
     torch.set_default_device(device)
 
 
-def get_device() -> "str":
+def get_device() -> str:
     r"""Get the current device to save the tensor.
 
     Returns:
         The name of the current device.
     """
     return DEFAULT_DEVICE
-
-
-def set_backend(backend: Union[str, Backend]) -> None:
-    r"""Set the backend implementation of QuAIRKit.
-
-    Args:
-        backend: The name of the backend.
-    """
-    global DEFAULT_SIMULATOR
-    if backend in ["state_vector", "density_matrix"]:
-        warnings.warn(
-            "The usage for 'state_vector' and 'density_matrix' will be deprecated in the future."
-            + "Please use 'default' instead.",
-            DeprecationWarning,
-        )
-        backend = 'default'
-    DEFAULT_SIMULATOR = Backend(backend) if isinstance(backend, str) else backend
-
-
-def get_backend() -> str:
-    r"""Get the current backend of QuAIRKit.
-
-    Returns:
-        The name of currently used backend.
-    """
-    return DEFAULT_SIMULATOR.value
 
 
 def set_seed(seed: int) -> None:
@@ -99,6 +59,10 @@ def set_seed(seed: int) -> None:
         ``torch``, ``torch.cuda``, ``numpy``, ``random``
 
     """
+    if not isinstance(seed, int):
+        warnings.warn('The input seed is not an integer', UserWarning)
+        seed = int(seed)
+    
     global SEED
     SEED = seed
     torch.manual_seed(seed)

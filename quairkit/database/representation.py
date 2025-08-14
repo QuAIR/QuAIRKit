@@ -21,9 +21,9 @@ from typing import List
 
 import torch
 
-from ..core import utils, State
-from ..core.intrinsic import (_ArrayLike, _SingleParamLike, _StateLike,
-                              _type_fetch, _type_transform)
+from ..core import State, utils
+from ..core.intrinsic import (_ArrayLike, _ParamLike, _SingleParamLike,
+                              _StateLike, _type_fetch, _type_transform)
 from .set import pauli_group
 
 __all__ = [
@@ -476,7 +476,7 @@ def reset_kraus(prob: _SingleParamLike) -> List[_ArrayLike]:
     return _type_transform(mat, type_str)
 
 
-def thermal_relaxation_kraus(const_t: _SingleParamLike, exec_time: _SingleParamLike) -> List[_ArrayLike]:
+def thermal_relaxation_kraus(const_t: _ParamLike, exec_time: _SingleParamLike) -> List[_ArrayLike]:
     r"""Kraus representation of a thermal relaxation channel
 
     Args:

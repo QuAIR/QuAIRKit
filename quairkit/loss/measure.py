@@ -18,15 +18,13 @@ The source file of the class for the measurement.
 """
 
 import math
-import warnings
 from typing import Dict, Iterable, List, Optional, Tuple, Union
 
 import numpy as np
 import torch
 
-from ..core import Hamiltonian, Operator, utils
-from ..core.intrinsic import _alias, _digit_to_int
-from ..core.state import State
+from ..core import Hamiltonian, Operator, StateOperator, StateSimulator, utils
+from ..core.intrinsic import _alias, _digit_to_int, _State
 from ..database import pauli_str_basis, std_basis
 
 __all__ = ["Measure", "ExpecVal"]
@@ -70,26 +68,28 @@ class ExpecVal(Operator):
         super().__init__()
         self.hamiltonian = hamiltonian
     
-    def __call__(self, state: State, decompose: Optional[bool] = False) -> Union[torch.Tensor, List[torch.Tensor]]:
+    def __call__(self, state: _State, shots: Optional[int] = None, decompose: Optional[bool] = False) -> torch.Tensor:
         return self.forward(state, decompose)
 
-    def forward(self, state: State, decompose: Optional[bool] = False) -> Union[torch.Tensor, List[torch.Tensor]]:
+    def forward(self, state: _State, shots: Optional[int] = None, decompose: Optional[bool] = False) -> torch.Tensor:
         r"""Compute the expectation value of the observable with respect to the input state.
 
         The value computed by this function can be used as a loss function to optimize.
 
         Args:
             state: The input state which will be used to compute the expectation value.
+            shots: The number of shots to measure the observable. Defaults to None, which means the default behavior.
             decompose: Defaults to ``False``.  If decompose is ``True``, it will return the expectation value of each term.
 
         Raises:
             NotImplementedError: The backend is wrong or not supported.
 
         Returns:
-            The expectation value.
+            The expectation value or the list of expectation values for each term in the observable.
 
         """
-        return state.expec_val(self.hamiltonian, decompose=decompose)
+        return state.expec_val(self.hamiltonian, shots=shots, decompose=decompose)
+
 
 class Measure(Operator):
     r"""Compute the probability of the specified measurement result.
@@ -177,55 +177,53 @@ class Measure(Operator):
         
         Note:
             the allowable input for `measure_op` are:
-            - None, i.e., a 'computational' basis
+            - None, i.e., a computational basis
             - a string composed of 'i', 'x', 'y', and 'z'
             - a projection-valued measurement (PVM) in torch.Tensor
         """
         super().__init__()
 
         self.measure_basis = None
-        if measure_op is None:
+        if measure_op is None or isinstance(measure_op, (str, List)):
             self.measure_op = measure_op
         
-        elif isinstance(measure_op, (str, List)):
-            self.measure_basis = pauli_str_basis(measure_op).to(self.dtype)
-            self.measure_op = self.measure_basis.density_matrix
-        
         elif isinstance(measure_op, torch.Tensor):
-            if not all(check := utils.check._is_positive(measure_op).tolist()):
-                warnings.warn(
-                    f"Some elements of the input PVM is not positive: received {check}", UserWarning)
-
-            sum_basis = torch.sum(measure_op, dim=-3)
-            if (err := torch.norm(sum_basis - torch.eye(sum_basis.shape[-1]).expand_as(sum_basis))) > 1e-6:
-                warnings.warn(
-                    f"The input PVM is not complete: sum distance to identity is {err}", UserWarning)
-
-            #TODO check whether the input is orthogonal
+            assert torch.all(utils.check._is_pvm(measure_op)).item(), \
+                "The input measurement operators do not form a projection-valued measurement (PVM)."
             self.measure_op = measure_op.to(self.dtype)
 
         else:
             raise ValueError(
-                f"Unsupported type for measure_basis: receive type {type(measure_op)}")
+                f"Unsupported type for measure_op: receive type {type(measure_op)}")
     
     @_alias({"system_idx": "qubits_idx"})
-    def __call__(self, state: State, system_idx: Optional[Union[Iterable[int], int, str]] = 'full',
+    def __call__(self, state: _State, system_idx: Optional[Union[Iterable[int], int, str]] = 'full', shots: Optional[int] = None,
                  desired_result: Optional[Union[Iterable[str], str]] = None, keep_state: Optional[bool] = False
-    ) -> Union[torch.Tensor, Tuple[torch.Tensor, State]]:
-        return self.forward(state, system_idx, desired_result, keep_state)
+    ) -> Union[torch.Tensor, Tuple[torch.Tensor, _State]]:
+        return self.forward(state, system_idx, shots, desired_result, keep_state)
     
-    def __check_measure_op(self, state: State, system_idx: List[int]) -> bool:
+    def __check_measure_op(self, state: _State, system_idx: List[int]) -> bool:
         r"""Check whether the shape of input measurement operator is valid,
         and return whether measurement is performed across all qubits.
+        
+        Note:
+            used for simulator backend only.
         """
         system_dim = [state.system_dim[idx] for idx in system_idx]
         measure_op = self.measure_op
         num_measure_systems = len(system_idx)
-        
+
         if measure_op is None:
             self.measure_basis = std_basis(num_measure_systems, system_dim)
+            self.measure_op = self.measure_basis.density_matrix
             return num_measure_systems == state.num_systems
-        
+        elif isinstance(measure_op, (str, List)):
+            if isinstance(measure_op, str) and len(measure_op) == 1:
+                measure_op *= num_measure_systems
+            self.measure_basis = pauli_str_basis(measure_op)
+            self.measure_op = self.measure_basis.density_matrix
+            return num_measure_systems == state.num_systems
+
         dim = math.prod(system_dim)
         expected_shape = [dim, dim]
         if measure_op.shape[-2:] != tuple(expected_shape):
@@ -249,14 +247,15 @@ class Measure(Operator):
 
     @_alias({"system_idx": "qubits_idx"})
     def forward(
-            self, state: State, system_idx: Optional[Union[Iterable[int], int, str]] = 'full',
-            desired_result: Optional[Union[List[Union[int, str]], int, str]] = None, keep_state: Optional[bool] = False
-    ) -> Union[torch.Tensor, Tuple[torch.Tensor, State], Tuple[Dict, State]]:
+            self, state: _State, system_idx: Optional[Union[Iterable[int], int, str]] = 'full', shots: Optional[int] = None,
+            desired_result: Optional[Union[List[Union[int, str]], int, str]] = None, keep_state: bool = False
+    ) -> Union[torch.Tensor, Tuple[torch.Tensor, _State], Tuple[Dict, _State]]:
         r"""Compute the probability of measurement to the input state.
 
         Args:
             state: The quantum state to be measured.
             system_idx: The index of the systems to be measured. Defaults to ``'full'`` which means measure all the qubits.
+            shots: The number of shots for the measurement. Defaults to None which means the default behavior.
             desired_result: Specify the results of the measurement to return. Defaults to ``None`` which means return the probability of all the results.
             keep_state: Whether return the measured state. Defaults to ``False``.
 
@@ -272,23 +271,39 @@ class Measure(Operator):
         else:
             system_idx = list(system_idx)
         system_dim = [state.system_dim[idx] for idx in system_idx]
-        measure_all_sys = self.__check_measure_op(state, system_idx)
-        
-        prob_array, measured_state = state.measure(self.measure_op, system_idx, keep_state=True)
-        
-        if measure_all_sys:
-            measured_state = self.measure_basis.expand_as(measured_state)
-        
-        if desired_result or desired_result == 0:
+        if desired_result is not None:
             if isinstance(desired_result, int):
                 desired_result = [desired_result]
             elif isinstance(desired_result, str):
                 desired_result = [_digit_to_int(desired_result, system_dim)]
             else:
                 desired_result = [(_digit_to_int(res, system_dim) if isinstance(res, str) else res)
-                                  for res in desired_result]
-            
-            prob_array = torch.index_select(prob_array, dim=-1, index=torch.tensor(desired_result))
-            measured_state = measured_state.prob_select(torch.tensor(desired_result))
+                                for res in desired_result]
+            desired_result = torch.tensor(desired_result)
+
+        if isinstance(state, StateSimulator):
+            measure_all_sys = self.__check_measure_op(state, system_idx)
+            measure_op = self.measure_op
+
+            if desired_result:
+                measure_op = torch.index_select(measure_op, dim=-3, index=desired_result)
+
+            prob_array, measured_state = state.measure(system_idx, shots=shots, measure_op=measure_op, keep_state=True)
+
+            if keep_state:
+                if measure_all_sys:
+                    measured_state = self.measure_basis.expand_as(measured_state)
+                return prob_array, measured_state
+            return prob_array
         
-        return (prob_array, measured_state) if keep_state else prob_array
+        assert not keep_state, \
+            "The post-measurement state is not supported for state operators."
+        
+        measure_op = self.measure_op
+        if isinstance(measure_op, List):
+            raise NotImplementedError(
+                "The measurement with multiple measurement operators is not supported for state operators.")
+        prob_array = state.measure(system_idx, shots=shots, measure_op=measure_op)
+        if desired_result:
+            prob_array = torch.index_select(prob_array, dim=-1, index=desired_result)
+        return prob_array

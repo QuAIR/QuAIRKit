@@ -201,7 +201,7 @@ def _thermal_relaxation_kraus(
     exec_time = exec_time.view([1]) / 1000
     prob_reset = 1 - torch.exp(-exec_time / t1)
     prob_z = (1 - prob_reset) * (1 - torch.exp(-exec_time / t2) * torch.exp(exec_time / t1)) / 2
-    prob_z = torch.zeros_like(exec_time) if torch.abs(prob_z) <= 0 else prob_z
+    prob_z = prob_z.clamp(min=0)
     prob_i = 1 - prob_reset - prob_z
     _0 = torch.zeros_like(exec_time)
     kraus_oper = [

@@ -21,6 +21,7 @@ from typing import Iterable, Optional, Union
 
 import torch
 
+from ...core import utils
 from ...core.utils.matrix import (_h, _p, _rx, _ry, _rz, _s, _sdg, _t, _tdg,
                                   _u3, _x, _y, _z)
 from .base import Gate, ParamGate
@@ -56,6 +57,7 @@ class H(Gate):
         }
         super().__init__(
             None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -95,7 +97,8 @@ class S(Gate):
 
     @property
     def matrix(self) -> torch.Tensor:
-        return S.__matrix.to(self.device, dtype=self.dtype)
+        mat = S.__matrix.to(self.device, dtype=self.dtype)
+        return utils.linalg._dagger(mat) if self._is_dagger else mat
 
 
 class Sdg(Gate):
@@ -122,16 +125,18 @@ class Sdg(Gate):
     ):
         gate_info = {
             "name": "sdg",
-            "tex": r'S^\dagger',
+            "tex": r'S',
             "api": "sdg",
             'plot_width': 0.4,
         }
         super().__init__(
             None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
+        self._is_dagger = True
 
     @property
     def matrix(self) -> torch.Tensor:
-        return Sdg.__matrix.to(self.device, dtype=self.dtype)
+        mat = Sdg.__matrix.to(self.device, dtype=self.dtype)
+        return mat if self._is_dagger else utils.linalg._dagger(mat)
 
 
 class T(Gate):
@@ -167,7 +172,8 @@ class T(Gate):
 
     @property
     def matrix(self) -> torch.Tensor:
-        return T.__matrix.to(self.device, dtype=self.dtype)
+        mat = T.__matrix.to(self.device, dtype=self.dtype)
+        return utils.linalg._dagger(mat) if self._is_dagger else mat
 
 
 class Tdg(Gate):
@@ -194,16 +200,18 @@ class Tdg(Gate):
     ):
         gate_info = {
             "name": "tdg",
-            "tex": r'T^\dagger',
+            "tex": r'T',
             "api": "tdg",
             'plot_width': 0.4,
         }
         super().__init__(
             None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
+        self._is_dagger = True
 
     @property
     def matrix(self) -> torch.Tensor:
-        return Tdg.__matrix.to(self.device, dtype=self.dtype)
+        mat = Tdg.__matrix.to(self.device, dtype=self.dtype)
+        return mat if self._is_dagger else utils.linalg._dagger(mat) 
 
 
 class X(Gate):
@@ -236,6 +244,7 @@ class X(Gate):
         }
         super().__init__(
             None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -271,6 +280,7 @@ class Y(Gate):
         }
         super().__init__(
             None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
 
     @property
     def matrix(self) -> torch.Tensor:
@@ -306,6 +316,7 @@ class Z(Gate):
         }
         super().__init__(
             None, qubits_idx, [2], check_legality=False, gate_info=gate_info)
+        self._is_hermitian = True
 
     @property
     def matrix(self) -> torch.Tensor:

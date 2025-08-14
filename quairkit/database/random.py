@@ -28,7 +28,7 @@ from scipy.stats import unitary_group
 # TODO this is added due to channel_repr_convert, move it to intrinsic
 import quairkit as qkit
 
-from ..core import Hamiltonian, State, get_dtype, get_float_dtype, to_state
+from ..core import Hamiltonian, StateSimulator, get_dtype, to_state
 from ..core.intrinsic import _alias, _format_total_dim
 from ..core.utils.linalg import _dagger
 
@@ -96,7 +96,7 @@ def random_state(
     is_real: Optional[bool] = False,
     size: Optional[Union[int, List[int]]] = 1,
     system_dim: Union[List[int], int] = 2,
-) -> State:
+) -> StateSimulator:
     r"""Generate a random quantum state.
 
     Args:

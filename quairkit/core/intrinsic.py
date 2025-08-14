@@ -23,7 +23,8 @@ import functools
 import io
 import math
 import warnings
-from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
+from typing import (Callable, Dict, Iterable, List, Optional, Tuple, TypeVar,
+                    Union)
 
 import IPython
 import numpy as np
@@ -32,7 +33,7 @@ import torch
 from torch.nn.parameter import Parameter
 
 from .base import get_dtype, get_float_dtype, get_seed
-from .state import MixedState, PureState, State, to_state
+from .state import State, StateOperator, StateSimulator, to_state
 
 
 def _format_total_dim(num_systems: int, system_dim: Union[List[int], int]) -> int:
@@ -241,7 +242,8 @@ def _get_complex_dtype(float_dtype: torch.dtype) -> torch.dtype:
 
 
 _ArrayLike = Union[np.ndarray, torch.Tensor]
-_StateLike = Union[np.ndarray, torch.Tensor, PureState, MixedState]
+_State = Union[StateSimulator, StateOperator]
+_StateLike = Union[np.ndarray, torch.Tensor, _State]
 _ParamLike = Union[np.ndarray, torch.Tensor, Iterable[float]]
 _SingleParamLike = Union[_ParamLike, float]
 _General = Union[_ArrayLike, _StateLike, _SingleParamLike]
@@ -270,41 +272,13 @@ def _type_fetch(data: _General,
     if isinstance(data, torch.Tensor):
         return "tensor" if ndim is None else list(data.shape[:-ndim])
     
-    if isinstance(data, State):
+    if isinstance(data, StateSimulator):
         return "state" if ndim is None else ("state", list(data.batch_dim))
 
     assert ndim is None, \
         ("Cannot obtain batch dimension for data type other than " +
          f"np.ndarray, torch.Tensor or quairkit.State: received {type(data)}")
     return "other"
-
-
-def _density_to_vector(rho: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    r""" transform a density matrix to a state vector
-
-    Args:
-        rho: a density matrix (pure state)
-
-    Returns:
-        a state vector
-
-    Raises:
-        ValueError: the output state may not be a pure state
-
-    """
-    type_str = _type_fetch(rho)
-    rho = _type_transform(rho, "tensor")
-    eigval, eigvec = torch.linalg.eigh(rho)
-
-    max_eigval = torch.max(eigval).item()
-    err = np.abs(max_eigval - 1)
-    if err > 1e-6:
-        raise ValueError(
-            f"the output state may not be a pure state, maximum distance: {err}")
-
-    state = eigvec[:, torch.argmax(eigval)]
-
-    return state.detach().numpy() if type_str == "numpy" else state
 
 
 def _type_transform(data: _General, output_type: str, 
@@ -325,7 +299,7 @@ def _type_transform(data: _General, output_type: str,
 
     """
     current_type = _type_fetch(data)
-    
+
     if current_type == "other":
         current_type = "tensor"
         data = torch.tensor(data)
@@ -343,7 +317,7 @@ def _type_transform(data: _General, output_type: str,
     if current_type == "numpy":
         if output_type == "tensor":
             return torch.from_numpy(data)
-        
+
         #TODO remove when all state manipulation functions are implemented
         if system_dim is None:
             shape = data.shape
@@ -356,7 +330,7 @@ def _type_transform(data: _General, output_type: str,
     if current_type == "tensor":
         if output_type == "numpy":
             return data.detach().cpu().resolve_conj().numpy()
-        
+
         #TODO remove when all state manipulation functions are implemented
         if system_dim is None:
             shape = data.shape
@@ -367,44 +341,14 @@ def _type_transform(data: _General, output_type: str,
         return to_state(data, system_dim=system_dim, eps=None)
 
     if current_type == "state":
-        if output_type == "numpy":
-            return data.numpy()
-        return data._data.clone()
-
-
-def _cnot_idx_fetch(num_qubits: int, qubits_idx: List[Tuple[int, int]]) -> List[int]:
-    r"""
-    Compute the CNOT index obtained by applying the CNOT gate without using matrix multiplication.
-
-    Args:
-        num_qubits: The total number of qubits in the system.
-        qubits_idx: A list of tuples, where each tuple contains the indices of the two qubits
-                    involved in the CNOT gate.
-
-    Returns:
-        List: A list of integers representing the decimal values of all binary strings
-                obtained by applying the CNOT gate.
-    """
-    assert len(np.shape(qubits_idx)) == 2, \
-        "The CNOT system_idx should be list of tuple of integers, e.g., [[0, 1], [1, 2]]."
-    binary_list = [bin(i)[2:].zfill(num_qubits) for i in range(2 ** num_qubits)]
-    system_idx_length = len(qubits_idx)
-    for item in range(len(binary_list)):
-        for bin_idx in range(system_idx_length):
-            id1 = qubits_idx[system_idx_length - bin_idx - 1][0]
-            id2 = qubits_idx[system_idx_length - bin_idx - 1][1]
-            if binary_list[item][id1] == "1":
-                if binary_list[item][id2] == '0':
-                    binary_list[item] = binary_list[item][:id2] + '1' + binary_list[item][id2 + 1:]
-                else:
-                    binary_list[item] = binary_list[item][:id2] + '0' + binary_list[item][id2 + 1:]
-
-    decimal_list = [int(binary, 2) for binary in binary_list]
-    return decimal_list
+        return data.numpy() if output_type == "numpy" else data._data.clone()
+    
+    raise ValueError(
+        f"does not support transformation from {current_type} to type {output_type}: received {data}")
 
 
 def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], param: torch.Tensor, 
-                     atol: float = 1e-2, rtol: float = 1e-2, eps: float = 1e-2,
+                     eps: float = 1e-2, atol: float = 1e-2, rtol: float = 1e-2, nondet_tol: float = 0.0,
                      feedback: bool = False, message: str = None) -> None:
     r"""
     Check the correctness of the gradient computation using finite difference method.
@@ -412,9 +356,10 @@ def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], p
     Args:
         function_name: function to be tested.
         param: variables that perform finite differences.
+        eps: perturbation for finite differences. Defaults to 1e-2.
         atol: absolute tolerance. Defaults to 1e-3.
         rtol: relative tolerance. Defaults to 1e-2.
-        eps: perturbation for finite differences. Defaults to 1e-2.
+        nondet_tol: tolerance for nondeterministic operations, for randomized functions only. Defaults to 0.
         feedback: whether to print the result for confirmation. Defaults to False.
         message: optional message to be printed if the gradient check fails. Defaults to None.
     
@@ -426,14 +371,14 @@ def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], p
     
     try:
         result = torch.autograd.gradcheck(func, param, eps=eps, atol=atol, 
-                                          rtol=rtol, raise_exception=True)
+                                          rtol=rtol, raise_exception=True, nondet_tol=nondet_tol)
     except Exception as e:
         result = False
         warnings.warn("The following error occurred when trying to compute the gradient\n" 
                       + str(e), RuntimeWarning)
     
     assert result, (
-        "The function is not accurate enough for precision \n"
+        "Gradient test failed \n"
         f"Setting: seed {seed}, precision {atol}, message {message} "
     )
         

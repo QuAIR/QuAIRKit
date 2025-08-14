@@ -23,6 +23,7 @@ See https://ctan.org/pkg/quantikz for more details.
 import datetime
 import os
 import subprocess
+import uuid
 import warnings
 from copy import deepcopy
 from typing import Dict, List, Optional, Tuple, Union
@@ -32,7 +33,7 @@ import numpy as np
 import torch
 from pdf2image import convert_from_path
 
-from .operator import OperatorInfoType
+from .operator.base import OperatorInfoType
 
 __all__ = ['code_to_str', 'OperatorListDrawer']
 
@@ -146,7 +147,8 @@ def _plot_code(latex_code: str, dpi: int) -> IPython.display.Image:
     """
     # Write the LaTeX code to a file
     date = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    file_name = f"quairkit{date}temp"
+    uid = uuid.uuid4()
+    file_name = f"quairkit{date}temp_{uid}"
     with open(f"{file_name}.tex", "w") as f:
         f.write(latex_code)
 
@@ -477,7 +479,7 @@ class OperatorListDrawer:
             gate_prefix = str(num_across_system)
             if show_param and self.style == 'detailed':
                 param_str = _format_data((param / np.pi) % 2, self.decimals)
-                param_str = ', '.join([rf"{num}\pi" for num in param_str.split(', ')]).replace(r'\ldots\pi', '\ldots')
+                param_str = ', '.join([rf"{num}\pi" for num in param_str.split(', ')]).replace(r'\ldots\pi', r'\ldots')
                 gate_prefix += r',label style={label={[gray]below:$\scriptscriptstyle ' + param_str + r' $}}'
             gate_command = r"\gate[" + gate_prefix + r']{' +  gate_name + r'}'
             
@@ -488,7 +490,7 @@ class OperatorListDrawer:
     def _append_measure_op(self, info: OperatorInfoType) -> None:
         r"""Append a measurement operator
         """
-        system_idx = info["system_idx"]
+        system_idx = info["system_idx"][0]
         self._fill_empty(system_idx)
         
         if (collapse_label := info.get("label", None)):
@@ -506,7 +508,7 @@ class OperatorListDrawer:
     def _append_locc_op(self, info: OperatorInfoType) -> None:
         r"""Append a local operation
         """
-        system_idx, num_measure_system = info["system_idx"], info["num_ctrl_system"]
+        system_idx, num_measure_system = info["system_idx"][0], info["num_ctrl_system"]
         measure_idx = system_idx[:num_measure_system]
         self._fill_empty(measure_idx)
         
@@ -529,6 +531,14 @@ class OperatorListDrawer:
         self._code[min_idx].append(gate_command)
         for idx in range(min_idx + 1, max_idx + 1):
             self._code[idx].append(r"{}" if idx in system_idx else self.__empty_through)
+            
+    def _append_reset_op(self, info: OperatorInfoType) -> None:
+        reset_idx, state_label = info["system_idx"][0], info["tex"]
+        self._fill_empty(reset_idx)
+        
+        for idx in reset_idx:
+            self._code[idx].append(r"\ground{}")
+            self._code[idx].append(r"\wireoverride{n} \push{" + state_label + r"\,\,}")
                 
     def append(self, info: OperatorInfoType) -> None:
         r"""Append an operator to the current circuit code
@@ -541,6 +551,8 @@ class OperatorListDrawer:
             self._append_measure_op(info)
         elif info['name'] == "locc":
             self._append_locc_op(info)
+        elif info['name'] == "reset":
+            self._append_reset_op(info)
         elif "param" in info:
             self._append_general_param_op(info)
         else:

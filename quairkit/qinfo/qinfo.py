@@ -867,7 +867,7 @@ def stab_nullity(unitary: _ArrayLike) -> _ArrayLike:
         if not is_unitary_matrices:
           raise ValueError("The input matrix is not unitary.")
     else:
-        is_unitary_list = is_unitary_matrices.tolist() if torch.is_tensor(is_unitary_matrices) else is_unitary_matrices
+        is_unitary_list = is_unitary_matrices.tolist() if isinstance(is_unitary_matrices, torch.Tensor) else is_unitary_matrices
         unitary_indices = torch.tensor([i for i, unitary in enumerate(is_unitary_list) if unitary], dtype=torch.long)
 
         if len(unitary_indices) == 0:
@@ -933,7 +933,7 @@ def stab_renyi(density: _StateLike, alpha: _SingleParamLike) -> _ArrayLike:
             raise ValueError("The input matrix is not density matrix.")
     else:
         # Ensure is_density_list is a list of individual boolean values
-        is_density_list = is_density.tolist() if torch.is_tensor(is_density) else is_density
+        is_density_list = is_density.tolist() if isinstance(is_density, torch.Tensor) else is_density
         density_indices = torch.tensor([i for i, density in enumerate(is_density_list) if density], dtype=torch.long)
 
         if len(density_indices) == 0:

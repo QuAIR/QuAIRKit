@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quairkit"
-version = "0.4.0"
+version = "0.4.1"
 description = "QuAIRKit is a Python research toolbox for developing quantum computing, quantum information, and quantum machine learning algorithms."
 readme = "README.md"
 requires-python = ">=3.8,<4"
@@ -23,8 +23,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "torch>=2.0.0",
-    "numpy<2.0.0",
+    "torch>=2.4.0",
     "scipy",
     "ipython",
     "matplotlib",
@@ -32,7 +31,7 @@ dependencies = [
     "pytest-xdist",
     "sphinx>=6.1.3",
     "readthedocs-sphinx-search",
-    "sphinx-rtd-theme>=1.3.0",
+    "sphinx-rtd-theme>=1.3.0"
 ]
 
 [project.urls]
@@ -41,4 +40,5 @@ Repository = "https://github.com/QuAIR/QuAIRKit"
 Documentation = "https://quairkit.com/QuAIRKit"
 
 [tool.setuptools.packages.find]
-include = ["quairkit*"]
+where = ["."]
+include = ["quairkit", "quairkit.*"]

@@ -118,7 +118,7 @@ def _tdg(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
     return torch.tensor(gate_matrix, dtype=dtype)
 
 
-def _eye(dim: int = 2, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
+def _eye(dim: int, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
     return torch.eye(dim, dtype=dtype)
 
 

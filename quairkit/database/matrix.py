@@ -61,6 +61,7 @@ __all__ = [
     "ms",
     "cswap",
     "toffoli",
+    "ccx",
     "universal2",
     "universal3",
     "universal_qudit",
@@ -1198,6 +1199,9 @@ def toffoli() -> torch.Tensor:
                     [0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j]])
     """
     return utils.matrix._toffoli(get_dtype())
+
+
+ccx = toffoli  # Alias for Toffoli gate, commonly used in quantum computing libraries
 
 
 def universal2(theta: _ParamLike) -> _ArrayLike:

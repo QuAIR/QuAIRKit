@@ -85,7 +85,7 @@ class TraceDistance(Operator):
             state.num_systems == self.target_state.num_systems
         ), f"The number of systems does not match: received {state.num_systems}, expect {self.target_state.num_systems}."
 
-        if not (state.backend == self.target_state.backend == 'state_vector'):
+        if not (state.backend == self.target_state.backend == 'default-pure'):
             return utils.qinfo._trace_distance(
                 state.density_matrix, self.target_state.density_matrix
             )
@@ -156,7 +156,7 @@ class StateFidelity(Operator):
             state.num_systems == self.target_state.num_systems
         ), f"The number of systems does not match: received {state.num_systems}, expect {self.target_state.num_systems}."
         
-        if not (state.backend == self.target_state.backend == 'state_vector'):
+        if not (state.backend == self.target_state.backend == 'default-pure'):
             return utils.qinfo._state_fidelity(
                 state.density_matrix, self.target_state.density_matrix
             )

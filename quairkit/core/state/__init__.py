@@ -17,7 +17,5 @@ r"""
 The module that implements the state class with backends.
 """
 
-from .backend import State
-from .backend.density_matrix import MixedState
-from .backend.state_vector import PureState
-from .state import *
+from .backend import *
+from .state import tensor_state, to_state

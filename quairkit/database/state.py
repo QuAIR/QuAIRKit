@@ -18,12 +18,13 @@ The library of common quantum states.
 """
 
 import math
-from typing import List, Union
+from typing import List, Optional, Union
 
 import torch
 
-from ..core import State, to_state
-from ..core.intrinsic import _alias, _format_total_dim
+from ..core import StateSimulator, get_backend, to_state
+from ..core.intrinsic import _alias, _format_total_dim, _State
+from ..operator import X
 
 __all__ = [
     "zero_state",
@@ -41,11 +42,11 @@ __all__ = [
 
 
 @_alias({"num_systems": "num_qubits"})
-def zero_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
+def zero_state(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> _State:
     r"""Generate a zero state.
 
     Args:
-        num_systems: Number of systems in this state. Alias of ``num_qubits``.
+        num_systems: Number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
         system_dim: Dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to qubit case.
 
@@ -74,11 +75,11 @@ def zero_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State
 
 
 @_alias({"num_systems": "num_qubits"})
-def one_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
+def one_state(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> _State:
     r"""Generate a one state.
 
     Args:
-        num_systems: Number of systems in this state. Alias of ``num_qubits``.
+        num_systems: Number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
         system_dim: Dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to qubit case.
 
@@ -107,13 +108,13 @@ def one_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
 
 
 @_alias({"num_systems": "num_qubits"})
-def computational_state(num_systems: int, index: int, 
-                        system_dim: Union[List[int], int] = 2) -> State:
+def computational_state(num_systems: Optional[int] = None, index: int = 0, 
+                        system_dim: Union[List[int], int] = 2) -> _State:
     r"""Generate a computational state :math:`|e_{i}\rangle`, 
     whose i-th element is 1 and all the other elements are 0.
 
     Args:
-        num_systems: Number of systems in this state. Alias of ``num_qubits``.
+        num_systems: Number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
         index:  Index :math:`i` of the computational basis state :math:`|e_{i}\rangle`.
         system_dim: Dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to qubit case.
@@ -140,15 +141,24 @@ def computational_state(num_systems: int, index: int,
             [0.+0.j 0.+0.j 0.+0.j 0.+0.j 1.+0.j 0.+0.j]
             ---------------------------------------------------
     """
-    dim = _format_total_dim(num_systems, system_dim)
+    if num_systems is None:
+        num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
     
-    data = torch.zeros(dim)
-    data[index] = 1
+    backend = get_backend()
+    if issubclass(backend, StateSimulator):
+        dim = _format_total_dim(num_systems, system_dim)
+        data = torch.zeros(dim)
+        data[index] = 1
+    else:
+        system_dim = [2] * num_systems # TODO add support for no num_systems input
+        index_binary = bin(index)[2:].zfill(num_systems)
+        x_idx = [[idx] for idx in range(num_systems) if index_binary[idx] == '1']
+        data = [X(x_idx).info] if x_idx else []
     return to_state(data, system_dim)
 
 
 @_alias({"num_systems": "num_qubits"})
-def bell_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State:
+def bell_state(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> _State:
     r"""Generate a Bell state.
 
     Its matrix form is:
@@ -158,7 +168,7 @@ def bell_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State
         |\Phi_{D}\rangle=\frac{1}{\sqrt{D}} \sum_{j=0}^{D-1}|j\rangle_{A}|j\rangle_{B}
 
     Args:
-        num_systems: Number of systems in this state. Alias of ``num_qubits``.
+        num_systems: Number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
         system_dim: Dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to qubit case.
 
@@ -183,6 +193,9 @@ def bell_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State
             [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
             ---------------------------------------------------
     """
+    if num_systems is None:
+        num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
+    
     assert num_systems % 2 == 0, \
         f"Number of systems must be even to form a Bell state. Received: {num_systems}"
     half = num_systems // 2
@@ -201,7 +214,7 @@ def bell_state(num_systems: int, system_dim: Union[List[int], int] = 2) -> State
     return to_state(data, system_dim)
 
 
-def bell_diagonal_state(prob: List[float]) -> State:
+def bell_diagonal_state(prob: List[float]) -> StateSimulator:
     r"""Generate a Bell diagonal state.
 
     Its matrix form is:
@@ -270,7 +283,7 @@ def bell_diagonal_state(prob: List[float]) -> State:
     return to_state(data)
 
 
-def w_state(num_qubits: int) -> State:
+def w_state(num_qubits: int) -> _State:
     r"""Generate a W-state.
 
     Args:
@@ -309,7 +322,7 @@ def w_state(num_qubits: int) -> State:
     return to_state(data)
 
 
-def ghz_state(num_qubits: int) -> State:
+def ghz_state(num_qubits: int) -> _State:
     r"""Generate a GHZ-state.
 
     Args:
@@ -345,7 +358,7 @@ def ghz_state(num_qubits: int) -> State:
     return to_state(data)
 
 
-def completely_mixed_computational(num_qubits: int) -> State:
+def completely_mixed_computational(num_qubits: int) -> StateSimulator:
     r"""Generate the density matrix of the completely mixed state.
 
     Args:
@@ -380,7 +393,7 @@ def completely_mixed_computational(num_qubits: int) -> State:
     return to_state(data)
 
 
-def r_state(prob: float) -> State:
+def r_state(prob: float) -> StateSimulator:
     r"""Generate an R-state.
 
     Its matrix form is:
@@ -433,7 +446,7 @@ def r_state(prob: float) -> State:
     return to_state(data)
 
 
-def s_state(prob: float) -> State:
+def s_state(prob: float) -> StateSimulator:
     r"""Generate the S-state.
 
     Its matrix form is:
@@ -482,7 +495,7 @@ def s_state(prob: float) -> State:
     return to_state(data)
 
 
-def isotropic_state(num_qubits: int, prob: float) -> State:
+def isotropic_state(num_qubits: int, prob: float) -> StateSimulator:
     r"""Generate the isotropic state.
 
     Its matrix form is:
