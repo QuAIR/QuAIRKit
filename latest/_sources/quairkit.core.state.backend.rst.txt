@@ -4,5 +4,7 @@ quairkit.core.state.backend
 .. toctree::
     :maxdepth: 2
 
-    quairkit.core.state.backend.density_matrix
-    quairkit.core.state.backend.state_vector
+    quairkit.core.state.backend.base
+    quairkit.core.state.backend.default
+    quairkit.core.state.backend.operator
+    quairkit.core.state.backend.simulator

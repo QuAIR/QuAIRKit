@@ -1,6 +1,8 @@
 quairkit.core.operator
 ======================
 
-.. automodule:: quairkit.core.operator
-    :members:
+.. toctree::
+    :maxdepth: 2
 
+    quairkit.core.operator.base
+    quairkit.core.operator.transpile
