@@ -290,6 +290,30 @@
                 
   
   
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -301,7 +325,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -318,14 +342,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
           </label>
@@ -635,6 +659,7 @@
 
 
 <h1 id="Batch-computation">Batch computation<a class="headerlink" href="#Batch-computation" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>This tutorial involves how to use batch computation to simplify a series of inputs in QuAIRKit.</p>
 <p><strong>Table of Contents</strong></p>
 <ul class="simple">
@@ -699,11 +724,11 @@ Quantum circuit output:
  Batch size: [3]
 
  # 0:
-[ 0.99+0.j    0.  -0.14j  0.  -0.05j -0.01+0.j  ]
+[ 0.96+0.j    0.  -0.23j  0.  -0.19j -0.04+0.j  ]
  # 1:
-[ 0.95+0.j    0.  -0.09j  0.  -0.3j  -0.03+0.j  ]
+[ 0.88+0.j    0.  -0.41j  0.  -0.22j -0.11+0.j  ]
  # 2:
-[ 0.92+0.j    0.  -0.29j  0.  -0.26j -0.08+0.j  ]
+[ 0.99+0.j    0.  -0.17j  0.  -0.03j -0.  +0.j  ]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -742,11 +767,11 @@ Quantum circuit output:
  Batch size: [3]
 
  # 0:
-[ 0.8 -0.01j  0.  +0.j   -0.49-0.34j  0.  +0.j  ]
+[ 0.58+0.55j  0.  +0.j   -0.27-0.54j  0.  +0.j  ]
  # 1:
-[-0.75+0.5j   0.  +0.j    0.16-0.41j  0.  +0.j  ]
+[-0.29-0.82j  0.  +0.j   -0.34-0.37j  0.  +0.j  ]
  # 2:
-[-0.04+0.03j  0.  +0.j   -0.25+0.97j  0.  +0.j  ]
+[-0.77-0.02j  0.  +0.j    0.11+0.62j  0.  +0.j  ]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -783,19 +808,19 @@ Kraus channel:
  Batch size: [3]
 
  # 0:
-[[0.68+0.j   0.  +0.j   0.06-0.46j 0.  +0.j  ]
+[[0.58+0.j   0.  +0.j   0.01-0.05j 0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
- [0.06+0.46j 0.  +0.j   0.32+0.j   0.  +0.j  ]
+ [0.01+0.05j 0.  +0.j   0.42+0.j   0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
  # 1:
-[[ 0.59+0.j    0.  +0.j   -0.16-0.47j  0.  +0.j  ]
+[[ 0.11+0.j    0.  +0.j   -0.11-0.12j  0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [-0.16+0.47j  0.  +0.j    0.41+0.j    0.  +0.j  ]
+ [-0.11+0.12j  0.  +0.j    0.89+0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
  # 2:
-[[ 0.69+0.j    0.  +0.j   -0.4 -0.24j  0.  +0.j  ]
+[[ 0.35+0.j    0.  +0.j   -0.3 +0.33j  0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [-0.4 +0.24j  0.  +0.j    0.31+0.j    0.  +0.j  ]
+ [-0.3 -0.33j  0.  +0.j    0.65+0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
 -----------------------------------------------------
 
@@ -831,18 +856,18 @@ Choi channel:
  Batch size: [3]
 
  # 0:
-[[0.44-0.j   0.25+0.08j 0.  +0.j   0.  +0.j  ]
- [0.25-0.08j 0.56-0.j   0.  +0.j   0.  +0.j  ]
+[[0.26+0.j   0.26+0.27j 0.  +0.j   0.  +0.j  ]
+ [0.26-0.27j 0.74-0.j   0.  +0.j   0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
  # 1:
-[[ 0.79+0.j   -0.19+0.31j  0.  +0.j    0.  +0.j  ]
- [-0.19-0.31j  0.21+0.j    0.  +0.j    0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
+[[0.14-0.j   0.12-0.18j 0.  +0.j   0.  +0.j  ]
+ [0.12+0.18j 0.86+0.j   0.  +0.j   0.  +0.j  ]
+ [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
+ [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
  # 2:
-[[ 0.52-0.j   -0.01-0.07j  0.  +0.j    0.  +0.j  ]
- [-0.01+0.07j  0.48-0.j    0.  +0.j    0.  +0.j  ]
+[[ 0.65+0.j   -0.29+0.26j  0.  +0.j    0.  +0.j  ]
+ [-0.29-0.26j  0.35+0.j    0.  +0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
 -----------------------------------------------------
@@ -906,14 +931,14 @@ Output state:
  Batch size: [3]
 
  # 0:
-[[0.47+0.j  0.2 -0.1j]
- [0.2 +0.1j 0.53+0.j ]]
+[[ 0.42+0.j   -0.05+0.06j]
+ [-0.05-0.06j  0.58+0.j  ]]
  # 1:
-[[0.44+0.j   0.34-0.17j]
- [0.34+0.17j 0.56+0.j  ]]
+[[ 0.46-0.j   -0.03+0.03j]
+ [-0.03-0.03j  0.54-0.j  ]]
  # 2:
-[[0.44+0.j   0.34-0.18j]
- [0.34+0.18j 0.56+0.j  ]]
+[[ 0.34-0.j   -0.11+0.12j]
+ [-0.11-0.12j  0.66-0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -934,7 +959,7 @@ Output state:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Hamiltonian: [[-0.25109698954851734, &#39;X0,Y1&#39;], [0.7827846816585016, &#39;Z0,Z1&#39;], [-0.352828758313956, &#39;Z0,X1&#39;]]
+Hamiltonian: [[0.8891666269428207, &#39;X0&#39;], [0.7368808573711985, &#39;Y0&#39;]]
 </pre></div></div>
 </div>
 <p>One can call the <code class="docutils literal notranslate"><span class="pre">expec_val</span></code> of <code class="docutils literal notranslate"><span class="pre">State</span></code> class, or implement the neural network module <code class="docutils literal notranslate"><span class="pre">ExpecVal</span></code> on batched states.</p>
@@ -970,28 +995,27 @@ Output state:
  Batch size: [3]
 
  # 0:
-[[0.68+0.j   0.  +0.j   0.06-0.46j 0.  +0.j  ]
+[[0.58+0.j   0.  +0.j   0.01-0.05j 0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]
- [0.06+0.46j 0.  +0.j   0.32+0.j   0.  +0.j  ]
+ [0.01+0.05j 0.  +0.j   0.42+0.j   0.  +0.j  ]
  [0.  +0.j   0.  +0.j   0.  +0.j   0.  +0.j  ]]
  # 1:
-[[ 0.59+0.j    0.  +0.j   -0.16-0.47j  0.  +0.j  ]
+[[ 0.11+0.j    0.  +0.j   -0.11-0.12j  0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [-0.16+0.47j  0.  +0.j    0.41+0.j    0.  +0.j  ]
+ [-0.11+0.12j  0.  +0.j    0.89+0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
  # 2:
-[[ 0.69+0.j    0.  +0.j   -0.4 -0.24j  0.  +0.j  ]
+[[ 0.35+0.j    0.  +0.j   -0.3 +0.33j  0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]
- [-0.4 +0.24j  0.  +0.j    0.31+0.j    0.  +0.j  ]
+ [-0.3 -0.33j  0.  +0.j    0.65+0.j    0.  +0.j  ]
  [ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j  ]]
 -----------------------------------------------------
 
-expectation value: tensor([0.2752, 0.1487, 0.2990])
-expectation value: tensor([0.2752, 0.1487, 0.2990])
+expectation value: tensor([ 0.0779, -0.0278, -1.0180])
+expectation value: tensor([ 0.0779, -0.0278, -1.0180])
 expectation value of each Pauli term:
-tensor([[-0.0000, -0.0000, -0.0000],
-        [0.2752, 0.1487, 0.2990],
-        [-0.0000, -0.0000, -0.0000]])
+tensor([[ 0.0094, -0.1980, -0.5258],
+        [ 0.0686,  0.1703, -0.4921]])
 </pre></div></div>
 </div>
 <p>Similarly, to measure the output state, one can call the <code class="docutils literal notranslate"><span class="pre">measure</span></code> of <code class="docutils literal notranslate"><span class="pre">State</span></code> class, or implement the neural network module <code class="docutils literal notranslate"><span class="pre">Measure</span></code> on batched states. The following code measures the second qubit of the output state.</p>
@@ -1020,12 +1044,12 @@ tensor([[-0.0000, -0.0000, -0.0000],
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The shape of PVM: torch.Size([2, 2, 2])
-expectation value: tensor([[0.3545, 0.6455],
-        [0.2408, 0.7592],
-        [0.3947, 0.6053]])
-expectation value: tensor([[0.3545, 0.6455],
-        [0.2408, 0.7592],
-        [0.3947, 0.6053]])
+expectation value: tensor([[0.4500, 0.5500],
+        [0.4740, 0.5260],
+        [0.5218, 0.4782]])
+expectation value: tensor([[0.4500, 0.5500],
+        [0.4740, 0.5260],
+        [0.5218, 0.4782]])
 </pre></div></div>
 </div>
 <p>One can also keep the collapsed states after the measurement by setting <code class="docutils literal notranslate"><span class="pre">keep_state</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
@@ -1072,12 +1096,12 @@ expectation value: tensor([[0.3545, 0.6455],
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
+quairkit: 0.4.2
 torch: 2.8.0+cu128
 torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
 OS: Linux
@@ -1144,7 +1168,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

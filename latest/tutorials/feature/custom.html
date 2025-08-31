@@ -290,6 +290,30 @@
                 
   
   
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -301,7 +325,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -318,14 +342,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
           </label>
@@ -635,6 +659,7 @@
 
 
 <h1 id="Neural-network-setup-customization">Neural network setup customization<a class="headerlink" href="#Neural-network-setup-customization" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>In the previous tutorial, we demonstrated how to build a quantum neural network, specifically a single quantum circuit, to solve the VQE problem. But what if you want to set up a neural network that includes multiple quantum circuits with shared parameters for gradient analysis, along with a classical neural network for post-processing information? This tutorial introduces a general framework in QuAIRKit for customizing quantum neural networks or classical-quantum hybrid neural networks, as well
 as managing parameters effectively.</p>
 <p><strong>Table of contents</strong></p>
@@ -660,7 +685,7 @@ as managing parameters effectively.</p>
 <p>If you are satisfied with QuAIRKit’s built-in circuit ansatzes and parameter gate structures, and have no special needs for parameter generation or management, we recommend constructing a neural network model using the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class.</p>
 <p>Previous tutorials have covered how to construct a quantum circuit or insert a gate/channel. Here, we focus on the built-in parameter management functionality provided by <code class="docutils literal notranslate"><span class="pre">Circuit</span></code>. Let’s start with the following circuit.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -675,12 +700,12 @@ as managing parameters effectively.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/tutorials_feature_custom_4_0.png" src="../../_images/tutorials_feature_custom_4_0.png" />
+<img alt="../../_images/tutorials_feature_custom_3_0.png" src="../../_images/tutorials_feature_custom_3_0.png" />
 </div>
 </div>
 <p>The parameters of the circuit can be revised by <code class="docutils literal notranslate"><span class="pre">update_param</span></code>. If the parameter gate has no input about parameters, the default parameters are uniformly sampled from 0 to <span class="math notranslate nohighlight">\(2\pi\)</span>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">new_cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -702,7 +727,7 @@ as managing parameters effectively.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/tutorials_feature_custom_6_0.png" src="../../_images/tutorials_feature_custom_6_0.png" />
+<img alt="../../_images/tutorials_feature_custom_5_0.png" src="../../_images/tutorials_feature_custom_5_0.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -717,12 +742,12 @@ circuit after updating the parameters
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/tutorials_feature_custom_6_2.png" src="../../_images/tutorials_feature_custom_6_2.png" />
+<img alt="../../_images/tutorials_feature_custom_5_2.png" src="../../_images/tutorials_feature_custom_5_2.png" />
 </div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class also provides adjustable options for uniform sampling and Gaussian sampling methods.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">randomize_param</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)</span> <span class="c1"># use uniform sampling to generate the parameters.</span>
@@ -734,11 +759,11 @@ circuit after updating the parameters
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/tutorials_feature_custom_8_0.png" src="../../_images/tutorials_feature_custom_8_0.png" />
+<img alt="../../_images/tutorials_feature_custom_7_0.png" src="../../_images/tutorials_feature_custom_7_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">randomize_param</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span> <span class="c1"># use Gaussian sampling to generate the parameters.</span>
@@ -750,12 +775,12 @@ circuit after updating the parameters
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/tutorials_feature_custom_9_0.png" src="../../_images/tutorials_feature_custom_9_0.png" />
+<img alt="../../_images/tutorials_feature_custom_8_0.png" src="../../_images/tutorials_feature_custom_8_0.png" />
 </div>
 </div>
 <p>What if you just want to manipulate the parameter of a particular gate? One can visit all elements of the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> through indexing. In this way, users can also access or modify the parameter of the specific gate.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span>
@@ -763,7 +788,7 @@ circuit after updating the parameters
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
 <div class="output_area docutils container">
@@ -782,7 +807,7 @@ Circuit(
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">first_gate</span> <span class="o">=</span> <span class="n">cir</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -798,16 +823,16 @@ Circuit(
 <div class="highlight"><pre>
 The parameters of first two RY gates are
  [Parameter containing:
-tensor([[[1.6176]],
+tensor([[[1.8684]],
 
-        [[0.2767]]], requires_grad=True)]
+        [[1.7971]]], requires_grad=True)]
 The Kraus representations of the first two RY gates are:
- tensor([[[[ 0.6904+0.j, -0.7235+0.j],
-          [ 0.7235+0.j,  0.6904+0.j]]],
+ tensor([[[[ 0.5945+0.j, -0.8041+0.j],
+          [ 0.8041+0.j,  0.5945+0.j]]],
 
 
-        [[[ 0.9904+0.j, -0.1379+0.j],
-          [ 0.1379+0.j,  0.9904+0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
+        [[[ 0.6227+0.j, -0.7824+0.j],
+          [ 0.7824+0.j,  0.6227+0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
 </pre></div></div>
 </div>
 <p>In addition to parameter manipulations, the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class also provides built-in interface for parameterized gate customizations. For example, suppose one wants to implement a controlled-U3 parameterized gate with control on the <span class="math notranslate nohighlight">\(\vert{11}\rangle\)</span> state</p>
@@ -816,7 +841,7 @@ The Kraus representations of the first two RY gates are:
 .\]</div>
 <p>Such three-qubit gate could be implemented via the following code</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">ccu3</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
@@ -827,7 +852,7 @@ The Kraus representations of the first two RY gates are:
 </div>
 <p>By providing the gate function, and the size of parameters, <code class="docutils literal notranslate"><span class="pre">param_oracle</span></code> would take care of any other messes, including the parameter management.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -847,14 +872,14 @@ The Kraus representations of the first two RY gates are:
 <div class="highlight"><pre>
 The parameters of this circuit are
  [Parameter containing:
-tensor([[[5.3570, 0.3300, 0.4004]]], requires_grad=True)]
+tensor([[[1.6940, 1.0177, 3.8678]]], requires_grad=True)]
 </pre></div></div>
 </div>
 <h2 id="Setup-via-torch.nn.Module">Setup via torch.nn.Module<a class="headerlink" href="#Setup-via-torch.nn.Module" title="Link to this heading">¶</a></h2>
 <p>For more general machine learning tasks, such as classical-quantum hybrid machine learning, or if you’re a machine learning researcher aligning with common practices, we recommend setting up the quantum neural network in the same way as a classical neural network—by creating a child class from <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.</p>
 <p>Next, we will demonstrate how to construct a classical-quantum hybrid neural network using <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>. We’ll start by considering the quantum side, which involves inputting quantum data followed by a parameterized universal gate.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_cir</span><span class="p">(</span><span class="n">training_data</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">param</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Circuit</span><span class="p">:</span>
@@ -876,7 +901,7 @@ tensor([[[5.3570, 0.3300, 0.4004]]], requires_grad=True)]
 <figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="../../_images/custom_network.png" style="width: 700px;" /></p>
 <figcaption><p>Fig.1: Depiction of below quantum-classical hybrid neural network with batch_size 100.</p>
 </figcaption></figure><div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Network</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -928,7 +953,7 @@ tensor([[[5.3570, 0.3300, 0.4004]]], requires_grad=True)]
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">100</span>
@@ -939,7 +964,7 @@ tensor([[[5.3570, 0.3300, 0.4004]]], requires_grad=True)]
 </div>
 <p>In the <code class="docutils literal notranslate"><span class="pre">Network</span></code> class, the parameters can be directly accessed through self-defined attributes, making it more convenient to modify parameters as needed.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">theta</span><span class="p">))</span>
@@ -948,7 +973,7 @@ tensor([[[5.3570, 0.3300, 0.4004]]], requires_grad=True)]
 </div>
 <p>Here is an example of passing a randomly-generated two-qubit quantum state through the network.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psi</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -997,7 +1022,7 @@ shape of the gradient tensor for the theta parameters torch.Size([2, 100, 6])
 </tbody>
 </table>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
@@ -1011,17 +1036,19 @@ shape of the gradient tensor for the theta parameters torch.Size([2, 100, 6])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
-torch: 2.8.0+cpu
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 
@@ -1081,7 +1108,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

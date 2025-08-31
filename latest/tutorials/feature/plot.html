@@ -290,6 +290,30 @@
                 
   
   
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -301,7 +325,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -318,14 +342,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
           </label>
@@ -1055,6 +1079,7 @@
 
 
 <h1 id="Drawing-Quantum-Circuits-with-QuAIRKit">Drawing Quantum Circuits with QuAIRKit<a class="headerlink" href="#Drawing-Quantum-Circuits-with-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
 <p>This tutorial provides a guide on how to easily draw quantum circuits using QuAIRKit, based on the <a class="reference external" href="https://ctan.org/pkg/quantikz">Quantikz</a> package.</p>
 <p><strong>Table of Contents</strong></p>
 <ul class="simple">
@@ -1106,7 +1131,7 @@
 </code></pre></div>
 </div>
 <p>Quantikz also supports features like automatic slicing, gate coloring, and logical grouping—useful in both publications and presentations. Its active maintenance and growing user base make it a reliable choice for modern quantum circuit diagrams.</p>
-<p>For full documentation, see [1](<a class="reference external" href="https://arxiv.org/pdf/1809.03842">https://arxiv.org/pdf/1809.03842</a>).</p>
+<p>For full documentation, see [1].</p>
 <h2 id="Installing-a-TeX-Distribution">Installing a TeX Distribution<a class="headerlink" href="#Installing-a-TeX-Distribution" title="Link to this heading">¶</a></h2>
 <p>To compile and preview the generated quantum circuits, you need to have a local TeX distribution. A popular choice is <strong>TeX Live</strong>. Below is a configuration guide for setting up VSCode with TeX Live and LaTeX Workshop.</p>
 <p><a class="reference external" href="https://www.tug.org/texlive/">TeX Live</a> is an easy way to get up and running with the TeX document production system. Download: <a class="reference external" href="https://www.tug.org/texlive/windows.html">Windows</a> / <a class="reference external" href="https://www.tug.org/mactex/">Mac</a> / <a class="reference external" href="https://www.tug.org/texlive/quickinstall.html">Unix</a>.</p>
@@ -1250,7 +1275,7 @@ The diagram of the quantum circuit after adding two parametric oracles:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The parameters of circuit are tensor([6.0770, 1.2419])
+The parameters of circuit are tensor([1.8479, 3.3738])
 </pre></div></div>
 </div>
 <h4 id="Oracles-on-Qudits">Oracles on Qudits<a class="headerlink" href="#Oracles-on-Qudits" title="Link to this heading">¶</a></h4>
@@ -1470,6 +1495,7 @@ The diagram of a quantum circuit containing a general permutation and a controll
 <ul class="simple">
 <li><p>Standard measurement (with probabilities)</p></li>
 <li><p>Post-selection (force a system to collapse to a given outcome)</p></li>
+<li><p>Qubit reset (collapse to <span class="math notranslate nohighlight">\(|0 \rangle\)</span> by default)</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
@@ -1481,17 +1507,19 @@ The diagram of a quantum circuit containing a general permutation and a controll
 
 <span class="c1"># Measure qubit 0 and post-select it to be in state |0⟩</span>
 <span class="c1"># &#39;if_print=True&#39; will print the average post-selection probability</span>
-<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">post_selection</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">post_selection</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">cir_meas</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">cir_meas</span><span class="o">.</span><span class="n">depolarizing</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
-<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">post_selection</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Partial trace and then reset qubit 1 to |0⟩</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">cir_meas</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># Perform a final measurement on qubit 0 (no post-selection)</span>
 <span class="c1"># The outcome will contribute to the final probability distribution</span>
-<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1512,8 +1540,7 @@ The diagram of a quantum circuit containing a general permutation and a controll
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-systems [[0]] collapse to the state |0&gt; with (average) probability 0.9673373103141785
-systems [[1]] collapse to the state |1&gt; with (average) probability 0.49535071849823
+systems [0] collapse to the state |0&gt; with (average) probability 0.9999847412109375
 The diagram of a quantum circuit containing complex layers and subsequent measurements and post-selections:
 </pre></div></div>
 </div>
@@ -1529,7 +1556,7 @@ The diagram of a quantum circuit containing complex layers and subsequent measur
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of the last measurement after post-selections is tensor([[[0.0062, 0.4729]]], grad_fn=&lt;MulBackward0&gt;)
+The probability distribution of the last measurement after post-selections is tensor([[0.4944, 0.5056]], grad_fn=&lt;MulBackward0&gt;)
 </pre></div></div>
 </div>
 <h2 id="Putting-Circuit-Plots-into-the-Paper">Putting Circuit Plots into the Paper<a class="headerlink" href="#Putting-Circuit-Plots-into-the-Paper" title="Link to this heading">¶</a></h2>
@@ -1559,8 +1586,8 @@ The probability distribution of the last measurement after post-selections is te
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with compact style and 150 dpi, as well as printing the latex code:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_style</span><span class="o">=</span><span class="s2">&quot;compact&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">print_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with compact style and 400 dpi, as well as printing the latex code:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;compact&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">print_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1569,7 +1596,7 @@ The probability distribution of the last measurement after post-selections is te
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the diagram of a quantum circuit with compact style and 150 dpi, as well as printing the latex code:
+the diagram of a quantum circuit with compact style and 400 dpi, as well as printing the latex code:
 
 \documentclass[border=2pt]{standalone}
 
@@ -1580,11 +1607,11 @@ the diagram of a quantum circuit with compact style and 150 dpi, as well as prin
 \begin{document}
 
 \begin{quantikz}[transparent]
-\lstick{} &amp; \gate[3]{U_1} &amp; \ctrl[]{2} &amp; {} &amp; \gate[1]{R_z(1.24)} &amp; \gate[1]{\mathcal{D}_{p = 0.1}} &amp; \gate[1]{R_{y}(0.81)}\gategroup[2,steps=8,style={inner sep=4pt,dashed,label={above:{2 Linear Entangled Layers}}}]{} &amp; \ctrl[]{1} &amp; \gate[1]{R_{z}(2.82)} &amp; \ctrl[]{1} &amp; \gate[1]{R_{y}(4.35)} &amp; \ctrl[]{1} &amp; \gate[1]{R_{z}(5.12)} &amp; \ctrl[]{1} &amp; {} &amp; {} &amp; {} &amp; \rstick{} \\
-\lstick{} &amp; \gateinput[label style={xshift=-8.2pt}]{$\textcolor{white}{\rule{4pt}{4pt}}$}\gateoutput[label style={xshift=8.2pt}]{$\textcolor{white}{\rule{4pt}{4pt}}$} &amp; \control[style={fill=white,draw=black,inner sep=1pt}]{} &amp; {} &amp; \push{\,\,} &amp; \gate[1]{\mathcal{E}_{\gamma = 0.2}^{\textrm{\tiny{(AD)}}}} &amp; \gate[1]{R_{y}(0.17)} &amp; \targ{} &amp; \gate[1]{R_{z}(2.26)} &amp; \targ{} &amp; \gate[1]{R_{y}(5.48)} &amp; \targ{} &amp; \gate[1]{R_{z}(4.71)} &amp; \targ{} &amp; \ctrl[]{1} &amp; \gate[2,style={draw=none}]{\permute{2,1}} &amp; {} &amp; \rstick{} \\
-\lstick{} &amp; {} &amp; \gate[2]{V_2} &amp; {} &amp; \control{} &amp; \gate[1]{\mathcal{E}_{p = 0.3}^{\textrm{\tiny{(BPF)}}}} &amp; \gate[1]{U(1.19, 2.19, 3.15)}\gategroup[3,steps=5,style={inner sep=4pt,dashed,label={below:{Complex Block Layer}}}]{} &amp; \ctrl[]{1} &amp; \gate[1]{U(2.62, 1.40, 1.24)} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \gate[2,style={draw=gray, dashed}]{\permute{2,1}} &amp; {} &amp; \gate[2,style={draw=none}]{\permute{2,1}} &amp; \rstick{} \\
-\lstick{} &amp; {} &amp; {} &amp; \gate[1]{R_z(6.08)} &amp; \octrl[]{-3} &amp; {} &amp; \gate[1]{U(4.45, 2.01, 3.15)} &amp; \targ{} &amp; \gate[1]{U(1.30, 1.61, 5.31)} &amp; \ctrl[]{1} &amp; \gate[1]{U(6.09, 4.29, 3.65)} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \rstick{} \\
-\lstick{} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \gate[1]{U(6.27, 4.10, 0.41)} &amp; {} &amp; {} &amp; \targ{} &amp; \gate[1]{U(5.68, 5.31, 2.86)} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \rstick{}
+\lstick{} &amp; \gate[3]{U_1} &amp; \ctrl[]{2} &amp; {} &amp; \gate[1]{R_z} &amp; \gate[1]{\mathcal{D}_{p = 0.1}} &amp; \gate[1]{R_{y}}\gategroup[2,steps=4,style={inner sep=4pt,dashed,label={above:{Linear Entangled Layer$\times 2$}}}]{} &amp; \ctrl[]{1} &amp; \gate[1]{R_{z}} &amp; \ctrl[]{1} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \rstick{} \\
+\lstick{} &amp; \gateinput[label style={xshift=-8.2pt}]{$\textcolor{white}{\rule{4pt}{4pt}}$}\gateoutput[label style={xshift=8.2pt}]{$\textcolor{white}{\rule{4pt}{4pt}}$} &amp; \control[style={fill=white,draw=black,inner sep=1pt}]{} &amp; {} &amp; \push{\,\,} &amp; \gate[1]{\mathcal{E}_{\gamma = 0.2}^{\textrm{\tiny{(AD)}}}} &amp; \gate[1]{R_{y}} &amp; \targ{} &amp; \gate[1]{R_{z}} &amp; \targ{} &amp; {} &amp; \ctrl[]{1} &amp; \gate[2,style={draw=none}]{\permute{2,1}} &amp; {} &amp; \rstick{} \\
+\lstick{} &amp; {} &amp; \gate[2]{V_2} &amp; {} &amp; \control{} &amp; \gate[1]{\mathcal{E}_{p = 0.3}^{\textrm{\tiny{(BPF)}}}} &amp; \gate[1]{U}\gategroup[3,steps=5,style={inner sep=4pt,dashed,label={below:{Complex Block Layer}}}]{} &amp; \ctrl[]{1} &amp; \gate[1]{U} &amp; {} &amp; {} &amp; \gate[2,style={draw=gray, dashed}]{\permute{2,1}} &amp; {} &amp; \gate[2,style={draw=none}]{\permute{2,1}} &amp; \rstick{} \\
+\lstick{} &amp; {} &amp; {} &amp; \gate[1]{R_z} &amp; \octrl[]{-3} &amp; {} &amp; \gate[1]{U} &amp; \targ{} &amp; \gate[1]{U} &amp; \ctrl[]{1} &amp; \gate[1]{U} &amp; {} &amp; {} &amp; {} &amp; \rstick{} \\
+\lstick{} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \gate[1]{U} &amp; {} &amp; {} &amp; \targ{} &amp; \gate[1]{U} &amp; {} &amp; {} &amp; {} &amp; \rstick{}
 \end{quantikz}
 
 \end{document}
@@ -1637,17 +1664,19 @@ the diagram of a quantum circuit with compact style and 150 dpi, as well as prin
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
-torch: 2.8.0+cpu
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 
@@ -1707,7 +1736,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

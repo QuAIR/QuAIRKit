@@ -1,0 +1,1719 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="custom.html">
+      
+      
+        <link rel="next" href="qudit.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Drawing Quantum Circuits with QuAIRKit - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Drawing Quantum Circuits with QuAIRKit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.feature.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="batch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/batch.ipynb (reference label)"><span>Batch computation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cloud.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/cloud.ipynb (reference label)"><span>Running Qu<wbr>AIRKit with third-<wbr>party quantum cloud platforms</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="custom.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/custom.ipynb (reference label)"><span>Neural network setup customization</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/plot.ipynb (reference label)"><span>Drawing Quantum Circuits with Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/plot.ipynb (reference label)"><span>Drawing Quantum Circuits with Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Why-Use-LaTeX-for-Drawing?" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#why-use-latex-for-drawing? (reference label)"><span>Why Use La<wbr>Te<wbr>X for Drawing?</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Why-Choose-Quantikz-Over-Qcircuit?" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#why-choose-quantikz-over-qcircuit? (reference label)"><span>Why Choose Quantikz Over Qcircuit?</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Installing-a-TeX-Distribution" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#installing-a-tex-distribution (reference label)"><span>Installing a Te<wbr>X Distribution</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Visualizing-Quantum-Circuits-with-QuAIRKit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#visualizing-quantum-circuits-with-quairkit (reference label)"><span>Visualizing Quantum Circuits with Qu<wbr>AIRKit</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualizing Quantum Circuits with QuAIRKit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Custom-Oracles-and-Parametric-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#custom-oracles-and-parametric-oracles (reference label)"><span>Custom Oracles and Parametric Oracles</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom Oracles and Parametric Oracles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Basic-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#basic-oracles (reference label)"><span>Basic Oracles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Controlled-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#controlled-oracles (reference label)"><span>Controlled Oracles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Parametric-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#parametric-oracles (reference label)"><span>Parametric Oracles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Oracles-on-Qudits" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#oracles-on-qudits (reference label)"><span>Oracles on Qudits</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Channels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#quantum-channels (reference label)"><span>Quantum Channels</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Parameterized-Layers" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#parameterized-layers (reference label)"><span>Parameterized Layers</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Permutations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#permutations (reference label)"><span>Permutations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permutations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#SWAP-and-CSWAP-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#swap-and-cswap-gates (reference label)"><span>SWAP and CSWAP Gates</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Permute" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#permute (reference label)"><span>Permute</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Measurement-and-Collapse" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#measurement-and-collapse (reference label)"><span>Measurement and Collapse</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Putting-Circuit-Plots-into-the-Paper" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#putting-circuit-plots-into-the-paper (reference label)"><span>Putting Circuit Plots into the Paper</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Putting Circuit Plots into the Paper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Plot-styles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#plot-styles (reference label)"><span>Plot styles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Submitting-to-arXiv" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#submitting-to-arxiv (reference label)"><span>Submitting to ar<wbr>Xiv</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qudit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/qudit.ipynb (reference label)"><span>Introduction to qudit quantum computing</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Why-Use-LaTeX-for-Drawing?" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#why-use-latex-for-drawing? (reference label)"><span>Why Use La<wbr>Te<wbr>X for Drawing?</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Why-Choose-Quantikz-Over-Qcircuit?" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#why-choose-quantikz-over-qcircuit? (reference label)"><span>Why Choose Quantikz Over Qcircuit?</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Installing-a-TeX-Distribution" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#installing-a-tex-distribution (reference label)"><span>Installing a Te<wbr>X Distribution</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Visualizing-Quantum-Circuits-with-QuAIRKit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#visualizing-quantum-circuits-with-quairkit (reference label)"><span>Visualizing Quantum Circuits with Qu<wbr>AIRKit</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualizing Quantum Circuits with QuAIRKit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Custom-Oracles-and-Parametric-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#custom-oracles-and-parametric-oracles (reference label)"><span>Custom Oracles and Parametric Oracles</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom Oracles and Parametric Oracles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Basic-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#basic-oracles (reference label)"><span>Basic Oracles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Controlled-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#controlled-oracles (reference label)"><span>Controlled Oracles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Parametric-Oracles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#parametric-oracles (reference label)"><span>Parametric Oracles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Oracles-on-Qudits" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#oracles-on-qudits (reference label)"><span>Oracles on Qudits</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Channels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#quantum-channels (reference label)"><span>Quantum Channels</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Parameterized-Layers" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#parameterized-layers (reference label)"><span>Parameterized Layers</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Permutations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#permutations (reference label)"><span>Permutations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permutations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#SWAP-and-CSWAP-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#swap-and-cswap-gates (reference label)"><span>SWAP and CSWAP Gates</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Permute" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#permute (reference label)"><span>Permute</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Measurement-and-Collapse" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#measurement-and-collapse (reference label)"><span>Measurement and Collapse</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Putting-Circuit-Plots-into-the-Paper" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#putting-circuit-plots-into-the-paper (reference label)"><span>Putting Circuit Plots into the Paper</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Putting Circuit Plots into the Paper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Plot-styles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#plot-styles (reference label)"><span>Plot styles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Submitting-to-arXiv" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#submitting-to-arxiv (reference label)"><span>Submitting to ar<wbr>Xiv</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/plot.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Drawing-Quantum-Circuits-with-QuAIRKit">Drawing Quantum Circuits with QuAIRKit<a class="headerlink" href="#Drawing-Quantum-Circuits-with-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>This tutorial provides a guide on how to easily draw quantum circuits using QuAIRKit, based on the <a class="reference external" href="https://ctan.org/pkg/quantikz">Quantikz</a> package.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction"><span class="std std-ref">Introduction</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Why-Use-LaTeX-for-Drawing?"><span class="std std-ref">Why Use LaTeX for Drawing?</span></a></p></li>
+<li><p><a class="reference internal" href="#Why-Choose-Quantikz-Over-Qcircuit?"><span class="std std-ref">Why Choose Quantikz Over Qcircuit?</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Installing-a-TeX-Distribution"><span class="std std-ref">Installing a TeX Distribution</span></a></p></li>
+<li><p><a class="reference internal" href="#Visualizing-Quantum-Circuits-with-QuAIRKit"><span class="std std-ref">Visualizing Quantum Circuits with QuAIRKit</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Custom-Oracles-and-Parametric-Oracles"><span class="std std-ref">Custom Oracles and Parametric Oracles</span></a></p></li>
+<li><p><a class="reference internal" href="#Quantum-Channels"><span class="std std-ref">Quantum Channels</span></a></p></li>
+<li><p><a class="reference internal" href="#Parameterized-Layers"><span class="std std-ref">Parameterized Layers</span></a></p></li>
+<li><p><a class="reference internal" href="#Permutations"><span class="std std-ref">Permutations</span></a></p></li>
+<li><p><a class="reference internal" href="#Measurement-and-Collapse"><span class="std std-ref">Measurement and Collapse</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Putting-Circuit-Plots-into-the-Paper"><span class="std std-ref">Putting Circuit Plots into the Paper</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Plot-styles"><span class="std std-ref">Plot Styles</span></a></p></li>
+<li><p><a class="reference internal" href="#Submitting-to-arXiv"><span class="std std-ref">Submitting to arXiv</span></a></p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Introduction">Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<h3 id="Why-Use-LaTeX-for-Drawing?">Why Use LaTeX for Drawing?<a class="headerlink" href="#Why-Use-LaTeX-for-Drawing?" title="Link to this heading">¶</a></h3>
+<p>LaTeX remains the standard tool for academic writing due to its unmatched typesetting quality and precise control over mathematical formatting. For quantum computing research, where diagrams often include complex gate arrangements or layered structures, LaTeX ensures clarity and publication-ready results. It also integrates well with collaborative platforms like Overleaf and arXiv workflows.</p>
+<h3 id="Why-Choose-Quantikz-Over-Qcircuit?">Why Choose Quantikz Over Qcircuit?<a class="headerlink" href="#Why-Choose-Quantikz-Over-Qcircuit?" title="Link to this heading">¶</a></h3>
+<p>While Qcircuit was widely used in earlier works, it relies on the outdated Xy-pic system and requires verbose, low-level syntax. Quantikz, built on TikZ, offers a more modern, readable, and flexible alternative. For example, a three-qubit controlled gate can be written cleanly as:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><code><span class="k">\begin</span><span class="nb">{</span>quantikz<span class="nb">}</span>
+<span class="k">\lstick</span><span class="nb">{</span><span class="k">\ket</span><span class="nb">{</span>0<span class="nb">}}</span> <span class="nb">&amp;</span> <span class="k">\ctrl</span><span class="nb">{</span>1<span class="nb">}</span> <span class="nb">&amp;</span> <span class="k">\qw</span> <span class="k">\\</span>
+<span class="k">\lstick</span><span class="nb">{</span><span class="k">\ket</span><span class="nb">{</span>0<span class="nb">}}</span> <span class="nb">&amp;</span> <span class="k">\ctrl</span><span class="nb">{</span>1<span class="nb">}</span> <span class="nb">&amp;</span> <span class="k">\qw</span> <span class="k">\\</span>
+<span class="k">\lstick</span><span class="nb">{</span><span class="k">\ket</span><span class="nb">{</span>0<span class="nb">}}</span> <span class="nb">&amp;</span> <span class="k">\targ</span><span class="nb">{}</span> <span class="nb">&amp;</span> <span class="k">\qw</span>
+<span class="k">\end</span><span class="nb">{</span>quantikz<span class="nb">}</span>
+</code></pre></div>
+</div>
+<p>Quantikz also supports features like automatic slicing, gate coloring, and logical grouping—useful in both publications and presentations. Its active maintenance and growing user base make it a reliable choice for modern quantum circuit diagrams.</p>
+<p>For full documentation, see [1](<a class="reference external" href="https://arxiv.org/pdf/1809.03842">https://arxiv.org/pdf/1809.03842</a>).</p>
+<h2 id="Installing-a-TeX-Distribution">Installing a TeX Distribution<a class="headerlink" href="#Installing-a-TeX-Distribution" title="Link to this heading">¶</a></h2>
+<p>To compile and preview the generated quantum circuits, you need to have a local TeX distribution. A popular choice is <strong>TeX Live</strong>. Below is a configuration guide for setting up VSCode with TeX Live and LaTeX Workshop.</p>
+<p><a class="reference external" href="https://www.tug.org/texlive/">TeX Live</a> is an easy way to get up and running with the TeX document production system. Download: <a class="reference external" href="https://www.tug.org/texlive/windows.html">Windows</a> / <a class="reference external" href="https://www.tug.org/mactex/">Mac</a> / <a class="reference external" href="https://www.tug.org/texlive/quickinstall.html">Unix</a>.</p>
+<p>After running the installer, open the terminal and run the command <code class="docutils literal notranslate"><span class="pre">latex</span> <span class="pre">--version</span></code> to ensure that TeX Live is correctly installed.</p>
+<p>For advanced usage, one can modify VSCode settings to set up the LaTeX compilation tools. See <a class="reference external" href="https://github.com/kuxuanwang/Texlive-VSCode_Configuration_in_Mac_and_Win10">Texlive+VSCode Configuration in Mac and Win10</a>.</p>
+<h2 id="Visualizing-Quantum-Circuits-with-QuAIRKit">Visualizing Quantum Circuits with QuAIRKit<a class="headerlink" href="#Visualizing-Quantum-Circuits-with-QuAIRKit" title="Link to this heading">¶</a></h2>
+<p>QuAIRKit provides a flexible way to visualize quantum circuits using LaTeX/Quantikz. This tutorial helps you to understand how to use the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> interface, including gates, layers, oracles, quantum channels, and permutations.</p>
+<h3 id="Custom-Oracles-and-Parametric-Oracles">Custom Oracles and Parametric Oracles<a class="headerlink" href="#Custom-Oracles-and-Parametric-Oracles" title="Link to this heading">¶</a></h3>
+<p>In quantum computing, an oracle is a black-box unitary operator that encodes problem-specific information. For example, Grover’s algorithm or many variational quantum algorithms rely on inserting user-defined oracles into a circuit.</p>
+<p>QuAIRKit allows you to insert custom unitaries as oracles and control their layout with LaTeX names and optional controls.</p>
+<h4 id="Basic-Oracles">Basic Oracles<a class="headerlink" href="#Basic-Oracles" title="Link to this heading">¶</a></h4>
+<p>You can add an oracle using a user-defined unitary matrix. Here’s how to insert a 2-qubit oracle between qubits 0 and 2.</p>
+<p><strong>Note:</strong> When a qubit that is not affected by a quantum gate passes through the gate, there will be a blank space in the diagram.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;U_1&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of a quantum circuit containing an oracle:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of a quantum circuit containing an oracle:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_7_1.png" src="../../_images/tutorials_feature_plot_7_1.png" />
+</div>
+</div>
+<h4 id="Controlled-Oracles">Controlled Oracles<a class="headerlink" href="#Controlled-Oracles" title="Link to this heading">¶</a></h4>
+<p>You can also add oracles with controls, including multi-qubit controls.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;V_2&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of the quantum circuit after adding a controlled oracle:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the quantum circuit after adding a controlled oracle:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_9_1.png" src="../../_images/tutorials_feature_plot_9_1.png" />
+</div>
+</div>
+<p>When passing a list like <code class="docutils literal notranslate"><span class="pre">system_idx</span> <span class="pre">=</span> <span class="pre">[[0,</span> <span class="pre">1],</span> <span class="pre">2,</span> <span class="pre">3]</span></code>, the oracle acts on qubits <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>, where <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> are control qubits, and <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code> are target qubits.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">control_idx</span></code> specifies which basis state of the control qubits (interpreted as a binary number) triggers the oracle. For example, if the control qubits are <span class="math notranslate nohighlight">\([q_0, q_1]\)</span>, then the four possible control conditions and their corresponding <code class="docutils literal notranslate"><span class="pre">control_idx</span></code> values are:</p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">control_idx</span></code></p></th>
+<th class="head"><p>Binary</p></th>
+<th class="head"><p>Trigger Condition</p></th>
+<th class="head"><p>Circuit Notation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>00</p></td>
+<td><p><span class="math notranslate nohighlight">\(q_0=\ket{0}, q_1=\ket{0}\)</span></p></td>
+<td><p>○──○</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>01</p></td>
+<td><p><span class="math notranslate nohighlight">\(q_0=\ket{0}, q_1=\ket{1}\)</span></p></td>
+<td><p>○──●</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>10</p></td>
+<td><p><span class="math notranslate nohighlight">\(q_0=\ket{1}, q_1=\ket{0}\)</span></p></td>
+<td><p>●──○</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>11</p></td>
+<td><p><span class="math notranslate nohighlight">\(q_0=\ket{1}, q_1=\ket{1}\)</span></p></td>
+<td><p>●──●</p></td>
+</tr>
+</tbody>
+</table>
+<p>Thus, setting <code class="docutils literal notranslate"><span class="pre">control_idx=2</span></code> corresponds to triggering the oracle when <span class="math notranslate nohighlight">\(q_0=\ket{1}\)</span> and <span class="math notranslate nohighlight">\(q_1=\ket{0}\)</span>, as visually shown in the diagram.</p>
+<h4 id="Parametric-Oracles">Parametric Oracles<a class="headerlink" href="#Parametric-Oracles" title="Link to this heading">¶</a></h4>
+<p>Parametric oracles apply known gates such as rotations, with optional control:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">param_oracle</span><span class="p">(</span><span class="n">rz</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;R_z&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">param_oracle</span><span class="p">(</span><span class="n">rz</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;R_z&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of the quantum circuit after adding two parametric oracles:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the quantum circuit after adding two parametric oracles:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_12_1.png" src="../../_images/tutorials_feature_plot_12_1.png" />
+</div>
+</div>
+<p>You can retrieve their parameters using the <code class="docutils literal notranslate"><span class="pre">cir.param</span></code> attribute.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The parameters of circuit are&#39;</span><span class="p">,</span> <span class="n">cir</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The parameters of circuit are tensor([6.0770, 1.2419])
+</pre></div></div>
+</div>
+<h4 id="Oracles-on-Qudits">Oracles on Qudits<a class="headerlink" href="#Oracles-on-Qudits" title="Link to this heading">¶</a></h4>
+<p>You can define a circuit with custom system dimensions by passing a list to <code class="docutils literal notranslate"><span class="pre">system_dim</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">unitary</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Create a circuit where qubits 0,1,2,3 have dimensions [3, 4, 5, 5]</span>
+<span class="n">cir_mix_qudit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># Apply a 3-qudit oracle from qudits [0,1,2] to qudit 3, with a large control index</span>
+<span class="n">cir_mix_qudit</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">unitary</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">],</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of a qudit oracle:&quot;</span><span class="p">)</span>
+<span class="n">cir_mix_qudit</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of a qudit oracle:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_16_1.png" src="../../_images/tutorials_feature_plot_16_1.png" />
+</div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">system_dim</span> <span class="pre">=</span> <span class="pre">[3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">5]</span></code>, so the control qudits <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2]</span></code> have dimensions 3, 4, and 5 respectively. The total control space has dimension: <span class="math notranslate nohighlight">\(3 \times 4 \times 5 = 60\)</span>.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">control_idx</span> <span class="pre">=</span> <span class="pre">50</span></code> means the oracle is triggered only when the control qudits are in the basis state corresponding to index 50, which refers to one specific combination among the 60 possible control states.</p>
+<h3 id="Quantum-Channels">Quantum Channels<a class="headerlink" href="#Quantum-Channels" title="Link to this heading">¶</a></h3>
+<p>Real quantum hardware is noisy, and simulating realistic noise is essential for designing robust circuits. QuAIRKit supports several common quantum channels as high-level objects.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">depolarizing</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>        <span class="c1"># depolarizing channel on qubit 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">amplitude_damping</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># amplitude damping on qubit 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">bit_phase_flip</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1"># bit-phase flip on qubit 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of the quantum circuit after adding noise channels:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the quantum circuit after adding noise channels:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_19_1.png" src="../../_images/tutorials_feature_plot_19_1.png" />
+</div>
+</div>
+<h3 id="Parameterized-Layers">Parameterized Layers<a class="headerlink" href="#Parameterized-Layers" title="Link to this heading">¶</a></h3>
+<p>In many variational circuits (e.g., quantum neural networks, ansätze for VQE), we apply the same gate pattern repeatedly across qubits. QuAIRKit supports template layers that apply parametrized rotations and entangling gates in a structured way.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">linear_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">complex_block_layer</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of the quantum circuit after adding linear entangled and complex block layers:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the quantum circuit after adding linear entangled and complex block layers:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_21_1.png" src="../../_images/tutorials_feature_plot_21_1.png" />
+</div>
+</div>
+<p>QuAIRKit circuits are built as layered structures — each gate, oracle, channel, layer or measurement is stored as an individual component. You can visualize any circuit layer using its index.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ComplexBlockLayer(
+  (0): U3()
+  (1): CNOT()
+  (2): U3()
+  (3): CNOT()
+  (4): U3()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of the ninth component of the circuit:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the ninth component of the circuit:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_24_1.png" src="../../_images/tutorials_feature_plot_24_1.png" />
+</div>
+</div>
+<h3 id="Permutations">Permutations<a class="headerlink" href="#Permutations" title="Link to this heading">¶</a></h3>
+<p>Swaps and permutations are essential for rearranging qubits to satisfy hardware connectivity constraints, simulating fermionic systems that require specific exchange operations, or implementing controlled reordering procedures in quantum algorithms such as quantum sorting and teleportation.</p>
+<h4 id="SWAP-and-CSWAP-Gates">SWAP and CSWAP Gates<a class="headerlink" href="#SWAP-and-CSWAP-Gates" title="Link to this heading">¶</a></h4>
+<p>SWAPs are rendered with crossing wires.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">cswap</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>               <span class="c1"># controlled-SWAP (Fredkin gate)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">swap</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of the quantum circuit after adding a controlled-SWAP and a SWAP gate:&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the quantum circuit after adding a controlled-SWAP and a SWAP gate:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_26_1.png" src="../../_images/tutorials_feature_plot_26_1.png" />
+</div>
+</div>
+<h4 id="Permute">Permute<a class="headerlink" href="#Permute" title="Link to this heading">¶</a></h4>
+<p>Unlike SWAPs which only exchange two systems, <code class="docutils literal notranslate"><span class="pre">permute</span></code> can reorder a subset arbitrarily.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Generate a random permutation of 3 elements: [0, 1, 2] shuffled</span>
+<span class="n">perm_1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">perm_1</span><span class="p">)</span>
+
+<span class="n">perm_2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">perm_2</span><span class="p">)</span>
+
+<span class="c1"># Randomly select distinct system indices from a pool of 5 qudits</span>
+<span class="n">idx1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">cir_permute</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="c1"># Apply a general (uncontrolled) permutation of idx1 qudits using perm_1</span>
+<span class="n">cir_permute</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">perm_1</span><span class="p">,</span> <span class="n">idx1</span><span class="p">)</span>
+<span class="c1"># Apply a controlled permutation (controlled by qudit 6) on idx2 qudits using perm_2</span>
+<span class="n">cir_permute</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">perm_2</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># control qudit: 6</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of a quantum circuit containing a general permutation and a controlled permutation:&quot;</span><span class="p">)</span>
+<span class="n">cir_permute</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of a quantum circuit containing a general permutation and a controlled permutation:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_28_1.png" src="../../_images/tutorials_feature_plot_28_1.png" />
+</div>
+</div>
+<h3 id="Measurement-and-Collapse">Measurement and Collapse<a class="headerlink" href="#Measurement-and-Collapse" title="Link to this heading">¶</a></h3>
+<p>Measurements collapse quantum states into classical outcomes. In QuAIRKit, you can simulate both:</p>
+<ul class="simple">
+<li><p>Standard measurement (with probabilities)</p></li>
+<li><p>Post-selection (force a system to collapse to a given outcome)</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir_meas</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Measure qubit 0 and post-select it to be in state |0⟩</span>
+<span class="c1"># &#39;if_print=True&#39; will print the average post-selection probability</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">post_selection</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">depolarizing</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">post_selection</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Perform a final measurement on qubit 0 (no post-selection)</span>
+<span class="c1"># The outcome will contribute to the final probability distribution</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">measure</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+</div>
+</div>
+<p>Now simulate and observe the result:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">output_state</span> <span class="o">=</span> <span class="n">cir_meas</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The diagram of a quantum circuit containing complex layers and subsequent measurements and post-selections:&quot;</span><span class="p">)</span>
+<span class="n">cir_meas</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The probability distribution of the last measurement after post-selections is&#39;</span><span class="p">,</span> <span class="n">output_state</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+systems [[0]] collapse to the state |0&gt; with (average) probability 0.9673373103141785
+systems [[1]] collapse to the state |1&gt; with (average) probability 0.49535071849823
+The diagram of a quantum circuit containing complex layers and subsequent measurements and post-selections:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_32_1.png" src="../../_images/tutorials_feature_plot_32_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The probability distribution of the last measurement after post-selections is tensor([[[0.0062, 0.4729]]], grad_fn=&lt;MulBackward0&gt;)
+</pre></div></div>
+</div>
+<h2 id="Putting-Circuit-Plots-into-the-Paper">Putting Circuit Plots into the Paper<a class="headerlink" href="#Putting-Circuit-Plots-into-the-Paper" title="Link to this heading">¶</a></h2>
+<h3 id="Plot-styles">Plot styles<a class="headerlink" href="#Plot-styles" title="Link to this heading">¶</a></h3>
+<p>There are three plot styles supported by QuAIRKit:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">standard</span></code> (default) : Suitable for general audiences and academic publications.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compact</span></code>: A minimalistic style focusing on circuit structure, suitable for quantum neural network researchers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">detailed</span></code>: Shows full gate/channel/operator labels, suitable for quantum algorithm designers.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">plot()</span></code> function accepts additional parameters for fine control over the diagram:</p>
+<ul class="simple">
+<li><p>dpi: Output resolution (default: 300).</p></li>
+<li><p>print_code: If <code class="docutils literal notranslate"><span class="pre">True</span></code>, prints the underlying LaTeX code.</p></li>
+<li><p>show_plot: Displays the plot immediately (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+<li><p>include_empty: Determines whether to include empty lines in the output (default: False).</p></li>
+<li><p>latex:</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default), the circuit is rendered using Quantikz.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the circuit will be displayed in matplotlib format (which will be depreciated in the near future).</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Notice</strong>: Since QuAIRKit 0.4.0, Quantikz is the recommended and default backend for rendering, ensuring best compatibility and aesthetics.</p>
+<p>Please feel free to adjust these parameters:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the diagram of a quantum circuit with compact style and 150 dpi, as well as printing the latex code:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_style</span><span class="o">=</span><span class="s2">&quot;compact&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">print_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the diagram of a quantum circuit with compact style and 150 dpi, as well as printing the latex code:
+
+\documentclass[border=2pt]{standalone}
+
+% WARNING: please disable other quantum circuit packages, such as qcircuit
+\usepackage{tikz}
+\usetikzlibrary{quantikz2}
+
+\begin{document}
+
+\begin{quantikz}[transparent]
+\lstick{} &amp; \gate[3]{U_1} &amp; \ctrl[]{2} &amp; {} &amp; \gate[1]{R_z(1.24)} &amp; \gate[1]{\mathcal{D}_{p = 0.1}} &amp; \gate[1]{R_{y}(0.81)}\gategroup[2,steps=8,style={inner sep=4pt,dashed,label={above:{2 Linear Entangled Layers}}}]{} &amp; \ctrl[]{1} &amp; \gate[1]{R_{z}(2.82)} &amp; \ctrl[]{1} &amp; \gate[1]{R_{y}(4.35)} &amp; \ctrl[]{1} &amp; \gate[1]{R_{z}(5.12)} &amp; \ctrl[]{1} &amp; {} &amp; {} &amp; {} &amp; \rstick{} \\
+\lstick{} &amp; \gateinput[label style={xshift=-8.2pt}]{$\textcolor{white}{\rule{4pt}{4pt}}$}\gateoutput[label style={xshift=8.2pt}]{$\textcolor{white}{\rule{4pt}{4pt}}$} &amp; \control[style={fill=white,draw=black,inner sep=1pt}]{} &amp; {} &amp; \push{\,\,} &amp; \gate[1]{\mathcal{E}_{\gamma = 0.2}^{\textrm{\tiny{(AD)}}}} &amp; \gate[1]{R_{y}(0.17)} &amp; \targ{} &amp; \gate[1]{R_{z}(2.26)} &amp; \targ{} &amp; \gate[1]{R_{y}(5.48)} &amp; \targ{} &amp; \gate[1]{R_{z}(4.71)} &amp; \targ{} &amp; \ctrl[]{1} &amp; \gate[2,style={draw=none}]{\permute{2,1}} &amp; {} &amp; \rstick{} \\
+\lstick{} &amp; {} &amp; \gate[2]{V_2} &amp; {} &amp; \control{} &amp; \gate[1]{\mathcal{E}_{p = 0.3}^{\textrm{\tiny{(BPF)}}}} &amp; \gate[1]{U(1.19, 2.19, 3.15)}\gategroup[3,steps=5,style={inner sep=4pt,dashed,label={below:{Complex Block Layer}}}]{} &amp; \ctrl[]{1} &amp; \gate[1]{U(2.62, 1.40, 1.24)} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \gate[2,style={draw=gray, dashed}]{\permute{2,1}} &amp; {} &amp; \gate[2,style={draw=none}]{\permute{2,1}} &amp; \rstick{} \\
+\lstick{} &amp; {} &amp; {} &amp; \gate[1]{R_z(6.08)} &amp; \octrl[]{-3} &amp; {} &amp; \gate[1]{U(4.45, 2.01, 3.15)} &amp; \targ{} &amp; \gate[1]{U(1.30, 1.61, 5.31)} &amp; \ctrl[]{1} &amp; \gate[1]{U(6.09, 4.29, 3.65)} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \rstick{} \\
+\lstick{} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \gate[1]{U(6.27, 4.10, 0.41)} &amp; {} &amp; {} &amp; \targ{} &amp; \gate[1]{U(5.68, 5.31, 2.86)} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; {} &amp; \rstick{}
+\end{quantikz}
+
+\end{document}
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_plot_34_1.png" src="../../_images/tutorials_feature_plot_34_1.png" />
+</div>
+</div>
+<h3 id="Submitting-to-arXiv">Submitting to arXiv<a class="headerlink" href="#Submitting-to-arXiv" title="Link to this heading">¶</a></h3>
+<p>When using <code class="docutils literal notranslate"><span class="pre">print_code=True</span></code>, QuAIRKit will export the underlying LaTeX (Quantikz) code for your circuit. To include it in your LaTeX document:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><code><span class="k">\usepackage</span><span class="nb">{</span>tikz<span class="nb">}</span>
+<span class="k">\usetikzlibrary</span><span class="nb">{</span>quantikz<span class="nb">}</span>
+</code></pre></div>
+</div>
+<p>Then include your exported code inside:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><code><span class="k">\begin</span><span class="nb">{</span>quantikz<span class="nb">}</span>[transparent]
+  <span class="c">% (paste the code here)</span>
+<span class="k">\end</span><span class="nb">{</span>quantikz<span class="nb">}</span>
+</code></pre></div>
+</div>
+<p><strong>Tip 1</strong>: The <code class="docutils literal notranslate"><span class="pre">quantikz</span></code> package is not yet included in arXiv’s default TeX installation. If you want your LaTeX document to compile on arXiv, you need to manually include the <code class="docutils literal notranslate"><span class="pre">tikzlibraryquantikz2.code.tex</span></code> file in your submission. You can find this file in your local TeX installation (typically under your <code class="docutils literal notranslate"><span class="pre">texmf</span></code> tree) if you’ve installed quantikz. Place the file in the same directory as your main <code class="docutils literal notranslate"><span class="pre">.tex</span></code> file.</p>
+<p><strong>Tip 2</strong>: If you’re using QuAIRKit on macOS and encounter an error like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code>OSError:<span class="w"> </span>Unable<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>page<span class="w"> </span>count.<span class="w"> </span>Is<span class="w"> </span>poppler<span class="w"> </span>installed<span class="w"> </span>and<span class="w"> </span><span class="k">in</span><span class="w"> </span>PATH?
+</code></pre></div>
+</div>
+<p>This means the <code class="docutils literal notranslate"><span class="pre">poppler</span></code> library (required for rendering PDFs into images) is not installed. You can fix this by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">poppler</span></code>.</p>
+<p><strong>Tip 3</strong>: If you do not want to worry about these “messes” for submission, a naive approach is to compile it in Overleaf (which includes <code class="docutils literal notranslate"><span class="pre">quantikz</span></code>) and save the figure as pdf file.</p>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Kay, Alastair. “Tutorial on the quantikz package.” arXiv preprint arXiv:1809.03842 (2018).</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em> | Symbol | Description | |:—————:|——————————————-| |<span class="math notranslate nohighlight">\(R_{x/y/z}(\theta)\)</span>| Rotation gate about the <span class="math notranslate nohighlight">\(X\)</span>/<span class="math notranslate nohighlight">\(Y\)</span>/<span class="math notranslate nohighlight">\(Z\)</span>-axis with angle <span class="math notranslate nohighlight">\(\theta\)</span>| | <span class="math notranslate nohighlight">\(\mathcal{D}_p\)</span> | Depolarizing channel with depolarizing probability <span class="math notranslate nohighlight">\(p\)</span> | | <span class="math notranslate nohighlight">\(\mathcal{E}^{(\mathrm{AD})}_\gamma\)</span> | Amplitude damping channel with damping rate <span class="math notranslate nohighlight">\(\gamma\)</span> | |
+<span class="math notranslate nohighlight">\(\mathcal{E}^{(\mathrm{BPF})}_p\)</span> | Bit-phase flip channel with error probability <span class="math notranslate nohighlight">\(p\)</span> | | <span class="math notranslate nohighlight">\(U3 / U(\theta, \phi, \lambda)\)</span> | General single-qubit unitary gate: <span class="math notranslate nohighlight">\(\begin{bmatrix} \cos \frac{\theta}{2} &amp; -e^{i\lambda} \sin \frac{\theta}{2} \\ e^{i\phi} \sin \frac{\theta}{2} &amp; e^{i(\phi + \lambda)} \cos \frac{\theta}{2} \end{bmatrix}\)</span> |</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.1
+torch: 2.8.0+cpu
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.5
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

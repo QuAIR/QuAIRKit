@@ -294,6 +294,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
         
   
@@ -325,7 +349,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -342,14 +366,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
           </label>
@@ -775,6 +799,7 @@
 
 
 <h1 id="Measuring-quantum-states-in-QuAIRKit">Measuring quantum states in QuAIRKit<a class="headerlink" href="#Measuring-quantum-states-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>This tutorial demonstrates how to perform quantum measurement using QuAIRKit.</p>
 <p><strong>Table of Contents</strong></p>
 <ul class="simple">
@@ -876,7 +901,7 @@ tensor([[[ 0.5000+0.j,  0.5000+0.j],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of outcome tensor([0.5954, 0.4046])
+The probability distribution of outcome tensor([0.1771, 0.8229])
 </pre></div></div>
 </div>
 <p>Users can get the collapsed state by setting <code class="docutils literal notranslate"><span class="pre">keep_state</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
@@ -902,15 +927,15 @@ The collapsed state for each outcome is
  Batch size: [2]
 
  # 0:
-[[ 0.32+0.j   -0.16-0.02j  0.32+0.j   -0.16-0.02j]
- [-0.16+0.02j  0.18+0.j   -0.16+0.02j  0.18+0.j  ]
- [ 0.32+0.j   -0.16-0.02j  0.32+0.j   -0.16-0.02j]
- [-0.16+0.02j  0.18+0.j   -0.16+0.02j  0.18+0.j  ]]
+[[0.17+0.j   0.04-0.18j 0.17+0.j   0.04-0.18j]
+ [0.04+0.18j 0.33+0.j   0.04+0.18j 0.33+0.j  ]
+ [0.17+0.j   0.04-0.18j 0.17+0.j   0.04-0.18j]
+ [0.04+0.18j 0.33+0.j   0.04+0.18j 0.33+0.j  ]]
  # 1:
-[[ 0.36+0.j   -0.19-0.11j -0.36+0.j    0.19+0.11j]
- [-0.19+0.11j  0.14+0.j    0.19-0.11j -0.14+0.j  ]
- [-0.36+0.j    0.19+0.11j  0.36+0.j   -0.19-0.11j]
- [ 0.19-0.11j -0.14+0.j   -0.19+0.11j  0.14+0.j  ]]
+[[ 0.45+0.j   -0.11-0.04j -0.45+0.j    0.11+0.04j]
+ [-0.11+0.04j  0.05+0.j    0.11-0.04j -0.05+0.j  ]
+ [-0.45+0.j    0.11+0.04j  0.45+0.j   -0.11-0.04j]
+ [ 0.11-0.04j -0.05+0.j   -0.11+0.04j  0.05+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -936,7 +961,7 @@ The collapsed state for each outcome is
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability for obtaining outcome 1 is tensor([0.4046]), with outcome state
+The probability for obtaining outcome 1 is tensor([0.8229]), with outcome state
 -----------------------------------------------------
  Backend: default-mixed
  System dimension: [2, 2]
@@ -944,10 +969,10 @@ The probability for obtaining outcome 1 is tensor([0.4046]), with outcome state
  Batch size: [1]
 
  # 0:
-[[ 0.36+0.j   -0.19-0.11j -0.36+0.j    0.19+0.11j]
- [-0.19+0.11j  0.14+0.j    0.19-0.11j -0.14+0.j  ]
- [-0.36+0.j    0.19+0.11j  0.36+0.j   -0.19-0.11j]
- [ 0.19-0.11j -0.14+0.j   -0.19+0.11j  0.14+0.j  ]]
+[[ 0.45+0.j   -0.11-0.04j -0.45+0.j    0.11+0.04j]
+ [-0.11+0.04j  0.05+0.j    0.11-0.04j -0.05+0.j  ]
+ [-0.45+0.j    0.11+0.04j  0.45+0.j   -0.11-0.04j]
+ [ 0.11-0.04j -0.05+0.j   -0.11+0.04j  0.05+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -970,7 +995,7 @@ The probability for obtaining outcome 1 is tensor([0.4046]), with outcome state
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of outcome tensor([0.4423, 0.5577])
+The probability distribution of outcome tensor([0.0808, 0.9192])
 The collapsed state for each outcome is
 -----------------------------------------------------
  Backend: default-mixed
@@ -1016,8 +1041,8 @@ The collapsed state for each outcome is
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time for measuring with pvm: 0.0010464191s
-Time for measuring with povm: 0.0001940727s
+Time for measuring with pvm: 0.0009458065s
+Time for measuring with povm: 0.0004417896s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1026,9 +1051,9 @@ Time for measuring with povm: 0.0001940727s
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Traceback (most recent call last):
-  File &#34;/tmp/ipykernel_196948/3381646845.py&#34;, line 11, in &lt;module&gt;
+  File &#34;/tmp/ipykernel_64353/3381646845.py&#34;, line 11, in &lt;module&gt;
     rho.measure(measure_op=pvm, is_povm=True, keep_state=True)
-  File &#34;/home/leiz/QuAIRKit-Dev/build/__editable__.quairkit-0.4.1-py3-none-any/quairkit/core/state/backend/simulator.py&#34;, line 642, in measure
+  File &#34;/home/leiz/QuAIRKit-Dev/build/__editable__.quairkit-0.4.2-py3-none-any/quairkit/core/state/backend/simulator.py&#34;, line 650, in measure
     raise ValueError(
 ValueError: `is_povm` and `keep_state` cannot be both True, since a general POVM does not distinguish states.
 </pre></div></div>
@@ -1129,7 +1154,7 @@ The measured states for the first batch is
 [[ 0.5+0.j -0.5+0.j]
  [-0.5+0.j  0.5+0.j]]
 -----------------------------------------------------
- with prob distribution tensor([0.4423, 0.5577])
+ with prob distribution tensor([0.0808, 0.9192])
 </pre></div></div>
 </div>
 <p>or apply <code class="docutils literal notranslate"><span class="pre">Measure</span></code> to a batched state. Note that the batch dimension needs to be matched.</p>
@@ -1168,7 +1193,7 @@ The measured states for the first batch is
 [[ 0.5+0.j -0.5+0.j]
  [-0.5+0.j  0.5+0.j]]
 -----------------------------------------------------
- with prob distribution tensor([0.3455, 0.6545])
+ with prob distribution tensor([0.5059, 0.4941])
 </pre></div></div>
 </div>
 <h2 id="Sampled-measurements">Sampled measurements<a class="headerlink" href="#Sampled-measurements" title="Link to this heading">¶</a></h2>
@@ -1214,18 +1239,18 @@ The measured states for the first batch is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 3 probability distributions are
- tensor([[0.3455, 0.6545],
-        [0.5076, 0.4924],
-        [0.6190, 0.3810]])
+ tensor([[0.5059, 0.4941],
+        [0.7718, 0.2282],
+        [0.4586, 0.5414]])
 
 The outcomes of quantum measurements:
-{&#39;0&#39;: tensor([360, 498, 639]), &#39;1&#39;: tensor([664, 526, 385])}
+{&#39;0&#39;: tensor([514, 807, 463]), &#39;1&#39;: tensor([510, 217, 561])}
 
 The outcomes of quantum measurements with the decimal system of dictionary system:
- {&#39;0&#39;: tensor([361, 536, 636]), &#39;1&#39;: tensor([663, 488, 388])}
+ {&#39;0&#39;: tensor([534, 787, 443]), &#39;1&#39;: tensor([490, 237, 581])}
 
 The outcomes of quantum measurements in proportion:
- {&#39;0&#39;: tensor([0.3213, 0.5049, 0.6045]), &#39;1&#39;: tensor([0.6787, 0.4951, 0.3955])}
+ {&#39;0&#39;: tensor([0.5254, 0.7734, 0.4648]), &#39;1&#39;: tensor([0.4746, 0.2266, 0.5352])}
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1277,12 +1302,12 @@ The outcomes of quantum measurements in proportion:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
+quairkit: 0.4.2
 torch: 2.8.0+cu128
 torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
 OS: Linux
@@ -1349,7 +1374,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

@@ -2121,7 +2121,7 @@
 <dd class="field-even"><p>The state basis of the observable given by the Pauli string.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.set.pauli_str_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.pauli_str_basis-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><em>StateSimulator</em></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2206,7 +2206,7 @@
 <dd class="field-even"><p>A tensor where the first index gives the eigenvector of the QFT matrix.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.set.qft_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.qft_basis-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><em>StateSimulator</em></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2233,12 +2233,12 @@
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.database.set.std_basis">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">std_basis</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.std_basis.num_systems" title="quairkit.database.set.std_basis.num_systems (Python parameter) — number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.std_basis.system_dim" title="quairkit.database.set.std_basis.system_dim (Python parameter) — dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.std_basis" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.set.</span></span><span class="sig-name descname"><span class="pre">std_basis</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.std_basis.num_systems" title="quairkit.database.set.std_basis.num_systems (Python parameter) — number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.set.std_basis.system_dim" title="quairkit.database.set.std_basis.system_dim (Python parameter) — dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.set.std_basis" title="Link to this definition">¶</a></dt>
 <dd><p>Generate all standard basis states for a given number of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.set.std_basis-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.std_basis-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.database.set.std_basis.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.set.std_basis.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>number of systems in this state. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
+<dt id="quairkit.database.set.std_basis.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.set.std_basis.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>number of systems in this state. If None, inferred from system_dim. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
 </dd>
 <dt id="quairkit.database.set.std_basis.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.database.set.std_basis.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>dimension of systems. Can be a list of system dimensions
 or an int representing the dimension of all systems. Defaults to be qubit case.</p>
@@ -2249,7 +2249,7 @@ or an int representing the dimension of all systems. Defaults to be qubit case.<
 <dd class="field-even"><p>A tensor where the first index gives the computational vector.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.set.std_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.std_basis-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><em>StateSimulator</em></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2285,7 +2285,7 @@ with each basis state accessible along the first dimension of a tensor.</p>
 <dd class="field-odd"><p>A tensor of shape (4, 4, 1), representing the four Bell basis states.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.set.bell_basis-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.set.bell_basis-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><em>StateSimulator</em></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>

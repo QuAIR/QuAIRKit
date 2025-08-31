@@ -294,6 +294,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
         
   
@@ -325,7 +349,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -342,14 +366,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
           </label>
@@ -855,6 +879,7 @@
 
 
 <h1 id="Constructing-quantum-circuits-in-QuAIRKit">Constructing quantum circuits in QuAIRKit<a class="headerlink" href="#Constructing-quantum-circuits-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>A quantum circuit is a series of operations, including quantum gates, initializations of qubits to known values, measurements, that act on qubits to perform a quantum algorithm. Circuits are written such that the horizontal axis is time, starting at the left-hand side and ending at the right. Horizontal lines are qubits, and doubled lines represent classical bits. The items that are connected by these lines are operations performed on the qubits, such as measurements or gates. These lines define
 the sequence of events and are usually not physical cables QuAIRKit uses the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class to represent quantum circuits. In this tutorial, we will learn how to manipulate quantum circuits in QuAIRKit.</p>
 <p><strong>Table of contents</strong></p>
@@ -1301,22 +1326,22 @@ the diagram of a quantum circuit with different kinds of layers:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The unitary matrix of the first layer is
- tensor([[-0.0056-0.0067j, -0.0053-0.0064j,  0.0745+0.0893j,  0.0701+0.0840j,
-          0.0347+0.0416j,  0.0327+0.0392j, -0.4593-0.5502j, -0.4323-0.5179j],
-        [-0.0037-0.0074j,  0.0039+0.0079j,  0.0487+0.0980j, -0.0518-0.1041j,
-          0.0227+0.0457j, -0.0241-0.0485j, -0.3004-0.6041j,  0.3191+0.6417j],
-        [-0.0241-0.1137j, -0.0227-0.1071j, -0.0018-0.0086j, -0.0017-0.0081j,
-          0.1488+0.7011j,  0.1401+0.6599j,  0.0113+0.0530j,  0.0106+0.0499j],
-        [-0.0469-0.0989j,  0.0499+0.1050j, -0.0035-0.0075j,  0.0038+0.0079j,
-          0.2893+0.6095j, -0.3074-0.6475j,  0.0219+0.0461j, -0.0232-0.0489j],
-        [-0.0227+0.0457j,  0.0241-0.0485j,  0.3004-0.6041j, -0.3191+0.6417j,
-         -0.0037+0.0074j,  0.0039-0.0079j,  0.0487-0.0980j, -0.0518+0.1041j],
-        [-0.0347+0.0416j, -0.0327+0.0392j,  0.4593-0.5502j,  0.4323-0.5179j,
-         -0.0056+0.0067j, -0.0053+0.0064j,  0.0745-0.0893j,  0.0701-0.0840j],
-        [-0.2893+0.6095j,  0.3074-0.6475j, -0.0219+0.0461j,  0.0232-0.0489j,
-         -0.0469+0.0989j,  0.0499-0.1050j, -0.0035+0.0075j,  0.0038-0.0079j],
-        [-0.1488+0.7011j, -0.1401+0.6599j, -0.0113+0.0530j, -0.0106+0.0499j,
-         -0.0241+0.1137j, -0.0227+0.1071j, -0.0018+0.0086j, -0.0017+0.0081j]],
+ tensor([[ 0.1259-0.0502j,  0.0332-0.0132j, -0.0735+0.0293j, -0.0193+0.0077j,
+         -0.7657+0.3050j, -0.2017+0.0803j,  0.4467-0.1779j,  0.1176-0.0469j],
+        [ 0.0064+0.0351j, -0.0244-0.1333j, -0.0038-0.0205j,  0.0143+0.0778j,
+         -0.0391-0.2135j,  0.1485+0.8107j,  0.0228+0.1245j, -0.0867-0.4729j],
+        [ 0.0786+0.0087j,  0.0207+0.0023j,  0.1347+0.0149j,  0.0355+0.0039j,
+         -0.4779-0.0528j, -0.1259-0.0139j, -0.8193-0.0904j, -0.2158-0.0238j],
+        [-0.0018-0.0207j,  0.0069+0.0788j, -0.0031-0.0356j,  0.0119+0.1350j,
+          0.0111+0.1261j, -0.0422-0.4789j,  0.0191+0.2162j, -0.0724-0.8210j],
+        [ 0.0391-0.2135j, -0.1485+0.8107j, -0.0228+0.1245j,  0.0867-0.4729j,
+          0.0064-0.0351j, -0.0244+0.1333j, -0.0038+0.0205j,  0.0143-0.0778j],
+        [ 0.7657+0.3050j,  0.2017+0.0803j, -0.4467-0.1779j, -0.1176-0.0469j,
+          0.1259+0.0502j,  0.0332+0.0132j, -0.0735-0.0293j, -0.0193-0.0077j],
+        [-0.0111+0.1261j,  0.0422-0.4789j, -0.0191+0.2162j,  0.0724-0.8210j,
+         -0.0018+0.0207j,  0.0069-0.0788j, -0.0031+0.0356j,  0.0119-0.1350j],
+        [ 0.4779-0.0528j,  0.1259-0.0139j,  0.8193-0.0904j,  0.2158-0.0238j,
+          0.0786-0.0087j,  0.0207-0.0023j,  0.1347-0.0149j,  0.0355-0.0039j]],
        grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
@@ -1403,31 +1428,17 @@ the output state for inputting zero state is:
  Backend: default-pure
  System dimension: [2, 2, 2]
  System sequence: [1, 2, 0]
-[-0.94+0.34j  0.03-0.01j -0.06+0.02j  0.  -0.j    0.  +0.j    0.  +0.j
+[ 0.5 -0.15j -0.28+0.08j -0.67-0.2j   0.37+0.11j  0.  +0.j    0.  +0.j
   0.  +0.j    0.  +0.j  ]
 -----------------------------------------------------
 
 the output state for inputting state rho is:
 -----------------------------------------------------
- Backend: default-mixed
+ Backend: default-pure
  System dimension: [2, 2, 2]
  System sequence: [1, 2, 0]
-[[ 0.27+0.j    0.09+0.03j  0.02-0.04j  0.05-0.03j  0.01-0.01j -0.04-0.02j
-   0.01-0.j    0.03-0.1j ]
- [ 0.09-0.03j  0.16+0.j    0.  +0.03j  0.01-0.1j  -0.  -0.01j -0.02+0.04j
-  -0.02+0.j   -0.01-0.08j]
- [ 0.02+0.04j  0.  -0.03j  0.12+0.j    0.02-0.j    0.02-0.01j  0.01+0.01j
-   0.03-0.j    0.03-0.01j]
- [ 0.05+0.03j  0.01+0.1j   0.02+0.j    0.16+0.j    0.  -0.02j -0.02-0.02j
-  -0.02-0.08j  0.08-0.04j]
- [ 0.01+0.01j -0.  +0.01j  0.02+0.01j  0.  +0.02j  0.01+0.j   -0.01+0.j
-   0.02+0.01j  0.02+0.01j]
- [-0.04+0.02j -0.02-0.04j  0.01-0.01j -0.02+0.02j -0.01-0.j    0.03+0.j
-   0.  -0.01j -0.01+0.01j]
- [ 0.01+0.j   -0.02-0.j    0.03+0.j   -0.02+0.08j  0.02-0.01j  0.  +0.01j
-   0.13+0.j    0.04-0.01j]
- [ 0.03+0.1j  -0.01+0.08j  0.03+0.01j  0.08+0.04j  0.02-0.01j -0.01-0.01j
-   0.04+0.01j  0.12+0.j  ]]
+[ 0.23-0.02j  0.06-0.02j  0.02+0.02j -0.64-0.04j -0.2 -0.15j  0.22+0.05j
+ -0.34+0.53j  0.08-0.02j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1472,20 +1483,20 @@ Circuit(
 the circuit depth is 2
 
 the gate history of the circuit is
- [{&#39;uid&#39;: &#39;2c5a6d60-8b7e-48e6-91e8-136e16ddade0&#39;, &#39;name&#39;: &#39;ry&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{y}&#39;, &#39;api&#39;: &#39;ry&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[0], [2]], &#39;param&#39;: Parameter containing:
-tensor([[[6.2116]],
+ [{&#39;uid&#39;: &#39;6433135e-3035-4d87-88e5-9464fdff1493&#39;, &#39;name&#39;: &#39;ry&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{y}&#39;, &#39;api&#39;: &#39;ry&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[0], [2]], &#39;param&#39;: Parameter containing:
+tensor([[[5.2706]],
 
-        [[0.1307]]], requires_grad=True), &#39;matrix&#39;: tensor([[[-0.9994+0.j, -0.0358+0.j],
-         [ 0.0358+0.j, -0.9994+0.j]],
+        [[4.4236]]], requires_grad=True), &#39;matrix&#39;: tensor([[[-0.8745+0.j, -0.4850+0.j],
+         [ 0.4850+0.j, -0.8745+0.j]],
 
-        [[ 0.9979+0.j, -0.0653+0.j],
-         [ 0.0653+0.j,  0.9979+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)}, {&#39;uid&#39;: &#39;13ab35a0-14c9-4c4c-ac19-c287d792fb1c&#39;, &#39;name&#39;: &#39;rz&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{z}&#39;, &#39;api&#39;: &#39;rz&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[1], [2]], &#39;param&#39;: tensor([[[0.6094]],
+        [[-0.5980+0.j, -0.8015+0.j],
+         [ 0.8015+0.j, -0.5980+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)}, {&#39;uid&#39;: &#39;a2db3eec-08d0-4ab8-a61f-e0104142f7bf&#39;, &#39;name&#39;: &#39;rz&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{z}&#39;, &#39;api&#39;: &#39;rz&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[1], [2]], &#39;param&#39;: tensor([[[0.0119]],
 
-        [[0.0777]]]), &#39;matrix&#39;: tensor([[[0.9539-0.3000j, 0.0000+0.0000j],
-         [0.0000+0.0000j, 0.9539+0.3000j]],
+        [[0.5829]]]), &#39;matrix&#39;: tensor([[[1.0000-0.0059j, 0.0000+0.0000j],
+         [0.0000+0.0000j, 1.0000+0.0059j]],
 
-        [[0.9992-0.0388j, 0.0000+0.0000j],
-         [0.0000+0.0000j, 0.9992+0.0388j]]])}]
+        [[0.9578-0.2873j, 0.0000+0.0000j],
+         [0.0000+0.0000j, 0.9578+0.2873j]]])}]
 </pre></div></div>
 </div>
 <p>Additionally, one can update the parameters of parameterized gates (if they exist) using the <code class="docutils literal notranslate"><span class="pre">update_param</span></code> method.</p>
@@ -1505,7 +1516,7 @@ tensor([[[6.2116]],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the trainable parameters of entire circuit are tensor([6.2116, 0.1307])
+the trainable parameters of entire circuit are tensor([5.2706, 4.4236])
 the updated trainable parameters of entire circuit are tensor([1., 1.])
 </pre></div></div>
 </div>
@@ -1567,12 +1578,12 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
+quairkit: 0.4.2
 torch: 2.8.0+cu128
 torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
 OS: Linux
@@ -1639,7 +1650,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

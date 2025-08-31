@@ -1,0 +1,1439 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="week%208%20qpe.html">
+      
+      
+        <link rel="next" href="../../tutorials.feature.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Hamiltonian simulation - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hamiltonian simulation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.AIAA-5072.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%201%20qubit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb (reference label)"><span>Brief Introduction to Quantum Computing</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%202%20quasi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 2 quasi.ipynb (reference label)"><span>Quantum error mitigation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%203%20vqe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 3 vqe.ipynb (reference label)"><span>Variational quantum eigensolver</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%204%20entanglement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 4 entanglement.ipynb (reference label)"><span>Entanglement</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%205%20superdense-coding.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb (reference label)"><span>Superdense coding</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%206%20teleportation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb (reference label)"><span>Quantum state teleportation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%207%20qaa.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb (reference label)"><span>Quantum state amplitude amplification</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%208%20qpe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 8 qpe.ipynb (reference label)"><span>Quantum phase estimation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb (reference label)"><span>Hamiltonian simulation</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb (reference label)"><span>Hamiltonian simulation</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Theoretical-Fundation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#theoretical-fundation (reference label)"><span>Theoretical Fundation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theoretical Fundation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#The-Schrödinger-Equation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#the-schrödinger-equation (reference label)"><span>The Schrödinger Equation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Time-Independent-Hamiltonian-Evolution-and-Applications" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#time-independent-hamiltonian-evolution-and-applications (reference label)"><span>Time-<wbr>Independent Hamiltonian Evolution and Applications</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Trotter-Suzuki-Decomposition-Theory" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#trotter-suzuki-decomposition-theory (reference label)"><span>Trotter-<wbr>Suzuki Decomposition Theory</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Implementation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#implementation (reference label)"><span>Implementation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Circuit-Setup" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#circuit-setup (reference label)"><span>Circuit Setup</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Verification-of-Trotter-decomposition" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#verification-of-trotter-decomposition (reference label)"><span>Verification of Trotter decomposition</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Conclusion" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#conclusion (reference label)"><span>Conclusion</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Theoretical-Fundation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#theoretical-fundation (reference label)"><span>Theoretical Fundation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theoretical Fundation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#The-Schrödinger-Equation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#the-schrödinger-equation (reference label)"><span>The Schrödinger Equation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Time-Independent-Hamiltonian-Evolution-and-Applications" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#time-independent-hamiltonian-evolution-and-applications (reference label)"><span>Time-<wbr>Independent Hamiltonian Evolution and Applications</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Trotter-Suzuki-Decomposition-Theory" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#trotter-suzuki-decomposition-theory (reference label)"><span>Trotter-<wbr>Suzuki Decomposition Theory</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Implementation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#implementation (reference label)"><span>Implementation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Circuit-Setup" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#circuit-setup (reference label)"><span>Circuit Setup</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Verification-of-Trotter-decomposition" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#verification-of-trotter-decomposition (reference label)"><span>Verification of Trotter decomposition</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Conclusion" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#conclusion (reference label)"><span>Conclusion</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quairkit&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>quairkit
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>pdftotext<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>poppler
+<span class="k">fi</span>
+</code></pre></div>
+</div>
+</div>
+<h1 id="Hamiltonian-simulation">Hamiltonian simulation<a class="headerlink" href="#Hamiltonian-simulation" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
+<p>In this tutorial, we present a comprehensive treatment of Hamiltonian simulation using Trotter decomposition methods, including theoretical foundations, implementation details, and numerical verification using the QuAIRKit framework.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction"><span class="std std-ref">Introduction</span></a></p></li>
+<li><p><a class="reference internal" href="#Theoretical-Fundation"><span class="std std-ref">Theoretical Fundation</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#The-Schrödinger-Equation"><span class="std std-ref">The Schrödinger Equation</span></a></p></li>
+<li><p><a class="reference internal" href="#Time-Independent-Hamiltonian-Evolution-and-Applications"><span class="std std-ref">Time-Independent Hamiltonian Evolution and Applications</span></a></p></li>
+<li><p><a class="reference internal" href="#Trotter-Suzuki-Decomposition-Theory"><span class="std std-ref">Trotter-Suzuki Decomposition Theory</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Implementation"><span class="std std-ref">Implementation</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Circuit-Setup"><span class="std std-ref">Circuit Setup</span></a></p></li>
+<li><p><a class="reference internal" href="#Verification-of-Trotter-decomposition"><span class="std std-ref">Verification of Trotter decomposition</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Conclusion"><span class="std std-ref">Conclusion</span></a></p></li>
+<li><p><a class="reference internal" href="#References"><span class="std std-ref">References</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">Hamiltonian</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">font_family</span> <span class="o">=</span> <span class="s1">&#39;STIXGeneral&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.fontset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">font_family</span>
+
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Introduction">Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<p>At the heart of quantum mechanics lies the Hamiltonian operator <span class="math notranslate nohighlight">\(H\)</span>, which encodes the total energy of a quantum system and governs its time evolution through the Schrödinger equation:</p>
+<div class="math notranslate nohighlight">
+\[i\hbar \frac{\partial}{\partial t}|\psi(t)\rangle = H|\psi(t)\rangle   \tag{1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(i\)</span> is the imaginary unit, <span class="math notranslate nohighlight">\(\hbar\)</span> is the reduced Planck constant, <span class="math notranslate nohighlight">\(|\psi(t)\rangle\)</span> is the quantum state at time <span class="math notranslate nohighlight">\(t\)</span>, and <span class="math notranslate nohighlight">\(H\)</span> is the Hamiltonian operator. The solution is given by the unitary time evolution operator <span class="math notranslate nohighlight">\(U(t) = e^{-iHt/\hbar}\)</span>. The ability to simulate this time evolution—Hamiltonian simulation—is essential for understanding quantum systems. However, the exponential scaling of quantum state spaces (<span class="math notranslate nohighlight">\(2^n\)</span> complex amplitudes for
+<span class="math notranslate nohighlight">\(n\)</span> qubits) makes classical simulation of generic Hamiltonians computationally intractable, motivating the development of quantum algorithms specifically designed for this task.</p>
+<p>The theoretical foundations of quantum simulation trace back to Feynman’s observation that nature cannot be efficiently simulated by classical means [1], and were formalized by Lloyd [2], who demonstrated that local Hamiltonians could be efficiently simulated on quantum computers with polynomial resource scaling. The key insight was that by splitting the evolution time into shorter segments, simulation error can be systematically controlled.</p>
+<p>Hamiltonian simulation has significant applications across multiple domains. In quantum chemistry, it enables calculation of molecular energies and reaction dynamics beyond classical methods [3]. In condensed matter physics, it provides insights into strongly correlated systems and quantum phase transitions [4]. It also aids in studying lattice gauge theories in particle physics [5], and serves as a critical subroutine in quantum algorithms including phase estimation and adiabatic state
+preparation [6].</p>
+<p>The algorithmic landscape has evolved considerably since Lloyd’s proposal. Product formula methods like the Trotter-Suzuki decomposition remain widely implemented due to their simplicity [7]. Recent advances include Taylor series methods [8], linear combination of unitaries (LCU) [9], and quantum signal processing techniques [10]. For near-term devices, variational quantum simulation offers a hybrid approach trading circuit depth for classical optimization [11].</p>
+<p>This tutorial focuses on implementing and verifying product formula methods using the QuAIRKit framework, chosen for their practical importance and pedagogical value. We begin with a review of the Schrödinger equation and its solutions for time-independent Hamiltonians, establishing the theoretical foundation for digital quantum simulation. We then present a detailed analysis of Trotter-Suzuki decompositions with numerical verification procedures demonstrating the trade-offs between accuracy and
+computational resources.</p>
+<h2 id="Theoretical-Fundation">Theoretical Fundation<a class="headerlink" href="#Theoretical-Fundation" title="Link to this heading">¶</a></h2>
+<p>In this section, we present the theoretical foundation of quantum dynamics, exploring how quantum states evolve over time and the central role of the Hamiltonian operator. We will cover the Schrödinger equation’s formulation, examine solutions for both time-independent and time-dependent cases, and discuss the eigenvalue problem. The key insight is that the Hamiltonian <span class="math notranslate nohighlight">\(H\)</span> acts as the generator of time evolution—it determines how quantum states change over time through the time evolution
+operator <span class="math notranslate nohighlight">\(U(t) = e^{-iHt}\)</span>, which is precisely what we aim to implement in Hamiltonian simulation algorithms. We will also introduce the time-independent Hamiltonian evolution and Trotter-Suzuki decomposition theory.</p>
+<h3 id="The-Schrödinger-Equation">The Schrödinger Equation<a class="headerlink" href="#The-Schrödinger-Equation" title="Link to this heading">¶</a></h3>
+<p>The time evolution of quantum systems is governed by the Schrödinger equation, which represents the fundamental dynamical law of quantum mechanics. Recall that or a quantum state <span class="math notranslate nohighlight">\(|\psi(t)\rangle\)</span> evolving under a Hamiltonian <span class="math notranslate nohighlight">\(H(t)\)</span>, the equation takes the form:</p>
+<div class="math notranslate nohighlight">
+\[i\hbar \frac{\partial |\psi(t)\rangle}{\partial t} = H(t)|\psi(t)\rangle    \tag{2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hbar\)</span> is the reduced Planck constant (often set to 1 in natural units). This first-order differential equation determines the complete time evolution of any quantum system given its Hamiltonian and initial state [12].</p>
+<p>The Hamiltonian operator <span class="math notranslate nohighlight">\(H\)</span> encodes all energy contributions and interactions within the system. For many-body quantum systems, it typically decomposes into kinetic and potential energy terms:</p>
+<div class="math notranslate nohighlight">
+\[H = T + V = \sum_i \frac{p_i^2}{2m_i} + V(x_1, x_2, ..., x_n)     \tag{3}\]</div>
+<p>In the context of quantum computing with qubits, Hamiltonians are commonly expressed as weighted sums of Pauli operators:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_\alpha h_\alpha \sigma_\alpha   \tag{4}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_\alpha\)</span> represents tensor products of Pauli matrices <span class="math notranslate nohighlight">\(\{I, X, Y, Z\}\)</span> and <span class="math notranslate nohighlight">\(h_\alpha\)</span> are real coefficients [13].</p>
+<p>The distinction between time-dependent and time-independent Hamiltonians fundamentally affects the complexity of finding solutions. For time-independent Hamiltonians, where <span class="math notranslate nohighlight">\(H(t) = H\)</span>, the Schrödinger equation admits a closed-form solution through the time evolution operator:</p>
+<div class="math notranslate nohighlight">
+\[|\psi(t)\rangle = U(t)|\psi(0)\rangle = e^{-iHt}|\psi(0)\rangle   \tag{5}\]</div>
+<p>This exponential operator encapsulates the complete dynamics of the system and forms the target of most Hamiltonian simulation algorithms [14].</p>
+<p>For time-dependent Hamiltonians, the solution requires a time-ordered exponential:</p>
+<div class="math notranslate nohighlight">
+\[U(t) = \mathcal{T} \exp\left(-i \int_0^t H(\tau)d\tau\right)   \tag{6}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> denotes time ordering. This significantly complicates both analytical and numerical approaches, as the operators at different times generally do not commute [15].</p>
+<p>The eigenvalue problem for the Hamiltonian, <span class="math notranslate nohighlight">\(H|E_n\rangle = E_n|E_n\rangle\)</span>, provides crucial physical insights. The eigenvalues <span class="math notranslate nohighlight">\(\{E_n\}\)</span> represent the allowed energy levels of the system, while the eigenvectors <span class="math notranslate nohighlight">\(\{|E_n\rangle\}\)</span> form a complete basis of energy eigenstates. In this basis, time evolution becomes particularly simple:</p>
+<div class="math notranslate nohighlight">
+\[|\psi(t)\rangle = \sum_n c_n e^{-iE_nt}|E_n\rangle   \tag{7}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_n = \langle E_n|\psi(0)\rangle\)</span> are the initial state amplitudes [16]. This spectral decomposition underlies many quantum algorithms, including quantum phase estimation, which extracts eigenvalues by implementing controlled time evolution operations [17].</p>
+<p>The challenge of simulating the Schrödinger equation on classical computers stems from the exponential scaling of the Hilbert space dimension. For a system of <span class="math notranslate nohighlight">\(n\)</span> qubits, the state vector contains <span class="math notranslate nohighlight">\(2^n\)</span> complex amplitudes, and the Hamiltonian is represented by a <span class="math notranslate nohighlight">\(2^n \times 2^n\)</span> matrix. Direct classical methods for computing <span class="math notranslate nohighlight">\(e^{-iHt}\)</span> thus require resources that scale exponentially with system size, limiting exact classical simulation to approximately 40-50 qubits even
+on supercomputers [18]. This exponential barrier motivates the development of quantum simulation algorithms that exploit the natural correspondence between quantum computers and quantum systems.</p>
+<h3 id="Time-Independent-Hamiltonian-Evolution-and-Applications">Time-Independent Hamiltonian Evolution and Applications<a class="headerlink" href="#Time-Independent-Hamiltonian-Evolution-and-Applications" title="Link to this heading">¶</a></h3>
+<p>Time-independent Hamiltonian evolution forms the foundation of numerous quantum simulation applications and serves as a key subroutine in many quantum algorithms. The unitary evolution <span class="math notranslate nohighlight">\(U(t) = e^{-iHt}\)</span> preserves the norm of quantum states while encoding the complete dynamical information of the system. Understanding how to efficiently implement this evolution on quantum computers has been a central challenge since the inception of the field.</p>
+<p>The computational challenge of implementing <span class="math notranslate nohighlight">\(e^{-iHt}\)</span> arises from the non-commutativity of Hamiltonian terms. For a Hamiltonian decomposed as <span class="math notranslate nohighlight">\(H = \sum_j H_j\)</span>, the naive factorization <span class="math notranslate nohighlight">\(e^{-iHt} \neq \prod_j e^{-iH_jt}\)</span> fails when <span class="math notranslate nohighlight">\([H_i, H_j] \neq 0\)</span>. This necessitates approximation schemes that balance accuracy with implementability.</p>
+<p>Applications of time-independent evolution extend beyond direct dynamics simulation. Quantum phase estimation leverages controlled time evolution to extract eigenvalues with exponential precision improvement over classical methods [19]. The algorithm implements controlled-<span class="math notranslate nohighlight">\(U^{2^k}\)</span> operations for various <span class="math notranslate nohighlight">\(k\)</span>, encoding phase information that reveals energy spectra. This approach enables quantum chemistry calculations for molecular ground states and excitation energies [20].</p>
+<p>Adiabatic state preparation employs slow time-independent evolution to prepare ground states of complex Hamiltonians. Starting from an easily preparable ground state of <span class="math notranslate nohighlight">\(H_0\)</span>, the system evolves under <span class="math notranslate nohighlight">\(H(s) = (1-s)H_0 + sH_1\)</span> as <span class="math notranslate nohighlight">\(s\)</span> slowly increases from 0 to 1. The adiabatic theorem ensures the system remains in the instantaneous ground state if the evolution is sufficiently slow compared to the energy gap [21].</p>
+<p>Time evolution also enables the calculation of dynamical correlation functions, essential for understanding response properties and transport phenomena. Green’s functions <span class="math notranslate nohighlight">\(G(t) = \langle\psi|A(t)B(0)|\psi\rangle\)</span>, where <span class="math notranslate nohighlight">\(A(t) = e^{iHt}Ae^{-iHt}\)</span>, characterize system responses to perturbations. Quantum computers can evaluate these functions by preparing appropriate initial states, implementing time evolution, and measuring observables [22].</p>
+<p>Recent algorithmic advances have improved the efficiency of time-independent evolution implementation. Quantum signal processing achieves optimal query complexity <span class="math notranslate nohighlight">\(\mathcal{O}(t + \log(1/\epsilon))\)</span> for evolution time <span class="math notranslate nohighlight">\(t\)</span> and error <span class="math notranslate nohighlight">\(\epsilon\)</span> [23]. Linear combination of unitaries methods enable implementation using <span class="math notranslate nohighlight">\(\mathcal{O}(t \|H\|)\)</span> gates where <span class="math notranslate nohighlight">\(\|H\|\)</span> is the spectral norm [24]. These improvements bring practical quantum advantage closer to realization for
+systems beyond classical computational reach.</p>
+<p>The verification of time evolution implementations presents unique challenges. While small systems permit direct comparison with classical matrix exponentiation, larger systems require indirect validation through conserved quantities, symmetry checks, and comparison with known analytical solutions in limiting cases [24]. Process tomography and randomized benchmarking provide experimental tools for characterizing implemented evolution operators on actual quantum hardware [25].</p>
+<h3 id="Trotter-Suzuki-Decomposition-Theory">Trotter-Suzuki Decomposition Theory<a class="headerlink" href="#Trotter-Suzuki-Decomposition-Theory" title="Link to this heading">¶</a></h3>
+<p>Trotterization is a critical technique in quantum computing used primarily for simulating the time evolution of systems with a given Hamiltonian. Consider a Hamiltonian decomposed as:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_{i=1}^n H_i   \tag{8}\]</div>
+<p>where <span class="math notranslate nohighlight">\(H_i\)</span> represents individual terms of the Hamiltonian. The core challenge stems from the fact that these terms generally do not commute, making the direct implementation of <span class="math notranslate nohighlight">\(e^{-iHt}\)</span> on a quantum computer non-trivial.</p>
+<p>The fundamental insight of the Trotter formula lies in approximating the exponential of a sum by a product of exponentials. Through Taylor expansion and the Baker-Campbell-Hausdorff formula, we can show that:</p>
+<div class="math notranslate nohighlight">
+\[e^{-iHt} = \left(\prod_{i=1}^n e^{-iH_i\tau}\right)^r + \mathcal{O}(t^2/r)   \tag{9}\]</div>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> is the total evolution time, <span class="math notranslate nohighlight">\(r\)</span> is the number of time slices, and <span class="math notranslate nohighlight">\(\tau = t/r\)</span> is the duration of each slice. This first-order approximation, while simple, accumulates error quadratically with the evolution time.</p>
+<p>The Trotter-Suzuki formulas provide systematic improvements through higher-order approximations. The hierarchy of decompositions can be expressed as:</p>
+<p><strong>First-order formula (:math:`S_1`):</strong></p>
+<div class="math notranslate nohighlight">
+\[S_1(\tau) = \prod_{i=1}^n e^{-iH_i\tau}   \tag{10}\]</div>
+<p><strong>Second-order formula (:math:`S_2`):</strong></p>
+<div class="math notranslate nohighlight">
+\[S_2(\tau) = \prod_{i=1}^n e^{-iH_i\tau/2} \prod_{i=n}^{1} e^{-iH_i\tau/2}    \tag{11}\]</div>
+<p>The second-order formula exploits the symmetry of forward and backward products to cancel first-order error terms, achieving <span class="math notranslate nohighlight">\(\mathcal{O}(t^3/r^2)\)</span> scaling.</p>
+<p><strong>Higher-order formulas (:math:`S_{2k}` for :math:`k &gt; 1`):</strong></p>
+<div class="math notranslate nohighlight">
+\[S_{2k}(\tau) = [S_{2k-2}(p_k\tau)]^2 S_{2k-2}((1-4p_k)\tau) [S_{2k-2}(p_k\tau)]^2   \tag{12}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_k = 1/(4 - 4^{1/(2k-1)})\)</span>. This recursive construction enables arbitrary even-order accuracy, though at the cost of increased circuit depth.</p>
+<p>Importantly, the Trotter-Suzuki decomposition is only formally defined for first-order (<span class="math notranslate nohighlight">\(S_1\)</span>) and even-order (<span class="math notranslate nohighlight">\(S_{2k}\)</span>) approximations. Odd-order formulas beyond the first do not generally exist due to symmetry requirements in the error cancellation.</p>
+<p>The choice of decomposition order involves a trade-off between accuracy and circuit complexity. Higher-order formulas reduce the number of time slices <span class="math notranslate nohighlight">\(r\)</span> needed for a given accuracy, but each slice requires more gates. For near-term quantum devices with limited coherence times, lower-order formulas with more repetitions often prove more practical than higher-order alternatives [26].</p>
+<p>The commutativity structure of the Hamiltonian significantly affects Trotter error. For Hamiltonians with mutually commuting terms, the Trotter decomposition becomes exact. More generally, the error depends on the magnitude of nested commutators <span class="math notranslate nohighlight">\([H_i, H_j]\)</span>, with rapidly decaying commutator norms enabling tighter error bounds.</p>
+<p>Recent theoretical advances have provided tighter error bounds for Trotter formulas. While the traditional analysis gives worst-case bounds, commutator scaling arguments and average-case analysis often yield substantially improved estimates, particularly for physically relevant Hamiltonians with local interactions [27].</p>
+<h2 id="Implementation">Implementation<a class="headerlink" href="#Implementation" title="Link to this heading">¶</a></h2>
+<p>In this section, we demonstrate how to implement Trotter decomposition using QuAIRKit. We will show how to construct time-evolution circuits for quantum systems and verify its accuracy.</p>
+<h3 id="Circuit-Setup">Circuit Setup<a class="headerlink" href="#Circuit-Setup" title="Link to this heading">¶</a></h3>
+<p>In QuAIRKit, we provide a <code class="docutils literal notranslate"><span class="pre">TrotterLayer</span></code> class to add time-evolving circuits to a user-specified circuit. This circuit could approximate the time-evolving operator of a system given its Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>, i.e., <span class="math notranslate nohighlight">\(U_{\rm cir} = e^{-iHt}\)</span>. The following implementation follows the approach presented in the QuAIRKit tutorial.</p>
+<p>Let’s consider a slightly complicated example. We will use the Hamiltonian of two qubits system as an example</p>
+<div class="math notranslate nohighlight">
+\[H = Z \otimes Z + X \otimes I + Y \otimes X  \tag{13}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">h</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Z0,Z1&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;X0&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Y0,X1&#39;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The hamiltonian is</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The matrix form of the hamiltonian is&#39;</span><span class="p">)</span>
+<span class="n">h</span><span class="o">.</span><span class="n">matrix</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The hamiltonian is
+ 1.0 Z0, Z1
+1.0 X0
+1.0 Y0, X1
+The matrix form of the hamiltonian is
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tensor([[ 1.+0.j,  0.+0.j,  1.+0.j,  0.-1.j],
+        [ 0.+0.j, -1.+0.j,  0.-1.j,  1.+0.j],
+        [ 1.+0.j,  0.+1.j, -1.+0.j,  0.+0.j],
+        [ 0.+1.j,  1.+0.j,  0.+0.j,  1.+0.j]])
+</pre></div></div>
+</div>
+<p>We can add the corresponding Trotter layer with Trotter parameters to a circuit as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">t</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The circuit with the Trotter layer with number of steps=2 and order=1&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;detailed&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The circuit with the Trotter layer with number of steps=2 and order=1
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_9_hamiltonian_10_1.png" src="../../_images/tutorials_AIAA-5072_week_9_hamiltonian_10_1.png" />
+</div>
+</div>
+<p>We can also determine which qubits in the circuit are used to simulate the corresponding Hamiltonian by specifying the qubit indices.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The repeated section slices in a Trotter circuit.&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;compact&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The repeated section slices in a Trotter circuit.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_9_hamiltonian_12_1.png" src="../../_images/tutorials_AIAA-5072_week_9_hamiltonian_12_1.png" />
+</div>
+</div>
+<h3 id="Verification-of-Trotter-decomposition">Verification of Trotter decomposition<a class="headerlink" href="#Verification-of-Trotter-decomposition" title="Link to this heading">¶</a></h3>
+<p>For a real physical system, we often need to calculate the real error in order to determine the circuit depth needed to simulate the system. It can be shown that the error bound on the error for the 2k-th order product formula [29] is：</p>
+<div class="math notranslate nohighlight">
+\[\epsilon \left( e^{-iHt}, \left(S_{1}(\tau)\right)^r \right) \leq \frac{(tn\Lambda)^2}{r} \exp\left(\frac{|t|n\Lambda}{r}\right)  \tag{14}\]</div>
+<div class="math notranslate nohighlight">
+\[\epsilon \left( e^{-iHt}, \left(S_{2k}(\tau)\right)^r \right) \leq \frac{\left(2n5^{k-1}\Lambda|t|\right)^{2k+1}}{3r^{2k}} \exp\left(\frac{2n5^{k-1}\Lambda|t|}{r}\right), \quad k \geq 1.  \tag{15}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\Lambda = \max_i ||H_i||_F\)</span> is the maximum of Frobenius norm of <span class="math notranslate nohighlight">\(H_i\)</span>. Still consider the same hamiltonian in (13), we can calculate the real error of the circuit as follows:</p>
+<p>To quantify how well our Trotter decomposition approximates the ideal time evolution, we compute the fidelity between the exact evolution operator <span class="math notranslate nohighlight">\(e^{-iHt}\)</span> and the Trotter-approximated circuit. The gate fidelity is defined as <span class="math notranslate nohighlight">\(F(U_1, U_2) = |\text{Tr}(U_1^\dagger U_2)|^2/d^2\)</span>, where <span class="math notranslate nohighlight">\(d\)</span> is the dimension of the Hilbert space. It measures the similarity between two unitary operations, with <span class="math notranslate nohighlight">\(F = 1\)</span> indicating perfect agreement and <span class="math notranslate nohighlight">\(F = 0\)</span> meaning the operations are
+completely orthogonal.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideal_gate</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">h</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+
+<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">order</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+
+<span class="n">trotter_gate</span> <span class="o">=</span> <span class="n">cir</span><span class="o">.</span><span class="n">matrix</span>
+<span class="n">fidelity</span> <span class="o">=</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">ideal_gate</span><span class="p">,</span> <span class="n">trotter_gate</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The fidelity of the circuit is&#39;</span><span class="p">,</span> <span class="n">fidelity</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The fidelity of the circuit is 0.9935372665966202
+</pre></div></div>
+</div>
+<p>The error could be further reduced if we further split the evolution process into more ‘pieces’:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_fidelity</span><span class="p">(</span><span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the gate fidelity of the Trotter circuit with n_steps steps.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_steps: Number of Trotter steps.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Gate fidelity of the Trotter circuit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cir</span><span class="o">.</span><span class="n">trotter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">cir</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">ideal_gate</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The gate fidelity of Trotter circuit with different number of Trotter steps:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="p">[</span><span class="n">get_fidelity</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gate fidelity of Trotter circuit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Trotter steps&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Gate fidelity with &#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$\exp(-iH)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;plain&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The gate fidelity of Trotter circuit with different number of Trotter steps:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_9_hamiltonian_16_1.png" src="../../_images/tutorials_AIAA-5072_week_9_hamiltonian_16_1.png" />
+</div>
+</div>
+<h2 id="Conclusion">Conclusion<a class="headerlink" href="#Conclusion" title="Link to this heading">¶</a></h2>
+<p>This tutorial has presented a comprehensive treatment of Hamiltonian simulation using Trotter-Suzuki decomposition methods. We have covered the theoretical foundations starting from the Schrödinger equation, analyzed the structure and error bounds of various order Trotter formulas, and demonstrated practical implementation using the QuAIRKit framework.</p>
+<p>The key insights from our analysis include:</p>
+<ul class="simple">
+<li><p>Trotter decomposition provides a systematic approach to approximate time evolution on quantum computers, with controllable error that decreases with the number of time slices.</p></li>
+<li><p>Higher-order Suzuki formulas offer improved accuracy at the cost of increased circuit depth, requiring careful optimization based on hardware constraints.</p></li>
+<li><p>Numerical verification through gate fidelity calculations provides practical guidance for parameter selection, often yielding better performance than theoretical worst-case bounds suggest.</p></li>
+</ul>
+<p>While Trotter methods remain the workhorse of current quantum simulation implementations, emerging techniques such as quantum signal processing and qubitization promise improved asymptotic performance. As quantum hardware continues to advance, the ability to simulate increasingly complex Hamiltonians will unlock applications across chemistry, materials science, and fundamental physics, fulfilling the original vision of quantum computation as a tool for understanding quantum systems.</p>
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Feynman, Richard P. “Simulating physics with computers.” Feynman and computation. cRc Press, 2018. 133-153.</p>
+<p>[2] Lloyd, Seth. “Universal quantum simulators.” Science 273.5278 (1996): 1073-1078.</p>
+<p>[3] Cao, Yudong, et al. “Quantum chemistry in the age of quantum computing.” Chemical reviews 119.19 (2019): 10856-10915.</p>
+<p>[4] Georgescu, Iulia M., Sahel Ashhab, and Franco Nori. “Quantum simulation.” Reviews of Modern Physics 86.1 (2014): 153-185.</p>
+<p>[5] Banuls, Mari Carmen, et al. “Simulating lattice gauge theories within quantum technologies.” The European physical journal D 74.8 (2020): 165.</p>
+<p>[6] Childs, Andrew M., et al. “Toward the first quantum simulation with quantum speedup.” Proceedings of the National Academy of Sciences 115.38 (2018): 9456-9461.</p>
+<p>[7] Suzuki, Masuo. “General theory of fractal path integrals with applications to many‐body theories and statistical physics.” Journal of mathematical physics 32.2 (1991): 400-407.</p>
+<p>[8] Berry, Dominic W., et al. “Simulating Hamiltonian dynamics with a truncated Taylor series.” Physical review letters 114.9 (2015): 090502.</p>
+<p>[9] Childs, Andrew M., and Nathan Wiebe. “Hamiltonian simulation using linear combinations of unitary operations.” arXiv preprint arXiv:1202.5822 (2012).</p>
+<p>[10] Low, Guang Hao, and Isaac L. Chuang. “Hamiltonian simulation by qubitization.” Quantum 3 (2019): 163.</p>
+<p>[11] Yuan, Xiao, et al. “Theory of variational quantum simulation.” Quantum 3 (2019): 191.</p>
+<p>[12] Sakurai, Jun John, and Jim Napolitano. Modern quantum mechanics. Cambridge University Press, 2020.</p>
+<p>[13] Whitfield, James D., Jacob Biamonte, and Alán Aspuru-Guzik. “Simulation of electronic structure Hamiltonians using quantum computers.” Molecular Physics 109.5 (2011): 735-750.</p>
+<p>[14] Nielsen, Michael A., and Isaac L. Chuang. Quantum computation and quantum information. Cambridge university press, 2010.</p>
+<p>[15] Magnus, Wilhelm. “On the exponential solution of differential equations for a linear operator.” Communications on pure and applied mathematics 7.4 (1954): 649-673.</p>
+<p>[16] Cohen-Tannoudji, Claude, Bernard Diu, and Franck Laloë. Quantum mechanics, volume 3: fermions, bosons, photons, correlations, and entanglement. John Wiley &amp; Sons, 2019.</p>
+<p>[17] Kitaev, A. Yu. “Quantum measurements and the Abelian stabilizer problem.” arXiv preprint quant-ph/9511026 (1995).</p>
+<p>[18] Häner, Thomas, and Damian S. Steiger. “5 petabyte simulation of a 45-qubit quantum circuit.” Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis. 2017.</p>
+<p>[19] Abrams, Daniel S., and Seth Lloyd. “Quantum algorithm providing exponential speed increase for finding eigenvalues and eigenvectors.” Physical Review Letters 83.24 (1999): 5162.</p>
+<p>[20] O’Brien, Thomas E., et al. “Calculating energy derivatives for quantum chemistry on a quantum computer.” npj Quantum Information 5.1 (2019): 113.</p>
+<p>[21] Albash, Tameem, and Daniel A. Lidar. “Adiabatic quantum computation.” Reviews of Modern Physics 90.1 (2018): 015002.</p>
+<p>[22] Raeisi, Sadegh, Nathan Wiebe, and Barry C. Sanders. “Quantum-circuit design for efficient simulations of many-body quantum dynamics.” New Journal of Physics 14.10 (2012): 103017.</p>
+<p>[23] Low, Guang Hao, and Isaac L. Chuang. “Optimal Hamiltonian simulation by quantum signal processing.” Physical review letters 118.1 (2017): 010501.</p>
+<p>[24] Berry, Dominic W., et al. “Exponential improvement in precision for simulating sparse Hamiltonians.” Proceedings of the forty-sixth annual ACM symposium on Theory of computing. 2014.</p>
+<p>[25] Kliesch, Martin, and Ingo Roth. “Theory of quantum system certification.” PRX quantum 2.1 (2021): 010201.</p>
+<p>[26] Trotter, Hale F. “On the product of semi-groups of operators.” Proceedings of the American Mathematical Society 10.4 (1959): 545-551.</p>
+<p>[27] Childs, Andrew M., and Yuan Su. “Nearly optimal lattice simulation by product formulas.” Physical review letters 123.5 (2019): 050503.</p>
+<p><em>Table: Notation conventions used in this tutorial</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(H_i\)</span></p></td>
+<td><p>Hamiltonian (term)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td></td>
+<td><p>Total number of Hamiltonian terms</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(X, Y, Z\)</span></p></td>
+<td></td>
+<td><p>Pauli operators</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(r\)</span></p></td>
+<td></td>
+<td><p>Number of Trotter steps</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(t\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\tau\)</span></p></td>
+<td><p>Evolution time (total or per step)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(S_k(\tau)\)</span></p></td>
+<td></td>
+<td><p><span class="math notranslate nohighlight">\(k\)</span>-th order Trotter-Suzuki decomposition</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\|\|\cdot\|\|_F\)</span></p></td>
+<td></td>
+<td><p>Frobenius norm</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\Lambda\)</span></p></td>
+<td></td>
+<td><p>Maximum of <span class="math notranslate nohighlight">\(\|\|H_i\|\|_F\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\epsilon\)</span></p></td>
+<td></td>
+<td><p>Approximation error</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(U(t)\)</span></p></td>
+<td></td>
+<td><p>Time evolution operator</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+---------DEVICE---------
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

@@ -290,6 +290,30 @@
                 
   
   
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -301,7 +325,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -318,14 +342,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
           </label>
@@ -635,6 +659,7 @@
 
 
 <h1 id="Running-QuAIRKit-with-third-party-quantum-cloud-platforms">Running QuAIRKit with third-party quantum cloud platforms<a class="headerlink" href="#Running-QuAIRKit-with-third-party-quantum-cloud-platforms" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
 <p>QuAIRKit as a quantum algorithm SDK does not provide access to its own quantum hardware or quantum hardware emulation. Instead, it allows users to run quantum algorithms with backends set to third-party quantum cloud providers. This tutorial will show how to run quantum circuits in QuAIRKit with backend linked to third-party quantum clouds for access to real quantum hardwares and quantum circuit emulations.</p>
 <p><strong>Table of contents</strong></p>
 <ul class="simple">
@@ -642,7 +667,7 @@
 <li><p><a class="reference internal" href="#VQE-with-quantum-cloud-backend"><span class="std std-ref">VQE with quantum cloud backend</span></a></p></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
@@ -668,7 +693,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot
 </div>
 <p>The cloud platform is accessed via a token. Please contact Tencent quantum cloud for more details.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorcircuit</span> <span class="k">as</span> <span class="nn">tc</span>
@@ -679,21 +704,19 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot
 </code></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Please first ``pip install -U cirq`` to enable related functionality in translation module
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-List of available backends in quantum cloud:
- [tencent::tianxuan_s2v20s1, tencent::tianxuan_s2, tencent::tianji_m2, tencent::tianji_m1v15s1, tencent::tianji_m1v15s2, tencent::tianji_m2v14s2, tencent::tianji_m1v15s4, tencent::tianji_m2v14s4, tencent::tianji_s2v7, tencent::tianxuan_s2v20s2, tencent::tianji_m1v15s3, tencent::tianji_s2, tencent::tianji_m2v15s3, tencent::tianji_m2v16s1, tencent::tianxuan_s1, tencent::simulator:tc, tencent::tianji_s2v6]
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[2], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">tensorcircuit</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">as</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">tc</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">tensorcircuit</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">cloud</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> apis
+<span class="ansi-green-intense-fg ansi-bold">      4</span> apis<span style="color: rgb(98,98,98)">.</span>set_token(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">ENTER YOUR TOKEN HERE</span><span style="color: rgb(175,0,0)">&#34;</span>)
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;tensorcircuit&#39;
 </pre></div></div>
 </div>
 <p>Hardware-like backends in QuAIRKit can be set via an abstract class <code class="docutils literal notranslate"><span class="pre">StateOperator</span></code>. Such class provides a unified interface for quantum hardware and quantum circuit emulations. By implementing an abstract method <code class="docutils literal notranslate"><span class="pre">_execute</span></code> on how to run quantum circuits (via <a class="reference external" href="https://github.com/openqasm/openqasm/tree/OpenQASM2.x">OpenQASM 2.0</a>), one can initialize a backend for quantum circuit execution and gradient back-propagations.</p>
@@ -734,7 +757,7 @@ List of available backends in quantum cloud:
 </div>
 <p>This backend can be setup for QuAIRKit as follows:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="n">TensorCircuitState</span><span class="p">)</span>
@@ -746,7 +769,7 @@ List of available backends in quantum cloud:
 <p>The task of variational quantum eigensolver (VQE) is to find the ground state energy of a given Hamiltonian. Here we show how to run a two-qubit VQE algorithm with backend linked to the Tencent quantum cloud.</p>
 <p>One first setup the circuit.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>
@@ -766,7 +789,7 @@ List of available backends in quantum cloud:
 </div>
 <p>For simplicity we consider a simple two-qubit Hamiltonian.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.7043555077309385</span><span class="p">,</span> <span class="s1">&#39;X0,X1&#39;</span><span class="p">],</span>
@@ -788,7 +811,7 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>As for initial states, note that one cannot easily initialize a random state on real quantum hardwares. QuAIRKit provides initialization to computational states.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># input_state = computational_state(num_qubits, index=3) # |3&gt; = |11&gt;</span>
@@ -798,7 +821,7 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>The loss function is defined as the expectation value with respect to the Hamiltonian. The grammar here is as usual in QuAIRKit.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_fcn</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
@@ -808,7 +831,7 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>The learning rate is set to 0.1 and the number of iterations is set to 25.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">LR</span><span class="p">,</span> <span class="n">NUM_ITR</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">25</span>
@@ -817,7 +840,7 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>For the gradient update, the gradient is computed via the generalized parameter-shift rule [1] or finite-difference method, depending on how operators in the circuit are parameterized.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">loss_list</span><span class="p">,</span> <span class="n">time_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -863,7 +886,7 @@ iter: 24, loss: -1.51974654, lr: 1.00E-01, avg_time: 370.2565s
 </div>
 <p>As shown below, the loss value approaches the ground state energy of the Hamiltonian.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">list_itr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">NUM_ITR</span><span class="p">))</span>
@@ -902,7 +925,7 @@ iter: 24, loss: -1.51974654, lr: 1.00E-01, avg_time: 370.2565s
 </div>
 <hr class="docutils" />
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
@@ -986,7 +1009,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

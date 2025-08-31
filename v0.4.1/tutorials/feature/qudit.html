@@ -1,0 +1,1373 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="plot.html">
+      
+      
+        <link rel="next" href="../../tutorials.introduction.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Introduction to qudit quantum computing - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Review-on-qubit-case" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to qudit quantum computing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.feature.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="batch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/batch.ipynb (reference label)"><span>Batch computation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cloud.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/cloud.ipynb (reference label)"><span>Running Qu<wbr>AIRKit with third-<wbr>party quantum cloud platforms</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="custom.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/custom.ipynb (reference label)"><span>Neural network setup customization</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plot.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/plot.ipynb (reference label)"><span>Drawing Quantum Circuits with Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/qudit.ipynb (reference label)"><span>Introduction to qudit quantum computing</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/feature/qudit.ipynb (reference label)"><span>Introduction to qudit quantum computing</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Review-on-qubit-case" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#review-on-qubit-case (reference label)"><span>Review on qubit case</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review on qubit case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Setup-for-qutrit-case" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#setup-for-qutrit-case (reference label)"><span>Setup for qutrit case</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Setup-for-general-cases" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#setup-for-general-cases (reference label)"><span>Setup for general cases</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Operations-in-qudit-circuits" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#operations-in-qudit-circuits (reference label)"><span>Operations in qudit circuits</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Adding-custom-gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#adding-custom-gates (reference label)"><span>Adding custom gates</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Adding-custom-channels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#adding-custom-channels (reference label)"><span>Adding custom channels</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#measurement (reference label)"><span>Measurement</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Review-on-qubit-case" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#review-on-qubit-case (reference label)"><span>Review on qubit case</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review on qubit case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Setup-for-qutrit-case" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#setup-for-qutrit-case (reference label)"><span>Setup for qutrit case</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Setup-for-general-cases" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#setup-for-general-cases (reference label)"><span>Setup for general cases</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Operations-in-qudit-circuits" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#operations-in-qudit-circuits (reference label)"><span>Operations in qudit circuits</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Adding-custom-gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#adding-custom-gates (reference label)"><span>Adding custom gates</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Adding-custom-channels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#adding-custom-channels (reference label)"><span>Adding custom channels</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/feature/qudit.ipynb#measurement (reference label)"><span>Measurement</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Introduction-to-qudit-quantum-computing">Introduction to qudit quantum computing<a class="headerlink" href="#Introduction-to-qudit-quantum-computing" title="Link to this heading">¶</a></h1>
+<p>In this tutorial, users will learn how to use qudit setting in QuAIRKit.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Review-on-qubit-case"><span class="std std-ref">Review on qubit case</span></a></p></li>
+<li><p><a class="reference internal" href="#Setup-for-qutrit-case"><span class="std std-ref">Setup for qutrit case</span></a></p></li>
+<li><p><a class="reference internal" href="#Setup-for-general-cases"><span class="std std-ref">Setup for general cases</span></a></p></li>
+<li><p><a class="reference internal" href="#Operations-in-qudit-circuits"><span class="std std-ref">Operations in qudit circuits</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Adding-custom-gates"><span class="std std-ref">Adding custom gates</span></a></p></li>
+<li><p><a class="reference internal" href="#Adding-custom-channels"><span class="std std-ref">Adding custom channels</span></a></p></li>
+<li><p><a class="reference internal" href="#Measurement"><span class="std std-ref">Measurement</span></a></p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+<span class="n">split_line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Review-on-qubit-case">Review on qubit case<a class="headerlink" href="#Review-on-qubit-case" title="Link to this heading">¶</a></h2>
+<p>The default setting in quantum computing is qubit unless specified otherwise. For detailed instruction on qubit circuits, please refer to the tutorials of states and circuits.</p>
+<p>Users can check the number of qubits, qutrits, and systems in the circuit using <code class="docutils literal notranslate"><span class="pre">cir.num_qubits</span></code>, <code class="docutils literal notranslate"><span class="pre">cir.num_qutrits</span></code> and <code class="docutils literal notranslate"><span class="pre">cir.num_systems</span></code>, respectively.</p>
+<p>For example, one can create a circuit with 3 qubits:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>  <span class="c1"># construct a circuit with specifying the number of qubits</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">()</span>  <span class="c1"># add a complex entangled layer</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The diagram of the quantum circuit:&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">split_line</span><span class="p">)</span>   <span class="c1"># a line of &#39;-&#39; for better readability</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Are the systems composed of qubits? </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">are_qubits</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qubits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qutrits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qutrits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of systems in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the quantum circuit:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_qudit_3_1.png" src="../../_images/tutorials_feature_qudit_3_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+----------------------------------------------------------------------------------------------------
+
+Are the systems composed of qubits? True
+----------------------------------------------------------------------------------------------------
+The total number of qubits in the circuit is 3
+----------------------------------------------------------------------------------------------------
+The total number of qutrits in the circuit is 0
+----------------------------------------------------------------------------------------------------
+The total number of systems in the circuit is 3
+----------------------------------------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p>One can also verify the dimension of each system using the <code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">dimension</span></code> attribute from the <code class="docutils literal notranslate"><span class="pre">State</span></code> class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The output state of the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The output state of the circuit is
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 2, 2]
+ System sequence: [0, 1, 2]
+[-0.28+0.j   -0.17+0.01j -0.19+0.11j -0.19-0.09j -0.05+0.04j -0.56-0.43j
+ -0.25-0.48j -0.03+0.08j]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<h3 id="Setup-for-qutrit-case">Setup for qutrit case<a class="headerlink" href="#Setup-for-qutrit-case" title="Link to this heading">¶</a></h3>
+<p>To configure the qudit state and its corresponding circuit, users can set <code class="docutils literal notranslate"><span class="pre">system_dim</span></code> to <span class="math notranslate nohighlight">\(d\)</span>, where <span class="math notranslate nohighlight">\(d\)</span> represents the dimension of the qudit.</p>
+<p>For instance, one can assign <code class="docutils literal notranslate"><span class="pre">system_dim</span></code> = <span class="math notranslate nohighlight">\(3\)</span> for qutrit. Then, the following code establishes the qutrit setup:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># generate a random 2-qutrit state</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The number of systems of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The dimension of each system of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">system_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Are the systems composed of qutrits? </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">are_qutrits</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">split_line</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Random 2-qutrit states: </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The number of systems of the state is 2
+----------------------------------------------------------------------------------------------------
+The dimension of each system of the state is [3, 3]
+----------------------------------------------------------------------------------------------------
+Are the systems composed of qutrits? True
+----------------------------------------------------------------------------------------------------
+
+Random 2-qutrit states:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [3, 3]
+ System sequence: [0, 1]
+[[ 0.12+0.j    0.03+0.j   -0.  +0.02j  0.02+0.j   -0.  +0.01j -0.  -0.01j
+  -0.04+0.03j  0.02-0.01j -0.01+0.01j]
+ [ 0.03-0.j    0.14+0.j    0.04-0.j    0.  -0.01j -0.01+0.j   -0.1 +0.04j
+  -0.  -0.02j -0.  +0.03j -0.02-0.01j]
+ [-0.  -0.02j  0.04+0.j    0.07+0.j   -0.01+0.02j  0.  +0.01j  0.  -0.j
+  -0.01+0.02j -0.03-0.j   -0.03+0.01j]
+ [ 0.02-0.j    0.  +0.01j -0.01-0.02j  0.09+0.j    0.01+0.04j  0.  -0.02j
+   0.02+0.j    0.02+0.01j -0.01-0.01j]
+ [-0.  -0.01j -0.01-0.j    0.  -0.01j  0.01-0.04j  0.08+0.j    0.03-0.04j
+  -0.05+0.02j -0.03+0.j   -0.02-0.01j]
+ [-0.  +0.01j -0.1 -0.04j  0.  +0.j    0.  +0.02j  0.03+0.04j  0.16+0.j
+  -0.04+0.01j  0.  -0.03j -0.04+0.02j]
+ [-0.04-0.03j -0.  +0.02j -0.01-0.02j  0.02-0.j   -0.05-0.02j -0.04-0.01j
+   0.12+0.j    0.01+0.01j -0.01+0.02j]
+ [ 0.02+0.01j -0.  -0.03j -0.03+0.j    0.02-0.01j -0.03-0.j    0.  +0.03j
+   0.01-0.01j  0.08+0.j    0.01+0.02j]
+ [-0.01-0.01j -0.02+0.01j -0.03-0.01j -0.01+0.01j -0.02+0.01j -0.04-0.02j
+  -0.01-0.02j  0.01-0.02j  0.13+0.j  ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>The corresponding qutrit circuit is as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># create a circuit with 2 systems, each of dimension 3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Are the systems composed of qutrits? </span><span class="si">{</span><span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">are_qutrits</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qubits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qutrits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qutrits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of systems in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Are the systems composed of qutrits? True
+----------------------------------------------------------------------------------------------------
+The total number of qubits in the circuit is 0
+----------------------------------------------------------------------------------------------------
+The total number of qutrits in the circuit is 2
+----------------------------------------------------------------------------------------------------
+The total number of systems in the circuit is 2
+----------------------------------------------------------------------------------------------------
+</pre></div></div>
+</div>
+<h3 id="Setup-for-general-cases">Setup for general cases<a class="headerlink" href="#Setup-for-general-cases" title="Link to this heading">¶</a></h3>
+<p>QuAIRKit supports general <span class="math notranslate nohighlight">\(d\)</span>-dimensional setup for qudits, as well as their compound, by setting <code class="docutils literal notranslate"><span class="pre">system_dim</span></code> as <span class="math notranslate nohighlight">\([d_0, d_2, d_3, \cdots, d_{n-1}]\)</span>.</p>
+<p>For example, to configure a 3-qudit system with dimensions <span class="math notranslate nohighlight">\([2, 3, 6]\)</span>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>   <span class="c1"># generate a random state with 3 systems of dimensions [2, 3, 6]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The number of systems of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The dimension of each system of the state is </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">system_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Random 3-qudit states: </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The number of systems of the state is 3
+----------------------------------------------------------------------------------------------------
+The dimension of each system of the state is [2, 3, 6]
+----------------------------------------------------------------------------------------------------
+Random 3-qudit states:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2, 3, 6]
+ System sequence: [0, 1, 2]
+[[ 0.03+0.j    0.01-0.01j  0.01-0.j   ... -0.01-0.j   -0.  -0.j
+  -0.  -0.01j]
+ [ 0.01+0.01j  0.03+0.j   -0.  +0.01j ...  0.  -0.01j  0.  -0.01j
+  -0.  -0.01j]
+ [ 0.01+0.j   -0.  -0.01j  0.02+0.j   ... -0.01-0.j    0.01-0.j
+  -0.01+0.j  ]
+ ...
+ [-0.01+0.j    0.  +0.01j -0.01+0.j   ...  0.04+0.j   -0.  +0.01j
+  -0.  +0.j  ]
+ [-0.  +0.j    0.  +0.01j  0.01+0.j   ... -0.  -0.01j  0.02+0.j
+  -0.  +0.j  ]
+ [-0.  +0.01j -0.  +0.01j -0.01-0.j   ... -0.  -0.j   -0.  -0.j
+   0.03+0.j  ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>The following codes illustrate compound dimensions of qudits in a quantum circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>  <span class="c1"># generate a random state with 3 systems of dimensions [2, 3, 6]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qubits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of qutrits in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_qutrits</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The total number of systems in the circuit is </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">num_systems</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The total number of qubits in the circuit is 1
+----------------------------------------------------------------------------------------------------
+The total number of qutrits in the circuit is 1
+----------------------------------------------------------------------------------------------------
+The total number of systems in the circuit is 3
+----------------------------------------------------------------------------------------------------
+</pre></div></div>
+</div>
+<h3 id="Operations-in-qudit-circuits">Operations in qudit circuits<a class="headerlink" href="#Operations-in-qudit-circuits" title="Link to this heading">¶</a></h3>
+<p>QuAIRKit offers a variety of operations for qudit circuits, including:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Adding-custom-gates"><span class="std std-ref">Adding custom gates</span></a></p></li>
+<li><p><a class="reference internal" href="#Adding-custom-channels"><span class="std std-ref">Adding custom channels</span></a></p></li>
+<li><p><a class="reference internal" href="#Measurement"><span class="std std-ref">Measurement</span></a></p></li>
+</ul>
+<p>In this section, we will demonstrate how to use these operations.</p>
+<h2 id="Adding-custom-gates">Adding custom gates<a class="headerlink" href="#Adding-custom-gates" title="Link to this heading">¶</a></h2>
+<p>One can define and incorporate custom gates into qudit circuits. Here is an example of how to define custom gates in qudit circuits:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># generate a random state with 3 systems of dimensions [2, 3, 6]</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="c1"># add a 3-dimension gate acting on the system 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># add a 6-dimension custom gate acting on the system 2</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># add a custom gate with the system 2 as control qudit acting on the 3 systems</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The diagram of the qudit circuit:&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The diagram of the qudit circuit:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_feature_qudit_16_1.png" src="../../_images/tutorials_feature_qudit_16_1.png" />
+</div>
+</div>
+<h2 id="Adding-custom-channels">Adding custom channels<a class="headerlink" href="#Adding-custom-channels" title="Link to this heading">¶</a></h2>
+<p>One can create and integrate custom channels into qudit circuits. Here’s a simple example of how to create a replacement channel in QuAIRKit:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># create a random state</span>
+
+<span class="c1"># generate the replacement channel in Choi representation</span>
+<span class="n">replacement_choi_repr</span> <span class="o">=</span> <span class="n">replacement_choi</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+<span class="c1"># add the replacement channel acting on the system 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">choi_channel</span><span class="p">(</span><span class="n">replacement_choi_repr</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The first system is replaced with state&#39;</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;while the output state of first system is:&#39;</span><span class="p">,</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The first system is replaced with state
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [4]
+ System sequence: [0]
+[[ 0.24+0.j    0.17-0.25j -0.05-0.02j  0.01-0.01j]
+ [ 0.17+0.25j  0.45+0.j   -0.  -0.04j -0.01+0.08j]
+ [-0.05+0.02j -0.  +0.04j  0.12+0.j    0.11-0.01j]
+ [ 0.01+0.01j -0.01-0.08j  0.11+0.01j  0.19+0.j  ]]
+-----------------------------------------------------
+
+while the output state of first system is:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [4]
+ System sequence: [0]
+[[ 0.24+0.j    0.17-0.25j -0.05-0.02j  0.01-0.01j]
+ [ 0.17+0.25j  0.45+0.j   -0.  -0.04j -0.01+0.08j]
+ [-0.05+0.02j -0.  +0.04j  0.12+0.j    0.11-0.01j]
+ [ 0.01+0.01j -0.01-0.08j  0.11+0.01j  0.19+0.j  ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>Similarly, QuAIRKit also supports batch computation for qudits. The following code demonstrates a simple example of batch computation in circuits:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># the number of batch size</span>
+
+<span class="c1"># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># add a universal gate to qudit system 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># add an custom gate to qudit system 2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The output state of the second system is:&#39;</span><span class="p">,</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The output state of the second system is:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [3]
+ System sequence: [0]
+ Batch size: [5]
+
+ # 0:
+[[0.76+0.j   0.06+0.02j 0.12+0.34j]
+ [0.06-0.02j 0.06+0.j   0.02+0.04j]
+ [0.12-0.34j 0.02-0.04j 0.18+0.j  ]]
+ # 1:
+[[0.76+0.j   0.06+0.02j 0.12+0.34j]
+ [0.06-0.02j 0.06+0.j   0.02+0.04j]
+ [0.12-0.34j 0.02-0.04j 0.18+0.j  ]]
+ # 2:
+[[0.76+0.j   0.06+0.02j 0.12+0.34j]
+ [0.06-0.02j 0.06+0.j   0.02+0.04j]
+ [0.12-0.34j 0.02-0.04j 0.18+0.j  ]]
+ # 3:
+[[0.76+0.j   0.06+0.02j 0.12+0.34j]
+ [0.06-0.02j 0.06+0.j   0.02+0.04j]
+ [0.12-0.34j 0.02-0.04j 0.18+0.j  ]]
+ # 4:
+[[0.76+0.j   0.06+0.02j 0.12+0.34j]
+ [0.06-0.02j 0.06+0.j   0.02+0.04j]
+ [0.12-0.34j 0.02-0.04j 0.18+0.j  ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<h2 id="Measurement">Measurement<a class="headerlink" href="#Measurement" title="Link to this heading">¶</a></h2>
+<p>Measurement operations in qudits are similar to those in qubit systems. Users just need to set the measurement basis dimensions to match the corresponding qudit system.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="c1"># define Pauli X basis as the measurement basis</span>
+
+<span class="c1"># measure the system 0 in the X basis for obtaining measurement result &#39;1&#39;</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">cir</span><span class="p">(),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The first state for obtaining measurement result &#39;1&#39; for the system 0 is&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">()</span>  <span class="c1"># computational basis as the measurement basis</span>
+
+<span class="c1"># measure systems 1 and 2, and obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">cir</span><span class="p">(),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;24&#39;</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The first state for obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2 is&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The first state for obtaining measurement result &#39;1&#39; for the system 0 is
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 3, 6]
+ System sequence: [0, 1, 2]
+ Batch size: [1]
+
+ # 0:
+[-0.07+0.01j -0.01+0.03j  0.31+0.03j  0.08+0.07j  0.02-0.14j  0.05-0.1j
+  0.11+0.03j  0.04-0.03j -0.42-0.23j -0.07-0.14j -0.11+0.19j -0.13+0.11j
+ -0.  +0.01j  0.  +0.j    0.01-0.03j  0.01-0.01j -0.02-0.01j -0.01-0.01j
+  0.07-0.01j  0.01-0.03j -0.31-0.03j -0.08-0.07j -0.02+0.14j -0.05+0.1j
+ -0.11-0.03j -0.04+0.03j  0.42+0.23j  0.07+0.14j  0.11-0.19j  0.13-0.11j
+  0.  -0.01j -0.  -0.j   -0.01+0.03j -0.01+0.01j  0.02+0.01j  0.01+0.01j]
+-----------------------------------------------------
+
+The first state for obtaining measurement result &#39;2&#39; for the system 1, and &#39;4&#39; for the system 2 is
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 3, 6]
+ System sequence: [0, 1, 2]
+ Batch size: [1]
+
+ # 0:
+[ 0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j
+  0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j
+  0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j   -0.63-0.37j  0.  +0.j
+  0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j
+  0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j
+  0.  +0.j    0.  +0.j    0.  +0.j    0.  +0.j   -0.58-0.35j  0.  +0.j  ]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>After measuring some qudits, if we want to perform additional operations, users can utilize the <code class="docutils literal notranslate"><span class="pre">cir.collapse</span></code> function to collapse the measured qudits. By printing the output state of the circuit, the average probability distribution of the collapsed qudits is obtained.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># the numbar of batch size</span>
+
+<span class="c1"># create a circuit with 3 qudits and dimensions [2, 3, 6] for corresponding qudit systems</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">universal_qudits</span><span class="p">(</span><span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># add a universal gate to qudit system 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># add an custom gate to qudit system 2</span>
+
+<span class="c1"># Collapse the second qudit to its first eigenstate and the third qudit to its third eigenstate</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">collapse</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="n">if_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> After collapsing the second qudit to its first eigenstate and the third qudit to its third eigenstate&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;the state of the first system is:&quot;</span><span class="p">,</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+systems [[1, 2]] collapse to the state |1&gt;|3&gt; with (average) probability 0.007088132912915589
+
+ After collapsing the second qudit to its first eigenstate and the third qudit to its third eigenstate the state of the first system is:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2]
+ System sequence: [0]
+ Batch size: [5, 1]
+
+ # 0:
+[[0.74+0.j   0.29+0.33j]
+ [0.29-0.33j 0.26+0.j  ]]
+ # 1:
+[[0.74+0.j   0.29+0.33j]
+ [0.29-0.33j 0.26+0.j  ]]
+ # 2:
+[[0.74+0.j   0.29+0.33j]
+ [0.29-0.33j 0.26+0.j  ]]
+ # 3:
+[[0.74+0.j   0.29+0.33j]
+ [0.29-0.33j 0.26+0.j  ]]
+ # 4:
+[[0.74+0.j   0.29+0.33j]
+ [0.29-0.33j 0.26+0.j  ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.1
+torch: 2.8.0+cpu
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.5
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

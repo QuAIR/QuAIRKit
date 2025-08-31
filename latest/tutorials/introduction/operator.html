@@ -294,6 +294,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
         
   
@@ -325,7 +349,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -342,14 +366,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
           </label>
@@ -1019,6 +1043,7 @@
 
 
 <h1 id="Quantum-gates-and-quantum-channels">Quantum gates and quantum channels<a class="headerlink" href="#Quantum-gates-and-quantum-channels" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>In this tutorial, we will briefly introduce the concepts of quantum gates and quantum channels, and learn how to implement some common quantum gates and quantum channels in QuAIRKit.</p>
 <p><strong>Table of Contents</strong></p>
 <ul class="simple">
@@ -1276,17 +1301,17 @@ R_{z}(\theta) =
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The matrix form of x-axis rotation gate with parameter 4.719 is
-tensor([[-0.7094+0.0000j,  0.0000-0.7048j],
-        [ 0.0000-0.7048j, -0.7094+0.0000j]])
+The matrix form of x-axis rotation gate with parameter 1.32 is
+tensor([[0.7900+0.0000j, 0.0000-0.6131j],
+        [0.0000-0.6131j, 0.7900+0.0000j]])
 
-The matrix form of y-axis rotation gate with parameter 4.719 is
-tensor([[-0.7094+0.j, -0.7048+0.j],
-        [ 0.7048+0.j, -0.7094+0.j]])
+The matrix form of y-axis rotation gate with parameter 1.32 is
+tensor([[ 0.7900+0.j, -0.6131+0.j],
+        [ 0.6131+0.j,  0.7900+0.j]])
 
-The matrix form of z-axis rotation gate with parameter 4.719 is
-tensor([[-0.7094-0.7048j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j, -0.7094+0.7048j]])
+The matrix form of z-axis rotation gate with parameter 1.32 is
+tensor([[0.7900-0.6131j, 0.0000+0.0000j],
+        [0.0000+0.0000j, 0.7900+0.6131j]])
 </pre></div></div>
 </div>
 <h3 id="Two-qubit-gates">Two-qubit gates<a class="headerlink" href="#Two-qubit-gates" title="Link to this heading">¶</a></h3>
@@ -1389,12 +1414,12 @@ The matrix form of swap gate is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 pure output state after applying a unitary:
- tensor([[ 0.3448+0.2005j],
-        [-0.3505-0.8474j]])
+ tensor([[-0.7103+0.6502j],
+        [-0.1676+0.2111j]])
 
 mixed output state after applying a unitary:
- tensor([[0.4741+0.0000e+00j, 0.0391-2.7313e-01j],
-        [0.0391+2.7313e-01j, 0.5259+1.3878e-17j]])
+ tensor([[0.6511-1.3878e-17j, 0.2525+2.8543e-01j],
+        [0.2525-2.8543e-01j, 0.3489-1.3878e-17j]])
 </pre></div></div>
 </div>
 <p>The position of the qubit on which the quantum gate acts can be specified through <code class="docutils literal notranslate"><span class="pre">sys_idx</span></code>. The dimension of a quantum gate can be smaller than the dimension of the quantum state.</p>
@@ -1416,14 +1441,14 @@ mixed output state after applying a unitary:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a unitary on the first qubit:
- tensor([[ 0.0862+3.4694e-18j,  0.0245-1.4047e-02j,  0.1032+6.1916e-03j,
-         -0.0584+8.9027e-03j],
-        [ 0.0245+1.4047e-02j,  0.0996+0.0000e+00j,  0.0264+1.8142e-01j,
-         -0.0229+4.2885e-02j],
-        [ 0.1032-6.1916e-03j,  0.0264-1.8142e-01j,  0.6518+1.7347e-18j,
-          0.0353-9.1390e-02j],
-        [-0.0584-8.9027e-03j, -0.0229-4.2885e-02j,  0.0353+9.1390e-02j,
-          0.1624+0.0000e+00j]])
+ tensor([[ 0.3150-2.7756e-17j, -0.2565-3.7983e-02j, -0.3015-7.1969e-02j,
+         -0.1116-8.7163e-02j],
+        [-0.2565+3.7983e-02j,  0.2521+0.0000e+00j,  0.2380+5.2877e-02j,
+          0.1233+2.9217e-02j],
+        [-0.3015+7.1969e-02j,  0.2380-5.2877e-02j,  0.3361-1.3878e-17j,
+          0.0951+5.2493e-02j],
+        [-0.1116+8.7163e-02j,  0.1233-2.9217e-02j,  0.0951-5.2493e-02j,
+          0.0968+0.0000e+00j]])
 </pre></div></div>
 </div>
 <p>The application of a quantum gate on batched states is also supported.</p>
@@ -1456,26 +1481,21 @@ state after applying a unitary on the first qubit:
 batched states after applying a unitary:
 
 -----------------------------------------------------
- Backend: default-mixed
+ Backend: default-pure
  System dimension: [2]
  System sequence: [0]
  Batch size: [5]
 
  # 0:
-[[ 0.31+0.j   -0.09-0.37j]
- [-0.09+0.37j  0.69+0.j  ]]
+[ 0.88-0.03j -0.44+0.17j]
  # 1:
-[[ 0.41+0.j   -0.3 +0.11j]
- [-0.3 -0.11j  0.59+0.j  ]]
+[0.73+0.17j 0.16+0.64j]
  # 2:
-[[ 0.39-0.j   -0.23-0.21j]
- [-0.23+0.21j  0.61-0.j  ]]
+[0.2 -0.62j 0.71-0.27j]
  # 3:
-[[ 0.5 +0.j  -0.03-0.3j]
- [-0.03+0.3j  0.5 +0.j ]]
+[-0.09+0.16j -0.85-0.5j ]
  # 4:
-[[ 0.75+0.j   -0.13-0.06j]
- [-0.13+0.06j  0.25+0.j  ]]
+[-0.47+0.76j  0.36+0.27j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1516,15 +1536,15 @@ state after applying batched unitaries:
  Batch size: [5]
 
  # 0:
-[-0.15+0.67j  0.19+0.71j]
+[ 0.65+0.69j -0.3 -0.08j]
  # 1:
-[ 0.53-0.22j -0.79-0.22j]
+[0.3-0.85j 0.4-0.16j]
  # 2:
-[0.47-0.25j 0.72-0.44j]
+[-0.56-0.18j -0.79+0.14j]
  # 3:
-[ 0.51-0.78j -0.05+0.35j]
+[ 0.4 +0.15j -0.87-0.27j]
  # 4:
-[-0.75-0.13j -0.49+0.42j]
+[0.51-0.58j 0.25-0.58j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1584,10 +1604,10 @@ output state after applying a quantum circuit:
  Backend: default-mixed
  System dimension: [2, 2]
  System sequence: [0, 1]
-[[ 0.51+0.j    0.11-0.13j -0.11+0.06j -0.2 +0.05j]
- [ 0.11+0.13j  0.15+0.j   -0.06+0.01j  0.02-0.06j]
- [-0.11-0.06j -0.06-0.01j  0.12+0.j    0.04-0.01j]
- [-0.2 -0.05j  0.02+0.06j  0.04+0.01j  0.22+0.j  ]]
+[[ 0.42+0.j   -0.  -0.j   -0.14+0.04j -0.03-0.07j]
+ [-0.  +0.j    0.27+0.j    0.1 +0.01j -0.07+0.06j]
+ [-0.14-0.04j  0.1 -0.01j  0.17+0.j   -0.05+0.13j]
+ [-0.03+0.07j -0.07-0.06j -0.05-0.13j  0.15+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1627,15 +1647,15 @@ output batched states after applying a quantum circuit:
  Batch size: [5]
 
  # 0:
-[-0.15-0.01j -0.13-0.55j -0.64+0.26j  0.24+0.34j]
+[-0.52-0.48j  0.14+0.2j  -0.32-0.52j  0.13-0.21j]
  # 1:
-[-0.44+0.04j  0.42-0.12j  0.65+0.1j   0.1 -0.43j]
+[-0.48-0.38j  0.51-0.22j  0.13+0.48j -0.26-0.08j]
  # 2:
-[ 0.3 -0.04j -0.48-0.18j -0.05-0.6j   0.37-0.38j]
+[ 0.19+0.1j   0.16+0.27j -0.73-0.49j -0.15-0.25j]
  # 3:
-[0.57+0.28j 0.3 +0.27j 0.56-0.02j 0.1 -0.33j]
+[0.07+0.35j 0.18-0.1j  0.01-0.02j 0.41-0.81j]
  # 4:
-[ 0.04-0.22j  0.51+0.49j -0.08-0.06j -0.23-0.62j]
+[ 0.15+0.45j -0.12-0.41j  0.47-0.08j -0.09-0.6j ]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1796,23 +1816,22 @@ such that for all <span class="math notranslate nohighlight">\(\rho_{A} \in \mat
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Kraus representation of a quantum channel:
- tensor([[[ 0.5448-0.4839j, -0.3109-0.4709j],
-         [-0.0505+0.2505j,  0.2166-0.2585j]],
-
-        [[ 0.0271-0.5792j,  0.6156+0.1093j],
-         [-0.1241+0.2283j, -0.4172+0.0531j]]])
+ tensor([[[ 0.2475+0.8749j,  0.3697+0.1917j],
+         [-0.1367+0.3933j, -0.4218-0.8054j]]])
 
 Choi representation of the same quantum channel:
- tensor([[ 0.8672+0.0000j, -0.2843-0.0464j,  0.0118+0.0475j,  0.2010+0.2763j],
-        [-0.2843+0.0464j,  0.1328+0.0000j, -0.1537+0.0524j, -0.0118-0.0475j],
-        [ 0.0118-0.0475j, -0.1537-0.0524j,  0.7094+0.0000j, -0.1966-0.2607j],
-        [ 0.2010-0.2763j, -0.0118+0.0475j, -0.1966+0.2607j,  0.2906+0.0000j]])
+ tensor([[ 0.8266+9.6013e-19j,  0.3103-2.1690e-01j,  0.2592+2.7597e-01j,
+         -0.8090-1.6966e-01j],
+        [ 0.3103+2.1690e-01j,  0.1734-1.6254e-18j,  0.0249+1.7160e-01j,
+         -0.2592-2.7597e-01j],
+        [ 0.2592-2.7597e-01j,  0.0249-1.7160e-01j,  0.1734+1.6008e-18j,
+         -0.3103+2.1690e-01j],
+        [-0.8090+1.6966e-01j, -0.2592+2.7597e-01j, -0.3103-2.1690e-01j,
+          0.8266+1.0816e-17j]])
 
 Stinespring representation of the same quantum channel:
- tensor([[ 0.5448-0.4839j, -0.3109-0.4709j],
-        [ 0.0271-0.5792j,  0.6156+0.1093j],
-        [-0.0505+0.2505j,  0.2166-0.2585j],
-        [-0.1241+0.2283j, -0.4172+0.0531j]])
+ tensor([[ 0.2475+0.8749j,  0.3697+0.1917j],
+        [-0.1367+0.3933j, -0.4218-0.8054j]])
 
 </pre></div></div>
 </div>
@@ -2117,12 +2136,12 @@ Stinespring representation of a amplitude damping channel with parameter 0.5:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a quantum channel in Kraus representation:
- tensor([[0.8230-1.3878e-17j, 0.0887+1.7369e-01j],
-        [0.0887-1.7369e-01j, 0.1770+7.0473e-18j]])
+ tensor([[ 0.8540-1.3878e-17j, -0.0955-1.7482e-01j],
+        [-0.0955+1.7482e-01j,  0.1460-6.9389e-18j]])
 
 state after applying a quantum channel in Choi representation:
- tensor([[0.8230+0.0000j, 0.0887+0.1737j],
-        [0.0887-0.1737j, 0.1770+0.0000j]])
+ tensor([[ 0.8540+2.7756e-17j, -0.0955-1.7482e-01j],
+        [-0.0955+1.7482e-01j,  0.1460+2.0817e-17j]])
 </pre></div></div>
 </div>
 <p>The position of the qubit on which the quantum channel acts can be specified through <code class="docutils literal notranslate"><span class="pre">sys_idx</span></code>.</p>
@@ -2144,14 +2163,14 @@ state after applying a quantum channel in Choi representation:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a quantum channel on the first qubit:
- tensor([[ 0.2199-8.6736e-19j, -0.1353+1.3755e-01j,  0.0927+5.4823e-02j,
-         -0.0738-5.5664e-03j],
-        [-0.1353-1.3755e-01j,  0.1860+1.7347e-18j, -0.0187-7.9868e-02j,
-          0.0172+5.0261e-02j],
-        [ 0.0927-5.4823e-02j, -0.0187+7.9868e-02j,  0.2030+0.0000e+00j,
-         -0.1235+1.6353e-01j],
-        [-0.0738+5.5664e-03j,  0.0172-5.0261e-02j, -0.1235-1.6353e-01j,
-          0.3911+8.6736e-18j]])
+ tensor([[ 0.2912-6.9389e-18j, -0.0043+3.9522e-02j, -0.0466+5.8629e-02j,
+          0.1129-1.1637e-02j],
+        [-0.0043-3.9522e-02j,  0.1493+1.0842e-19j, -0.0301-5.2052e-02j,
+         -0.0371-2.1358e-02j],
+        [-0.0466-5.8629e-02j, -0.0301+5.2052e-02j,  0.3098+1.5179e-17j,
+         -0.0215+1.3664e-02j],
+        [ 0.1129+1.1637e-02j, -0.0371+2.1358e-02j, -0.0215-1.3664e-02j,
+          0.2497-4.7705e-18j]])
 </pre></div></div>
 </div>
 <p>For batched states, the application of a quantum channel is also supported.</p>
@@ -2190,15 +2209,15 @@ batched states after applying a quantum channel:
  Batch size: [5]
 
  # 0:
-[-0.15+0.67j  0.19+0.71j]
+[ 0.65+0.69j -0.3 -0.08j]
  # 1:
-[ 0.53-0.22j -0.79-0.22j]
+[0.3-0.85j 0.4-0.16j]
  # 2:
-[0.47-0.25j 0.72-0.44j]
+[-0.56-0.18j -0.79+0.14j]
  # 3:
-[ 0.51-0.78j -0.05+0.35j]
+[ 0.4 +0.15j -0.87-0.27j]
  # 4:
-[-0.75-0.13j -0.49+0.42j]
+[0.51-0.58j 0.25-0.58j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -2305,17 +2324,19 @@ batched states after applying a quantum channel:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
-torch: 2.8.0+cpu
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 
@@ -2375,7 +2396,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

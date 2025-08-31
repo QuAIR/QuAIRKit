@@ -1,0 +1,1409 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="week%204%20entanglement.html">
+      
+      
+        <link rel="next" href="week%206%20teleportation.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Superdense coding - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Superdense coding
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.AIAA-5072.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%201%20qubit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb (reference label)"><span>Brief Introduction to Quantum Computing</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%202%20quasi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 2 quasi.ipynb (reference label)"><span>Quantum error mitigation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%203%20vqe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 3 vqe.ipynb (reference label)"><span>Variational quantum eigensolver</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%204%20entanglement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 4 entanglement.ipynb (reference label)"><span>Entanglement</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb (reference label)"><span>Superdense coding</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb (reference label)"><span>Superdense coding</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#The-Protocol" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#the-protocol (reference label)"><span>The Protocol</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Initialization" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#initialization (reference label)"><span>Initialization</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Encoding" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#encoding (reference label)"><span>Encoding</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Decoding" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#decoding (reference label)"><span>Decoding</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Superdense-Coding-with-Batch-Computation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#superdense-coding-with-batch-computation (reference label)"><span>Superdense Coding with Batch Computation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Superdense Coding with Batch Computation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Generate-Encoded-States" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#generate-encoded-states (reference label)"><span>Generate Encoded States</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Batch-Decoding-and-Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#batch-decoding-and-measurement (reference label)"><span>Batch Decoding and Measurement</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%206%20teleportation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb (reference label)"><span>Quantum state teleportation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%207%20qaa.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb (reference label)"><span>Quantum state amplitude amplification</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%208%20qpe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 8 qpe.ipynb (reference label)"><span>Quantum phase estimation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%209%20hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb (reference label)"><span>Hamiltonian simulation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#The-Protocol" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#the-protocol (reference label)"><span>The Protocol</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Initialization" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#initialization (reference label)"><span>Initialization</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Encoding" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#encoding (reference label)"><span>Encoding</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Decoding" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#decoding (reference label)"><span>Decoding</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Superdense-Coding-with-Batch-Computation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#superdense-coding-with-batch-computation (reference label)"><span>Superdense Coding with Batch Computation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Superdense Coding with Batch Computation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Generate-Encoded-States" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#generate-encoded-states (reference label)"><span>Generate Encoded States</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Batch-Decoding-and-Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#batch-decoding-and-measurement (reference label)"><span>Batch Decoding and Measurement</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quairkit&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>quairkit
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>pdftotext<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>poppler
+<span class="k">fi</span>
+</code></pre></div>
+</div>
+</div>
+<h1 id="Superdense-coding">Superdense coding<a class="headerlink" href="#Superdense-coding" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
+<p>This tutorial aims to introduce the Superdense Coding protocol. We will explore the background and importance of this protocol, its specific implementation process, and how to simulate it using QuAIRKit.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction"><span class="std std-ref">Introduction</span></a></p></li>
+<li><p><a class="reference internal" href="#The-Protocol"><span class="std std-ref">The Protocol</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Initialization"><span class="std std-ref">Initialization</span></a></p></li>
+<li><p><a class="reference internal" href="#Encoding"><span class="std std-ref">Encoding</span></a></p></li>
+<li><p><a class="reference internal" href="#Decoding"><span class="std std-ref">Decoding</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Superdense-Coding-with-Batch-Computation"><span class="std std-ref">Superdense Coding with Batch Computation</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Generate-Encoded-States"><span class="std std-ref">Generate Encoded States</span></a></p></li>
+<li><p><a class="reference internal" href="#Batch-Decoding-and-Measurement"><span class="std std-ref">Batch Decoding and Measurement</span></a></p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+</code></pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<h2 id="Introduction">Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<p>The coding and operation of classical computers are based on Boolean logic algebra, and a single bit is a binary number of 0 and 1, which means one classical bit can encode one bit of information at most. However, with the discovery of quantum entanglement and the introduction of Bell states, Bennett and Wiesner proposed a quantum coding protocol in 1992 [1]. This protocol uses the entangled nature of qubits to transmit the information of two classical bits through one qubit, thereby realizing a
+communication method with larger capacity and higher efficiency. This way of using quantum entanglement to achieve high-capacity coding is called quantum superdense coding, and it is an important application of quantum mechanics in coding. Experimentally, the quantum superdense coding protocol was verified by Mattle et al. through photon polarization experiments in 1996 [2].</p>
+<p>It should be highlighted that the concepts of quantum superdense coding and quantum teleportation should not be confused. Here we will make a simple comparison:</p>
+<ul class="simple">
+<li><p>Quantum superdense coding transmits two classical bits of information through one qubit.</p></li>
+<li><p>Quantum teleportation transmits one of qubit information through two classical bits of information.</p></li>
+</ul>
+<p>At the same time, both protocols use quantum entanglement as a resource.</p>
+<figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="../../_images/densecoding_workflow.jpg" style="width: 1000px;" /></p>
+<figcaption><p>Figure 1. The quantum circuit for superdense coding</p>
+</figcaption></figure><p>The diagram above shows the quantum circuit for superdense coding. The entire process is divided into three steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Initialization</strong>: First, an entanglement source produces a pair of entangled qubits in a Bell state, typically the <span class="math notranslate nohighlight">\(|\Phi^+\rangle\)</span> state. These two qubits are then distributed to Alice and Bob, serving as their shared quantum channel.</p></li>
+<li><p><strong>Encoding</strong>: Alice, based on the two classical bits she wishes to send (00, 01, 10, or 11), performs a specific quantum gate operation (<span class="math notranslate nohighlight">\(U\)</span>) on her qubit (<span class="math notranslate nohighlight">\(q_A\)</span>). After the operation, she sends her qubit to Bob.</p></li>
+<li><p><strong>Decoding and Measurement</strong>: Bob now possesses the complete entangled pair. He performs a decoding operation on these two qubits (first a CNOT gate, then a Hadamard gate) and then measures them. The measurement outcome will correspond to Alice’s intended two-bit classical message with 100% probability.</p></li>
+</ol>
+<h2 id="The-Protocol">The Protocol<a class="headerlink" href="#The-Protocol" title="Link to this heading">¶</a></h2>
+<p>In this section, we will detail the three core steps of superdense coding: initialization, encoding, and decoding, providing mathematical descriptions and the corresponding QuAIRKit code implementations.</p>
+<h3 id="Initialization">Initialization<a class="headerlink" href="#Initialization" title="Link to this heading">¶</a></h3>
+<p>Before the protocol begins, Alice and Bob must share a pair of entangled qubits. The standard procedure is to prepare one of the four Bell states; we will use the most common one, <span class="math notranslate nohighlight">\(|\Phi^+\rangle\)</span>, as our example. Its mathematical expression is:</p>
+<div class="math notranslate nohighlight">
+\[|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle), \tag{1}\]</div>
+<p>After this Bell state is generated by an entanglement source, the first qubit (<span class="math notranslate nohighlight">\(q_A\)</span>) is sent to Alice, and the second (<span class="math notranslate nohighlight">\(q_B\)</span>) is sent to Bob. Now, even though Alice and Bob may be far apart, their respective qubits are strongly correlated.</p>
+<p>In QuAIRKit, we can directly call the <code class="docutils literal notranslate"><span class="pre">bell_state</span></code> function from the <code class="docutils literal notranslate"><span class="pre">database</span></code> module to create this entangled state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepare the shared entangled state</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># 1. Initialization: Create a Bell state</span>
+<span class="n">shared_entangled_state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial shared entangled state |Φ+&gt;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shared_entangled_state</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Initial shared entangled state |Φ+&gt;:
+tensor([[0.7071+0.j],
+        [0.0000+0.j],
+        [0.0000+0.j],
+        [0.7071+0.j]])
+</pre></div></div>
+</div>
+<h3 id="Encoding">Encoding<a class="headerlink" href="#Encoding" title="Link to this heading">¶</a></h3>
+<p>Alice’s task is to perform an operation on her qubit, <span class="math notranslate nohighlight">\(q_A\)</span> (the 0th qubit in the system), based on the two-bit classical message she wants to send. The rules for the operation are shown in the table below, where each classical message corresponds to a specific quantum gate operation.</p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Classical Bits</p></th>
+<th class="head"><p>Alice’s Operation (Gate)</p></th>
+<th class="head"><p>Action on <span class="math notranslate nohighlight">\(q_A\)</span></p></th>
+<th class="head"><p>Resulting Bell State</p></th>
+<th class="head"><p>Mathematical Expression</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>00</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(I\)</span> (Identity)</p></td>
+<td><p><span class="math notranslate nohighlight">\((I \otimes I)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\Phi^+}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>01</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(X\)</span> (Pauli-X)</p></td>
+<td><p><span class="math notranslate nohighlight">\((X \otimes I)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\Psi^+}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2}}(\ket{10} + \ket{01})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>10</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(Z\)</span> (Pauli-Z)</p></td>
+<td><p><span class="math notranslate nohighlight">\((Z \otimes I)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\Phi^-}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2}}(\ket{00} - \ket{11})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>11</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(iY\)</span> (<span class="math notranslate nohighlight">\(Z \cdot X\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\((ZX \otimes I)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\Psi^-}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2}}(\ket{01} - \ket{10})\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>After performing the operation, Alice sends her qubit <span class="math notranslate nohighlight">\(q_A\)</span> through a quantum channel to Bob. Now, Bob possesses the complete, encoded entangled pair.</p>
+<p>In QuAIRKit, we can use the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class to simulate Alice’s encoding operation. A <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> object can be applied to a <code class="docutils literal notranslate"><span class="pre">State</span></code> object to evolve it into a new quantum state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Assume Alice wants to send the classical message &#39;10&#39;</span>
+<span class="c1"># 2. Encoding: Alice creates a quantum circuit with only a Z gate and specifies that it acts on qubit 0</span>
+<span class="n">alice_encoding_circuit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">alice_encoding_circuit</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Alice applies her operation to the shared entangled state</span>
+<span class="n">state_after_encoding</span> <span class="o">=</span> <span class="n">alice_encoding_circuit</span><span class="p">(</span><span class="n">shared_entangled_state</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After Alice sends &#39;10&#39;, the system&#39;s state becomes |Φ-&gt;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">state_after_encoding</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+After Alice sends &#39;10&#39;, the system&#39;s state becomes |Φ-&gt;:
+tensor([[ 0.7071+0.j],
+        [ 0.0000+0.j],
+        [ 0.0000+0.j],
+        [-0.7071+0.j]])
+</pre></div></div>
+</div>
+<h3 id="Decoding">Decoding<a class="headerlink" href="#Decoding" title="Link to this heading">¶</a></h3>
+<p>To read the information Alice sent, Bob needs to perform a decoding operation that uniquely maps the four possible Bell states to the four computational basis states: <span class="math notranslate nohighlight">\(|00\rangle, |01\rangle, |10\rangle, |11\rangle\)</span>.</p>
+<p>The decoding process consists of two steps:</p>
+<ol class="arabic simple">
+<li><p>Apply a CNOT gate to the two qubits Bob holds, with Alice’s qubit <span class="math notranslate nohighlight">\(q_A\)</span> as the control bit and Bob’s original qubit <span class="math notranslate nohighlight">\(q_B\)</span> as the target bit.</p></li>
+<li><p>Apply a Hadamard gate to Alice’s qubit <span class="math notranslate nohighlight">\(q_A\)</span>.</p></li>
+</ol>
+<p>After these two operations, the quantum state of the system transforms from the Bell basis to the computational basis, with the following relationship:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(|\Phi^+\rangle \xrightarrow{\text{CNOT}_{AB}} \xrightarrow{H_A} |00\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\Psi^+\rangle \xrightarrow{\text{CNOT}_{AB}} \xrightarrow{H_A} |01\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\Phi^-\rangle \xrightarrow{\text{CNOT}_{AB}} \xrightarrow{H_A} |10\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\Psi^-\rangle \xrightarrow{\text{CNOT}_{AB}} \xrightarrow{H_A} |11\rangle\)</span></p></li>
+</ul>
+<p>Finally, Bob measures both qubits, and the resulting classical bit string is the message Alice sent.</p>
+<p>Let’s continue with the example of Alice sending <strong>‘10’</strong> to complete the entire decoding and measurement process:</p>
+<ol class="arabic">
+<li><p><strong>Initial State</strong>: <span class="math notranslate nohighlight">\(|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)\)</span></p></li>
+<li><p><strong>Alice’s Encoding</strong>: Alice applies a <span class="math notranslate nohighlight">\(Z\)</span> gate to her qubit <span class="math notranslate nohighlight">\(q_A\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[(Z \otimes I)|\Phi^+\rangle = \frac{1}{\sqrt{2}}(Z|0\rangle|0\rangle + Z|1\rangle|1\rangle) = \frac{1}{\sqrt{2}}(|0\rangle|0\rangle - |1\rangle|1\rangle) = |\Phi^-\rangle, \tag{2}\]</div>
+</li>
+<li><p><strong>Bob’s Decoding</strong>: Bob receives <span class="math notranslate nohighlight">\(q_A\)</span>, and the state he has is <span class="math notranslate nohighlight">\(|\Phi^-\rangle\)</span>. He first applies a CNOT gate, then an H gate on the first qubit.</p>
+<div class="math notranslate nohighlight">
+\[\text{CNOT}_{AB}|\Phi^-\rangle = \text{CNOT}_{AB}\frac{1}{\sqrt{2}}(|00\rangle - |11\rangle) = \frac{1}{\sqrt{2}}(|00\rangle - |10\rangle), \tag{3}\]</div>
+<div class="math notranslate nohighlight">
+\[(H \otimes I)\frac{1}{\sqrt{2}}(|00\rangle - |10\rangle) = \frac{1}{\sqrt{2}}(H|0\rangle|0\rangle - H|1\rangle|0\rangle) = \frac{1}{\sqrt{2}}\left(\frac{|0\rangle+|1\rangle}{\sqrt{2}}|0\rangle - \frac{|0\rangle-|1\rangle}{\sqrt{2}}|0\rangle\right) = \frac{1}{2}(|00\rangle + |10\rangle - |00\rangle + |10\rangle) = |10\rangle, \tag{4}\]</div>
+</li>
+<li><p><strong>Measurement</strong>: Bob measures the final state <span class="math notranslate nohighlight">\(|10\rangle\)</span> and will obtain the result “10” with 100% probability, successfully decoding Alice’s message.</p></li>
+</ol>
+<p>In QuAIRKit, we similarly construct a decoding circuit and perform a measurement on the encoded quantum state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># 3. Decoding: Bob constructs the decoding circuit</span>
+<span class="n">bob_decoding_circuit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">bob_decoding_circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">bob_decoding_circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Bob applies the decoding circuit to the quantum state he received</span>
+<span class="n">final_state</span> <span class="o">=</span> <span class="n">bob_decoding_circuit</span><span class="p">(</span><span class="n">state_after_encoding</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final quantum state after Bob&#39;s decoding operation:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_state</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+
+<span class="c1"># 4. Measurement: Bob measures the final state in the computational basis</span>
+<span class="c1"># The .measure() method returns the probability distribution of the measurement outcomes</span>
+<span class="n">measurement_result</span> <span class="o">=</span> <span class="n">final_state</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Probability distribution of measurement results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P(|00&gt;): </span><span class="si">{</span><span class="n">measurement_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P(|01&gt;): </span><span class="si">{</span><span class="n">measurement_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P(|10&gt;): </span><span class="si">{</span><span class="n">measurement_result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P(|11&gt;): </span><span class="si">{</span><span class="n">measurement_result</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Final quantum state after Bob&#39;s decoding operation:
+tensor([[0.0000+0.j],
+        [0.0000+0.j],
+        [1.0000+0.j],
+        [0.0000+0.j]])
+
+Probability distribution of measurement results:
+P(|00&gt;): 0.00
+P(|01&gt;): 0.00
+P(|10&gt;): 1.00
+P(|11&gt;): 0.00
+</pre></div></div>
+</div>
+<p>As seen from the output, the probability of measuring “10” is 1, while the probabilities for all other outcomes are 0. This perfectly matches our theoretical derivation.</p>
+<h2 id="Superdense-Coding-with-Batch-Computation">Superdense Coding with Batch Computation<a class="headerlink" href="#Superdense-Coding-with-Batch-Computation" title="Link to this heading">¶</a></h2>
+<p>In the previous example, we simulated the full process for Alice to send one specific message, “10”. However, when analyzing a protocol, we often want to verify its correctness for all possible cases. This means we need to simulate all four scenarios where Alice sends “00”, “01”, “10”, and “11”.</p>
+<p>A key observation is that no matter which classical bits Alice wants to transmit, Bob’s decoding procedure is always the same. This uniformity makes the protocol an excellent candidate for verification using <strong>batch computation</strong> in <code class="docutils literal notranslate"><span class="pre">QuAIRKit</span></code>. We can first prepare all four potential quantum states that Bob could receive. Then, we group these states into a single batch and apply Bob’s single, uniform decoding circuit to the entire batch in one operation. This allows us to efficiently verify
+all outcomes of the protocol at once.</p>
+<h3 id="Generate-Encoded-States">Generate Encoded States<a class="headerlink" href="#Generate-Encoded-States" title="Link to this heading">¶</a></h3>
+<p>First, we create the initial Bell state, then apply each of the four separate encoding circuits to it, resulting in four distinct encoded quantum states. As shown in the table above, ‘00’ -&gt; I gate; ‘01’ -&gt; X gate; ‘10’ -&gt; Z gate; ‘11’ -&gt; ZX gate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">encode_gate</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">x</span><span class="p">(),</span> <span class="n">z</span><span class="p">(),</span> <span class="n">z</span><span class="p">()</span> <span class="o">@</span> <span class="n">x</span><span class="p">()])</span>
+
+<span class="n">encoding_circuit</span> <span class="o">=</span> <span class="n">qkit</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">encoding_circuit</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">encode_gate</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">state_after_encoding_batch</span> <span class="o">=</span> <span class="n">encoding_circuit</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+</div>
+</div>
+<p>Now, <code class="docutils literal notranslate"><span class="pre">state_after_encoding_batch</span></code> is a <code class="docutils literal notranslate"><span class="pre">State</span></code> object with a batch size of 4, containing all the quantum states that need to be decoded.</p>
+<h3 id="Batch-Decoding-and-Measurement">Batch Decoding and Measurement<a class="headerlink" href="#Batch-Decoding-and-Measurement" title="Link to this heading">¶</a></h3>
+<p>Bob’s decoding circuit (CNOT gate + H gate) is the same for all cases. Therefore, we only need to create a regular decoding circuit. When this circuit is applied to the batched <code class="docutils literal notranslate"><span class="pre">State</span></code> object we just combined, the circuit will be automatically broadcast to every quantum state within the batch.</p>
+<p>The measurement module also supports computation on batched quantum states. Calling the <code class="docutils literal notranslate"><span class="pre">.measure()</span></code> method on a batched <code class="docutils literal notranslate"><span class="pre">State</span></code> object will return a batched probability distribution result.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batch Decoding:</span>
+<span class="c1"># Bob&#39;s decoding circuit is the same as before</span>
+<span class="n">bob_decoding_circuit</span> <span class="o">=</span> <span class="n">qkit</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">bob_decoding_circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">bob_decoding_circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Apply the decoding circuit to the batched encoded states</span>
+<span class="n">final_state_batch</span> <span class="o">=</span> <span class="n">bob_decoding_circuit</span><span class="p">(</span><span class="n">state_after_encoding_batch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final batch of 4 decoded states:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_state_batch</span><span class="p">)</span>
+
+<span class="c1"># Batch Measurement:</span>
+<span class="c1"># Perform measurement on the final batched state</span>
+<span class="n">measurement_results_batch</span> <span class="o">=</span> <span class="n">final_state_batch</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Probability distribution of measurement results for the batch:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">measurement_results_batch</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Final batch of 4 decoded states:
+
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+ Batch size: [4]
+
+ # 0:
+[1.+0.j 0.+0.j 0.+0.j 0.+0.j]
+ # 1:
+[0.+0.j 1.+0.j 0.+0.j 0.+0.j]
+ # 2:
+[0.+0.j 0.+0.j 1.+0.j 0.+0.j]
+ # 3:
+[0.+0.j 0.+0.j 0.+0.j 1.+0.j]
+-----------------------------------------------------
+
+
+Probability distribution of measurement results for the batch:
+tensor([[1.0000, 0.0000, 0.0000, 0.0000],
+        [0.0000, 1.0000, 0.0000, 0.0000],
+        [0.0000, 0.0000, 1.0000, 0.0000],
+        [0.0000, 0.0000, 0.0000, 1.0000]])
+</pre></div></div>
+</div>
+<p>The final measurement output should be an identity matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix},\end{split}\]</div>
+<p>This indicates that:</p>
+<ul class="simple">
+<li><p>When Alice sends “00” (row 0), the probability of measuring “00” is 1.</p></li>
+<li><p>When Alice sends “01” (row 1), the probability of measuring “01” is 1.</p></li>
+<li><p>When Alice sends “10” (row 2), the probability of measuring “10” is 1.</p></li>
+<li><p>When Alice sends “11” (row 3), the probability of measuring “11” is 1.</p></li>
+</ul>
+<p>This result clearly demonstrates that the superdense coding protocol is correct for all four cases.</p>
+<blockquote>
+<div><p>Note: <code class="docutils literal notranslate"><span class="pre">QuAIRKit</span></code> also supports batch computation for gate parameters, providing further efficiency for tasks like training variational quantum circuits.</p>
+</div></blockquote>
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Bennett, Charles H., and Stephen J. Wiesner. “Communication via one-and two-particle operators on Einstein-Podolsky-Rosen states.” Physical Review Letters 69.20 (1992): 2881.</p>
+<p>[2] Mattle, Klaus, et al. “Dense coding in experimental quantum communication.” Physical Review Letters 76.25 (1996): 4656.</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\Phi^+}, \ket{\Psi^+}, \ket{\Phi^-}, \ket{\Psi^-}\)</span></p></td>
+<td><p>Ket notation for a quantum state. Variants are the four Bell states.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td></td>
+<td><p>Identity gate.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(X, Y, Z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma_x, \sigma_y, \sigma_z\)</span></p></td>
+<td><p>The Pauli gates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td></td>
+<td><p>Hadamard gate.</p></td>
+</tr>
+<tr class="row-even"><td><p>CNOT</p></td>
+<td><p>CX</p></td>
+<td><p>Controlled-NOT gate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\otimes\)</span></p></td>
+<td></td>
+<td><p>Tensor product operator.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(q_A, q_B\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(q_0, q_1\)</span></p></td>
+<td><p>Qubits belonging to Alice (0) and Bob (1).</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(P(\cdot)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(P(\ket{00})\)</span></p></td>
+<td><p>Probability of a measurement outcome.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+---------DEVICE---------
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

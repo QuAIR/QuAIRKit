@@ -2477,12 +2477,12 @@
 <p>The library of common quantum states.</p>
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.database.state.zero_state">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">zero_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.zero_state.num_systems" title="quairkit.database.state.zero_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.zero_state.system_dim" title="quairkit.database.state.zero_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.zero_state" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">zero_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.zero_state.num_systems" title="quairkit.database.state.zero_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.zero_state.system_dim" title="quairkit.database.state.zero_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.zero_state" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a zero state.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.state.zero_state-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.zero_state-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.database.state.zero_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.state.zero_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
+<dt id="quairkit.database.state.zero_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.state.zero_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. If None, inferred from system_dim. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
 </dd>
 <dt id="quairkit.database.state.zero_state.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.database.state.zero_state.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>Dimension of systems. Can be a list of system dimensions
 or an int representing the dimension of all systems. Defaults to qubit case.</p>
@@ -2493,7 +2493,7 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 <dd class="field-even"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.state.zero_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.zero_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2516,12 +2516,12 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.database.state.one_state">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">one_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.one_state.num_systems" title="quairkit.database.state.one_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.one_state.system_dim" title="quairkit.database.state.one_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.one_state" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">one_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.one_state.num_systems" title="quairkit.database.state.one_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.one_state.system_dim" title="quairkit.database.state.one_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.one_state" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a one state.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.state.one_state-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.one_state-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.database.state.one_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.state.one_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
+<dt id="quairkit.database.state.one_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.state.one_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. If None, inferred from system_dim. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
 </dd>
 <dt id="quairkit.database.state.one_state.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.database.state.one_state.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>Dimension of systems. Can be a list of system dimensions
 or an int representing the dimension of all systems. Defaults to qubit case.</p>
@@ -2532,7 +2532,7 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 <dd class="field-even"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.state.one_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.one_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2555,13 +2555,13 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py" id="quairkit.database.state.computational_state">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">computational_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.computational_state.num_systems" title="quairkit.database.state.computational_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.computational_state.index" title="quairkit.database.state.computational_state.index (Python parameter) — Index i of the computational basis state |e_{i}\rangle."><span class="n"><span class="pre">index</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.computational_state.system_dim" title="quairkit.database.state.computational_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.computational_state" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">computational_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.computational_state.num_systems" title="quairkit.database.state.computational_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.computational_state.index" title="quairkit.database.state.computational_state.index (Python parameter) — Index i of the computational basis state |e_{i}\rangle."><span class="n"><span class="pre">index</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.computational_state.system_dim" title="quairkit.database.state.computational_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.computational_state" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a computational state <span class="math notranslate nohighlight">\(|e_{i}\rangle\)</span>,
 whose i-th element is 1 and all the other elements are 0.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.state.computational_state-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.computational_state-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.database.state.computational_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.state.computational_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
+<dt id="quairkit.database.state.computational_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.state.computational_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. If None, inferred from system_dim. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
 </dd>
 <dt id="quairkit.database.state.computational_state.index"><span class="sig-name descname">index</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.state.computational_state.index" title="Permalink to this definition">¶</a></dt><dd><p>Index <span class="math notranslate nohighlight">\(i\)</span> of the computational basis state <span class="math notranslate nohighlight">\(|e_{i}\rangle\)</span>.</p>
 </dd>
@@ -2574,7 +2574,7 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 <dd class="field-even"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.state.computational_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.computational_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2598,7 +2598,7 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.database.state.bell_state">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">bell_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.bell_state.num_systems" title="quairkit.database.state.bell_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.bell_state.system_dim" title="quairkit.database.state.bell_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.bell_state" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.state.</span></span><span class="sig-name descname"><span class="pre">bell_state</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.bell_state.num_systems" title="quairkit.database.state.bell_state.num_systems (Python parameter) — Number of systems in this state."><span class="n"><span class="pre">num_systems</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.state.bell_state.system_dim" title="quairkit.database.state.bell_state.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.state.bell_state" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a Bell state.</p>
 <p>Its matrix form is:</p>
 <div class="math notranslate nohighlight">
@@ -2606,7 +2606,7 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.state.bell_state-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.bell_state-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.database.state.bell_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.state.bell_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
+<dt id="quairkit.database.state.bell_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.state.bell_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems in this state. If None, inferred from system_dim. Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
 </dd>
 <dt id="quairkit.database.state.bell_state.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.database.state.bell_state.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>Dimension of systems. Can be a list of system dimensions
 or an int representing the dimension of all systems. Defaults to qubit case.</p>
@@ -2617,7 +2617,7 @@ or an int representing the dimension of all systems. Defaults to qubit case.</p>
 <dd class="field-even"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.state.bell_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.bell_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>State</em></p>
+<dd class="field-odd"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2663,7 +2663,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.bell_diagonal_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.bell_diagonal_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2704,7 +2704,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.w_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.w_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2742,7 +2742,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.ghz_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.ghz_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2783,7 +2783,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.completely_mixed_computational-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.completely_mixed_computational-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2828,7 +2828,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.r_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.r_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2875,7 +2875,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.s_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.s_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -2924,7 +2924,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
 <dd class="field-odd"><p>The generated quantum state.</p>
 </dd>
 <dt class="field-even" id="quairkit.database.state.isotropic_state-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.state.isotropic_state-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><em>State</em></p>
+<dd class="field-even"><p><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a></p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
@@ -3004,7 +3004,7 @@ p_{4}|\Psi^{-}\rangle\langle\Psi^{-}|\]</div>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

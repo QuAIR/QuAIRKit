@@ -294,6 +294,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
         
   
@@ -325,7 +349,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -342,14 +366,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
           </label>
@@ -743,6 +767,7 @@
 
 
 <h1 id="Training-parameterized-quantum-circuits">Training parameterized quantum circuits<a class="headerlink" href="#Training-parameterized-quantum-circuits" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>In this tutorial, Parameterized Quantum Circuit (PQC) and its application on variational quantum eigensolvers (VQE) will be implemented in QuAIRKit.</p>
 <p><strong>Table of Contents</strong></p>
 <ul class="simple">
@@ -1042,17 +1067,17 @@ statistical physics and condensed matter theory.</p>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Training:
-iter: 0, loss: -0.36181292, lr: 5.00E-02 avg_time: 0.0094s
-iter: 20, loss: -2.69505572, lr: 5.00E-02 avg_time: 0.0072s
-iter: 40, loss: -3.01261497, lr: 5.00E-02 avg_time: 0.0070s
-iter: 60, loss: -3.40792918, lr: 5.00E-02 avg_time: 0.0073s
-iter: 80, loss: -3.49100828, lr: 5.00E-02 avg_time: 0.0073s
-iter: 100, loss: -3.49361849, lr: 5.00E-02 avg_time: 0.0063s
-iter: 120, loss: -3.49383688, lr: 5.00E-02 avg_time: 0.0072s
-iter: 140, loss: -3.49391413, lr: 5.00E-02 avg_time: 0.0067s
-iter: 160, loss: -3.49394202, lr: 5.00E-02 avg_time: 0.0066s
-iter: 180, loss: -3.49395323, lr: 5.00E-02 avg_time: 0.0071s
-iter: 199, loss: -3.49395728, lr: 5.00E-02 avg_time: 0.0067s
+iter: 0, loss: -0.36181292, lr: 5.00E-02 avg_time: 0.0853s
+iter: 20, loss: -2.69505548, lr: 5.00E-02 avg_time: 0.0028s
+iter: 40, loss: -3.01261520, lr: 5.00E-02 avg_time: 0.0031s
+iter: 60, loss: -3.40792942, lr: 5.00E-02 avg_time: 0.0024s
+iter: 80, loss: -3.49100828, lr: 5.00E-02 avg_time: 0.0024s
+iter: 100, loss: -3.49361849, lr: 5.00E-02 avg_time: 0.0024s
+iter: 120, loss: -3.49383712, lr: 5.00E-02 avg_time: 0.0023s
+iter: 140, loss: -3.49391413, lr: 5.00E-02 avg_time: 0.0025s
+iter: 160, loss: -3.49394155, lr: 5.00E-02 avg_time: 0.0025s
+iter: 180, loss: -3.49395132, lr: 5.00E-02 avg_time: 0.0029s
+iter: 199, loss: -3.49395680, lr: 5.00E-02 avg_time: 0.0030s
 
 ----------------------------------------------------------------------------------------------------
 
@@ -1151,17 +1176,19 @@ Training process:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
-torch: 2.8.0+cpu
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 
@@ -1221,7 +1248,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

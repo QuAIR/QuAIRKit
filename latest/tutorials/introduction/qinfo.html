@@ -294,6 +294,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
         
   
@@ -325,7 +349,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -342,14 +366,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
           </label>
@@ -723,6 +747,7 @@
 
 
 <h1 id="Quantum-information-tools">Quantum information tools<a class="headerlink" href="#Quantum-information-tools" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>This tutorial introduces the <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> module in QuAIRKit. The functions in <code class="docutils literal notranslate"><span class="pre">quairkit.qinfo</span></code> can be categorized into several application areas relevant to quantum computation and quantum information. For quantum computation, there are functions mainly to compute the Kronecker product, conjugate transpose, and trace of matrices. There are also functions associated with quantum gates, such as decomposing a single-qubit unitary operation into rotation angles around the Z and Y axes. For functions
 related to quantum information theory, this module includes partial trace, quantum entropies, the fidelity of quantum states, various kinds of norms, and so on. Additionally, this module provides data format validation such as verifying whether a matrix is a unitary, density matrix, or a projector.</p>
 <p><strong>Table of Contents</strong></p>
@@ -764,12 +789,12 @@ related to quantum information theory, this module includes partial trace, quant
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Matrix A is:
-tensor([[-0.3301-0.1497j,  0.8280-0.4279j],
-        [ 0.0518+0.9306j,  0.2966+0.2084j]])
+tensor([[-0.6617+0.4886j, -0.0569-0.5658j],
+        [-0.5167+0.2377j, -0.0859+0.8180j]])
 
 Matrix B is:
-tensor([[ 0.3659-0.1172j, -0.4424-0.8103j],
-        [-0.5144+0.7667j, -0.3537-0.1501j]])
+tensor([[-0.0826+0.8141j, -0.2365+0.5239j],
+        [-0.5741-0.0286j,  0.7621+0.2979j]])
 </pre></div></div>
 </div>
 <p>Users can use functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to implement specific operations on these two matrices.</p>
@@ -802,24 +827,28 @@ tensor([[ 0.3659-0.1172j, -0.4424-0.8103j],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The trace of matrix A is (-0.03357084814567024+0.058753563794145924j)
+The trace of matrix A is (-0.7476029706454768+1.3066321644723216j)
 The direct sum of matrix A and B is:
-tensor([[-0.3301-0.1497j,  0.8280-0.4279j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [ 0.0518+0.9306j,  0.2966+0.2084j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.3659-0.1172j, -0.4424-0.8103j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.5144+0.7667j, -0.3537-0.1501j]])
+tensor([[-0.6617+0.4886j, -0.0569-0.5658j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [-0.5167+0.2377j, -0.0859+0.8180j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.0826+0.8141j, -0.2365+0.5239j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.5741-0.0286j,  0.7621+0.2979j]])
 
 The tensor product of matrix A and B is:
-tensor([[-0.1383-0.0161j,  0.0248+0.3337j,  0.2528-0.2536j, -0.7130-0.4816j],
-        [ 0.2846-0.1761j,  0.0943+0.1025j, -0.0979+0.8549j, -0.3571+0.0271j],
-        [ 0.1280+0.3344j,  0.7312-0.4536j,  0.1330+0.0415j,  0.0377-0.3325j],
-        [-0.7400-0.4390j,  0.1213-0.3369j, -0.3123+0.1202j, -0.0736-0.1182j]])
+tensor([[-0.3431-5.7905e-01j, -0.0995-4.6222e-01j,  0.4654+3.9582e-04j,
+          0.3099+1.0401e-01j],
+        [ 0.3938-2.6160e-01j, -0.6499+1.7523e-01j,  0.0165+3.2647e-01j,
+          0.1252-4.4821e-01j],
+        [-0.1508-4.4024e-01j, -0.0023-3.2688e-01j, -0.6589-1.3747e-01j,
+         -0.4083-2.3846e-01j],
+        [ 0.3034-1.2170e-01j, -0.4646+2.7223e-02j,  0.0727-4.6718e-01j,
+         -0.3092+5.9787e-01j]])
 
 The conjugate transpose of matrix A is:
-tensor([[-0.3301+0.1497j,  0.0518-0.9306j],
-        [ 0.8280+0.4279j,  0.2966-0.2084j]])
+tensor([[-0.6617-0.4886j, -0.5167-0.2377j],
+        [-0.0569+0.5658j, -0.0859-0.8180j]])
 
-The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(4.2312), tensor(2.3997), tensor(-0.9026))
+The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(0.2048), tensor(1.2099), tensor(-1.0350))
 </pre></div></div>
 </div>
 <h2 id="Functions-in-quantum-information">Functions in quantum information<a class="headerlink" href="#Functions-in-quantum-information" title="Link to this heading">¶</a></h2>
@@ -850,16 +879,20 @@ The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The first quantum state is:
- tensor([[ 0.2533+0.0000j, -0.3834-0.0164j, -0.0503+0.1434j,  0.1234-0.0596j],
-        [-0.3834+0.0164j,  0.5815+0.0000j,  0.0668-0.2203j, -0.1829+0.0981j],
-        [-0.0503-0.1434j,  0.0668+0.2203j,  0.0912+0.0000j, -0.0582-0.0580j],
-        [ 0.1234+0.0596j, -0.1829-0.0981j, -0.0582+0.0580j,  0.0741+0.0000j]])
+ tensor([[ 0.0825-1.8464e-19j, -0.0059+8.1267e-02j,  0.1179+4.8123e-02j,
+         -0.2237-5.3209e-02j],
+        [-0.0059-8.1267e-02j,  0.0804+2.9382e-19j,  0.0390-1.1952e-01j,
+         -0.0365+2.2404e-01j],
+        [ 0.1179-4.8123e-02j,  0.0390+1.1952e-01j,  0.1965+4.6562e-19j,
+         -0.3506+5.4411e-02j],
+        [-0.2237+5.3209e-02j, -0.0365-2.2404e-01j, -0.3506-5.4411e-02j,
+          0.6405+3.3658e-18j]])
 
 The second quantum state is:
- tensor([[-0.0088-0.0320j],
-        [ 0.4109-0.2810j],
-        [ 0.0018+0.1228j],
-        [-0.8501+0.1155j]])
+ tensor([[ 0.3073-0.1452j],
+        [ 0.2224+0.0360j],
+        [-0.6681+0.5462j],
+        [ 0.1777+0.2398j]])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -894,18 +927,18 @@ The second quantum state is:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The von Neumann entropy between state 1 is:
-8.008566259537294e-17
+2.562741203051934e-15
 torch.float64
 The trace distance between state 1 and state 2  is:
-0.7741364762143528
+0.9183441952050546
 The state fidelity between state 1 and state 2 is:
-0.6330187421891446
+0.3957826994848831
 The purity of state 1 is:
-0.9999999999999993
+0.9999999999999999
 The relative entropy of state 1 and state 2 is:
-34.44895819903868
+46.973657265325116
 The Schatten 2-norm of state 1 is:
-0.9999999999999994
+0.9999999999999998
 </pre></div></div>
 </div>
 <h2 id="Validation-functions">Validation functions<a class="headerlink" href="#Validation-functions" title="Link to this heading">¶</a></h2>
@@ -987,17 +1020,19 @@ State fidelity dtype (State): &lt;class &#39;torch.Tensor&#39;&gt;
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
-torch: 2.8.0+cpu
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 
@@ -1057,7 +1092,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

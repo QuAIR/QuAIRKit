@@ -294,6 +294,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tutorials.feature.html" class="md-nav__link">
         
   
@@ -325,7 +349,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -342,14 +366,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
           </label>
@@ -723,6 +747,7 @@
 
 
 <h1 id="Manipulation-of-quantum-states-in-QuAIRKit">Manipulation of quantum states in QuAIRKit<a class="headerlink" href="#Manipulation-of-quantum-states-in-QuAIRKit" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
 <p>A pure quantum state is a unit vector in a Hilbert space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. A mixed quantum state could be described by a density matrix <span class="math notranslate nohighlight">\(\rho\)</span>, which is a Hermitian, positive semi-definite matrix with unit trace. Concretely, pure states are of the form <span class="math notranslate nohighlight">\(|\psi \rangle \langle \psi |\)</span> where <span class="math notranslate nohighlight">\(|\psi \rangle \in \mathcal{H}\)</span> is a normalized vector. Mixed state is the convex combination of the pure states <span class="math notranslate nohighlight">\(\sum_{x \in \mathcal{X}}p(x)|\psi_x \rangle \langle \psi_x |\)</span> for
 some set <span class="math notranslate nohighlight">\(\{|\psi_x \rangle\}_{x \in \mathcal{X}}\)</span> of state vectors defined with respect to a finite alphabet <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, where <span class="math notranslate nohighlight">\(p: \mathcal{X} \rightarrow [0, 1]\)</span> is a probability distribution. The <code class="docutils literal notranslate"><span class="pre">State</span></code> class in QuairKit supports operations related to quantum states, mainly including the preparation of quantum states and operations on them.</p>
 <p><strong>Table of Contents</strong></p>
@@ -855,7 +880,7 @@ A state vector with 2 qubits following Haar random
  Backend: default-pure
  System dimension: [2]
  System sequence: [0]
-[-0.92-0.31j -0.04+0.23j]
+[-0.41-0.33j  0.02-0.85j]
 -----------------------------------------------------
 
 type of the state: default-mixed
@@ -885,11 +910,11 @@ type of the state: default-mixed
  Batch size: [3]
 
  # 0:
-[ 0.34-0.3j  -0.85+0.26j]
+[-0.98-0.19j -0.02-0.04j]
  # 1:
-[0.41-0.62j 0.28+0.61j]
+[-0.59+0.33j  0.36+0.64j]
  # 2:
-[-0.37-0.21j -0.73-0.54j]
+[0.84-0.02j 0.36-0.41j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -911,31 +936,31 @@ type of the state: default-mixed
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Its density matrix is :
- tensor([[[ 0.2043+0.0000j, -0.3687+0.1630j],
-         [-0.3687-0.1630j,  0.7957+0.0000j]],
+ tensor([[[9.9780e-01+0.0000j, 2.7953e-02-0.0376j],
+         [2.7953e-02+0.0376j, 2.1981e-03+0.0000j]],
 
-        [[ 0.5536+0.0000j, -0.2647-0.4208j],
-         [-0.2647+0.4208j,  0.4464+0.0000j]],
+        [[4.6152e-01+0.0000j, 1.3722e-04+0.4985j],
+         [1.3722e-04-0.4985j, 5.3848e-01+0.0000j]],
 
-        [[ 0.1771+0.0000j,  0.3790-0.0456j],
-         [ 0.3790+0.0456j,  0.8229+0.0000j]]])
+        [[7.0070e-01+0.0000j, 3.0552e-01+0.3411j],
+         [3.0552e-01-0.3411j, 2.9930e-01+0.0000j]]])
 
 Its ket is :
- tensor([[[ 0.3410-0.2967j],
-         [-0.8523+0.2634j]],
+ tensor([[[-0.9812-0.1874j],
+         [-0.0204-0.0422j]],
 
-        [[ 0.4061-0.6235j],
-         [ 0.2797+0.6068j]],
+        [[-0.5944+0.3289j],
+         [ 0.3551+0.6422j]],
 
-        [[-0.3654-0.2087j],
-         [-0.7283-0.5409j]]])
+        [[ 0.8369-0.0166j],
+         [ 0.3568-0.4147j]]])
 
 Its bra is :
- tensor([[[ 0.3410+0.2967j, -0.8523-0.2634j]],
+ tensor([[[-0.9812+0.1874j, -0.0204+0.0422j]],
 
-        [[ 0.4061+0.6235j,  0.2797-0.6068j]],
+        [[-0.5944-0.3289j,  0.3551-0.6422j]],
 
-        [[-0.3654+0.2087j, -0.7283+0.5409j]]])
+        [[ 0.8369+0.0166j,  0.3568+0.4147j]]])
 </pre></div></div>
 </div>
 <p>We can also use the method <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> to output <em>numpy.ndarray</em> type data for <code class="docutils literal notranslate"><span class="pre">State</span></code>.</p>
@@ -954,9 +979,9 @@ Its bra is :
 <div class="highlight"><pre>
 
 The state is :
- [[ 0.34096912-0.2966931j  -0.85225207+0.26340017j]
- [ 0.40605783-0.6234965j   0.27968004+0.6067522j ]
- [-0.365373  -0.20870502j -0.7282931 -0.54086405j]]
+ [[-0.98117244-0.1873567j  -0.02043195-0.04219783j]
+ [-0.59444374+0.3288729j   0.35505924+0.6421933j ]
+ [ 0.8369146 -0.01659448j  0.35683313-0.41469112j]]
 </pre></div></div>
 </div>
 <p>Other useful information can be read via <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
@@ -976,7 +1001,7 @@ The state is :
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The trace of these states are tensor([1.0000+0.j, 1.0000+0.j, 1.0000+0.j])
+The trace of these states are tensor([1.+0.j, 1.+0.j, 1.+0.j])
 The rank of these states are 1
 The size of these states are 2
 The shape of vectorization of these states are torch.Size([3, 4, 1])
@@ -1024,9 +1049,9 @@ the second and third state in the batch:
  Batch size: [2]
 
  # 0:
-[0.41-0.62j 0.28+0.61j]
+[-0.59+0.33j  0.36+0.64j]
  # 1:
-[-0.37-0.21j -0.73-0.54j]
+[0.84-0.02j 0.36-0.41j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1051,9 +1076,9 @@ the second and third state in the batch:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 matrix multiplication:
-tensor([[ 0.9596+0.0000j, -0.1961-0.0164j],
+tensor([[ 0.4853+0.0000j, -0.3291-0.3218j],
         [ 0.0000+0.0000j,  0.0000+0.0000j]])
-The overlap of state_1 and state_2 is : tensor(0.9596+0.j)
+The overlap of state_1 and state_2 is : tensor(0.4853+0.j)
 </pre></div></div>
 </div>
 <p>User can also use <code class="docutils literal notranslate"><span class="pre">NKron</span></code> to obtain the tensor product <span class="math notranslate nohighlight">\(\rho \otimes \sigma\)</span> of the two quantum states <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
@@ -1072,8 +1097,8 @@ The overlap of state_1 and state_2 is : tensor(0.9596+0.j)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 tensor product:
-tensor([[ 0.9596+0.0000j, -0.1961-0.0164j,  0.0000+0.0000j,  0.0000-0.0000j],
-        [-0.1961+0.0164j,  0.0404+0.0000j, -0.0000+0.0000j,  0.0000+0.0000j],
+tensor([[ 0.4853+0.0000j, -0.3291-0.3218j,  0.0000+0.0000j,  0.0000-0.0000j],
+        [-0.3291+0.3218j,  0.5147+0.0000j, -0.0000+0.0000j,  0.0000+0.0000j],
         [ 0.0000+0.0000j,  0.0000-0.0000j,  0.0000+0.0000j,  0.0000-0.0000j],
         [-0.0000+0.0000j,  0.0000+0.0000j, -0.0000+0.0000j,  0.0000+0.0000j]])
 </pre></div></div>
@@ -1101,7 +1126,7 @@ tensor([[ 0.9596+0.0000j, -0.1961-0.0164j,  0.0000+0.0000j,  0.0000-0.0000j],
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [0, 1]
-[ 0.26-0.42j -0.25-0.03j  0.47+0.51j -0.43-0.16j]
+[-0.4 -0.19j  0.01+0.41j -0.48+0.12j  0.  -0.63j]
 -----------------------------------------------------
 
 state after permutation:
@@ -1109,14 +1134,14 @@ state after permutation:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [1, 0]
-[ 0.26-0.42j  0.47+0.51j -0.25-0.03j -0.43-0.16j]
+[-0.4 -0.19j -0.48+0.12j  0.01+0.41j  0.  -0.63j]
 -----------------------------------------------------
 
 </pre></div></div>
 </div>
 <p>User can also clone a state, or change its data type and device.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dtype of these states are&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -1161,7 +1186,7 @@ state after evolving with unitary:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [1, 0]
-[-0.07+0.52j -0.56-0.22j -0.04+0.18j -0.39+0.43j]
+[-0.01+0.17j  0.78-0.16j  0.41+0.41j -0.04-0.08j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1187,7 +1212,7 @@ state after transformation:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [0, 1]
-[ 0.26-0.42j -0.25-0.03j  0.47+0.51j -0.43-0.16j]
+[-0.4 -0.19j  0.01+0.41j -0.48+0.12j  0.  -0.63j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1212,7 +1237,7 @@ state after transformation:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [0, 1]
-[ 0.26-0.42j -0.25-0.03j  0.47+0.51j -0.43-0.16j]
+[-0.4 -0.19j  0.01+0.41j -0.48+0.12j  0.  -0.63j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1235,7 +1260,7 @@ state after transformation:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the expectation value under the given observable:  tensor(-0.7639)
+the expectation value under the given observable:  tensor(-0.5443)
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">State.measure()</span></code> returns the measurement result in the computational basis.</p>
@@ -1252,7 +1277,7 @@ the expectation value under the given observable:  tensor(-0.7639)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Theoretical value is : tensor([0.2453, 0.0637, 0.4861, 0.2049])
+Theoretical value is : tensor([0.1989, 0.1651, 0.2435, 0.3926])
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1310,12 +1335,12 @@ Theoretical value is : tensor([0.2453, 0.0637, 0.4861, 0.2049])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
+quairkit: 0.4.2
 torch: 2.8.0+cu128
 torch cuda: 12.8
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
 OS: Linux
@@ -1382,7 +1407,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
