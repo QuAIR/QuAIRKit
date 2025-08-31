@@ -481,18 +481,6 @@ class OperatorList(torch.nn.Sequential):
         output_basis = output.ket.view([dim, -1, dim, 1])
         return torch.sum(output_basis @ input_basis, dim=0).view(output.batch_dim[1:] + [dim, dim])
 
-    def unitary_matrix(self) -> torch.Tensor:
-        r"""Get the unitary matrix form of the circuit.
-
-        Returns:
-            Unitary matrix form of the circuit.
-        
-        """
-        warnings.warn(
-            "Starting from QuAIRKit 0.4.0, it is recommended to use 'Circuit.matrix' instead of "
-            "'Circuit.unitary_matrix' to call the unitary matrix of the circuit.", FutureWarning)
-        return self.matrix
-
     @property
     def depth(self) -> int:
         r"""Depth of gate sequences.

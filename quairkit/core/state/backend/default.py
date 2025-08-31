@@ -311,7 +311,7 @@ class MixedState(DefaultSimulator):
         prob = prob.view([1] * num_previous_prob + [-1]).to(self.dtype).real
 
         data = self._data.view(self.batch_dim + [1, self.dim, self.dim])
-        self._data = data.repeat(self.batch_dim + [prob.shape[-1], 1, 1]).view([-1, self.dim, self.dim])
+        self._data = data.repeat([1] * len(self.batch_dim) + [prob.shape[-1], 1, 1]).view([-1, self.dim, self.dim])
         self._prob.append(prob)
     
     @staticmethod
@@ -630,7 +630,7 @@ class PureState(DefaultSimulator):
         prob = prob.view([1] * num_previous_prob + [-1])
 
         data = self._data.view(self.batch_dim + [1, self.dim])
-        self._data = data.repeat(self.batch_dim + [prob.shape[-1], 1]).view([-1, self.dim])
+        self._data = data.repeat([1] * len(self.batch_dim) + [prob.shape[-1], 1]).view([-1, self.dim])
         self._prob.append(prob)
     
     @staticmethod

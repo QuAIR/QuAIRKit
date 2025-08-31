@@ -28,9 +28,8 @@ from scipy.stats import unitary_group
 # TODO this is added due to channel_repr_convert, move it to intrinsic
 import quairkit as qkit
 
-from ..core import Hamiltonian, StateSimulator, get_dtype, to_state
+from ..core import Hamiltonian, StateSimulator, get_dtype, to_state, utils
 from ..core.intrinsic import _alias, _format_total_dim
-from ..core.utils.linalg import _dagger
 
 __all__ = [
     "random_pauli_str_generator",
@@ -43,6 +42,7 @@ __all__ = [
     "random_unitary",
     "random_unitary_hermitian",
     "random_unitary_with_hermitian_block",
+    "random_lcu",
     "haar_orthogonal",
     "haar_unitary",
     "haar_state_vector",
@@ -275,7 +275,7 @@ def random_projector(num_systems: int, size: int = 1,
     U = random_unitary(num_systems, size, system_dim)
     rank = np.random.randint(1, U.shape[0])
     V = U[:, :rank]
-    return V @ _dagger(V)
+    return V @ utils.linalg._dagger(V)
 
 
 random_orthogonal_projection = random_projector
@@ -442,6 +442,38 @@ def random_unitary_with_hermitian_block(
     mat = np.block([[mat0, mat1], [mat1, mat0]]).astype(complex)
 
     return torch.tensor(mat, dtype=get_dtype())
+
+
+@_alias({"num_systems": "num_qubits", "num_ctrl_systems": "num_ctrl_qubits"})
+def random_lcu(num_systems: int, num_ctrl_systems: int = 1, system_dim: Union[List[int], int] = 2) -> torch.Tensor:
+    r"""Randomly generate a unitary that can creates a linear combination of random unitaries. 
+    The number of unitaries is at least 2, and at most the dimension of the total control system.
+    
+    Args:
+        num_systems: Number of systems :math:`n`.
+        num_ctrl_systems: Number of control systems. Defaults to 1.
+        system_dim: Dimension of all systems. Can be a list of system dimensions or an int representing the dimension of all systems. Defaults to the qubit case.
+    """
+    system_dim = [system_dim] * (num_systems + num_ctrl_systems) if isinstance(system_dim, int) else system_dim
+    
+    ctrl_dim = 2**num_ctrl_systems
+    num_unitary = np.random.randint(2, ctrl_dim + 1)
+            
+    unitary = random_unitary(num_systems, size=num_unitary, system_dim=system_dim[:num_systems])
+    if num_unitary == 1:
+        unitary = unitary.unsqueeze(0)
+        ctrl_dim = max(2, ctrl_dim)
+    if ctrl_dim > num_unitary:
+        unitary_extra = torch.eye(unitary.shape[-1], dtype=unitary.dtype).unsqueeze(0).repeat(ctrl_dim - num_unitary, 1, 1)
+        unitary = torch.cat([unitary, unitary_extra], dim=0)
+    
+    computation_state = torch.eye(ctrl_dim).unsqueeze(-1)
+    computation_state = computation_state @ utils.linalg._dagger(computation_state)
+    lcu = utils.linalg._nkron(computation_state, unitary).sum(dim=0)
+    
+    coef_u = random_unitary(num_ctrl_systems, system_dim=system_dim[num_systems:])
+    coef_u /= coef_u[0, 0] / torch.abs(coef_u[0, 0])
+    return lcu @ torch.kron(coef_u, torch.eye(unitary.shape[-1]))
 
 
 def haar_orthogonal(dim: int) -> torch.Tensor:

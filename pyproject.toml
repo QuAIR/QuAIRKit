@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quairkit"
-version = "0.4.1"
+version = "0.4.2"
 description = "QuAIRKit is a Python research toolbox for developing quantum computing, quantum information, and quantum machine learning algorithms."
 readme = "README.md"
 requires-python = ">=3.8,<4"

@@ -78,7 +78,7 @@ def _format_system_dim(total_dim: int, system_dim: Union[List[int], int]) -> Lis
 
 
 def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, str],
-                           num_systems: int, num_acted_system: int) -> List[List[int]]:
+                           num_systems: int, num_acted_system: int) -> Union[List[int], List[List[int]]]:
     r"""Formatting the system indices in a sequential way
 
     Args:
@@ -90,8 +90,8 @@ def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, st
         The shape of output system indices are formatted as [# of vertical gates, num_acted_system].
     """
     if not isinstance(system_idx, str):
-        return system_idx
-
+        return [system_idx] if isinstance(system_idx, int) else system_idx
+    
     if num_acted_system == 1:
         if system_idx == 'full':
             system_idx = list(range(num_systems))
@@ -112,7 +112,7 @@ def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, st
             + list(range(idx + num_acted_system - num_systems))
             for idx in range(num_systems - num_acted_system, num_systems)
         )
-    
+
     elif system_idx == 'linear':
         assert num_systems >= num_acted_system, \
             f"# of system should be >= # of acted systems: received {num_systems} and {num_acted_system}"
@@ -121,7 +121,7 @@ def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, st
             list(range(idx, idx + num_acted_system))
             for idx in range(num_systems - num_acted_system + 1)
         ]
-    
+
     return system_idx
 
 

@@ -285,9 +285,8 @@ class Measure(Operator):
             measure_all_sys = self.__check_measure_op(state, system_idx)
             measure_op = self.measure_op
 
-            if desired_result:
+            if desired_result is not None:
                 measure_op = torch.index_select(measure_op, dim=-3, index=desired_result)
-
             prob_array, measured_state = state.measure(system_idx, shots=shots, measure_op=measure_op, keep_state=True)
 
             if keep_state:

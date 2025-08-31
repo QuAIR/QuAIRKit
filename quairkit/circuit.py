@@ -261,6 +261,18 @@ class Circuit(OperatorList):
         self.system_idx = physical_idx
         
         return '\n'.join([header, qreg, qasm_str])
+    
+    def unitary_matrix(self) -> torch.Tensor:
+        r"""Get the unitary matrix form of the circuit.
+
+        Returns:
+            Unitary matrix form of the circuit.
+        
+        """
+        warnings.warn(
+            "Starting from QuAIRKit 0.4.0, it is recommended to use 'Circuit.matrix' instead of "
+            "'Circuit.unitary_matrix()' to call the unitary matrix of the circuit.", FutureWarning)
+        return self.matrix
 
     # ---------------------- below are common operators ---------------------- #
     def h(self, qubits_idx: Union[Iterable[int], int, str] = 'full') -> None:
@@ -1360,7 +1372,7 @@ class Circuit(OperatorList):
                 oracle, system_idx, control_idx, acted_system_dim, gate_info))
 
     @_alias({"system_idx": "qubits_idx"})
-    def control_oracle(self, oracle: torch.Tensor, system_idx: List[Union[List[int], int]], control_idx: int = -1,
+    def control_oracle(self, oracle: torch.Tensor, system_idx: Union[List[Union[List[int], int]], int], control_idx: int = -1,
                         gate_name: str = 'coracle', latex_name: Optional[str] = None) -> None:
         r"""Add a controlled oracle gate.
 
@@ -1385,11 +1397,13 @@ class Circuit(OperatorList):
                 \lstick{} & \octrl[]{1} & \meter[2]{} & {} \\
                 \lstick{} & \gate[1]{$Identity$} & {} & {}
         """
+        warnings.warn(
+            "Starting from QuAIRKit 0.4.1, it is recommended to use Circuit.oracle(..., control_idx=..) instead of Circuit.control_oracle", FutureWarning)
         self.oracle(oracle, system_idx, control_idx, gate_name, latex_name)
         
     @_alias({"system_idx": "qubits_idx"})
     def param_oracle(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int,
-                     system_idx: Union[List[int], int], control_idx: Optional[int] = None,
+                     system_idx: Union[List[Union[List[int], int]], int], control_idx: Optional[int] = None,
                      param: Union[torch.Tensor, float] = None, gate_name: Optional[str] = None,
                      latex_name: Optional[str] = None, support_batch: bool = True) -> None:
         r"""Add a parameterized oracle gate.
@@ -1492,7 +1506,7 @@ class Circuit(OperatorList):
         self.append(Collapse(system_idx, acted_system_dim, post_selection, if_print, measure_basis))
     
     @_alias({"system_idx": "qubits_idx"})
-    def locc(self, local_unitary: torch.Tensor, system_idx: List[Union[List[int], int]],
+    def locc(self, local_unitary: torch.Tensor, system_idx: Union[List[Union[List[int], int]], int],
              label: str = 'M', latex_name: str = 'O') -> None:
         r"""Add a one-way LOCC protocol comprised of unitary operations.
 
@@ -1529,7 +1543,7 @@ class Circuit(OperatorList):
         
     @_alias({"system_idx": "qubits_idx"})
     def param_locc(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int, 
-                   system_idx: List[Union[List[int], int]], param: Union[torch.Tensor, float] = None, 
+                   system_idx: Union[List[Union[List[int], int]], int], param: Union[torch.Tensor, float] = None, 
                    label: str = 'M', latex_name: str = 'U', support_batch: bool = True) -> None:
         r"""Add a one-way LOCC protocol comprised of unitary operations, where the applied unitary is parameterized.
 
@@ -1564,7 +1578,7 @@ class Circuit(OperatorList):
         
     @_alias({"system_idx": "qubits_idx"})
     def quasi(self, list_unitary: torch.Tensor, probability: Iterable[float],
-              system_idx: List[Union[List[int], int]], latex_name: str = r'\mathcal{E}'):
+              system_idx: Union[List[Union[List[int], int]], int], latex_name: str = r'\mathcal{E}'):
         r"""Add a quasi-probability operation, now only supports unitary operations.
         
         Args:
@@ -1588,7 +1602,7 @@ class Circuit(OperatorList):
         
     @_alias({"system_idx": "qubits_idx"})
     def param_quasi(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int, 
-                    probability: Iterable[float], system_idx: List[Union[List[int], int]], probability_param: bool = False,
+                    probability: Iterable[float], system_idx: Union[List[Union[List[int], int]], int], probability_param: bool = False,
                     param: Union[torch.Tensor, float] = None, latex_name: str = r'\mathcal{E}', support_batch: bool = True):
         r"""Add a quasi-probability operation, where the applied unitary is parameterized.
         
@@ -1622,7 +1636,7 @@ class Circuit(OperatorList):
         self.append(QuasiOperation(param_gate, probability, probability_param=probability_param))
         
     @_alias({"system_idx": "qubits_idx"})
-    def reset(self, system_idx: List[Union[List[int], int]], 
+    def reset(self, system_idx: Union[List[int], int], 
               replace_state: Optional[StateSimulator] = None, state_label: Optional[str] = None) -> None:
         r"""Reset the state of the specified systems to a given state.
         

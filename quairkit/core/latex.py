@@ -502,7 +502,7 @@ class OperatorListDrawer:
             num_across_system = max_idx - min_idx + 1
             measure_command = r"\meter[" + str(num_across_system) + r"]{" + str(info.get('label', '')) + "}"
             self._code[min_idx].append(measure_command)
-            for idx in range(min_idx, max_idx + 1):
+            for idx in range(min_idx + 1, max_idx + 1):
                 self._code[idx].append(r"{}" if idx in system_idx else self.__empty_through)
                 
     def _append_locc_op(self, info: OperatorInfoType) -> None:

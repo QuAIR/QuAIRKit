@@ -9,7 +9,7 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
   </a>
   <!-- PyPI -->
   <a href="https://pypi.org/project/quairkit/">
-    <img src="https://img.shields.io/badge/pypi-v0.4.1-orange.svg?style=flat-square&logo=pypi"/>
+    <img src="https://img.shields.io/badge/pypi-v0.4.2-orange.svg?style=flat-square&logo=pypi"/>
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">
@@ -20,8 +20,12 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
     <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square&logo=apache"/>
   </a>
   <!-- Platform -->
-  <a href="https://github.com/PaddlePaddle/Quantum">
+  <a href="https://quairkit.com/QuAIRKit">
     <img src="https://img.shields.io/badge/OS-MacOS%20|%20Windows%20|%20Linux-lightgrey.svg?style=flat-square"/>
+  </a>
+  <!-- Statistics -->
+  <a href="https://pepy.tech/projects/quairkit">
+    <img src="https://static.pepy.tech/badge/quairkit"/>
   </a>
 </p>
 
@@ -269,6 +273,18 @@ default-mixed
   - [Quantum State Teleportation and Distribution](tutorials/research/locc.ipynb)
   - [Rediscovering Simon's algorithm with PQC](tutorials/research/simon.ipynb)
   - [Training quantum process transformation with PQC](tutorials/research/comb.ipynb)
+
+- [Tutorials for AIAA 5072](tutorials/AIAA-5072), a quantum computing course instructed in HKUST(GZ)
+  - [Brief Introduction to Quantum Computing](tutorials/AIAA-5072/week%201%20qubit.ipynb)
+  - [Quantum error mitigation](tutorials/AIAA-5072/week%202%20quasi.ipynb)
+  - [Variational quantum eigensolver](tutorials/AIAA-5072/week%203%20vqe.ipynb)
+  - [Entanglement](tutorials/AIAA-5072/week%204%20entanglement.ipynb)
+  - [Superdense coding](tutorials/AIAA-5072/week%205%20superdense-coding.ipynb)
+  - [Quantum state teleportation](tutorials/AIAA-5072/week%206%20teleportation.ipynb)
+  - [Quantum state amplitude amplification](tutorials/AIAA-5072/week%207%20qaa.ipynb)
+  - [Quantum phase estimation](tutorials/AIAA-5072/week%208%20qpe.ipynb)
+  - [Hamiltonian simulation](tutorials/AIAA-5072/week%209%20hamiltonian.ipynb)
+
 
 ## Acknowledgements
 

@@ -170,7 +170,7 @@ class Collapse(Operator):
         # whether print the collapsed result
         if self.if_print:
             prob = prob_array.mean().item()
-            print(f"systems {self.system_idx} collapse to the state {state_str} with (average) probability {prob}")
+            print(f"systems {self.system_idx[0]} collapse to the state {state_str} with (average) probability {prob}")
 
         return measured_state
 

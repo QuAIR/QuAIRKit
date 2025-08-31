@@ -223,7 +223,7 @@ class OneWayLOCCNet(torch.nn.Module):
             measure_dim.append(cir.system_dim[idx])
             
         for idx, op in enumerate(self._list_locc):
-            settled_idx = op.measure.system_idx
+            settled_idx = op.measure.system_idx[0]
             assert set(measure_idx).isdisjoint(set(settled_idx)), \
                 f"Measurement system {measure_idx} has been used in the {idx}-th LOCC protocols {settled_idx}"
             
@@ -265,7 +265,7 @@ class OneWayLOCCNet(torch.nn.Module):
             measure_dim.append(cir.system_dim[idx])
             
         for idx, op in enumerate(self._list_locc):
-            settled_idx = op.measure.system_idx
+            settled_idx = op.measure.system_idx[0]
             assert set(measure_idx).isdisjoint(set(settled_idx)), \
                 f"Measurement system {measure_idx} has been used in the {idx}-th LOCC protocols {settled_idx}"
             
@@ -300,7 +300,7 @@ class OneWayLOCCNet(torch.nn.Module):
         trace_dim = []
         for op in self._list_locc:
             state = op(state)
-            trace_idx.extend(op.measure.system_idx)
+            trace_idx.extend(op.measure.system_idx[0])
             trace_dim.append(np.prod(op.measure.system_dim))
         trace_state = std_basis(len(trace_idx), system_dim=[state.system_dim[idx] for idx in trace_idx])
         trace_state._batch_dim = trace_dim

@@ -152,8 +152,8 @@ class OperatorInfo(dict):
         elif key == "matrix":
             if self['type'] != "gate":
                 raise ValueError(f"matrix is only valid for gate type operators, not {self['type']}.")
-            if not isinstance(value, torch.Tensor):
-                raise TypeError("matrix must be a torch.Tensor")
+            if not (isinstance(value, torch.Tensor) or (value is None)):
+                raise TypeError("matrix must be a torch.Tensor or None")
 
         super().__setitem__(key, value)
         
