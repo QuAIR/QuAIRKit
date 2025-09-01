@@ -1,0 +1,1260 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="state.html">
+      
+      
+        <link rel="next" href="../../tutorials.research.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Training parameterized quantum circuits - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction-to-Neural-Networks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Training parameterized quantum circuits
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.introduction.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)"><span>Hamiltonian in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="circuit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/circuit.ipynb (reference label)"><span>Constructing quantum circuits in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="measure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/measure.ipynb (reference label)"><span>Measuring quantum states in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="operator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/operator.ipynb (reference label)"><span>Quantum gates and quantum channels</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qinfo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/qinfo.ipynb (reference label)"><span>Quantum information tools</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="state.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/state.ipynb (reference label)"><span>Manipulation of quantum states in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/training.ipynb (reference label)"><span>Training parameterized quantum circuits</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/training.ipynb (reference label)"><span>Training parameterized quantum circuits</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction-to-Neural-Networks" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#introduction-to-neural-networks (reference label)"><span>Introduction to Neural Networks</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Neural-Networks-in-PyTorch" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#neural-networks-in-pytorch (reference label)"><span>Neural Networks in Py<wbr>Torch</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Parameterized-quantum-circuits-(PQCs)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#parameterized-quantum-circuits-(pqcs) (reference label)"><span>Parameterized quantum circuits <wbr>(PQCs)</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Variational-quantum-eigensolvers-(VQEs)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#variational-quantum-eigensolvers-(vqes) (reference label)"><span>Variational quantum eigensolvers <wbr>(VQEs)</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction-to-Neural-Networks" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#introduction-to-neural-networks (reference label)"><span>Introduction to Neural Networks</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Neural-Networks-in-PyTorch" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#neural-networks-in-pytorch (reference label)"><span>Neural Networks in Py<wbr>Torch</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Parameterized-quantum-circuits-(PQCs)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#parameterized-quantum-circuits-(pqcs) (reference label)"><span>Parameterized quantum circuits <wbr>(PQCs)</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Variational-quantum-eigensolvers-(VQEs)" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#variational-quantum-eigensolvers-(vqes) (reference label)"><span>Variational quantum eigensolvers <wbr>(VQEs)</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/training.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Training-parameterized-quantum-circuits">Training parameterized quantum circuits<a class="headerlink" href="#Training-parameterized-quantum-circuits" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
+<p>In this tutorial, Parameterized Quantum Circuit (PQC) and its application on variational quantum eigensolvers (VQE) will be implemented in QuAIRKit.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction-to-Neural-Networks"><span class="std std-ref">Introduction to Neural Networks</span></a></p></li>
+<li><p><a class="reference internal" href="#Neural-Networks-in-PyTorch"><span class="std std-ref">Neural Networks in PyTorch</span></a></p></li>
+<li><p><a class="reference internal" href="#Parameterized-quantum-circuits-(PQCs)"><span class="std std-ref">Parameterized quantum circuits (PQCs)</span></a></p></li>
+<li><p><a class="reference internal" href="#Variational-quantum-eigensolvers-(VQEs)"><span class="std std-ref">Variational quantum eigensolvers (VQEs)</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">Hamiltonian</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1797587035</span><span class="p">)</span>  <span class="c1"># set a seed for reproducibility</span>
+</code></pre></div>
+</div>
+</div>
+<blockquote>
+<div><p>The following section introduces the fundamentals of neural networks. For specific examples, you can proceed directly to the section on <a class="reference internal" href="#Variational-quantum-eigensolvers-(VQEs)"><span class="std std-ref">variational quantum eigensolvers (VQEs)</span></a>.</p>
+</div></blockquote>
+<h2 id="Introduction-to-Neural-Networks">Introduction to Neural Networks<a class="headerlink" href="#Introduction-to-Neural-Networks" title="Link to this heading">¶</a></h2>
+<p>Neural networks are machine learning models that draw inspiration from the structure and function of the human brain. These networks are composed of layers of interconnected nodes, or artificial neurons, which include an input layer, one or more hidden layers, and an output layer. Each connection is characterized by weights and thresholds that influence how information is processed.</p>
+<p>In a neural network, the fundamental unit is the neuron. It receives input signals, processes them, and generates an output. For instance, parameterized quantum gates, which operate in quantum neural networks (QNNs), can be viewed as analogous to neurons.</p>
+<p>The neurons are organized into layers, where each layer transforms the input and passes it to the next. For example, a sequence of quantum gates like rotations and controlled-NOT (CNOT) gates can serve as a layer in a QNN.</p>
+<p>Key to neural network function are the parameters, which are adjusted during training to optimize performance. These parameters, such as the angles in quantum rotation gates <span class="math notranslate nohighlight">\(U(\theta)\)</span>, are tuned to minimize the network’s loss function. The loss function quantifies the error between the predicted and actual outputs, guiding the network toward more accurate predictions.</p>
+<p>Common loss functions include the Mean Squared Error (MSE), Cross-Entropy Loss, and more specialized metrics such as state and gate infidelity. These functions measure discrepancies in various contexts, such as between probability distributions or quantum states.</p>
+<ul class="simple">
+<li><p>MSE measures the squared differences between predicted and actual outputs: <span class="math notranslate nohighlight">\(L(y,\hat{y}) = \frac{1}{2} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2 .\)</span></p></li>
+<li><p>Cross-Entropy Loss is used in classification tasks: <span class="math notranslate nohighlight">\(L(y,\hat{y}) = - \sum_{i=1}^{m} y_i \log(\hat{y}_i) / m + (1-y_i) \log(1-\hat{y}_i) .\)</span></p></li>
+<li><p>State Infidelity measures the overlap between two quantum states: <span class="math notranslate nohighlight">\(L(\rho, \hat{\rho}) = 1 - \operatorname{tr} \sqrt{\sqrt{\rho} \hat{\rho} \sqrt{\rho}} .\)</span></p></li>
+<li><p>Gate Infidelity evaluates the difference between two quantum operations: <span class="math notranslate nohighlight">\(L(U, V) = 1 - \left| \operatorname{tr} \left( U^\dagger V \right) \right| / d .\)</span></p></li>
+</ul>
+<p>Forward propagation refers to the process of passing data through a neural network. In the context of a quantum neural network (QNN) with <span class="math notranslate nohighlight">\(N\)</span> layers, denoted as <span class="math notranslate nohighlight">\(U_1 (\theta^{(1)}), \ldots, U_N (\theta^{(N)})\)</span> , and an initial state <span class="math notranslate nohighlight">\(| \psi^{(0)} \rangle\)</span>. Then the output state of the <span class="math notranslate nohighlight">\(l\)</span>-th layer is computed as:</p>
+<div class="math notranslate nohighlight">
+\[| \psi^{(l)} \rangle = U_l (\theta^{(l)}) | \psi^{(l - 1)} \rangle
+, \tag{1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(| \psi^{(l - 1)} \rangle\)</span> represents the output state of the <span class="math notranslate nohighlight">\((l-1)\)</span>-th layer. The final output state <span class="math notranslate nohighlight">\(| \psi^{(N)} \rangle\)</span> is obtained by applying a loss function <span class="math notranslate nohighlight">\(L\)</span>, yielding the network’s final result.</p>
+<p>Backpropagation is the process used to compute gradients of the parameters with respect to the loss function <span class="math notranslate nohighlight">\(L\)</span>. In particular, Continuing the previous example, the gradient for the parameter <span class="math notranslate nohighlight">\(\theta_j^{(l)}\)</span> in the <span class="math notranslate nohighlight">\(l\)</span>-th layer is mathematically computed as</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial L}{\partial \theta_j^{(l)}}
+= \frac{\partial L}{\partial \psi^{(N)}} \cdot \frac{d \psi^{(N)}}{d \psi^{(N - 1)}} \cdot \ldots \cdot \frac{d \psi^{(l + 1)}}{d \psi^{(l)}} \cdot \frac{d \psi^{(l)}}{d \theta_j^{(l)}}
+. \tag{2}\]</div>
+<p>Once the gradients are determined, the parameters are updated using optimization methods such as gradient descent. The update rule for gradient descent is:</p>
+<div class="math notranslate nohighlight">
+\[\theta_j^{(l)} \leftarrow \theta_j^{(l)} - \eta \frac{\partial L}{\partial \theta_j^{(l)}}
+, \tag{3}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\eta\)</span> is the learning rate , a small value like <span class="math notranslate nohighlight">\(0.1\)</span>. ensuring steady convergence by controlling the step size in the direction of the negative gradient.</p>
+<h2 id="Neural-Networks-in-PyTorch">Neural Networks in PyTorch<a class="headerlink" href="#Neural-Networks-in-PyTorch" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p>Managing Parameters in torch.nn.Module</p>
+<p>In PyTorch, a neural network is implemented by creating a class that inherits from <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>. Inside the __init__ method, network parameters such as weights and biases are defined using <code class="docutils literal notranslate"><span class="pre">torch.nn.Parameter</span></code>. This setup ensures that PyTorch tracks and optimizes these parameters during training, simplifying the model definition and making it easy to integrate with PyTorch’s optimization and gradient computation tools.</p>
+</li>
+<li><p>Backpropagation</p>
+<p>After the forward pass is executed in PyTorch, the model’s loss is computed based on the predicted and actual outputs. Backpropagation is then performed by calling <code class="docutils literal notranslate"><span class="pre">.backward()</span></code> of the module. This function calculates the gradients of the loss with respect to all the learnable parameters of the model, preparing them for optimization in the next step.</p>
+</li>
+<li><p>Gradient</p>
+<p>During backpropagation in PyTorch, the gradients of the loss with respect to each parameter are computed and stored in the <code class="docutils literal notranslate"><span class="pre">grad</span></code> attribute of the respective parameters. These gradients are then used to update the model’s weights. If any data, such as <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> is marked with <code class="docutils literal notranslate"><span class="pre">stop_gradient=True</span></code>, which means that it will be treated as a constant and will not have gradients calculated, effectively excluding it from the optimization process.</p>
+</li>
+<li><p>Updating Parameters</p>
+<p>After gradients are calculated, the parameters of the model are updated using an optimizer. The <code class="docutils literal notranslate"><span class="pre">step</span></code> method of the optimizer is called to apply these updates based on the calculated gradients. This step adjusts the parameters according to the specified optimization algorithm, moving the model closer to minimizing the loss function.</p>
+</li>
+<li><p>Schedulers</p>
+<p>Schedulers in PyTorch are used to dynamically adjust the learning rate during training, helping to improve convergence and overall model performance. These schedulers modify the learning rate based on factors such as the number of epochs, the validation loss, or other predefined conditions. By gradually reducing the learning rate as training progresses, schedulers help smooth the optimization process, preventing overshooting and ensuring a more stable path towards the optimal solution.</p>
+</li>
+</ul>
+<h2 id="Parameterized-quantum-circuits-(PQCs)">Parameterized quantum circuits (PQCs)<a class="headerlink" href="#Parameterized-quantum-circuits-(PQCs)" title="Link to this heading">¶</a></h2>
+<p>PQCs are critical components in variational quantum algorithms, where quantum gates depend on tunable parameters. These parameters are iteratively optimized through classical algorithms to minimize a specific cost function. PQCs play a pivotal role in exploring high-dimensional solution spaces, making them widely applicable in quantum machine learning, optimization, and quantum chemistry simulations. Their ability to leverage quantum superposition and entanglement allows for computationally
+efficient solutions to problems that are challenging for classical systems.</p>
+<ul class="simple">
+<li><p>Structure of PQCs</p>
+<ul>
+<li><p>Rotation gates in PQCs are characterized by tunable angles, acting as adjustable weights, while fixed two-qubit gates are used to create entanglement within the circuit, enabling the interaction between qubits and enhancing the circuit’s capability to represent complex quantum states.</p></li>
+<li><p>PQCs can be conceptualized as a neural network, where the input layer corresponds to an initial quantum state and the output layer yields either a final quantum state or the expectation value of an observable, such as a Hamiltonian. The hidden layers are composed of quantum gates, including rotation gates that serve as tunable parameters.</p></li>
+</ul>
+</li>
+<li><p>Training PQCs</p>
+<ul>
+<li><p>PQCs are trained using classical optimization techniques aimed at minimizing a loss function. This loss is often associated with reaching a target quantum state or optimizing the expectation value of a quantum observable, such as a Hamiltonian. By iteratively adjusting the parameters of the quantum gates, these optimization methods guide the circuit toward improved performance, similar to how neural networks are trained in classical machine learning.</p></li>
+<li><p>Backpropagation in the quantum circuit: parameter updates are performed using techniques such as parameter shift and gradient descent. These methods calculate the gradients of the loss function with respect to the parameters (angles) of the quantum gates.</p></li>
+</ul>
+</li>
+</ul>
+<h2 id="Variational-quantum-eigensolvers-(VQEs)">Variational quantum eigensolvers (VQEs)<a class="headerlink" href="#Variational-quantum-eigensolvers-(VQEs)" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p>Background</p>
+<p>VQEs is a quantum algorithm designed to find the lowest eigenvalue of a Hamiltonian, which represents the total energy of a quantum system. This problem is crucial in quantum mechanics, as the eigenstates of a Hamiltonian reveal important system properties like energy levels and thermodynamic behavior. Although determining the exact ground state is computationally challenging, VQEs offers a practical approach by variationally approximating the ground state, making it valuable in fields such
+as quantum chemistry and materials science [1-5].</p>
+</li>
+<li><p>Theoretical Framework</p>
+<p>According to the Rayleigh-Ritz variational principle [6-7], the expectation value of the Hamiltonian provides an lower bound for the true ground state energy. This principle underlies the VQEs approach by parameterizing a quantum state <span class="math notranslate nohighlight">\(\vert \psi(\theta)\rangle\)</span> using a quantum circuit and iteratively optimizing the parameters to minimize the Hamiltonian’s expectation value <span class="math notranslate nohighlight">\(\langle \psi(\theta)\vert H \vert\psi(\theta)\rangle\)</span>, VQEs seeks to approximate the system’s true ground
+state,</p>
+<div class="math notranslate nohighlight">
+\[\lambda_0 = \min_{\theta} \langle \psi(\theta)\vert H \vert\psi(\theta)\rangle,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_0\)</span> is approximately the ground state energy of the Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>.</p>
+</li>
+<li><p>Application</p>
+<p>VQEs can be used to find the ground state energy of the Ising model, a two-dimensional model of ferromagnetism where atomic magnetic moments align. Despite its simplicity, the Ising model exhibits complex behaviors such as spontaneous magnetization and critical phenomena, making it a fundamental tool for understanding collective behavior in physical systems. Exact solutions and numerical simulations of the Ising model also provide insights into more complex systems and phenomena in
+statistical physics and condensed matter theory.</p>
+<p>For the following example, we consider a specific the Ising model is given by</p>
+<div class="math notranslate nohighlight">
+\[H = - \sum_{i=1}^{N-1} Z_{i} Z_{i+1} + \sum_{i=1}^{N} X_{i}, \tag{4}\]</div>
+<p>where <span class="math notranslate nohighlight">\(X_{i}\)</span> and <span class="math notranslate nohighlight">\(Z_{i}\)</span> are the Pauli matrices, the external magnetic field strength is set to <span class="math notranslate nohighlight">\(1\)</span>, interaction strength on each pair of sites is uniform.</p>
+<p>VQEs algorithm is able to find the ground state of the Hamiltonian, which is the lowest eigenvalue of the Hamiltonian. Here are details for implementing VQEs in QuAIRKit.</p>
+</li>
+</ul>
+<p>Construct a parameters circuit with predefined circuit templates in QuAIRKit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">construct_cir</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Circuit</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Construct the quantum circuit for the variational quantum eigensolver.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        num_qubits: number of qubits in the quantum circuit.</span>
+<span class="sd">        depth: number of training layers in the circuit.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the target quantum circuit</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">circuit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+
+    <span class="c1"># add qubit gates to the circuit</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">complex_entangled_layer</span><span class="p">(</span><span class="n">qubits_idx</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)),</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">circuit</span>
+</code></pre></div>
+</div>
+</div>
+<p>Define the loss function as the expectation value of <span class="math notranslate nohighlight">\(H\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_fcn</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">exp_val</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">State</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the loss function of the quantum neural network.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cir: the input PQC</span>
+<span class="sd">        exp_val: the expectation value function</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the loss value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">circuit</span><span class="p">()</span>  <span class="c1"># input state is |0&gt; state by default</span>
+    <span class="k">return</span> <span class="n">exp_val</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>  <span class="c1"># calculate the expectation value of the output state</span>
+</code></pre></div>
+</div>
+</div>
+<p>Define the plot generation function to visualize the optimization process.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">display_results</span><span class="p">(</span><span class="n">loss_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">lambda_0</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Plot the training process and the final circuit.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loss_list: the list of loss values during the training process</span>
+<span class="sd">        lambda_0: the ground-state energy</span>
+<span class="sd">        circuit: the final circuit</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Circuit after training:&quot;</span><span class="p">)</span>
+
+    <span class="n">circuit</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>  <span class="c1"># plot the circuit</span>
+
+    <span class="n">num_itr</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">loss_list</span><span class="p">)</span>
+    <span class="n">base_line</span> <span class="o">=</span> <span class="n">lambda_0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_itr</span><span class="p">)</span>
+    <span class="n">list_itr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_itr</span><span class="p">))</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># a line of &#39;-&#39; for better readability</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training process:&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">list_itr</span><span class="p">,</span>
+        <span class="n">loss_list</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\left\langle {\psi \left( {\theta } \right)} \right|&quot;</span>
+        <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;H\left| {\psi \left( {\theta } \right)} \right\rangle $&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">list_itr</span><span class="p">,</span>
+        <span class="n">base_line</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ground-state energy $\lambda_0$&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of iteration&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Energy $\lambda_0$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<p>Construct the Neural Network model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">num_itr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">LR</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">H</span><span class="p">:</span> <span class="n">Hamiltonian</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="n">cir</span> <span class="o">=</span> <span class="n">construct_cir</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+
+    <span class="c1"># calculate the eigenvalues and eigenvectors of the Hamiltonian</span>
+    <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="c1"># take the minimum eigenvalue as the ground state energy</span>
+    <span class="n">lambda_0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">))</span>
+
+    <span class="c1"># the expectation value operator of the Hamiltonian H</span>
+    <span class="n">exp_val</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+    <span class="n">loss_list</span><span class="p">,</span> <span class="n">time_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="c1"># cir is a Circuit type</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">LR</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">cir</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+    <span class="c1"># activate scheduler</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">itr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_itr</span><span class="p">):</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fcn</span><span class="p">(</span><span class="n">cir</span><span class="p">,</span> <span class="n">exp_val</span><span class="p">)</span>  <span class="c1"># compute loss</span>
+
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># compute gradients</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update parameters</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>  <span class="c1"># activate scheduler</span>
+
+        <span class="n">loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">itr</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">itr</span> <span class="o">==</span> <span class="n">num_itr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iter: </span><span class="si">{</span><span class="n">itr</span><span class="si">}</span><span class="s2">, loss: </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, &quot;</span>
+                  <span class="sa">f</span><span class="s2">&quot;lr: </span><span class="si">{</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2E</span><span class="si">}</span><span class="s2"> &quot;</span>
+                  <span class="sa">f</span><span class="s2">&quot;avg_time: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">time_list</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+            <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">display_results</span><span class="p">(</span><span class="n">loss_list</span><span class="p">,</span> <span class="n">lambda_0</span><span class="p">,</span> <span class="n">cir</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>Train the parameterized quantum circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits in the system</span>
+
+<span class="n">NUM_ITR</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># number of iterations for training</span>
+<span class="n">LR</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># learning rate for training</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># depth of the circuit</span>
+
+<span class="n">edges</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">vertices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">hamiltonian</span> <span class="o">=</span> <span class="n">ising_hamiltonian</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>  <span class="c1"># the Ising Hamiltonian</span>
+
+<span class="n">train_model</span><span class="p">(</span><span class="n">NUM_ITR</span><span class="p">,</span> <span class="n">LR</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">hamiltonian</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Training:
+iter: 0, loss: -0.36181292, lr: 5.00E-02 avg_time: 0.0853s
+iter: 20, loss: -2.69505548, lr: 5.00E-02 avg_time: 0.0028s
+iter: 40, loss: -3.01261520, lr: 5.00E-02 avg_time: 0.0031s
+iter: 60, loss: -3.40792942, lr: 5.00E-02 avg_time: 0.0024s
+iter: 80, loss: -3.49100828, lr: 5.00E-02 avg_time: 0.0024s
+iter: 100, loss: -3.49361849, lr: 5.00E-02 avg_time: 0.0024s
+iter: 120, loss: -3.49383712, lr: 5.00E-02 avg_time: 0.0023s
+iter: 140, loss: -3.49391413, lr: 5.00E-02 avg_time: 0.0025s
+iter: 160, loss: -3.49394155, lr: 5.00E-02 avg_time: 0.0025s
+iter: 180, loss: -3.49395132, lr: 5.00E-02 avg_time: 0.0029s
+iter: 199, loss: -3.49395680, lr: 5.00E-02 avg_time: 0.0030s
+
+----------------------------------------------------------------------------------------------------
+
+Circuit after training:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_training_17_1.png" src="../../_images/tutorials_introduction_training_17_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+----------------------------------------------------------------------------------------------------
+
+Training process:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_introduction_training_17_3.png" src="../../_images/tutorials_introduction_training_17_3.png" />
+</div>
+</div>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Cao, Yudong, et al. “Quantum chemistry in the age of quantum computing.” Chemical reviews 119.19 (2019): 10856-10915.</p>
+<p>[2] McArdle, Sam, et al. “Quantum computational chemistry.” Reviews of Modern Physics 92.1 (2020): 015003.</p>
+<p>[3] Peruzzo, Alberto, et al. “A variational eigenvalue solver on a photonic quantum processor.” Nature communications 5.1 (2014): 4213.</p>
+<p>[4] Moll, Nikolaj, et al. “Quantum optimization using variational algorithms on near-term quantum devices.” Quantum Science and Technology 3.3 (2018): 030503.</p>
+<p>[5] Tilly, Jules, et al. “The variational quantum eigensolver: a review of methods and best practices.” Physics Reports 986 (2022): 1-128.</p>
+<p>[6] Sakurai, J. J., and Jim Napolitano. Modern Quantum Mechanics. 3rd ed. Cambridge: Cambridge University Press, 2020. Print.</p>
+<p>[7] Griffiths, David J., and Darrell F. Schroeter. Introduction to Quantum Mechanics. 3rd ed. Cambridge: Cambridge University Press, 2018. Print.</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+<td></td>
+<td><p>loss function</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\eta\)</span></p></td>
+<td></td>
+<td><p>learning rate</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\operatorname{tr}\)</span></p></td>
+<td></td>
+<td><p>trace of a matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td></td>
+<td><p>matrix representation of the Hamiltonian</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\lambda_0\)</span></p></td>
+<td></td>
+<td><p>the minimum eigenvalue of the Hamiltonian</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(U(\theta)\)</span></p></td>
+<td><p>quantum gate/layer (parameterized by <span class="math notranslate nohighlight">\(\theta\)</span>)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\vert \psi \rangle\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\vert \psi(\theta) \rangle\)</span></p></td>
+<td><p>pure state (parameterized by <span class="math notranslate nohighlight">\(\theta\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(Z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(X_i\)</span>, <span class="math notranslate nohighlight">\(Z_i\)</span></p></td>
+<td><p>Pauli matrices (on the <span class="math notranslate nohighlight">\(i\)</span>-th qubit)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+---------DEVICE---------
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

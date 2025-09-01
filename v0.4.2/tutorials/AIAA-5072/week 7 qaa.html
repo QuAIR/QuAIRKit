@@ -1,0 +1,1735 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="week%206%20teleportation.html">
+      
+      
+        <link rel="next" href="week%208%20qpe.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Quantum state amplitude amplification - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Problem-statement" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quantum state amplitude amplification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.AIAA-5072.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%201%20qubit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb (reference label)"><span>Brief Introduction to Quantum Computing</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%202%20quasi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 2 quasi.ipynb (reference label)"><span>Quantum error mitigation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%203%20vqe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 3 vqe.ipynb (reference label)"><span>Variational quantum eigensolver</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%204%20entanglement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 4 entanglement.ipynb (reference label)"><span>Entanglement</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%205%20superdense-coding.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb (reference label)"><span>Superdense coding</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%206%20teleportation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb (reference label)"><span>Quantum state teleportation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb (reference label)"><span>Quantum state amplitude amplification</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb (reference label)"><span>Quantum state amplitude amplification</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Problem-statement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#problem-statement (reference label)"><span>Problem statement</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problem statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Assumptions" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#assumptions (reference label)"><span>Assumptions</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Amplitude-Amplification" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#quantum-amplitude-amplification (reference label)"><span>Quantum Amplitude Amplification</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Unstructured-search-problem" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#unstructured-search-problem (reference label)"><span>Unstructured search problem</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Oblivious-amplitude-amplification" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#oblivious-amplitude-amplification (reference label)"><span>Oblivious amplitude amplification</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Implementation-of-Oblivious-Amplitude-Amplification" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#implementation-of-oblivious-amplitude-amplification (reference label)"><span>Implementation of Oblivious Amplitude Amplification</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Extension" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#extension (reference label)"><span>Extension</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Singular-Value-Transformation-Framework" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#quantum-singular-value-transformation-framework (reference label)"><span>Quantum Singular Value Transformation Framework</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Eliminating-the-Requirement-for-U^\dagger" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#eliminating-the-requirement-for-u^\dagger (reference label)"><span>Eliminating the Requirement for U^\dagger</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%208%20qpe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 8 qpe.ipynb (reference label)"><span>Quantum phase estimation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%209%20hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb (reference label)"><span>Hamiltonian simulation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Problem-statement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#problem-statement (reference label)"><span>Problem statement</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problem statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Assumptions" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#assumptions (reference label)"><span>Assumptions</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Amplitude-Amplification" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#quantum-amplitude-amplification (reference label)"><span>Quantum Amplitude Amplification</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Unstructured-search-problem" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#unstructured-search-problem (reference label)"><span>Unstructured search problem</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Oblivious-amplitude-amplification" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#oblivious-amplitude-amplification (reference label)"><span>Oblivious amplitude amplification</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Implementation-of-Oblivious-Amplitude-Amplification" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#implementation-of-oblivious-amplitude-amplification (reference label)"><span>Implementation of Oblivious Amplitude Amplification</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Extension" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#extension (reference label)"><span>Extension</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extension">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Singular-Value-Transformation-Framework" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#quantum-singular-value-transformation-framework (reference label)"><span>Quantum Singular Value Transformation Framework</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Eliminating-the-Requirement-for-U^\dagger" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#eliminating-the-requirement-for-u^\dagger (reference label)"><span>Eliminating the Requirement for U^\dagger</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quairkit&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>quairkit
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>pdftotext<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>poppler
+<span class="k">fi</span>
+</code></pre></div>
+</div>
+</div>
+<h1 id="Quantum-state-amplitude-amplification">Quantum state amplitude amplification<a class="headerlink" href="#Quantum-state-amplitude-amplification" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
+<p>This tutorial introduces amplitude amplification and its practical implementations in QuAIRKit. It covers the general amplitude amplification framework, the special case of unstructured search (Grover’s algorithm), and the oblivious amplitude amplification (OAA).</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Problem-statement"><span class="std std-ref">Problem statement</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Assumptions"><span class="std std-ref">Assumptions</span></a></p></li>
+<li><p><a class="reference internal" href="#Quantum-Amplitude-Amplification"><span class="std std-ref">Quantum amplitude amplification</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Unstructured-search-problem"><span class="std std-ref">Unstructured search problem</span></a></p></li>
+<li><p><a class="reference internal" href="#Oblivious-amplitude-amplification"><span class="std std-ref">Oblivious amplitude amplification</span></a></p></li>
+<li><p><a class="reference internal" href="#Extension"><span class="std std-ref">Extension</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">to_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.ansatz</span> <span class="kn">import</span> <span class="n">Layer</span>
+<span class="kn">from</span> <span class="nn">quairkit.operator</span> <span class="kn">import</span> <span class="n">Oracle</span><span class="p">,</span> <span class="n">ControlOracle</span><span class="p">,</span> <span class="n">H</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Problem-statement">Problem statement<a class="headerlink" href="#Problem-statement" title="Link to this heading">¶</a></h2>
+<p>Consider the problem of quantum amplitude amplification. We assume there exists a unitary operation <span class="math notranslate nohighlight">\(U\)</span> such that:</p>
+<div class="math notranslate nohighlight">
+\[U |0^k\rangle = |\varphi\rangle \tag{1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(k\)</span> is the number of qubits, and the state <span class="math notranslate nohighlight">\(|\varphi\rangle\)</span> can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[|\varphi\rangle = \sin (\theta) |\psi\rangle + \cos (\theta) |\psi^{\perp}\rangle \tag{2}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> is referred to as the “good state,” and is orthogonal to <span class="math notranslate nohighlight">\(|\psi^{\perp}\rangle\)</span>, i.e., <span class="math notranslate nohighlight">\(\langle\psi | \psi^{\perp}\rangle = 0\)</span>.</p>
+<p>In this decomposition the coefficients <span class="math notranslate nohighlight">\(\sin(\theta)\)</span> and <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> are the quantum amplitudes of the corresponding components. More generally, an amplitude is a complex coefficient multiplying a basis component of a quantum state: its squared magnitude gives the measurement probability for that component (e.g. the probability of obtaining <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> here is <span class="math notranslate nohighlight">\(\sin^2(\theta)\)</span>).</p>
+<p>Our goal is to find a quantum circuit <span class="math notranslate nohighlight">\(Q\)</span> such that for any integer <span class="math notranslate nohighlight">\(n\)</span>, the following holds:</p>
+<div class="math notranslate nohighlight">
+\[Q^n (U |0^k\rangle) = \sin((2n+1)\theta) |\psi\rangle + \cos((2n+1)\theta) |\psi^{\perp}\rangle  \tag{4}\]</div>
+<p>This allows us to effectively amplify the amplitude of the state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> using the circuit <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<h3 id="Assumptions">Assumptions<a class="headerlink" href="#Assumptions" title="Link to this heading">¶</a></h3>
+<p>To realize amplitude amplification we assume access to the following oracles:</p>
+<ul class="simple">
+<li><p><strong>State preparation oracle</strong> <span class="math notranslate nohighlight">\(U\)</span> and its inverse <span class="math notranslate nohighlight">\(U^{\dagger}\)</span>. This prepares <span class="math notranslate nohighlight">\(|\varphi\rangle=U|0^k\rangle\)</span>.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Reflection (phase) oracle about the good subspace</strong>: a unitary <span class="math notranslate nohighlight">\(S = I - 2|\psi\rangle\langle\psi|\)</span> that flips the sign of the good state(s).</p></li>
+</ul>
+<p>The “good subspace” refers to the subspace spanned by the target quantum state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> whose amplitude we want to amplify in the quantum amplitude amplification algorithm.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psi</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">amplitude_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">bra</span> <span class="o">@</span> <span class="n">psi</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+<span class="n">amplitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">amplitude_tensor</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">amplitude</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">num_qubits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">ket</span> <span class="o">@</span> <span class="n">psi</span><span class="o">.</span><span class="n">bra</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="Quantum-Amplitude-Amplification">Quantum Amplitude Amplification<a class="headerlink" href="#Quantum-Amplitude-Amplification" title="Link to this heading">¶</a></h3>
+<p>The quantum amplitude amplification algorithm increases the amplitude of the “good state” by iteratively applying a combination of operators that effects a rotation in the invariant two-dimensional plane spanned by <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> and <span class="math notranslate nohighlight">\(|\psi^{\perp}\rangle\)</span>, thus amplifying the component along the target state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+<p>In the foundational work by Brassard et al. [1], the quantum operator <span class="math notranslate nohighlight">\(Q\)</span> for solving the amplitude amplification problem is constructed as a composition of two fundamental operators.</p>
+<p>The first operator is a reflection (phase) oracle about the good subspace: <span class="math notranslate nohighlight">\(S = \mathbb{I} - 2|\psi\rangle\langle\psi|\)</span>, which flips the sign of the good state.</p>
+<p>The second component is the diffusion operator: <span class="math notranslate nohighlight">\(D = \mathbb{I} - 2|\varphi\rangle\langle\varphi|\)</span>, which implements a reflection about the initial state <span class="math notranslate nohighlight">\(|\varphi\rangle\)</span>.</p>
+<p>The composition of these two operators yields what has become known as the Grover operator (or amplitude amplification operator):</p>
+<div class="math notranslate nohighlight">
+\[Q = -DS\]</div>
+<p>The geometric interpretation of this operator reveals that each application of <span class="math notranslate nohighlight">\(Q\)</span> corresponds to a rotation in the two-dimensional subspace <span class="math notranslate nohighlight">\(\mathcal{H} = \text{span}\{|\psi\rangle, |\psi^{\perp}\rangle\}\)</span>, systematically increasing the amplitude of the target state. To prove this, we give the following theorem:</p>
+<p><strong>Theorem.</strong> The operator <span class="math notranslate nohighlight">\(Q = -DS\)</span> is a rotation by angle <span class="math notranslate nohighlight">\(-2\theta\)</span> in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
+<p><strong>Proof.</strong> We proceed by computing the matrix representation of <span class="math notranslate nohighlight">\(Q\)</span> in the orthonormal basis <span class="math notranslate nohighlight">\(\mathbb{B} = \{|\psi\rangle, |\psi^{\perp}\rangle\}\)</span>.</p>
+<p>The oracle reflection <span class="math notranslate nohighlight">\(S\)</span> acts as the identity on all states orthogonal to <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> and reflects <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> to <span class="math notranslate nohighlight">\(-|\psi\rangle\)</span>. In our chosen basis:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}S = \mathbb{I} - 2|\psi\rangle\langle\psi| = \begin{pmatrix} -1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}_\mathbb{B}\end{split}\]</div>
+<p>For the diffusion operator, we express the initial state as <span class="math notranslate nohighlight">\(|\varphi\rangle = \sin\theta\,|\psi\rangle + \cos\theta\,|\psi^{\perp}\rangle\)</span>. The projection operator becomes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}|\varphi\rangle\langle\varphi| = \begin{pmatrix} \sin^2\theta &amp; \sin\theta\cos\theta \\ \sin\theta\cos\theta &amp; \cos^2\theta \end{pmatrix}_\mathbb{B}\end{split}\]</div>
+<p>Therefore, the diffusion operator is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+D &amp;= \mathbb{I} - 2|\varphi\rangle\langle\varphi| \\
+&amp;= \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix} - 2\begin{pmatrix} \sin^2\theta &amp; \sin\theta\cos\theta \\ \sin\theta\cos\theta &amp; \cos^2\theta \end{pmatrix}_\mathbb{B} \\
+&amp;= \begin{pmatrix} \cos 2\theta &amp; -\sin 2\theta \\ -\sin 2\theta &amp; -\cos 2\theta \end{pmatrix}_\mathbb{B}
+\end{aligned}\end{split}\]</div>
+<p>Computing the product <span class="math notranslate nohighlight">\(DS\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+DS &amp;= \begin{pmatrix} \cos 2\theta &amp; -\sin 2\theta \\ -\sin 2\theta &amp; -\cos 2\theta \end{pmatrix}_\mathbb{B} \begin{pmatrix} -1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}_\mathbb{B} \\
+&amp;= \begin{pmatrix} -\cos 2\theta &amp; -\sin 2\theta \\ \sin 2\theta &amp; -\cos 2\theta \end{pmatrix}_\mathbb{B}
+\end{aligned}\end{split}\]</div>
+<p>Thus, the Grover operator is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Q = -DS = \begin{pmatrix} \cos 2\theta &amp; \sin 2\theta \\ -\sin 2\theta &amp; \cos 2\theta \end{pmatrix}_\mathbb{B}\end{split}\]</div>
+<p>This is precisely the rotation matrix <span class="math notranslate nohighlight">\(R_{-2\theta}\)</span> representing a rotation by angle <span class="math notranslate nohighlight">\(-2\theta\)</span>.</p>
+<p>After <span class="math notranslate nohighlight">\(n\)</span> iterations of <span class="math notranslate nohighlight">\(Q\)</span> on the initial state <span class="math notranslate nohighlight">\(|\varphi\rangle = (\sin\theta, \cos\theta)^T\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+Q^n|\varphi\rangle &amp;= \begin{pmatrix} \cos 2\theta &amp; \sin 2\theta \\ -\sin 2\theta &amp; \cos 2\theta \end{pmatrix}_\mathbb{B}^n \begin{pmatrix} \sin\theta \\ \cos\theta \end{pmatrix}_\mathbb{B} \\
+&amp;= \begin{pmatrix} \cos(2n\theta) &amp; \sin(2n\theta) \\ -\sin(2n\theta) &amp; \cos(2n\theta) \end{pmatrix}_\mathbb{B} \begin{pmatrix} \sin\theta \\ \cos\theta \end{pmatrix}_\mathbb{B} \\
+&amp;= \begin{pmatrix} \sin((2n+1)\theta) \\ \cos((2n+1)\theta) \end{pmatrix}_\mathbb{B}
+\end{aligned}\end{split}\]</div>
+<p>Therefore:</p>
+<div class="math notranslate nohighlight">
+\[Q^n U|0^k\rangle = \sin((2n+1)\theta)\,|\psi\rangle + \cos((2n+1)\theta)\,|\psi^{\perp}\rangle
+\tag{5}\]</div>
+<p>The success probability after <span class="math notranslate nohighlight">\(n\)</span> iterations is <span class="math notranslate nohighlight">\(\sin^2((2n+1)\theta)\)</span>.</p>
+<p>As for the implementation, note that <span class="math notranslate nohighlight">\(D = I - 2|\varphi\rangle\langle\varphi|\)</span> can be realized using elementary gates. Since <span class="math notranslate nohighlight">\(|\varphi\rangle = U|0^k\rangle\)</span>, we can express the diffusion operator as:</p>
+<div class="math notranslate nohighlight">
+\[D = U\,(I-2|0^k\rangle\langle 0^k|)\,U^{\dagger}
+\tag{6}\]</div>
+<p>Thus the implementation reduces to realizing the phase-flip operator <span class="math notranslate nohighlight">\(I-2|0^k\rangle\langle 0^k|\)</span>, which multiplies the zero state <span class="math notranslate nohighlight">\(|0^k\rangle\)</span> by <span class="math notranslate nohighlight">\(-1\)</span> and leaves all orthogonal states unchanged. A standard way to implement <span class="math notranslate nohighlight">\(I-2|0^k\rangle\langle 0^k|\)</span> on <span class="math notranslate nohighlight">\(l\)</span> qubits is:</p>
+<ol class="arabic simple">
+<li><p>Apply <span class="math notranslate nohighlight">\(X\)</span> gates to all qubits so that <span class="math notranslate nohighlight">\(|0^k\rangle\)</span> is mapped to <span class="math notranslate nohighlight">\(|1^k\rangle\)</span>.</p></li>
+<li><p>Apply a multi-controlled <span class="math notranslate nohighlight">\(Z\)</span> (phase) gate that flips the phase of <span class="math notranslate nohighlight">\(|1^k\rangle\)</span> (this can be built from Toffoli gates plus a single-qubit <span class="math notranslate nohighlight">\(Z\)</span> or using ancilla qubits to reduce the multi-control cost).</p></li>
+<li><p>Apply the same <span class="math notranslate nohighlight">\(X\)</span> gates again to restore the computational basis.</p></li>
+</ol>
+<p>Below is the code implementation of a Grover operator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Grover</span><span class="p">(</span><span class="n">Layer</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Circuit layer for Grover operator</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        qubits_idx: Indices of the qubits in the circuit.</span>
+<span class="sd">        num: The number of Grover iterations to perform.</span>
+<span class="sd">        oracle: The state preparation oracle to use in the Grover operator. If None, then default to hadamard gates.</span>
+<span class="sd">        diffusion: The diffusion operator to use in the Grover operator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">oracle</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">diffusion</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">qubits_idx</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="s1">&#39;Grover operator&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">oracle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diffusion</span> <span class="o">=</span> <span class="n">diffusion</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__add_layer</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__add_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qubits_idx</span><span class="p">,</span> <span class="n">oracle</span><span class="p">,</span> <span class="n">diffusion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">diffusion</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Oracle</span><span class="p">(</span><span class="n">diffusion</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="p">,</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;I - 2|\psi\rangle\!\langle\psi|&#39;</span><span class="p">}))</span>
+
+        <span class="k">if</span> <span class="n">oracle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H</span><span class="p">(</span><span class="n">qubits_idx</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Oracle</span><span class="p">(</span><span class="n">dagger</span><span class="p">(</span><span class="n">oracle</span><span class="p">),</span> <span class="n">qubits_idx</span><span class="p">,</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;U^\dagger&#39;</span><span class="p">}))</span>
+
+        <span class="n">control_idx</span><span class="p">,</span> <span class="n">apply_idx</span> <span class="o">=</span> <span class="n">qubits_idx</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">qubits_idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ControlOracle</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">(),</span> <span class="p">[</span><span class="n">control_idx</span><span class="p">,</span> <span class="n">apply_idx</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">acted_system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">qubits_idx</span><span class="p">),</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;-Z&#39;</span><span class="p">}))</span>
+
+        <span class="k">if</span> <span class="n">oracle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H</span><span class="p">(</span><span class="n">qubits_idx</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Oracle</span><span class="p">(</span><span class="n">oracle</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="p">,</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;U&#39;</span><span class="p">}))</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">oracle</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)),</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;U&#39;</span><span class="p">)</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Grover</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)),</span> <span class="n">l</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">))</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;compact&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_7_qaa_12_0.png" src="../../_images/tutorials_AIAA-5072_week_7_qaa_12_0.png" />
+</div>
+</div>
+<p>Below we show that the squared absolute value of the inner product between the output state and <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> is $ <span class="math">\sin`^2!:nbsphinx-math:</span>big`((2n+1):nbsphinx-math:<cite>theta</cite><span class="math">\big</span>). $</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">input_state</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+
+<span class="n">sin_theta_complex</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">bra</span> <span class="o">@</span> <span class="n">U</span> <span class="o">@</span> <span class="n">input_state</span><span class="o">.</span><span class="n">ket</span>
+<span class="n">sin_theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sin_theta_complex</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">sin_theta</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
+
+<span class="n">actual_amplitude</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">bra</span> <span class="o">@</span> <span class="n">output_state</span><span class="o">.</span><span class="n">ket</span>
+<span class="n">actual_probability</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="n">theoretical_amplitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+<span class="n">theoretical_probability</span> <span class="o">=</span> <span class="n">theoretical_amplitude</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="n">difference</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_probability</span> <span class="o">-</span> <span class="n">theoretical_probability</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of iterations n: </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial angle θ: </span><span class="si">{</span><span class="n">theta</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial amplitude sin(θ): </span><span class="si">{</span><span class="n">sin_theta</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Theoretical probability sin²((2n+1)θ): </span><span class="si">{</span><span class="n">theoretical_probability</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actual probability |&lt;ψ|output&gt;|²: </span><span class="si">{</span><span class="n">actual_probability</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Absolute difference: </span><span class="si">{</span><span class="n">difference</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of iterations n: 3
+Initial angle θ: 0.1105
+Initial amplitude sin(θ): 0.1103
+Theoretical probability sin²((2n+1)θ): 0.488338
+Actual probability |&lt;ψ|output&gt;|²: 0.488338
+Absolute difference: 9.44e-16
+</pre></div></div>
+</div>
+<h2 id="Unstructured-search-problem">Unstructured search problem<a class="headerlink" href="#Unstructured-search-problem" title="Link to this heading">¶</a></h2>
+<p>Unstructured search concerns finding an element that satisfies a Boolean predicate in a list with no ordering or structure, serving as a benchmark to compare classical and quantum query complexities.</p>
+<p>Classically: given <span class="math notranslate nohighlight">\(\{0,\dots,N-1\}\)</span> and an oracle <span class="math notranslate nohighlight">\(f:\{0,\dots,N-1\}\to\{0,1\}\)</span> with marked set <span class="math notranslate nohighlight">\(M=\{x:f(x)=1\}\)</span> of size <span class="math notranslate nohighlight">\(m\)</span>, the task is to find an <span class="math notranslate nohighlight">\(x\in M\)</span>. Any randomized classical algorithm requires <span class="math notranslate nohighlight">\(\Theta(N/m)\)</span> queries in expectation[3].</p>
+<p>The quantum unstructured search problem is defined as follows: given <span class="math notranslate nohighlight">\(n\)</span> qubits representing a state space <span class="math notranslate nohighlight">\(\{|0\rangle, |1\rangle, \ldots, |N-1\rangle\}\)</span> where <span class="math notranslate nohighlight">\(N = 2^n\)</span>, and access to a quantum oracle <span class="math notranslate nohighlight">\(O_f = I - 2\sum_{x \in M}|x\rangle\langle x|\)</span> that flips the phase of marked states, where <span class="math notranslate nohighlight">\(M = \{x : f(x) = 1\}\)</span> is the set of <span class="math notranslate nohighlight">\(m\)</span> marked items, the task is to find an element <span class="math notranslate nohighlight">\(x \in M\)</span>.</p>
+<p>The quantum approach prepares the uniform superposition <span class="math notranslate nohighlight">\(|\varphi\rangle = H^{\otimes n}|0\rangle = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1}|x\rangle\)</span> and defines the good state <span class="math notranslate nohighlight">\(|\psi\rangle = \frac{1}{\sqrt{m}}\sum_{x\in M}|x\rangle\)</span>. The initial amplitude is <span class="math notranslate nohighlight">\(\sin\theta = \sqrt{m/N}\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> characterizes the overlap between the uniform state and the good subspace.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">num_qubits</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">marked_items</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Search space size N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of marked elements m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Marked element indices: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">marked_items</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Search space size N = 32
+Number of marked elements m = 3
+Marked element indices: [ 3 27 31]
+</pre></div></div>
+</div>
+<p>As an example, we generate a random function <span class="math notranslate nohighlight">\(f\)</span> and provide the corresponding oracle <span class="math notranslate nohighlight">\(O_f\)</span>, <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>, and <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">marked_items</span> <span class="k">else</span> <span class="mi">0</span>
+
+<span class="n">psi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">marked_items</span><span class="p">:</span>
+    <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">psi</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="n">Of</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Theoretical parameters:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sin(θ) = √(m/N) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">theta_grover</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="n">N</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;θ = </span><span class="si">{</span><span class="n">theta_grover</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Theoretical parameters:
+sin(θ) = √(m/N) = 0.3062
+θ = 0.3112
+</pre></div></div>
+</div>
+<p>Grover’s algorithm applies amplitude amplification to the unstructured search problem. Starting from the uniform state <span class="math notranslate nohighlight">\(|\varphi\rangle = H^{\otimes n}|0\rangle\)</span>, the Grover operator <span class="math notranslate nohighlight">\(Q\)</span> rotates the state vector in the two-dimensional subspace spanned by <span class="math notranslate nohighlight">\(\{|\psi\rangle,|\psi^\perp\rangle\}\)</span>, systematically increasing the good amplitude.</p>
+<p>If the initial “good” state amplitude is <span class="math notranslate nohighlight">\(\sin\theta\)</span>, then after <span class="math notranslate nohighlight">\(k\)</span> iterations of standard amplitude amplification (the repeated application of the Grover operator <span class="math notranslate nohighlight">\(Q = -DS\)</span>), the “good” state amplitude becomes <span class="math notranslate nohighlight">\(\sin\big((2k+1)\theta\big)\)</span>, and the success probability is <span class="math notranslate nohighlight">\(\sin^2\big((2k+1)\theta\big)\)</span>.</p>
+<p>To maximize the success probability, choose <span class="math notranslate nohighlight">\(k\)</span> such that <span class="math notranslate nohighlight">\((2k+1)\theta \approx \frac{\pi}{2}\)</span>, which gives <span class="math notranslate nohighlight">\(k \approx \frac{\pi}{4\theta} - \frac{1}{2}\)</span>. In practice, take <span class="math notranslate nohighlight">\(k = \left\lfloor \frac{\pi}{4\theta} - \frac{1}{2} \right\rfloor\)</span>.</p>
+<p>For the single-solution case (<span class="math notranslate nohighlight">\(m=1\)</span>), we have <span class="math notranslate nohighlight">\(\sin\theta = \sqrt{m/N} = 1/\sqrt{N}\)</span>. For large <span class="math notranslate nohighlight">\(N\)</span>, this gives <span class="math notranslate nohighlight">\(\theta \approx \sin\theta = 1/\sqrt{N}\)</span>. Applying the optimization formula:</p>
+<div class="math notranslate nohighlight">
+\[k \approx \frac{\pi}{4\theta} - \frac{1}{2} \approx \frac{\pi}{4 \cdot (1/\sqrt{N})} - \frac{1}{2} = \frac{\pi\sqrt{N}}{4} - \frac{1}{2}
+\tag{7}\]</div>
+<p>Therefore, Grover’s algorithm finds a solution with high probability using <span class="math notranslate nohighlight">\(O(\sqrt{N})\)</span> queries to <span class="math notranslate nohighlight">\(O_f\)</span>, compared with the classical lower bound of <span class="math notranslate nohighlight">\(\Theta(N)\)</span> queries, demonstrating a quadratic quantum speedup.</p>
+<p>The following code computes the theoretical optimal number of Grover iterations:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">optimal_iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">theta_grover</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Theoretical optimal number of iterations: </span><span class="si">{</span><span class="n">optimal_iterations</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Theoretical optimal number of iterations: 2
+</pre></div></div>
+</div>
+<p>The following code constructs and executes the Grover quantum circuit with the optimal iteration count, then analyzes the measurement probabilities to verify the theoretical predictions</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">()</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Grover</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)),</span> <span class="n">optimal_iterations</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">S</span><span class="p">))</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;compact&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_7_qaa_23_0.png" src="../../_images/tutorials_AIAA-5072_week_7_qaa_23_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">prob</span> <span class="o">=</span> <span class="n">cir</span><span class="p">()</span><span class="o">.</span><span class="n">probability</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Measurement probabilities for each basis state (showing only states with probability &gt; 0.01):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="n">is_marked</span> <span class="o">=</span> <span class="s2">&quot;✓ (marked state)&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">marked_items</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">binary_str</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;0</span><span class="si">{</span><span class="n">num_qubits</span><span class="si">}</span><span class="s1">b&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  |</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">⟩ = |</span><span class="si">{</span><span class="n">binary_str</span><span class="si">}</span><span class="s2">⟩: </span><span class="si">{</span><span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">is_marked</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">total_success_prob</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">prob</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">marked_items</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total success probability: </span><span class="si">{</span><span class="n">total_success_prob</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Theoretical optimal probability: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">optimal_iterations</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">theta_grover</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Measurement probabilities for each basis state (showing only states with probability &gt; 0.01):
+  | 3⟩ = |00011⟩: 0.3333 ✓ (marked state)
+  |27⟩ = |11011⟩: 0.3333 ✓ (marked state)
+  |31⟩ = |11111⟩: 0.3333 ✓ (marked state)
+
+Total success probability: 0.999779
+Theoretical optimal probability: 0.999779
+</pre></div></div>
+</div>
+<h2 id="Oblivious-amplitude-amplification">Oblivious amplitude amplification<a class="headerlink" href="#Oblivious-amplitude-amplification" title="Link to this heading">¶</a></h2>
+<p>The QAA algorithm[1], while powerful, suffers from a fundamental limitation: it requires access to an oracle <span class="math notranslate nohighlight">\(S\)</span> that selectively inverts the phase of marked states. However, implementing <span class="math notranslate nohighlight">\(S\)</span> typically necessitates prior knowledge of the target state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>, creating a circular dependency. This requirement undermines the practical quantum advantage of algorithms like Grover’s search, as one cannot employ QAA without already knowing <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>.</p>
+<p>To fix this problem, we turn to study a variant of the amplitude amplification problem. The problem statement is as follows: consider a unitary <span class="math notranslate nohighlight">\(U\)</span> acting on <span class="math notranslate nohighlight">\(\mu\)</span> ancilla qubits and <span class="math notranslate nohighlight">\(n\)</span> system qubits, satisfying</p>
+<div class="math notranslate nohighlight">
+\[U | 0^\mu \rangle | \psi \rangle = \sin(\theta) | 0^\mu \rangle V | \psi \rangle + \cos(\theta) | \Phi^\perp \rangle
+\tag{8}\]</div>
+<p>where <span class="math notranslate nohighlight">\(V\)</span> is an unknown unitary and <span class="math notranslate nohighlight">\(| \Phi^\perp \rangle\)</span> is an <span class="math notranslate nohighlight">\((\mu+n)\)</span>-qubit state with <span class="math notranslate nohighlight">\(\Pi| \Phi^\perp \rangle = 0\)</span> for <span class="math notranslate nohighlight">\(\Pi = \ket{0^\mu}\bra{0^\mu} \otimes \mathbb{I}\)</span>. The goal is to amplify the amplitude of the state <span class="math notranslate nohighlight">\(V|\psi\rangle\)</span>.</p>
+<p>The solution of this problem is known as oblivious amplitude amplification[2]. The key insight is that we can amplify desired amplitudes by only querying a unitary <span class="math notranslate nohighlight">\(U\)</span> and its inverse <span class="math notranslate nohighlight">\(U^\dagger\)</span>, without needing direct access to the target operation <span class="math notranslate nohighlight">\(V\)</span> or knowledge of the input state <span class="math notranslate nohighlight">\(| \psi \rangle\)</span>. This makes the amplification process “oblivious” to the specific input state, requiring only reflections in the ancilla space rather than reflections about unknown quantum
+states.</p>
+<p>One common example for such unitary <span class="math notranslate nohighlight">\(U\)</span> is for the technique of linear combination of unitaries (LCU) [4], where <span class="math notranslate nohighlight">\(U\)</span> is constructed as a controlled operation over a set of unitaries <span class="math notranslate nohighlight">\(\{U_j\}_j\)</span> with control states in the ancilla register.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_ancilla_qubit</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">num_main_qubit</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">U</span> <span class="o">=</span> <span class="n">random_lcu</span><span class="p">(</span><span class="n">num_main_qubit</span><span class="p">,</span> <span class="n">num_ancilla_qubit</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>In the code, we simplify the main register by treating it as a large qudit system.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">dim_main</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">num_main_qubit</span>
+<span class="n">system_dim</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_ancilla_qubit</span> <span class="o">+</span> <span class="p">[</span><span class="n">dim_main</span><span class="p">]</span>
+
+<span class="n">psi</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="n">dim_main</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>Initial state amplitude can be computed as <span class="math notranslate nohighlight">\(|\sin(\theta)| = || \Pi (U | 0^\mu \rangle | \psi \rangle) ||\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">zero</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_ancilla_qubit</span><span class="p">)</span>
+<span class="n">input_state</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+<span class="n">projector</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">zero</span><span class="o">.</span><span class="n">density_matrix</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim_main</span><span class="p">))</span>
+
+<span class="n">initial_amplitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">projector</span> <span class="o">@</span> <span class="n">U</span> <span class="o">@</span> <span class="n">input_state</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">initial_amplitude</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Implementation-of-Oblivious-Amplitude-Amplification">Implementation of Oblivious Amplitude Amplification<a class="headerlink" href="#Implementation-of-Oblivious-Amplitude-Amplification" title="Link to this heading">¶</a></h2>
+<p>Define the following two operators:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R = 2\Pi - \mathbb{I}\)</span>: reflection about the subspace with ancilla in <span class="math notranslate nohighlight">\(|0^\mu\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Q = -URU^\dagger R\)</span>: the amplification operator</p></li>
+</ul>
+<p>The operator <span class="math notranslate nohighlight">\(Q\)</span> acts as a generalized rotation in a two-dimensional subspace, analogous to standard amplitude amplification but without requiring reflection about the unknown input state.</p>
+<p><strong>Theorem.</strong> For any integer <span class="math notranslate nohighlight">\(l\)</span> and any <span class="math notranslate nohighlight">\(n\)</span>-qudit state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[Q^l U|0^\mu\rangle|\psi\rangle = \sin((2l+1)\theta)|0^\mu\rangle V|\psi\rangle + \cos((2l+1)\theta)|\Phi^\perp\rangle
+\tag{9}\]</div>
+<p><strong>Proof.</strong> We proceed by establishing that the evolution remains within a two-dimensional subspace.</p>
+<p>Define the states:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(|\psi_g\rangle = |0^\mu\rangle V|\psi\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\psi_b\rangle = |\Phi^\perp\rangle\)</span></p></li>
+</ul>
+<p>These states form an orthonormal basis for the relevant subspace, since <span class="math notranslate nohighlight">\(\Pi|\psi_b\rangle = 0\)</span> implies <span class="math notranslate nohighlight">\(\langle \psi_g|\psi_b\rangle = 0\)</span>, and both states are normalized (the normalization of <span class="math notranslate nohighlight">\(|\psi_b\rangle\)</span> follows from the unitarity of <span class="math notranslate nohighlight">\(U\)</span>).</p>
+<p>The initial state after applying <span class="math notranslate nohighlight">\(U\)</span> can be written as:</p>
+<div class="math notranslate nohighlight">
+\[U|0^\mu\rangle|\psi\rangle = \sin(\theta)|\psi_g\rangle + \cos(\theta)|\psi_b\rangle
+\tag{10}\]</div>
+<p>The reflection <span class="math notranslate nohighlight">\(R\)</span> acts as:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R|\psi_g\rangle = |\psi_g\rangle\)</span> (since <span class="math notranslate nohighlight">\(\Pi|\psi_g\rangle = |\psi_g\rangle\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(R|\psi_b\rangle = -|\psi_b\rangle\)</span> (since <span class="math notranslate nohighlight">\(\Pi|\psi_b\rangle = 0\)</span>)</p></li>
+</ul>
+<p>To compute the action of <span class="math notranslate nohighlight">\(Q = -URU^\dagger R\)</span> in the subspace spanned by <span class="math notranslate nohighlight">\(\{|\psi_g\rangle, |\psi_b\rangle\}\)</span>, we introduce auxiliary states:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(|\alpha\rangle = \sin(\theta)|\psi_g\rangle + \cos(\theta)|\psi_b\rangle = U|0^\mu\rangle|\psi\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\beta\rangle = \cos(\theta)|\psi_g\rangle - \sin(\theta)|\psi_b\rangle\)</span> (orthogonal to <span class="math notranslate nohighlight">\(|\alpha\rangle\)</span>)</p></li>
+</ul>
+<p>The operator <span class="math notranslate nohighlight">\(URU^\dagger\)</span> reflects about <span class="math notranslate nohighlight">\(|\alpha\rangle\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(URU^\dagger|\alpha\rangle = |\alpha\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(URU^\dagger|\beta\rangle = -|\beta\rangle\)</span></p></li>
+</ul>
+<p>Expressing the basis states in terms of <span class="math notranslate nohighlight">\(\{|\alpha\rangle, |\beta\rangle\}\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(|\psi_g\rangle = \sin(\theta)|\alpha\rangle + \cos(\theta)|\beta\rangle\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\psi_b\rangle = \cos(\theta)|\alpha\rangle - \sin(\theta)|\beta\rangle\)</span></p></li>
+</ul>
+<p>Computing <span class="math notranslate nohighlight">\(Q|\psi_g\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+URU^\dagger|\psi_g\rangle &amp; = \sin(\theta)|\alpha\rangle - \cos(\theta)|\beta\rangle = -\cos(2\theta)|\psi_g\rangle + \sin(2\theta)|\psi_b\rangle \\
+Q|\psi_g\rangle           &amp; = -URU^\dagger R|\psi_g\rangle = \cos(2\theta)|\psi_g\rangle - \sin(2\theta)|\psi_b\rangle
+\end{aligned}\end{split}\]</div>
+<p>Computing <span class="math notranslate nohighlight">\(Q|\psi_b\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+URU^\dagger|\psi_b\rangle &amp; = \cos(\theta)|\alpha\rangle + \sin(\theta)|\beta\rangle = \sin(2\theta)|\psi_g\rangle + \cos(2\theta)|\psi_b\rangle \\
+Q|\psi_b\rangle           &amp; = -URU^\dagger R|\psi_b\rangle = URU^\dagger|\psi_b\rangle = \sin(2\theta)|\psi_g\rangle + \cos(2\theta)|\psi_b\rangle
+\end{aligned}\end{split}\]</div>
+<p>In the basis <span class="math notranslate nohighlight">\(\mathbb{B} = \{|\psi_g\rangle, |\psi_b\rangle\}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Q = \begin{pmatrix} \cos(2\theta) &amp; \sin(2\theta) \\ -\sin(2\theta) &amp; \cos(2\theta) \end{pmatrix}_\mathbb{B}\end{split}\]</div>
+<p>This is a rotation matrix by angle <span class="math notranslate nohighlight">\(-2\theta\)</span>. Therefore:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Q^l = \begin{pmatrix} \cos(2l\theta) &amp; \sin(2l\theta) \\ -\sin(2l\theta) &amp; \cos(2l\theta) \end{pmatrix}_\mathbb{B}\end{split}\]</div>
+<p>Applying <span class="math notranslate nohighlight">\(Q^l\)</span> to the initial state:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+Q^l U|0^\mu\rangle|\psi\rangle &amp;= Q^l(\sin(\theta)|\psi_g\rangle + \cos(\theta)|\psi_b\rangle) \\
+&amp;= \begin{pmatrix} \cos(2l\theta) &amp; \sin(2l\theta) \\ -\sin(2l\theta) &amp; \cos(2l\theta) \end{pmatrix}_\mathbb{B} \begin{pmatrix} \sin(\theta) \\ \cos(\theta) \end{pmatrix}_\mathbb{B} \\
+&amp;= \begin{pmatrix} \sin((2l+1)\theta) \\ \cos((2l+1)\theta) \end{pmatrix}_\mathbb{B} \\
+&amp;= \sin((2l+1)\theta)|\psi_g\rangle + \cos((2l+1)\theta)|\psi_b\rangle \\
+&amp;= \sin((2l+1)\theta)|0^\mu\rangle V|\psi\rangle + \cos((2l+1)\theta)|\Phi^\perp\rangle
+\end{aligned}\end{split}\]</div>
+<figure style="text-align: center;"><p><img alt="alt text" src="../../_images/qaa_grover.png" /></p>
+<figcaption><p>The Q operator performs a 2θ rotation, amplifying the good component.</p>
+</figcaption></figure><p>This completes the proof. The amplification proceeds without knowledge of <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>, requiring only the ability to implement <span class="math notranslate nohighlight">\(U\)</span> and the reflection <span class="math notranslate nohighlight">\(R\)</span> about the ancilla subspace. The following is the OAA layer implements the amplification operator <span class="math notranslate nohighlight">\(Q\)</span> up to a global phase.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">OAA</span><span class="p">(</span><span class="n">Layer</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Circuit layer for oblivious amplitude amplification operator</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        system_idx: Indices of the systems in the circuit.</span>
+<span class="sd">        num: The number of OAA iterations to perform.</span>
+<span class="sd">        U_op: The state preparation unitary operator.</span>
+<span class="sd">        dims: List of dimensions for each subsystem [ancilla_dim, main_dim].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">oracle</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">system_idx</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="s1">&#39;Amplification operator&#39;</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="n">system_dim</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">oracle</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__add_layer</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__add_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">system_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_idx</span>
+        <span class="n">ancilla_dim</span> <span class="o">=</span> <span class="n">system_dim</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">control_idx</span><span class="p">,</span> <span class="n">apply_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_ancilla_qubit</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">num_ancilla_qubit</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ControlOracle</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">(),</span> <span class="p">[</span><span class="n">control_idx</span><span class="p">,</span> <span class="n">apply_idx</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">acted_system_dim</span><span class="o">=</span><span class="n">ancilla_dim</span><span class="p">,</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;-Z&#39;</span><span class="p">}))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Oracle</span><span class="p">(</span><span class="n">dagger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">),</span> <span class="n">system_idx</span><span class="p">,</span> <span class="n">acted_system_dim</span><span class="o">=</span><span class="n">system_dim</span><span class="p">,</span>
+                          <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;U^\dagger&#39;</span><span class="p">}))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ControlOracle</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">(),</span> <span class="p">[</span><span class="n">control_idx</span><span class="p">,</span> <span class="n">apply_idx</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">acted_system_dim</span><span class="o">=</span><span class="n">ancilla_dim</span><span class="p">,</span> <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;-Z&#39;</span><span class="p">}))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Oracle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="n">system_idx</span><span class="p">,</span> <span class="n">acted_system_dim</span><span class="o">=</span><span class="n">system_dim</span><span class="p">,</span>
+                          <span class="n">gate_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tex&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;U&#39;</span><span class="p">}))</span>
+</code><br/></pre></div>
+</div>
+</div>
+<p>As an experiment, we can show that OAA would do the same thing as the conventional one. For simplicity, consider a iteration number <span class="math notranslate nohighlight">\(l = \lfloor \frac{3\pi}{4\theta} - \frac{1}{2} \rfloor\)</span> such that <span class="math notranslate nohighlight">\(|\sin((2l + 1)\theta)| \to 1\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">theoretical_amplitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">theta</span><span class="p">))</span>
+</code></pre></div>
+</div>
+</div>
+<p>The overall circuit is constructed as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="n">num_ancilla_qubit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="n">system_dim</span><span class="p">)</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_ancilla_qubit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;U&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OAA</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_ancilla_qubit</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">l</span><span class="p">,</span> <span class="n">U</span><span class="p">))</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;compact&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_7_qaa_37_0.png" src="../../_images/tutorials_AIAA-5072_week_7_qaa_37_0.png" />
+</div>
+</div>
+<p>As shown below, the circuit enhances the amplitude from <span class="math notranslate nohighlight">\(|\sin(\theta)|\)</span> to <span class="math notranslate nohighlight">\(|\sin((2l+1)\theta)|\)</span>. By choosing <span class="math notranslate nohighlight">\(l\)</span> such that <span class="math notranslate nohighlight">\((2l+1)\theta \approx \pi/2\)</span>, we can implement <span class="math notranslate nohighlight">\(V\)</span> with near-certainty without ever needing to know the specific form of <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>.</p>
+<p>This construction is particularly useful when <span class="math notranslate nohighlight">\(U\)</span> can be efficiently implemented but <span class="math notranslate nohighlight">\(V\)</span> itself is difficult to realize directly. The amplification process effectively “extracts” the <span class="math notranslate nohighlight">\(V\)</span> operation from <span class="math notranslate nohighlight">\(U\)</span> through repeated applications of <span class="math notranslate nohighlight">\(Q = -URU^\dagger R\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
+<span class="n">actual_amplitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">projector</span> <span class="o">@</span> <span class="n">output_state</span><span class="o">.</span><span class="n">ket</span><span class="p">)</span>
+<span class="n">difference</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_amplitude</span> <span class="o">-</span> <span class="n">theoretical_amplitude</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expect amplitude = </span><span class="si">{</span><span class="n">theoretical_amplitude</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actual amplitude = </span><span class="si">{</span><span class="n">actual_amplitude</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Absolute difference: </span><span class="si">{</span><span class="n">difference</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Expect amplitude = 0.956992
+Actual amplitude = 0.956992
+Absolute difference: 1.11e-15
+</pre></div></div>
+</div>
+<h2 id="Extension">Extension<a class="headerlink" href="#Extension" title="Link to this heading">¶</a></h2>
+<h3 id="Quantum-Singular-Value-Transformation-Framework">Quantum Singular Value Transformation Framework<a class="headerlink" href="#Quantum-Singular-Value-Transformation-Framework" title="Link to this heading">¶</a></h3>
+<p>Oblivious amplitude amplification is a special case of the more general quantum singular value transformation (QSVT)[5] framework. QSVT provides a systematic method for implementing polynomial transformations on the singular values of a block-encoded matrix. In the context of OAA, the unitary <span class="math notranslate nohighlight">\(U\)</span> block-encodes the operator <span class="math notranslate nohighlight">\(V\)</span> with singular value <span class="math notranslate nohighlight">\(\sin(\theta)\)</span>. The amplification process corresponds to applying a polynomial transformation to this singular value.</p>
+<p>Specifically, QSVT operates on the two-dimensional subspace spanned by <span class="math notranslate nohighlight">\(\{\ket{0}V\ket{\psi}, \ket{\Phi^\perp}\}\)</span> and implements polynomial functions of the block-encoding parameter. The OAA operator <span class="math notranslate nohighlight">\(S^l U\)</span> realizes the Chebyshev polynomial of the first kind: <span class="math notranslate nohighlight">\(f(\sin(\theta)) = \sin((2l+1)\theta)\)</span>, which corresponds to the linear transformation <span class="math notranslate nohighlight">\(f(x) = T_{2l+1}(x)\)</span> where <span class="math notranslate nohighlight">\(T_n\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>-th Chebyshev polynomial. This perspective reveals that OAA performs a
+specific polynomial transformation that amplifies the desired component while preserving unitarity.</p>
+<h3 id="Eliminating-the-Requirement-for-U^\dagger">Eliminating the Requirement for <span class="math notranslate nohighlight">\(U^\dagger\)</span><a class="headerlink" href="#Eliminating-the-Requirement-for-U^\dagger" title="Link to this heading">¶</a></h3>
+<p>While the standard formulation of OAA requires both <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(U^\dagger\)</span>, the inverse operation can be eliminated since for any <span class="math notranslate nohighlight">\(d\)</span>-dimensional unitary <span class="math notranslate nohighlight">\(U\)</span>, the inverse <span class="math notranslate nohighlight">\(U^\dagger\)</span> can be implemented using <span class="math notranslate nohighlight">\(O(d^2)\)</span> controlled applications of <span class="math notranslate nohighlight">\(U\)</span>[6].</p>
+<p>The construction works by decomposing <span class="math notranslate nohighlight">\(U^\dagger\)</span> as a linear combination of powers of <span class="math notranslate nohighlight">\(U\)</span>: since <span class="math notranslate nohighlight">\(U\)</span> is unitary with eigenvalues on the unit circle, we can write <span class="math notranslate nohighlight">\(U^\dagger = \sum_{k=0}^{d-1} c_k U^k\)</span> for appropriate coefficients <span class="math notranslate nohighlight">\(c_k\)</span>. Using the Linear Combination of Unitaries (LCU) technique, this decomposition can be implemented with <span class="math notranslate nohighlight">\(O(d^2)\)</span> queries to controlled-<span class="math notranslate nohighlight">\(U\)</span> operations. Therefore, OAA requires only the ability to implement <span class="math notranslate nohighlight">\(U\)</span>, making
+it truly “oblivious” in the sense that neither <span class="math notranslate nohighlight">\(V\)</span> nor <span class="math notranslate nohighlight">\(U^\dagger\)</span> needs to be explicitly known or implemented.</p>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Brassard, Gilles, et al. “Quantum amplitude amplification and estimation.” arXiv preprint quant-ph/0005055 (2000).</p>
+<p>[2] Berry, Dominic W., et al. “Exponential improvement in precision for simulating sparse Hamiltonians.” Proceedings of the forty-sixth annual ACM symposium on Theory of computing. 2014.</p>
+<p>[3] Santha, Miklos. “Quantum walk based search algorithms.” International Conference on Theory and Applications of Models of Computation. Berlin, Heidelberg: Springer Berlin Heidelberg, 2008.</p>
+<p>[4] Childs, Andrew M., and Nathan Wiebe. “Hamiltonian simulation using linear combinations of unitary operations.” arXiv preprint arXiv:1202.5822 (2012).</p>
+<p>[5] Gilyén, András, et al. “Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics.” Proceedings of the 51st annual ACM SIGACT symposium on theory of computing. 2019.</p>
+<p>[6] Chen, Yu-Ao, et al. “Quantum Algorithm for Reversing Unknown Unitary Evolutions.” arXiv preprint arXiv:2403.04704 (2024).</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\psi_{\text{good}}}\)</span></p></td>
+<td><p>Target/good state to be amplified</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\ket{\psi^{\perp}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{\psi_{\text{bad}}}\)</span></p></td>
+<td><p>Orthogonal complement to good state</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mathcal{A}\)</span></p></td>
+<td><p>State preparation unitary/oracle</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O_f\)</span>, <span class="math notranslate nohighlight">\(S_{\psi}\)</span></p></td>
+<td><p>Phase oracle/reflection operator</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Q\)</span></p></td>
+<td></td>
+<td><p>Grover/amplification operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<td></td>
+<td><p>Initial amplitude angle</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbb{B}\)</span></p></td>
+<td></td>
+<td><p>Basis of 2-dimensional rotation subspace</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\Pi\)</span></p></td>
+<td></td>
+<td><p>Projector onto ancilla subspace</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(R\)</span></p></td>
+<td></td>
+<td><p>Reflection operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td></td>
+<td><p>Number of marked items</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(N\)</span></p></td>
+<td></td>
+<td><p>Size of search space</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[21]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+---------DEVICE---------
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

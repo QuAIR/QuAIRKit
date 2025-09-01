@@ -1,0 +1,1104 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="operator.html">
+      
+      
+        <link rel="next" href="state.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Quantum information tools - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Functions-in-quantum-computation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quantum information tools
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.introduction.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/hamiltonian.ipynb (reference label)"><span>Hamiltonian in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="circuit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/circuit.ipynb (reference label)"><span>Constructing quantum circuits in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="measure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/measure.ipynb (reference label)"><span>Measuring quantum states in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="operator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/operator.ipynb (reference label)"><span>Quantum gates and quantum channels</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/qinfo.ipynb (reference label)"><span>Quantum information tools</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/qinfo.ipynb (reference label)"><span>Quantum information tools</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Functions-in-quantum-computation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#functions-in-quantum-computation (reference label)"><span>Functions in quantum computation</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Functions-in-quantum-information" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#functions-in-quantum-information (reference label)"><span>Functions in quantum information</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Validation-functions" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#validation-functions (reference label)"><span>Validation functions</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Compatibility-with-different-data-formats" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#compatibility-with-different-data-formats (reference label)"><span>Compatibility with different data formats</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="state.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/state.ipynb (reference label)"><span>Manipulation of quantum states in Qu<wbr>AIRKit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="training.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/introduction/training.ipynb (reference label)"><span>Training parameterized quantum circuits</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Functions-in-quantum-computation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#functions-in-quantum-computation (reference label)"><span>Functions in quantum computation</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Functions-in-quantum-information" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#functions-in-quantum-information (reference label)"><span>Functions in quantum information</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Validation-functions" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#validation-functions (reference label)"><span>Validation functions</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Compatibility-with-different-data-formats" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/introduction/qinfo.ipynb#compatibility-with-different-data-formats (reference label)"><span>Compatibility with different data formats</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Quantum-information-tools">Quantum information tools<a class="headerlink" href="#Quantum-information-tools" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2024 QuAIR team. All Rights Reserved.</p>
+<p>This tutorial introduces the <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> module in QuAIRKit. The functions in <code class="docutils literal notranslate"><span class="pre">quairkit.qinfo</span></code> can be categorized into several application areas relevant to quantum computation and quantum information. For quantum computation, there are functions mainly to compute the Kronecker product, conjugate transpose, and trace of matrices. There are also functions associated with quantum gates, such as decomposing a single-qubit unitary operation into rotation angles around the Z and Y axes. For functions
+related to quantum information theory, this module includes partial trace, quantum entropies, the fidelity of quantum states, various kinds of norms, and so on. Additionally, this module provides data format validation such as verifying whether a matrix is a unitary, density matrix, or a projector.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Functions-in-quantum-computation"><span class="std std-ref">Functions in quantum computation</span></a></p></li>
+<li><p><a class="reference internal" href="#Functions-in-quantum-information"><span class="std std-ref">Functions in quantum information</span></a></p></li>
+<li><p><a class="reference internal" href="#Validation-functions"><span class="std std-ref">Validation functions</span></a></p></li>
+<li><p><a class="reference internal" href="#Compatibility-with-different-data-formats"><span class="std std-ref">Compatibility with different data formats</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">to_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s2">&quot;complex128&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Functions-in-quantum-computation">Functions in quantum computation<a class="headerlink" href="#Functions-in-quantum-computation" title="Link to this heading">¶</a></h2>
+<p>First, initialize two random unitary matrices through a built-in function of QuAIRKit. The matrix A and B are both in <em>torch.tensor</em> format.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">A</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matrix A is:</span><span class="se">\n</span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matrix B is:</span><span class="se">\n</span><span class="si">{</span><span class="n">B</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Matrix A is:
+tensor([[-0.6617+0.4886j, -0.0569-0.5658j],
+        [-0.5167+0.2377j, -0.0859+0.8180j]])
+
+Matrix B is:
+tensor([[-0.0826+0.8141j, -0.2365+0.5239j],
+        [-0.5741-0.0286j,  0.7621+0.2979j]])
+</pre></div></div>
+</div>
+<p>Users can use functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to implement specific operations on these two matrices.</p>
+<ul class="simple">
+<li><p>Calculate the trace of a matrix by <code class="docutils literal notranslate"><span class="pre">trace</span></code>.</p></li>
+<li><p>Calculate the direct sum of matrix A and B with <code class="docutils literal notranslate"><span class="pre">direct_sum</span></code>. Direct sum is an operation that combines two matrices into a larger matrix where A and B occupy diagonal blocks of the resulting matrix, and the remaining entries are zero.</p></li>
+<li><p>Calculate the Kronecker products of at least two matrices by <code class="docutils literal notranslate"><span class="pre">NKron</span></code>.</p></li>
+<li><p>Implement conjugate transpose of a matrix by <code class="docutils literal notranslate"><span class="pre">dagger</span></code>.</p></li>
+<li><p>Decompose a single-qubit unitary operator into Z-Y-Z rotation angles by <code class="docutils literal notranslate"><span class="pre">decomp_1qubit</span></code>.</p></li>
+<li><p>…</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The trace of matrix A is </span><span class="si">{</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The direct sum of matrix A and B is: </span><span class="se">\n</span><span class="si">{</span><span class="n">direct_sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The tensor product of matrix A and B is: </span><span class="se">\n</span><span class="si">{</span><span class="n">NKron</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The conjugate transpose of matrix A is: </span><span class="se">\n</span><span class="si">{</span><span class="n">dagger</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is </span><span class="si">{</span><span class="n">decomp_1qubit</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The trace of matrix A is (-0.7476029706454768+1.3066321644723216j)
+The direct sum of matrix A and B is:
+tensor([[-0.6617+0.4886j, -0.0569-0.5658j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [-0.5167+0.2377j, -0.0859+0.8180j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.0826+0.8141j, -0.2365+0.5239j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.5741-0.0286j,  0.7621+0.2979j]])
+
+The tensor product of matrix A and B is:
+tensor([[-0.3431-5.7905e-01j, -0.0995-4.6222e-01j,  0.4654+3.9582e-04j,
+          0.3099+1.0401e-01j],
+        [ 0.3938-2.6160e-01j, -0.6499+1.7523e-01j,  0.0165+3.2647e-01j,
+          0.1252-4.4821e-01j],
+        [-0.1508-4.4024e-01j, -0.0023-3.2688e-01j, -0.6589-1.3747e-01j,
+         -0.4083-2.3846e-01j],
+        [ 0.3034-1.2170e-01j, -0.4646+2.7223e-02j,  0.0727-4.6718e-01j,
+         -0.3092+5.9787e-01j]])
+
+The conjugate transpose of matrix A is:
+tensor([[-0.6617-0.4886j, -0.5167-0.2377j],
+        [-0.0569+0.5658j, -0.0859-0.8180j]])
+
+The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(0.2048), tensor(1.2099), tensor(-1.0350))
+</pre></div></div>
+</div>
+<h2 id="Functions-in-quantum-information">Functions in quantum information<a class="headerlink" href="#Functions-in-quantum-information" title="Link to this heading">¶</a></h2>
+<p>Users can use functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to quantify information-theoretic properties of quantum states.</p>
+<ul class="simple">
+<li><p>Calculate the von-Neumann entropy of a quantum state by <code class="docutils literal notranslate"><span class="pre">von_neumann_entropy</span></code>.</p></li>
+<li><p>Calculate the trace distance of two quantum states by <code class="docutils literal notranslate"><span class="pre">trace_distance</span></code>.</p></li>
+<li><p>Calculate the fidelity of two quantum states by <code class="docutils literal notranslate"><span class="pre">state_fidelity</span></code>.</p></li>
+<li><p>Calculate the purity of a quantum state by <code class="docutils literal notranslate"><span class="pre">purity</span></code>.</p></li>
+<li><p>Calculate the relative entropy of two quantum states by <code class="docutils literal notranslate"><span class="pre">relative_entropy</span></code>.</p></li>
+<li><p>Calculate of Schatten p-norm by <code class="docutils literal notranslate"><span class="pre">p_norm</span></code>.</p></li>
+<li><p>…</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state1</span> <span class="o">=</span>  <span class="n">random_state</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The first quantum state is:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state1</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">state2</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">ket</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The second quantum state is:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">state2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The first quantum state is:
+ tensor([[ 0.0825-1.8464e-19j, -0.0059+8.1267e-02j,  0.1179+4.8123e-02j,
+         -0.2237-5.3209e-02j],
+        [-0.0059-8.1267e-02j,  0.0804+2.9382e-19j,  0.0390-1.1952e-01j,
+         -0.0365+2.2404e-01j],
+        [ 0.1179-4.8123e-02j,  0.0390+1.1952e-01j,  0.1965+4.6562e-19j,
+         -0.3506+5.4411e-02j],
+        [-0.2237+5.3209e-02j, -0.0365-2.2404e-01j, -0.3506-5.4411e-02j,
+          0.6405+3.3658e-18j]])
+
+The second quantum state is:
+ tensor([[ 0.3073-0.1452j],
+        [ 0.2224+0.0360j],
+        [-0.6681+0.5462j],
+        [ 0.1777+0.2398j]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">entropy</span> <span class="o">=</span> <span class="n">von_neumann_entropy</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The von Neumann entropy between state 1 is:</span><span class="se">\n</span><span class="si">{</span><span class="n">entropy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">traceDistance</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">traceDistance</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The trace distance between state 1 and state 2  is:</span><span class="se">\n</span><span class="si">{</span><span class="n">traceDistance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">fidelity</span> <span class="o">=</span> <span class="n">state_fidelity</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The state fidelity between state 1 and state 2 is:</span><span class="se">\n</span><span class="si">{</span><span class="n">fidelity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">purity_state</span> <span class="o">=</span> <span class="n">purity</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The purity of state 1 is:</span><span class="se">\n</span><span class="si">{</span><span class="n">purity_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">r_entropy</span> <span class="o">=</span> <span class="n">relative_entropy</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The relative entropy of state 1 and state 2 is:</span><span class="se">\n</span><span class="si">{</span><span class="n">r_entropy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">pnorm</span> <span class="o">=</span> <span class="n">p_norm</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The Schatten </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">-norm of state 1 is:</span><span class="se">\n</span><span class="si">{</span><span class="n">pnorm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The von Neumann entropy between state 1 is:
+2.562741203051934e-15
+torch.float64
+The trace distance between state 1 and state 2  is:
+0.9183441952050546
+The state fidelity between state 1 and state 2 is:
+0.3957826994848831
+The purity of state 1 is:
+0.9999999999999999
+The relative entropy of state 1 and state 2 is:
+46.973657265325116
+The Schatten 2-norm of state 1 is:
+0.9999999999999998
+</pre></div></div>
+</div>
+<h2 id="Validation-functions">Validation functions<a class="headerlink" href="#Validation-functions" title="Link to this heading">¶</a></h2>
+<p>Users can use validation functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to check if the matrix satisfies certain conditions.</p>
+<ul class="simple">
+<li><p>Check if the input matrix is a positive semi-definite matrix by <code class="docutils literal notranslate"><span class="pre">is_positive</span></code>.</p></li>
+<li><p>Check if the input quantum state is PPT by <code class="docutils literal notranslate"><span class="pre">is_ppt</span></code>.</p></li>
+<li><p>Check if the input matrix is unitary by <code class="docutils literal notranslate"><span class="pre">is_unitary</span></code>.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">is_positive</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The matrix is a positive matrix: </span><span class="si">{</span><span class="n">is_positive</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">is_ppt</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The state 1 is a PPT state: </span><span class="si">{</span><span class="n">is_ppt</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">is_unitary</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The matrix is a unitary matrix: </span><span class="si">{</span><span class="n">is_unitary</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The matrix is a positive matrix: False
+The state 1 is a PPT state: False
+The matrix is a unitary matrix: True
+</pre></div></div>
+</div>
+<h2 id="Compatibility-with-different-data-formats">Compatibility with different data formats<a class="headerlink" href="#Compatibility-with-different-data-formats" title="Link to this heading">¶</a></h2>
+<p>Functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> support different formats of input, including <em>torch.Tensor</em>, <em>numpy.ndarray</em>, and <em>State</em>. The input data format is transformed through <code class="docutils literal notranslate"><span class="pre">_type_transform</span></code>. At the same time, the output format is consistent with the input format in the most situations. For example, the output will be <em>numpy.ndarray</em> format if the input is also <em>numpy.ndarray</em> format.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Input with torch.tensor format</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State fidelity dtype (torch.tensor): </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">state_fidelity</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span><span class="w"> </span><span class="n">state2</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Input with numpy.ndarray format</span>
+<span class="n">state1_num</span> <span class="o">=</span> <span class="n">state1</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">state2_num</span> <span class="o">=</span> <span class="n">state2</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State fidelity dtype (numpy.ndarray): </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">state_fidelity</span><span class="p">(</span><span class="n">state1_num</span><span class="p">,</span><span class="w"> </span><span class="n">state2_num</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Input with State format</span>
+<span class="n">state1_sta</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
+<span class="n">state2_sta</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">state2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State fidelity dtype (State): </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">state_fidelity</span><span class="p">(</span><span class="n">state1_sta</span><span class="p">,</span><span class="w"> </span><span class="n">state2_sta</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code><br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+State fidelity dtype (torch.tensor): &lt;class &#39;torch.Tensor&#39;&gt;
+State fidelity dtype (numpy.ndarray): &lt;class &#39;numpy.ndarray&#39;&gt;
+State fidelity dtype (State): &lt;class &#39;torch.Tensor&#39;&gt;
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+---------DEVICE---------
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

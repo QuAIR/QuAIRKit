@@ -1,0 +1,1500 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="quairkit.loss.distance.html">
+      
+      
+        <link rel="next" href="quairkit.operator.html">
+      
+      
+      <link rel="icon" href="_static/favicon.svg">
+    
+    
+      
+        <title>quairkit.loss.measure - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quairkit.loss.measure.Measure" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              quairkit.loss.measure
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.ansatz.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.ansatz.rst (reference label)"><span>quairkit.<wbr>ansatz</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.application.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.application.rst (reference label)"><span>quairkit.<wbr>application</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.circuit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.circuit.rst (reference label)"><span>quairkit.<wbr>circuit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.rst (reference label)"><span>quairkit.<wbr>core</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.database.rst (reference label)"><span>quairkit.<wbr>database</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.loss.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.rst (reference label)"><span>quairkit.<wbr>loss</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1_6" id="__nav_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.loss.rst (reference label)"><span>quairkit.<wbr>loss</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.loss.distance.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.distance.rst (reference label)"><span>quairkit.<wbr>loss.<wbr>distance</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.measure.rst (reference label)"><span>quairkit.<wbr>loss.<wbr>measure</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.measure.rst (reference label)"><span>quairkit.<wbr>loss.<wbr>measure</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure (Python class) — Compute the probability of the specified measurement result."><span>quairkit.<wbr>loss.<wbr>measure.<wbr>Measure</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.loss.measure.Measure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.__init__.measure_op" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.__init__.measure_op (Python parameter) — Specify the basis of the measurement."><span>measure_<wbr>op</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward (Python method) — Compute the probability of measurement to the input state."><span>forward</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.state" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.state (Python parameter) — The quantum state to be measured."><span>state</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.system_idx" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.system_idx (Python parameter) — The index of the systems to be measured."><span>system_<wbr>idx</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.shots" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.shots (Python parameter) — The number of shots for the measurement."><span>shots</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.desired_result" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.desired_result (Python parameter) — Specify the results of the measurement to return."><span>desired_<wbr>result</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.keep_state" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.keep_state (Python parameter) — Whether return the measured state."><span>keep_<wbr>state</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal (Python class) — The class of the loss function to compute the expectation value for the observable."><span>quairkit.<wbr>loss.<wbr>measure.<wbr>Expec<wbr>Val</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.loss.measure.ExpecVal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.__init__.hamiltonian" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable."><span>hamiltonian</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward (Python method) — Compute the expectation value of the observable with respect to the input state."><span>forward</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward.state" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward.state (Python parameter) — The input state which will be used to compute the expectation value."><span>state</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward.shots" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward.shots (Python parameter) — The number of shots to measure the observable."><span>shots</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward.decompose" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward.decompose (Python parameter) — Defaults to False."><span>decompose</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-raises" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Raises</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.operator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.rst (reference label)"><span>quairkit.<wbr>operator</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.qinfo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.rst (reference label)"><span>quairkit.<wbr>qinfo</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure (Python class) — Compute the probability of the specified measurement result."><span>quairkit.<wbr>loss.<wbr>measure.<wbr>Measure</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.loss.measure.Measure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.__init__.measure_op" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.__init__.measure_op (Python parameter) — Specify the basis of the measurement."><span>measure_<wbr>op</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward (Python method) — Compute the probability of measurement to the input state."><span>forward</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.state" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.state (Python parameter) — The quantum state to be measured."><span>state</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.system_idx" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.system_idx (Python parameter) — The index of the systems to be measured."><span>system_<wbr>idx</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.shots" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.shots (Python parameter) — The number of shots for the measurement."><span>shots</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.desired_result" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.desired_result (Python parameter) — Specify the results of the measurement to return."><span>desired_<wbr>result</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward.keep_state" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.Measure.forward.keep_state (Python parameter) — Whether return the measured state."><span>keep_<wbr>state</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.Measure.forward-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal (Python class) — The class of the loss function to compute the expectation value for the observable."><span>quairkit.<wbr>loss.<wbr>measure.<wbr>Expec<wbr>Val</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.loss.measure.ExpecVal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.__init__.hamiltonian" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable."><span>hamiltonian</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward (Python method) — Compute the expectation value of the observable with respect to the input state."><span>forward</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward.state" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward.state (Python parameter) — The input state which will be used to compute the expectation value."><span>state</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward.shots" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward.shots (Python parameter) — The number of shots to measure the observable."><span>shots</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward.decompose" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.loss.measure.ExpecVal.forward.decompose (Python parameter) — Defaults to False."><span>decompose</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-raises" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Raises</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.loss.measure.ExpecVal.forward-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="module-quairkit.loss.measure"><span id="quairkit-loss-measure"></span>quairkit.loss.measure<a class="headerlink" href="#module-quairkit.loss.measure" title="Link to this heading">¶</a></h1>
+<p>The source file of the class for the measurement.</p>
+<dl class="py class objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.loss.measure.Measure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quairkit.loss.measure.</span></span><span class="sig-name descname"><span class="pre">Measure</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.Measure.__init__.measure_op" title="quairkit.loss.measure.Measure.__init__.measure_op (Python parameter) — Specify the basis of the measurement."><span class="n"><span class="pre">measure_op</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.measure.Measure" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the probability of the specified measurement result.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.loss.measure.Measure-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.Measure-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.loss.measure.Measure.__init__.measure_op"><span class="sig-name descname">measure_op</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | List[str] | Tensor | None</span></span><a class="headerlink" href="#quairkit.loss.measure.Measure.__init__.measure_op" title="Permalink to this definition">¶</a></dt><dd><p>Specify the basis of the measurement. Defaults to <code class="docutils literal notranslate"><span class="pre">'computational'</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>the allowable input for <cite>measure_op</cite> are:
+- None, i.e., a ‘computational’ basis
+- a string composed of ‘i’, ‘x’, ‘y’, and ‘z’
+- a projection-valued measurement (PVM) in torch.Tensor</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_state</span><span class="p">,</span> <span class="n">std_basis</span>
+
+<span class="c1"># Define measurement basis using a string (e.g., &#39;xy&#39; denotes eigen-basis of X ⊗ Y)</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="s2">&quot;xy&quot;</span><span class="p">)</span>
+<span class="c1"># Define measurement basis using a list for multiple measurement setups (e.g., &#39;xy&#39; and &#39;yz&#39;)</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">([</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;yz&quot;</span><span class="p">])</span>
+<span class="c1"># Define a custom measurement basis using a user-specified PVM tensor</span>
+<span class="n">pvm_tensor</span> <span class="o">=</span> <span class="n">std_basis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm_tensor</span><span class="p">)</span>
+<span class="c1"># Use default computational basis</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">()</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Full measurement: probability distribution over all measurement outcomes.</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probabilities for measuring all qubits:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Measurement on a targeted subsystem (e.g., the first qubit)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probabilities for measuring the first qubit:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Compute probability for a specific full-system outcome (&#39;10&#39;)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">desired_result</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probability for measuring all qubits with outcome 10:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Compute probabilities for selected outcomes (e.g., outcomes corresponding to indices 0 and 3)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">desired_result</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probabilities for measuring all qubits with outcomes 00 and 11:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Retrieve both the probability and the post-measurement state.</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">post_state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Post-measurement state:&quot;</span><span class="p">,</span> <span class="n">post_state</span><span class="p">)</span>
+
+<span class="c1"># Batched measurement on multiple states.</span>
+<span class="n">state_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state_batch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probabilities for measuring two states:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Probabilities</span> <span class="k">for</span> <span class="n">measuring</span> <span class="nb">all</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.1273</span><span class="p">,</span> <span class="mf">0.0956</span><span class="p">,</span> <span class="mf">0.3312</span><span class="p">,</span> <span class="mf">0.4459</span><span class="p">])</span>
+<span class="n">Probabilities</span> <span class="k">for</span> <span class="n">measuring</span> <span class="n">the</span> <span class="n">first</span> <span class="n">qubit</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.2229</span><span class="p">,</span> <span class="mf">0.7771</span><span class="p">])</span>
+<span class="n">Probability</span> <span class="k">for</span> <span class="n">measuring</span> <span class="nb">all</span> <span class="n">qubits</span> <span class="k">with</span> <span class="n">outcome</span> <span class="mi">10</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.3312</span><span class="p">])</span>
+<span class="n">Probabilities</span> <span class="k">for</span> <span class="n">measuring</span> <span class="nb">all</span> <span class="n">qubits</span> <span class="k">with</span> <span class="n">outcomes</span> <span class="mi">00</span> <span class="ow">and</span> <span class="mi">11</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.1273</span><span class="p">,</span> <span class="mf">0.4459</span><span class="p">])</span>
+<span class="n">Post</span><span class="o">-</span><span class="n">measurement</span> <span class="n">state</span><span class="p">:</span>
+<span class="o">-----------------------------------------------------</span>
+<span class="n">Backend</span><span class="p">:</span> <span class="n">state_vector</span>
+<span class="n">System</span> <span class="n">dimension</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">System</span> <span class="n">sequence</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">Batch</span> <span class="n">size</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+
+<span class="c1"># 0:</span>
+<span class="p">[</span><span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 1:</span>
+<span class="p">[</span><span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 2:</span>
+<span class="p">[</span><span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="c1"># 3:</span>
+<span class="p">[</span><span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span> <span class="mf">1.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span><span class="p">]</span>
+<span class="o">-----------------------------------------------------</span>
+
+<span class="n">Probabilities</span> <span class="k">for</span> <span class="n">measuring</span> <span class="n">two</span> <span class="n">states</span><span class="p">:</span>
+<span class="n">tensor</span><span class="p">([[</span><span class="mf">0.2846</span><span class="p">,</span> <span class="mf">0.1826</span><span class="p">,</span> <span class="mf">0.2665</span><span class="p">,</span> <span class="mf">0.2663</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.1513</span><span class="p">,</span> <span class="mf">0.4921</span><span class="p">,</span> <span class="mf">0.1676</span><span class="p">,</span> <span class="mf">0.1891</span><span class="p">]])</span>
+</code></pre></div>
+</div>
+<dl class="py method objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.loss.measure.Measure.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.Measure.forward.state" title="quairkit.loss.measure.Measure.forward.state (Python parameter) — The quantum state to be measured."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.Measure.forward.system_idx" title="quairkit.loss.measure.Measure.forward.system_idx (Python parameter) — The index of the systems to be measured."><span class="n"><span class="pre">system_idx</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;full&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.Measure.forward.shots" title="quairkit.loss.measure.Measure.forward.shots (Python parameter) — The number of shots for the measurement."><span class="n"><span class="pre">shots</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.Measure.forward.desired_result" title="quairkit.loss.measure.Measure.forward.desired_result (Python parameter) — Specify the results of the measurement to return."><span class="n"><span class="pre">desired_result</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.Measure.forward.keep_state" title="quairkit.loss.measure.Measure.forward.keep_state (Python parameter) — Whether return the measured state."><span class="n"><span class="pre">keep_state</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the probability of measurement to the input state.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.loss.measure.Measure.forward-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.loss.measure.Measure.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit.">StateSimulator</a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices.">StateOperator</a></span></span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The quantum state to be measured.</p>
+</dd>
+<dt id="quairkit.loss.measure.Measure.forward.system_idx"><span class="sig-name descname">system_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[int] | int | str | None</span></span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward.system_idx" title="Permalink to this definition">¶</a></dt><dd><p>The index of the systems to be measured. Defaults to <code class="docutils literal notranslate"><span class="pre">'full'</span></code> which means measure all the qubits.</p>
+</dd>
+<dt id="quairkit.loss.measure.Measure.forward.shots"><span class="sig-name descname">shots</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward.shots" title="Permalink to this definition">¶</a></dt><dd><p>The number of shots for the measurement. Defaults to None which means the default behavior.</p>
+</dd>
+<dt id="quairkit.loss.measure.Measure.forward.desired_result"><span class="sig-name descname">desired_result</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int | str] | int | str | None</span></span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward.desired_result" title="Permalink to this definition">¶</a></dt><dd><p>Specify the results of the measurement to return. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> which means return the probability of all the results.</p>
+</dd>
+<dt id="quairkit.loss.measure.Measure.forward.keep_state"><span class="sig-name descname">keep_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward.keep_state" title="Permalink to this definition">¶</a></dt><dd><p>Whether return the measured state. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.loss.measure.Measure.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The probability of the measurement.</p>
+</dd>
+<dt class="field-odd" id="quairkit.loss.measure.Measure.forward-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.Measure.forward-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Tensor</em> | <em>Tuple</em>[<em>Tensor</em>, <a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a>] | <em>Tuple</em>[<em>Dict</em>, <a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit."><em>StateSimulator</em></a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices."><em>StateOperator</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.loss.measure.ExpecVal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quairkit.loss.measure.</span></span><span class="sig-name descname"><span class="pre">ExpecVal</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.ExpecVal.__init__.hamiltonian" title="quairkit.loss.measure.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable."><span class="n"><span class="pre">hamiltonian</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal" title="Link to this definition">¶</a></dt>
+<dd><p>The class of the loss function to compute the expectation value for the observable.</p>
+<p>This interface can make you using the expectation value for the observable as the loss function.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.loss.measure.ExpecVal-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.loss.measure.ExpecVal.__init__.hamiltonian"><span class="sig-name descname">hamiltonian</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.hamiltonian.html#quairkit.core.hamiltonian.Hamiltonian" title="quairkit.core.hamiltonian.Hamiltonian (Python class) — Hamiltonian class in QuAIRKit.">Hamiltonian</a></span></span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.__init__.hamiltonian" title="Permalink to this definition">¶</a></dt><dd><p>The input observable.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_hamiltonian_generator</span><span class="p">,</span> <span class="n">random_state</span>
+
+<span class="n">observable</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The input observable is:</span><span class="se">\n</span><span class="si">{</span><span class="n">observable</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">expec_val</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">observable</span><span class="p">)</span>
+
+<span class="n">input_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The expectation value of the observable:&#39;</span><span class="p">,</span><span class="n">expec_val</span><span class="p">(</span><span class="n">input_state</span><span class="p">,</span> <span class="n">decompose</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="n">input_state_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The expectation value of the observable:&#39;</span><span class="p">,</span><span class="n">expec_val</span><span class="p">(</span><span class="n">input_state_batch</span><span class="p">,</span> <span class="n">decompose</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="nb">input</span> <span class="n">observable</span> <span class="ow">is</span><span class="p">:</span>
+<span class="o">-</span><span class="mf">0.28233465254251144</span> <span class="n">Z0</span>
+<span class="mf">0.12440505341821817</span> <span class="n">X0</span>
+<span class="o">-</span><span class="mf">0.2854054036807161</span> <span class="n">Y0</span>
+<span class="n">The</span> <span class="n">expectation</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1162</span><span class="p">,</span>  <span class="mf">0.0768</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0081</span><span class="p">])</span>
+<span class="n">The</span> <span class="n">expectation</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.1748</span><span class="p">,</span> <span class="mf">0.0198</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<dl class="py method objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.loss.measure.ExpecVal.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.ExpecVal.forward.state" title="quairkit.loss.measure.ExpecVal.forward.state (Python parameter) — The input state which will be used to compute the expectation value."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.ExpecVal.forward.shots" title="quairkit.loss.measure.ExpecVal.forward.shots (Python parameter) — The number of shots to measure the observable."><span class="n"><span class="pre">shots</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.measure.ExpecVal.forward.decompose" title="quairkit.loss.measure.ExpecVal.forward.decompose (Python parameter) — Defaults to False."><span class="n"><span class="pre">decompose</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the expectation value of the observable with respect to the input state.</p>
+<p>The value computed by this function can be used as a loss function to optimize.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.loss.measure.ExpecVal.forward-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.loss.measure.ExpecVal.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.state.backend.simulator.html#quairkit.core.state.backend.simulator.StateSimulator" title="quairkit.core.state.backend.simulator.StateSimulator (Python class) — The abstract base class for simulating quantum states in QuAIRKit.">StateSimulator</a> | <a class="reference internal" href="quairkit.core.state.backend.operator.html#quairkit.core.state.backend.operator.StateOperator" title="quairkit.core.state.backend.operator.StateOperator (Python class) — The abstract base class for operating quantum state in QuAIRKit, via emulators or quantum devices.">StateOperator</a></span></span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input state which will be used to compute the expectation value.</p>
+</dd>
+<dt id="quairkit.loss.measure.ExpecVal.forward.shots"><span class="sig-name descname">shots</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward.shots" title="Permalink to this definition">¶</a></dt><dd><p>The number of shots to measure the observable. Defaults to None, which means the default behavior.</p>
+</dd>
+<dt id="quairkit.loss.measure.ExpecVal.forward.decompose"><span class="sig-name descname">decompose</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward.decompose" title="Permalink to this definition">¶</a></dt><dd><p>Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.  If decompose is <code class="docutils literal notranslate"><span class="pre">True</span></code>, it will return the expectation value of each term.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.loss.measure.ExpecVal.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – The backend is wrong or not supported.</p>
+</dd>
+<dt class="field-odd" id="quairkit.loss.measure.ExpecVal.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p>The expectation value or the list of expectation values for each term in the observable.</p>
+</dd>
+<dt class="field-even" id="quairkit.loss.measure.ExpecVal.forward-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.measure.ExpecVal.forward-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><em>Tensor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
+</html>

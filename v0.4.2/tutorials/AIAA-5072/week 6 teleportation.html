@@ -1,0 +1,1275 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="week%205%20superdense-coding.html">
+      
+      
+        <link rel="next" href="week%207%20qaa.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Quantum state teleportation - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quantum state teleportation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.AIAA-5072.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%201%20qubit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb (reference label)"><span>Brief Introduction to Quantum Computing</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%202%20quasi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 2 quasi.ipynb (reference label)"><span>Quantum error mitigation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%203%20vqe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 3 vqe.ipynb (reference label)"><span>Variational quantum eigensolver</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%204%20entanglement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 4 entanglement.ipynb (reference label)"><span>Entanglement</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%205%20superdense-coding.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb (reference label)"><span>Superdense coding</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb (reference label)"><span>Quantum state teleportation</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb (reference label)"><span>Quantum state teleportation</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Background" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#background (reference label)"><span>Background</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Motivation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#motivation (reference label)"><span>Motivation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Single-Qubit-Teleportation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#single-qubit-teleportation (reference label)"><span>Single Qubit Teleportation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single Qubit Teleportation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Mathematical-Proof-of-Teleportation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#mathematical-proof-of-teleportation (reference label)"><span>Mathematical Proof of Teleportation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#QuAIRKit-Implementation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#quairkit-implementation (reference label)"><span>Qu<wbr>AIRKit Implementation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Summary" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#summary (reference label)"><span>Summary</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%207%20qaa.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb (reference label)"><span>Quantum state amplitude amplification</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%208%20qpe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 8 qpe.ipynb (reference label)"><span>Quantum phase estimation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%209%20hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb (reference label)"><span>Hamiltonian simulation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Introduction" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#introduction (reference label)"><span>Introduction</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Background" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#background (reference label)"><span>Background</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Motivation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#motivation (reference label)"><span>Motivation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Single-Qubit-Teleportation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#single-qubit-teleportation (reference label)"><span>Single Qubit Teleportation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single Qubit Teleportation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Mathematical-Proof-of-Teleportation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#mathematical-proof-of-teleportation (reference label)"><span>Mathematical Proof of Teleportation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#QuAIRKit-Implementation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#quairkit-implementation (reference label)"><span>Qu<wbr>AIRKit Implementation</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Summary" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#summary (reference label)"><span>Summary</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quairkit&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>quairkit
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>pdftotext<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>poppler
+<span class="k">fi</span>
+</code></pre></div>
+</div>
+</div>
+<h1 id="Quantum-state-teleportation">Quantum state teleportation<a class="headerlink" href="#Quantum-state-teleportation" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
+<p>This tutorial introduces <strong>Quantum State Teleportation</strong>, a fundamental protocol in quantum information science. We will cover the theoretical foundations and motivations behind quantum teleportation, examine its mathematical formulation, and implement it using <strong>QuAIRKit</strong>.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Introduction"><span class="std std-ref">Introduction</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Background"><span class="std std-ref">Background</span></a></p></li>
+<li><p><a class="reference internal" href="#Motivation"><span class="std std-ref">Motivation</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Single-Qubit-Teleportation"><span class="std std-ref">Single Qubit Teleportation</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Mathematical-Proof-of-Teleportation"><span class="std std-ref">Mathematical Proof</span></a></p></li>
+<li><p><a class="reference internal" href="#QuAIRKit-Implementation"><span class="std std-ref">QuAIRKit Implementation</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Summary"><span class="std std-ref">Summary</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Introduction">Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
+<h3 id="Background">Background<a class="headerlink" href="#Background" title="Link to this heading">¶</a></h3>
+<p>Quantum state teleportation is a process whereby the quantum information of a particle is transferred from one location (the sender, “Alice”) to another (the receiver, “Bob”), without physically transmitting the particle itself[1]. First proposed by Bennett <em>et al.</em> in 1993[2], this protocol has become a cornerstone of quantum information science. Unlike classical information transfer, quantum teleportation transmits the complete quantum state while the original state is necessarily destroyed in
+the process.</p>
+<p>The quantum teleportation protocol relies on several essential components that work together to transfer quantum states.</p>
+<p>The quantum circuit shown below provides a schematic representation of the quantum teleportation protocol[1].</p>
+<figure style="text-align: center;"><p><img alt="alt text" src="../../_images/teleportation_circuit.png" /></p>
+<figcaption><p>Quantum Teleportation Circuit.</p>
+</figcaption></figure><p>In this circuit, the two upper lines represent Alice’s system, while the bottom line represents Bob’s system. The meters denote measurements, and the double lines represent classical communication channels carrying classical bits (recall that single lines denote qubits).</p>
+<p>First, <strong>entanglement</strong> is established between two quantum systems (for example, qubits) by preparing them in a maximally entangled Bell state, such as</p>
+<div class="math notranslate nohighlight">
+\[|\Phi^+\rangle = \frac{1}{\sqrt{2}} \, (|00\rangle + |11\rangle).\tag{1}\]</div>
+<p>This is one of the four Bell states, with the other three being:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+|\Phi^-\rangle &amp;= \frac{1}{\sqrt{2}} \, (|00\rangle - |11\rangle)\tag{2}\\
+|\Psi^+\rangle &amp;= \frac{1}{\sqrt{2}} \, (|01\rangle + |10\rangle)\tag{3}\\
+|\Psi^-\rangle &amp;= \frac{1}{\sqrt{2}} \, (|01\rangle - |10\rangle)\tag{4}
+\end{align}\end{split}\]</div>
+<p>This shared entangled pair is distributed between Alice and Bob, creating a quantum channel that connects them. Next, Alice takes the unknown quantum state she wants to teleport, namely</p>
+<div class="math notranslate nohighlight">
+\[|\psi\rangle = \alpha|0\rangle + \beta|1\rangle,\tag{5}\]</div>
+<p>and performs a <strong>Bell-state measurement (BSM)</strong> on this state combined with her half of the entangled pair. A BSM is a joint measurement that projects two qubits onto one of the four maximally entangled Bell states defined above. This measurement essentially “compares” the unknown state with Alice’s entangled qubit, encoding their relationship into a two-bit classical result (00, 01, 10, or 11 corresponding to which Bell state was measured). Although the outcome is random, it encodes the precise
+transformation that Bob needs to apply to recover the original state. After the measurement, Alice sends the two classical bits—which represent her measurement result—to Bob via a classical communication channel. Finally, Bob uses these bits to perform a conditional unitary transformation (which might be the identity, a bit-flip <span class="math notranslate nohighlight">\(X\)</span>, a phase-flip <span class="math notranslate nohighlight">\(Z\)</span>, or both <span class="math notranslate nohighlight">\(XZ\)</span>) on his half of the entangled pair. This corrects the state of Bob’s qubit, reconstructing exactly the state
+<span class="math notranslate nohighlight">\(|\psi\rangle\)</span> that Alice intended to send. In summary, the protocol involves:</p>
+<ul class="simple">
+<li><p><strong>Pre-sharing entanglement:</strong> Alice and Bob share a Bell state.</p></li>
+<li><p><strong>Measurement and Communication:</strong> Alice performs a Bell measurement on her unknown qubit <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> and her entangled qubit, then sends the two classical bits (the measurement outcome) to Bob.</p></li>
+<li><p><strong>State Reconstruction:</strong> Bob applies the corresponding unitary operation to his qubit so that it assumes the state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+</ul>
+<h3 id="Motivation">Motivation<a class="headerlink" href="#Motivation" title="Link to this heading">¶</a></h3>
+<p>Quantum teleportation serves as both a cornerstone for practical implementations—such as long-distance quantum communication and distributed quantum computing—and as an indispensable theoretical tool for simplifying and characterizing complex adaptive protocols. By exploiting entanglement and classical communication, teleportation enables the mapping of arbitrary quantum channels into simplified forms, facilitating the analysis of quantum communication protocols.</p>
+<p>Beyond communication, quantum teleportation has become a foundational resource in quantum metrology, channel discrimination, and resource theories of quantum processors. The protocol not only facilitates operational tasks but also provides deep insight into diverse physical phenomena, from quantum catalysis and decoherence to direct wavefunction measurement and macroscopic quantum effects, thereby highlighting its dual role as both a practical protocol and a lens through which the subtleties of
+quantum mechanics can be explored.</p>
+<h2 id="Single-Qubit-Teleportation">Single Qubit Teleportation<a class="headerlink" href="#Single-Qubit-Teleportation" title="Link to this heading">¶</a></h2>
+<h3 id="Mathematical-Proof-of-Teleportation">Mathematical Proof of Teleportation<a class="headerlink" href="#Mathematical-Proof-of-Teleportation" title="Link to this heading">¶</a></h3>
+<p>In this section, we provide a detailed mathematical derivation of the quantum teleportation protocol. We demonstrate step-by-step how an unknown single-qubit state can be transmitted from Alice to Bob using one Bell pair and two classical bits.</p>
+<div class="line-block">
+<div class="line">Our task is to teleport an <strong>unknown</strong> single-qubit state</div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[|\psi\rangle = \alpha\,|0\rangle + \beta\,|1\rangle,\tag{6}\]</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">with <span class="math notranslate nohighlight">\(\alpha,\beta\in\mathbb{C}\)</span> and <span class="math notranslate nohighlight">\(|\alpha|^2 + |\beta|^2 = 1\)</span>.</div>
+</div>
+<ol class="arabic">
+<li><div class="line-block">
+<div class="line"><strong>Initial state</strong></div>
+<div class="line">Alice holds <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> (qubit 0) and one half of a Bell pair; Bob holds the other half (qubit 2). The total three-qubit state is</div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[|\psi_0\rangle
+= |\psi\rangle \,\bigl|\beta_{00}\bigr\rangle
+= \frac{1}{\sqrt 2}\bigl[\alpha\,|0\rangle(|00\rangle+|11\rangle)
++ \beta\,|1\rangle(|00\rangle+|11\rangle)\bigr].\tag{7}\]</div>
+</div></blockquote>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Apply CNOT</strong> (control = qubit 0, target = qubit 1):</div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[|\psi_1\rangle
+= \frac{1}{\sqrt 2}\bigl[\alpha\,|0\rangle(|00\rangle+|11\rangle)
++ \beta\,|1\rangle(|10\rangle+|01\rangle)\bigr].\tag{8}\]</div>
+</div></blockquote>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Apply Hadamard</strong> on qubit 0:</div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[|\psi_2\rangle
+= \frac{1}{2}\Bigl[\alpha\,(|0\rangle+ |1\rangle)(|00\rangle+|11\rangle)
++ \beta\,(|0\rangle- |1\rangle)(|10\rangle+|01\rangle)\Bigr].\tag{9}\]</div>
+</div></blockquote>
+<p>Expand and regroup:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+|\psi_2\rangle = \tfrac12\Bigl[\, &amp;|00\rangle(\alpha|0\rangle+\beta|1\rangle)
++|01\rangle(\alpha|1\rangle+\beta|0\rangle)\\
++&amp;|10\rangle(\alpha|0\rangle-\beta|1\rangle)
++|11\rangle(\alpha|1\rangle-\beta|0\rangle)\Bigr].
+\end{aligned}\end{split}\]</div>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Bell-state measurement</strong></div>
+<div class="line">Alice uses bell bases measures her two qubits, and gets the measurement outcomes (00, 01, 10, 11). Conditional on the outcome <span class="math notranslate nohighlight">\(m_1m_2\)</span>, Bob’s qubit collapses to</div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+00 &amp;\longmapsto\;[\alpha|0\rangle+\beta|1\rangle],\\
+01 &amp;\longmapsto\;[\alpha|1\rangle+\beta|0\rangle] = X\,|\psi\rangle,\\
+10 &amp;\longmapsto\;[\alpha|0\rangle-\beta|1\rangle] = Z\,|\psi\rangle,\\
+11 &amp;\longmapsto\;[\alpha|1\rangle-\beta|0\rangle] = XZ\,|\psi\rangle.
+\end{aligned}\end{split}\]</div>
+</div></blockquote>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Classical communication</strong>: Alice sends <span class="math notranslate nohighlight">\((m_1,m_2)\)</span> to Bob.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>Reconstruction</strong> : Bob applies <span class="math notranslate nohighlight">\(Z^{m_1}X^{m_2}\)</span> to recover</div>
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[Z^{m_1}X^{m_2}\bigl[\dots\bigl] = \alpha|0\rangle+\beta|1\rangle = |\psi\rangle.\tag{10}\]</div>
+</div></blockquote>
+</li>
+</ol>
+<p>This completes the proof that an <em>unknown</em> qubit state can be faithfully transmitted using one Bell pair and two classical bits.</p>
+<h3 id="QuAIRKit-Implementation">QuAIRKit Implementation<a class="headerlink" href="#QuAIRKit-Implementation" title="Link to this heading">¶</a></h3>
+<p>Below is a step-by-step QuAIRKit implementation that mirrors the above mathematical proof.</p>
+<p>We begin by creating a random quantum state and combining it with a Bell state to prepare the input state. In this example, we choose a batch size of 100 for the input states.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psi</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">input_state</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+</div>
+</div>
+<p>Next, we prepare the one-way LOCC controlled gates on Bob’s side: an identity stack combined with X and Z gates.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">M1_locc</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">eye</span><span class="p">(),</span> <span class="n">x</span><span class="p">()])</span>
+<span class="n">M2_locc</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">eye</span><span class="p">(),</span> <span class="n">z</span><span class="p">()])</span>
+</code></pre></div>
+</div>
+</div>
+<p>With the gate stacks ready, we construct the 3‑qubit circuit. We apply CNOT and Hadamard gates at the appropriate positions, then use the <code class="docutils literal notranslate"><span class="pre">locc</span></code> function to associate the stacked gates with measurement results and target qubits.</p>
+<p>The usage of <code class="docutils literal notranslate"><span class="pre">Circuit.locc</span></code> is as follows:</p>
+<ul class="simple">
+<li><p><strong>First argument</strong>: A stack of operators, i.e., a list of quantum operations (such as gates or measurements) that will be applied in sequence on the circuit.</p></li>
+<li><p><strong>Second argument</strong>: Two arrays of integer indices</p>
+<ul>
+<li><p>The first array specifies which qubit positions serve as control qubits.</p></li>
+<li><p>The second array specifies which qubit positions serve as target (or “controlled”) qubits.</p></li>
+</ul>
+</li>
+<li><p><strong>Third argument</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">label=</span></code> gives a name to the measurement.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">latex_name=</span></code> specifies name of the controlled gate.</p></li>
+</ul>
+</li>
+</ul>
+<p>For example, consider a set of measurement operators <span class="math notranslate nohighlight">\(\{\mathcal{M}_x\}\)</span>. Conditioned on the outcome <span class="math notranslate nohighlight">\(x\)</span>, one applies the operator <span class="math notranslate nohighlight">\(\mathcal{N}^{(x)}\)</span>. The overall quantum channel can then be expressed as</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{N} = \sum_x \mathcal{M}_x \otimes \mathcal{N}^{(x)},\tag{11}\]</div>
+<p>where each <span class="math notranslate nohighlight">\(\mathcal{N}^{(x)}\)</span> is a CPTP map acting on the appropriate subsystem, and <span class="math notranslate nohighlight">\(\sum_x \mathcal{M}_x\)</span> is itself a CPTP map on the measured subsystem. In order to implement this in <code class="docutils literal notranslate"><span class="pre">Circuit.locc</span></code>, one stacks all of the operators <span class="math notranslate nohighlight">\(\mathcal{N}^{(x)}\)</span> (in ascending order of <span class="math notranslate nohighlight">\(x\)</span>) as the first argument; uses <code class="docutils literal notranslate"><span class="pre">label=</span></code> to name the measurement <span class="math notranslate nohighlight">\(\mathcal{M}_x\)</span>; and specifies the name <span class="math notranslate nohighlight">\(N^{(x)}\)</span> in <code class="docutils literal notranslate"><span class="pre">latex_name=</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">cnot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">cir</span><span class="o">.</span><span class="n">locc</span><span class="p">(</span><span class="n">M1_locc</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;M_2&#39;</span><span class="p">,</span> <span class="n">latex_name</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">locc</span><span class="p">(</span><span class="n">M2_locc</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;M_1&#39;</span><span class="p">,</span> <span class="n">latex_name</span><span class="o">=</span><span class="s1">&#39;Z&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>We can visualize the circuit as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_6_teleportation_14_0.png" src="../../_images/tutorials_AIAA-5072_week_6_teleportation_14_0.png" />
+</div>
+</div>
+<p>After running the teleportation circuit, there are 4 measurement branches per input state (one for each combination of Alice’s two classical bits), so we have 100 × 4 = 400 output states.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span><span class="o">.</span><span class="n">trace</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+</div>
+</div>
+<p>We then use the <code class="docutils literal notranslate"><span class="pre">expec_state</span></code> attribute to collapse those 400 conditioned states back into a batch of 100 “expected” states.</p>
+<p>Finally, we compare the teleported state with the original state by computing the minimum fidelity across the four possible measurement outcomes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">state_fidelity</span><span class="p">(</span><span class="n">output_state</span><span class="o">.</span><span class="n">expec_state</span><span class="p">(),</span> <span class="n">psi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The average fidelity of the qubit teleportation protocol on all outcomes and 100 random states is:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The average fidelity of the qubit teleportation protocol on all outcomes and 100 random states is: 1.0000000028853822
+</pre></div></div>
+</div>
+<h2 id="Summary">Summary<a class="headerlink" href="#Summary" title="Link to this heading">¶</a></h2>
+<p>This tutorial demonstrated quantum teleportation through mathematical proof and practical implementation. We showed how an unknown quantum state can be transmitted using one Bell pair and two classical bits, with the key insight being that entanglement enables the transfer of quantum information without physically moving the qubit itself. The QuAIRKit implementation validated this protocol by successfully teleporting random quantum states with high fidelity.</p>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Nielsen, Michael A., and Isaac L. Chuang. Quantum computation and quantum information. Cambridge university press, 2010.</p>
+<p>[2] Bennett, Charles H., et al. “Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels.” Physical review letters 70.13 (1993): 1895.</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\ket{\Phi^+}\)</span></p></td>
+<td><p>A maximally entangled Bell state: <span class="math notranslate nohighlight">\(\tfrac1{\sqrt2}(\ket{00} + \ket{11})\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p></td>
+<td><p>The unknown quantum state to be teleported</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\alpha, \beta\)</span></p></td>
+<td><p>Complex amplitudes of the quantum state</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(X, Y, Z\)</span></p></td>
+<td><p>Pauli matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathcal{M}_x\)</span></p></td>
+<td><p>Measurement operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(m_1, m_2\)</span></p></td>
+<td><p>Alice’s measurement outcomes (classical bits)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td><p>Density matrix of a quantum state</p></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>
