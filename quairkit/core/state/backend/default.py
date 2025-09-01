@@ -399,6 +399,7 @@ class MixedState(DefaultSimulator):
         self._system_seq = target_seq
         
     def _index_select(self, new_indices: torch.Tensor) -> None:
+        self.reset_sequence()
         self._data = self._data.index_select(-2, new_indices).index_select(-1, new_indices)
     
     def _evolve(self, unitary: torch.Tensor, sys_idx: List[int], on_batch: bool = True) -> None:
@@ -707,6 +708,7 @@ class PureState(DefaultSimulator):
         self._system_seq = target_seq
         
     def _index_select(self, new_indices: torch.Tensor) -> None:
+        self.reset_sequence()
         self._data = self._data.index_select(dim=-1, index=new_indices)
         
     def _record_unitary(self, unitary: torch.Tensor, sys_idx: List[int]) -> None:
