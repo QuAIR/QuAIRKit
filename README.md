@@ -9,7 +9,7 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
   </a>
   <!-- PyPI -->
   <a href="https://pypi.org/project/quairkit/">
-    <img src="https://img.shields.io/badge/pypi-v0.4.2-orange.svg?style=flat-square&logo=pypi"/>
+    <img src="https://img.shields.io/badge/pypi-v0.4.3-orange.svg?style=flat-square&logo=pypi"/>
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">

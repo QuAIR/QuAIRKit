@@ -183,7 +183,7 @@ from .circuit import Circuit
 from . import application
 
 name = "quairkit"
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 
 
 def print_info() -> None:
