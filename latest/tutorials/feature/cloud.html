@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -682,6 +682,9 @@
 <span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.fontset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;STIXGeneral&#39;</span>
 </code></pre></div>
 </div>
 </div>
@@ -689,39 +692,25 @@
 <p>The example cloud platform for this tutorial is the Tencent quantum cloud. One needs to first install the <a class="reference external" href="https://github.com/tencent-quantum-lab/tensorcircuit">TensorCircuit</a> SDK. Note that TensorCircuit v0.12.0 is not compatible with the newest version of Numpy (v2.2.6), so we need to install an older version of Numpy (less than v2.0.0) to avoid potential issues.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;tensorcircuit[cloud]&quot;</span>
 pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;numpy&lt;2.0.0&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>cirq
 </code></pre></div>
 </div>
 <p>The cloud platform is accessed via a token. Please contact Tencent quantum cloud for more details.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">tensorcircuit</span> <span class="k">as</span> <span class="nn">tc</span>
 
 <span class="kn">from</span> <span class="nn">tensorcircuit.cloud</span> <span class="kn">import</span> <span class="n">apis</span>
-<span class="n">apis</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;ENTER YOUR TOKEN HERE&quot;</span><span class="p">)</span>
+<span class="n">apis</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;SET YOUR TOKEN HERE&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of available backends in quantum cloud:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">apis</span><span class="o">.</span><span class="n">list_devices</span><span class="p">())</span>
 </code></pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[2], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">tensorcircuit</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">as</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">tc</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">tensorcircuit</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">cloud</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> apis
-<span class="ansi-green-intense-fg ansi-bold">      4</span> apis<span style="color: rgb(98,98,98)">.</span>set_token(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">ENTER YOUR TOKEN HERE</span><span style="color: rgb(175,0,0)">&#34;</span>)
-
-<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;tensorcircuit&#39;
-</pre></div></div>
-</div>
 <p>Hardware-like backends in QuAIRKit can be set via an abstract class <code class="docutils literal notranslate"><span class="pre">StateOperator</span></code>. Such class provides a unified interface for quantum hardware and quantum circuit emulations. By implementing an abstract method <code class="docutils literal notranslate"><span class="pre">_execute</span></code> on how to run quantum circuits (via <a class="reference external" href="https://github.com/openqasm/openqasm/tree/OpenQASM2.x">OpenQASM 2.0</a>), one can initialize a backend for quantum circuit execution and gradient back-propagations.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TensorCircuitState</span><span class="p">(</span><span class="n">StateOperator</span><span class="p">):</span>
@@ -757,7 +746,7 @@ Cell <span class="ansi-green-fg">In[2], line 1</span>
 </div>
 <p>This backend can be setup for QuAIRKit as follows:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="n">TensorCircuitState</span><span class="p">)</span>
@@ -769,7 +758,7 @@ Cell <span class="ansi-green-fg">In[2], line 1</span>
 <p>The task of variational quantum eigensolver (VQE) is to find the ground state energy of a given Hamiltonian. Here we show how to run a two-qubit VQE algorithm with backend linked to the Tencent quantum cloud.</p>
 <p>One first setup the circuit.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">2</span>
@@ -789,7 +778,7 @@ Cell <span class="ansi-green-fg">In[2], line 1</span>
 </div>
 <p>For simplicity we consider a simple two-qubit Hamiltonian.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.7043555077309385</span><span class="p">,</span> <span class="s1">&#39;X0,X1&#39;</span><span class="p">],</span>
@@ -811,7 +800,7 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>As for initial states, note that one cannot easily initialize a random state on real quantum hardwares. QuAIRKit provides initialization to computational states.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># input_state = computational_state(num_qubits, index=3) # |3&gt; = |11&gt;</span>
@@ -821,7 +810,7 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>The loss function is defined as the expectation value with respect to the Hamiltonian. The grammar here is as usual in QuAIRKit.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_fcn</span><span class="p">(</span><span class="n">circuit</span><span class="p">:</span> <span class="n">Circuit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
@@ -831,16 +820,16 @@ Ground state energy: -1.5360291004180908
 </div>
 <p>The learning rate is set to 0.1 and the number of iterations is set to 25.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">LR</span><span class="p">,</span> <span class="n">NUM_ITR</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">25</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">LR</span><span class="p">,</span> <span class="n">NUM_ITR</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">5</span>
 </code></pre></div>
 </div>
 </div>
 <p>For the gradient update, the gradient is computed via the generalized parameter-shift rule [1] or finite-difference method, depending on how operators in the circuit are parameterized.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">loss_list</span><span class="p">,</span> <span class="n">time_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -876,17 +865,16 @@ Ground state energy: -1.5360291004180908
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-iter: 00, loss: -0.62908894, lr: 1.00E-01, avg_time: 370.0089s
-iter: 05, loss: -1.19858003, lr: 1.00E-01, avg_time: 367.4510s
-iter: 10, loss: -1.45725131, lr: 1.00E-01, avg_time: 371.2424s
-iter: 15, loss: -1.47504807, lr: 1.00E-01, avg_time: 369.3047s
-iter: 20, loss: -1.48539484, lr: 1.00E-01, avg_time: 369.2584s
-iter: 24, loss: -1.51974654, lr: 1.00E-01, avg_time: 370.2565s
+iter: 0, loss: 0.90886796, lr: 1.00E-01, avg_time: 2864.2311s
+iter: 1, loss: 0.54134756, lr: 1.00E-01, avg_time: 478.4038s
+iter: 2, loss: 0.14775312, lr: 1.00E-01, avg_time: 489.8597s
+iter: 3, loss: -0.29219526, lr: 1.00E-01, avg_time: 479.3605s
+iter: 4, loss: -0.55003899, lr: 1.00E-01, avg_time: 475.9992s
 </pre></div></div>
 </div>
 <p>As shown below, the loss value approaches the ground state energy of the Hamiltonian.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">list_itr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">NUM_ITR</span><span class="p">))</span>
@@ -925,7 +913,7 @@ iter: 24, loss: -1.51974654, lr: 1.00E-01, avg_time: 370.2565s
 </div>
 <hr class="docutils" />
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
@@ -939,13 +927,13 @@ iter: 24, loss: -1.51974654, lr: 1.00E-01, avg_time: 370.2565s
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
-torch: 2.8.0+cpu
+quairkit: 0.4.4
+torch: 2.9.1+cpu
 numpy: 1.26.4
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.8
 ---------SYSTEM---------
-Python version: 3.10.18
+Python version: 3.10.19
 OS: Windows
 OS version: 10.0.26100
 ---------DEVICE---------
@@ -992,7 +980,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1009,13 +997,13 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

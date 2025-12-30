@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -939,7 +939,7 @@
 
 
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
@@ -1197,11 +1197,11 @@ Q^n|\varphi\rangle &amp;= \begin{pmatrix} \cos 2\theta &amp; \sin 2\theta \\ -\s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Number of iterations n: 3
-Initial angle θ: 0.1105
-Initial amplitude sin(θ): 0.1103
-Theoretical probability sin²((2n+1)θ): 0.488338
-Actual probability |&lt;ψ|output&gt;|²: 0.488338
-Absolute difference: 9.44e-16
+Initial angle θ: 0.1870
+Initial amplitude sin(θ): 0.1859
+Theoretical probability sin²((2n+1)θ): 0.932946
+Actual probability |&lt;ψ|output&gt;|²: 0.932946
+Absolute difference: 1.67e-15
 </pre></div></div>
 </div>
 <h2 id="Unstructured-search-problem">Unstructured search problem<a class="headerlink" href="#Unstructured-search-problem" title="Link to this heading">¶</a></h2>
@@ -1231,7 +1231,7 @@ Absolute difference: 9.44e-16
 
 Search space size N = 32
 Number of marked elements m = 3
-Marked element indices: [ 3 27 31]
+Marked element indices: [ 4 19 29]
 </pre></div></div>
 </div>
 <p>As an example, we generate a random function <span class="math notranslate nohighlight">\(f\)</span> and provide the corresponding oracle <span class="math notranslate nohighlight">\(O_f\)</span>, <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>, and <span class="math notranslate nohighlight">\(S\)</span>.</p>
@@ -1340,9 +1340,9 @@ Theoretical optimal number of iterations: 2
 <div class="highlight"><pre>
 
 Measurement probabilities for each basis state (showing only states with probability &gt; 0.01):
-  | 3⟩ = |00011⟩: 0.3333 ✓ (marked state)
-  |27⟩ = |11011⟩: 0.3333 ✓ (marked state)
-  |31⟩ = |11111⟩: 0.3333 ✓ (marked state)
+  | 4⟩ = |00100⟩: 0.3333 ✓ (marked state)
+  |19⟩ = |10011⟩: 0.3333 ✓ (marked state)
+  |29⟩ = |11101⟩: 0.3333 ✓ (marked state)
 
 Total success probability: 0.999779
 Theoretical optimal probability: 0.999779
@@ -1559,9 +1559,9 @@ Q^l U|0^\mu\rangle|\psi\rangle &amp;= Q^l(\sin(\theta)|\psi_g\rangle + \cos(\the
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Expect amplitude = 0.956992
-Actual amplitude = 0.956992
-Absolute difference: 1.11e-15
+Expect amplitude = 0.999634
+Actual amplitude = 0.999634
+Absolute difference: 6.66e-16
 </pre></div></div>
 </div>
 <h2 id="Extension">Extension<a class="headerlink" href="#Extension" title="Link to this heading">¶</a></h2>
@@ -1651,19 +1651,17 @@ it truly “oblivious” in the sense that neither <span class="math notranslate
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -1706,7 +1704,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1723,13 +1721,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

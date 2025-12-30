@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -1326,23 +1326,30 @@ the diagram of a quantum circuit with different kinds of layers:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The unitary matrix of the first layer is
- tensor([[ 0.1259-0.0502j,  0.0332-0.0132j, -0.0735+0.0293j, -0.0193+0.0077j,
-         -0.7657+0.3050j, -0.2017+0.0803j,  0.4467-0.1779j,  0.1176-0.0469j],
-        [ 0.0064+0.0351j, -0.0244-0.1333j, -0.0038-0.0205j,  0.0143+0.0778j,
-         -0.0391-0.2135j,  0.1485+0.8107j,  0.0228+0.1245j, -0.0867-0.4729j],
-        [ 0.0786+0.0087j,  0.0207+0.0023j,  0.1347+0.0149j,  0.0355+0.0039j,
-         -0.4779-0.0528j, -0.1259-0.0139j, -0.8193-0.0904j, -0.2158-0.0238j],
-        [-0.0018-0.0207j,  0.0069+0.0788j, -0.0031-0.0356j,  0.0119+0.1350j,
-          0.0111+0.1261j, -0.0422-0.4789j,  0.0191+0.2162j, -0.0724-0.8210j],
-        [ 0.0391-0.2135j, -0.1485+0.8107j, -0.0228+0.1245j,  0.0867-0.4729j,
-          0.0064-0.0351j, -0.0244+0.1333j, -0.0038+0.0205j,  0.0143-0.0778j],
-        [ 0.7657+0.3050j,  0.2017+0.0803j, -0.4467-0.1779j, -0.1176-0.0469j,
-          0.1259+0.0502j,  0.0332+0.0132j, -0.0735-0.0293j, -0.0193-0.0077j],
-        [-0.0111+0.1261j,  0.0422-0.4789j, -0.0191+0.2162j,  0.0724-0.8210j,
-         -0.0018+0.0207j,  0.0069-0.0788j, -0.0031+0.0356j,  0.0119-0.1350j],
-        [ 0.4779-0.0528j,  0.1259-0.0139j,  0.8193-0.0904j,  0.2158-0.0238j,
-          0.0786-0.0087j,  0.0207-0.0023j,  0.1347-0.0149j,  0.0355-0.0039j]],
-       grad_fn=&lt;ViewBackward0&gt;)
+ tensor([[ 2.9658e-01+0.1661j,  5.9478e-01+0.3330j,  2.5083e-01+0.1404j,
+          5.0302e-01+0.2817j, -2.0546e-02-0.0115j, -4.1205e-02-0.0231j,
+         -1.7377e-02-0.0097j, -3.4848e-02-0.0195j],
+        [-6.7661e-01-0.0829j,  3.3739e-01+0.0414j, -5.7223e-01-0.0701j,
+          2.8534e-01+0.0350j,  4.6873e-02+0.0057j, -2.3373e-02-0.0029j,
+          3.9642e-02+0.0049j, -1.9767e-02-0.0024j],
+        [ 1.1739e-01+0.2624j,  2.3542e-01+0.5263j, -1.3880e-01-0.3103j,
+         -2.7836e-01-0.6223j, -8.1322e-03-0.0182j, -1.6309e-02-0.0365j,
+          9.6157e-03+0.0215j,  1.9284e-02+0.0431j],
+        [-1.8549e-02-0.5762j,  9.2492e-03+0.2873j,  2.1932e-02+0.6813j,
+         -1.0936e-02-0.3397j,  1.2850e-03+0.0399j, -6.4075e-04-0.0199j,
+         -1.5194e-03-0.0472j,  7.5763e-04+0.0235j],
+        [-4.6873e-02+0.0057j,  2.3373e-02-0.0029j, -3.9642e-02+0.0049j,
+          1.9767e-02-0.0024j, -6.7661e-01+0.0829j,  3.3739e-01-0.0414j,
+         -5.7223e-01+0.0701j,  2.8534e-01-0.0350j],
+        [ 2.0546e-02-0.0115j,  4.1205e-02-0.0231j,  1.7377e-02-0.0097j,
+          3.4848e-02-0.0195j,  2.9658e-01-0.1661j,  5.9478e-01-0.3330j,
+          2.5083e-01-0.1404j,  5.0302e-01-0.2817j],
+        [-1.2850e-03+0.0399j,  6.4075e-04-0.0199j,  1.5194e-03-0.0472j,
+         -7.5763e-04+0.0235j, -1.8549e-02+0.5762j,  9.2492e-03-0.2873j,
+          2.1932e-02-0.6813j, -1.0936e-02+0.3397j],
+        [ 8.1322e-03-0.0182j,  1.6309e-02-0.0365j, -9.6157e-03+0.0215j,
+         -1.9284e-02+0.0431j,  1.1739e-01-0.2624j,  2.3542e-01-0.5263j,
+         -1.3880e-01+0.3103j, -2.7836e-01+0.6223j]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div></div>
 </div>
 <p>Note that the order here is from left to right.</p>
@@ -1428,17 +1435,31 @@ the output state for inputting zero state is:
  Backend: default-pure
  System dimension: [2, 2, 2]
  System sequence: [1, 2, 0]
-[ 0.5 -0.15j -0.28+0.08j -0.67-0.2j   0.37+0.11j  0.  +0.j    0.  +0.j
-  0.  +0.j    0.  +0.j  ]
+[0.83-0.45j 0.24-0.13j 0.14-0.07j 0.04-0.02j 0.  +0.j   0.  +0.j
+ 0.  +0.j   0.  +0.j  ]
 -----------------------------------------------------
 
 the output state for inputting state rho is:
 -----------------------------------------------------
- Backend: default-pure
+ Backend: default-mixed
  System dimension: [2, 2, 2]
  System sequence: [1, 2, 0]
-[ 0.23-0.02j  0.06-0.02j  0.02+0.02j -0.64-0.04j -0.2 -0.15j  0.22+0.05j
- -0.34+0.53j  0.08-0.02j]
+[[ 0.11+0.j    0.  -0.06j -0.1 -0.05j -0.04+0.04j  0.01+0.01j  0.  +0.05j
+  -0.01-0.09j -0.03-0.j  ]
+ [ 0.  +0.06j  0.17+0.j    0.04-0.04j  0.1 +0.01j  0.06+0.03j  0.  +0.05j
+   0.11+0.01j -0.  -0.05j]
+ [-0.1 +0.05j  0.04+0.04j  0.16+0.j    0.02-0.08j -0.01-0.01j -0.  -0.01j
+  -0.01+0.05j  0.02-0.j  ]
+ [-0.04-0.04j  0.1 -0.01j  0.02+0.08j  0.14+0.j    0.06-0.j    0.03+0.01j
+   0.05+0.02j -0.  -0.03j]
+ [ 0.01-0.01j  0.06-0.03j -0.01+0.01j  0.06+0.j    0.04+0.j    0.04+0.02j
+   0.01+0.j   -0.01-0.01j]
+ [ 0.  -0.05j  0.  -0.05j -0.  +0.01j  0.03-0.01j  0.04-0.02j  0.11+0.j
+  -0.09+0.05j  0.  +0.02j]
+ [-0.01+0.09j  0.11-0.01j -0.01-0.05j  0.05-0.02j  0.01-0.j   -0.09-0.05j
+   0.24+0.j   -0.  -0.07j]
+ [-0.03+0.j   -0.  +0.05j  0.02+0.j   -0.  +0.03j -0.01+0.01j  0.  -0.02j
+  -0.  +0.07j  0.02-0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1483,20 +1504,20 @@ Circuit(
 the circuit depth is 2
 
 the gate history of the circuit is
- [{&#39;uid&#39;: &#39;6433135e-3035-4d87-88e5-9464fdff1493&#39;, &#39;name&#39;: &#39;ry&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{y}&#39;, &#39;api&#39;: &#39;ry&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[0], [2]], &#39;param&#39;: Parameter containing:
-tensor([[[5.2706]],
+ [{&#39;uid&#39;: &#39;cea88d1e-9e05-4762-9ccb-c1f5f1a1913c&#39;, &#39;name&#39;: &#39;ry&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{y}&#39;, &#39;api&#39;: &#39;ry&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[0], [2]], &#39;param&#39;: Parameter containing:
+tensor([[[0.5530]],
 
-        [[4.4236]]], requires_grad=True), &#39;matrix&#39;: tensor([[[-0.8745+0.j, -0.4850+0.j],
-         [ 0.4850+0.j, -0.8745+0.j]],
+        [[0.3327]]], requires_grad=True), &#39;matrix&#39;: tensor([[[ 0.9620+0.j, -0.2730+0.j],
+         [ 0.2730+0.j,  0.9620+0.j]],
 
-        [[-0.5980+0.j, -0.8015+0.j],
-         [ 0.8015+0.j, -0.5980+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)}, {&#39;uid&#39;: &#39;a2db3eec-08d0-4ab8-a61f-e0104142f7bf&#39;, &#39;name&#39;: &#39;rz&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{z}&#39;, &#39;api&#39;: &#39;rz&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[1], [2]], &#39;param&#39;: tensor([[[0.0119]],
+        [[ 0.9862+0.j, -0.1656+0.j],
+         [ 0.1656+0.j,  0.9862+0.j]]], grad_fn=&lt;SqueezeBackward0&gt;)}, {&#39;uid&#39;: &#39;cdf763a7-d930-465d-a6d3-1af4c52db787&#39;, &#39;name&#39;: &#39;rz&#39;, &#39;type&#39;: &#39;gate&#39;, &#39;tex&#39;: &#39;R_{z}&#39;, &#39;api&#39;: &#39;rz&#39;, &#39;param_sharing&#39;: False, &#39;plot_width&#39;: 0.9, &#39;system_idx&#39;: [[1], [2]], &#39;param&#39;: tensor([[[0.9333]],
 
-        [[0.5829]]]), &#39;matrix&#39;: tensor([[[1.0000-0.0059j, 0.0000+0.0000j],
-         [0.0000+0.0000j, 1.0000+0.0059j]],
+        [[0.0632]]]), &#39;matrix&#39;: tensor([[[0.8931-0.4499j, 0.0000+0.0000j],
+         [0.0000+0.0000j, 0.8931+0.4499j]],
 
-        [[0.9578-0.2873j, 0.0000+0.0000j],
-         [0.0000+0.0000j, 0.9578+0.2873j]]])}]
+        [[0.9995-0.0316j, 0.0000+0.0000j],
+         [0.0000+0.0000j, 0.9995+0.0316j]]])}]
 </pre></div></div>
 </div>
 <p>Additionally, one can update the parameters of parameterized gates (if they exist) using the <code class="docutils literal notranslate"><span class="pre">update_param</span></code> method.</p>
@@ -1516,7 +1537,7 @@ tensor([[[5.2706]],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the trainable parameters of entire circuit are tensor([5.2706, 4.4236])
+the trainable parameters of entire circuit are tensor([0.5530, 0.3327])
 the updated trainable parameters of entire circuit are tensor([1., 1.])
 </pre></div></div>
 </div>
@@ -1578,19 +1599,17 @@ the updated trainable parameters of entire circuit are tensor([1., 1.])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -1633,7 +1652,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1650,13 +1669,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -1301,17 +1301,17 @@ R_{z}(\theta) =
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The matrix form of x-axis rotation gate with parameter 1.32 is
-tensor([[0.7900+0.0000j, 0.0000-0.6131j],
-        [0.0000-0.6131j, 0.7900+0.0000j]])
+The matrix form of x-axis rotation gate with parameter 4.606 is
+tensor([[-0.6685+0.0000j,  0.0000-0.7437j],
+        [ 0.0000-0.7437j, -0.6685+0.0000j]])
 
-The matrix form of y-axis rotation gate with parameter 1.32 is
-tensor([[ 0.7900+0.j, -0.6131+0.j],
-        [ 0.6131+0.j,  0.7900+0.j]])
+The matrix form of y-axis rotation gate with parameter 4.606 is
+tensor([[-0.6685+0.j, -0.7437+0.j],
+        [ 0.7437+0.j, -0.6685+0.j]])
 
-The matrix form of z-axis rotation gate with parameter 1.32 is
-tensor([[0.7900-0.6131j, 0.0000+0.0000j],
-        [0.0000+0.0000j, 0.7900+0.6131j]])
+The matrix form of z-axis rotation gate with parameter 4.606 is
+tensor([[-0.6685-0.7437j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j, -0.6685+0.7437j]])
 </pre></div></div>
 </div>
 <h3 id="Two-qubit-gates">Two-qubit gates<a class="headerlink" href="#Two-qubit-gates" title="Link to this heading">¶</a></h3>
@@ -1414,12 +1414,12 @@ The matrix form of swap gate is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 pure output state after applying a unitary:
- tensor([[-0.7103+0.6502j],
-        [-0.1676+0.2111j]])
+ tensor([[ 0.4068-0.1042j],
+        [-0.7043+0.5723j]])
 
 mixed output state after applying a unitary:
- tensor([[0.6511-1.3878e-17j, 0.2525+2.8543e-01j],
-        [0.2525-2.8543e-01j, 0.3489-1.3878e-17j]])
+ tensor([[ 0.6346+7.6328e-17j, -0.1124+3.0529e-01j],
+        [-0.1124-3.0529e-01j,  0.3654-3.4694e-18j]])
 </pre></div></div>
 </div>
 <p>The position of the qubit on which the quantum gate acts can be specified through <code class="docutils literal notranslate"><span class="pre">sys_idx</span></code>. The dimension of a quantum gate can be smaller than the dimension of the quantum state.</p>
@@ -1441,14 +1441,14 @@ mixed output state after applying a unitary:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a unitary on the first qubit:
- tensor([[ 0.3150-2.7756e-17j, -0.2565-3.7983e-02j, -0.3015-7.1969e-02j,
-         -0.1116-8.7163e-02j],
-        [-0.2565+3.7983e-02j,  0.2521+0.0000e+00j,  0.2380+5.2877e-02j,
-          0.1233+2.9217e-02j],
-        [-0.3015+7.1969e-02j,  0.2380-5.2877e-02j,  0.3361-1.3878e-17j,
-          0.0951+5.2493e-02j],
-        [-0.1116+8.7163e-02j,  0.1233-2.9217e-02j,  0.0951-5.2493e-02j,
-          0.0968+0.0000e+00j]])
+ tensor([[ 5.4110e-02+0.0000j,  1.0668e-02-0.0985j, -1.9786e-01-0.0446j,
+          4.3252e-04-0.0154j],
+        [ 1.0668e-02+0.0985j,  1.8128e-01+0.0000j,  4.2128e-02-0.3688j,
+          2.8034e-02-0.0022j],
+        [-1.9786e-01+0.0446j,  4.2128e-02+0.3688j,  7.6025e-01+0.0000j,
+          1.1075e-02+0.0565j],
+        [ 4.3252e-04+0.0154j,  2.8034e-02+0.0022j,  1.1075e-02-0.0565j,
+          4.3632e-03+0.0000j]])
 </pre></div></div>
 </div>
 <p>The application of a quantum gate on batched states is also supported.</p>
@@ -1487,15 +1487,15 @@ batched states after applying a unitary:
  Batch size: [5]
 
  # 0:
-[ 0.88-0.03j -0.44+0.17j]
+[-0.27-0.8j   0.21-0.49j]
  # 1:
-[0.73+0.17j 0.16+0.64j]
+[-0.73-0.58j  0.32+0.17j]
  # 2:
-[0.2 -0.62j 0.71-0.27j]
+[-0.47+0.67j  0.57+0.11j]
  # 3:
-[-0.09+0.16j -0.85-0.5j ]
+[ 0.8 -0.14j -0.44-0.37j]
  # 4:
-[-0.47+0.76j  0.36+0.27j]
+[ 0.18-0.16j -0.15+0.96j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1536,15 +1536,15 @@ state after applying batched unitaries:
  Batch size: [5]
 
  # 0:
-[ 0.65+0.69j -0.3 -0.08j]
+[-0.4 -0.85j  0.09-0.33j]
  # 1:
-[0.3-0.85j 0.4-0.16j]
+[0.01-0.18j 0.93+0.31j]
  # 2:
-[-0.56-0.18j -0.79+0.14j]
+[0.62+0.36j 0.69+0.01j]
  # 3:
-[ 0.4 +0.15j -0.87-0.27j]
+[-0.75+0.64j  0.16+0.06j]
  # 4:
-[0.51-0.58j 0.25-0.58j]
+[ 0.21+0.74j -0.22-0.61j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1604,10 +1604,10 @@ output state after applying a quantum circuit:
  Backend: default-mixed
  System dimension: [2, 2]
  System sequence: [0, 1]
-[[ 0.42+0.j   -0.  -0.j   -0.14+0.04j -0.03-0.07j]
- [-0.  +0.j    0.27+0.j    0.1 +0.01j -0.07+0.06j]
- [-0.14-0.04j  0.1 -0.01j  0.17+0.j   -0.05+0.13j]
- [-0.03+0.07j -0.07-0.06j -0.05-0.13j  0.15+0.j  ]]
+[[ 0.13+0.j    0.03-0.03j -0.05-0.04j  0.1 -0.01j]
+ [ 0.03+0.03j  0.07+0.j    0.05+0.04j -0.01+0.01j]
+ [-0.05+0.04j  0.05-0.04j  0.56+0.j   -0.06+0.29j]
+ [ 0.1 +0.01j -0.01-0.01j -0.06-0.29j  0.24+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1641,21 +1641,36 @@ output state after applying a quantum circuit:
 output batched states after applying a quantum circuit:
 
 -----------------------------------------------------
- Backend: default-pure
+ Backend: default-mixed
  System dimension: [2, 2]
  System sequence: [0, 1]
  Batch size: [5]
 
  # 0:
-[-0.52-0.48j  0.14+0.2j  -0.32-0.52j  0.13-0.21j]
+[[ 0.21+0.j    0.02+0.15j -0.07-0.02j  0.04+0.07j]
+ [ 0.02-0.15j  0.22+0.j   -0.06-0.11j  0.05-0.19j]
+ [-0.07+0.02j -0.06+0.11j  0.28+0.j    0.23+0.04j]
+ [ 0.04-0.07j  0.05+0.19j  0.23-0.04j  0.29+0.j  ]]
  # 1:
-[-0.48-0.38j  0.51-0.22j  0.13+0.48j -0.26-0.08j]
+[[ 0.17+0.j    0.03+0.06j  0.04-0.16j  0.05-0.17j]
+ [ 0.03-0.06j  0.35+0.j   -0.02+0.05j  0.05+0.09j]
+ [ 0.04+0.16j -0.02-0.05j  0.2 +0.j    0.23-0.01j]
+ [ 0.05+0.17j  0.05-0.09j  0.23+0.01j  0.28+0.j  ]]
  # 2:
-[ 0.19+0.1j   0.16+0.27j -0.73-0.49j -0.15-0.25j]
+[[ 0.25+0.j    0.22+0.05j  0.15+0.08j  0.02-0.01j]
+ [ 0.22-0.05j  0.22+0.j    0.22+0.06j  0.  +0.j  ]
+ [ 0.15-0.08j  0.22-0.06j  0.5 +0.j   -0.05+0.07j]
+ [ 0.02+0.01j  0.  -0.j   -0.05-0.07j  0.03+0.j  ]]
  # 3:
-[0.07+0.35j 0.18-0.1j  0.01-0.02j 0.41-0.81j]
+[[ 0.13+0.j    0.01+0.07j  0.07+0.18j  0.13-0.12j]
+ [ 0.01-0.07j  0.27+0.j    0.11-0.09j  0.04-0.08j]
+ [ 0.07-0.18j  0.11+0.09j  0.32+0.j   -0.1 -0.22j]
+ [ 0.13+0.12j  0.04+0.08j -0.1 +0.22j  0.28+0.j  ]]
  # 4:
-[ 0.15+0.45j -0.12-0.41j  0.47-0.08j -0.09-0.6j ]
+[[ 0.49+0.j    0.21-0.27j  0.09-0.2j   0.03+0.11j]
+ [ 0.21+0.27j  0.28+0.j    0.18-0.05j  0.  +0.09j]
+ [ 0.09+0.2j   0.18+0.05j  0.13+0.j   -0.01+0.07j]
+ [ 0.03-0.11j  0.  -0.09j -0.01-0.07j  0.1 +0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1816,22 +1831,18 @@ such that for all <span class="math notranslate nohighlight">\(\rho_{A} \in \mat
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Kraus representation of a quantum channel:
- tensor([[[ 0.2475+0.8749j,  0.3697+0.1917j],
-         [-0.1367+0.3933j, -0.4218-0.8054j]]])
+ tensor([[[ 0.0135-0.2590j, -0.9470+0.1895j],
+         [ 0.1875-0.9474j,  0.2590-0.0141j]]])
 
 Choi representation of the same quantum channel:
- tensor([[ 0.8266+9.6013e-19j,  0.3103-2.1690e-01j,  0.2592+2.7597e-01j,
-         -0.8090-1.6966e-01j],
-        [ 0.3103+2.1690e-01j,  0.1734-1.6254e-18j,  0.0249+1.7160e-01j,
-         -0.2592-2.7597e-01j],
-        [ 0.2592-2.7597e-01j,  0.0249-1.7160e-01j,  0.1734+1.6008e-18j,
-         -0.3103+2.1690e-01j],
-        [-0.8090+1.6966e-01j, -0.2592+2.7597e-01j, -0.3103-2.1690e-01j,
-          0.8266+1.0816e-17j]])
+ tensor([[ 0.0673+0.0000j,  0.2479-0.0357j, -0.0619+0.2427j,  0.0071-0.0669j],
+        [ 0.2479+0.0357j,  0.9327+0.0000j, -0.3571+0.8617j,  0.0619-0.2427j],
+        [-0.0619-0.2427j, -0.3571-0.8617j,  0.9327+0.0000j, -0.2479+0.0357j],
+        [ 0.0071+0.0669j,  0.0619+0.2427j, -0.2479-0.0357j,  0.0673+0.0000j]])
 
 Stinespring representation of the same quantum channel:
- tensor([[ 0.2475+0.8749j,  0.3697+0.1917j],
-        [-0.1367+0.3933j, -0.4218-0.8054j]])
+ tensor([[ 0.0135-0.2590j, -0.9470+0.1895j],
+        [ 0.1875-0.9474j,  0.2590-0.0141j]])
 
 </pre></div></div>
 </div>
@@ -2136,12 +2147,12 @@ Stinespring representation of a amplitude damping channel with parameter 0.5:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a quantum channel in Kraus representation:
- tensor([[ 0.8540-1.3878e-17j, -0.0955-1.7482e-01j],
-        [-0.0955+1.7482e-01j,  0.1460-6.9389e-18j]])
+ tensor([[ 0.7814-8.6736e-18j, -0.0396+3.7603e-02j],
+        [-0.0396-3.7603e-02j,  0.2186+6.5052e-18j]])
 
 state after applying a quantum channel in Choi representation:
- tensor([[ 0.8540+2.7756e-17j, -0.0955-1.7482e-01j],
-        [-0.0955+1.7482e-01j,  0.1460+2.0817e-17j]])
+ tensor([[ 0.7814+0.0000j, -0.0396+0.0376j],
+        [-0.0396-0.0376j,  0.2186+0.0000j]])
 </pre></div></div>
 </div>
 <p>The position of the qubit on which the quantum channel acts can be specified through <code class="docutils literal notranslate"><span class="pre">sys_idx</span></code>.</p>
@@ -2163,14 +2174,14 @@ state after applying a quantum channel in Choi representation:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a quantum channel on the first qubit:
- tensor([[ 0.2912-6.9389e-18j, -0.0043+3.9522e-02j, -0.0466+5.8629e-02j,
-          0.1129-1.1637e-02j],
-        [-0.0043-3.9522e-02j,  0.1493+1.0842e-19j, -0.0301-5.2052e-02j,
-         -0.0371-2.1358e-02j],
-        [-0.0466-5.8629e-02j, -0.0301+5.2052e-02j,  0.3098+1.5179e-17j,
-         -0.0215+1.3664e-02j],
-        [ 0.1129+1.1637e-02j, -0.0371+2.1358e-02j, -0.0215-1.3664e-02j,
-          0.2497-4.7705e-18j]])
+ tensor([[ 0.3027-4.1633e-17j,  0.1231-3.3574e-02j, -0.1929-3.4692e-01j,
+         -0.0561+1.8455e-01j],
+        [ 0.1231+3.3574e-02j,  0.0538-3.4694e-18j, -0.0400-1.6254e-01j,
+         -0.0433+6.8861e-02j],
+        [-0.1929+3.4692e-01j, -0.0400+1.6254e-01j,  0.5206+6.9389e-18j,
+         -0.1758-1.8189e-01j],
+        [-0.0561-1.8455e-01j, -0.0433-6.8861e-02j, -0.1758+1.8189e-01j,
+          0.1229+1.0408e-17j]])
 </pre></div></div>
 </div>
 <p>For batched states, the application of a quantum channel is also supported.</p>
@@ -2209,15 +2220,15 @@ batched states after applying a quantum channel:
  Batch size: [5]
 
  # 0:
-[ 0.65+0.69j -0.3 -0.08j]
+[-0.4 -0.85j  0.09-0.33j]
  # 1:
-[0.3-0.85j 0.4-0.16j]
+[0.01-0.18j 0.93+0.31j]
  # 2:
-[-0.56-0.18j -0.79+0.14j]
+[0.62+0.36j 0.69+0.01j]
  # 3:
-[ 0.4 +0.15j -0.87-0.27j]
+[-0.75+0.64j  0.16+0.06j]
  # 4:
-[0.51-0.58j 0.25-0.58j]
+[ 0.21+0.74j -0.22-0.61j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -2324,19 +2335,17 @@ batched states after applying a quantum channel:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -2379,7 +2388,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -2396,13 +2405,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

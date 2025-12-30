@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -789,12 +789,12 @@ related to quantum information theory, this module includes partial trace, quant
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Matrix A is:
-tensor([[-0.6617+0.4886j, -0.0569-0.5658j],
-        [-0.5167+0.2377j, -0.0859+0.8180j]])
+tensor([[ 0.5922+0.1412j,  0.5974-0.5220j],
+        [-0.3276+0.7225j, -0.3059-0.5264j]])
 
 Matrix B is:
-tensor([[-0.0826+0.8141j, -0.2365+0.5239j],
-        [-0.5741-0.0286j,  0.7621+0.2979j]])
+tensor([[-0.3875+0.7183j, -0.3942-0.4225j],
+        [ 0.2434+0.5241j,  0.8113-0.0891j]])
 </pre></div></div>
 </div>
 <p>Users can use functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to implement specific operations on these two matrices.</p>
@@ -827,28 +827,24 @@ tensor([[-0.0826+0.8141j, -0.2365+0.5239j],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The trace of matrix A is (-0.7476029706454768+1.3066321644723216j)
+The trace of matrix A is (0.2863027184977963-0.38519697105362916j)
 The direct sum of matrix A and B is:
-tensor([[-0.6617+0.4886j, -0.0569-0.5658j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [-0.5167+0.2377j, -0.0859+0.8180j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.0826+0.8141j, -0.2365+0.5239j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.5741-0.0286j,  0.7621+0.2979j]])
+tensor([[ 0.5922+0.1412j,  0.5974-0.5220j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [-0.3276+0.7225j, -0.3059-0.5264j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.3875+0.7183j, -0.3942-0.4225j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.2434+0.5241j,  0.8113-0.0891j]])
 
 The tensor product of matrix A and B is:
-tensor([[-0.3431-5.7905e-01j, -0.0995-4.6222e-01j,  0.4654+3.9582e-04j,
-          0.3099+1.0401e-01j],
-        [ 0.3938-2.6160e-01j, -0.6499+1.7523e-01j,  0.0165+3.2647e-01j,
-          0.1252-4.4821e-01j],
-        [-0.1508-4.4024e-01j, -0.0023-3.2688e-01j, -0.6589-1.3747e-01j,
-         -0.4083-2.3846e-01j],
-        [ 0.3034-1.2170e-01j, -0.4646+2.7223e-02j,  0.0727-4.6718e-01j,
-         -0.3092+5.9787e-01j]])
+tensor([[-0.3309+0.3707j, -0.1738-0.3059j,  0.1434+0.6314j, -0.4560-0.0467j],
+        [ 0.0702+0.3447j,  0.4930+0.0617j,  0.4190+0.1860j,  0.4381-0.4767j],
+        [-0.3921-0.5152j,  0.4344-0.1464j,  0.4966-0.0158j, -0.1018+0.3368j],
+        [-0.4584+0.0042j, -0.2013+0.6154j,  0.2014-0.2885j, -0.2951-0.3998j]])
 
 The conjugate transpose of matrix A is:
-tensor([[-0.6617-0.4886j, -0.5167-0.2377j],
-        [-0.0569+0.5658j, -0.0859-0.8180j]])
+tensor([[ 0.5922-0.1412j, -0.3276-0.7225j],
+        [ 0.5974+0.5220j, -0.3059+0.5264j]])
 
-The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(0.2048), tensor(1.2099), tensor(-1.0350))
+The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(1.7624), tensor(1.8325), tensor(-4.0937))
 </pre></div></div>
 </div>
 <h2 id="Functions-in-quantum-information">Functions in quantum information<a class="headerlink" href="#Functions-in-quantum-information" title="Link to this heading">¶</a></h2>
@@ -879,20 +875,20 @@ The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The first quantum state is:
- tensor([[ 0.0825-1.8464e-19j, -0.0059+8.1267e-02j,  0.1179+4.8123e-02j,
-         -0.2237-5.3209e-02j],
-        [-0.0059-8.1267e-02j,  0.0804+2.9382e-19j,  0.0390-1.1952e-01j,
-         -0.0365+2.2404e-01j],
-        [ 0.1179-4.8123e-02j,  0.0390+1.1952e-01j,  0.1965+4.6562e-19j,
-         -0.3506+5.4411e-02j],
-        [-0.2237+5.3209e-02j, -0.0365-2.2404e-01j, -0.3506-5.4411e-02j,
-          0.6405+3.3658e-18j]])
+ tensor([[ 3.6209e-01+0.0000j, -5.4280e-02+0.0056j, -4.3214e-02-0.1629j,
+          1.8862e-02+0.0362j],
+        [-5.4280e-02-0.0056j,  2.4612e-01+0.0000j, -4.9127e-02+0.0512j,
+          2.9170e-04-0.1432j],
+        [-4.3214e-02+0.1629j, -4.9127e-02-0.0512j,  2.2662e-01+0.0000j,
+          2.8520e-02+0.0613j],
+        [ 1.8862e-02-0.0362j,  2.9170e-04+0.1432j,  2.8520e-02-0.0613j,
+          1.6516e-01+0.0000j]])
 
 The second quantum state is:
- tensor([[ 0.3073-0.1452j],
-        [ 0.2224+0.0360j],
-        [-0.6681+0.5462j],
-        [ 0.1777+0.2398j]])
+ tensor([[-0.1438-0.1321j],
+        [ 0.2214+0.2891j],
+        [-0.3069-0.8106j],
+        [-0.2364+0.1487j]])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -927,18 +923,18 @@ The second quantum state is:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The von Neumann entropy between state 1 is:
-2.562741203051934e-15
+1.523382404731748
 torch.float64
 The trace distance between state 1 and state 2  is:
-0.9183441952050546
+0.6940036781290594
 The state fidelity between state 1 and state 2 is:
-0.3957826994848831
+0.5896874363658731
 The purity of state 1 is:
-0.9999999999999999
+0.3966511236984205
 The relative entropy of state 1 and state 2 is:
-46.973657265325116
+37.03875730211899
 The Schatten 2-norm of state 1 is:
-0.9999999999999998
+0.6298024481521333
 </pre></div></div>
 </div>
 <h2 id="Validation-functions">Validation functions<a class="headerlink" href="#Validation-functions" title="Link to this heading">¶</a></h2>
@@ -969,7 +965,7 @@ The Schatten 2-norm of state 1 is:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The matrix is a positive matrix: False
-The state 1 is a PPT state: False
+The state 1 is a PPT state: True
 The matrix is a unitary matrix: True
 </pre></div></div>
 </div>
@@ -1020,19 +1016,17 @@ State fidelity dtype (State): &lt;class &#39;torch.Tensor&#39;&gt;
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -1075,7 +1069,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1092,13 +1086,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

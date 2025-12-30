@@ -1,0 +1,424 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0f03ee2f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%%bash\n",
+    "if ! python -c \"import quairkit\" 2>/dev/null; then\n",
+    "    pip install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple quairkit \n",
+    "fi\n",
+    "\n",
+    "if ! command -v pdftotext &> /dev/null; then\n",
+    "    conda install -y -c conda-forge poppler\n",
+    "fi"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "91ca55f5",
+   "metadata": {},
+   "source": [
+    "# Quantum state teleportation\n",
+    "\n",
+    "<em style=\"color:gray;\">Copyright (c) 2025 QuAIR team. All Rights Reserved.</em>\n",
+    "\n",
+    "This tutorial introduces **Quantum State Teleportation**, a fundamental protocol in quantum information science. We will cover the theoretical foundations and motivations behind quantum teleportation, examine its mathematical formulation, and implement it using **QuAIRKit**.\n",
+    "\n",
+    "**Table of Contents**\n",
+    "\n",
+    "- [Introduction](#introduction)\n",
+    "  - [Background](#background)  \n",
+    "  - [Motivation](#motivation)  \n",
+    "- [Single Qubit Teleportation](#single-qubit-teleportation)\n",
+    "  - [Mathematical Proof](#mathematical-proof-of-teleportation)\n",
+    "  - [QuAIRKit Implementation](#quairkit-implementation)\n",
+    "- [Summary](#summary)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "987ae779",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import torch\n",
+    "import quairkit as qkit\n",
+    "from quairkit import Circuit\n",
+    "from quairkit.database import *\n",
+    "from quairkit.operator import *\n",
+    "from quairkit.qinfo import *\n",
+    "\n",
+    "qkit.set_dtype('complex128')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d250d5f3",
+   "metadata": {},
+   "source": [
+    "## Introduction\n",
+    "\n",
+    "### Background\n",
+    "\n",
+    "Quantum state teleportation is a process whereby the quantum information of a particle is transferred from one location (the sender, \"Alice\") to another (the receiver, \"Bob\"), without physically transmitting the particle itself[1]. First proposed by Bennett *et al.* in 1993[2], this protocol has become a cornerstone of quantum information science. Unlike classical information transfer, quantum teleportation transmits the complete quantum state while the original state is necessarily destroyed in the process.\n",
+    "\n",
+    "The quantum teleportation protocol relies on several essential components that work together to transfer quantum states.\n",
+    "\n",
+    "The quantum circuit shown below provides a schematic representation of the quantum teleportation protocol[1].\n",
+    "\n",
+    "<figure style=\"text-align: center;\">\n",
+    "  <img src=\"figures/teleportation_circuit.png\" alt=\"alt text\"/>\n",
+    "  <figcaption>Quantum Teleportation Circuit. </figcaption>\n",
+    "</figure>\n",
+    "\n",
+    "In this circuit, the two upper lines represent Alice's system, while the bottom line represents Bob's system. The meters denote measurements, and the double lines represent classical communication channels carrying classical bits (recall that single lines denote qubits)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fc3781a2",
+   "metadata": {},
+   "source": [
+    "First, **entanglement** is established between two quantum systems (for example, qubits) by preparing them in a maximally entangled Bell state, such as\n",
+    "$$\n",
+    "|\\Phi^+\\rangle = \\frac{1}{\\sqrt{2}} \\, (|00\\rangle + |11\\rangle).\\tag{1}\n",
+    "$$\n",
+    "This is one of the four Bell states, with the other three being:\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "|\\Phi^-\\rangle &= \\frac{1}{\\sqrt{2}} \\, (|00\\rangle - |11\\rangle)\\tag{2}\\\\\n",
+    "|\\Psi^+\\rangle &= \\frac{1}{\\sqrt{2}} \\, (|01\\rangle + |10\\rangle)\\tag{3}\\\\\n",
+    "|\\Psi^-\\rangle &= \\frac{1}{\\sqrt{2}} \\, (|01\\rangle - |10\\rangle)\\tag{4}\n",
+    "\\end{align}\n",
+    "$$\n",
+    "This shared entangled pair is distributed between Alice and Bob, creating a quantum channel that connects them. Next, Alice takes the unknown quantum state she wants to teleport, namely\n",
+    "$$\n",
+    "|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle,\\tag{5}\n",
+    "$$\n",
+    "and performs a **Bell-state measurement (BSM)** on this state combined with her half of the entangled pair. A BSM is a joint measurement that projects two qubits onto one of the four maximally entangled Bell states defined above. This measurement essentially \"compares\" the unknown state with Alice's entangled qubit, encoding their relationship into a two-bit classical result (00, 01, 10, or 11 corresponding to which Bell state was measured). Although the outcome is random, it encodes the precise transformation that Bob needs to apply to recover the original state.\n",
+    "After the measurement, Alice sends the two classical bits—which represent her measurement result—to Bob via a classical communication channel. Finally, Bob uses these bits to perform a conditional unitary transformation (which might be the identity, a bit-flip $X$, a phase-flip $Z$, or both $XZ$) on his half of the entangled pair. This corrects the state of Bob's qubit, reconstructing exactly the state $|\\psi\\rangle$ that Alice intended to send.\n",
+    "In summary, the protocol involves:\n",
+    "- **Pre-sharing entanglement:** Alice and Bob share a Bell state.\n",
+    "- **Measurement and Communication:** Alice performs a Bell measurement on her unknown qubit $|\\psi\\rangle$ and her entangled qubit, then sends the two classical bits (the measurement outcome) to Bob.\n",
+    "- **State Reconstruction:** Bob applies the corresponding unitary operation to his qubit so that it assumes the state $|\\psi\\rangle$."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cc62152c",
+   "metadata": {},
+   "source": [
+    "### Motivation\n",
+    "\n",
+    "Quantum teleportation serves as both a cornerstone for practical implementations—such as long-distance quantum communication and distributed quantum computing—and as an indispensable theoretical tool for simplifying and characterizing complex adaptive protocols. By exploiting entanglement and classical communication, teleportation enables the mapping of arbitrary quantum channels into simplified forms, facilitating the analysis of quantum communication protocols.\n",
+    "\n",
+    "Beyond communication, quantum teleportation has become a foundational resource in quantum metrology, channel discrimination, and resource theories of quantum processors. The protocol not only facilitates operational tasks but also provides deep insight into diverse physical phenomena, from quantum catalysis and decoherence to direct wavefunction measurement and macroscopic quantum effects, thereby highlighting its dual role as both a practical protocol and a lens through which the subtleties of quantum mechanics can be explored."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cd32837c",
+   "metadata": {},
+   "source": [
+    "## Single Qubit Teleportation\n",
+    "\n",
+    "### Mathematical Proof of Teleportation\n",
+    "In this section, we provide a detailed mathematical derivation of the quantum teleportation protocol. We demonstrate step-by-step how an unknown single-qubit state can be transmitted from Alice to Bob using one Bell pair and two classical bits. \n",
+    "\n",
+    "Our task is to teleport an **unknown** single-qubit state  \n",
+    "$$\n",
+    "|\\psi\\rangle = \\alpha\\,|0\\rangle + \\beta\\,|1\\rangle,\\tag{6}\n",
+    "$$  \n",
+    "with $\\alpha,\\beta\\in\\mathbb{C}$ and $|\\alpha|^2 + |\\beta|^2 = 1$.\n",
+    "\n",
+    "1. **Initial state**  \n",
+    "   Alice holds $|\\psi\\rangle$ (qubit 0) and one half of a Bell pair; Bob holds the other half (qubit 2). The total three-qubit state is  \n",
+    "   $$\n",
+    "   |\\psi_0\\rangle\n",
+    "   = |\\psi\\rangle \\,\\bigl|\\beta_{00}\\bigr\\rangle\n",
+    "   = \\frac{1}{\\sqrt 2}\\bigl[\\alpha\\,|0\\rangle(|00\\rangle+|11\\rangle)\n",
+    "   + \\beta\\,|1\\rangle(|00\\rangle+|11\\rangle)\\bigr].\\tag{7}\n",
+    "   $$\n",
+    "\n",
+    "\n",
+    "2. **Apply CNOT** (control = qubit 0, target = qubit 1):  \n",
+    "   $$\n",
+    "   |\\psi_1\\rangle\n",
+    "   = \\frac{1}{\\sqrt 2}\\bigl[\\alpha\\,|0\\rangle(|00\\rangle+|11\\rangle)\n",
+    "   + \\beta\\,|1\\rangle(|10\\rangle+|01\\rangle)\\bigr].\\tag{8}\n",
+    "   $$\n",
+    "\n",
+    "3. **Apply Hadamard** on qubit 0:  \n",
+    "   $$\n",
+    "   |\\psi_2\\rangle\n",
+    "   = \\frac{1}{2}\\Bigl[\\alpha\\,(|0\\rangle+ |1\\rangle)(|00\\rangle+|11\\rangle)\n",
+    "   + \\beta\\,(|0\\rangle- |1\\rangle)(|10\\rangle+|01\\rangle)\\Bigr].\\tag{9}\n",
+    "   $$  \n",
+    "\n",
+    "   Expand and regroup:\n",
+    "   $$\n",
+    "   \\begin{aligned}\n",
+    "   |\\psi_2\\rangle = \\tfrac12\\Bigl[\\, &|00\\rangle(\\alpha|0\\rangle+\\beta|1\\rangle)\n",
+    "   +|01\\rangle(\\alpha|1\\rangle+\\beta|0\\rangle)\\\\\n",
+    "   +&|10\\rangle(\\alpha|0\\rangle-\\beta|1\\rangle)\n",
+    "   +|11\\rangle(\\alpha|1\\rangle-\\beta|0\\rangle)\\Bigr].\n",
+    "   \\end{aligned}\n",
+    "   $$\n",
+    "\n",
+    "4. **Bell-state measurement**  \n",
+    "   Alice uses bell bases measures her two qubits, and gets the measurement outcomes (00, 01, 10, 11). Conditional on the outcome $m_1m_2$, Bob's qubit collapses to  \n",
+    "   $$\n",
+    "   \\begin{aligned}\n",
+    "   00 &\\longmapsto\\;[\\alpha|0\\rangle+\\beta|1\\rangle],\\\\\n",
+    "   01 &\\longmapsto\\;[\\alpha|1\\rangle+\\beta|0\\rangle] = X\\,|\\psi\\rangle,\\\\\n",
+    "   10 &\\longmapsto\\;[\\alpha|0\\rangle-\\beta|1\\rangle] = Z\\,|\\psi\\rangle,\\\\\n",
+    "   11 &\\longmapsto\\;[\\alpha|1\\rangle-\\beta|0\\rangle] = XZ\\,|\\psi\\rangle.\n",
+    "   \\end{aligned}\n",
+    "   $$\n",
+    "\n",
+    "5. **Classical communication**: Alice sends $(m_1,m_2)$ to Bob.  \n",
+    "6. **Reconstruction** : Bob applies $Z^{m_1}X^{m_2}$ to recover  \n",
+    "   $$\n",
+    "   Z^{m_1}X^{m_2}\\bigl[\\dots\\bigl] = \\alpha|0\\rangle+\\beta|1\\rangle = |\\psi\\rangle.\\tag{10}\n",
+    "   $$\n",
+    "\n",
+    "This completes the proof that an *unknown* qubit state can be faithfully transmitted using one Bell pair and two classical bits."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7cbed1ae",
+   "metadata": {},
+   "source": [
+    "### QuAIRKit Implementation\n",
+    "\n",
+    "Below is a step-by-step QuAIRKit implementation that mirrors the above mathematical proof.\n",
+    "\n",
+    "We begin by creating a random quantum state and combining it with a Bell state to prepare the input state. In this example, we choose a batch size of 100 for the input states."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "8c61cbd6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "psi = random_state(1, size=100)\n",
+    "input_state = nkron(psi, bell_state(2))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b2323171",
+   "metadata": {},
+   "source": [
+    "Next, we prepare the one-way LOCC controlled gates on Bob's side: an identity stack combined with X and Z gates."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "9860927b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "M1_locc = torch.stack([eye(), x()])\n",
+    "M2_locc = torch.stack([eye(), z()])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "38f004c5",
+   "metadata": {},
+   "source": [
+    "With the gate stacks ready, we construct the 3‑qubit circuit. We apply CNOT and Hadamard gates at the appropriate positions, then use the `locc` function to associate the stacked gates with measurement results and target qubits.\n",
+    "\n",
+    "The usage of `Circuit.locc` is as follows:\n",
+    "\n",
+    "- **First argument**: A stack of operators, i.e., a list of quantum operations (such as gates or measurements) that will be applied in sequence on the circuit.\n",
+    "\n",
+    "- **Second argument**: Two arrays of integer indices  \n",
+    "  - The first array specifies which qubit positions serve as control qubits.  \n",
+    "  - The second array specifies which qubit positions serve as target (or \"controlled\") qubits.\n",
+    "\n",
+    "- **Third argument**:  \n",
+    "  - `label=` gives a name to the measurement.  \n",
+    "  - `latex_name=` specifies name of the controlled gate.\n",
+    "\n",
+    "For example, consider a set of measurement operators $\\{\\mathcal{M}_x\\}$. Conditioned on the outcome $x$, one applies the operator $\\mathcal{N}^{(x)}$. The overall quantum channel can then be expressed as\n",
+    "\n",
+    "$$\n",
+    "\\mathcal{N} = \\sum_x \\mathcal{M}_x \\otimes \\mathcal{N}^{(x)},\\tag{11}\n",
+    "$$\n",
+    "\n",
+    "where each $\\mathcal{N}^{(x)}$ is a CPTP map acting on the appropriate subsystem, and $\\sum_x \\mathcal{M}_x$ is itself a CPTP map on the measured subsystem. In order to implement this in `Circuit.locc`, one stacks all of the operators $\\mathcal{N}^{(x)}$ (in ascending order of $x$) as the first argument; uses `label=` to name the measurement $\\mathcal{M}_x$; and specifies the name $N^{(x)}$ in `latex_name=`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "7833dc7a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cir = Circuit(3)\n",
+    "cir.cnot([0, 1])\n",
+    "cir.h(0)\n",
+    "\n",
+    "cir.locc(M1_locc, [1, 2], label='M_2', latex_name='X')\n",
+    "cir.locc(M2_locc, [0, 2], label='M_1', latex_name='Z')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ac3e9b93",
+   "metadata": {},
+   "source": [
+    "We can visualize the circuit as follows:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "11a81702",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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",
+      "text/plain": [
+       "<IPython.core.display.Image object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "cir.plot()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7c989d7b",
+   "metadata": {},
+   "source": [
+    "After running the teleportation circuit, there are 4 measurement branches per input state (one for each combination of Alice's two classical bits), so we have 100 × 4 = 400 output states."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "af42a61b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "output_state = cir(input_state).trace([0, 1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3ab867c9",
+   "metadata": {},
+   "source": [
+    "We then use the `expec_state` attribute to collapse those 400 conditioned states back into a batch of 100 \"expected\" states.\n",
+    "\n",
+    "Finally, we compare the teleported state with the original state by computing the minimum fidelity across the four possible measurement outcomes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "39ebf08d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The average fidelity of the qubit teleportation protocol on all outcomes and 100 random states is: 1.0000000028853822\n"
+     ]
+    }
+   ],
+   "source": [
+    "result = state_fidelity(output_state.expec_state(), psi)\n",
+    "print(\"The average fidelity of the qubit teleportation protocol on all outcomes and 100 random states is:\", result.mean().item())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e911e538",
+   "metadata": {},
+   "source": [
+    "## Summary\n",
+    "\n",
+    "This tutorial demonstrated quantum teleportation through mathematical proof and practical implementation. We showed how an unknown quantum state can be transmitted using one Bell pair and two classical bits, with the key insight being that entanglement enables the transfer of quantum information without physically moving the qubit itself. The QuAIRKit implementation validated this protocol by successfully teleporting random quantum states with high fidelity."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "728f5a28",
+   "metadata": {},
+   "source": [
+    "---"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1a2eff31",
+   "metadata": {},
+   "source": [
+    "## References\n",
+    "\n",
+    "[1] Nielsen, Michael A., and Isaac L. Chuang. Quantum computation and quantum information. Cambridge university press, 2010.\n",
+    "\n",
+    "[2] Bennett, Charles H., et al. \"Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels.\" Physical review letters 70.13 (1993): 1895."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "55551f45",
+   "metadata": {},
+   "source": [
+    "*Table: A reference of notation conventions in this tutorial.*\n",
+    "\n",
+    "| Symbol                                      | Description                                                                                     |\n",
+    "|:--------------------------------------------:|:---------------------------------------------------------------|\n",
+    "| $\\ket{\\Phi^+}$        | A maximally entangled Bell state: $\\tfrac1{\\sqrt2}(\\ket{00} + \\ket{11})$                       |\n",
+    "| $\\ket{\\psi}$          | The unknown quantum state to be teleported                                                      |\n",
+    "| $\\alpha, \\beta$       | Complex amplitudes of the quantum state                                                         |\n",
+    "| $X, Y, Z$             | Pauli matrices                                                                  |\n",
+    "| $\\mathcal{M}_x$       | Measurement operator                                                            |\n",
+    "| $m_1, m_2$            | Alice's measurement outcomes (classical bits)                                                   |\n",
+    "| $\\rho$                | Density matrix of a quantum state                                                              |"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "api",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.18"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

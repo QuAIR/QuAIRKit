@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -1043,7 +1043,7 @@
 
 
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
@@ -1194,8 +1194,8 @@ Random state with single qubit:
  Backend: default-mixed
  System dimension: [2]
  System sequence: [0]
-[[ 0.31+0.j  -0.23-0.2j]
- [-0.23+0.2j  0.69+0.j ]]
+[[ 0.98+0.j -0.03+0.j]
+ [-0.03-0.j  0.02+0.j]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1328,10 +1328,10 @@ to describe both pure states and mixed states(statistical ensembles).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Random density matrix: tensor([[ 0.1285+0.0000j, -0.0621-0.0081j, -0.0267+0.0540j, -0.0347+0.0125j],
-        [-0.0621+0.0081j,  0.3315+0.0000j,  0.0560+0.1331j, -0.0685+0.0802j],
-        [-0.0267-0.0540j,  0.0560-0.1331j,  0.3177+0.0000j, -0.1186+0.0538j],
-        [-0.0347-0.0125j, -0.0685-0.0802j, -0.1186-0.0538j,  0.2223+0.0000j]])
+Random density matrix: tensor([[ 0.1933+0.0000j,  0.1323-0.1586j,  0.1102-0.2323j, -0.1462-0.1607j],
+        [ 0.1323+0.1586j,  0.2206+0.0000j,  0.2660-0.0686j,  0.0317-0.2299j],
+        [ 0.1102+0.2323j,  0.2660+0.0686j,  0.3420+0.0000j,  0.1098-0.2673j],
+        [-0.1462+0.1607j,  0.0317+0.2299j,  0.1098+0.2673j,  0.2441+0.0000j]])
 </pre></div></div>
 </div>
 <h3 id="Quantum-Evolution">Quantum Evolution<a class="headerlink" href="#Quantum-Evolution" title="Link to this heading">¶</a></h3>
@@ -1452,11 +1452,25 @@ The unitary matrix of the circuit: tensor([[ 0.0000+0.0000j,  0.0000+0.0000j,  0
 <div class="highlight"><pre>
 The output state for input random state is:
 -----------------------------------------------------
- Backend: default-pure
+ Backend: default-mixed
  System dimension: [2, 2, 2]
  System sequence: [1, 0, 2]
-[-0.09+0.2j  -0.04+0.07j  0.16-0.09j  0.51+0.34j -0.05+0.27j  0.02-0.13j
- -0.18-0.03j -0.41+0.49j]
+[[ 0.13+0.j    0.08+0.1j  -0.01-0.04j  0.01-0.02j  0.01-0.06j  0.03-0.j
+  -0.01+0.01j -0.01+0.02j]
+ [ 0.08-0.1j   0.15+0.j   -0.05-0.02j  0.01-0.02j -0.05-0.06j -0.03-0.02j
+  -0.  -0.01j  0.02+0.02j]
+ [-0.01+0.04j -0.05+0.02j  0.09+0.j   -0.04+0.03j  0.04-0.02j -0.01-0.01j
+   0.02+0.02j  0.02-0.01j]
+ [ 0.01+0.02j  0.01+0.02j -0.04-0.03j  0.08+0.j    0.01+0.03j -0.03+0.02j
+  -0.01-0.03j -0.03+0.01j]
+ [ 0.01+0.06j -0.05+0.06j  0.04+0.02j  0.01-0.03j  0.16+0.j    0.02-0.07j
+   0.01+0.08j -0.03+0.08j]
+ [ 0.03+0.j   -0.03+0.02j -0.01+0.01j -0.03-0.02j  0.02+0.07j  0.18+0.j
+  -0.04+0.06j -0.09-0.01j]
+ [-0.01-0.01j -0.  +0.01j  0.02-0.02j -0.01+0.03j  0.01-0.08j -0.04-0.06j
+   0.1 +0.j    0.04+0.05j]
+ [-0.01-0.02j  0.02-0.02j  0.02+0.01j -0.03-0.01j -0.03-0.08j -0.09+0.01j
+   0.04-0.05j  0.12+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1931,15 +1945,15 @@ The collapsed state for each outcome is:
  Batch size: [2]
 
  # 0:
-[[0.35+0.j   0.21-0.01j 0.35+0.j   0.21-0.01j]
- [0.21+0.01j 0.15+0.j   0.21+0.01j 0.15+0.j  ]
- [0.35+0.j   0.21-0.01j 0.35+0.j   0.21-0.01j]
- [0.21+0.01j 0.15+0.j   0.21+0.01j 0.15+0.j  ]]
+[[ 0.32+0.j   -0.12+0.13j  0.32+0.j   -0.12+0.13j]
+ [-0.12-0.13j  0.18+0.j   -0.12-0.13j  0.18+0.j  ]
+ [ 0.32+0.j   -0.12+0.13j  0.32+0.j   -0.12+0.13j]
+ [-0.12-0.13j  0.18+0.j   -0.12-0.13j  0.18+0.j  ]]
  # 1:
-[[ 0.48+0.j   -0.04-0.07j -0.48+0.j    0.04+0.07j]
- [-0.04+0.07j  0.02+0.j    0.04-0.07j -0.02+0.j  ]
- [-0.48+0.j    0.04+0.07j  0.48+0.j   -0.04-0.07j]
- [ 0.04-0.07j -0.02+0.j   -0.04+0.07j  0.02+0.j  ]]
+[[ 0.34+0.j    0.11+0.11j -0.34+0.j   -0.11-0.11j]
+ [ 0.11-0.11j  0.16+0.j   -0.11+0.11j -0.16+0.j  ]
+ [-0.34+0.j   -0.11-0.11j  0.34+0.j    0.11+0.11j]
+ [-0.11+0.11j -0.16+0.j    0.11-0.11j  0.16+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -2048,9 +2062,9 @@ The Pauli decomposition of the Hamiltonian for the Heisenberg model is:
 0.5 Z1, Z2
 ----------------------------------------------------------------------------------------------------
 The Pauli decomposition of the random Hamiltonian is:
- -0.5565087119069443 Z2
--0.3574592594985191 Z0, Z1
--0.3444759632175145 Z0, Y1, Y2
+ 0.45403777068681817 Y0, X1
+-0.270132904940946 X0
+0.9207009676070583 Y1, Z2
 ----------------------------------------------------------------------------------------------------
 Custom Hamiltonian from coefficient list:
  0.1 X0, Z1
@@ -2092,34 +2106,34 @@ Custom Hamiltonian from coefficient list:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The Pauli decomposition of the random Hamiltonian is:
- 0.8961078150613921 X0, Y1, X2
-0.6632186222657794 X0
--0.5799476719289227 Z0, Y1, Y2
+ 0.8501514511256654 Z0, Y1, X2
+0.9491868763526996 X2
+-0.19439967249921986 X0, Z1, X2
 ----------------------------------------------------------------------------------------------------
 random state with three qubit:
 -----------------------------------------------------
  Backend: default-mixed
  System dimension: [2, 2, 2]
  System sequence: [0, 1, 2]
-[[ 0.15+0.j    0.04+0.03j -0.12-0.1j   0.07+0.05j -0.04+0.04j  0.06-0.05j
-   0.1 -0.j   -0.13-0.06j]
- [ 0.04-0.03j  0.07+0.j   -0.08+0.02j  0.04+0.02j -0.03-0.02j -0.  -0.07j
-   0.09-0.04j  0.01+0.06j]
- [-0.12+0.1j  -0.08-0.02j  0.19-0.j   -0.09-0.01j  0.  -0.03j -0.03+0.11j
-  -0.12+0.06j  0.14-0.09j]
- [ 0.07-0.05j  0.04-0.02j -0.09+0.01j  0.06+0.j   -0.02+0.03j -0.01-0.05j
-   0.05-0.07j -0.04+0.01j]
- [-0.04-0.04j -0.03+0.02j  0.  +0.03j -0.02-0.03j  0.06+0.j    0.01+0.01j
-  -0.04+0.02j -0.04+0.07j]
- [ 0.06+0.05j -0.  +0.07j -0.03-0.11j -0.01+0.05j  0.01-0.01j  0.08-0.j
-   0.05+0.09j -0.08-0.02j]
- [ 0.1 +0.j    0.09+0.04j -0.12-0.06j  0.05+0.07j -0.04-0.02j  0.05-0.09j
-   0.14+0.j   -0.04+0.03j]
- [-0.13+0.06j  0.01-0.06j  0.14+0.09j -0.04-0.01j -0.04-0.07j -0.08+0.02j
-  -0.04-0.03j  0.25+0.j  ]]
+[[ 0.07+0.j    0.01+0.04j  0.02+0.06j  0.01+0.01j  0.04-0.07j  0.  -0.03j
+  -0.  -0.01j -0.03-0.01j]
+ [ 0.01-0.04j  0.32+0.j    0.1 -0.03j  0.02-0.04j -0.01-0.13j -0.01-0.07j
+  -0.11-0.01j -0.04+0.03j]
+ [ 0.02-0.06j  0.1 +0.03j  0.1 -0.j    0.03-0.02j -0.04-0.07j -0.03-0.05j
+  -0.04-0.04j -0.01+0.02j]
+ [ 0.01-0.01j  0.02+0.04j  0.03+0.02j  0.06+0.j   -0.  +0.01j -0.02-0.04j
+  -0.02-0.03j -0.06+0.02j]
+ [ 0.04+0.07j -0.01+0.13j -0.04+0.07j -0.  -0.01j  0.15-0.j    0.05+0.j
+   0.01-0.03j -0.01-0.01j]
+ [ 0.  +0.03j -0.01+0.07j -0.03+0.05j -0.02+0.04j  0.05-0.j    0.09-0.j
+   0.05-0.04j  0.01-0.04j]
+ [-0.  +0.01j -0.11+0.01j -0.04+0.04j -0.02+0.03j  0.01+0.03j  0.05+0.04j
+   0.1 +0.j    0.01-0.01j]
+ [-0.03+0.01j -0.04-0.03j -0.01-0.02j -0.06-0.02j -0.01+0.01j  0.01+0.04j
+   0.01+0.01j  0.11+0.j  ]]
 -----------------------------------------------------
 
-Expection value of the Hamiltonian: 0.41734418272972107
+Expection value of the Hamiltonian: 0.11617866158485413
 </pre></div></div>
 </div>
 <p>This tutorial has introduced the core functionalities of QuAIRKit, demonstrating its capabilities for quantum state manipulation, gate operations, measurements, and expectation value estimation—essential tools for quantum algorithm development and simulation.</p>
@@ -2232,19 +2246,17 @@ Expection value of the Hamiltonian: 0.41734418272972107
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -2287,7 +2299,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -2304,13 +2316,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

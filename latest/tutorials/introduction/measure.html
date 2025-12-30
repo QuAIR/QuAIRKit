@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -901,7 +901,7 @@ tensor([[[ 0.5000+0.j,  0.5000+0.j],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of outcome tensor([0.1771, 0.8229])
+The probability distribution of outcome tensor([0.1965, 0.8035])
 </pre></div></div>
 </div>
 <p>Users can get the collapsed state by setting <code class="docutils literal notranslate"><span class="pre">keep_state</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
@@ -927,15 +927,15 @@ The collapsed state for each outcome is
  Batch size: [2]
 
  # 0:
-[[0.17+0.j   0.04-0.18j 0.17+0.j   0.04-0.18j]
- [0.04+0.18j 0.33+0.j   0.04+0.18j 0.33+0.j  ]
- [0.17+0.j   0.04-0.18j 0.17+0.j   0.04-0.18j]
- [0.04+0.18j 0.33+0.j   0.04+0.18j 0.33+0.j  ]]
+[[ 0.23+0.j   -0.17-0.03j  0.23+0.j   -0.17-0.03j]
+ [-0.17+0.03j  0.27+0.j   -0.17+0.03j  0.27+0.j  ]
+ [ 0.23+0.j   -0.17-0.03j  0.23+0.j   -0.17-0.03j]
+ [-0.17+0.03j  0.27+0.j   -0.17+0.03j  0.27+0.j  ]]
  # 1:
-[[ 0.45+0.j   -0.11-0.04j -0.45+0.j    0.11+0.04j]
- [-0.11+0.04j  0.05+0.j    0.11-0.04j -0.05+0.j  ]
- [-0.45+0.j    0.11+0.04j  0.45+0.j   -0.11-0.04j]
- [ 0.11-0.04j -0.05+0.j   -0.11+0.04j  0.05+0.j  ]]
+[[ 0.07+0.j  0.11-0.j -0.07+0.j -0.11+0.j]
+ [ 0.11+0.j  0.43+0.j -0.11-0.j -0.43+0.j]
+ [-0.07+0.j -0.11+0.j  0.07+0.j  0.11-0.j]
+ [-0.11-0.j -0.43+0.j  0.11+0.j  0.43+0.j]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -961,7 +961,7 @@ The collapsed state for each outcome is
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability for obtaining outcome 1 is tensor([0.8229]), with outcome state
+The probability for obtaining outcome 1 is tensor([0.8035]), with outcome state
 -----------------------------------------------------
  Backend: default-mixed
  System dimension: [2, 2]
@@ -969,10 +969,10 @@ The probability for obtaining outcome 1 is tensor([0.8229]), with outcome state
  Batch size: [1]
 
  # 0:
-[[ 0.45+0.j   -0.11-0.04j -0.45+0.j    0.11+0.04j]
- [-0.11+0.04j  0.05+0.j    0.11-0.04j -0.05+0.j  ]
- [-0.45+0.j    0.11+0.04j  0.45+0.j   -0.11-0.04j]
- [ 0.11-0.04j -0.05+0.j   -0.11+0.04j  0.05+0.j  ]]
+[[ 0.07+0.j  0.11-0.j -0.07+0.j -0.11+0.j]
+ [ 0.11+0.j  0.43+0.j -0.11-0.j -0.43+0.j]
+ [-0.07+0.j -0.11+0.j  0.07+0.j  0.11-0.j]
+ [-0.11-0.j -0.43+0.j  0.11+0.j  0.43+0.j]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -995,7 +995,7 @@ The probability for obtaining outcome 1 is tensor([0.8229]), with outcome state
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of outcome tensor([0.0808, 0.9192])
+The probability distribution of outcome tensor([0.6381, 0.3619])
 The collapsed state for each outcome is
 -----------------------------------------------------
  Backend: default-mixed
@@ -1041,8 +1041,8 @@ The collapsed state for each outcome is
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time for measuring with pvm: 0.0009458065s
-Time for measuring with povm: 0.0004417896s
+Time for measuring with pvm: 0.0011847019s
+Time for measuring with povm: 0.0000000000s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1051,9 +1051,9 @@ Time for measuring with povm: 0.0004417896s
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Traceback (most recent call last):
-  File &#34;/tmp/ipykernel_64353/3381646845.py&#34;, line 11, in &lt;module&gt;
+  File &#34;C:\Users\Cloud\AppData\Local\Temp\ipykernel_25024\3381646845.py&#34;, line 11, in &lt;module&gt;
     rho.measure(measure_op=pvm, is_povm=True, keep_state=True)
-  File &#34;/home/leiz/QuAIRKit-Dev/build/__editable__.quairkit-0.4.2-py3-none-any/quairkit/core/state/backend/simulator.py&#34;, line 650, in measure
+  File &#34;C:\Users\Cloud\QuAIRKit-Dev\build\__editable__.quairkit-0.4.4-py3-none-any\quairkit\core\state\backend\simulator.py&#34;, line 758, in measure
     raise ValueError(
 ValueError: `is_povm` and `keep_state` cannot be both True, since a general POVM does not distinguish states.
 </pre></div></div>
@@ -1154,7 +1154,7 @@ The measured states for the first batch is
 [[ 0.5+0.j -0.5+0.j]
  [-0.5+0.j  0.5+0.j]]
 -----------------------------------------------------
- with prob distribution tensor([0.0808, 0.9192])
+ with prob distribution tensor([0.6381, 0.3619])
 </pre></div></div>
 </div>
 <p>or apply <code class="docutils literal notranslate"><span class="pre">Measure</span></code> to a batched state. Note that the batch dimension needs to be matched.</p>
@@ -1181,19 +1181,17 @@ The measured states for the first batch is
 <div class="highlight"><pre>
 The measured states for the first batch is
 -----------------------------------------------------
- Backend: default-mixed
+ Backend: default-pure
  System dimension: [2]
  System sequence: [0]
  Batch size: [2]
 
  # 0:
-[[0.5+0.j 0.5+0.j]
- [0.5+0.j 0.5+0.j]]
+[0.35-0.61j 0.35-0.61j]
  # 1:
-[[ 0.5+0.j -0.5+0.j]
- [-0.5+0.j  0.5+0.j]]
+[-0.25+0.66j  0.25-0.66j]
 -----------------------------------------------------
- with prob distribution tensor([0.5059, 0.4941])
+ with prob distribution tensor([0.0507, 0.9493])
 </pre></div></div>
 </div>
 <h2 id="Sampled-measurements">Sampled measurements<a class="headerlink" href="#Sampled-measurements" title="Link to this heading">¶</a></h2>
@@ -1239,18 +1237,18 @@ The measured states for the first batch is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 3 probability distributions are
- tensor([[0.5059, 0.4941],
-        [0.7718, 0.2282],
-        [0.4586, 0.5414]])
+ tensor([[0.0507, 0.9493],
+        [0.3128, 0.6872],
+        [0.9854, 0.0146]])
 
 The outcomes of quantum measurements:
-{&#39;0&#39;: tensor([514, 807, 463]), &#39;1&#39;: tensor([510, 217, 561])}
+{&#39;0&#39;: tensor([  58,  340, 1009]), &#39;1&#39;: tensor([966, 684,  15])}
 
 The outcomes of quantum measurements with the decimal system of dictionary system:
- {&#39;0&#39;: tensor([534, 787, 443]), &#39;1&#39;: tensor([490, 237, 581])}
+ {&#39;0&#39;: tensor([  63,  323, 1007]), &#39;1&#39;: tensor([961, 701,  17])}
 
 The outcomes of quantum measurements in proportion:
- {&#39;0&#39;: tensor([0.5254, 0.7734, 0.4648]), &#39;1&#39;: tensor([0.4746, 0.2266, 0.5352])}
+ {&#39;0&#39;: tensor([0.0459, 0.3213, 0.9834]), &#39;1&#39;: tensor([0.9541, 0.6787, 0.0166])}
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1302,19 +1300,17 @@ The outcomes of quantum measurements in proportion:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -1357,7 +1353,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1374,13 +1370,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

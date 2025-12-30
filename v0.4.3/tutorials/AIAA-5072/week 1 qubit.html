@@ -1,0 +1,2316 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../tutorials.AIAA-5072.html">
+      
+      
+        <link rel="next" href="week%202%20quasi.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Brief Introduction to Quantum Computing - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Quantum-State" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Brief Introduction to Quantum Computing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.AIAA-5072.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb (reference label)"><span>Brief Introduction to Quantum Computing</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb (reference label)"><span>Brief Introduction to Quantum Computing</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Quantum-State" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-state (reference label)"><span>Quantum State</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum State">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#State-Vector" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#state-vector (reference label)"><span>State Vector</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Density-Matrix" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#density-matrix (reference label)"><span>Density Matrix</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Evolution" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-evolution (reference label)"><span>Quantum Evolution</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-gates (reference label)"><span>Quantum Gates</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum Gates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Pauil-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#pauil-gates (reference label)"><span>Pauil Gates</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Rotation-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#rotation-gates (reference label)"><span>Rotation Gates</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Circuit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-circuit (reference label)"><span>Quantum Circuit</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Channels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-channels (reference label)"><span>Quantum Channels</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Common-Quantum-Channel-Examples" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#common-quantum-channel-examples (reference label)"><span>Common Quantum Channel Examples</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#measurement (reference label)"><span>Measurement</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Projective-Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#projective-measurement (reference label)"><span>Projective Measurement</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Positive-Operator-Valued-Measures" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#positive-operator-valued-measures (reference label)"><span>Positive Operator-<wbr>Valued Measures</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%202%20quasi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 2 quasi.ipynb (reference label)"><span>Quantum error mitigation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%203%20vqe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 3 vqe.ipynb (reference label)"><span>Variational quantum eigensolver</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%204%20entanglement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 4 entanglement.ipynb (reference label)"><span>Entanglement</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%205%20superdense-coding.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 5 superdense-coding.ipynb (reference label)"><span>Superdense coding</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%206%20teleportation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 6 teleportation.ipynb (reference label)"><span>Quantum state teleportation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%207%20qaa.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 7 qaa.ipynb (reference label)"><span>Quantum state amplitude amplification</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%208%20qpe.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 8 qpe.ipynb (reference label)"><span>Quantum phase estimation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="week%209%20hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/aiaa-5072/week 9 hamiltonian.ipynb (reference label)"><span>Hamiltonian simulation</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.research.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Quantum-State" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-state (reference label)"><span>Quantum State</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum State">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#State-Vector" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#state-vector (reference label)"><span>State Vector</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Density-Matrix" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#density-matrix (reference label)"><span>Density Matrix</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Evolution" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-evolution (reference label)"><span>Quantum Evolution</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-gates (reference label)"><span>Quantum Gates</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum Gates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Pauil-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#pauil-gates (reference label)"><span>Pauil Gates</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Rotation-Gates" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#rotation-gates (reference label)"><span>Rotation Gates</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Circuit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-circuit (reference label)"><span>Quantum Circuit</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Quantum-Channels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#quantum-channels (reference label)"><span>Quantum Channels</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Common-Quantum-Channel-Examples" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#common-quantum-channel-examples (reference label)"><span>Common Quantum Channel Examples</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#measurement (reference label)"><span>Measurement</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Projective-Measurement" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#projective-measurement (reference label)"><span>Projective Measurement</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Positive-Operator-Valued-Measures" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#positive-operator-valued-measures (reference label)"><span>Positive Operator-<wbr>Valued Measures</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre><span></span><code>%%bash
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quairkit&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>-i<span class="w"> </span>https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple<span class="w"> </span>quairkit
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>pdftotext<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>conda<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>poppler
+<span class="k">fi</span>
+</code></pre></div>
+</div>
+</div>
+<h1 id="Brief-Introduction-to-Quantum-Computing">Brief Introduction to Quantum Computing<a class="headerlink" href="#Brief-Introduction-to-Quantum-Computing" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2025 QuAIR team. All Rights Reserved.</p>
+<p>Quantum computing represents a revolutionary approach to computation that harnesses the principles of quantum mechanics. Unlike classical bits that exist as either 0 or 1, quantum bits (qubits) can exist in superpositions of states, enabling parallel computation. Furthermore, quantum systems can exhibit entanglement - a uniquely quantum phenomenon where each system cannot be described independently of the others, even when separated by large distances. These properties allow quantum computers to
+solve certain problems exponentially faster than classical computers, with applications in cryptography [2-4], optimization [5-7], chemistry [8-9], and more.</p>
+<p>In this tutorial we introduce the basic usage of QuAIRKit. We will cover fundamental concepts in quantum computing, including quantum state representation, quantum evolution(gates, channels and circuit), measurement, and expectation value estimation.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Quantum-State"><span class="std std-ref">Quantum state</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#State-Vector"><span class="std std-ref">State Vector</span></a></p></li>
+<li><p><a class="reference internal" href="#Density-Matrix"><span class="std std-ref">Density Matrix</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Quantum-Evolution"><span class="std std-ref">Quantum Evolution</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Quantum-Gates"><span class="std std-ref">Quantum Gates</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Pauil-Gates"><span class="std std-ref">Pauli Gates</span></a></p></li>
+<li><p><a class="reference internal" href="#Rotation-Gates"><span class="std std-ref">Rotation Gates</span></a></p></li>
+<li><p>Two Qubits Gates</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Quantum-Circuit"><span class="std std-ref">Quantum Circuit</span></a></p></li>
+<li><p><a class="reference internal" href="#Quantum-Channels"><span class="std std-ref">Quantum Channel</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Measurement"><span class="std std-ref">Measurement</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Projective-Measurement"><span class="std std-ref">Projective Measurement</span></a></p></li>
+<li><p>Positive Operator-Valued Measures</p></li>
+</ul>
+</li>
+<li><p>Expectation</p>
+<ul>
+<li><p>Hamiltonian</p></li>
+<li><p>Expectation Value Estimation</p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">Hamiltonian</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Quantum-State">Quantum State<a class="headerlink" href="#Quantum-State" title="Link to this heading">¶</a></h2>
+<h3 id="State-Vector">State Vector<a class="headerlink" href="#State-Vector" title="Link to this heading">¶</a></h3>
+<p>In classical computing, information is stored in bits that can be either 0 or 1. Quantum computing extends this concept using qubits (quantum bits), which follow the laws of quantum mechanics. Unlike classical bits, qubits can exist in superpositions of states, enabling parallel computation. A single qubit is represented by a <strong>state vector</strong> in a 2D complex vector space. The basis states are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{0}=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix},\;
+\ket{1}=
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}
+.\end{split}\]</div>
+<p>which is known as the <strong>computational basis</strong>. and any quantum state <span class="math notranslate nohighlight">\(\psi\)</span> can be expressed as a linear combination:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{\psi}=\alpha\ket{0}+\beta\ket{1}=
+\begin{bmatrix}
+\alpha\\
+\beta
+\end{bmatrix}
+.\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha,\beta\in \Bbb{C}\)</span> are probability amplitudes satisfying the normalization condition:</p>
+<div class="math notranslate nohighlight">
+\[|\alpha|^2+|\beta|^2=1.\]</div>
+<p>The state can also be parameterized (ignoring global phase) as:</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi}=\cos\frac{\theta}{2}\ket{0}+e^{i\phi}\sin\frac{\theta}{2}\ket{1}.\]</div>
+<p>This maps every pure state to a point on the Bloch sphere as Figure. 1 shows, with:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span>: Polar angle <span class="math notranslate nohighlight">\((0 \leq \theta \leq \pi)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span>: Azimuthal angle <span class="math notranslate nohighlight">\((0 \leq \phi &lt; 2\pi)\)</span></p></li>
+</ul>
+<figure style="text-align: center;"><p><img alt="alt text" src="../../_images/qubit_bloch_sphere.png" /></p>
+<figcaption><p>A example of bloch sphere.</p>
+</figcaption></figure><p>In QuAIRKit, we can construct a single-qubit quantum state using the following code:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># set the number of qubits</span>
+
+<span class="c1"># create a |0&gt;</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zero state with single qubit: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># create a |1&gt;</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">one_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;One state with single qubit: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># create a random state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random state with single qubit: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Zero state with single qubit:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2]
+ System sequence: [0]
+[1.+0.j 0.+0.j]
+-----------------------------------------------------
+
+One state with single qubit:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2]
+ System sequence: [0]
+[0.+0.j 1.+0.j]
+-----------------------------------------------------
+
+Random state with single qubit:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2]
+ System sequence: [0]
+[[ 0.31+0.j  -0.23-0.2j]
+ [-0.23+0.2j  0.69+0.j ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code> is a class in QuAIRKit which provides a unified interface for working with both pure and mixed quantum states. It supports two fundamental representations:</p>
+<ul class="simple">
+<li><p>State vectors (for pure states)</p></li>
+<li><p>Density matrices (for mixed states)</p></li>
+</ul>
+<p>The class handles:</p>
+<ul class="simple">
+<li><p>State initialization and validation</p></li>
+<li><p>System dimension management</p></li>
+<li><p>State representation conversions</p></li>
+<li><p>Common quantum state generation</p></li>
+</ul>
+<p>Check this link for more states you can create: <a class="reference external" href="https://quairkit.com/QuAIRKit/v0.1.0/quairkit.database.state.html#">QuAIRKit.database.state</a>. You can use the functions in this class to construct states like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Create different states</span>
+<span class="c1"># Index=4 corresponds to |1,1⟩ state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">computational_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The computationa state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The Bell state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">ghz_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The GHZ-state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The computationa state is:
+
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 3]
+ System sequence: [0, 1]
+[0.+0.j 0.+0.j 0.+0.j 0.+0.j 1.+0.j 0.+0.j]
+-----------------------------------------------------
+
+The Bell state is:
+
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+-----------------------------------------------------
+
+The GHZ-state is:
+
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 2, 2]
+ System sequence: [0, 1, 2]
+[0.71+0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>Multiple systems can be constructed using tensor product with <code class="docutils literal notranslate"><span class="pre">nkron</span></code> like this</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state_1</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">state_2</span> <span class="o">=</span> <span class="n">one_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="n">product_state</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">state_1</span><span class="p">,</span> <span class="n">state_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Construct a tensor-product state of individual qubits: </span><span class="si">{</span><span class="n">product_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Construct a tensor-product state of individual qubits:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+[0.+0.j 1.+0.j 0.+0.j 0.+0.j]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<h3 id="Density-Matrix">Density Matrix<a class="headerlink" href="#Density-Matrix" title="Link to this heading">¶</a></h3>
+<p>In quantum mechanics, quantum states can be described equivalently in two mathematical forms:</p>
+<ul class="simple">
+<li><p>State Vector Representation: Used for pure states (Dirac notation <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>)</p></li>
+<li><p>Density Matrix Representation: Used for both pure and mixed states (operator <span class="math notranslate nohighlight">\(\rho\)</span>)</p></li>
+</ul>
+<p>A pure state represents a quantum system that is fully characterized by a single state vector, while a mixed state describes a statistical mixture of quantum states, representing classical uncertainty about the system’s preparation. While state vectors work well for describing pure quantum states, quantum systems often exist as statistical mixtures that require a more general representation. This leads us to the density matrix (or density operator) formalism, which provides a unified framework
+to describe both pure states and mixed states(statistical ensembles).</p>
+<p>For a pure state described by state vector <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>, the density matrix is <span class="math notranslate nohighlight">\(\rho=\ket{\psi}\bra{\psi}\)</span>. For a mixed state with probabilities <span class="math notranslate nohighlight">\(\{p_i\}\)</span> and states <span class="math notranslate nohighlight">\(\{ \ket{\psi_i}\}\)</span>, the density matrix is <span class="math notranslate nohighlight">\(\rho=\sum_i p_i\ket{\psi_i}\bra{\psi_i}\)</span> with properties:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\rho=\rho^{\dagger}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{Tr}(\rho)=1\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\langle\psi\vert\rho\vert\psi\rangle\geq 0\)</span> for all <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>.</p></li>
+</ol>
+<p><strong>Example</strong></p>
+<p>Consider a qubit in a mixed state with 50% in <span class="math notranslate nohighlight">\(\ket{0}\)</span> and 50% in <span class="math notranslate nohighlight">\(\ket{1}\)</span>. The density matrix of this mixed state is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\rho=0.5\ket{0}\bra{0}+0.5\ket{1}\bra{1}=
+\begin{pmatrix}
+0.5 &amp; 0\\
+0 &amp; 0.5
+\end{pmatrix}.\end{split}\]</div>
+<p>In QuAIRKit, we can construct density matrix randomly like this with <code class="docutils literal notranslate"><span class="pre">random_density_matrix</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">density_matrix</span> <span class="o">=</span> <span class="n">random_density_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random density matrix: </span><span class="si">{</span><span class="n">density_matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Random density matrix: tensor([[ 0.1285+0.0000j, -0.0621-0.0081j, -0.0267+0.0540j, -0.0347+0.0125j],
+        [-0.0621+0.0081j,  0.3315+0.0000j,  0.0560+0.1331j, -0.0685+0.0802j],
+        [-0.0267-0.0540j,  0.0560-0.1331j,  0.3177+0.0000j, -0.1186+0.0538j],
+        [-0.0347-0.0125j, -0.0685-0.0802j, -0.1186-0.0538j,  0.2223+0.0000j]])
+</pre></div></div>
+</div>
+<h3 id="Quantum-Evolution">Quantum Evolution<a class="headerlink" href="#Quantum-Evolution" title="Link to this heading">¶</a></h3>
+<p>Quantum state evolution describes how a quantum system changes over time under the laws of quantum mechanics. In closed systems (isolated from the environment), this evolution is:</p>
+<ul class="simple">
+<li><p>Unitary: Preserves the norm of the state vector</p></li>
+<li><p>Reversible: The process can theoretically be undone</p></li>
+<li><p>Deterministic: For known Hamiltonians, evolution is perfectly predictable</p></li>
+</ul>
+<p>In closed quantum systems (isolated from the environment), quantum evolution is described by unitary operators that preserve the norm of state vectors. Mathematically:</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi_{final}}=U\ket{\psi_{init}}.\]</div>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> satisfies <span class="math notranslate nohighlight">\(U^{\dagger}U=I\)</span>. These unitary operators are implemented as quantum gates in quantum circuits.</p>
+<h3 id="Quantum-Gates">Quantum Gates<a class="headerlink" href="#Quantum-Gates" title="Link to this heading">¶</a></h3>
+<p>Quantum gates are the fundamental building blocks of quantum circuits, analogous to classical logic gates (e.g., AND, OR). They are unitary operators that act on qubits, preserving the norm of the quantum state. Mathematically, a quantum gate applied to an <span class="math notranslate nohighlight">\(n\)</span>-qubit system is represented by a <span class="math notranslate nohighlight">\(2^n \times 2^n\)</span> unitary matrix <span class="math notranslate nohighlight">\(U\)</span> (i.e., <span class="math notranslate nohighlight">\(U^{\dagger}U=I\)</span>).</p>
+<p>Common quantum gates and their matrix representations are listed below:</p>
+<h4 id="Pauil-Gates">Pauil Gates<a class="headerlink" href="#Pauil-Gates" title="Link to this heading">¶</a></h4>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>gate</p></th>
+<th class="head"><p>matrix</p></th>
+<th class="head"><p>code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>X</p></td>
+<td><p><span class="math notranslate nohighlight">\(\begin{bmatrix}0 &amp; 1\\1 &amp; 0\end{bmatrix}\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Y</p></td>
+<td><p><span class="math notranslate nohighlight">\(\begin{bmatrix}0 &amp; -i\\i &amp; 0\end{bmatrix}\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">y</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Z</p></td>
+<td><p><span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0\\0 &amp; -1\end{bmatrix}\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">z</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="Rotation-Gates">Rotation Gates<a class="headerlink" href="#Rotation-Gates" title="Link to this heading">¶</a></h4>
+<p>Rotation gates implement unitary rotations around Bloch sphere axes by angle <span class="math notranslate nohighlight">\(\theta\)</span>: | gate | matrix | code | |:——:|:——–:|:—–:| | RX |<span class="math notranslate nohighlight">\(\begin{bmatrix}\cos{\frac{\theta}{2}} &amp; -i\sin{\frac{\theta}{2}} \\ -i\sin{\frac{\theta}{2}} &amp; \cos{\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">rx</span></code> | | RY |<span class="math notranslate nohighlight">\(\begin{bmatrix}\cos{\frac{\theta}{2}} &amp; -\sin{\frac{\theta}{2}} \\ \sin{\frac{\theta}{2}} &amp; \cos{\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">ry</span></code> | | RZ
+|<span class="math notranslate nohighlight">\(\begin{bmatrix}e^{-i\frac{\theta}{2}} &amp; 0 \\ 0 &amp; e^{i\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">rz</span></code> | #### Two-Qubit Gates | gate | matrix | code | |:——:|:——–:|:—–:| | CNOT |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\\0 &amp; 0 &amp; 1 &amp; 0\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">cnot</span></code> | | CZ |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 0 &amp; -1\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">cz</span></code>|</p>
+<h3 id="Quantum-Circuit">Quantum Circuit<a class="headerlink" href="#Quantum-Circuit" title="Link to this heading">¶</a></h3>
+<p>Quantum circuits provide the operational framework for quantum computation, translating the abstract principles of unitary evolution into executable sequences of quantum gates.</p>
+<p>A quantum circuit is composed of:</p>
+<ul class="simple">
+<li><p>Qubits, represented by horizontal lines (wires).</p></li>
+<li><p>Quantum Gates, represented by symbols on the wires, which perform unitary operations.</p></li>
+<li><p>Time flows from left to right, defining the order of operations.</p></li>
+</ul>
+<p>By arranging gates in a specific order across qubits, we construct quantum algorithms that exploit superposition and entanglement to solve problems.</p>
+<p>Here is a simple demonstration of a quantum circuit:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># construct a circuit with specifying the number of qubits</span>
+<span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># number of qubits</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+
+<span class="c1"># add operations</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># apply Hadamard gate on qubit 0</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">x</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># apply x gate on qubit 0 and 1</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># apply cnot gate (control=qubit 0, target=qubit 1) - cx([control, target])</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># apply rz gate on qubit 0 with theta=pi/2</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">cz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># apply cz gate(control=qubit 1, target=qubit 0) - cz([control, target])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unitary matrix of the circuit: </span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The unitary matrix of the circuit: tensor([[ 0.0000+0.0000j,  0.0000+0.0000j,  0.5000-0.5000j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000+0.0000j, -0.5000+0.5000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.5000-0.5000j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.5000+0.5000j],
+        [ 0.5000-0.5000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
+         -0.5000+0.5000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.5000-0.5000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0000+0.0000j, -0.5000+0.5000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.5000+0.5000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.5000+0.5000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.5000+0.5000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.5000+0.5000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.5000-0.5000j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000+0.0000j, -0.5000-0.5000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.5000-0.5000j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.5000-0.5000j]])
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_AIAA-5072_week_1_qubit_14_1.png" src="../../_images/tutorials_AIAA-5072_week_1_qubit_14_1.png" />
+</div>
+</div>
+<p>Alternatively, we can apply the evolution to a specified state (e.g., <code class="docutils literal notranslate"><span class="pre">cir(state)</span></code>) by invoking the circuit object with a given state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># apply circuit unitary U to initial state: U|ψ⟩</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The output state for input random state is: </span><span class="si">{</span><span class="n">output_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The output state for input random state is:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2, 2, 2]
+ System sequence: [1, 0, 2]
+[-0.09+0.2j  -0.04+0.07j  0.16-0.09j  0.51+0.34j -0.05+0.27j  0.02-0.13j
+ -0.18-0.03j -0.41+0.49j]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p><strong>Example</strong></p>
+<p>To better observe the evolution of the quantum state, let’s create a quantum circuit to simulate the process and analyze the results at each step through a step-by-step derivation. We can use <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> to create a quantum circuit as shown below, add quantum gates through gate functions like <code class="docutils literal notranslate"><span class="pre">h</span></code>, <code class="docutils literal notranslate"><span class="pre">cx</span></code>, <code class="docutils literal notranslate"><span class="pre">rz</span></code>, and finally perform a default evolution on the <span class="math notranslate nohighlight">\(\ket{0}\)</span> state by directly calling the created circuit object (e.g., <code class="docutils literal notranslate"><span class="pre">cir()</span></code>):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># construct a circuit with specifying the number of qubits</span>
+<span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># number of qubits</span>
+<span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>Let us now observe the evolutionary process described by the above circuit step by step through mathematical derivation. Start with the ground state:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \ket{\psi_0}=\ket{0}=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}.\end{split}\]</div>
+<p><strong>Step 1</strong>: Hadamard Gate(<span class="math notranslate nohighlight">\(H\)</span>)</p>
+<p>Add H gate on <span class="math notranslate nohighlight">\(\psi_0\)</span> to create superposition:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{\psi_1} = H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt{2}}=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+1\\
+1
+\end{bmatrix}.\end{split}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># add Hadamard gate on qubit 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unitary matrix of the circuit after H gate: </span><span class="se">\n</span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The unitary matrix of the circuit after H gate:
+tensor([[ 0.7071+0.j,  0.7071+0.j],
+        [ 0.7071+0.j, -0.7071+0.j]])
+</pre></div></div>
+</div>
+<p><strong>Step 2</strong>: Phase Rotation(<span class="math notranslate nohighlight">\(RZ\)</span>)</p>
+<p>Add relative phase <span class="math notranslate nohighlight">\(\theta=\pi/2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{\psi_2}=RZ(\frac{\pi}{2})\ket{\psi_1}=\frac{e^{-i\pi/4}\ket{0}+e^{i\pi/4}\ket{1}}{\sqrt{2}}=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+e^{-i\pi/4}\\
+e^{i\pi/4}
+\end{bmatrix}.\end{split}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">cir</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add CZ gate on qubit 0 with θ=π/2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unitary matrix of the circuit after H gate and CZ gate: </span><span class="se">\n</span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The unitary matrix of the circuit after H gate and CZ gate:
+tensor([[ 0.5000-0.5000j,  0.5000-0.5000j],
+        [ 0.5000+0.5000j, -0.5000-0.5000j]])
+</pre></div></div>
+</div>
+<p>Due to Euler’s Formula <span class="math notranslate nohighlight">\(e^{i\theta}=\cos(\theta)+i\sin(\theta)\)</span>, we can obtain:</p>
+<div class="math notranslate nohighlight">
+\[e^{-i\pi/4}=\cos(\pi/4)-i\sin(\pi/4)=\frac{1-i}{\sqrt{2}}.\]</div>
+<div class="math notranslate nohighlight">
+\[e^{i\pi/4}=\cos(\pi/4)+i\sin(\pi/4)=\frac{1+i}{\sqrt{2}}.\]</div>
+<p>the above expression of <span class="math notranslate nohighlight">\(\ket{\psi_2}\)</span> is equivalent to:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\ket{\psi_2}=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+e^{-i\pi/4}\\
+e^{i\pi/4}
+\end{bmatrix}=
+\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+\frac{1-i}{\sqrt{2}}\\
+\frac{1+i}{\sqrt{2}}
+\end{bmatrix}=
+\frac{1}{2}
+\begin{bmatrix}
+1-i\\
+1+i
+\end{bmatrix}=
+\begin{bmatrix}
+0.5-0.5i\\
+0.5+0.5i
+\end{bmatrix}.\end{split}\]</div>
+<p>This is consistent with the results obtained from the code.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unitary matrix of the final circuit: </span><span class="se">\n</span><span class="si">{</span><span class="n">cir</span><span class="o">.</span><span class="n">matrix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">()</span>  <span class="c1"># run the circuit with initial state |0&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The output state for inputting zero state is: </span><span class="si">{</span><span class="n">output_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The unitary matrix of the final circuit:
+tensor([[ 0.5000-0.5000j,  0.5000-0.5000j],
+        [ 0.5000+0.5000j, -0.5000-0.5000j]])
+
+The output state for inputting zero state is:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2]
+ System sequence: [0]
+[0.5-0.5j 0.5+0.5j]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<h4 id="Quantum-Channels">Quantum Channels<a class="headerlink" href="#Quantum-Channels" title="Link to this heading">¶</a></h4>
+<p>Quantum channels are completely positive, trace-preserving (CPTP) maps that describe the most general physical transformations of quantum states. Unlike unitary gates, they can model:</p>
+<ul class="simple">
+<li><p>Noise processes (decoherence, amplitude damping)</p></li>
+<li><p>Measurement effects</p></li>
+<li><p>Open system dynamics (interaction with environment)</p></li>
+</ul>
+<p>A key feature of a quantum channel is its ability to transform a pure state into a mixed state, described by a density matrix with non-zero entropy. While they can be represented in several mathematically equivalent ways (Kraus, Choi, Stinespring representations), in practice, we often define them by their action on qubits. Here we only introduce the Kraus representation. You can find more representations at <a class="reference external" href="https://quairkit.com/QuAIRKit/latest/tutorials/introduction/operator.html">QuAIRKit
+Tutorial</a>. A common example is the Depolarizing Channel, which with probability <span class="math notranslate nohighlight">\(p\)</span> randomly applies an X, Y, or Z error to a qubit, and with probability <span class="math notranslate nohighlight">\((1-p)\)</span> leaves it untouched.</p>
+<p><strong>Kraus Representation</strong></p>
+<p>Mathematically, a quantum channel <span class="math notranslate nohighlight">\(\mathcal{N}\)</span> acts on density matrix <span class="math notranslate nohighlight">\(\rho\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{N}(\rho)=\sum_i K_i \rho K_i^{\dagger}.\]</div>
+<p>where Kraus operators <span class="math notranslate nohighlight">\(\{ K_i\}\)</span> satisfy:</p>
+<div class="math notranslate nohighlight">
+\[\sum_i K_i^{\dagger} K_i = I.\]</div>
+<h3 id="Common-Quantum-Channel-Examples">Common Quantum Channel Examples<a class="headerlink" href="#Common-Quantum-Channel-Examples" title="Link to this heading">¶</a></h3>
+<p><strong>Depolarizing Channel</strong></p>
+<p>The depolarizing channel is a fundamental noise model in quantum information theory. It describes a process where, with a certain probability, the quantum state is replaced by the completely mixed state, effectively introducing isotropic noise (noise that is the same in all directions).</p>
+<p>The action of the depolarizing channel on a density matrix <span class="math notranslate nohighlight">\(\rho\)</span> with probability <span class="math notranslate nohighlight">\(p\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\Phi_{depo}(\rho)=(1-p)\rho + p\frac{I}{d}.\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(p\)</span>: The error probability or depolarizing probability. It is a real number between 0 and 1 (<span class="math notranslate nohighlight">\(0 \leq p \leq 1\)</span>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span>: The dimension of the Hilbert space of the quantum system.</p></li>
+<li><p><span class="math notranslate nohighlight">\(I\)</span>: The identity operator (or identity matrix) acting on the Hilbert space of the quantum system. Its dimension matches that of <span class="math notranslate nohighlight">\(\rho\)</span>.</p></li>
+</ul>
+<p>The Kraus representation for the depolarizing channel can be expressed in terms of the identity operator and Pauli matrices. For a single qubit (d=2), the Kraus operators are:</p>
+<div class="math notranslate nohighlight">
+\[K_0 = \sqrt{1-\frac{3p}{4}}I, \quad K_1 = \sqrt{\frac{p}{4}}X, \quad K_2 = \sqrt{\frac{p}{4}}Y, \quad K_3 = \sqrt{\frac{p}{4}}Z.\]</div>
+<p>where <span class="math notranslate nohighlight">\(X,Y,Z\)</span> are the Pauli matrices and <span class="math notranslate nohighlight">\(I\)</span> is the identity matrix.</p>
+<p>Depolarizing Channel can be easily constructed using <code class="docutils literal notranslate"><span class="pre">depolarizing_kraus</span></code> in kraus representation:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">probs</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># probability</span>
+<span class="n">depolarizing_kraus_repr</span> <span class="o">=</span> <span class="n">depolarizing_kraus</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a depolarizing channel with probability </span><span class="si">{</span><span class="n">probs</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">depolarizing_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Kraus representation of a depolarizing channel with probability 0.5:
+ tensor([[[ 0.7906+0.0000j,  0.0000+0.0000j],
+         [ 0.0000+0.0000j,  0.7906+0.0000j]],
+
+        [[ 0.0000+0.0000j,  0.3536+0.0000j],
+         [ 0.3536+0.0000j,  0.0000+0.0000j]],
+
+        [[ 0.0000+0.0000j,  0.0000-0.3536j],
+         [ 0.0000+0.3536j,  0.0000+0.0000j]],
+
+        [[ 0.3536+0.0000j,  0.0000+0.0000j],
+         [ 0.0000+0.0000j, -0.3536+0.0000j]]])
+
+</pre></div></div>
+</div>
+<p><strong>Amplitude Damping (AD) Channel</strong></p>
+<p>The amplitude damping channel is the channel given with Kraus operators:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}K_0=
+\begin{bmatrix}
+1 &amp; 0\\
+0 &amp; \sqrt{1-\gamma}
+\end{bmatrix},\;
+K_1=
+\begin{bmatrix}
+0 &amp; \sqrt{\gamma}\\
+0 &amp; 0
+\end{bmatrix}.\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma\in[0,1]\)</span>.</p>
+<p>AD channel can be constructed using <code class="docutils literal notranslate"><span class="pre">amplitude_damping_kraus</span></code> in kraus representation:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># parameter gamma</span>
+<span class="n">amplitude_damping_kraus_repr</span> <span class="o">=</span> <span class="n">amplitude_damping_kraus</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="c1"># Kraus representation</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus representation of a amplitude damping channel with parameter </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">amplitude_damping_kraus_repr</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Kraus representation of a amplitude damping channel with parameter 0.5:
+ tensor([[[1.0000+0.j, 0.0000+0.j],
+         [0.0000+0.j, 0.7071+0.j]],
+
+        [[0.0000+0.j, 0.7071+0.j],
+         [0.0000+0.j, 0.0000+0.j]]])
+
+</pre></div></div>
+</div>
+<p>And we can add channels to circuit like this:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Similarly, you can implement custom channels using Circuit.append.</span>
+<span class="n">kraus_op</span> <span class="o">=</span> <span class="n">random_channel</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;kraus&quot;</span><span class="p">)</span>
+<span class="n">cir</span><span class="o">.</span><span class="n">kraus_channel</span><span class="p">(</span><span class="n">kraus_op</span><span class="p">,</span> <span class="n">system_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p><strong>Example</strong></p>
+<p>To understand how quantum channels work in practice, let’s examine a concrete example using the Kraus representation. We will create two common noise channels—depolarizing and amplitude damping—see their Kraus operators, and most importantly, observe how they transform a pure state into a mixed state.</p>
+<p><strong>Step 1</strong>: Initial Pure State Preparation</p>
+<p>We begin with the computational basis state <span class="math notranslate nohighlight">\(\ket{0}\)</span>, which will serve as our input to the quantum channels.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Example: Demonstrating Kraus representation and pure-to-mixed state transformation</span>
+
+<span class="c1"># Define parameters for the channels</span>
+<span class="n">depolarizing_prob</span> <span class="o">=</span> <span class="mf">0.7</span>  <span class="c1"># Strong depolarizing probability</span>
+<span class="n">damping_gamma</span> <span class="o">=</span> <span class="mf">0.3</span>      <span class="c1"># Amplitude damping parameter</span>
+
+<span class="c1"># --- 1. Create a pure state |0⟩ ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. CREATING INITIAL PURE STATE&quot;</span><span class="p">)</span>
+<span class="n">init_state</span> <span class="o">=</span> <span class="n">zero_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># |0⟩ state</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial state: </span><span class="si">{</span><span class="n">init_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State vector: </span><span class="si">{</span><span class="n">init_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1. CREATING INITIAL PURE STATE
+Initial state:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2]
+ System sequence: [0]
+[1.+0.j 0.+0.j]
+-----------------------------------------------------
+
+State vector:
+-----------------------------------------------------
+ Backend: default-pure
+ System dimension: [2]
+ System sequence: [0]
+[1.+0.j 0.+0.j]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p><strong>Step 2</strong>: Depolarizing Channel Implementation</p>
+<p>Applying the depolarizing channel with probability p=0.7 to our initial state. The transformation follows:</p>
+<div class="math notranslate nohighlight">
+\[\Phi_{depo}(\rho)=(1-0.7)\ket{0}\bra{0} + 0.7·\frac{I}{2}=0.3\ket{0}\bra{0}+0.35I.\]</div>
+<p>The corresponding Kraus operators with numerical coefficients:</p>
+<div class="math notranslate nohighlight">
+\[K_0 = \sqrt{0.475}I \approx 0.689I.\]</div>
+<div class="math notranslate nohighlight">
+\[K_1 = \sqrt{0.175}X \approx 0.418X.\]</div>
+<div class="math notranslate nohighlight">
+\[K_2 = \sqrt{0.175}Y \approx 0.418Y.\]</div>
+<div class="math notranslate nohighlight">
+\[K_3 = \sqrt{0.175}Z \approx 0.418Z.\]</div>
+<p>We extract and examine the Kraus operators that implement this transformation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># --- 2. Depolarizing Channel Example ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. DEPOLARIZING CHANNEL:&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get Kraus operators for depolarizing channel</span>
+<span class="n">depolarizing_kraus_ops</span> <span class="o">=</span> <span class="n">depolarizing_kraus</span><span class="p">(</span><span class="n">depolarizing_prob</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus operators (p=</span><span class="si">{</span><span class="n">depolarizing_prob</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">depolarizing_kraus_ops</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;K</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Apply channel to pure state</span>
+<span class="n">depolarized_state</span> <span class="o">=</span> <span class="n">init_state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">depolarizing_kraus_ops</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">After depolarizing channel, the output state:</span><span class="si">{</span><span class="n">depolarized_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2. DEPOLARIZING CHANNEL:
+Kraus operators (p=0.7):
+K0:
+tensor([[0.6892+0.j, 0.0000+0.j],
+        [0.0000+0.j, 0.6892+0.j]])
+K1:
+tensor([[0.0000+0.j, 0.4183+0.j],
+        [0.4183+0.j, 0.0000+0.j]])
+K2:
+tensor([[0.+0.0000j, 0.-0.4183j],
+        [0.+0.4183j, 0.+0.0000j]])
+K3:
+tensor([[ 0.4183+0.j,  0.0000+0.j],
+        [ 0.0000+0.j, -0.4183+0.j]])
+
+After depolarizing channel, the output state:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2]
+ System sequence: [0]
+[[0.65+0.j 0.  +0.j]
+ [0.  +0.j 0.35+0.j]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p><strong>Step 3</strong>: Amplitude Damping Channel Implementation</p>
+<p>Now applying amplitude damping with <span class="math notranslate nohighlight">\(\gamma=0.3\)</span>. The Kraus operators implement:</p>
+<div class="math notranslate nohighlight">
+\[K_0=\ket{0}\bra{0}+\sqrt{0.7}\ket{1}\bra{1} \approx \ket{0}\bra{0}+0.837\ket{1}\bra{1}.\]</div>
+<div class="math notranslate nohighlight">
+\[K_1=\sqrt{0.3}\ket{0}\bra{1} \approx 0.548 \ket{0}\bra{1}.\]</div>
+<p>The output state becomes:</p>
+<div class="math notranslate nohighlight">
+\[\rho_{out} = K_0 \ket{0}\bra{0}K^{\dagger}_0+K_1\ket{0}\bra{0}K^{\dagger}_1=\ket{0}\bra{0}+0.3\ket{0}\bra{0}=\ket{0}\bra{0}.\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[18]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># --- 3. Amplitude Damping Channel Example ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. AMPLITUDE DAMPING CHANNEL:&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get Kraus operators for amplitude damping</span>
+<span class="n">damping_kraus_ops</span> <span class="o">=</span> <span class="n">amplitude_damping_kraus</span><span class="p">(</span><span class="n">damping_gamma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kraus operators (γ=</span><span class="si">{</span><span class="n">damping_gamma</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">damping_kraus_ops</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;K</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Apply channel to pure state</span>
+<span class="n">damped_state</span> <span class="o">=</span> <span class="n">init_state</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">damping_kraus_ops</span><span class="p">,</span> <span class="n">sys_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">After amplitude damping channel, the output state:</span><span class="si">{</span><span class="n">damped_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3. AMPLITUDE DAMPING CHANNEL:
+Kraus operators (γ=0.3):
+K0:
+tensor([[1.0000+0.j, 0.0000+0.j],
+        [0.0000+0.j, 0.8367+0.j]])
+K1:
+tensor([[0.0000+0.j, 0.5477+0.j],
+        [0.0000+0.j, 0.0000+0.j]])
+
+After amplitude damping channel, the output state:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2]
+ System sequence: [0]
+[[1.+0.j 0.+0.j]
+ [0.+0.j 0.+0.j]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<h2 id="Measurement">Measurement<a class="headerlink" href="#Measurement" title="Link to this heading">¶</a></h2>
+<p>Quantum measurement is the process of extracting classical information from a quantum system, causing the system’s state to collapse probabilistically to an eigenstate of the measured observable. Unlike classical measurements, quantum measurements:</p>
+<ul class="simple">
+<li><p>Are fundamentally probabilistic</p></li>
+<li><p>Irreversibly alter the quantum state (wavefunction collapse)</p></li>
+<li><p>Depend on the choice of measurement basis</p></li>
+</ul>
+<h3 id="Projective-Measurement">Projective Measurement<a class="headerlink" href="#Projective-Measurement" title="Link to this heading">¶</a></h3>
+<p>An observable <span class="math notranslate nohighlight">\(O\)</span> is represented by a Hermitian operator (<span class="math notranslate nohighlight">\(O=O^{\dagger}\)</span>). Being Hermitian, it admits a spectral decomposition into its eigenvalues <span class="math notranslate nohighlight">\(\lambda_i\)</span> (the possible measurement outcomes) and corresponding orthonormal eigenstates <span class="math notranslate nohighlight">\(\ket{\sigma_i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[O=\sum_i \lambda_i \ket{\sigma_i}\bra{\sigma_i}.\]</div>
+<p><strong>Born Rule</strong></p>
+<p>For a quantum system in a pure state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>, Upon measurement of <span class="math notranslate nohighlight">\(O\)</span> the system yields an outcome associated with eigenvalue <span class="math notranslate nohighlight">\(\lambda_i\)</span>, occurring with probability:</p>
+<div class="math notranslate nohighlight">
+\[p_i=|\langle \sigma_i \vert \psi \rangle|^2.\]</div>
+<p>Following the measurement, the post-measurement state collapses to the corresponding eigenstate:</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi}\xrightarrow{\text{after measure}}\ket{\sigma_i}.\]</div>
+<h3 id="Positive-Operator-Valued-Measures">Positive Operator-Valued Measures<a class="headerlink" href="#Positive-Operator-Valued-Measures" title="Link to this heading">¶</a></h3>
+<p>A more general Positive Operator-Valued Measure (POVM) is a set of operators <span class="math notranslate nohighlight">\({E_i}\)</span> where:</p>
+<div class="math notranslate nohighlight">
+\[E_i=M_i^{\dagger}M_i,\quad \sum_i E_i=I.\]</div>
+<p>the probability of outcome <span class="math notranslate nohighlight">\(i\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[p_i= \mathrm{Tr} (M_i \rho M_i^{\dagger})= \mathrm{Tr} (E_i \rho).\]</div>
+<p>Unlike projective measurements, POVMs allow non-orthogonal measurements.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[19]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Construct a POVM for the single-qubit Pauli-X basis</span>
+<span class="n">pvm</span> <span class="o">=</span> <span class="n">pauli_str_povm</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Projection-valued measure: </span><span class="se">\n</span><span class="si">{</span><span class="n">pvm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Measure on qubit 0 and keep the collapsed state</span>
+<span class="n">prob</span><span class="p">,</span> <span class="n">collapsed_state</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">qubits_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keep_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The collapsed state for each outcome is: </span><span class="si">{</span><span class="n">collapsed_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Projection-valued measure:
+tensor([[[ 0.5000+0.j,  0.5000+0.j],
+         [ 0.5000+0.j,  0.5000+0.j]],
+
+        [[ 0.5000+0.j, -0.5000+0.j],
+         [-0.5000+0.j,  0.5000+0.j]]])
+
+The collapsed state for each outcome is:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2, 2]
+ System sequence: [0, 1]
+ Batch size: [2]
+
+ # 0:
+[[0.35+0.j   0.21-0.01j 0.35+0.j   0.21-0.01j]
+ [0.21+0.01j 0.15+0.j   0.21+0.01j 0.15+0.j  ]
+ [0.35+0.j   0.21-0.01j 0.35+0.j   0.21-0.01j]
+ [0.21+0.01j 0.15+0.j   0.21+0.01j 0.15+0.j  ]]
+ # 1:
+[[ 0.48+0.j   -0.04-0.07j -0.48+0.j    0.04+0.07j]
+ [-0.04+0.07j  0.02+0.j    0.04-0.07j -0.02+0.j  ]
+ [-0.48+0.j    0.04+0.07j  0.48+0.j   -0.04-0.07j]
+ [ 0.04-0.07j -0.02+0.j   -0.04+0.07j  0.02+0.j  ]]
+-----------------------------------------------------
+
+</pre></div></div>
+</div>
+<p>With this general framework in place, we now turn to the most important observable in most quantum systems: the Hamiltonian. ### Hamiltonian Among all quantum observables, the Hamiltonian operator holds a place of paramount importance. Its expectation value has a direct and profound physical interpretation: it represents the average energy of the quantum system in the state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>. For this reason, calculating it is a central task in many quantum problems, from analyzing molecular
+structures to optimizing quantum algorithms.</p>
+<p>In quantum mechanics, a Hamiltonian (<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>) is a Hermitian operator that corresponds to the total energy of a quantum system. It governs the time evolution of quantum states through the Schrödinger equation. For quantum computing purposes, we typically work with time-independent Hamiltonians expressed as sums of Pauli operators:</p>
+<div class="math notranslate nohighlight">
+\[H = \sum_i c_i h_i.\]</div>
+<p>where <span class="math notranslate nohighlight">\(h_i\)</span> are Pauli strings (e.g., <span class="math notranslate nohighlight">\(h_i \in \{I,X,Y,Z\}^{\otimes n}\)</span> for <span class="math notranslate nohighlight">\(n\)</span> qubit system) and <span class="math notranslate nohighlight">\(c_i\)</span> are real coefficients.</p>
+<p><strong>Building Quantum Hamiltonians</strong></p>
+<p>A quantum Hamiltonian characterizes the interactions among the constituents of a quantum system. To facilitate simulations, the library implements several convenient routines for building Hamiltonians of common models.</p>
+<p><strong>Example 1</strong>: Ising-type Model</p>
+<p>The Ising model is one of the simplest yet most important models that describes interacting quantum bits (qubits). It plays a central role in quantum optimization and quantum simulation, providing a minimal framework to study collective quantum phenomena.</p>
+<p>This model captures two essential physical effects:</p>
+<ul class="simple">
+<li><p>Qubit interactions: Qubits influence each other through ZZ coupling terms.</p></li>
+<li><p>External influence: Individual qubits are affected by external fields (X terms).</p></li>
+</ul>
+<p>Formally, for <span class="math notranslate nohighlight">\(n\)</span> qubit system, Ising model describes Hamiltonian with two-site interaction and external field:</p>
+<div class="math notranslate nohighlight">
+\[H_{\text{Ising}} = \sum_{i&lt;j} J_{ij}Z_i Z_j + \sum_{k} h_k X_k\]</div>
+<p>where <span class="math notranslate nohighlight">\(J_{ij}\)</span> is the coupling strength between sites <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(h_k\)</span> is the magnetic field strength at vertex <span class="math notranslate nohighlight">\(k\)</span>. In QuAirKit, Ising model can be constructed via ising_hamiltonian.</p>
+<p>In QuAirKit, the Ising Hamiltonian can be readily constructed using the function <code class="docutils literal notranslate"><span class="pre">ising_hamiltonian</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[20]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Hamiltonian construction examples</span>
+<span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># initial setting with 3 qubits</span>
+<span class="n">split_line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+<span class="c1"># J matrix controls qubit-qubit interaction strengths</span>
+<span class="c1"># h vector controls external field strengths on each qubit</span>
+<span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>  <span class="c1"># uniform interaction strength</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span>  <span class="c1"># uniform external field</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">ising_hamiltonian</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the Hamiltonian for the Ising model is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Pauli decomposition of the Hamiltonian for the Ising model is:
+ 0.5 Z0, Z1
+0.5 Z0, Z2
+0.5 Z1, Z2
+0.30000001192092896 X0
+0.30000001192092896 X1
+0.30000001192092896 X2
+----------------------------------------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p><strong>Other Hamiltonian</strong></p>
+<p>The hamiltonian library supports various interaction patterns. Here are additional examples (For further details regarding Hamiltonian, please refer to the dedicated tutorial: <a class="reference external" href="https://github.com/QuAIR/QuAIRKit/blob/main/tutorials/introduction/Hamiltonian.ipynb">Hamiltonian</a>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[21]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Hamiltonian with XX and YY interactions (XY model)</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">xy_hamiltonian</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the Hamiltonian for the XY chain is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+
+<span class="c1"># Hamiltonian with full XYZ interactions (Heisenberg model)</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">heisenberg_hamiltonian</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the Hamiltonian for the Heisenberg model is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+
+<span class="c1"># Random Hamiltonian for general use</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the random Hamiltonian is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+
+<span class="c1"># Custom Hamiltonian from explicit coefficients</span>
+<span class="n">h_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;X0,Z1&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="s2">&quot;Z1&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Z2&quot;</span><span class="p">]]</span>  <span class="c1"># [coefficient, Pauli_string]</span>
+<span class="n">H_custom</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">h_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Custom Hamiltonian from coefficient list:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H_custom</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Pauli decomposition of the Hamiltonian for the XY chain is:
+ 0.5 X0, X1
+0.5 Y0, Y1
+0.5 X0, X2
+0.5 Y0, Y2
+0.5 X1, X2
+0.5 Y1, Y2
+----------------------------------------------------------------------------------------------------
+The Pauli decomposition of the Hamiltonian for the Heisenberg model is:
+ 0.5 X0, X1
+0.5 Y0, Y1
+0.5 Z0, Z1
+0.5 X0, X2
+0.5 Y0, Y2
+0.5 Z0, Z2
+0.5 X1, X2
+0.5 Y1, Y2
+0.5 Z1, Z2
+----------------------------------------------------------------------------------------------------
+The Pauli decomposition of the random Hamiltonian is:
+ -0.5565087119069443 Z2
+-0.3574592594985191 Z0, Z1
+-0.3444759632175145 Z0, Y1, Y2
+----------------------------------------------------------------------------------------------------
+Custom Hamiltonian from coefficient list:
+ 0.1 X0, Z1
+0.3 Z1
+0.5 Z2
+</pre></div></div>
+</div>
+<p>The expectation value of an observable <span class="math notranslate nohighlight">\(O\)</span>, which is the hamiltonian matrix, in quantum represents the statistical average of measurement outcomes obtained from repeated experiments on identically prepared systems.</p>
+<p>For a pure state <span class="math notranslate nohighlight">\(|\psi \rangle\)</span>, the expectation value is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\langle O \rangle=\langle \psi \vert O \vert \psi \rangle.\]</div>
+<p>For a mixed state described by a density matrix <span class="math notranslate nohighlight">\(\rho\)</span>, the expectation value is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\langle O \rangle = \mathrm{Tr}(O\rho).\]</div>
+<p>The observable <span class="math notranslate nohighlight">\(O\)</span> can be decomposed by the spectral decomposition</p>
+<div class="math notranslate nohighlight">
+\[\langle O \rangle=\sum_i \lambda_i |\sigma_i\rangle\langle \sigma_i|.\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_i\)</span> is eigenvalue of the observable <span class="math notranslate nohighlight">\(O\)</span> and <span class="math notranslate nohighlight">\(|\sigma_i\rangle\langle \sigma_i|\)</span> is an corresponding to eigenvector. Then, the expectation value may be rewritten by:</p>
+<div class="math notranslate nohighlight">
+\[\langle O \rangle=\sum_i \lambda_i \,p_i.\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_i= \mathrm{Tr}(\rho |\sigma_i\rangle\langle \sigma_i|)\)</span> for arbitrary state <span class="math notranslate nohighlight">\(\rho\)</span> is the probability of obtaining the outcome <span class="math notranslate nohighlight">\(|\sigma_i\rangle\)</span>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">expec_val</span></code> may be employed to compute the expectation value for a specified Hamiltonian and quantum state.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[22]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># caculate the expection value</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Pauli decomposition of the random Hamiltonian is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">split_line</span><span class="p">)</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;random state with three qubit: </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expection value of the Hamiltonian: </span><span class="si">{</span><span class="n">rho</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">H</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Pauli decomposition of the random Hamiltonian is:
+ 0.8961078150613921 X0, Y1, X2
+0.6632186222657794 X0
+-0.5799476719289227 Z0, Y1, Y2
+----------------------------------------------------------------------------------------------------
+random state with three qubit:
+-----------------------------------------------------
+ Backend: default-mixed
+ System dimension: [2, 2, 2]
+ System sequence: [0, 1, 2]
+[[ 0.15+0.j    0.04+0.03j -0.12-0.1j   0.07+0.05j -0.04+0.04j  0.06-0.05j
+   0.1 -0.j   -0.13-0.06j]
+ [ 0.04-0.03j  0.07+0.j   -0.08+0.02j  0.04+0.02j -0.03-0.02j -0.  -0.07j
+   0.09-0.04j  0.01+0.06j]
+ [-0.12+0.1j  -0.08-0.02j  0.19-0.j   -0.09-0.01j  0.  -0.03j -0.03+0.11j
+  -0.12+0.06j  0.14-0.09j]
+ [ 0.07-0.05j  0.04-0.02j -0.09+0.01j  0.06+0.j   -0.02+0.03j -0.01-0.05j
+   0.05-0.07j -0.04+0.01j]
+ [-0.04-0.04j -0.03+0.02j  0.  +0.03j -0.02-0.03j  0.06+0.j    0.01+0.01j
+  -0.04+0.02j -0.04+0.07j]
+ [ 0.06+0.05j -0.  +0.07j -0.03-0.11j -0.01+0.05j  0.01-0.01j  0.08-0.j
+   0.05+0.09j -0.08-0.02j]
+ [ 0.1 +0.j    0.09+0.04j -0.12-0.06j  0.05+0.07j -0.04-0.02j  0.05-0.09j
+   0.14+0.j   -0.04+0.03j]
+ [-0.13+0.06j  0.01-0.06j  0.14+0.09j -0.04-0.01j -0.04-0.07j -0.08+0.02j
+  -0.04-0.03j  0.25+0.j  ]]
+-----------------------------------------------------
+
+Expection value of the Hamiltonian: 0.41734418272972107
+</pre></div></div>
+</div>
+<p>This tutorial has introduced the core functionalities of QuAIRKit, demonstrating its capabilities for quantum state manipulation, gate operations, measurements, and expectation value estimation—essential tools for quantum algorithm development and simulation.</p>
+<hr class="docutils" />
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Nielsen, Michael A., and Isaac L. Chuang. Quantum computation and quantum information. Cambridge university press, 2010.</p>
+<p>[2] Shor, Peter W. “Algorithms for quantum computation: discrete logarithms and factoring.” Proceedings 35th annual symposium on foundations of computer science. Ieee, 1994.</p>
+<p>[3] Gisin, Nicolas, et al. “Quantum cryptography.” Reviews of modern physics 74.1 (2002): 145.</p>
+<p>[4] Bennett, Charles H., and Gilles Brassard. “Quantum cryptography: Public key distribution and coin tossing.” Theoretical computer science 560 (2014): 7-11.</p>
+<p>[5] Farhi, Edward, Jeffrey Goldstone, and Sam Gutmann. “A quantum approximate optimization algorithm.” arXiv preprint arXiv:1411.4028 (2014).</p>
+<p>[6] Peruzzo, Alberto, et al. “A variational eigenvalue solver on a photonic quantum processor.” Nature communications 5.1 (2014): 4213.</p>
+<p>[7] Tilly, Jules, et al. “The variational quantum eigensolver: a review of methods and best practices.” Physics Reports 986 (2022): 1-128.</p>
+<p>[8] Levine, Ira N., Daryle H. Busch, and Harrison Shull. Quantum chemistry. Vol. 6. Upper Saddle River, NJ: Pearson Prentice Hall, 2009.</p>
+<p>[9] Cao, Yudong, et al. “Quantum chemistry in the age of quantum computing.” Chemical reviews 119.19 (2019): 10856-10915.</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Variant</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p></td>
+<td></td>
+<td><p>State vector representation of quantum states</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td></td>
+<td><p>Density matrix representation of quantum states</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td></td>
+<td><p>Unitary operations</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(H,X,Y,Z\)</span></p></td>
+<td></td>
+<td><p>Hadamard gate and Pauli matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(M\)</span></p></td>
+<td></td>
+<td><p>Quantum measurement operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(p\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p_i\)</span></p></td>
+<td><p>THe probability</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(K_i\)</span></p></td>
+<td></td>
+<td><p>Kraus operators for quantum channels</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathcal{N}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Phi, \Phi_{depo} ,\Phi_{AD}\)</span></p></td>
+<td><p>Quantum channel (CPTP map)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(H_{\text{Ising}}\)</span></p></td>
+<td><p>Hamiltonian operator</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(O\)</span></p></td>
+<td></td>
+<td><p>Observable operator</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\lambda_i\)</span></p></td>
+<td></td>
+<td><p>Set of eigenvalues of observable <span class="math notranslate nohighlight">\(O\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\langle O \rangle\)</span></p></td>
+<td></td>
+<td><p>Expectation value of observable <span class="math notranslate nohighlight">\(O\)</span> in state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\alpha,\beta\)</span></p></td>
+<td></td>
+<td><p>Probability amplitudes in quantum superposition</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\theta, \phi\)</span></p></td>
+<td></td>
+<td><p>Angles parameterizing quantum states on Bloch sphere</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(I_d\)</span></p></td>
+<td><p>Identity operator of dimension <span class="math notranslate nohighlight">\(d\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathrm{Tr}\)</span></p></td>
+<td></td>
+<td><p>Trace operation</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathrm{Tr}_B\)</span></p></td>
+<td></td>
+<td><p>Partial trace over subsystem B</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\dagger\)</span></p></td>
+<td></td>
+<td><p>Hermitian conjugate (adjoint) operation</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[23]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.4.2
+torch: 2.8.0+cu128
+torch cuda: 12.8
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Linux
+OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+---------DEVICE---------
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.2.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+    
+  </body>
+</html>

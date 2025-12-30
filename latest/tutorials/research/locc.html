@@ -14,7 +14,7 @@
         <link rel="prev" href="comb.html">
       
       
-        <link rel="next" href="simon.html">
+        <link rel="next" href="loccnet.html">
       
       
       <link rel="icon" href="../../_static/favicon.svg">
@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -650,6 +650,30 @@
   
   
     <li class="md-nav__item">
+      <a href="loccnet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/loccnet.ipynb (reference label)"><span>Search quantum information protocols with LOCCNet</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="simon.html" class="md-nav__link">
         
   
@@ -1061,12 +1085,10 @@ allocation of a target multipartite entangled state across the <span class="math
 </div>
 <blockquote>
 <div><div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-|\psi_2\rangle = \tfrac12\Bigl[\, &amp;|00\rangle(\alpha|0\rangle+\beta|1\rangle)
-+|01\rangle(\alpha|1\rangle+\beta|0\rangle)\\
-+&amp;|10\rangle(\alpha|0\rangle-\beta|1\rangle)
-+|11\rangle(\alpha|1\rangle-\beta|0\rangle)\Bigr].\tag{8}
-\end{aligned}\end{split}\]</div>
+\[|\psi_2\rangle = \tfrac12\Bigl[\, |00\rangle(\alpha|0\rangle+\beta|1\rangle)
++|01\rangle(\alpha|1\rangle+\beta|0\rangle)
++|10\rangle(\alpha|0\rangle-\beta|1\rangle)
++|11\rangle(\alpha|1\rangle-\beta|0\rangle)\Bigr].\tag{8}\]</div>
 </div></blockquote>
 </li>
 <li><div class="line-block">
@@ -1079,7 +1101,7 @@ allocation of a target multipartite entangled state across the <span class="math
 00 &amp;\longmapsto\;[\alpha|0\rangle+\beta|1\rangle],\\
 01 &amp;\longmapsto\;[\alpha|1\rangle+\beta|0\rangle] = X\,|\psi\rangle,\\
 10 &amp;\longmapsto\;[\alpha|0\rangle-\beta|1\rangle] = Z\,|\psi\rangle,\\
-11 &amp;\longmapsto\;[\alpha|1\rangle-\beta|0\rangle] = XZ\,|\psi\rangle.\tag{9}
+11 &amp;\longmapsto\;[\alpha|1\rangle-\beta|0\rangle] = XZ\,|\psi\rangle.
 \end{aligned}\end{split}\]</div>
 </div></blockquote>
 </li>
@@ -1213,7 +1235,7 @@ The two top lines represent Alice’s system, while the bottom line is Bob’s s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The average fidelity of the qubit teleportation protocol on all outcomes and 100 random states is: 1.000000002698434
+The average fidelity of the qubit teleportation protocol on all outcomes and 100 random states is: 1.0
 </pre></div></div>
 </div>
 <h2 id="W-state-Distribution">W-state Distribution<a class="headerlink" href="#W-state-Distribution" title="Link to this heading">¶</a></h2>
@@ -1259,7 +1281,7 @@ The average fidelity of the qubit teleportation protocol on all outcomes and 100
 X^{s_k}\,Z^{s_k}, &amp; \text{if } k = 1,\\
 X^{s_k},         &amp; \text{if } k = 2,\\
 Z^{\kappa_k}\,X^{s_k}, &amp; \text{if } 3 \le k \le N,
-\end{cases} \tag{14}\end{split}\]</div>
+\end{cases}\end{split}\]</div>
 <p>where</p>
 <div class="math notranslate nohighlight">
 \[\kappa_k \;=\; \Bigl(\sum_{l=2}^{\,k-1} s_l\Bigr) \bmod 2.\tag{15}\]</div>
@@ -1374,7 +1396,7 @@ index for Bob) as required by the circuit.</p>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The fidelity of the W-state distribution protocol on each outcome is:
- [1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166, 1.0000000234658166]
+ [1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165, 1.0000000210354165]
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1475,19 +1497,17 @@ The fidelity of the W-state distribution protocol on each outcome is:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.2
-torch: 2.8.0+cu128
-torch cuda: 12.8
+quairkit: 0.4.4
+torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
 matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Linux
-OS version: #1 SMP Tue Nov 5 00:21:55 UTC 2024
+OS: Windows
+OS version: 10.0.26100
 ---------DEVICE---------
-CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
-GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
 </pre></div></div>
 </div>
 
@@ -1530,7 +1550,7 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1547,13 +1567,13 @@ GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

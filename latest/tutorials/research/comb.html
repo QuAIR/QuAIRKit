@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.6ec1c446c2c357833.min.css?v=e2e8fea8" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -654,6 +654,30 @@
   
   
     <li class="md-nav__item">
+      <a href="loccnet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/loccnet.ipynb (reference label)"><span>Search quantum information protocols with LOCCNet</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="simon.html" class="md-nav__link">
         
   
@@ -1077,7 +1101,7 @@ $ U^{-1} $ directly using the original unitary $ U $ without performing process 
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1107,12 +1131,17 @@ $ U^{-1} $ directly using the original unitary $ U $ without performing process 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-iter: 0000, loss: 0.77159519, fidelity: 0.74352938, lr: 5.00E-02, avg_time: 0.1712s
-iter: 0200, loss: 0.05852106, fidelity: 0.98009833, lr: 1.25E-02, avg_time: 0.0292s
-iter: 0400, loss: 0.04180552, fidelity: 0.98606228, lr: 6.25E-03, avg_time: 0.0459s
-iter: 0600, loss: 0.03328973, fidelity: 0.98900595, lr: 6.25E-03, avg_time: 0.0217s
-iter: 0800, loss: 0.02877360, fidelity: 0.99051779, lr: 3.13E-03, avg_time: 0.0197s
-iter: 1000, loss: 0.02505510, fidelity: 0.99174989, lr: 3.13E-03, avg_time: 0.0208s
+iter: 0000, loss: 0.76535219, fidelity: 0.75019536, lr: 5.00E-02, avg_time: 0.1304s
+iter: 0200, loss: 0.07975962, fidelity: 0.97321460, lr: 2.50E-02, avg_time: 0.0228s
+iter: 0400, loss: 0.05184983, fidelity: 0.98239121, lr: 1.25E-02, avg_time: 0.0252s
+iter: 0600, loss: 0.04091344, fidelity: 0.98583470, lr: 6.25E-03, avg_time: 0.0290s
+iter: 0800, loss: 0.03374435, fidelity: 0.98816686, lr: 3.13E-03, avg_time: 0.0341s
+iter: 1000, loss: 0.03030910, fidelity: 0.98932508, lr: 3.13E-03, avg_time: 0.0355s
+iter: 1200, loss: 0.02691856, fidelity: 0.99050815, lr: 3.13E-03, avg_time: 0.0327s
+iter: 1400, loss: 0.02431794, fidelity: 0.99143494, lr: 1.56E-03, avg_time: 0.0366s
+iter: 1600, loss: 0.02270146, fidelity: 0.99201986, lr: 1.56E-03, avg_time: 0.0392s
+iter: 1800, loss: 0.02102574, fidelity: 0.99262976, lr: 1.56E-03, avg_time: 0.0379s
+iter: 1999, loss: 0.01931890, fidelity: 0.99325315, lr: 1.56E-03, avg_time: 0.0387s
 </pre></div></div>
 </div>
 <p>As shown by above training result, one can obtain a trained circuit that can effectively simulate the inverse of a given unitary <span class="math notranslate nohighlight">\(U\)</span>, with test fidelity above 99%.</p>
@@ -1135,7 +1164,7 @@ iter: 1000, loss: 0.02505510, fidelity: 0.99174989, lr: 3.13E-03, avg_time: 0.02
 <h3 id="Initializing-PQCombNet">Initializing PQCombNet<a class="headerlink" href="#Initializing-PQCombNet" title="Link to this heading">¶</a></h3>
 <p>First of all, import the necessary libraries for initializing the <code class="docutils literal notranslate"><span class="pre">PQCombNet</span></code> class.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.application</span> <span class="kn">import</span> <span class="n">PQCombNet</span>
@@ -1145,7 +1174,7 @@ iter: 1000, loss: 0.02505510, fidelity: 0.99174989, lr: 3.13E-03, avg_time: 0.02
 <p>Initializing the PQCombNet, we want to achieve the process <span class="math notranslate nohighlight">\(U^{-1}\)</span></p>
 <p>According to the recent paper [1], the minimum resource for PQComb to implement the inverse unitary task is 4 <code class="docutils literal notranslate"><span class="pre">num_slots</span></code> and 3 <code class="docutils literal notranslate"><span class="pre">num_aux_qubits</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">PQCombNet</span><span class="p">(</span>
@@ -1162,7 +1191,7 @@ iter: 1000, loss: 0.02505510, fidelity: 0.99174989, lr: 3.13E-03, avg_time: 0.02
 </div>
 <p>This initializes a PQCombNet instance with the specified parameters, ready for training and optimization. Now we can train our model to approximate the quantum process transformation <span class="math notranslate nohighlight">\(f(U) = U^{-1}\)</span>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">base_lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="n">num_iter</span><span class="p">,</span> <span class="n">is_save_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1174,35 +1203,35 @@ iter: 1000, loss: 0.02505510, fidelity: 0.99174989, lr: 3.13E-03, avg_time: 0.02
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">0   0.0463s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.75190565</span>, <span class="ansi-green-intense-fg">Fid: 0.24181475</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">100 0.0297s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.05256974</span>, <span class="ansi-green-intense-fg">Fid: 0.94567283</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">200 0.0297s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.01628234</span>, <span class="ansi-green-intense-fg">Fid: 0.98326826</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">300 0.0288s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.00678811</span>, <span class="ansi-green-intense-fg">Fid: 0.99304489</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">400 0.0310s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00533677</span>, <span class="ansi-green-intense-fg">Fid: 0.99453199</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">500 0.0306s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00489814</span>, <span class="ansi-green-intense-fg">Fid: 0.99498090</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">600 0.0307s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00445306</span>, <span class="ansi-green-intense-fg">Fid: 0.99543658</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">700 0.0310s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00401353</span>, <span class="ansi-green-intense-fg">Fid: 0.99588677</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">800 0.0300s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00358973</span>, <span class="ansi-green-intense-fg">Fid: 0.99632106</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">900 0.0306s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00318941</span>, <span class="ansi-green-intense-fg">Fid: 0.99673156</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1000        0.0343s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00281806</span>, <span class="ansi-green-intense-fg">Fid: 0.99711266</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1100        0.0307s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00247907</span>, <span class="ansi-green-intense-fg">Fid: 0.99746085</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1200        0.0273s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00217393</span>, <span class="ansi-green-intense-fg">Fid: 0.99777451</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1300        0.0294s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00190252</span>, <span class="ansi-green-intense-fg">Fid: 0.99805372</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1400        0.0341s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00166335</span>, <span class="ansi-green-intense-fg">Fid: 0.99829986</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1500        0.0330s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00145403</span>, <span class="ansi-green-intense-fg">Fid: 0.99851530</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1600        0.0310s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00127160</span>, <span class="ansi-green-intense-fg">Fid: 0.99870302</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1700        0.0297s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00111292</span>, <span class="ansi-green-intense-fg">Fid: 0.99886618</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1800        0.0304s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00097495</span>, <span class="ansi-green-intense-fg">Fid: 0.99900790</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1900        0.0289s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00085491</span>, <span class="ansi-green-intense-fg">Fid: 0.99913105</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">0   0.0498s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.74884420</span>, <span class="ansi-green-intense-fg">Fid: 0.25583911</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">100 0.0329s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.06711903</span>, <span class="ansi-green-intense-fg">Fid: 0.92906250</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">200 0.0374s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.01628728</span>, <span class="ansi-green-intense-fg">Fid: 0.98310936</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">300 0.0393s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.00883456</span>, <span class="ansi-green-intense-fg">Fid: 0.99108562</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">400 0.0331s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00552339</span>, <span class="ansi-green-intense-fg">Fid: 0.99433158</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">500 0.0353s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00503172</span>, <span class="ansi-green-intense-fg">Fid: 0.99483838</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">600 0.0330s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00453871</span>, <span class="ansi-green-intense-fg">Fid: 0.99534626</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">700 0.0317s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00405737</span>, <span class="ansi-green-intense-fg">Fid: 0.99584176</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">800 0.0350s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00359704</span>, <span class="ansi-green-intense-fg">Fid: 0.99631533</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">900 0.0370s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00316422</span>, <span class="ansi-green-intense-fg">Fid: 0.99676033</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1000        0.0373s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00276318</span>, <span class="ansi-green-intense-fg">Fid: 0.99717239</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1100        0.0312s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00239642</span>, <span class="ansi-green-intense-fg">Fid: 0.99754895</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1200        0.0349s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00206504</span>, <span class="ansi-green-intense-fg">Fid: 0.99788891</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1300        0.0350s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00176896</span>, <span class="ansi-green-intense-fg">Fid: 0.99819240</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1400        0.0329s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00150717</span>, <span class="ansi-green-intense-fg">Fid: 0.99846049</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1500        0.0336s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00127795</span>, <span class="ansi-green-intense-fg">Fid: 0.99869502</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1600        0.0338s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00107904</span>, <span class="ansi-green-intense-fg">Fid: 0.99889838</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1700        0.0354s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00090785</span>, <span class="ansi-green-intense-fg">Fid: 0.99907326</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1800        0.0378s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00076163</span>, <span class="ansi-green-intense-fg">Fid: 0.99922254</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1900        0.0357s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00063761</span>, <span class="ansi-green-intense-fg">Fid: 0.99934911</span>
 Progress |██████████████████████████████████████████████████| 100.0%
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1999        0.0303s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00075133</span>, <span class="ansi-green-intense-fg">Fid: 0.99923716</span>
-[pqcomb_dagger | process | 73] Finished training with Fidelity: 0.99923816
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1999        0.0375s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00053403</span>, <span class="ansi-green-intense-fg">Fid: 0.99945479</span>
+[pqcomb_dagger | process | 73] Finished training with Fidelity: 0.99945577
 </pre></div></div>
 </div>
 <h3 id="Other-functional">Other functional<a class="headerlink" href="#Other-functional" title="Link to this heading">¶</a></h3>
 <p>We can have a view of the PQComb by the attribute <code class="docutils literal notranslate"><span class="pre">plot</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[14]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">net</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -1220,7 +1249,7 @@ Progress |███████████████████████�
 with the original parameterized circuit. we will show a simple example in this section about the usage of updating certain part of circuit for a <strong>PQCombNet</strong></p>
 <p>For example, we want to substitute a known circuit <code class="docutils literal notranslate"><span class="pre">new_V</span></code> and we can prepare the new_V in several ways.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[15]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.operator</span> <span class="kn">import</span> <span class="n">ParamOracle</span>
@@ -1249,7 +1278,7 @@ with the original parameterized circuit. we will show a simple example in this s
 </div>
 <p>Update the V circuit in place at a specified <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[16]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># In this example, we replace the `index` 1 (the 2nd part of the PQCombNet) with our prepared structure</span>
@@ -1276,7 +1305,7 @@ with the original parameterized circuit. we will show a simple example in this s
 <p>[1] Mo, Yin, et al. “Parameterized quantum comb and simpler circuits for reversing unknown qubit-unitary operations.” npj Quantum Information 11.1 (2025): 32.</p>
 <p>[2] Chiribella, Giulio, G. Mauro D’Ariano, and Paolo Perinotti. “Quantum circuit architecture.” Physical review letters 101.6 (2008): 060401.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[17]:
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
@@ -1290,11 +1319,11 @@ with the original parameterized circuit. we will show a simple example in this s
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.1
+quairkit: 0.4.4
 torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.5
+matplotlib: 3.10.6
 ---------SYSTEM---------
 Python version: 3.10.18
 OS: Windows
@@ -1383,7 +1412,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1400,13 +1429,13 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.2"], "title": "v0.4.2", "version": "v0.4.2"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>
