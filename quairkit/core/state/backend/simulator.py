@@ -29,6 +29,123 @@ from ... import Hamiltonian, utils
 from .base import State
 
 
+class ProbabilityData:
+    r"""
+    A small helper that owns and manages the probability history attached to a StateSimulator.
+
+    It stores a list of torch.Tensor objects, each representing the distribution of a random
+    variable X_{t=n}. The shape rules follow the original design:
+
+    - When adding a fresh distribution for time n (i.e., after n previous distributions),
+      the canonical shape is [1, 1, ..., 1, d_n] with exactly n leading 1's.
+    - When a distribution already carries the broadcasted batch/prob dimensions (e.g., from
+      measurement), we can append it as-is.
+
+    It also tracks the per-variable outcome counts (dims) and provides utilities to compute
+    the joint distribution over a subset of variables.
+    """
+
+    def __init__(self, probs: Optional[List[torch.Tensor]] = None) -> None:
+        self._list: List[torch.Tensor] = []
+        self._dims: List[int] = []
+        if probs:
+            for p in probs:
+                self._list.append(p)
+                self._dims.append(int(p.shape[-1]))
+
+    def __len__(self) -> int:
+        return len(self._list)
+
+    def __bool__(self) -> bool:
+        return len(self) > 0
+
+    def __getitem__(self, idx: int) -> torch.Tensor:
+        return self._list[idx]
+
+    @property
+    def list(self) -> List[torch.Tensor]:
+        return self._list
+
+    def clone_list(self) -> List[torch.Tensor]:
+        return [p.clone() for p in self._list]
+
+    @property
+    def shape(self) -> List[int]:
+        return self._dims.copy()
+    
+    @property
+    def non_prob_dim(self) -> List[int]:
+        num_prob = len(self._list)
+        return [] if num_prob == 0 else list(self._list[-1].shape[:-num_prob])
+
+    @property
+    def product_dim(self) -> int:
+        return int(np.prod(self._dims))
+
+    def clear(self) -> None:
+        self._list.clear()
+        self._dims.clear()
+
+    def prepare_new(self, prob: torch.Tensor, dtype: Optional[torch.dtype] = None,
+                    device: Optional[torch.device] = None, real_only: bool = False) -> torch.Tensor:
+        r"""
+        Canonicalize a fresh probability tensor to shape [1]*num_prev + [-1].
+        This does not append; it only prepares the shaped tensor.
+        """
+        num_prev = len(self._list)
+        p = prob.view([1] * num_prev + [-1])
+        if dtype is not None or device is not None:
+            p = p.to(dtype=dtype, device=device)
+        if real_only:
+            p = p.real
+        return p
+
+    def append(self, prob: torch.Tensor, normalize: bool = False,
+               dtype: Optional[torch.dtype] = None,
+               device: Optional[torch.device] = None,
+               real_only: bool = False) -> None:
+        r"""
+        Append a probability tensor into the history.
+
+        Args:
+            prob: The tensor to append.
+            normalize: If True, reshape to [1]*num_prev + [-1] before appending.
+            dtype, device: Optional dtype/device cast.
+            real_only: If True, keep only the real part.
+        """
+        p = self.prepare_new(prob, dtype=dtype, device=device, real_only=real_only) if normalize else prob
+        if dtype is not None or device is not None:
+            p = p.to(dtype=dtype, device=device)
+        if real_only:
+            p = p.real
+        self._list.append(p)
+        self._dims.append(int(p.shape[-1]))
+
+    def joint(self, prob_idx: List[int]) -> torch.Tensor:
+        r"""
+        Compute the joint distribution across the selected indices (with broadcasting).
+
+        Returns:
+            A tensor shaped to the broadcasted product of the selected distributions.
+        """
+        if len(self._list) == 0:
+            # Keep previous behavior: return a CPU scalar 1.0
+            return torch.tensor(1.0)
+
+        dtype = self._list[0].dtype
+        device = self._list[0].device
+        result = torch.tensor(1.0, dtype=dtype, device=device)
+        for idx in sorted(prob_idx):
+            p = self._list[idx]
+            if p.dim() > result.dim():
+                result = result.view(list(result.shape) + [1] * (p.dim() - result.dim()))
+            result = result * p
+        return result
+
+    def clone(self) -> 'ProbabilityData':
+        return ProbabilityData(self.clone_list())
+
+
 class StateSimulator(State):
     r"""The abstract base class for simulating quantum states in QuAIRKit.
 
@@ -48,7 +165,8 @@ class StateSimulator(State):
                  probability: Optional[List[torch.Tensor]]) -> None:
         super().__init__(sys_dim)
 
-        self._prob = [] if probability is None else probability
+        self._prob = ProbabilityData(probability)
+        
         non_batch_len = 2 + len(self._prob)
         self._batch_dim = list(data.shape[:-non_batch_len])
 
@@ -144,26 +262,16 @@ class StateSimulator(State):
 
         """
 
-    @abstractmethod
     def _joint_probability(self, prob_idx: List[int]) -> torch.Tensor:
         r"""The joint probability distribution of these states' occurrences
-
-        Args:
-            prob_idx: the indices of probability distributions
-
         """
+        return self._prob.joint(prob_idx)
 
     @property
-    @abstractmethod
     def probability(self) -> torch.Tensor:
         r"""The probability distribution(s) of these states' occurrences
         """
-
-    @property
-    @abstractmethod
-    def _prob_dim(self) -> List[int]:
-        r"""Current probability dimensions
-        """
+        return self._prob.joint(list(range(len(self._prob))))
 
     @property
     @abstractmethod
@@ -180,7 +288,7 @@ class StateSimulator(State):
     def _squeeze_shape(self) -> List[int]:
         r"""The squeezed shape of this state batch
         """
-        return [-1, int(np.prod(self._prob_dim))]
+        return [-1, self._prob.product_dim]
 
     @property
     @abstractmethod
@@ -262,7 +370,7 @@ class StateSimulator(State):
 
     @property
     @abstractmethod
-    def rank(self) -> List[int]:
+    def rank(self) -> Union[int, List[int]]:
         r"""The rank of the state.
         """
 
@@ -597,9 +705,9 @@ class StateSimulator(State):
             The expected State obtained from the taken probability distributions.
 
         """
-        if self.probability.numel() == 0:
-            return self.clone()
         num_prob = len(self._prob)
+        if num_prob == 0:
+            return self.clone()
 
         if prob_idx is None:
             prob_idx = list(range(num_prob))
@@ -699,7 +807,7 @@ class StateSimulator(State):
         system_dim = [self.system_dim[i] for i in reset_idx]
         assert replace_state.system_dim == system_dim, \
             f"The system dimension of the replace state {replace_state.system_dim} does not match the reset system dimension {system_dim}."
-        if len(reset_idx) == self.num_systems:
+        if len(reset_idx) == self.num_systems and self._data.requires_grad:
             warnings.warn("All systems will be reset: gradient break here.", UserWarning)
             return replace_state.clone()
         if replace_state.batch_dim:

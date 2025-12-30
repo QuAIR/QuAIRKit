@@ -22,9 +22,9 @@ from typing import List, Optional, Union
 
 import torch
 
-from ..core import StateSimulator, get_backend, to_state
+from ..core import OperatorInfoType, StateSimulator, get_backend, to_state
 from ..core.intrinsic import _alias, _format_total_dim, _State
-from ..operator import X
+from ..operator import CNOT, CRY, RY, H, X
 
 __all__ = [
     "zero_state",
@@ -153,7 +153,7 @@ def computational_state(num_systems: Optional[int] = None, index: int = 0,
         system_dim = [2] * num_systems # TODO add support for no num_systems input
         index_binary = bin(index)[2:].zfill(num_systems)
         x_idx = [[idx] for idx in range(num_systems) if index_binary[idx] == '1']
-        data = [X(x_idx).info] if x_idx else []
+        data = [X(x_idx).info] if x_idx else []   
     return to_state(data, system_dim)
 
 
@@ -195,22 +195,34 @@ def bell_state(num_systems: Optional[int] = None, system_dim: Union[List[int], i
     """
     if num_systems is None:
         num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
-    
+
     assert num_systems % 2 == 0, \
         f"Number of systems must be even to form a Bell state. Received: {num_systems}"
     half = num_systems // 2
-    
-    dim = _format_total_dim(num_systems, system_dim)
-    if isinstance(system_dim, int):
-        local_dim = system_dim ** half
+
+    backend = get_backend()
+    if issubclass(backend, StateSimulator):
+        dim = _format_total_dim(num_systems, system_dim)
+        if isinstance(system_dim, int):
+            local_dim = system_dim ** half
+        else:
+            local_dim = math.prod(system_dim[:half])
+            assert dim == (local_dim ** 2), \
+                f"Dimension of systems must be evenly distributed. Received: {system_dim}"
+
+        data = torch.zeros(dim)
+        for i in range(0, dim, local_dim + 1 ):
+            data[i] = 1 / math.sqrt(local_dim)
     else:
-        local_dim = math.prod(system_dim[:half])
-        assert dim == (local_dim ** 2), \
-            f"Dimension of systems must be evenly distributed. Received: {system_dim}"
-    
-    data = torch.zeros(dim)
-    for i in range(0, dim, local_dim + 1 ):
-        data[i] = 1 / math.sqrt(local_dim)
+        if isinstance(system_dim, int):
+            system_dim = [system_dim] * num_systems
+        assert system_dim == [2] * num_systems,\
+            f"Only qubit system is supported in circuit simulation. Received: {system_dim}"
+        assert num_systems%2==0,\
+            f"num_systems must be a multiple of 2. Received: {num_systems}"
+        data=[]
+        for i in range(num_systems//2):
+            data.extend((H(i).info, CNOT([i,i+int(num_systems/2)]).info))
     return to_state(data, system_dim)
 
 
@@ -283,6 +295,19 @@ def bell_diagonal_state(prob: List[float]) -> StateSimulator:
     return to_state(data)
 
 
+def _add_w_state_info(num_qubits: int) -> List[OperatorInfoType]:
+    if num_qubits == 1:
+        data = [H(0).info]
+    elif num_qubits == 2:
+        data = [H(0).info, CNOT([0, 1]).info]
+    else:
+        data=[X(0).info]        
+        for i in range(num_qubits-1):
+            theta_i = 2*math.acos(1 / math.sqrt(num_qubits- i))
+            data.extend((CRY([i,i+1],theta_i).info,CNOT([i+1,i]).info))
+    return data
+
+
 def w_state(num_qubits: int) -> _State:
     r"""Generate a W-state.
 
@@ -312,14 +337,19 @@ def w_state(num_qubits: int) -> _State:
             [0.  +0.j 0.71+0.j 0.71+0.j 0.  +0.j]
             ---------------------------------------------------
     """
-    dim = 2 ** num_qubits
-    coeff = 1 / math.sqrt(num_qubits)
-    data = torch.zeros(dim)
 
-    for i in range(num_qubits):
-        data[2 ** i] = coeff
+    backend = get_backend()
+    system_dim = [2] * num_qubits
+    if issubclass(backend, StateSimulator):
+        dim = 2 ** num_qubits
+        coeff = 1 / math.sqrt(num_qubits)
+        data = torch.zeros(dim)
 
-    return to_state(data)
+        for i in range(num_qubits):
+            data[2 ** i] = coeff
+    else:
+        data = _add_w_state_info(num_qubits)
+    return to_state(data, system_dim)
 
 
 def ghz_state(num_qubits: int) -> _State:
@@ -351,11 +381,17 @@ def ghz_state(num_qubits: int) -> _State:
             [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
             ---------------------------------------------------
     """
-    dim = 2 ** num_qubits
-    data = torch.zeros(dim)
-    data[0] = 1 / math.sqrt(2)
-    data[-1] = 1 / math.sqrt(2)
-    return to_state(data)
+    backend = get_backend()
+    system_dim = [2] * num_qubits
+    if issubclass(backend, StateSimulator):
+        dim = 2 ** num_qubits
+        data = torch.zeros(dim)
+        data[0] = 1 / math.sqrt(2)
+        data[-1] = 1 / math.sqrt(2)
+    else:
+        data=[H(0).info,
+              CNOT([[i-1, i] for i in range(1, num_qubits)]).info]
+    return to_state(data, system_dim)
 
 
 def completely_mixed_computational(num_qubits: int) -> StateSimulator:

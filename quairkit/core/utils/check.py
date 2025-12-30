@@ -85,16 +85,21 @@ def _is_ppt(density_op: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
     return utils.qinfo._negativity(density_op) <= eps
 
 
-def _is_choi(op: torch.Tensor) -> torch.Tensor:
+def _is_choi(op: torch.Tensor, trace_preserving: bool = True, eps: float = 1e-6) -> torch.Tensor:
     op = op.to(torch.complex128)
     sys_dim = math.isqrt(op.shape[-1])
     
     is_pos = _is_positive(op)
     
     partial_op = utils.linalg._partial_trace(op, [1], [sys_dim, sys_dim])
-    is_trace_non_inc = _is_positive(torch.eye(sys_dim).expand_as(partial_op) - partial_op)
+    identity = torch.eye(sys_dim).expand_as(partial_op)
     
-    return is_pos & is_trace_non_inc
+    if trace_preserving:
+        is_trace = (identity - partial_op).norm(dim=(-2, -1)) < eps
+    else:
+        is_trace = _is_positive(identity - partial_op, eps)
+    
+    return is_pos & is_trace
 
 
 def _is_linear(

@@ -53,6 +53,8 @@ class CNOT(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     __matrix = _cnot(torch.complex128)
@@ -83,7 +85,6 @@ class CNOT(Gate):
         if state._keep_dim:
             return super().forward(state)
         
-        state = state.clone()
         swap_indices = utils.linalg._get_swap_indices(2, 3, self.system_idx, state.system_dim, self.device)
         state._index_select(swap_indices)
         return state
@@ -112,6 +113,8 @@ class CY(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     __matrix = _cy(torch.complex128)
@@ -160,6 +163,8 @@ class CZ(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     __matrix = _cz(torch.complex128)
@@ -207,6 +212,8 @@ class SWAP(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     __matrix = _swap(torch.complex128)
@@ -254,6 +261,8 @@ class CP(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -266,6 +275,7 @@ class CP(ParamGate):
             "api": "cp",
             "num_ctrl_system": 1,
             "label": '1',
+            "param_sharing": param_sharing,
             'plot_width': 0.9,
         }
 
@@ -302,6 +312,8 @@ class CRX(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -351,6 +363,8 @@ class CRY(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -400,6 +414,8 @@ class CRZ(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -449,6 +465,8 @@ class CU(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -496,6 +514,8 @@ class RXX(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -541,6 +561,8 @@ class RYY(ParamGate):
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -586,7 +608,9 @@ class RZZ(ParamGate):
 
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
-    
+
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     def __init__(
@@ -627,6 +651,8 @@ class MS(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first two qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     __matrix = _ms(torch.complex128)
@@ -636,7 +662,7 @@ class MS(Gate):
     ):
         gate_info = {
             "name": "ms",
-            "tex": r'\text{MS}',
+            "tex": r'\mathtt{MS}',
             "api": "ms",
             'plot_width': 0.6,
         }
@@ -676,6 +702,8 @@ class CSWAP(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first three qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _cswap(torch.complex128)
 
@@ -725,6 +753,8 @@ class CCX(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first three qubits.
     
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _toffoli(torch.complex128)
 

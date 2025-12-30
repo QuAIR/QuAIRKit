@@ -33,7 +33,7 @@ import torch
 from torch.nn.parameter import Parameter
 
 from .base import get_dtype, get_float_dtype, get_seed
-from .state import State, StateOperator, StateSimulator, to_state
+from .state import StateOperator, StateSimulator, to_state
 
 
 def _format_total_dim(num_systems: int, system_dim: Union[List[int], int]) -> int:
@@ -77,12 +77,44 @@ def _format_system_dim(total_dim: int, system_dim: Union[List[int], int]) -> Lis
     return system_dim
 
 
-def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, str],
-                           num_systems: int, num_acted_system: int) -> Union[List[int], List[List[int]]]:
-    r"""Formatting the system indices in a sequential way
+def __norm(list_idx: Union[Iterable[int], int], n: int) -> Union[Iterable[int], int]:
+    return [__norm(item, n) for item in list_idx] if (isinstance(list_idx, list) or isinstance(list_idx, tuple)) else int(list_idx) % n
+
+def __find_max_abs(list_idx: Iterable[int]) -> int:
+    stack = [iter(list_idx)]
+    found_any = False
+    best = 0
+
+    while stack:
+        try:
+            x = next(stack[-1])
+        except StopIteration:
+            stack.pop()
+            continue
+
+        if isinstance(x, Iterable) and not isinstance(x, (str, bytes, bytearray)):
+            stack.append(iter(x))
+            continue
+
+        if not isinstance(x, int):
+            x = int(x)
+
+        ax = -x if x < 0 else x
+        if not found_any or ax > best:
+            best = ax
+            found_any = True
+
+    if not found_any:
+        raise ValueError("No integers found (empty iterable).")
+
+    return best
+
+def _format_sequential_idx(system_idx: Union[Iterable[int], int, str],
+                           num_systems: int, num_acted_system: int) -> Iterable[int]:
+    r"""Formatting the system indices in a sequential way, and translate negative indices to positive ones
 
     Args:
-        system_idx: input system indices
+        system_idx: input system indices. Supports negative indices (counting from the end).
         num_systems: total number of systems
         num_acted_system: the number of systems that one operation acts on
 
@@ -90,7 +122,15 @@ def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, st
         The shape of output system indices are formatted as [# of vertical gates, num_acted_system].
     """
     if not isinstance(system_idx, str):
-        return [system_idx] if isinstance(system_idx, int) else system_idx
+        if isinstance(system_idx, int):
+            system_idx = [system_idx]
+        
+        assert (
+            (max_idx := __find_max_abs(system_idx)) < num_systems
+        ), (f"Invalid input system idx: {max_idx} cannot match with {num_systems} systems." + 
+            " One may change the number of systems by calling property `num_systems` or method `add_systems`.")
+            
+        return [__norm(item, num_systems) for item in system_idx]
     
     if num_acted_system == 1:
         if system_idx == 'full':
@@ -99,6 +139,9 @@ def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, st
             system_idx = list(range(num_systems, 2))
         elif system_idx == 'odd':
             system_idx = list(range(1, num_systems, 2))
+        else:
+            raise ValueError(
+                f"Unsupported system_idx string for single-system operator: received {system_idx}")
 
     elif system_idx == 'cycle':
         assert num_systems >= num_acted_system, \
@@ -121,6 +164,10 @@ def _format_sequential_idx(system_idx: Union[List[List[int]], List[int], int, st
             list(range(idx, idx + num_acted_system))
             for idx in range(num_systems - num_acted_system + 1)
         ]
+        
+    else:
+        raise ValueError(
+            f"Unsupported system_idx string for multi-system operator: received {system_idx}")
 
     return system_idx
 
@@ -573,3 +620,28 @@ def _display_png(img: IPython.display.Image) -> None:
     else:
         pil_img = PIL.Image.open(io.BytesIO(img.data))
         pil_img.show()
+
+
+def _merge_qasm(qasm1: Union[str, List[str]], qasm2: Union[str, List[str]]) -> Union[str, List[str]]:
+    r"""Merge two qasm which can be Union[str, List[str]]
+
+        Args:
+            qasm1: first qasm
+            qasm2: second qasm
+
+        Returns:
+            A string if both inputs are strings else a list of strings.
+    """
+    if isinstance(qasm1, str):
+        if isinstance(qasm2, str):
+            qasm1 += qasm2
+        else:
+            qasm1 = [qasm1 + item for item in qasm2]
+    elif isinstance(qasm2, str):
+        qasm1 = [item + qasm2 for item in qasm1]
+    else:
+        if len(qasm1) != len(qasm2):
+            raise ValueError("The circuit has different batch sizes for different gates!")
+        for ii in range(len(qasm1)):
+            qasm1[ii] += qasm2[ii]
+    return qasm1

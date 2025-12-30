@@ -51,7 +51,7 @@ class Gate(Channel):
         
         super().__init__('gate', matrix, system_idx, acted_system_dim, check_legality, gate_info)
         
-        self.__matrix = matrix if matrix is None else matrix.to(dtype=self.dtype, device=self.device)
+        self.__matrix = matrix if matrix is None else matrix.to(dtype=self.dtype, device=self.device).contiguous()
         self._is_dagger: bool = False
         self._is_hermitian: bool = False
         
@@ -81,7 +81,7 @@ class Gate(Channel):
         return info
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float) -> float:
-        r'''The display function called by circuit instance when plotting.
+        r"""The display function called by circuit instance when plotting.
 
         Args:
             ax: the ``matplotlib.axes.Axes`` instance
@@ -92,7 +92,7 @@ class Gate(Channel):
 
         Note:
             Users could overload this function for custom display.
-        '''
+        """
         return _base_gate_display(self, ax, x)
 
     def _single_qubit_combine_with_threshold6(self, state: StateSimulator, matrices: List[torch.Tensor]) -> None:
@@ -221,7 +221,7 @@ class ParamGate(Gate):
         return info
 
     def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        r'''The display function called by circuit instance when plotting.
+        r"""The display function called by circuit instance when plotting.
 
         Args:
             ax: the ``matplotlib.axes.Axes`` instance
@@ -232,7 +232,7 @@ class ParamGate(Gate):
 
         Note:
             Users could overload this function for custom display.
-        '''
+        """
         return _base_param_gate_display(self, ax, x)
 
     def forward(self, state: StateSimulator) -> StateSimulator:

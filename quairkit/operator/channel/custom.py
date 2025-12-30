@@ -33,6 +33,10 @@ class ChoiRepr(Channel):
         system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
         acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions
             or an int representing the dimension of all systems. Defaults to be qubit case.
+        check_legality: whether to check the legality of the input Choi operator. Defaults to ``True``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
 
     """
 
@@ -42,6 +46,7 @@ class ChoiRepr(Channel):
         choi_repr: torch.Tensor,
         system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
         acted_system_dim: Union[List[int], int] = 2,
+        check_legality: bool = True,
     ):
         channel_info = {
             "name": "channel",
@@ -50,7 +55,8 @@ class ChoiRepr(Channel):
             "kwargs": {"choi_repr": choi_repr},
         }
         super().__init__(
-            "choi", choi_repr, system_idx, acted_system_dim, channel_info=channel_info
+            "choi", choi_repr, system_idx, acted_system_dim, 
+            check_legality=check_legality, channel_info=channel_info
         )
 
 
@@ -62,6 +68,10 @@ class KrausRepr(Channel):
         system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
         acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions
             or an int representing the dimension of all systems. Defaults to be qubit case.
+        check_legality: whether to check the legality of the input Choi operator. Defaults to ``True``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
 
     """
 
@@ -71,6 +81,7 @@ class KrausRepr(Channel):
         kraus_repr: Union[torch.Tensor, List[torch.Tensor]],
         system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
         acted_system_dim: Union[List[int], int] = 2,
+        check_legality: bool = True,
     ):
         channel_info = {
             "name": "channel",
@@ -79,7 +90,8 @@ class KrausRepr(Channel):
             "kwargs": {"kraus_repr": kraus_repr},
         }
         super().__init__(
-            "kraus", kraus_repr, system_idx, acted_system_dim, channel_info=channel_info
+            "kraus", kraus_repr, system_idx, acted_system_dim, 
+            check_legality=check_legality, channel_info=channel_info
         )
 
 
@@ -91,6 +103,10 @@ class StinespringRepr(Channel):
         system_idx: Indices of the systems on which this channel acts. Defaults to ``None``.
         acted_system_dim: dimension of systems that this channel acts on. Can be a list of system dimensions
             or an int representing the dimension of all systems. Defaults to be qubit case.
+        check_legality: whether to check the legality of the input Choi operator. Defaults to ``True``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
 
     """
 
@@ -100,6 +116,7 @@ class StinespringRepr(Channel):
         stinespring_mat: torch.Tensor,
         system_idx: Union[Iterable[Iterable[int]], Iterable[int], int] = None,
         acted_system_dim: Union[List[int], int] = 2,
+        check_legality: bool = True,
     ):
         channel_info = {
             "name": "channel",
@@ -112,5 +129,6 @@ class StinespringRepr(Channel):
             stinespring_mat,
             system_idx,
             acted_system_dim,
-            channel_info=channel_info,
+            check_legality=check_legality,
+            channel_info=channel_info
         )

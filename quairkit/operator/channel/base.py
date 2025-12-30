@@ -114,7 +114,7 @@ class Channel(Operator):
             warnings.warn(
                 "The input data may not be a Choi representation of a channel.", UserWarning)
         
-        self.__choi_repr = choi_repr
+        self.__choi_repr = choi_repr.contiguous()
         return num_acted_system
 
     def __kraus_init(self, kraus_repr: torch.Tensor, 
@@ -138,7 +138,7 @@ class Channel(Operator):
                     f"The input data may not be a Kraus representation of a channel: norm(sum(E * E^d) - I) = {err}.",
                     UserWarning)
 
-        self.__kraus_repr = kraus_repr
+        self.__kraus_repr = kraus_repr.contiguous()
         return num_acted_system
     
     def __gate_init(self, mat: torch.Tensor, 
@@ -156,7 +156,7 @@ class Channel(Operator):
                 warnings.warn(
                     f"\nThe input gate matrix may not be a unitary: norm(U * U^d - I) = {err}.", UserWarning)
         
-        self.__kraus_repr = mat.unsqueeze(-3)
+        self.__kraus_repr = mat.unsqueeze(-3).contiguous()
         return num_acted_system
 
     def __stinespring_init(self, stinespring_repr: torch.Tensor, 
@@ -174,7 +174,7 @@ class Channel(Operator):
             assert out_dim % input_dim == 0, \
                 'The width of stinespring matrix should be the factor of its height'
 
-        self.__stinespring_repr = stinespring_repr
+        self.__stinespring_repr = stinespring_repr.contiguous()
         return num_acted_system
 
     @property

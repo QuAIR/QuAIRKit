@@ -24,7 +24,7 @@ from typing import Iterable, List, Optional, Union
 import numpy as np
 import torch
 
-from ..core import Operator, OperatorInfoType, StateSimulator, utils
+from ..core import Operator, OperatorInfoType, StateSimulator, to_state, utils
 from ..core.intrinsic import _alias, _digit_to_int, _int_to_digit
 from . import Channel, Gate
 
@@ -40,16 +40,28 @@ class ResetState(Operator):
     """
     @_alias({"system_idx": "qubits_idx"})
     def __init__(self, system_idx: Union[int, Iterable[int]], acted_system_dim: List[int],
-                 replace_state: StateSimulator, state_label: str) -> None:
+                 replace_state: Optional[StateSimulator], state_label: Optional[str]) -> None:
         super().__init__()
         self.system_idx = [[system_idx]] if isinstance(system_idx, int) else [list(system_idx)]
-        self.system_dim = acted_system_dim
-        self.replace_state = replace_state
-        
         _info = {"name": "reset",
                  "system_idx": self.system_idx,
-                 "type": "channel",
-                 "tex": state_label}
+                 "type": "channel"}
+        
+        if replace_state is None:
+            data = torch.zeros(int(np.prod(acted_system_dim)))
+            data[0] = 1
+            replace_state = to_state(data, system_dim=acted_system_dim, eps=None)
+            state_label = state_label or r'\ket{0}'
+            _info["kwargs"] = {"replace_dm": None}
+        else:
+            assert acted_system_dim == replace_state.system_dim, \
+                f"The system dimension of the input state {acted_system_dim} does not match the replace state {replace_state.system_dim}."
+            state_label = state_label or r'\rho'
+            _info["kwargs"] = {"replace_dm": replace_state.density_matrix}
+        _info['tex'] = state_label
+        
+        self.system_dim = acted_system_dim
+        self.replace_state = replace_state
         self._info.update(_info)
         
     @property
@@ -92,16 +104,21 @@ class Collapse(Operator):
         super().__init__()
         self.measure_op = []
 
+        _info = {"name": "measure",
+                 "type": "channel",
+                 "kwargs": {"if_print": if_print}}
         system_idx = [system_idx] if isinstance(system_idx, int) else list(system_idx)
         if measure_op is None:
             dim = int(np.prod(acted_system_dim))
             identity = torch.eye(dim, dtype=self.dtype, device=self.device).unsqueeze(-1)
             measure_op = identity @ identity.mH
+            _info["kwargs"]["measure_basis"] = None
         else:
             assert len(measure_op) > 1, \
-                    "The input measurement op should be a list of measurement operators."
-            assert utils.check.is_pvm(measure_op), \
-                    "The input measurement op do not form a projection-valued measurement."
+                "The input measurement op should be a list of measurement operators."
+            assert utils.check._is_pvm(measure_op), \
+                "The input measurement op do not form a projection-valued measurement."
+            _info["kwargs"]["measure_basis"] = measure_op
 
         if desired_result is None:
             digits_str = None
@@ -111,7 +128,8 @@ class Collapse(Operator):
             digits_str = _int_to_digit(desired_result, acted_system_dim)
             desired_result = torch.tensor(desired_result)
             measure_op = torch.index_select(measure_op, -3, desired_result)
-
+            _info["label"] = digits_str
+        
         self.system_idx = [system_idx]
         self.system_dim = acted_system_dim
         self.measure_op = measure_op
@@ -120,13 +138,7 @@ class Collapse(Operator):
         self.digits_str = digits_str
         self.desired_result = desired_result
 
-
-        _info = {"name": "measure",
-                 "system_idx": self.system_idx,
-                 "type": "channel",
-                 "kwargs": {"basis": measure_op, "if_print": if_print}}
-        if desired_result is not None:
-            _info["label"] = digits_str
+        _info["system_idx"] = self.system_idx
         self._info.update(_info)
         
     def __call__(self, state: StateSimulator) -> StateSimulator:
@@ -164,7 +176,7 @@ class Collapse(Operator):
         
         if torch.any(prob_array < 1e-10).item():
             warnings.warn(
-                f"It is computationally infeasible for some states in systems {self.system_idx} "
+                f"It is computationally infeasible for some states in systems {self.system_idx[0]} "
                 f"to collapse to state {state_str}")
 
         # whether print the collapsed result
@@ -210,7 +222,8 @@ class OneWayLOCC(Operator):
                            'type': "locc",
                            'num_ctrl_system': len(measure_idx),
                            'kwargs': {'measure_basis': measure_op,
-                                      'label_name': label}})
+                                      'label_name': label,
+                                      'info': gate.info}})
         
     def __call__(self, state: StateSimulator) -> StateSimulator:
         r"""Same as forward of Neural Network
@@ -259,7 +272,7 @@ class OneWayLOCC(Operator):
         measured_state = self.measure(state)
         
         dim = len(matrix.shape[:-2])
-        matrix = matrix.repeat(measured_state._prob_dim[:-dim] + [1] * (dim + 2))
+        matrix = matrix.repeat(measured_state._prob.shape[:-dim] + [1] * (dim + 2))
         measured_state._evolve(matrix, sys_idx, on_batch=False)
         return measured_state
 
@@ -332,7 +345,14 @@ class QuasiOperation(Operator):
     def info(self) -> OperatorInfoType:
         r"""Information of this operation
         """
-        return self.quasi_op.info
+        info = self.quasi_op.info
+        if "kwargs" in info.keys():
+            info["kwargs"].update({"probability": self._prob,
+                                   "probability_param": self.probability_param})
+        else:
+            info.update({"kwargs": {"probability": self._prob,
+                                    "probability_param": self.probability_param}})
+        return info
     
     def forward(self, state: StateSimulator) -> StateSimulator:
         r"""Compute the input state passing through the quasi-operation.
@@ -347,6 +367,7 @@ class QuasiOperation(Operator):
         state.add_probability(self.probability)
         
         matrix = self.quasi_op.matrix
-        matrix = matrix.repeat(state._prob_dim[:-1] + [1, 1, 1])
+        dim = len(matrix.shape[:-2])
+        matrix = matrix.repeat(state._prob._dims[:-dim] + [1] * (dim + 2))
         state._evolve(matrix, self.system_idx, on_batch=False)
         return state

@@ -17,4 +17,4 @@ r"""
 The module that implements the Operator class with OperatorInfo.
 """
 
-from .base import Operator, OperatorInfo, OperatorInfoType
+from .base import Operator, OperatorInfo, OperatorInfoType, qasm2_to_info

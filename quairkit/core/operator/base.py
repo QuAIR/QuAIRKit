@@ -79,13 +79,13 @@ class OperatorInfoType(TypedDict):
             "OperatorInfoType is used as a type hint for OperatorInfo, and hence should not be instantiated.")
     
     @property
-    def qasm(self) -> str:
+    def qasm(self) -> Union[str, List[str]]:
         r"""Display in OpenQASM-like format
         """
         pass
     
     @property
-    def qasm2(self) -> str:
+    def qasm2(self) -> Union[str, List[str]]:
         r"""Display in OpenQASM 2.0 format
         """
         pass     
@@ -182,16 +182,56 @@ class OperatorInfo(dict):
             self[key] = value
 
     @property
-    def qasm(self) -> str:
+    def qasm(self) -> Union[str, List[str]]:
         r"""Display in OpenQASM-like format
         """
+        if self.get('param', None) is not None and self['param'].shape[1] > 1:
+            split = torch.split(self['param'], 1, dim=1)
+            return [OpenQASM2Transpiler.format_qasm(self['name'], self['system_idx'], param) for param in split]
+
         return OpenQASM2Transpiler.format_qasm(self['name'], self['system_idx'], self.get('param', None))
 
     @property
-    def qasm2(self) -> str:
+    def qasm2(self) -> Union[str, List[str]]:
         r"""Display in OpenQASM 2.0 format
         """
+        if self.get('param', None) is not None and self['param'].shape[1] > 1:
+            split = torch.split(self['param'], 1, dim=1)
+            return [OpenQASM2Transpiler.transpile(self['name'], self['system_idx'], param) for param in split]
+
         return OpenQASM2Transpiler.transpile(self['name'], self['system_idx'], self.get('param', None))
+
+
+def qasm2_to_info(qasm2: str) -> List[OperatorInfoType]:
+    r"""Convert an OpenQASM 2.0 string to a list of OperatorInfo instances.
+
+    Args:
+        qasm2: A complete OpenQASM 2.0 string representing a circuit.
+
+    Returns:
+        A list of OperatorInfo instances corresponding to the provided OpenQASM 2.0 string.
+    """
+    list_info = []
+    for name, system_idx, param in OpenQASM2Transpiler.from_qasm2(qasm2):
+        kwargs = {'name': name,
+                  'system_idx': system_idx,
+                  'api': name if name != 'cx' else 'cnot'}
+        if name == 'reset':
+            kwargs['type'] = 'channel'
+            kwargs['tex'] = r'\ket{0}'
+            kwargs['kwargs'] = {'replace_dm': None}
+        elif name == 'measure':
+            kwargs['type'] = 'channel'
+            kwargs['kwargs'] = {'if_print': False,
+                                'measure_basis': None}
+        else:
+            kwargs['type'] = 'gate'
+        
+        if param is not None:
+            kwargs['param'] = param
+            kwargs['param_sharing'] = False
+        list_info.append(OperatorInfo(**kwargs))
+    return list_info
 
 
 class Operator(torch.nn.Module):

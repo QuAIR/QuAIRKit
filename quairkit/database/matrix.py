@@ -1232,7 +1232,8 @@ def universal2(theta: _ParamLike) -> _ArrayLike:
                     [-0.2431+0.3212j, -0.1714+0.5374j,  0.1140+0.5703j, -0.2703+0.3289j]])
     """
     type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    mat = utils.matrix._universal2(theta)
+    batch_dim = list(theta.shape[:-1])
+    mat = utils.matrix._universal2(theta).view(batch_dim + [4, 4])
     return _type_transform(mat, type_str)
 
 
@@ -1282,7 +1283,8 @@ def universal3(theta: _ParamLike) -> _ArrayLike:
                      -0.1030-0.2991j, -0.1473+0.0931j, -0.1686-0.3451j,  0.3825+0.1480j]])
     """
     type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    mat = utils.matrix._universal3(theta)
+    batch_dim = list(theta.shape[:-1])
+    mat = utils.matrix._universal3(theta).view(batch_dim + [8, 8])
     return _type_transform(mat, type_str)
 
 

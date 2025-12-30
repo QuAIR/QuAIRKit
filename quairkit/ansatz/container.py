@@ -19,7 +19,7 @@ The source file of the Sequential class.
 
 import itertools
 import warnings
-from typing import Generator, Iterable, List, Optional, Union
+from typing import Dict, Generator, Iterable, List, Optional, Union
 
 import numpy as np
 import torch
@@ -27,7 +27,7 @@ from torch.nn.parameter import Parameter
 
 from ..core import get_device, get_dtype, get_float_dtype
 from ..core.intrinsic import (_display_png, _format_sequential_idx,
-                              _replace_indices, _State)
+                              _merge_qasm, _replace_indices, _State)
 from ..core.latex import OperatorListDrawer
 from ..core.operator import Operator, OperatorInfoType
 from ..core.state import StateSimulator
@@ -196,7 +196,8 @@ class OperatorList(torch.nn.Sequential):
         r"""Update sequential according to input operator index information, or report error.
 
         Args:
-            operator_idx: input system indices of the operator. None means acting on all systems.
+            operator_idx: input system indices of the operator. None means acting on all systems. 
+                Supports negative indices (counting from the end).
             num_acted_system: number of systems that one operator acts on. None means just check the input.
         
         Returns:
@@ -211,12 +212,6 @@ class OperatorList(torch.nn.Sequential):
 
         num_systems = self.num_systems
         operator_idx = _format_sequential_idx(operator_idx, num_systems, num_acted_system)
-
-        assert (
-            (max_idx := np.max(operator_idx)) < num_systems
-        ), (f"Invalid input system idx: {max_idx} cannot match with {num_systems} systems." + 
-            " One may change the number of systems by calling property `num_systems` or method `add_systems`.")
-
         return _replace_indices(operator_idx, self.__system_idx)
 
     def append(self, op: Union[Operator, 'OperatorList']) -> 'OperatorList':
@@ -480,6 +475,26 @@ class OperatorList(torch.nn.Sequential):
         input_basis = input_basis.bra.view([dim, 1, 1, dim])
         output_basis = output.ket.view([dim, -1, dim, 1])
         return torch.sum(output_basis @ input_basis, dim=0).view(output.batch_dim[1:] + [dim, dim])
+    
+    @property
+    def _system_depth(self) -> Dict[int, int]:
+        r"""Depth of each system in the circuit.
+        
+        Returns:
+            depth of each system
+        """
+        system_depth = {x: 0 for x in self.system_idx}
+        for op in self.children():
+            if isinstance(op, OperatorList):
+                for idx, depth in op._system_depth.items():
+                    system_depth[idx] += depth
+                continue
+            else:
+                for system_idx in op.system_idx:
+                    for idx in system_idx:
+                        system_depth[idx] += 1
+        
+        return system_depth
 
     @property
     def depth(self) -> int:
@@ -493,14 +508,7 @@ class OperatorList(torch.nn.Sequential):
             See Niel's answer in the [StackExchange](https://quantumcomputing.stackexchange.com/a/5772).
         
         """
-        system_depth = np.array([0] * self.num_systems)
-        for gate_info in self.operator_history:
-            sys_idx = gate_info['system_idx']
-            if isinstance(sys_idx, int):
-                system_depth[sys_idx] += 1
-            else:
-                system_depth[sys_idx] = np.max(system_depth[sys_idx]) + 1
-        return int(np.max(system_depth))
+        return max(self._system_depth.values()) if self._system_depth else 0
     
     def get_qasm(self, transpile: bool) -> str:
         r"""Get the OpenQASM-like string representation of the circuit.
@@ -515,12 +523,14 @@ class OperatorList(torch.nn.Sequential):
         for op in self.children():
             if isinstance(op, OperatorList):
                 if qasm_str and qasm_str[-1] != '\n':
-                    qasm_str += '\n'
+                    qasm_str = _merge_qasm(qasm_str, '\n')
                 if isinstance(op, Layer):
-                    qasm_str += '\n// ' + op.get_latex_name('standard')
-                qasm_str += op.get_qasm(transpile) + '\n'
+                    qasm_str = _merge_qasm(qasm_str, '\n// ' + op.get_latex_name('standard'))
+                op_qasm = op.get_qasm(transpile) + '\n'
             else:
-                qasm_str += '\n' + (op.info.qasm2 if transpile else op.info.qasm)
+                op_qasm = _merge_qasm('\n', (op.info.qasm2 if transpile else op.info.qasm))
+            qasm_str = _merge_qasm(qasm_str, op_qasm)
+
         return qasm_str
         
     def __str__(self):
@@ -542,7 +552,7 @@ class Layer(OperatorList):
     r"""Base class for built-in trainable quantum circuit ansatz.
     
     Args:
-        physical_idx: Physical indices of the systems on which this layer is applied.
+        physical_idx: Physical indices of the systems on which this layer is applied. Supports negative indices (counting from the end).
         depth: Depth of the layer.
         name: Name of the layer. Defaults to 'Layer'.
         system_dim: Dimension of the systems. Defaults to be qubit-systems.

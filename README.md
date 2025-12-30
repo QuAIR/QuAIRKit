@@ -9,7 +9,7 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
   </a>
   <!-- PyPI -->
   <a href="https://pypi.org/project/quairkit/">
-    <img src="https://img.shields.io/badge/pypi-v0.4.3-orange.svg?style=flat-square&logo=pypi"/>
+    <img src="https://img.shields.io/badge/pypi-v0.4.4-orange.svg?style=flat-square&logo=pypi"/>
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">
@@ -38,7 +38,7 @@ QuAIRKit provides the following functionalities,
 
 ## Installation
 
-The minimum Python environment for QuAIRKit is `3.8`. We recommend installing QuAIRKit with Python `3.10`.
+The minimum Python environment for QuAIRKit is `3.9`. We recommend installing QuAIRKit with Python `3.10`.
 
 ```bash
 conda create -n quair python=3.10
@@ -271,6 +271,7 @@ default-mixed
   - [Analyze Barren Plateau in quantum neural networks](tutorials/research/bp.ipynb)
   - [Hamiltonian simulation via Trotter decomposition](tutorials/research/trotter.ipynb)
   - [Quantum State Teleportation and Distribution](tutorials/research/locc.ipynb)
+  - [Search quantum information protocols with LOCCNet](tutorials/research/loccnet.ipynb)
   - [Rediscovering Simon's algorithm with PQC](tutorials/research/simon.ipynb)
   - [Training quantum process transformation with PQC](tutorials/research/comb.ipynb)
 
@@ -284,7 +285,6 @@ default-mixed
   - [Quantum state amplitude amplification](tutorials/AIAA-5072/week%207%20qaa.ipynb)
   - [Quantum phase estimation](tutorials/AIAA-5072/week%208%20qpe.ipynb)
   - [Hamiltonian simulation](tutorials/AIAA-5072/week%209%20hamiltonian.ipynb)
-
 
 ## Acknowledgements
 

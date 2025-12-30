@@ -54,7 +54,7 @@ class OneWayLOCCNet(torch.nn.Module):
         super().__init__()
         self._cir_map = ModuleDict()
         self._state_map: Dict[Tuple[int, ...], StateSimulator] = {}
-        self._list_locc = ModuleList()
+        self._list_locc: Iterable[OneWayLOCC] = ModuleList()
 
         current_idx = 0
         for name, info in party_info.items():
@@ -182,6 +182,11 @@ class OneWayLOCCNet(torch.nn.Module):
         state.reset_sequence()
         self._state_map[indices_tuple] = state
         
+    def clean_init_state(self) -> None:
+        r"""Clear all the initial states set in the LOCC protocol.
+        """
+        self._state_map.clear()
+        
     def __prepare_init_state(self) -> StateSimulator:
         r"""Prepare the physical initial state for the LOCC protocol.
         """
@@ -200,17 +205,8 @@ class OneWayLOCCNet(torch.nn.Module):
         combined_state._system_seq = settled_indices + unsettled_indices
         return combined_state
     
-    @_alias({"system_idx": "qubits_idx"})
-    def locc(self, local_unitary: torch.Tensor, system_idx: List[Union[List[_LogicalIndex], _LogicalIndex]],
-             label: str = 'M', latex_name: str = 'O') -> None:
-        r"""Set a (non-parameterized) one-way LOCC protocol to the network.
-        
-        Args:
-            local_unitary: The local unitary operation.
-            system_idx: Systems on which the protocol is applied. The first element indicates the measure system.
-            label: Label for measurement. Defaults to 'M'.
-            latex_name: LaTeX name for the applied operator. Defaults to 'O'.
-        
+    def __check_locc_idx(self, system_idx: List[Union[List[_LogicalIndex]]]) -> List[List[int]]:
+        r"""Check if the logical indices are valid and not measured before. Return formatted information.
         """
         if isinstance(system_idx[0], Tuple):
             system_idx[0] = [system_idx[0]]
@@ -231,6 +227,22 @@ class OneWayLOCCNet(torch.nn.Module):
             cir = self[name]
             apply_idx.append(cir.system_idx[idx])
             apply_dim.append(cir.system_dim[idx])
+            
+        return measure_idx, measure_dim, apply_idx, apply_dim
+    
+    @_alias({"system_idx": "qubits_idx"})
+    def locc(self, local_unitary: torch.Tensor, system_idx: List[Union[List[_LogicalIndex], _LogicalIndex]],
+             label: str = 'M', latex_name: str = 'O') -> None:
+        r"""Set a (non-parameterized) one-way LOCC protocol to the network.
+        
+        Args:
+            local_unitary: The local unitary operation.
+            system_idx: Systems on which the protocol is applied. The first element indicates the measure system.
+            label: Label for measurement. Defaults to 'M'.
+            latex_name: LaTeX name for the applied operator. Defaults to 'O'.
+        
+        """
+        measure_idx, measure_dim, apply_idx, apply_dim = self.__check_locc_idx(system_idx)
         
         gate = Oracle(local_unitary, apply_idx, apply_dim)
         self._list_locc.append(OneWayLOCC(gate, measure_idx, measure_dim, label=label, latex_name=latex_name))
@@ -254,25 +266,7 @@ class OneWayLOCCNet(torch.nn.Module):
             If the generator does not support batched input, you need to set `support_batch` to `False`.
 
         """
-        if isinstance(system_idx[0], Tuple):
-            system_idx[0] = [system_idx[0]]
-        measure_idx, apply_idx = [], []
-        measure_dim, apply_dim = [], []
-        
-        for name, idx in system_idx[0]:
-            cir = self[name]
-            measure_idx.append(cir.system_idx[idx])
-            measure_dim.append(cir.system_dim[idx])
-            
-        for idx, op in enumerate(self._list_locc):
-            settled_idx = op.measure.system_idx[0]
-            assert set(measure_idx).isdisjoint(set(settled_idx)), \
-                f"Measurement system {measure_idx} has been used in the {idx}-th LOCC protocols {settled_idx}"
-            
-        for name, idx in system_idx[1:]:
-            cir = self[name]
-            apply_idx.append(cir.system_idx[idx])
-            apply_dim.append(cir.system_dim[idx])
+        measure_idx, measure_dim, apply_idx, apply_dim = self.__check_locc_idx(system_idx)
         
         if param is None:
             float_dtype = intrinsic._get_float_dtype(get_dtype())
@@ -296,8 +290,7 @@ class OneWayLOCCNet(torch.nn.Module):
         for cir in self.values():
             state = cir(state)
         
-        trace_idx = []
-        trace_dim = []
+        trace_idx, trace_dim = [], []
         for op in self._list_locc:
             state = op(state)
             trace_idx.extend(op.measure.system_idx[0])

@@ -47,6 +47,9 @@ class BitFlip(Channel):
     Args:
         prob: Probability of a bit flip. Its value should be in the range :math:`[0, 1]`.
         qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
+
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
@@ -76,6 +79,9 @@ class PhaseFlip(Channel):
     Args:
         prob: Probability of a phase flip. Its value should be in the range :math:`[0, 1]`.
         qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
+
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
@@ -105,6 +111,9 @@ class BitPhaseFlip(Channel):
     Args:
         prob: Probability of a bit phase flip. Its value should be in the range :math:`[0, 1]`.
         qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
+
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
@@ -142,6 +151,9 @@ class AmplitudeDamping(Channel):
     Args:
         gamma: Damping probability. Its value should be in the range :math:`[0, 1]`.
         qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
+    
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, gamma: Union[torch.Tensor, float],
@@ -178,6 +190,9 @@ class GeneralizedAmplitudeDamping(Channel):
         gamma: Damping probability. Its value should be in the range :math:`[0, 1]`.
         prob: Excitation probability. Its value should be in the range :math:`[0, 1]`.
         qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
+    
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, gamma: Union[torch.Tensor, float], prob: Union[torch.Tensor, float],
@@ -217,6 +232,9 @@ class PhaseDamping(Channel):
     Args:
         gamma: Parameter of the phase damping channels. Its value should be in the range :math:`[0, 1]`.
         qubits_idx: Indices of the qubits on which the channels act. Defaults to list(range(# of acted qubits))
+
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, gamma: Union[torch.Tensor, float],
@@ -255,6 +273,8 @@ class Depolarizing(Channel):
         edition by M.A.Nielsen and I.L.Chuang.
         Reference: Nielsen, M., & Chuang, I. (2010). Quantum Computation and Quantum Information: 10th
         Anniversary Edition. Cambridge: Cambridge University Press. doi:10.1017/CBO9780511976667
+        Unless input state is pure, this class will not create a new instance for output.
+
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
@@ -286,6 +306,9 @@ class GeneralizedDepolarizing(Channel):
         qubits_idx: Indices of the qubits on which the channels act, the length of which is :math:`n`.
             Defaults to be ``None``.
         num_qubits: Total number of qubits. Defaults to ``None``.
+    
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, prob: Union[torch.Tensor, float],
@@ -317,6 +340,9 @@ class PauliChannel(Channel):
 
     Note:
         The sum of three input probabilities should be less than or equal to 1.
+    
+    Note:
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, prob: Union[torch.Tensor, Iterable[float]],
@@ -369,6 +395,7 @@ class ResetChannel(Channel):
 
     Note:
         The sum of two input probabilities should be less than or equal to 1.
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, prob: Union[torch.Tensor, Iterable[float]],
@@ -396,6 +423,7 @@ class ThermalRelaxation(Channel):
 
     Note:
         Relaxation time must satisfy :math:`T_2 \le T_1`. For reference please see https://arxiv.org/abs/2101.02109.
+        Unless input state is pure, this class will not create a new instance for output.
     """
     def __init__(
             self, const_t: Union[torch.Tensor, Iterable[float]], exec_time: Union[torch.Tensor, float],
@@ -425,6 +453,7 @@ class ReplacementChannel(Channel):
         sigma: The state to be replaced.
         system_idx: Indices of the qubits on which the channels act, the length of which is :math:`n`.
             Defaults to list(range(# of acted qubits)).
+
     """
     def __init__(
             self, sigma: State,

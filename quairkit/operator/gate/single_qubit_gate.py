@@ -43,6 +43,8 @@ class H(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _h(torch.complex128)
 
@@ -80,6 +82,8 @@ class S(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _s(torch.complex128)
 
@@ -117,6 +121,8 @@ class Sdg(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _sdg(torch.complex128)
 
@@ -155,6 +161,8 @@ class T(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _t(torch.complex128)
 
@@ -192,6 +200,8 @@ class Tdg(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _tdg(torch.complex128)
 
@@ -229,6 +239,8 @@ class X(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
 
     __matrix = _x(torch.complex128)
@@ -266,6 +278,8 @@ class Y(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _y(torch.complex128)
 
@@ -302,6 +316,8 @@ class Z(Gate):
     Args:
         qubits_idx: Indices of the qubits on which the gates are applied. Defaults to the first qubit.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     __matrix = _z(torch.complex128)
 
@@ -342,6 +358,9 @@ class P(ParamGate):
 
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
+    
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -377,6 +396,9 @@ class RX(ParamGate):
 
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -412,6 +434,9 @@ class RY(ParamGate):
 
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -447,6 +472,9 @@ class RZ(ParamGate):
 
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,
@@ -485,6 +513,9 @@ class U3(ParamGate):
 
     Raises:
         ValueError: The ``param`` must be ``torch.Tensor`` or ``float``.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
             self, qubits_idx: Optional[Union[Iterable, int, str]] = None,

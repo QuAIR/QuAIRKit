@@ -20,6 +20,7 @@ The source file of the Circuit class.
 import math
 import shutil
 import warnings
+from copy import deepcopy
 from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 
 import matplotlib
@@ -31,7 +32,8 @@ from .ansatz import (AmplitudeEncoding, AngleEncoding, BasisEncoding,
                      ComplexBlockLayer, ComplexEntangledLayer, IQPEncoding,
                      Layer, LinearEntangledLayer, OperatorList, RealBlockLayer,
                      RealEntangledLayer, TrotterLayer, Universal2, Universal3)
-from .core import Hamiltonian, StateSimulator, intrinsic, latex, utils
+from .core import (Hamiltonian, OperatorInfoType, StateSimulator, intrinsic,
+                   latex, qasm2_to_info, to_state, utils)
 from .core.intrinsic import _alias
 from .database.state import zero_state
 from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CY, CZ, MS, RX,
@@ -228,7 +230,7 @@ class Circuit(OperatorList):
                 return _fig
 
     @property
-    def qasm(self) -> str:
+    def qasm(self) -> Union[str, List[str]]:
         r"""String representation of the circuit in qasm-like format.
 
         Returns:
@@ -239,11 +241,13 @@ class Circuit(OperatorList):
         physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
         qasm_str = self.get_qasm(transpile=False)
         self.system_idx = physical_idx
-        
-        return '\n'.join([qreg, qasm_str])
-    
+
+        if isinstance(qasm_str, str):
+            return '\n'.join([qreg, qasm_str])
+        return ['\n'.join([qreg, item]) for item in qasm_str]
+
     @property
-    def qasm2(self) -> str:
+    def qasm2(self) -> Union[str, List[str]]:
         r"""Transpile the circuit in OpenQASM 2.0 format.
 
         Returns:
@@ -259,8 +263,9 @@ class Circuit(OperatorList):
         physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
         qasm_str = self.get_qasm(transpile=True)
         self.system_idx = physical_idx
-        
-        return '\n'.join([header, qreg, qasm_str])
+        if isinstance(qasm_str, str):
+            return '\n'.join([header, qreg, qasm_str])
+        return ['\n'.join([header, qreg, item]) for item in qasm_str]
     
     def unitary_matrix(self) -> torch.Tensor:
         r"""Get the unitary matrix form of the circuit.
@@ -1087,7 +1092,7 @@ class Circuit(OperatorList):
         qubits_idx = self.register_idx(qubits_idx, 2)
         self.append(RZZ(qubits_idx, param, param_sharing))
 
-    def ms(self, qubits_idx: Union[Iterable[int], str] = 'cycle') -> None:
+    def ms(self, qubits_idx: Union[Iterable[int], str] = 'linear') -> None:
         r"""Add Mølmer-Sørensen (MS) gates.
 
         The matrix form is:
@@ -1351,16 +1356,16 @@ class Circuit(OperatorList):
         
         if control_idx is None:
             system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
-            system_idx = self.register_idx(system_idx, len(system_idx))
-            
             acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+            
+            system_idx = self.register_idx(system_idx, len(system_idx))
             self.append(Oracle(oracle, system_idx, acted_system_dim, gate_info))
         else:
             if isinstance(system_idx[0], int):
                 system_idx[0] = [system_idx[0]]
             _system_idx = system_idx[0] + system_idx[1:]
-            _system_idx = self.register_idx(_system_idx, len(_system_idx))
             acted_system_dim = [self.system_dim[idx] for idx in _system_idx]
+            system_idx = self.register_idx(system_idx, len(_system_idx))
 
             ctrl_dim = math.prod(acted_system_dim[:len(system_idx[0])])
             if control_idx == -1:
@@ -1460,17 +1465,17 @@ class Circuit(OperatorList):
         
         if control_idx is None:
             system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
-            system_idx = self.register_idx(system_idx, len(system_idx))
-            
             acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+            
+            system_idx = self.register_idx(system_idx, len(system_idx))
             self.append(ParamOracle(
                 generator, system_idx, param, num_acted_param, acted_system_dim, gate_info, support_batch))
         else:
             if isinstance(system_idx[0], int):
                 system_idx[0] = [system_idx[0]]
             _system_idx = system_idx[0] + system_idx[1:]
-            _system_idx = self.register_idx(_system_idx, len(_system_idx))
             acted_system_dim = [self.system_dim[idx] for idx in _system_idx]
+            system_idx = self.register_idx(system_idx, len(_system_idx))
             
             ctrl_dim = math.prod(acted_system_dim[:len(system_idx[0])])
             assert control_idx < ctrl_dim, f"Control index out of range: expect < {ctrl_dim}, got {control_idx}."
@@ -1501,8 +1506,13 @@ class Circuit(OperatorList):
                 \lstick{} & \meter[2]{} & {} \\
                 \lstick{} & {} & {}
         """
+        if system_idx is None:
+            acted_system_dim = self.system_dim.copy()
+        elif isinstance(system_idx, int):
+            acted_system_dim = [self.system_dim[system_idx]]
+        else:
+            acted_system_dim = [self.system_dim[idx] for idx in system_idx]
         system_idx = self.register_idx(system_idx, None)
-        acted_system_dim = [self.system_dim[idx] for idx in system_idx]
         self.append(Collapse(system_idx, acted_system_dim, post_selection, if_print, measure_basis))
     
     @_alias({"system_idx": "qubits_idx"})
@@ -1532,11 +1542,12 @@ class Circuit(OperatorList):
         """
         if isinstance(system_idx[0], int):
             system_idx[0] = [system_idx[0]]
-        measure_idx, apply_idx = system_idx[0], system_idx[1:]
-        _system_idx = measure_idx + apply_idx
-        _system_idx = self.register_idx(_system_idx, len(np.unique(_system_idx)))
+        _system_idx = system_idx[0] + system_idx[1:]
         system_dim = [self.system_dim[idx] for idx in _system_idx]
-        measure_dim, apply_dim = system_dim[:len(measure_idx)], system_dim[len(measure_idx):]
+        measure_dim, apply_dim = system_dim[:len(system_idx[0])], system_dim[len(system_idx[0]):]
+        
+        system_idx = self.register_idx(system_idx, len(np.unique(_system_idx)))
+        measure_idx, apply_idx = system_idx[0], system_idx[1:]
         
         gate = Oracle(local_unitary, apply_idx, apply_dim)
         self.append(OneWayLOCC(gate, measure_idx, measure_dim, label=label, latex_name=latex_name))
@@ -1562,11 +1573,12 @@ class Circuit(OperatorList):
         """
         if isinstance(system_idx[0], int):
             system_idx[0] = [system_idx[0]]
-        measure_idx, apply_idx = system_idx[0], system_idx[1:]
-        _system_idx = measure_idx + apply_idx
-        _system_idx = self.register_idx(_system_idx, len(np.unique(_system_idx)))
+        _system_idx = system_idx[0] + system_idx[1:]
         system_dim = [self.system_dim[idx] for idx in _system_idx]
-        measure_dim, apply_dim = system_dim[:len(measure_idx)], system_dim[len(measure_idx):]
+        measure_dim, apply_dim = system_dim[:len(system_idx[0])], system_dim[len(system_idx[0]):]
+        
+        system_idx = self.register_idx(system_idx, len(np.unique(_system_idx)))
+        measure_idx, apply_idx = system_idx[0], system_idx[1:]
         
         if param is None:
             float_dtype = intrinsic._get_float_dtype(self.dtype)
@@ -1593,8 +1605,8 @@ class Circuit(OperatorList):
         if not torch.is_tensor(probability): 
             probability = torch.tensor(probability, dtype=self.dtype, device=self.device)
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
-        system_idx = self.register_idx(system_idx, len(system_idx))
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        system_idx = self.register_idx(system_idx, len(system_idx))
         
         gate_info = {'name': 'quasi', 'tex': latex_name}
         gate = Oracle(list_unitary, system_idx, acted_system_dim, gate_info)
@@ -1620,8 +1632,8 @@ class Circuit(OperatorList):
         if not torch.is_tensor(probability): 
             probability = torch.tensor(probability, dtype=self.dtype, device=self.device)
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
-        system_idx = self.register_idx(system_idx, len(system_idx))
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        system_idx = self.register_idx(system_idx, len(system_idx))
         
         gate_info = {'name': 'quasi', 'tex': latex_name}
         if param is None:
@@ -1637,7 +1649,8 @@ class Circuit(OperatorList):
         
     @_alias({"system_idx": "qubits_idx"})
     def reset(self, system_idx: Union[List[int], int], 
-              replace_state: Optional[StateSimulator] = None, state_label: Optional[str] = None) -> None:
+              replace_state: Optional[Union[torch.Tensor, StateSimulator]] = None, 
+              state_label: Optional[str] = None) -> None:
         r"""Reset the state of the specified systems to a given state.
         
         Args:
@@ -1647,10 +1660,11 @@ class Circuit(OperatorList):
         
         """
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
-        system_idx = self.register_idx(system_idx, len(system_idx))
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
         
-        
+        if isinstance(replace_state, torch.Tensor):
+            replace_state = to_state(replace_state, acted_system_dim)
+        system_idx = self.register_idx(system_idx, len(system_idx))
 
         if replace_state:
             assert acted_system_dim == replace_state.system_dim, \
@@ -1777,18 +1791,20 @@ class Circuit(OperatorList):
         qubits_idx = self.register_idx(qubits_idx, None)
         self.append(ComplexBlockLayer(qubits_idx, depth, param))
     
-    def basis_encoding(self, number: int, qubits_idx: Optional[List[int]] = None) -> None:
+    def basis_encoding(self, number: Union[int, List[int], torch.Tensor],
+                       qubits_idx: Optional[List[int]] = None) -> None:
         r"""Prepares a basis encoding layer that performs :math:`|0\rangle^{\otimes n} \to |x\rangle`
             
         Args:
-            number: the integer to be encoded.
+            number: Integer to be encoded (must be in [0, 2**n_qubits - 1]).
+                    If batched, must be List[int], torch.Tensor.
             qubits_idx: Indices of the qubits on which the layer is applied. Defaults to ``None``.
             
         Examples:
             .. code-block:: python
 
                 qc = Circuit(2)
-                qc.basic_encoding(3, [0, 1])
+                qc.basis_encoding(3, [0, 1])
                 print(f'The latex code of this circuit is:\n{qc.to_latex()}')
 
             ::
@@ -1805,7 +1821,7 @@ class Circuit(OperatorList):
         r"""Prepares an amplitude encoding layer that performs :math:`|0\rangle^{\otimes n} \to \sum_{i=0}^{d-1} x_i |i\rangle`
         
         Args:
-            vector: Input normalized vector to be encoded.
+            vector: Input normalized vector to be encoded. If batched, size must be 2^n_qubits * batch_size
             qubits_idx: Indices of the qubits on which the encoding is applied. Defaults to ``None``.
         
         Examples:
@@ -1832,7 +1848,7 @@ class Circuit(OperatorList):
         r"""Prepares an angle encoding layer that encode angles via rotation gates.
         
         Args:
-            angles: Input vector of angles.
+            angles: Input vector of angles. If batched, size must be num_qubits * batch_size
             qubits_idx: Indices of the qubits on which the encoding is applied. Defaults to ``None``.
             rotation: Type of rotation gate ('RY', 'RZ', or 'RX').
             
@@ -1861,7 +1877,7 @@ class Circuit(OperatorList):
         r"""Prepares an instantaneous quantum polynomial (IQP) layer that encode angles via a type of rotation gates.
         
         Args:
-            features: Input vector for encoding.
+            features: Input vector for encoding. If batched, size must be num_qubits * batch_size
             set_entanglement: the set containing all pairs of qubits to be entangled using RZZ gates
             qubits_idx: Indices of the qubits on which the encoding is applied. Defaults to ``None``.
             depth: Number of depth. Defaults to 1.
@@ -2177,12 +2193,14 @@ class Circuit(OperatorList):
         self.append(ThermalRelaxation(const_t, exec_time, qubits_idx))
 
     def choi_channel(self, choi_repr: Iterable[torch.Tensor],
-                     system_idx: Union[Iterable[Iterable[int]], Iterable[int], int]) -> None:
+                     system_idx: Union[Iterable[Iterable[int]], Iterable[int], int],
+                     check_legality: bool = True) -> None:
         r"""Add custom channels in the Choi representation.
 
         Args:
             choi_repr: Choi representation.
             system_idx: Systems to apply the channel on.
+            check_legality: whether to check the legality of the input Choi operator. Defaults to ``True``.
 
         Examples:
             .. code-block:: python
@@ -2201,21 +2219,23 @@ class Circuit(OperatorList):
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
         system_idx = self.register_idx(system_idx, len(system_idx))
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
-        self.append(ChoiRepr(choi_repr, system_idx, acted_system_dim))
+        self.append(ChoiRepr(choi_repr, system_idx, acted_system_dim, check_legality))
 
-    def kraus_channel(self, kraus_oper: Iterable[torch.Tensor],
-                      system_idx: Union[Iterable[Iterable[int]], Iterable[int], int]) -> None:
+    def kraus_channel(self, kraus_repr: Iterable[torch.Tensor],
+                      system_idx: Union[Iterable[Iterable[int]], Iterable[int], int],
+                      check_legality: bool = True) -> None:
         r"""Add custom channels in the Kraus representation.
 
         Args:
-            kraus_oper: Kraus operators.
+            kraus_repr: Kraus operators.
             system_idx: Systems to apply the channel on.
+            check_legality: whether to check the legality of the input representation. Defaults to ``True``.
 
         Examples:
             .. code-block:: python
 
                 qc = Circuit(2)
-                qc.kraus_channel(kraus_oper=eye(2), system_idx=[0])
+                qc.kraus_channel(kraus_repr=eye(2), system_idx=[0])
                 print(f'The latex code of this circuit is:\n{qc.to_latex()}')
 
             ::
@@ -2226,15 +2246,17 @@ class Circuit(OperatorList):
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
         system_idx = self.register_idx(system_idx, len(system_idx))
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
-        self.append(KrausRepr(kraus_oper, system_idx, acted_system_dim))
+        self.append(KrausRepr(kraus_repr, system_idx, acted_system_dim, check_legality))
 
     def stinespring_channel(self, stinespring_repr: Iterable[torch.Tensor],
-                             system_idx: Union[Iterable[Iterable[int]], Iterable[int], int]) -> None:
+                             system_idx: Union[Iterable[Iterable[int]], Iterable[int], int],
+                             check_legality: bool = True) -> None:
         r"""Add custom channels in the Stinespring representation.
 
         Args:
             stinespring_repr: Stinespring representation.
             system_idx: Systems to apply the channel on.
+            check_legality: whether to check the legality of the input representation. Defaults to ``True``.
 
         Examples:
             .. code-block:: python
@@ -2251,4 +2273,177 @@ class Circuit(OperatorList):
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
         system_idx = self.register_idx(system_idx, len(system_idx))
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
-        self.append(StinespringRepr(stinespring_repr, system_idx, acted_system_dim))
+        self.append(StinespringRepr(stinespring_repr, system_idx, acted_system_dim, check_legality))
+        
+    __1input = ['h', 's', 'sdg', 't', 'tdg', 'x', 'y', 'z', 'cnot', 'cy', 'cz', 'swap', 'cswap', 'ccx', 'ms']
+    __3input = ['p', 'rx', 'ry', 'rz', 'u3', 'cp', 'crx', 'cry', 'crz', 'cu', 'rxx', 'ryy', 'rzz']
+    __custom_gate = ['permute', 'control_permute', 'oracle', 'control_oracle', 'param_oracle']
+    __special = ['measure', 'locc', 'quasi', 'reset']
+    __noise = ['bit_flip', 'phase_flip', 'bit_phase_flip', 'amplitude_damping', 'generalized_amplitude_damping',
+               'phase_damping', 'depolarizing', 'generalized_depolarizing', 'pauli_channel', 'reset_channel','thermal_relaxation',]
+    __custom_channel = ['choi_channel', 'kraus_channel', 'stinespring_channel']
+    
+    @classmethod
+    def from_operators(cls, list_operators: List[OperatorInfoType]) -> 'Circuit':
+        r"""Reconstruct a Circuit from a saved operator_history (same format as OperatorList.operator_history).
+        Do not support daggered list_operators.
+
+        Args:
+            list_operators: operator_history list (or nested lists).
+
+        Returns:
+            Circuit: a Circuit instance with the same sequence of operations.
+        
+        Note:
+            This function assumes all systems are qubits.
+        """
+
+        if not list_operators:
+            raise ValueError("Input an empty list!")
+        
+        max_index = -1
+        list_operators = [element for item in list_operators
+                          for element in (item if isinstance(item, list) else [item])]
+        for op_info in list_operators:
+            system_idx: List[List[int]] = op_info['system_idx']
+            for sub_list in system_idx:
+                max_index = max([max_index] + sub_list)
+
+        num_systems = max_index + 1 if max_index >= 0 else 1
+        system_dim = [2] * num_systems
+        cir = cls(num_systems, system_dim, list(range(num_systems)))
+        for op_info in list_operators:
+            if (op_info.get('api', '') not in ['t', 's', 'sdg', 'tdg']) and (op_info.get('tex', '').find('dagger') >= 0):
+                raise NotImplementedError("Daggered OperatorList not supported!")
+            
+            if op_info['name'] in cls.__special:
+                _load_special(cir, op_info)
+
+            elif op_info['api'] in cls.__1input:
+                method = getattr(cir, op_info['api'])
+                method(op_info['system_idx'])
+
+            elif op_info['api'] in cls.__3input:
+                method = getattr(cir, op_info['api'])
+                param = op_info['param'][0] if op_info['param_sharing'] else op_info['param']
+                method(op_info['system_idx'], param, op_info['param_sharing'])
+
+            elif op_info['api'] in cls.__custom_gate:
+                _load_custom_gate(cir, op_info)
+
+            elif op_info['api'] in cls.__noise:
+                method = getattr(cir, op_info['api'])
+                method(qubits_idx=op_info['system_idx'], **op_info['kwargs'])
+
+            elif op_info['api'] in cls.__custom_channel:
+                _load_custom_channel(cir, op_info)
+
+            else:
+                raise NotImplementedError(f'{op_info["name"]} not supported!')
+        return cir
+    
+    @classmethod
+    def from_qasm2(cls, qasm: str) -> 'Circuit':
+        r"""Reconstruct a Circuit from a QASM2 string.
+
+        Args:
+            qasm: A complete OpenQASM 2.0 string representing a circuit.
+
+        Returns:
+            a Circuit instance with the same sequence of operations.
+            
+        Raises:
+            ValueError: if the program header is missing or does not include "qelib1.inc", or malformed ops.
+            NotImplementedError: if the program contains gate/opaque definitions or classically conditioned "if".
+            
+        Note:
+            commands such as "barrier", "creg" are ignored. Multiple quantum registers are merged by order of definition. The circuit is assumed to be composed of qubits only.
+        """
+        return cls.from_operators(qasm2_to_info(qasm))
+
+
+def _load_special(cir: Circuit, info: OperatorInfoType) -> None:
+    r"""Load special operators: measure, reset, locc, quasi into a Circuit.
+    """
+    if info['name'] == 'measure':
+        for system_idx in info['system_idx']:
+            cir.measure(system_idx, info.get('label', None), **info['kwargs'])
+
+    elif info['name'] == 'reset':
+        replace_state = info['kwargs']['replace_dm']
+        tex = info['tex']
+        for system_idx in info['system_idx']:
+            cir.reset(system_idx, replace_state, tex)
+
+    elif info['name'] == 'locc':
+        if info['kwargs']['info']['api'] == 'param_oracle':
+            param = info['kwargs']['info']['param']
+            cir.param_locc(info['kwargs']['info']['kwargs']['generator'], param.shape[-1],
+                                        info['system_idx'][0], param=param)
+        else:
+            for system_idx in info['system_idx']:
+                matrix = info['kwargs']['info']['matrix'].clone()
+                cir.locc(matrix, system_idx)
+
+    elif info['name'] == 'quasi':
+        if info['api'] == 'oracle':
+            matrix = info['matrix']
+            for system_idx in info['system_idx']:
+                cir.quasi(matrix, info["kwargs"]["probability"], system_idx)
+        elif info['api'] == 'param_oracle':
+            param = info['param']
+            cir.param_quasi(info['kwargs']['generator'], param.shape[-1],
+                                        info["kwargs"]["probability"], info['system_idx'][0],
+                                        info["kwargs"]["probability_param"], param)
+        else:
+            raise NotImplementedError(f"Quasi operator with {info['api']} not implemented!")
+
+    else:
+        raise ValueError(f"{info['name']} not found in special operators")
+        
+def _load_custom_gate(cir: Circuit, info: OperatorInfoType) -> None:
+    r"""Load custom gates: permute, control_permute, oracle, control_oracle, param_oracle into a Circuit.
+    """
+    if info['api'] == 'permute':
+        for system_idx in info['system_idx']:
+            cir.permute(info['permute'], system_idx)
+    elif info['api'] == 'control_permute':
+        system_idx = deepcopy(info['system_idx'][0])
+        system_idx = [system_idx[:info['num_ctrl_system']]] + system_idx[info['num_ctrl_system']:]
+        cir.permute(info['permute'], system_idx, int(info['label']))
+
+    elif info['api'] == 'oracle':
+        for system_idx in info['system_idx']:
+            cir.oracle(info['matrix'], system_idx)
+
+    elif info['api'] == 'control_oracle':
+        system_idx = deepcopy(info['system_idx'][0])
+        system_idx = [system_idx[:info['num_ctrl_system']]] + system_idx[info['num_ctrl_system']:]
+        cir.oracle(info['matrix'], system_idx, int(info['label']))
+
+    elif info['api'] == 'param_oracle':
+        param = info['param']
+        if 'label' in info.keys():
+            system_idx = deepcopy(info['system_idx'][0])
+            system_idx = [system_idx[:info['num_ctrl_system']]] + system_idx[info['num_ctrl_system']:]
+            cir.param_oracle(info['kwargs']['generator'], param.shape[-1], system_idx,
+                                        int(info['label']), param)
+        else:
+            cir.param_oracle(info['kwargs']['generator'], param.shape[-1],
+                                        info['system_idx'], param=param)
+    
+    else:
+        raise ValueError(f"{info['api']} not found in custom gates")
+            
+def _load_custom_channel(cir: Circuit, info: OperatorInfoType) -> None:
+    r"""Load custom channels: choi_channel, kraus_channel, stinespring_channel into a Circuit.
+    """
+    system_idx = info['system_idx'][0]
+    if info['api'] == 'choi_channel':
+        cir.choi_channel(info['kwargs']['choi_repr'], system_idx)
+    elif info['api'] == 'kraus_channel':
+        cir.kraus_channel(info['kwargs']['kraus_repr'], system_idx)
+    elif info['api'] == 'stinespring_channel':
+        cir.stinespring_channel(info['kwargs']['stinespring_channel'], system_idx)
+    else:
+        raise ValueError(f"{info['api']} not found in custom channels")

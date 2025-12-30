@@ -198,6 +198,12 @@ class OperatorListDrawer:
     
     """
     def __init__(self, style: str, decimals: int) -> None:
+        style = style.lower()
+        if style not in ['standard', 'compact', 'detailed']:
+            raise ValueError(
+                f"The style must be 'standard', 'compact' or 'detailed': received {style}."
+            )
+        
         self.style = style
         self.decimals = decimals
         self._code: Dict[int, List[str]] = {}
@@ -577,6 +583,7 @@ class OperatorListDrawer:
         assert depth > 0, \
                 f"Layer must have non-zero depth: received {depth}"
         num_op_per_layer, num_remain_layer = divmod(len(list_info), depth)
+        
         layer_style = self.style
 
         drawer = OperatorListDrawer(layer_style, self.decimals)
@@ -585,12 +592,12 @@ class OperatorListDrawer:
             list_info, list_end_info = list_info[:num_op_per_layer], list_info[-num_remain_layer:]
         for info in list_info:
             drawer.append(info)
-
         min_idx, max_idx = min(drawer._code.keys()), max(drawer._code.keys())
         label_pos = 'above' if min_idx == 0 else 'below'
-
+        max_len = max((len(lst) for lst in drawer._code.values()), default=0)
+        
         drawer._code[min_idx][0] += (r'\gategroup[' + str(len(drawer._code)) + 
-                                     r',steps=' + str(len(drawer._code[max_idx])) + 
+                                     r',steps=' + str(max_len) + 
                                      r',style={inner sep=4pt,dashed,label={' + label_pos + 
                                      r':{' + name + r'}}}]{}')
         drawer.fill_all()

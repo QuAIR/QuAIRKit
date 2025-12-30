@@ -160,7 +160,7 @@ class RealBlockLayer(Layer):
         self.append(CNOT(cnot_acted_list))
 
     def __add_ry_layer(self, param: torch.Tensor, qubits_idx: List[int], position: List[int]):
-        ry_acted_list = list(range(qubits_idx[position[0]], qubits_idx[position[1]] + 1))
+        ry_acted_list = [[qubits_idx[i]] for i in range(position[0], position[1] + 1)]
         self.append(RY(ry_acted_list, param=torch.nn.Parameter(param.view([-1, 1, 1]))))
 
 
@@ -209,7 +209,7 @@ class ComplexBlockLayer(Layer):
         self.append(CNOT(cnot_acted_list))
 
     def __add_u3_layer(self, param: torch.Tensor, qubits_idx: List[int], position: List[int]):
-        u3_acted_list = list(range(qubits_idx[position[0]], qubits_idx[position[1]] + 1))
+        u3_acted_list = [[qubits_idx[i]] for i in range(position[0], position[1] + 1)]
         self.append(U3(u3_acted_list, param=torch.nn.Parameter(param.view([-1, 1, 3]))))
 
 

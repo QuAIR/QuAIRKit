@@ -41,6 +41,9 @@ class Oracle(Gate):
         system_idx: Indices of the systems on which the gates are applied.
         acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
+    
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
             self, oracle: torch.Tensor, system_idx: Union[List[int], int],
@@ -48,7 +51,7 @@ class Oracle(Gate):
     ):
         default_gate_info = {
             "name": "oracle",
-            "tex": r'\text{oracle}',
+            "tex": r'\mathtt{oracle}',
             "api": "oracle",
             'plot_width': 0.6,
         }
@@ -82,7 +85,10 @@ class ControlOracle(Gate):
             or an int representing the dimension of all systems. Defaults to be qubit case.
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
             Defaults to ``None``.
-    
+
+    Note:
+        The forward function of this class will not create a new instance of state.
+
     """
     def __init__(
         self, oracle: torch.Tensor, system_idx: List[Union[List[int], int]], index: int, 
@@ -94,7 +100,7 @@ class ControlOracle(Gate):
         ctrl_system_dim = [acted_system_dim] * num_ctrl_system if isinstance(acted_system_dim, int) else acted_system_dim[:num_ctrl_system]
         default_gate_info = {
             "name": "coracle",
-            "tex": r'\text{oracle}',
+            "tex": r'\mathtt{oracle}',
             "api": "control_oracle",
             "num_ctrl_system": len(ctrl_system_idx),
             "label": _int_to_digit(index, ctrl_system_dim).zfill(num_ctrl_system),
@@ -123,6 +129,7 @@ class ControlOracle(Gate):
         if (perm := info.get('permute', None)) and len(perm) > 2:
             perm = utils.linalg._perm_of_list(perm, list(range(len(perm))))
             info['permute'] = perm
+        info['matrix'] = self.__apply_matrix
         return info
         
     @property
@@ -137,8 +144,7 @@ class ControlOracle(Gate):
         _eye = torch.eye(matrix.shape[-1]).expand_as(matrix)
         return utils.linalg._kron(proj, matrix) + utils.linalg._kron(torch.eye(ctrl_dim) - proj, _eye)
     
-    def forward(self, state: StateSimulator) -> StateSimulator:
-        state = state.clone()
+    def forward(self, state: StateSimulator) -> StateSimulator: 
         state._evolve_ctrl(self._apply_matrix, self.__index, self.__system_idx)
         return state
     
@@ -160,6 +166,8 @@ class ParamOracle(ParamGate):
             Defaults to ``None``.
         support_batch: whether the generator supports batched input. Defaults to ``True``.
 
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
         self, generator: Callable[[torch.Tensor], torch.Tensor], system_idx: Union[List[int], int],
@@ -168,7 +176,7 @@ class ParamOracle(ParamGate):
     ):
         default_gate_info = {
             "name": "oracle",
-            "tex": r'\text{oracle}',
+            "tex": r'\mathtt{oracle}',
             "param_sharing": False,
             "api": "param_oracle",
             "kwargs": {"generator": generator},
@@ -193,6 +201,9 @@ class ControlParamOracle(ParamGate):
         gate_info: information of this gate that will be placed into the gate history or plotted by a Circuit. 
             Defaults to ``None``.
         support_batch: whether the generator supports batched input. Defaults to ``True``.
+    
+    Note:
+        The forward function of this class will not create a new instance of state.
 
     """
     def __init__(
@@ -206,12 +217,13 @@ class ControlParamOracle(ParamGate):
         ctrl_system_dim = [acted_system_dim] * num_ctrl_system if isinstance(acted_system_dim, int) else acted_system_dim[:num_ctrl_system]
         default_gate_info = {
             "name": "coracle",
-            "tex": r'\text{oracle}',
+            "tex": r'\mathtt{oracle}',
             "param_sharing": False,
             "api": "param_oracle",
             "num_ctrl_system": len(ctrl_system_idx),
             "label": _int_to_digit(index, ctrl_system_dim).zfill(num_ctrl_system),
             'plot_width': 0.6,
+            "kwargs": {"generator": generator},
         }
         default_gate_info.update(gate_info or {})
         super().__init__(generator, param, num_acted_param, False, ctrl_system_idx + system_idx[1:], 
@@ -233,7 +245,6 @@ class ControlParamOracle(ParamGate):
         return utils.linalg._kron(proj, matrix) + utils.linalg._kron(torch.eye(ctrl_dim) - proj, _eye)
     
     def forward(self, state: StateSimulator) -> StateSimulator:
-        state = state.clone()
         state._evolve_ctrl(super().matrix, self.__index, self.__system_idx)
         return state
 
@@ -253,6 +264,9 @@ class UniversalQudits(ParamGate):
         param_sharing: Whether gates in the same layer share a parameter. Defaults to ``False``.
         acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
+
+    Note:
+        The forward function of this class will not create a new instance of state.
     """
     def __init__(
         self, system_idx: Optional[Union[Iterable[int], str]], acted_system_dim: Iterable[int],
@@ -291,7 +305,7 @@ class Permutation(Gate):
         system_idx: Indices of the systems on which the gates are applied.
         acted_system_dim: dimension of systems that this gate acts on. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
-    
+
     """
     def __init__(
             self, perm: List[int], system_idx: List[Union[List[int], int]],

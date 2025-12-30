@@ -83,6 +83,10 @@ def __to_operator_state(
 
     if data is None:
         return initializer(data, system_dim)
+    
+    if isinstance(system_dim, int):
+        raise NotImplementedError(
+            "For state operator, `system_dim` should be a list of integers, but got an integer.")
 
     assert isinstance(data, List) and all(
         isinstance(op, OperatorInfo) for op in data

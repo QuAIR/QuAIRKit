@@ -400,67 +400,67 @@ def _toffoli(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
 
 
 def _universal2(theta: torch.Tensor) -> torch.Tensor:
-    theta, complex_dtype = theta.view([15]), __get_complex_dtype(theta.dtype)
+    theta, complex_dtype = theta.view([-1, 15]), __get_complex_dtype(theta.dtype)
     unitary = _eye(4, complex_dtype)
     _cnot_gate = _cnot(complex_dtype)
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[[0, 1, 2]]), qubit_idx=0, num_qubits=2
+        unitary, _u3(theta[:, [0, 1, 2]]), qubit_idx=0, num_qubits=2
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[[3, 4, 5]]), qubit_idx=1, num_qubits=2
+        unitary, _u3(theta[:, [3, 4, 5]]), qubit_idx=1, num_qubits=2
     )
     unitary = utils.linalg._unitary_transformation(
         unitary, _cnot_gate, qubit_idx=[1, 0], num_qubits=2
     )
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _rz(theta[[6]]), qubit_idx=0, num_qubits=2
+        unitary, _rz(theta[:, [6]]), qubit_idx=0, num_qubits=2
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _ry(theta[[7]]), qubit_idx=1, num_qubits=2
+        unitary, _ry(theta[:, [7]]), qubit_idx=1, num_qubits=2
     )
     unitary = utils.linalg._unitary_transformation(
         unitary, _cnot_gate, qubit_idx=[0, 1], num_qubits=2
     )
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _ry(theta[[8]]), qubit_idx=1, num_qubits=2
+        unitary, _ry(theta[:, [8]]), qubit_idx=1, num_qubits=2
     )
     unitary = utils.linalg._unitary_transformation(
         unitary, _cnot_gate, qubit_idx=[1, 0], num_qubits=2
     )
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[[9, 10, 11]]), qubit_idx=0, num_qubits=2
+        unitary, _u3(theta[:, [9, 10, 11]]), qubit_idx=0, num_qubits=2
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[[12, 13, 14]]), qubit_idx=1, num_qubits=2
+        unitary, _u3(theta[:, [12, 13, 14]]), qubit_idx=1, num_qubits=2
     )
 
     return unitary
 
 
 def _universal3(theta: torch.Tensor) -> torch.Tensor:
-    theta, complex_dtype = theta.view([81]), __get_complex_dtype(theta.dtype)
+    theta, complex_dtype = theta.view([-1, 81]), __get_complex_dtype(theta.dtype)
     unitary = _eye(8, complex_dtype)
     __h, __s, __cnot = _h(complex_dtype), _s(complex_dtype), _cnot(complex_dtype)
 
-    psi = torch.reshape(theta[:60], shape=[4, 15])
-    phi = torch.reshape(theta[60:], shape=[7, 3])
+    psi = torch.reshape(theta[:, :60], shape=[-1, 4, 15])
+    phi = torch.reshape(theta[:, 60:], shape=[-1, 7, 3])
 
     def __block_u(_unitary, _theta):
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[0]), qubit_idx=1, num_qubits=3
+            _unitary, _ry(_theta[:, 0]), qubit_idx=1, num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[0, 1], num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[1]), qubit_idx=1, num_qubits=3
+            _unitary, _ry(_theta[:, 1]), qubit_idx=1, num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[0, 1], num_qubits=3
@@ -481,7 +481,7 @@ def _universal3(theta: torch.Tensor) -> torch.Tensor:
             _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
-            _unitary, _rz(_theta[2]), qubit_idx=2, num_qubits=3
+            _unitary, _rz(_theta[:, 2]), qubit_idx=2, num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
@@ -503,13 +503,13 @@ def _universal3(theta: torch.Tensor) -> torch.Tensor:
         )
 
         _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[0]), qubit_idx=2, num_qubits=3
+            _unitary, _ry(_theta[:, 0]), qubit_idx=2, num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[1]), qubit_idx=2, num_qubits=3
+            _unitary, _ry(_theta[:, 1]), qubit_idx=2, num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
@@ -531,7 +531,7 @@ def _universal3(theta: torch.Tensor) -> torch.Tensor:
             _unitary, __cnot, qubit_idx=[0, 2], num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
-            _unitary, _rz(_theta[2]), qubit_idx=2, num_qubits=3
+            _unitary, _rz(_theta[:, 2]), qubit_idx=2, num_qubits=3
         )
         _unitary = utils.linalg._unitary_transformation(
             _unitary, __cnot, qubit_idx=[0, 2], num_qubits=3
@@ -539,34 +539,34 @@ def _universal3(theta: torch.Tensor) -> torch.Tensor:
         return _unitary
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[0]), qubit_idx=[0, 1], num_qubits=3
+        unitary, _universal2(psi[:, 0]), qubit_idx=[0, 1], num_qubits=3
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[0, 0:3]), qubit_idx=2, num_qubits=3
+        unitary, _u3(phi[:, 0, 0:3]), qubit_idx=2, num_qubits=3
     )
-    unitary = __block_u(unitary, phi[1])
+    unitary = __block_u(unitary, phi[:, 1])
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[1]), qubit_idx=[0, 1], num_qubits=3
+        unitary, _universal2(psi[:, 1]), qubit_idx=[0, 1], num_qubits=3
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[2, 0:3]), qubit_idx=2, num_qubits=3
+        unitary, _u3(phi[:, 2, 0:3]), qubit_idx=2, num_qubits=3
     )
-    unitary = __block_v(unitary, phi[3])
+    unitary = __block_v(unitary, phi[:, 3])
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[2]), qubit_idx=[0, 1], num_qubits=3
+        unitary, _universal2(psi[:, 2]), qubit_idx=[0, 1], num_qubits=3
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[4, 0:3]), qubit_idx=2, num_qubits=3
+        unitary, _u3(phi[:, 4, 0:3]), qubit_idx=2, num_qubits=3
     )
-    unitary = __block_u(unitary, phi[5])
+    unitary = __block_u(unitary, phi[:, 5])
 
     unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[3]), qubit_idx=[0, 1], num_qubits=3
+        unitary, _universal2(psi[:, 3]), qubit_idx=[0, 1], num_qubits=3
     )
     unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[6, 0:3]), qubit_idx=2, num_qubits=3
+        unitary, _u3(phi[:, 6, 0:3]), qubit_idx=2, num_qubits=3
     )
     return unitary
 

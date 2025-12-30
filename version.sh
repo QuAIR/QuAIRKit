@@ -85,6 +85,12 @@ for tag in "${tags[@]}"; do
             sphinx-build docs/sphinx_src docs/api/$tag
             rm -rf docs/sphinx_src
             ;;
+        v0.4.4 | *)
+            python docs/update_quairkit_rst.py
+            cp -r tutorials docs/sphinx_src/
+            sphinx-build docs/sphinx_src docs/api/$tag
+            rm -rf docs/sphinx_src
+            ;;
     esac
 done
 

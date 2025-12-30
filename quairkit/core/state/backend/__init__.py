@@ -56,7 +56,8 @@ def set_backend(backend: Union[str, State]) -> None:
     
     backend_str = backend.backend
     assert backend_str is not None, \
-        f"New backend should have a non-trivial `backend` string attribute, but got {backend_str}."
+        (f"New backend should have a non-trivial `backend` string attribute, but got {backend_str}" +
+         "Please add a class attribute `backend` to the new backend class.")
     if backend_str in list_backend:
         assert backend.__name__ == (search_backend := BACKEND_LIST[backend_str].__name__), \
             (f"'{backend_str}' is already registered as {search_backend} in the backend list, "

@@ -244,6 +244,43 @@ class Measure(Operator):
             and dim == measure_op.shape[-3]
             and num_measure_systems == state.num_systems
         )
+        
+    def __measure_simulator_backend(
+        self, state: StateSimulator, system_idx: List[int], shots: Optional[int],
+        desired_result: Optional[torch.Tensor], keep_state: bool
+    ) -> Union[torch.Tensor, Tuple[torch.Tensor, StateSimulator]]:
+        measure_all_sys = self.__check_measure_op(state, system_idx)
+        measure_op = self.measure_op
+
+        if desired_result is not None:
+            measure_op = torch.index_select(measure_op, dim=-3, index=desired_result)
+        
+        prob_array, measured_state = state.measure(system_idx, shots=shots, measure_op=measure_op, keep_state=True)
+
+        if keep_state:
+            if measure_all_sys:
+                measure_basis = self.measure_basis.permute(system_idx)
+                if desired_result is not None:
+                    measure_basis = measure_basis[desired_result]
+                measured_state = measure_basis.expand_as(measured_state)
+            return prob_array, measured_state
+        return prob_array
+    
+    def __measure_operator_backend(
+        self, state: StateOperator, system_idx: List[int], shots: Optional[int],
+        desired_result: Optional[torch.Tensor], keep_state: bool
+    ) -> Union[torch.Tensor, Tuple[torch.Tensor, StateOperator]]:
+        assert not keep_state, \
+            "The post-measurement state is not supported for state operators."
+        
+        measure_op = self.measure_op
+        if isinstance(measure_op, List):
+            raise NotImplementedError(
+                "The measurement with multiple measurement operators is not supported for state operators.")
+        prob_array = state.measure(system_idx, shots=shots, measure_op=measure_op)
+        if desired_result:
+            prob_array = torch.index_select(prob_array, dim=-1, index=desired_result)
+        return prob_array
 
     @_alias({"system_idx": "qubits_idx"})
     def forward(
@@ -279,30 +316,12 @@ class Measure(Operator):
             else:
                 desired_result = [(_digit_to_int(res, system_dim) if isinstance(res, str) else res)
                                 for res in desired_result]
-            desired_result = torch.tensor(desired_result)
+            desired_result = torch.tensor(desired_result, dtype=torch.long)
 
         if isinstance(state, StateSimulator):
-            measure_all_sys = self.__check_measure_op(state, system_idx)
-            measure_op = self.measure_op
-
-            if desired_result is not None:
-                measure_op = torch.index_select(measure_op, dim=-3, index=desired_result)
-            prob_array, measured_state = state.measure(system_idx, shots=shots, measure_op=measure_op, keep_state=True)
-
-            if keep_state:
-                if measure_all_sys:
-                    measured_state = self.measure_basis.expand_as(measured_state)
-                return prob_array, measured_state
-            return prob_array
+            return self.__measure_simulator_backend(
+                state, system_idx, shots, desired_result, keep_state
+            )
         
-        assert not keep_state, \
-            "The post-measurement state is not supported for state operators."
-        
-        measure_op = self.measure_op
-        if isinstance(measure_op, List):
-            raise NotImplementedError(
-                "The measurement with multiple measurement operators is not supported for state operators.")
-        prob_array = state.measure(system_idx, shots=shots, measure_op=measure_op)
-        if desired_result:
-            prob_array = torch.index_select(prob_array, dim=-1, index=desired_result)
-        return prob_array
+        return self.__measure_operator_backend(
+            state, system_idx, shots, desired_result, keep_state)

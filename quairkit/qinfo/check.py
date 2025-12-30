@@ -40,19 +40,21 @@ __all__ = [
 ]
 
 
-def is_choi(op: _ArrayLike) -> Union[bool, List[bool]]:
+def is_choi(op: _ArrayLike, trace_preserving: bool = True, eps: float = 1e-6) -> Union[bool, List[bool]]:
     r"""Check if the input op is a Choi operator of a physical operation.
         Support batch input.
 
     Args:
         op: matrix form of the linear operation.
+        trace_preserving: whether check the operation is trace-preserving. Default to be `True`.
+        eps: tolerance of error. Default value is 1e-6.
 
     Returns:
         Whether the input op is a valid quantum operation Choi operator. 
         For batch input, return a boolean array with the same batch dimensions as input.
 
     Note:
-        The operation op is (default) applied to the second system.
+        Assume the output system is the second system, and dimensions of input and output systems are the same.
 
     .. code-block:: python
 
@@ -70,7 +72,7 @@ def is_choi(op: _ArrayLike) -> Union[bool, List[bool]]:
     assert utils.check._is_square(op), \
         f"The input matrix is not a square matrix: received shape {op.shape}"
 
-    return utils.check._is_choi(op).tolist()
+    return utils.check._is_choi(op, trace_preserving, eps).tolist()
 
 
 def is_density_matrix(
