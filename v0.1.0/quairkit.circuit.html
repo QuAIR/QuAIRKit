@@ -3775,7 +3775,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.circuit.Circuit.basis_encoding.number (Python parameter) — the integer to be encoded."><span>number</span></span>
+      <span title="quairkit.circuit.Circuit.basis_encoding.number (Python parameter) — Integer to be encoded (must be in [0, 2**n_qubits - 1]). If batched, must be List[int], torch.Tensor."><span>number</span></span>
     </span>
   </a>
   
@@ -4829,6 +4829,18 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.choi_channel.check_legality" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.choi_channel.check_legality (Python parameter) — whether to check the legality of the input Choi operator."><span>check_<wbr>legality</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4864,12 +4876,12 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quairkit.circuit.Circuit.kraus_channel.kraus_oper" class="md-nav__link">
+  <a href="#quairkit.circuit.Circuit.kraus_channel.kraus_repr" class="md-nav__link">
     
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.circuit.Circuit.kraus_channel.kraus_oper (Python parameter) — Kraus operators."><span>kraus_<wbr>oper</span></span>
+      <span title="quairkit.circuit.Circuit.kraus_channel.kraus_repr (Python parameter) — Kraus operators."><span>kraus_<wbr>repr</span></span>
     </span>
   </a>
   
@@ -4882,6 +4894,18 @@
     
     <span class="md-ellipsis">
       <span title="quairkit.circuit.Circuit.kraus_channel.system_idx (Python parameter) — Systems to apply the channel on."><span>system_<wbr>idx</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.kraus_channel.check_legality" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.kraus_channel.check_legality (Python parameter) — whether to check the legality of the input representation."><span>check_<wbr>legality</span></span>
     </span>
   </a>
   
@@ -4945,8 +4969,162 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.stinespring_channel.check_legality" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.stinespring_channel.check_legality (Python parameter) — whether to check the legality of the input representation."><span>check_<wbr>legality</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_operators (Python method) — Reconstruct a Circuit from a saved operator_history (same format as OperatorList.operator_history). Do not support daggered list_operators."><span>from_<wbr>operators</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="from_operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators.list_operators" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_operators.list_operators (Python parameter) — operator_history list (or nested lists)."><span>list_<wbr>operators</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_qasm2 (Python method) — Reconstruct a Circuit from a QASM2 string."><span>from_<wbr>qasm2</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="from_qasm2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2.qasm" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_qasm2.qasm (Python parameter) — A complete OpenQASM 2.0 string representing a circuit."><span>qasm</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-raises" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Raises</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
   
 </li>
         
@@ -8591,7 +8769,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.circuit.Circuit.basis_encoding.number (Python parameter) — the integer to be encoded."><span>number</span></span>
+      <span title="quairkit.circuit.Circuit.basis_encoding.number (Python parameter) — Integer to be encoded (must be in [0, 2**n_qubits - 1]). If batched, must be List[int], torch.Tensor."><span>number</span></span>
     </span>
   </a>
   
@@ -9645,6 +9823,18 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.choi_channel.check_legality" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.choi_channel.check_legality (Python parameter) — whether to check the legality of the input Choi operator."><span>check_<wbr>legality</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -9680,12 +9870,12 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quairkit.circuit.Circuit.kraus_channel.kraus_oper" class="md-nav__link">
+  <a href="#quairkit.circuit.Circuit.kraus_channel.kraus_repr" class="md-nav__link">
     
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.circuit.Circuit.kraus_channel.kraus_oper (Python parameter) — Kraus operators."><span>kraus_<wbr>oper</span></span>
+      <span title="quairkit.circuit.Circuit.kraus_channel.kraus_repr (Python parameter) — Kraus operators."><span>kraus_<wbr>repr</span></span>
     </span>
   </a>
   
@@ -9698,6 +9888,18 @@
     
     <span class="md-ellipsis">
       <span title="quairkit.circuit.Circuit.kraus_channel.system_idx (Python parameter) — Systems to apply the channel on."><span>system_<wbr>idx</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.kraus_channel.check_legality" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.kraus_channel.check_legality (Python parameter) — whether to check the legality of the input representation."><span>check_<wbr>legality</span></span>
     </span>
   </a>
   
@@ -9761,8 +9963,162 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.stinespring_channel.check_legality" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.stinespring_channel.check_legality (Python parameter) — whether to check the legality of the input representation."><span>check_<wbr>legality</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_operators (Python method) — Reconstruct a Circuit from a saved operator_history (same format as OperatorList.operator_history). Do not support daggered list_operators."><span>from_<wbr>operators</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="from_operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators.list_operators" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_operators.list_operators (Python parameter) — operator_history list (or nested lists)."><span>list_<wbr>operators</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_operators-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_qasm2 (Python method) — Reconstruct a Circuit from a QASM2 string."><span>from_<wbr>qasm2</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="from_qasm2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2.qasm" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.circuit.Circuit.from_qasm2.qasm (Python parameter) — A complete OpenQASM 2.0 string representing a circuit."><span>qasm</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-raises" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Raises</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.circuit.Circuit.from_qasm2-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
   
 </li>
         
@@ -9916,7 +10272,7 @@ visualization.</p>
 
 <dl class="py property objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.qasm">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qasm</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">str</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.qasm" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qasm</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#quairkit.circuit.Circuit.qasm" title="Link to this definition">¶</a></dt>
 <dd><p>String representation of the circuit in qasm-like format.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.qasm-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.qasm-returns" title="Permalink to this headline">¶</a></dt>
@@ -9927,7 +10283,7 @@ visualization.</p>
 
 <dl class="py property objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.qasm2">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qasm2</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">str</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.qasm2" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qasm2</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#quairkit.circuit.Circuit.qasm2" title="Link to this definition">¶</a></dt>
 <dd><p>Transpile the circuit in OpenQASM 2.0 format.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.qasm2-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.qasm2-returns" title="Permalink to this headline">¶</a></dt>
@@ -10803,7 +11159,7 @@ visualization.</p>
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.ms">
-<span class="sig-name descname"><span class="pre">ms</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.ms.qubits_idx" title="quairkit.circuit.Circuit.ms.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied."><span class="n"><span class="pre">qubits_idx</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;cycle&#39;</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.ms" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ms</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.ms.qubits_idx" title="quairkit.circuit.Circuit.ms.qubits_idx (Python parameter) — Indices of the qubits on which the gates are applied."><span class="n"><span class="pre">qubits_idx</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;linear&#39;</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.ms" title="Link to this definition">¶</a></dt>
 <dd><p>Add Mølmer-Sørensen (MS) gates.</p>
 <p>The matrix form is:</p>
 <div class="math notranslate nohighlight">
@@ -11298,7 +11654,7 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.circuit.Circuit.reset.system_idx"><span class="sig-name descname">system_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.reset.system_idx" title="Permalink to this definition">¶</a></dt><dd><p>list of systems to be reset.</p>
 </dd>
-<dt id="quairkit.circuit.Circuit.reset.replace_state"><span class="sig-name descname">replace_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator | None</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.reset.replace_state" title="Permalink to this definition">¶</a></dt><dd><p>the state to replace the quantum state. Defaults to zero state.</p>
+<dt id="quairkit.circuit.Circuit.reset.replace_state"><span class="sig-name descname">replace_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | StateSimulator | None</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.reset.replace_state" title="Permalink to this definition">¶</a></dt><dd><p>the state to replace the quantum state. Defaults to zero state.</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.reset.state_label"><span class="sig-name descname">state_label</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | None</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.reset.state_label" title="Permalink to this definition">¶</a></dt><dd><p>LaTeX label of the reset state, used for printing. Defaults to r’rho’ or r’ket{0}’.</p>
 </dd>
@@ -11444,12 +11800,13 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.basis_encoding">
-<span class="sig-name descname"><span class="pre">basis_encoding</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.basis_encoding.number" title="quairkit.circuit.Circuit.basis_encoding.number (Python parameter) — the integer to be encoded."><span class="n"><span class="pre">number</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.basis_encoding.qubits_idx" title="quairkit.circuit.Circuit.basis_encoding.qubits_idx (Python parameter) — Indices of the qubits on which the layer is applied."><span class="n"><span class="pre">qubits_idx</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.basis_encoding" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">basis_encoding</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.basis_encoding.number" title="quairkit.circuit.Circuit.basis_encoding.number (Python parameter) — Integer to be encoded (must be in [0, 2**n_qubits - 1]). If batched, must be List[int], torch.Tensor."><span class="n"><span class="pre">number</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.basis_encoding.qubits_idx" title="quairkit.circuit.Circuit.basis_encoding.qubits_idx (Python parameter) — Indices of the qubits on which the layer is applied."><span class="n"><span class="pre">qubits_idx</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.basis_encoding" title="Link to this definition">¶</a></dt>
 <dd><p>Prepares a basis encoding layer that performs <span class="math notranslate nohighlight">\(|0\rangle^{\otimes n} \to |x\rangle\)</span></p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.basis_encoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.basis_encoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.circuit.Circuit.basis_encoding.number"><span class="sig-name descname">number</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.basis_encoding.number" title="Permalink to this definition">¶</a></dt><dd><p>the integer to be encoded.</p>
+<dt id="quairkit.circuit.Circuit.basis_encoding.number"><span class="sig-name descname">number</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.basis_encoding.number" title="Permalink to this definition">¶</a></dt><dd><p>Integer to be encoded (must be in [0, 2**n_qubits - 1]).
+If batched, must be List[int], torch.Tensor.</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.basis_encoding.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | None</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.basis_encoding.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the layer is applied. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
@@ -11458,7 +11815,7 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 </dl>
 <p class="example rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">qc</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">basic_encoding</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">basis_encoding</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The latex code of this circuit is:</span><span class="se">\n</span><span class="si">{</span><span class="n">qc</span><span class="o">.</span><span class="n">to_latex</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
@@ -11476,7 +11833,7 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.amplitude_encoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.amplitude_encoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.circuit.Circuit.amplitude_encoding.vector"><span class="sig-name descname">vector</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.amplitude_encoding.vector" title="Permalink to this definition">¶</a></dt><dd><p>Input normalized vector to be encoded.</p>
+<dt id="quairkit.circuit.Circuit.amplitude_encoding.vector"><span class="sig-name descname">vector</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.amplitude_encoding.vector" title="Permalink to this definition">¶</a></dt><dd><p>Input normalized vector to be encoded. If batched, size must be 2^n_qubits * batch_size</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.amplitude_encoding.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | None</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.amplitude_encoding.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the encoding is applied. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
@@ -11504,7 +11861,7 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.angle_encoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.angle_encoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.circuit.Circuit.angle_encoding.angles"><span class="sig-name descname">angles</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.angle_encoding.angles" title="Permalink to this definition">¶</a></dt><dd><p>Input vector of angles.</p>
+<dt id="quairkit.circuit.Circuit.angle_encoding.angles"><span class="sig-name descname">angles</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.angle_encoding.angles" title="Permalink to this definition">¶</a></dt><dd><p>Input vector of angles. If batched, size must be num_qubits * batch_size</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.angle_encoding.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | None</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.angle_encoding.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the encoding is applied. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
@@ -11534,7 +11891,7 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.iqp_encoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.iqp_encoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.circuit.Circuit.iqp_encoding.features"><span class="sig-name descname">features</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.iqp_encoding.features" title="Permalink to this definition">¶</a></dt><dd><p>Input vector for encoding.</p>
+<dt id="quairkit.circuit.Circuit.iqp_encoding.features"><span class="sig-name descname">features</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.iqp_encoding.features" title="Permalink to this definition">¶</a></dt><dd><p>Input vector for encoding. If batched, size must be num_qubits * batch_size</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.iqp_encoding.set_entanglement"><span class="sig-name descname">set_entanglement</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[List[int]]</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.iqp_encoding.set_entanglement" title="Permalink to this definition">¶</a></dt><dd><p>the set containing all pairs of qubits to be entangled using RZZ gates</p>
 </dd>
@@ -11888,7 +12245,7 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.choi_channel">
-<span class="sig-name descname"><span class="pre">choi_channel</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.choi_channel.choi_repr" title="quairkit.circuit.Circuit.choi_channel.choi_repr (Python parameter) — Choi representation."><span class="n"><span class="pre">choi_repr</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.choi_channel.system_idx" title="quairkit.circuit.Circuit.choi_channel.system_idx (Python parameter) — Systems to apply the channel on."><span class="n"><span class="pre">system_idx</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.choi_channel" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">choi_channel</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.choi_channel.choi_repr" title="quairkit.circuit.Circuit.choi_channel.choi_repr (Python parameter) — Choi representation."><span class="n"><span class="pre">choi_repr</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.choi_channel.system_idx" title="quairkit.circuit.Circuit.choi_channel.system_idx (Python parameter) — Systems to apply the channel on."><span class="n"><span class="pre">system_idx</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.choi_channel.check_legality" title="quairkit.circuit.Circuit.choi_channel.check_legality (Python parameter) — whether to check the legality of the input Choi operator."><span class="n"><span class="pre">check_legality</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.choi_channel" title="Link to this definition">¶</a></dt>
 <dd><p>Add custom channels in the Choi representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.choi_channel-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.choi_channel-parameters" title="Permalink to this headline">¶</a></dt>
@@ -11896,6 +12253,8 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <dt id="quairkit.circuit.Circuit.choi_channel.choi_repr"><span class="sig-name descname">choi_repr</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Tensor]</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.choi_channel.choi_repr" title="Permalink to this definition">¶</a></dt><dd><p>Choi representation.</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.choi_channel.system_idx"><span class="sig-name descname">system_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Iterable[int]] | Iterable[int] | int</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.choi_channel.system_idx" title="Permalink to this definition">¶</a></dt><dd><p>Systems to apply the channel on.</p>
+</dd>
+<dt id="quairkit.circuit.Circuit.choi_channel.check_legality"><span class="sig-name descname">check_legality</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.choi_channel.check_legality" title="Permalink to this definition">¶</a></dt><dd><p>whether to check the legality of the input Choi operator. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -11916,21 +12275,23 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.kraus_channel">
-<span class="sig-name descname"><span class="pre">kraus_channel</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.kraus_channel.kraus_oper" title="quairkit.circuit.Circuit.kraus_channel.kraus_oper (Python parameter) — Kraus operators."><span class="n"><span class="pre">kraus_oper</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.kraus_channel.system_idx" title="quairkit.circuit.Circuit.kraus_channel.system_idx (Python parameter) — Systems to apply the channel on."><span class="n"><span class="pre">system_idx</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">kraus_channel</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.kraus_channel.kraus_repr" title="quairkit.circuit.Circuit.kraus_channel.kraus_repr (Python parameter) — Kraus operators."><span class="n"><span class="pre">kraus_repr</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.kraus_channel.system_idx" title="quairkit.circuit.Circuit.kraus_channel.system_idx (Python parameter) — Systems to apply the channel on."><span class="n"><span class="pre">system_idx</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.kraus_channel.check_legality" title="quairkit.circuit.Circuit.kraus_channel.check_legality (Python parameter) — whether to check the legality of the input representation."><span class="n"><span class="pre">check_legality</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel" title="Link to this definition">¶</a></dt>
 <dd><p>Add custom channels in the Kraus representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.kraus_channel-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.circuit.Circuit.kraus_channel.kraus_oper"><span class="sig-name descname">kraus_oper</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Tensor]</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel.kraus_oper" title="Permalink to this definition">¶</a></dt><dd><p>Kraus operators.</p>
+<dt id="quairkit.circuit.Circuit.kraus_channel.kraus_repr"><span class="sig-name descname">kraus_repr</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Tensor]</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel.kraus_repr" title="Permalink to this definition">¶</a></dt><dd><p>Kraus operators.</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.kraus_channel.system_idx"><span class="sig-name descname">system_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Iterable[int]] | Iterable[int] | int</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel.system_idx" title="Permalink to this definition">¶</a></dt><dd><p>Systems to apply the channel on.</p>
+</dd>
+<dt id="quairkit.circuit.Circuit.kraus_channel.check_legality"><span class="sig-name descname">check_legality</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.kraus_channel.check_legality" title="Permalink to this definition">¶</a></dt><dd><p>whether to check the legality of the input representation. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">qc</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">kraus_channel</span><span class="p">(</span><span class="n">kraus_oper</span><span class="o">=</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">kraus_channel</span><span class="p">(</span><span class="n">kraus_repr</span><span class="o">=</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The latex code of this circuit is:</span><span class="se">\n</span><span class="si">{</span><span class="n">qc</span><span class="o">.</span><span class="n">to_latex</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
@@ -11941,8 +12302,8 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 </dd></dl>
 
 <dl class="py method objdesc">
-<dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.stinespring_channel">
-<span class="sig-name descname"><span class="pre">stinespring_channel</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.stinespring_channel.stinespring_repr" title="quairkit.circuit.Circuit.stinespring_channel.stinespring_repr (Python parameter) — Stinespring representation."><span class="n"><span class="pre">stinespring_repr</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.stinespring_channel.system_idx" title="quairkit.circuit.Circuit.stinespring_channel.system_idx (Python parameter) — Systems to apply the channel on."><span class="n"><span class="pre">system_idx</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.stinespring_channel" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.circuit.Circuit.stinespring_channel">
+<span class="sig-name descname"><span class="pre">stinespring_channel</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.stinespring_channel.stinespring_repr" title="quairkit.circuit.Circuit.stinespring_channel.stinespring_repr (Python parameter) — Stinespring representation."><span class="n"><span class="pre">stinespring_repr</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.stinespring_channel.system_idx" title="quairkit.circuit.Circuit.stinespring_channel.system_idx (Python parameter) — Systems to apply the channel on."><span class="n"><span class="pre">system_idx</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.stinespring_channel.check_legality" title="quairkit.circuit.Circuit.stinespring_channel.check_legality (Python parameter) — whether to check the legality of the input representation."><span class="n"><span class="pre">check_legality</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.stinespring_channel" title="Link to this definition">¶</a></dt>
 <dd><p>Add custom channels in the Stinespring representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.circuit.Circuit.stinespring_channel-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.stinespring_channel-parameters" title="Permalink to this headline">¶</a></dt>
@@ -11950,6 +12311,8 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <dt id="quairkit.circuit.Circuit.stinespring_channel.stinespring_repr"><span class="sig-name descname">stinespring_repr</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Tensor]</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.stinespring_channel.stinespring_repr" title="Permalink to this definition">¶</a></dt><dd><p>Stinespring representation.</p>
 </dd>
 <dt id="quairkit.circuit.Circuit.stinespring_channel.system_idx"><span class="sig-name descname">system_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[Iterable[int]] | Iterable[int] | int</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.stinespring_channel.system_idx" title="Permalink to this definition">¶</a></dt><dd><p>Systems to apply the channel on.</p>
+</dd>
+<dt id="quairkit.circuit.Circuit.stinespring_channel.check_legality"><span class="sig-name descname">check_legality</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.stinespring_channel.check_legality" title="Permalink to this definition">¶</a></dt><dd><p>whether to check the legality of the input representation. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -11963,6 +12326,61 @@ where <span class="math notranslate nohighlight">\(d\)</span> is the gate dimens
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">latex</span> <span class="n">code</span> <span class="n">of</span> <span class="n">this</span> <span class="n">circuit</span> <span class="ow">is</span><span class="p">:</span>
 \<span class="n">lstick</span><span class="p">{}</span> <span class="o">&amp;</span> \<span class="n">gate</span><span class="p">[</span><span class="mi">1</span><span class="p">]{</span>\<span class="n">mathcal</span><span class="p">{</span><span class="n">N</span><span class="p">}}</span>
 </code></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.from_operators">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_operators</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.from_operators.list_operators" title="quairkit.circuit.Circuit.from_operators.list_operators (Python parameter) — operator_history list (or nested lists)."><span class="n"><span class="pre">list_operators</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_operators" title="Link to this definition">¶</a></dt>
+<dd><p>Reconstruct a Circuit from a saved operator_history (same format as OperatorList.operator_history).
+Do not support daggered list_operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.circuit.Circuit.from_operators-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_operators-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.circuit.Circuit.from_operators.list_operators"><span class="sig-name descname">list_operators</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[OperatorInfoType]</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.from_operators.list_operators" title="Permalink to this definition">¶</a></dt><dd><p>operator_history list (or nested lists).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.circuit.Circuit.from_operators-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_operators-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>a Circuit instance with the same sequence of operations.</p>
+</dd>
+<dt class="field-odd" id="quairkit.circuit.Circuit.from_operators-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_operators-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quairkit.circuit.Circuit" title="quairkit.circuit.Circuit (Python class) — Class for quantum circuit.">Circuit</a></p>
+</dd>
+</dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function assumes all systems are qubits.</p>
+</div>
+</dd></dl>
+
+<dl class="py method objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.circuit.Circuit.from_qasm2">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qasm2</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.circuit.Circuit.from_qasm2.qasm" title="quairkit.circuit.Circuit.from_qasm2.qasm (Python parameter) — A complete OpenQASM 2.0 string representing a circuit."><span class="n"><span class="pre">qasm</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_qasm2" title="Link to this definition">¶</a></dt>
+<dd><p>Reconstruct a Circuit from a QASM2 string.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.circuit.Circuit.from_qasm2-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_qasm2-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.circuit.Circuit.from_qasm2.qasm"><span class="sig-name descname">qasm</span><span class="p"> : </span><span class="desctype"><span class="desctype">str</span></span><a class="headerlink" href="#quairkit.circuit.Circuit.from_qasm2.qasm" title="Permalink to this definition">¶</a></dt><dd><p>A complete OpenQASM 2.0 string representing a circuit.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.circuit.Circuit.from_qasm2-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_qasm2-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>a Circuit instance with the same sequence of operations.</p>
+</dd>
+<dt class="field-odd" id="quairkit.circuit.Circuit.from_qasm2-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_qasm2-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – if the program header is missing or does not include “qelib1.inc”, or malformed ops.</p></li>
+<li><p><strong>NotImplementedError</strong> – if the program contains gate/opaque definitions or classically conditioned “if”.</p></li>
+</ul>
+</dd>
+<dt class="field-even" id="quairkit.circuit.Circuit.from_qasm2-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.circuit.Circuit.from_qasm2-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p><a class="reference internal" href="#quairkit.circuit.Circuit" title="quairkit.circuit.Circuit (Python class) — Class for quantum circuit."><em>Circuit</em></a></p>
+</dd>
+</dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>commands such as “barrier”, “creg” are ignored. Multiple quantum registers are merged by order of definition. The circuit is assumed to be composed of qubits only.</p>
 </div>
 </dd></dl>
 

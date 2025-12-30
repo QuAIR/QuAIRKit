@@ -427,7 +427,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.ansatz.encoding.BasisEncoding.__init__.data (Python parameter) — Integer to be encoded (must be in [0, 2**n - 1] where n is number of qubits)."><span>data</span></span>
+      <span title="quairkit.ansatz.encoding.BasisEncoding.__init__.data (Python parameter) — Integer to be encoded (must be in [0, 2**n_qubits - 1]). If batched, must be List[int], torch.Tensor."><span>data</span></span>
     </span>
   </a>
   
@@ -983,7 +983,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.ansatz.encoding.BasisEncoding.__init__.data (Python parameter) — Integer to be encoded (must be in [0, 2**n - 1] where n is number of qubits)."><span>data</span></span>
+      <span title="quairkit.ansatz.encoding.BasisEncoding.__init__.data (Python parameter) — Integer to be encoded (must be in [0, 2**n_qubits - 1]). If batched, must be List[int], torch.Tensor."><span>data</span></span>
     </span>
   </a>
   
@@ -1233,7 +1233,7 @@
 - IQP encoding</p>
 <dl class="py class objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.ansatz.encoding.BasisEncoding">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quairkit.ansatz.encoding.</span></span><span class="sig-name descname"><span class="pre">BasisEncoding</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.data" title="quairkit.ansatz.encoding.BasisEncoding.__init__.data (Python parameter) — Integer to be encoded (must be in [0, 2**n - 1] where n is number of qubits)."><span class="n"><span class="pre">data</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.qubits_idx" title="quairkit.ansatz.encoding.BasisEncoding.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the encoding is applied."><span class="n"><span class="pre">qubits_idx</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.ansatz.encoding.BasisEncoding" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quairkit.ansatz.encoding.</span></span><span class="sig-name descname"><span class="pre">BasisEncoding</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.data" title="quairkit.ansatz.encoding.BasisEncoding.__init__.data (Python parameter) — Integer to be encoded (must be in [0, 2**n_qubits - 1]). If batched, must be List[int], torch.Tensor."><span class="n"><span class="pre">data</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.qubits_idx" title="quairkit.ansatz.encoding.BasisEncoding.__init__.qubits_idx (Python parameter) — Indices of the qubits on which the encoding is applied."><span class="n"><span class="pre">qubits_idx</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.ansatz.encoding.BasisEncoding" title="Link to this definition">¶</a></dt>
 <dd><p>Basis encoding for classical data.</p>
 <p>Encodes an integer into a computational basis state:</p>
 <div class="math notranslate nohighlight">
@@ -1244,7 +1244,8 @@
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.ansatz.encoding.BasisEncoding.__init__.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the encoding is applied.</p>
 </dd>
-<dt id="quairkit.ansatz.encoding.BasisEncoding.__init__.data"><span class="sig-name descname">data</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.data" title="Permalink to this definition">¶</a></dt><dd><p>Integer to be encoded (must be in [0, 2**n - 1] where n is number of qubits).</p>
+<dt id="quairkit.ansatz.encoding.BasisEncoding.__init__.data"><span class="sig-name descname">data</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int] | Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.BasisEncoding.__init__.data" title="Permalink to this definition">¶</a></dt><dd><p>Integer to be encoded (must be in [0, 2**n_qubits - 1]).
+If batched, must be List[int], torch.Tensor.</p>
 </dd>
 </dl>
 </dd>
@@ -1262,7 +1263,7 @@
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.ansatz.encoding.AmplitudeEncoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.ansatz.encoding.AmplitudeEncoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.ansatz.encoding.AmplitudeEncoding.__init__.vector"><span class="sig-name descname">vector</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.AmplitudeEncoding.__init__.vector" title="Permalink to this definition">¶</a></dt><dd><p>Input vector to be encoded.</p>
+<dt id="quairkit.ansatz.encoding.AmplitudeEncoding.__init__.vector"><span class="sig-name descname">vector</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.AmplitudeEncoding.__init__.vector" title="Permalink to this definition">¶</a></dt><dd><p>Input vector to be encoded. If batched, size must be 2^n_qubits * batch_size</p>
 </dd>
 <dt id="quairkit.ansatz.encoding.AmplitudeEncoding.__init__.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.AmplitudeEncoding.__init__.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the encoding is applied.</p>
 </dd>
@@ -1283,7 +1284,7 @@
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.ansatz.encoding.AngleEncoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.ansatz.encoding.AngleEncoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.ansatz.encoding.AngleEncoding.__init__.angles"><span class="sig-name descname">angles</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.AngleEncoding.__init__.angles" title="Permalink to this definition">¶</a></dt><dd><p>Input vector of angles.</p>
+<dt id="quairkit.ansatz.encoding.AngleEncoding.__init__.angles"><span class="sig-name descname">angles</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.AngleEncoding.__init__.angles" title="Permalink to this definition">¶</a></dt><dd><p>Input vector of angles. If batched, size must be num_qubits * batch_size</p>
 </dd>
 <dt id="quairkit.ansatz.encoding.AngleEncoding.__init__.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.AngleEncoding.__init__.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the encoding is applied.</p>
 </dd>
@@ -1306,7 +1307,7 @@ to be entangled using <span class="math notranslate nohighlight">\(R_{zz}\)</spa
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.ansatz.encoding.IQPEncoding-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.ansatz.encoding.IQPEncoding-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.ansatz.encoding.IQPEncoding.__init__.features"><span class="sig-name descname">features</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.IQPEncoding.__init__.features" title="Permalink to this definition">¶</a></dt><dd><p>Input vector for encoding.</p>
+<dt id="quairkit.ansatz.encoding.IQPEncoding.__init__.features"><span class="sig-name descname">features</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.IQPEncoding.__init__.features" title="Permalink to this definition">¶</a></dt><dd><p>Input vector for encoding. If batched, size must be num_qubits * batch_size</p>
 </dd>
 <dt id="quairkit.ansatz.encoding.IQPEncoding.__init__.set_entanglement"><span class="sig-name descname">set_entanglement</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[List[int]]</span></span><a class="headerlink" href="#quairkit.ansatz.encoding.IQPEncoding.__init__.set_entanglement" title="Permalink to this definition">¶</a></dt><dd><p>the set containing all pairs of qubits to be entangled using RZZ gates</p>
 </dd>

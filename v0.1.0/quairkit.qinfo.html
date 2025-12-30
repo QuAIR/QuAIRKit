@@ -439,6 +439,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.is_choi.trace_preserving" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.is_choi.trace_preserving (Python parameter) — whether check the operation is trace-preserving."><span>trace_<wbr>preserving</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.is_choi.eps" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.is_choi.eps (Python parameter) — tolerance of error."><span>eps</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4798,6 +4822,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.is_choi.trace_preserving" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.is_choi.trace_preserving (Python parameter) — whether check the operation is trace-preserving."><span>trace_<wbr>preserving</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.qinfo.is_choi.eps" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.qinfo.is_choi.eps (Python parameter) — tolerance of error."><span>eps</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -9110,7 +9158,7 @@
 <p>The library of functions in quantum information theory and quantum computing.</p>
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.is_choi">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.</span></span><span class="sig-name descname"><span class="pre">is_choi</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.is_choi.op" title="quairkit.qinfo.is_choi.op (Python parameter) — matrix form of the linear operation."><span class="n"><span class="pre">op</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.is_choi" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.</span></span><span class="sig-name descname"><span class="pre">is_choi</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.is_choi.op" title="quairkit.qinfo.is_choi.op (Python parameter) — matrix form of the linear operation."><span class="n"><span class="pre">op</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.is_choi.trace_preserving" title="quairkit.qinfo.is_choi.trace_preserving (Python parameter) — whether check the operation is trace-preserving."><span class="n"><span class="pre">trace_preserving</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.is_choi.eps" title="quairkit.qinfo.is_choi.eps (Python parameter) — tolerance of error."><span class="n"><span class="pre">eps</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1e-06</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.is_choi" title="Link to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Check if the input op is a Choi operator of a physical operation.</dt><dd><p>Support batch input.</p>
 </dd>
@@ -9119,6 +9167,10 @@
 <dt class="field-odd" id="quairkit.qinfo.is_choi-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.is_choi-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.qinfo.is_choi.op"><span class="sig-name descname">op</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.is_choi.op" title="Permalink to this definition">¶</a></dt><dd><p>matrix form of the linear operation.</p>
+</dd>
+<dt id="quairkit.qinfo.is_choi.trace_preserving"><span class="sig-name descname">trace_preserving</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.qinfo.is_choi.trace_preserving" title="Permalink to this definition">¶</a></dt><dd><p>whether check the operation is trace-preserving. Default to be <cite>True</cite>.</p>
+</dd>
+<dt id="quairkit.qinfo.is_choi.eps"><span class="sig-name descname">eps</span><span class="p"> : </span><span class="desctype"><span class="desctype">float</span></span><a class="headerlink" href="#quairkit.qinfo.is_choi.eps" title="Permalink to this definition">¶</a></dt><dd><p>tolerance of error. Default value is 1e-6.</p>
 </dd>
 </dl>
 </dd>
@@ -9132,7 +9184,7 @@ For batch input, return a boolean array with the same batch dimensions as input.
 </dl>
 <div class="note admonition">
 <p class="admonition-title">Note</p>
-<p>The operation op is (default) applied to the second system.</p>
+<p>Assume the output system is the second system, and dimensions of input and output systems are the same.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">ischoi</span> <span class="o">=</span> <span class="n">is_choi</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The operation is choi or not:</span><span class="se">\n</span><span class="si">{</span><span class="n">ischoi</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>

@@ -2710,7 +2710,8 @@ or an int representing the dimension of all systems.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.ansatz.container.OperatorList.register_idx-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.ansatz.container.OperatorList.register_idx-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.ansatz.container.OperatorList.register_idx.operator_idx"><span class="sig-name descname">operator_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[int] | int | str | None</span></span><a class="headerlink" href="#quairkit.ansatz.container.OperatorList.register_idx.operator_idx" title="Permalink to this definition">¶</a></dt><dd><p>input system indices of the operator. None means acting on all systems.</p>
+<dt id="quairkit.ansatz.container.OperatorList.register_idx.operator_idx"><span class="sig-name descname">operator_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">Iterable[int] | int | str | None</span></span><a class="headerlink" href="#quairkit.ansatz.container.OperatorList.register_idx.operator_idx" title="Permalink to this definition">¶</a></dt><dd><p>input system indices of the operator. None means acting on all systems.
+Supports negative indices (counting from the end).</p>
 </dd>
 <dt id="quairkit.ansatz.container.OperatorList.register_idx.num_acted_system"><span class="sig-name descname">num_acted_system</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.ansatz.container.OperatorList.register_idx.num_acted_system" title="Permalink to this definition">¶</a></dt><dd><p>number of systems that one operator acts on. None means just check the input.</p>
 </dd>
@@ -2914,7 +2915,7 @@ See Niel’s answer in the [StackExchange](<a class="reference external" href="h
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.ansatz.container.Layer-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.ansatz.container.Layer-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.ansatz.container.Layer.__init__.physical_idx"><span class="sig-name descname">physical_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.container.Layer.__init__.physical_idx" title="Permalink to this definition">¶</a></dt><dd><p>Physical indices of the systems on which this layer is applied.</p>
+<dt id="quairkit.ansatz.container.Layer.__init__.physical_idx"><span class="sig-name descname">physical_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.container.Layer.__init__.physical_idx" title="Permalink to this definition">¶</a></dt><dd><p>Physical indices of the systems on which this layer is applied. Supports negative indices (counting from the end).</p>
 </dd>
 <dt id="quairkit.ansatz.container.Layer.__init__.depth"><span class="sig-name descname">depth</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.container.Layer.__init__.depth" title="Permalink to this definition">¶</a></dt><dd><p>Depth of the layer.</p>
 </dd>
