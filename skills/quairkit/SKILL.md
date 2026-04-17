@@ -1,5 +1,5 @@
 ---
-name: quairkit-guide
+name: quairkit
 description: Write, explain, validate, and reproduce QuAIRKit code using only the reference files in this directory. Use when working with QuAIRKit circuits, states, ansatzes, LOCC, Quantikz plotting, training loops, common workload patterns, or third-party execution backends.
 ---
 
@@ -27,7 +27,7 @@ Use this skill when a task involves:
 
 ### Runtime Install
 
-- Recommended environment: Python 3.10 and PyTorch 2.9.x.
+- Recommended environment: Python 3.10 and PyTorch 2.11.x.
 - On supported wheel platforms, use `pip install quairkit`.
 - Release wheels are acceptable if their PyTorch compatibility matches the environment.
 

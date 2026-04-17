@@ -13,7 +13,7 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3.9+-blue.svg?style=flat-square&logo=python"/>
+    <img src="https://img.shields.io/badge/Python-3.10+-blue.svg?style=flat-square&logo=python"/>
   </a>
   <!-- License -->
   <a href="./LICENSE">
@@ -36,11 +36,11 @@ QuAIRKit provides the following functionalities,
 - Quantum channel simulation
 - Quantum algorithm/information tools
 
-We provide [skills](skills/quairkit) for coding agents to use QuAIRKit.
+We provide [skills](skills/quairkit-guide) for coding agents to use QuAIRKit.
 
 ## Installation
 
-The minimum supported Python version for QuAIRKit is `3.9`. We recommend Python `3.10`.
+The minimum supported Python version for QuAIRKit is `3.10`.
 A typical fresh environment is:
 
 ```bash
@@ -51,7 +51,7 @@ conda install jupyter notebook  # for notebook tutorials
 
 ### Quick start (recommended)
 
-If you use Python >= 3.10, PyTorch >= 2.9, and one of the following platforms: Windows x86_64, Linux x86_64, or macOS Apple Silicon (arm64), the command below installs the recommended PyPI wheel.
+If you use Python >= 3.10, PyTorch >= 2.11, and one of the following platforms: Windows x86_64, Linux x86_64, or macOS Apple Silicon (arm64), the command below installs the recommended PyPI wheel.
 
 ```bash
 pip install quairkit
@@ -63,7 +63,7 @@ Or install a wheel downloaded from [GitHub Releases](https://github.com/QuAIR/Qu
 pip install ./quairkit-0.5.0-*.whl
 ```
 
-These wheels are built against PyTorch 2.9.x and are expected to work with both CPU and CUDA PyTorch builds, as long as your installed PyTorch is also 2.9.x.
+These wheels are built against PyTorch 2.11.x and are expected to work with both CPU and CUDA PyTorch builds, as long as your installed PyTorch is also 2.11.x.
 
 If you need a source or developer install instead, see [Installation from source](#installation-from-source) at the end of this README.
 
@@ -301,7 +301,7 @@ default-mixed
 ## Installation from source
 
 Installation from source will compile the C++ extension and compiler/toolchain with C++17 support.
-Source builds support PyTorch >= 2.4 (recommended: PyTorch 2.9 or newer).
+Source builds support PyTorch >= 2.4 (recommended: PyTorch 2.11 or newer).
 
 Compiler toolchain references (official):
 

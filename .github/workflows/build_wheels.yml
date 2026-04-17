@@ -37,15 +37,17 @@ jobs:
           CIBW_BUILD_VERBOSITY: "1"
           # Windows: PyTorch wheels are 64-bit only.
           CIBW_ARCHS_WINDOWS: "auto64"
-          # Linux: ensure PEP517 build isolation (build-system.requires) also resolves CPU-only torch.
-          CIBW_ENVIRONMENT_LINUX: >-
+          CIBW_ENVIRONMENT: >-
             PIP_INDEX_URL=https://download.pytorch.org/whl/cpu
             PIP_EXTRA_INDEX_URL=https://pypi.org/simple
-          # Build against PyTorch 2.9.x (CPU wheels) to provide consistent ABI expectations.
+            PIP_PREFER_BINARY=1
+            PIP_RETRIES=5
+            PIP_DEFAULT_TIMEOUT=120
           CIBW_BEFORE_BUILD: >-
             python -m pip install --upgrade pip &&
-            python -m pip install "torch==2.9.*" --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple &&
+            python -m pip install "torch==2.11.*" --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple &&
             python -m pip install ninja
+          CIBW_TEST_REQUIRES: "torch==2.11.*"
           CIBW_TEST_COMMAND: >-
             python -c "import quairkit; import quairkit._C; print(quairkit.__version__)"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >-
