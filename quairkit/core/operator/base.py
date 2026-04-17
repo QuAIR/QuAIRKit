@@ -72,7 +72,7 @@ class OperatorInfoType(TypedDict):
     api: str
     permute: List[int]
     kwargs: Dict[str, Any]
-    plot_width: Optional[float]  # TODO depreciated in the next version
+    plot_width: Optional[float]
     
     def __init__(self, *args, **kwargs) -> None:
         raise NotImplementedError(
@@ -107,7 +107,7 @@ class OperatorInfo(dict):
         "api",
         "permute",
         "kwargs",
-        "plot_width",  # TODO depreciated in the next version
+        "plot_width",
     }
 
     def __init__(self, name: str = "unidentified", type: str = "general", **kwargs) -> None:
@@ -170,7 +170,6 @@ class OperatorInfo(dict):
             value = self[key]
             
             if isinstance(value, torch.Tensor):
-                # FIXME Sometimes requires_grad is not set correctly without manually setting requires_grad_(True)
                 new_instance[key] = value.clone().requires_grad_(True) if value.requires_grad else value.clone()
             else:
                 new_instance[key] = copy.deepcopy(value, memo)
@@ -220,10 +219,6 @@ def qasm2_to_info(qasm2: str) -> List[OperatorInfoType]:
             kwargs['type'] = 'channel'
             kwargs['tex'] = r'\ket{0}'
             kwargs['kwargs'] = {'replace_dm': None}
-        elif name == 'measure':
-            kwargs['type'] = 'channel'
-            kwargs['kwargs'] = {'if_print': False,
-                                'measure_basis': None}
         else:
             kwargs['type'] = 'gate'
         

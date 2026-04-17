@@ -26,8 +26,8 @@ import torch
 
 from ..base import get_device, get_dtype
 from ..operator import OperatorInfo, OperatorInfoType
-from .backend import (DefaultSimulator, State, StateOperator, StateSimulator,
-                      get_backend)
+from .backend import (DefaultSimulator, ProductDefaultSimulator, State,
+                      StateOperator, StateSimulator, get_backend)
 
 
 def __to_simulator_state(
@@ -154,5 +154,27 @@ def tensor_state(state_1st: StateSimulator, *args: StateSimulator) -> StateSimul
         Use ``quairkit.linalg.nkron`` if the input datatype is ``torch.Tensor`` or ``numpy.ndarray``.
 
     """
+    if not args:
+        return state_1st
+
+    all_states = [state_1st] + list(args)
+    if all(isinstance(s, DefaultSimulator) for s in all_states):
+        list_state = []
+        list_state_idx = []
+        offset = 0
+
+        for state in all_states:
+            if isinstance(state, ProductDefaultSimulator):
+                for s, idx in state._export_blocks(clone_state=True):
+                    list_state.append(s)
+                    list_state_idx.append([g + offset for g in idx])
+                offset += state.num_systems
+            else:
+                list_state.append(state.clone())
+                list_state_idx.append(list(range(offset, offset + state.num_systems)))
+                offset += state.num_systems
+
+        return ProductDefaultSimulator(list_state, list_state_idx)
+
     __kron_state = lambda state_1st, state_2nd: state_1st.kron(state_2nd)
-    return reduce(__kron_state, args, state_1st) if args else state_1st
+    return reduce(__kron_state, args, state_1st)

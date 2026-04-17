@@ -387,16 +387,13 @@ def _average_fidelity(
     """
     if fid_type == "test" and self.test_unitary_set.__len__() == 0:
         return torch.tensor(-1)
-    # Set up the parameters
     is_comb_mode = self.train_mode == "comb"
     num_target_systems = 2 * self.num_V if is_comb_mode else 2
     system_dim_loss = self.ancilla_dim_list + [self.slot_dim] * num_target_systems
     V_list_applied_index = _get_V_list_applied_index(self, is_comb_mode)
 
-    # Prepare the input state
     Psi_in = _prepare_initial_state(self, is_comb_mode)
 
-    # Construct the circuit
     circuit = _construct_circuit(
         self,
         system_dim_loss,
@@ -404,7 +401,6 @@ def _average_fidelity(
         V_list_applied_index,
     )
 
-    # Compute the output density matrix
     psi_out = circuit(Psi_in).density_matrix @ (
         projector
         if projector is not None
@@ -487,7 +483,6 @@ def _setup_parameters(
         is_ctrl_U: Flag to indicate if a controlled-U operation is used in the training process
         seed: Optional seed for random number generation, enhancing reproducibility
     """
-    # Basic parameters setup
     self._target_function = target_function
     self._is_ctrl_U = is_ctrl_U
     self._slot_dim = slot_dim
@@ -503,7 +498,6 @@ def _setup_parameters(
         task_name or f"pqcomb_{target_function.__name__}{'_ctrl' if is_ctrl_U else ''}"
     )
 
-    # Training parameters setup
     self._seed = seed or np.random.randint(1e6)
 
     _validate_training_mode(self, train_mode)
@@ -750,11 +744,9 @@ def _log_progress(
         )
 
         time_list.clear()
-        # Save results and possibly stop training
         if is_save_data:
             _save_results(self, itr, fidelity, loss.item(), base_lr, current_lr)
 
-        # Stop training if auto-stop conditions are met
     return current_lr < 1e-3 * base_lr and is_auto_stop
 
 
@@ -873,13 +865,10 @@ def _save_results_to_csv(data: Dict[str, Any], filename: str, directory: str) ->
     """
     filepath = os.path.join(directory, filename)
 
-    # Ensure the directory exists
     os.makedirs(directory, exist_ok=True)
 
-    # Define the column names
     fieldnames = list(data.keys())
 
-    # Write to the CSV file
     file_exists = os.path.isfile(filepath)
 
     with open(filepath, mode="a", newline="") as file:
@@ -906,25 +895,18 @@ def _extract_highest_fidelity(data_directory, filename):
             "The pandas library is required to run this function. Please install it using 'pip install pandas'."
         ) from e
 
-    # Construct the full file path
     filepath = os.path.join(data_directory, filename)
 
-    # Read the CSV file into a DataFrame
     df = pd.read_csv(filepath)
 
-    # Find unique slot_dim values
     slot_dim_values = df["slot_dim"].unique()
 
-    # Create a directory to save the result tables
     result_dir = os.path.join(data_directory, "fidelity_tables")
     os.makedirs(result_dir, exist_ok=True)
 
-    # Iterate over each unique slot_dim value
     for slot_dim in slot_dim_values:
-        # Filter the DataFrame for the current slot_dim
         df_filtered = df[df["slot_dim"] == slot_dim]
 
-        # Pivot the table to have num_slots as rows and ancilla_dim as columns, with max fidelity as values
         pivot_table = df_filtered.pivot_table(
             index="num_slots",
             columns="ancilla_dim",
@@ -932,7 +914,6 @@ def _extract_highest_fidelity(data_directory, filename):
             aggfunc="max",
         )
 
-        # Save the pivot table to a CSV file
         output_filename = f"fidelity_table_slot_dim_{slot_dim}.csv"
         output_filepath = os.path.join(result_dir, output_filename)
         pivot_table.to_csv(output_filepath)
@@ -971,7 +952,6 @@ def _train_swap_circuit(
     Returns:
         Tuple[Circuit, float]: The trained SWAP gate circuit and the final loss value.
     """
-    # check if the slot_dim is greater than or equal to the ancilla_dim
     assert self.slot_dim <= self.ancilla_dim, (
         f"slot_dim must be greater than or equal to ancilla_dim, "
         f"but got slot_dim={self.slot_dim} and ancilla_dim={self.ancilla_dim}"
@@ -996,25 +976,19 @@ def _train_swap_circuit(
         @ bell_state(2, self.system_dim).ket
     )
 
-    # define the loss function as 1 minus the fidelity between the Choi matrices of the actual and desired circuits
     def swap_loss_func():
         actual_choi_ket = (
             actual_swap_cir.matrix.kron(torch.eye(self.system_dim))
             @ bell_state(2, self.system_dim).ket
         )
-        # calculate the fidelity between the actual and desired density matrices
         return 1 - abs(utils.linalg._dagger(actual_choi_ket) @ ideal_choi_ket) ** 2
 
-    # initialize the optimizer and scheduler
     opt = torch.optim.Adam(actual_swap_cir.parameters(), lr=base_lr)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, "min")
 
-    # start the training process
     for itr in range(max_epochs):
         _print_progress_bar(itr + 1, max_epochs, prefix="Progress")
-        # calculate the loss
         loss = swap_loss_func()
-        # obtain the updated learning rate
         lr = scheduler.optimizer.param_groups[0]["lr"]
         if loss.item() < loss_threshold or lr < base_lr * 1e-4:
             print(
@@ -1023,16 +997,11 @@ def _train_swap_circuit(
             )
             break
 
-        # zero the gradients
         opt.zero_grad()
-        # backpropagation
         loss.backward()
-        # update the parameters
         opt.step()
-        # adjust the learning rate according to the loss value
         scheduler.step(loss.item())
 
-        # print training information every 40 iterations or on the last iteration
         if itr % 100 == 0 or itr == max_epochs - 1:
             print(
                 f"[pqc_search_swap | \033[90m{itr}\033[0m | {depth}] "
@@ -1101,13 +1070,11 @@ def _swap_train(
         self.V_circuit_list[-1].extend(deepcopy(param_swap_gate))
         self.V_circuit_list.append(deepcopy(param_swap_gate))
         if is_save_data:
-            # Insert SWAP and calculate initial fidelity
             fidelity_train_swap_start = _average_fidelity(
                 self, "train", projector
             ).item()
             fidelity_test_swap_start = _average_fidelity(self, "test", projector).item()
 
-        # Train only SWAP gate
         print("Training only on parameterized SWAP gates.")
         start_time_swap_only = time.time()
         _train(
@@ -1121,17 +1088,14 @@ def _swap_train(
         time_swap_only = time.time() - start_time_swap_only
 
         if is_save_data:
-            # Calculate fidelity after SWAP-only training
             fidelity_train_swap_only = _average_fidelity(
                 self, "train", projector
             ).item()
             fidelity_test_swap_only = _average_fidelity(self, "test", projector).item()
 
-        # Allow all gates to be trained
         for V_circuit in self.V_circuit_list:
             V_circuit.requires_grad_(True)
 
-        # Train all gates
         print("Training on all gates.")
         start_time_all = time.time()
         _train(
@@ -1146,7 +1110,6 @@ def _swap_train(
         if is_save_data:
             time_all = time.time() - start_time_all
 
-            # Calculate fidelity after training all gates
             fidelity_train_all = _average_fidelity(self, "train", projector).item()
             fidelity_test_all = _average_fidelity(self, "test", projector).item()
 
@@ -1203,7 +1166,6 @@ def _swap_train(
                 writer.writerow(swap_start_only_all_fidelity_time_item)
 
     if is_save_data:
-        # Extract the highest fidelity for each combination of num_slots and ancilla_dim
         try:
             import pandas as pd
         except ImportError as e:
@@ -1211,10 +1173,8 @@ def _swap_train(
                 "The pandas library is required to run this function. Please install it using 'pip install pandas'."
             ) from e
 
-        # Read the CSV file into a DataFrame
         df = pd.read_csv(csv_file_name).round(4)
 
-        # Pivot the table to have num_slots as rows and ancilla_dim as columns, with max fidelity_test_all as values
         pivot_table = df.pivot_table(
             index="num_slots",
             columns="ancilla_dim",
@@ -1222,7 +1182,6 @@ def _swap_train(
             aggfunc="max",
         )
 
-        # Save the pivot table to a new CSV file
         max_fidelity_filename = os.path.join(
             self.data_directory_name,
             f"max_fidelity_dataset={self.train_unitary_set.__len__()}_d={self.slot_dim}.csv",

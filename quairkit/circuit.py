@@ -36,17 +36,17 @@ from .core import (Hamiltonian, OperatorInfoType, StateSimulator, intrinsic,
                    latex, qasm2_to_info, to_state, utils)
 from .core.intrinsic import _alias
 from .database.state import zero_state
-from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CY, CZ, MS, RX,
-                       RXX, RY, RYY, RZ, RZZ, SWAP, U3, AmplitudeDamping,
-                       BitFlip, BitPhaseFlip, ChoiRepr, Collapse,
-                       ControlOracle, ControlParamOracle, Depolarizing, Gate,
-                       GeneralizedAmplitudeDamping, GeneralizedDepolarizing, H,
-                       KrausRepr, OneWayLOCC, Oracle, P, ParamOracle,
-                       PauliChannel, Permutation, PhaseDamping, PhaseFlip,
-                       QuasiOperation, ResetChannel, ResetState, S, Sdg,
-                       StinespringRepr, T, Tdg, ThermalRelaxation,
+from .operator import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CY, CZ, MS,
+                       QFT, RX, RXX, RY, RYY, RZ, RZZ, SWAP, U3,
+                       AmplitudeDamping, BitFlip, BitPhaseFlip, ChoiRepr,
+                       Collapse, ControlOracle, ControlParamOracle,
+                       Depolarizing, Gate, GeneralizedAmplitudeDamping,
+                       GeneralizedDepolarizing, H, KrausRepr,
+                       ManifoldUniversalQudits, OneWayLOCC, Oracle, P,
+                       ParamOracle, PauliChannel, Permutation, PhaseDamping,
+                       PhaseFlip, QuasiOperation, ResetChannel, ResetState, S,
+                       Sdg, StinespringRepr, T, Tdg, ThermalRelaxation,
                        UniversalQudits, X, Y, Z)
-from .operator.gate import _circuit_plot
 
 __all__ = ['Circuit']
 
@@ -55,25 +55,30 @@ class Circuit(OperatorList):
     r"""Class for quantum circuit.
 
     Args:
-        num_systems: number of systems in the circuit. Defaults to None. Alias of ``num_qubits``.
-        system_dim: dimension of systems of this circuit. Can be a list of system dimensions 
+        num_systems: Number of systems in the circuit. Defaults to None. Alias of ``num_qubits``.
+        system_dim: Dimension of systems of this circuit. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to be qubit case.
-        physical_idx: physical indices of systems. Defaults to be the same as the logical indices.
+        physical_idx: Physical indices of systems. Defaults to be the same as the logical indices.
     
     Note:
-        when the number of system is unknown and system_dim is an int, the circuit is a dynamic quantum circuit.
+        When the number of system is unknown and system_dim is an int, the circuit is a dynamic quantum circuit.
 
     Examples:
         .. code-block:: python
 
-            qc = Circuit(1)  # A quantum circuit with 1 qubit
-            qc.h()
+            from quairkit import Circuit
+
+            # Create a simple circuit with 2 qubits
+            qc = Circuit(2)
+            qc.h(0)  # Apply Hadamard gate on qubit 0
+            qc.cnot([0, 1])  # Apply CNOT gate
             print(f'The latex code of this circuit is:\n{qc.to_latex()}')
 
         ::
 
             The latex code of this circuit is:
-            \lstick{} & \gate[1]{H}
+            \lstick{} & \gate[1]{H} & \ctrl[]{1} & {} \\
+            \lstick{} & {} & \targ{} & {}
     """
     @_alias({'num_systems': 'num_qubits'})
     def __init__(self, num_systems: Optional[int] = None, 
@@ -81,7 +86,6 @@ class Circuit(OperatorList):
                  physical_idx: Optional[List[int]] = None) -> None:
         super().__init__(num_systems, system_dim, physical_idx)
 
-        # alias
         self.toffoli = self.ccx
         self.cx = self.cnot
         self.collapse = self.measure
@@ -140,10 +144,9 @@ class Circuit(OperatorList):
         self.system_idx = physical_idx
         return latex.code_to_str(drawer.code, begin_code)
     
-    def plot(self, style: str = 'standard', decimal: int = 2,
-             dpi: int = 300, print_code: bool = False, 
-             show_plot: bool = True, include_empty: bool = False,
-             latex: bool = True, **kwargs) -> Optional[matplotlib.figure.Figure]:
+    def plot(self, style: str = 'standard', decimal: int = 2, dpi: int = 300, 
+             print_code: bool = False, show_plot: bool = True, include_empty: bool = False, 
+             **kwargs) -> None:
         r'''Display the circuit using Quantikz if ``latex`` is True, otherwise using matplotlib.
 
         Args:
@@ -153,19 +156,7 @@ class Circuit(OperatorList):
             print_code: whether print the LaTeX code of the circuit, default to ``False``.
             show_plot: whether show the plotted circuit, default to ``True``.
             include_empty: whether include empty lines, default to ``False``.
-            latex: whether use Quantikz, a LaTeX package, to plot circuits , default to ``True``.
             kwargs: additional parameters for matplotlib plot.
-        
-        Returns:
-            None, or a ``matplotlib.figure.Figure`` instance depending on ``latex`` and ``output``.
-
-        Notes:
-            If ``latex`` is True, the circuit will be displayed in LaTeX format;
-            if ``latex`` is False, the circuit will be displayed in matplotlib format,
-            in which case we have three additional parameters:
-            - output_plot: whether output the plot instance, default to ``False``.
-            - save_path: the save path of image. Defaults to None.
-            - scale: scale coefficient of figure. Default to 1.0.
 
         Examples:
             .. code-block:: python
@@ -177,20 +168,8 @@ class Circuit(OperatorList):
             ::
 
                 (Displays the plotted circuit using Quantikz or matplotlib)
-                
-        .. warning::
-        
-            Starting from QuAIRKit 2.5.0, `Circuit.plot` now defaults to using QuantiKz, 
-            a LaTeX package powered by TikZ, for rendering quantum circuit diagrams 
-            commonly used in academic publications. Support for plotting circuits with 
-            Matplotlib will be deprecated in the near future.
-
-            To fully utilize this feature, please ensure that a TeX distribution, such 
-            as [TeX Live](https://www.tug.org/texlive), is installed on your system. 
-            This will enhance your experience with QuAIRKit and quantum computing 
-            visualization.
         '''
-        if latex and (shutil.which("pdflatex") is None):
+        if shutil.which("pdflatex") is None:
             warnings.warn(
                 "pdflatex is mot detected on your system. Will skip the plot.", UserWarning)
             
@@ -198,36 +177,14 @@ class Circuit(OperatorList):
                 print(self.to_latex(style, decimal))
             return
 
-        if latex:
-            drawer, begin_code = self._get_drawer(style, decimal)   
-            drawer._fill_empty(list(range(self.num_systems if include_empty else 
-                                          (max(drawer._code.keys()) + 1))))
-            drawer.add_end()
-            _fig = drawer.plot(dpi, print_code, begin_code)
-            
-            if show_plot:
-                intrinsic._display_png(_fig)
-        else:
-            warnings.warn(
-                "Starting from QuAIRKit 0.4.0, `Circuit.plot` now defaults to using Quantikz, a LaTeX package "
-                "powered by TikZ, for rendering quantum circuit diagrams commonly used in academic publications. "
-                "Support for plotting circuits with Matplotlib will be deprecated in the near future. \n"
-                "To fully utilize this feature, please ensure that a TeX distribution, such as TeX Live "
-                "(https://www.tug.org/texlive), is installed on your system. This will enhance your experience "
-                "with QuAIRKit and quantum computing visualization.", FutureWarning)
-            save_path, scale = kwargs.get('save_path', None), kwargs.get('scale', 1.0)
-            output_plot = kwargs.get('output_plot', False)
-            
-            physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
-            _fig = _circuit_plot(self, dpi=dpi, scale=scale)
-            self.system_idx = physical_idx
-            
-            if save_path:
-                plt.savefig(save_path, dpi=dpi)
-            if show_plot:
-                plt.show()
-            if output_plot:
-                return _fig
+        drawer, begin_code = self._get_drawer(style, decimal)   
+        drawer._fill_empty(list(range(self.num_systems if include_empty else 
+                                        (max(drawer._code.keys()) + 1))))
+        drawer.add_end()
+        _fig = drawer.plot(dpi, print_code, begin_code)
+        
+        if show_plot:
+            intrinsic._display_png(_fig)
 
     @property
     def qasm(self) -> Union[str, List[str]]:
@@ -279,7 +236,6 @@ class Circuit(OperatorList):
             "'Circuit.unitary_matrix()' to call the unitary matrix of the circuit.", FutureWarning)
         return self.matrix
 
-    # ---------------------- below are common operators ---------------------- #
     def h(self, qubits_idx: Union[Iterable[int], int, str] = 'full') -> None:
         r"""Add single-qubit Hadamard gates.
 
@@ -579,22 +535,44 @@ class Circuit(OperatorList):
 
         Args:
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
-            param: Parameters of the gates. Defaults to None.
+            param: Parameters of the gates. Can be a single float or a tensor for batch operations.
+                For batch operations, the shape should be ``(batch_size,)`` or ``(batch_size, num_gates)``.
+                Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
+
+        Note:
+            This method supports batch operations. When ``param`` is a tensor with batch dimension,
+            the circuit will process multiple parameter sets simultaneously.
 
         Examples:
             .. code-block:: python
 
+                import torch
+                from quairkit import Circuit
+
+                # Single parameter example
                 qc = Circuit(2)
                 qc.rx([0], torch.pi/2)
-                qc.measure()
-                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+                print(f'Single parameter circuit:\n{qc.to_latex()}')
 
             ::
 
-                The latex code of this circuit is:
-                \lstick{} & \gate[1]{R_{x}(1.57)} & \meter[2]{} & {} \\
-                \lstick{} & {} & {} & {}
+                Single parameter circuit:
+                \lstick{} & \gate[1]{R_{x}(1.57)} & {} \\
+                \lstick{} & {} & {}
+
+            .. code-block:: python
+
+                # Batch parameter example
+                qc = Circuit(2)
+                batch_params = torch.tensor([0.0, torch.pi/4, torch.pi/2, torch.pi])
+                qc.rx([0], batch_params)  # Apply different rotations in batch
+                state = qc()  # Execute circuit with batched parameters
+                print(f'Batch size: {state.batch_dim}')
+
+            ::
+
+                Batch size: [4]
         """
         qubits_idx = self.register_idx(qubits_idx, 1)
         self.append(RX(qubits_idx, param, param_sharing))
@@ -613,22 +591,44 @@ class Circuit(OperatorList):
 
         Args:
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
-            param: Parameters of the gates. Defaults to None.
+            param: Parameters of the gates. Can be a single float or a tensor for batch operations.
+                For batch operations, the shape should be ``(batch_size,)`` or ``(batch_size, num_gates)``.
+                Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
+
+        Note:
+            This method supports batch operations. When ``param`` is a tensor with batch dimension,
+            the circuit will process multiple parameter sets simultaneously.
 
         Examples:
             .. code-block:: python
 
+                import torch
+                from quairkit import Circuit
+
+                # Single parameter example
                 qc = Circuit(2)
                 qc.ry([0], torch.pi/2)
-                qc.measure()
-                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+                print(f'Single parameter circuit:\n{qc.to_latex()}')
 
             ::
 
-                The latex code of this circuit is:
-                \lstick{} & \gate[1]{R_{y}(1.57)} & \meter[2]{} & {} \\
-                \lstick{} & {} & {} & {}
+                Single parameter circuit:
+                \lstick{} & \gate[1]{R_{y}(1.57)} & {} \\
+                \lstick{} & {} & {}
+
+            .. code-block:: python
+
+                # Batch parameter example
+                qc = Circuit(2)
+                batch_params = torch.tensor([0.0, torch.pi/4, torch.pi/2])
+                qc.ry([0], batch_params)  # Apply different rotations in batch
+                state = qc()  # Execute circuit with batched parameters
+                print(f'Batch size: {state.batch_dim}')
+
+            ::
+
+                Batch size: [3]
         """
         qubits_idx = self.register_idx(qubits_idx, 1)
         self.append(RY(qubits_idx, param, param_sharing))
@@ -647,22 +647,44 @@ class Circuit(OperatorList):
 
         Args:
             qubits_idx: Indices of the qubits on which the gates are applied. Defaults to 'full'.
-            param: Parameters of the gates. Defaults to None.
+            param: Parameters of the gates. Can be a single float or a tensor for batch operations.
+                For batch operations, the shape should be ``(batch_size,)`` or ``(batch_size, num_gates)``.
+                Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
+
+        Note:
+            This method supports batch operations. When ``param`` is a tensor with batch dimension,
+            the circuit will process multiple parameter sets simultaneously.
 
         Examples:
             .. code-block:: python
 
+                import torch
+                from quairkit import Circuit
+
+                # Single parameter example
                 qc = Circuit(2)
                 qc.rz([0], torch.pi/2)
-                qc.measure()
-                print(f'The latex code of this circuit is:\n{qc.to_latex()}')
+                print(f'Single parameter circuit:\n{qc.to_latex()}')
 
             ::
 
-                The latex code of this circuit is:
-                \lstick{} & \gate[1]{R_{z}(1.57)} & \meter[2]{} & {} \\
-                \lstick{} & {} & {} & {}
+                Single parameter circuit:
+                \lstick{} & \gate[1]{R_{z}(1.57)} & {} \\
+                \lstick{} & {} & {}
+
+            .. code-block:: python
+
+                # Batch parameter example
+                qc = Circuit(2)
+                batch_params = torch.tensor([0.0, torch.pi/4, torch.pi/2])
+                qc.rz([0], batch_params)  # Apply different rotations in batch
+                state = qc()  # Execute circuit with batched parameters
+                print(f'Batch size: {state.batch_dim}')
+
+            ::
+
+                Batch size: [3]
         """
         qubits_idx = self.register_idx(qubits_idx, 1)
         self.append(RZ(qubits_idx, param, param_sharing))
@@ -1202,7 +1224,10 @@ class Circuit(OperatorList):
 
         Args:
             qubits_idx: Indices of the qubits on which the gates are applied.
-            param: Parameters of the gates. Defaults to None.
+            param: Parameters of the gates. Batched input should have shape
+                ``[batch_size, 15]``. Single-sample input with ``numel == 15``
+                is also accepted. Legacy class-specific batched layouts are
+                not accepted.
 
         Examples:
             .. code-block:: python
@@ -1225,7 +1250,10 @@ class Circuit(OperatorList):
 
         Args:
             qubits_idx: Indices of the qubits on which the gates are applied.
-            param: Parameters of the gates. Defaults to None.
+            param: Parameters of the gates. Batched input should have shape
+                ``[batch_size, 81]``. Single-sample input with ``numel == 81``
+                is also accepted. Legacy class-specific batched layouts are
+                not accepted.
 
         Examples:
             .. code-block:: python
@@ -1244,7 +1272,8 @@ class Circuit(OperatorList):
     
     @_alias({"system_idx": "qubits_idx"})
     def universal_qudits(self, system_idx: List[int],
-                         param: Union[torch.Tensor, float] = None, param_sharing: bool = False) -> None:
+                         param: Union[torch.Tensor, float] = None, param_sharing: bool = False,
+                         manifold: bool = False, identity_init: bool = False) -> None:
         r"""Add universal qudit gates. One such gate requires :math:`d^2 - 1` parameters,
         where :math:`d` is the gate dimension.
 
@@ -1252,6 +1281,9 @@ class Circuit(OperatorList):
             system_idx: Indices of the systems on which the gates are applied.
             param: Parameters of the gates. Defaults to None.
             param_sharing: Whether gates in the same layer share a parameter. Defaults to False.
+            manifold: If True, use ManifoldUniversalQudits which optimizes on the unitary
+                manifold via Riemannian gradient descent. Defaults to False.
+            identity_init: If True, initialize to identity matrix. Defaults to False.
 
         Examples:
             .. code-block:: python
@@ -1266,9 +1298,15 @@ class Circuit(OperatorList):
                 The latex code of this circuit is:
                 \lstick{} & \gate[1]{\operatorname{UNI}_{3}} & \meter[1]{} & {}
         """
-        system_idx = self.register_idx(system_idx, 1 if isinstance(system_idx, int) else len(system_idx))
-        self.append(UniversalQudits(system_idx, [self.system_dim[idx] for idx in system_idx],
-                                    param, param_sharing))
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+        acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        system_idx = self.register_idx(system_idx, len(system_idx))
+        if manifold:
+            self.append(ManifoldUniversalQudits(system_idx, acted_system_dim,
+                                                param, param_sharing, identity_init))
+        else:
+            self.append(UniversalQudits(system_idx, acted_system_dim,
+                                        param, param_sharing, identity_init))
     
     @_alias({"system_idx": "qubits_idx"})
     def permute(self, perm: List[int], system_idx: List[int], control_idx: Optional[int] = None) -> None:
@@ -1322,6 +1360,32 @@ class Circuit(OperatorList):
             self.append(ControlOracle(
                 permutation, system_idx, control_idx, acted_system_dim, gate_info))
     
+    @_alias({"system_idx": "qubits_idx"})
+    def qft(self, system_idx: Union[List[Union[List[int], int]], int],
+            is_dagger: bool = False) -> None:
+        r"""Add a quantum Fourier transform (QFT) gate.
+
+        Args:
+            system_idx: Indices of the systems on which the gate is applied.
+            is_dagger: Whether to apply the inverse QFT. Defaults to ``False``.
+        """
+        num_acted_system = intrinsic._infer_num_acted_system(system_idx)
+        system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
+
+        if isinstance(system_idx[0], int):
+            acted_system_dim = [self.system_dim[idx] for idx in system_idx]
+        else:
+            acted_system_dim = [self.system_dim[idx] for idx in system_idx[0]]
+            for idx_group in system_idx[1:]:
+                group_dim = [self.system_dim[idx] for idx in idx_group]
+                assert group_dim == acted_system_dim, (
+                    f"QFT layer requires consistent acted_system_dim: "
+                    f"received {group_dim}, expected {acted_system_dim}."
+                )
+
+        system_idx = self.register_idx(system_idx, num_acted_system)
+        self.append(QFT(system_idx, acted_system_dim, is_dagger=is_dagger))
+
     @_alias({"system_idx": "qubits_idx"})
     def oracle(self, oracle: torch.Tensor, system_idx: Union[List[Union[List[int], int]], int], 
                control_idx: Optional[int] = None, gate_name: Optional[str] = None,
@@ -1590,7 +1654,7 @@ class Circuit(OperatorList):
         
     @_alias({"system_idx": "qubits_idx"})
     def quasi(self, list_unitary: torch.Tensor, probability: Iterable[float],
-              system_idx: Union[List[Union[List[int], int]], int], latex_name: str = r'\mathcal{E}'):
+              system_idx: Union[List[int], int], latex_name: str = r'\mathcal{E}'):
         r"""Add a quasi-probability operation, now only supports unitary operations.
         
         Args:
@@ -1602,8 +1666,12 @@ class Circuit(OperatorList):
         """
         if not torch.is_tensor(list_unitary):
             list_unitary = torch.tensor(list_unitary, dtype=self.dtype, device=self.device)
-        if not torch.is_tensor(probability): 
-            probability = torch.tensor(probability, dtype=self.dtype, device=self.device)
+        float_dtype = intrinsic._get_float_dtype(self.dtype)
+        if not torch.is_tensor(probability):
+            probability = torch.tensor(probability, dtype=float_dtype, device=self.device)
+        if torch.is_complex(probability):
+            raise TypeError("Circuit.quasi probability must be real float (complex dtype is not allowed).")
+        probability = probability.to(dtype=float_dtype, device=self.device)
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
         system_idx = self.register_idx(system_idx, len(system_idx))
@@ -1614,7 +1682,7 @@ class Circuit(OperatorList):
         
     @_alias({"system_idx": "qubits_idx"})
     def param_quasi(self, generator: Callable[[torch.Tensor], torch.Tensor], num_acted_param: int, 
-                    probability: Iterable[float], system_idx: Union[List[Union[List[int], int]], int], probability_param: bool = False,
+                    probability: Iterable[float], system_idx: Union[List[int], int], probability_param: bool = False,
                     param: Union[torch.Tensor, float] = None, latex_name: str = r'\mathcal{E}', support_batch: bool = True):
         r"""Add a quasi-probability operation, where the applied unitary is parameterized.
         
@@ -1629,8 +1697,12 @@ class Circuit(OperatorList):
             support_batch: Whether generator supports batched input.
         
         """
-        if not torch.is_tensor(probability): 
-            probability = torch.tensor(probability, dtype=self.dtype, device=self.device)
+        float_dtype = intrinsic._get_float_dtype(self.dtype)
+        if not torch.is_tensor(probability):
+            probability = torch.tensor(probability, dtype=float_dtype, device=self.device)
+        if torch.is_complex(probability):
+            raise TypeError("Circuit.param_quasi probability must be real float (complex dtype is not allowed).")
+        probability = probability.to(dtype=float_dtype, device=self.device)
         system_idx = [system_idx] if isinstance(system_idx, int) else system_idx
         acted_system_dim = [self.system_dim[idx] for idx in system_idx]
         system_idx = self.register_idx(system_idx, len(system_idx))
@@ -1683,7 +1755,10 @@ class Circuit(OperatorList):
         Args:
             qubits_idx: Systems to apply the layer on. Defaults to all.
             depth: Number of layers. Defaults to 1.
-            param: Parameters for the layer. Defaults to self-generated.
+            param: Parameters for the layer. Batched input should have shape
+                ``[batch_size, 2 * depth * len(qubits_idx)]``. Single-sample
+                input with matching ``numel`` is also accepted. Legacy
+                class-specific batched layouts are not accepted.
 
         Examples:
             .. code-block:: python
@@ -1706,7 +1781,10 @@ class Circuit(OperatorList):
         Args:
             qubits_idx: Systems to apply the layer on. Defaults to all.
             depth: Number of layers. Defaults to 1.
-            param: Layer parameters. Defaults to self-generated.
+            param: Layer parameters. Batched input should have shape
+                ``[batch_size, depth * len(qubits_idx)]``. Single-sample input
+                with matching ``numel`` is also accepted. Legacy class-specific
+                batched layouts are not accepted.
 
         Examples:
             .. code-block:: python
@@ -1729,7 +1807,10 @@ class Circuit(OperatorList):
         Args:
             qubits_idx: Systems to apply the layer on. Defaults to all.
             depth: Number of layers. Defaults to 1.
-            param: Layer parameters. Defaults to self-generated.
+            param: Layer parameters. Batched input should have shape
+                ``[batch_size, 3 * depth * len(qubits_idx)]``. Single-sample
+                input with matching ``numel`` is also accepted. Legacy
+                class-specific batched layouts are not accepted.
 
         Examples:
             .. code-block:: python
@@ -1752,7 +1833,10 @@ class Circuit(OperatorList):
         Args:
             qubits_idx: Systems to apply the layer on. Defaults to all.
             depth: Number of layers. Defaults to 1.
-            param: Layer parameters. Defaults to self-generated.
+            param: Layer parameters. Batched input should have shape
+                ``[batch_size, 2 * depth * (len(qubits_idx) - 1) + len(qubits_idx)]``.
+                Single-sample input with matching ``numel`` is also accepted.
+                Legacy class-specific batched layouts are not accepted.
 
         Examples:
             .. code-block:: python
@@ -1775,7 +1859,10 @@ class Circuit(OperatorList):
         Args:
             qubits_idx: Systems to apply the layer on. Defaults to all.
             depth: Number of layers. Defaults to 1.
-            param: Layer parameters. Defaults to self-generated.
+            param: Layer parameters. Batched input should have shape
+                ``[batch_size, (2 * depth * (len(qubits_idx) - 1) + len(qubits_idx)) * 3]``.
+                Single-sample input with matching ``numel`` is also accepted.
+                Legacy class-specific batched layouts are not accepted.
 
         Examples:
             .. code-block:: python
@@ -1919,7 +2006,18 @@ class Circuit(OperatorList):
             name: Name of the Hamiltonian. Defaults to 'H'.
 
         """
-        qubits_idx = self.register_idx(qubits_idx, None)
+        if qubits_idx is None:
+            qubits_idx = list(range(hamiltonian.n_qubits))
+        qubits_idx_registered = self.register_idx(qubits_idx, hamiltonian.n_qubits)
+        if qubits_idx_registered and isinstance(qubits_idx_registered[0], list):
+            qubits_idx = qubits_idx_registered[0]
+        else:
+            qubits_idx = qubits_idx_registered if qubits_idx_registered else list(range(hamiltonian.n_qubits))
+        if len(qubits_idx) != hamiltonian.n_qubits:
+            if qubits_idx is not None and len(qubits_idx) == hamiltonian.n_qubits:
+                pass
+            else:
+                qubits_idx = list(range(hamiltonian.n_qubits))
         tau = time / num_steps
         self.append(TrotterLayer(hamiltonian, qubits_idx, tau, num_steps, order, name))
 
@@ -2277,7 +2375,7 @@ class Circuit(OperatorList):
         
     __1input = ['h', 's', 'sdg', 't', 'tdg', 'x', 'y', 'z', 'cnot', 'cy', 'cz', 'swap', 'cswap', 'ccx', 'ms']
     __3input = ['p', 'rx', 'ry', 'rz', 'u3', 'cp', 'crx', 'cry', 'crz', 'cu', 'rxx', 'ryy', 'rzz']
-    __custom_gate = ['permute', 'control_permute', 'oracle', 'control_oracle', 'param_oracle']
+    __custom_gate = ['permute', 'control_permute', 'oracle', 'control_oracle', 'param_oracle', 'qft']
     __special = ['measure', 'locc', 'quasi', 'reset']
     __noise = ['bit_flip', 'phase_flip', 'bit_phase_flip', 'amplitude_damping', 'generalized_amplitude_damping',
                'phase_damping', 'depolarizing', 'generalized_depolarizing', 'pauli_channel', 'reset_channel','thermal_relaxation',]
@@ -2301,19 +2399,31 @@ class Circuit(OperatorList):
         if not list_operators:
             raise ValueError("Input an empty list!")
         
-        max_index = -1
+        used_physical_idx: set[int] = set()
         list_operators = [element for item in list_operators
                           for element in (item if isinstance(item, list) else [item])]
         for op_info in list_operators:
             system_idx: List[List[int]] = op_info['system_idx']
             for sub_list in system_idx:
-                max_index = max([max_index] + sub_list)
+                used_physical_idx.update(sub_list)
 
-        num_systems = max_index + 1 if max_index >= 0 else 1
+        physical_idx = sorted(used_physical_idx) if used_physical_idx else [0]
+        num_systems = len(physical_idx)
         system_dim = [2] * num_systems
-        cir = cls(num_systems, system_dim, list(range(num_systems)))
+        cir = cls(num_systems, system_dim, physical_idx)
+
+        physical_to_logical = {p: i for i, p in enumerate(physical_idx)}
+
+        def _to_logical_system_idx(system_idx: List[List[int]]) -> List[List[int]]:
+            return [[physical_to_logical[p] for p in group] for group in system_idx]
+
         for op_info in list_operators:
-            if (op_info.get('api', '') not in ['t', 's', 'sdg', 'tdg']) and (op_info.get('tex', '').find('dagger') >= 0):
+            op_info = dict(op_info)
+            op_info['system_idx'] = _to_logical_system_idx(op_info['system_idx'])
+
+            if (op_info.get('api', '') not in ['t', 's', 'sdg', 'tdg', 'qft']) and (
+                op_info.get('tex', '').find('dagger') >= 0
+            ):
                 raise NotImplementedError("Daggered OperatorList not supported!")
             
             if op_info['name'] in cls.__special:
@@ -2402,7 +2512,7 @@ def _load_special(cir: Circuit, info: OperatorInfoType) -> None:
         raise ValueError(f"{info['name']} not found in special operators")
         
 def _load_custom_gate(cir: Circuit, info: OperatorInfoType) -> None:
-    r"""Load custom gates: permute, control_permute, oracle, control_oracle, param_oracle into a Circuit.
+    r"""Load custom gates: permute, control_permute, oracle, control_oracle, param_oracle, qft into a Circuit.
     """
     if info['api'] == 'permute':
         for system_idx in info['system_idx']:
@@ -2431,6 +2541,10 @@ def _load_custom_gate(cir: Circuit, info: OperatorInfoType) -> None:
         else:
             cir.param_oracle(info['kwargs']['generator'], param.shape[-1],
                                         info['system_idx'], param=param)
+    elif info['api'] == 'qft':
+        is_dagger = bool(info.get('kwargs', {}).get('is_dagger', info.get('name') == 'qftdg'))
+        for system_idx in info['system_idx']:
+            cir.qft(system_idx, is_dagger=is_dagger)
     
     else:
         raise ValueError(f"{info['api']} not found in custom gates")

@@ -182,6 +182,46 @@ class OpenQASM2Transpiler:
             gate_qasm.append(f"{name}{param_str} {indices};")
 
         return '\n'.join(gate_qasm)
+
+    @staticmethod
+    def _qft_to_qasm2(gate_idx: List[int], is_dagger: bool) -> List[str]:
+        r"""Translate a QFT/IQFT gate on ``gate_idx`` to OpenQASM 2.0 basis gates."""
+        ops: List[Tuple[str, Union[int, Tuple[int, int]], Optional[float]]] = []
+        num_qubits = len(gate_idx)
+
+        for target_pos in range(num_qubits):
+            target = gate_idx[target_pos]
+            ops.append(("h", target, None))
+            for control_pos in range(target_pos + 1, num_qubits):
+                control = gate_idx[control_pos]
+                theta = math.pi / (2 ** (control_pos - target_pos))
+                ops.append(("cu1", (control, target), theta))
+
+        for i in range(num_qubits // 2):
+            ops.append(("swap", (gate_idx[i], gate_idx[num_qubits - i - 1]), None))
+
+        if is_dagger:
+            transformed_ops = []
+            for name, qubits, theta in reversed(ops):
+                if name == "cu1":
+                    transformed_ops.append((name, qubits, -theta))
+                else:
+                    transformed_ops.append((name, qubits, theta))
+            ops = transformed_ops
+
+        qasm_lines = []
+        for name, qubits, theta in ops:
+            if name == "h":
+                qasm_lines.append(f"h q[{qubits}];")
+            elif name == "cu1":
+                ctrl, tgt = qubits
+                qasm_lines.append(f"cu1({theta:.5f}) q[{ctrl}], q[{tgt}];")
+            elif name == "swap":
+                q0, q1 = qubits
+                qasm_lines.append(f"swap q[{q0}], q[{q1}];")
+            else:
+                raise ValueError(f"Unexpected gate in QFT decomposition: {name}")
+        return qasm_lines
     
     @staticmethod
     def transpile(name: str, system_idx: List[List[int]], param: Optional[torch.Tensor]) -> str:
@@ -195,6 +235,18 @@ class OpenQASM2Transpiler:
         Returns:
             The OpenQASM 2.0 representation of the operator.
         """
+        if name == 'measure':
+            raise NotImplementedError(
+                "QuAIRKit restricted QASM 2.0 does not support 'measure' operations. "
+                "Remove measure operations before exporting to QASM 2.0.")
+        if name in {"qft", "qftdg"}:
+            if param is not None:
+                raise ValueError(f"{name} does not accept parameters in OpenQASM 2.0 export.")
+            is_dagger = name == "qftdg"
+            gates_qasm: List[str] = []
+            for gate_idx in system_idx:
+                gates_qasm.extend(OpenQASM2Transpiler._qft_to_qasm2(gate_idx, is_dagger))
+            return '\n'.join(gates_qasm)
         if name in OpenQASM2Transpiler.__general_case:
             return OpenQASM2Transpiler.format_qasm(OpenQASM2Transpiler.__general_case[name], system_idx, param)
         
@@ -220,7 +272,9 @@ class OpenQASM2Transpiler:
                     gates_qasm.extend(qasm(gate_idx, param[index]))
             return '\n'.join(gates_qasm)
         
-        raise NotImplementedError(f"Operator {name} not supported in OpenQASM 2.0")
+        raise NotImplementedError(
+            f"Operator '{name}' is not supported in QuAIRKit restricted QASM 2.0 "
+            "(only qelib1.inc gates, no measure, no custom gate definitions).")
     
     @staticmethod
     def from_qasm2(source: str) -> List[Tuple[str, List[List[int]], Optional[torch.Tensor]]]:
@@ -251,44 +305,36 @@ class OpenQASM2Transpiler:
         """
         text = _strip_qasm_comments(source or "")
 
-        # Basic header checks
         if not re.search(r'^\s*openqasm\s+2\.0\s*;', text, flags=re.IGNORECASE | re.MULTILINE):
             raise ValueError('Missing "OPENQASM 2.0;" header.')
         if not re.search(r'include\s+["\']qelib1\.inc["\']\s*;', text, flags=re.IGNORECASE):
             raise ValueError('Header must include "qelib1.inc".')
 
-        # Explicitly reject features that are out of scope (measure/reset allowed; barrier ignored)
         if re.search(r'\b(gate|opaque)\b', text, flags=re.IGNORECASE):
             raise NotImplementedError("Custom gate definitions (gate/opaque) are not supported.")
         if re.search(r'\bif\s*\(', text, flags=re.IGNORECASE):
             raise NotImplementedError('Classically-conditioned operations ("if (...)") are not supported.')
 
-        # Prepare name mappings
-        inv_general = {v: k for k, v in OpenQASM2Transpiler.__general_case.items()}  # e.g., u1->p, cu1->cp
-        # Known qubit arities (internal names)
+        inv_general = {v: k for k, v in OpenQASM2Transpiler.__general_case.items()}
         num_qubits_map = {
             'h': 1, 'x': 1, 'y': 1, 'z': 1, 's': 1, 'sdg': 1, 't': 1, 'tdg': 1,
             'rx': 1, 'ry': 1, 'rz': 1, 'p': 1, 'u3': 1,
             'cx': 2, 'cy': 2, 'cz': 2, 'ccx': 3, 'crz': 2, 'cp': 2,
-            # measure/reset treated as variadic (skip fixed-arity check below)
             'measure': None, 'reset': None,
         }
         for k, v in OpenQASM2Transpiler.__special_case.items():
             num_qubits_map[k] = v['num_qubits']
 
-        # Track quantum registers to flatten indices across multiple qregs (if present)
-        qregs: Dict[str, Tuple[int, int]] = {}  # name -> (base_offset, size)
+        qregs: Dict[str, Tuple[int, int]] = {}
         next_base = 0
 
-        # Tokenize by semicolons (statements)
         statements = [stmt.strip() for stmt in re.split(r';', text) if stmt.strip()]
 
         results: List[Tuple[str, List[List[int]], Optional[torch.Tensor]]] = []
 
-        # Aggregation state for combining consecutive identical, parallelizable gates
         cur_name: Optional[str] = None
         cur_sys_idx: List[List[int]] = []
-        cur_params_list: Optional[List[List[float]]] = None  # None for non-param gates; else NxM list
+        cur_params_list: Optional[List[List[float]]] = None
         cur_param_count: Optional[int] = None
         cur_used_qubits: set[int] = set()
 
@@ -301,13 +347,12 @@ class OpenQASM2Transpiler:
             else:
                 param_tensor = torch.tensor(
                     cur_params_list, dtype=torch.get_default_dtype()
-                ).unsqueeze(1)  # [N, 1, M]
+                ).unsqueeze(1)
             results.append((cur_name, cur_sys_idx, param_tensor))
             cur_name, cur_sys_idx, cur_params_list, cur_param_count = None, [], None, None
             cur_used_qubits = set()
 
         def can_place_in_parallel(idx_group: List[int]) -> bool:
-            # No shared qubits with what's already in the current group
             return cur_name is not None and set(idx_group).isdisjoint(cur_used_qubits)
 
         def add_instance(name: str, idx_group: List[int], params: Optional[List[float]]):
@@ -315,7 +360,6 @@ class OpenQASM2Transpiler:
             this_param_count = 0 if (params is None) else len(params)
 
             if cur_name is None:
-                # Start a new aggregation group
                 cur_name = name
                 cur_sys_idx = [idx_group]
                 cur_used_qubits = set(idx_group)
@@ -323,11 +367,10 @@ class OpenQASM2Transpiler:
                     cur_params_list = None
                     cur_param_count = 0
                 else:
-                    cur_params_list = [params]  # type: ignore[list-item]
+                    cur_params_list = [params]
                     cur_param_count = this_param_count
                 return
 
-            # Same gate name, same parameter count, and qubits are disjoint -> can parallelize
             if (name == cur_name) and (this_param_count == (cur_param_count or 0)) and can_place_in_parallel(idx_group):
                 cur_sys_idx.append(idx_group)
                 cur_used_qubits.update(idx_group)
@@ -335,7 +378,6 @@ class OpenQASM2Transpiler:
                     cur_params_list.append(params)
                 return
 
-            # Otherwise, close current group and start a new one
             flush()
             cur_name = name
             cur_sys_idx = [idx_group]
@@ -344,19 +386,16 @@ class OpenQASM2Transpiler:
                 cur_params_list = None
                 cur_param_count = 0
             else:
-                cur_params_list = [params]  # type: ignore[list-item]
+                cur_params_list = [params]
                 cur_param_count = this_param_count
 
         def resolve_index(reg: str, local_idx: int) -> int:
-            # Flatten (reg, local_idx) into a global qubit index using declaration order
             if reg in qregs:
                 base, _ = qregs[reg]
                 return base + local_idx
-            # Fallback: if the reg is unknown (non-standard QASM), treat as global index
             return local_idx
 
         def operand_to_indices(operand: str) -> List[int]:
-            # Accept either "<reg>[<i>]" or "<reg>" (full register)
             m_idx = re.fullmatch(r'\s*([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]\s*', operand)
             if m_idx:
                 reg = m_idx[1]
@@ -376,13 +415,11 @@ class OpenQASM2Transpiler:
             if not s:
                 continue
 
-            # Skip/handle non-gate operational statements
             if re.match(r'^\s*openqasm\s+2\.0\s*$', s, flags=re.IGNORECASE):
                 continue
             if re.match(r'^\s*include\s+["\'].*?["\']\s*$', s, flags=re.IGNORECASE):
                 continue
 
-            # qreg declarations (capture and keep declaration order for flattening)
             m_qreg = re.match(r'^\s*qreg\s+([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]\s*$', s, flags=re.IGNORECASE)
             if m_qreg:
                 reg_name = m_qreg[1]
@@ -396,24 +433,18 @@ class OpenQASM2Transpiler:
                         raise ValueError(f"qreg '{reg_name}' redeclared with different size ({old_size} vs {size}).")
                 continue
 
-            # creg declarations are ignored
             if re.match(r'^\s*creg\s+[A-Za-z_]\w*\s*\[\s*\d+\s*\]\s*$', s, flags=re.IGNORECASE):
-                continue
+                raise NotImplementedError(
+                    "QuAIRKit restricted QASM 2.0 does not support classical registers (creg).")
 
-            # barrier is ignored and does not break aggregation
             if re.match(r'^\s*barrier\b', s, flags=re.IGNORECASE):
                 continue
 
-            # measure: record only quantum side; ignore classical target
             m_measure = re.match(r'^\s*measure\s+(.+?)\s*->\s*(.+?)\s*$', s, flags=re.IGNORECASE)
             if m_measure:
-                q_operand = m_measure[1].strip()
-                indices = operand_to_indices(q_operand)
-                # Do NOT split; treat as single instance with one idx group containing all indices.
-                add_instance('measure', indices, None)
-                continue
+                raise NotImplementedError(
+                    "QuAIRKit restricted QASM 2.0 does not support 'measure' operations.")
 
-            # reset: supports qubit or entire register; treat full register as single idx group
             m_reset = re.match(r'^\s*reset\s+(.+?)\s*$', s, flags=re.IGNORECASE)
             if m_reset:
                 q_operand = m_reset[1].strip()
@@ -421,7 +452,6 @@ class OpenQASM2Transpiler:
                 add_instance('reset', indices, None)
                 continue
 
-            # Parse a gate statement: either name(params) args or name args
             m_param = re.match(r'^\s*([A-Za-z_]\w*)\s*\((.*?)\)\s*(.+)$', s)
             m_nop   = None if m_param else re.match(r'^\s*([A-Za-z_]\w*)\s+(.+)$', s)
             if not m_param and not m_nop:
@@ -430,10 +460,8 @@ class OpenQASM2Transpiler:
             raw_name = (m_param or m_nop).group(1).strip().lower()
             args_str = (m_param[3] if m_param else m_nop.group(2)).strip()
 
-            # Extract explicit indexed qubits (q[0], r[1], ...)
             explicit_pairs = re.findall(r'([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]', args_str)
             if not explicit_pairs:
-                # Allow register arguments (e.g., "h q", "cx q, r")
                 operands = [op.strip() for op in _split_top_level_commas(args_str)]
                 if not operands:
                     raise ValueError(f"Expected qubit argument(s) in: {s}")
@@ -441,17 +469,14 @@ class OpenQASM2Transpiler:
                 max_len = max(len(lst) for lst in op_lists)
                 if any(len(lst) not in (1, max_len) for lst in op_lists):
                     raise ValueError(f"Incompatible register sizes in: {s}")
-                # Broadcast singletons
                 expanded = []
                 for i in range(max_len):
                     idx_group = [lst[i] if len(lst) > 1 else lst[0] for lst in op_lists]
                     expanded.append(idx_group)
             else:
-                # Only explicit indices present; keep single instance
                 idx_group = [resolve_index(reg, int(qidx)) for (reg, qidx) in explicit_pairs]
                 expanded = [idx_group]
 
-            # Parameters
             if m_param:
                 param_str = m_param[2].strip()
                 param_tokens = _split_top_level_commas(param_str) if param_str else []
@@ -459,44 +484,36 @@ class OpenQASM2Transpiler:
             else:
                 params = None
 
-            # Map QASM gate name to internal name + param normalization
             name = raw_name
             if name in inv_general:
-                # u1->p, cu1->cp, and identities like x->x
                 name = inv_general[name]
             elif name == 'u2':
-                # u2(phi, lambda) == u3(pi/2, phi, lambda)
                 if params is None or len(params) != 2:
                     raise ValueError(f"u2 expects 2 parameters, got: {params}")
                 name = 'u3'
                 params = [math.pi / 2.0, params[0], params[1]]
-            elif name in ('u',):  # Accept "u" as an alias for u3(theta,phi,lambda)
+            elif name in ('u',):
                 if params is None or len(params) != 3:
                     raise ValueError(f"u expects 3 parameters, got: {params}")
                 name = 'u3'
             elif name == 'id':
-                # Map identity to a zero-angle u3
                 name = 'u3'
                 params = [0.0, 0.0, 0.0]
             elif name == 'cu3':
-                # Map cu3(theta,phi,lambda) to cu4(theta,phi,lambda,0.0)
                 if params is None or len(params) != 3:
                     raise ValueError(f"cu3 expects 3 parameters, got: {params}")
                 name = 'cu4'
                 params = [params[0], params[1], params[2], 0.0]
 
-            # Basic arity check when known (measure/reset are variadic, skip check)
             expected = num_qubits_map.get(name)
             if expected is not None:
                 for idx_group in expanded:
                     if len(idx_group) != expected:
                         raise ValueError(f"{name} requires {expected} qubit(s), got {len(idx_group)} in: {s}")
 
-            # Add each expanded instance, applying parallel-aggregation rule
             for idx_group in expanded:
                 add_instance(name, idx_group, params)
 
-        # Flush any remaining group
         flush()
         return results
 
@@ -508,23 +525,19 @@ def _tensor_to_float(arr: torch.Tensor) -> Union[int, Iterable[float]]:
     shape = arr.shape
     current = flat_list
 
-    # Group elements into nested lists based on shape (from last dimension to first)
     for dim in reversed(shape):
         current = [current[i:i + dim] for i in range(0, len(current), dim)]
 
-    # Extract the rebuilt nested list structure
     return current[0]
 
 
 def _strip_qasm_comments(s: str) -> str:
-    # Remove /* ... */ and // ... comments
     s = re.sub(r'/\*.*?\*/', '', s, flags=re.S)
     s = re.sub(r'//.*?$', '', s, flags=re.M)
     return s
 
 
 def _split_top_level_commas(s: str) -> List[str]:
-    # Split a parameter string by commas not enclosed in parentheses
     parts: List[str] = []
     depth = 0
     buf: List[str] = []
@@ -547,7 +560,6 @@ def _split_top_level_commas(s: str) -> List[str]:
 
 
 def _eval_qasm_expr(expr: str) -> float:
-    # Safe evaluator for QASM parameter expressions (supports +,-,*,/,**, unary +/- and common funcs, with pi)
     allowed_funcs = {
         'sin': math.sin, 'cos': math.cos, 'tan': math.tan,
         'asin': math.asin, 'acos': math.acos, 'atan': math.atan,
@@ -556,9 +568,9 @@ def _eval_qasm_expr(expr: str) -> float:
     allowed_names = {'pi': math.pi, 'e': math.e}
 
     def _eval(node):
-        if isinstance(node, ast.Num):  # Py<3.8
+        if isinstance(node, ast.Num):
             return float(node.n)
-        if isinstance(node, ast.Constant):  # Py>=3.8
+        if isinstance(node, ast.Constant):
             if isinstance(node.value, (int, float)):
                 return float(node.value)
             raise ValueError(f"Invalid constant in expression: {expr}")

@@ -52,7 +52,6 @@ class Hamiltonian:
         self.__pauli_words = []
         self.__sites = []
         self.__nqubits = None
-        # when internally updating the __pauli_str, be sure to set __update_flag to True
         self.__pauli_str = pauli_str
         self.__update_flag = True
         self.__decompose()
@@ -420,7 +419,6 @@ def _pauli_str_to_matrix(pauli_str: list, n: int) -> torch.Tensor:
     pauli_dict = {'i': np.eye(2) + 0j, 'x': np.array([[0, 1], [1, 0]]) + 0j,
                   'y': np.array([[0, -1j], [1j, 0]]), 'z': np.array([[1, 0], [0, -1]]) + 0j}
 
-    # Parse pauli_str; 'x0,z1,y4' to 'xziiy'
     new_pauli_str = []
     for coeff, op_str in pauli_str:
         init = list('i' * n)
@@ -434,7 +432,6 @@ def _pauli_str_to_matrix(pauli_str: list, n: int) -> torch.Tensor:
                 raise ValueError('Only Pauli operator "I" can be accepted without specifying its position')
         new_pauli_str.append([coeff, ''.join(init)])
 
-    # Convert new_pauli_str to matrix; 'xziiy' to NKron(x, z, i, i, y)
     matrices = []
     for coeff, op_str in new_pauli_str:
         sub_matrices = [pauli_dict[op.lower()] for op in op_str]

@@ -18,9 +18,8 @@ The module of the quantum gates.
 """
 
 from .base import Gate, ParamGate
-from .custom import (ControlOracle, ControlParamOracle, Oracle, ParamOracle,
-                     Permutation, UniversalQudits)
+from .custom import (ControlOracle, ControlParamOracle, ManifoldUniversalQudits,
+                     Oracle, ParamOracle, Permutation, QFT, UniversalQudits)
 from .multi_qubit_gate import (CCX, CNOT, CP, CRX, CRY, CRZ, CSWAP, CU, CX, CY,
                                CZ, MS, RXX, RYY, RZZ, SWAP, Toffoli)
 from .single_qubit_gate import RX, RY, RZ, U3, H, P, S, Sdg, T, Tdg, X, Y, Z
-from .visual import _circuit_plot

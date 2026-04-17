@@ -19,11 +19,16 @@ from typing import Callable, List, Optional, Union
 import numpy as np
 import torch
 
-from quairkit.core import utils
-from quairkit.core.intrinsic import _is_sample_linear
-
 from ..core import utils
-from ..core.intrinsic import _ArrayLike, _StateLike, _type_transform
+from ..core.intrinsic import (
+    _ArrayLike,
+    _StateLike,
+    _ensure_mat_3d,
+    _ensure_set_4d,
+    _ensure_vec_3d,
+    _is_sample_linear,
+    _type_transform,
+)
 
 __all__ = [
     "is_choi",
@@ -68,11 +73,14 @@ def is_choi(op: _ArrayLike, trace_preserving: bool = True, eps: float = 1e-6) ->
 
     """
     op = _type_transform(op, "tensor")
+    op3, batch_shape = _ensure_mat_3d(op)
 
-    assert utils.check._is_square(op), \
+    assert utils.check._is_square(op3), \
         f"The input matrix is not a square matrix: received shape {op.shape}"
 
-    return utils.check._is_choi(op, trace_preserving, eps).tolist()
+    out = utils.check._is_choi(op3, trace_preserving, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_density_matrix(
@@ -101,11 +109,14 @@ def is_density_matrix(
 
     """
     rho = _type_transform(rho, "tensor")
+    rho3, batch_shape = _ensure_mat_3d(rho)
 
-    assert utils.check._is_square(rho), \
+    assert utils.check._is_square(rho3), \
         f"The input matrix is not a square matrix: received shape {rho.shape}"
 
-    return utils.check._is_density_matrix(rho, eps).tolist()
+    out = utils.check._is_density_matrix(rho3, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_hermitian(
@@ -134,11 +145,14 @@ def is_hermitian(
 
     """
     mat = _type_transform(mat, "tensor")
+    mat3, batch_shape = _ensure_mat_3d(mat)
 
-    assert utils.check._is_square(mat), \
+    assert utils.check._is_square(mat3), \
         f"The input matrix is not a square matrix: received shape {mat.shape}"
 
-    return utils.check._is_hermitian(mat, eps).tolist()
+    out = utils.check._is_hermitian(mat3, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_linear(
@@ -209,11 +223,14 @@ def is_positive(
 
     """
     mat = _type_transform(mat, "tensor")
+    mat3, batch_shape = _ensure_mat_3d(mat)
 
-    assert utils.check._is_square(mat), \
+    assert utils.check._is_square(mat3), \
         f"The input matrix is not a square matrix: received shape {mat.shape}"
 
-    return utils.check._is_positive(mat, eps).tolist()
+    out = utils.check._is_positive(mat3, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_povm(
@@ -241,7 +258,10 @@ def is_povm(
 
     """
     set_op = _type_transform(set_op, "tensor")
-    return utils.check._is_povm(set_op, eps)
+    set4, batch_shape = _ensure_set_4d(set_op)
+    out = utils.check._is_povm(set4, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_projector(
@@ -270,11 +290,14 @@ def is_projector(
 
     """
     mat = _type_transform(mat, "tensor")
+    mat3, batch_shape = _ensure_mat_3d(mat)
 
-    assert utils.check._is_square(mat), \
+    assert utils.check._is_square(mat3), \
         f"The input matrix is not a square matrix: received shape {mat.shape}"
 
-    return utils.check._is_projector(mat, eps).tolist()
+    out = utils.check._is_projector(mat3, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_ppt(density_op: _StateLike) -> Union[bool, List[bool]]:
@@ -300,7 +323,10 @@ def is_ppt(density_op: _StateLike) -> Union[bool, List[bool]]:
 
     """
     density_op = _type_transform(density_op, "state").density_matrix
-    return utils.check._is_ppt(density_op).tolist()
+    rho3, batch_shape = _ensure_mat_3d(density_op)
+    out = utils.check._is_ppt(rho3)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_pvm(
@@ -328,7 +354,10 @@ def is_pvm(
 
     """
     set_op = _type_transform(set_op, "tensor")
-    return utils.check._is_pvm(set_op, eps)
+    set4, batch_shape = _ensure_set_4d(set_op)
+    out = utils.check._is_pvm(set4, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_state_vector(
@@ -357,13 +386,14 @@ def is_state_vector(
 
     """
     vec = _type_transform(vec, "tensor")
-
     if vec.ndim == 1:
         vec = vec.view([-1, 1])
-    else:
-        vec = vec.view(list(vec.shape[:-2]) + [-1, 1])
-
-    return utils.check._is_state_vector(vec, eps).tolist()
+    elif vec.ndim >= 2 and vec.shape[-1] == vec.shape[-2]:
+        vec = vec.reshape(list(vec.shape[:-2]) + [-1, 1])
+    vec3, batch_shape = _ensure_vec_3d(vec)
+    out = utils.check._is_state_vector(vec3, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()
 
 
 def is_unitary(
@@ -392,8 +422,11 @@ def is_unitary(
 
     """
     mat = _type_transform(mat, "tensor")
+    mat3, batch_shape = _ensure_mat_3d(mat)
 
-    assert utils.check._is_square(mat), \
+    assert utils.check._is_square(mat3), \
         f"The input matrix is not a square matrix: received shape {mat.shape}"
 
-    return utils.check._is_unitary(mat, eps).tolist()
+    out = utils.check._is_unitary(mat3, eps)
+    out = out.reshape(batch_shape) if batch_shape else out.squeeze(0)
+    return out.tolist()

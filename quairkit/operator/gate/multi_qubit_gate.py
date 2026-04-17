@@ -27,9 +27,6 @@ from ...core.utils.matrix import (_cnot, _cp, _crx, _cry, _crz, _cswap, _cu,
                                   _cy, _cz, _ms, _rxx, _ryy, _rzz, _swap,
                                   _toffoli, _universal2, _universal3)
 from .base import Gate, ParamGate
-from .visual import (_cnot_display, _crx_like_display, _cswap_display,
-                     _cx_like_display, _oracle_like_display, _rxx_like_display,
-                     _swap_display, _tofolli_display)
 
 
 class CNOT(Gate):
@@ -77,16 +74,13 @@ class CNOT(Gate):
     @property
     def matrix(self) -> torch.Tensor:
         return CNOT.__matrix.to(self.device, dtype=self.dtype)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _cnot_display(self, ax, x, )
     
     def forward(self, state: StateSimulator) -> StateSimulator:
         if state._keep_dim:
             return super().forward(state)
         
-        swap_indices = utils.linalg._get_swap_indices(2, 3, self.system_idx, state.system_dim, self.device)
-        state._index_select(swap_indices)
+        swap_indices = utils.linalg._get_swap_indices(2, 3, self.system_idx, state.system_dim, self.device).long()
+        state._index_select(swap_indices, self.system_idx)
         return state
 
 CX = CNOT
@@ -138,9 +132,6 @@ class CY(Gate):
     def matrix(self) -> torch.Tensor:
         return CY.__matrix.to(self.device, dtype=self.dtype)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _cx_like_display(self, ax, x, )
-
 
 class CZ(Gate):
     r"""A collection of controlled Z gates.
@@ -188,9 +179,6 @@ class CZ(Gate):
     def matrix(self) -> torch.Tensor:
         return CZ.__matrix.to(self.device, dtype=self.dtype)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _cx_like_display(self, ax, x)
-
 
 class SWAP(Gate):
     r"""A collection of SWAP gates.
@@ -235,9 +223,6 @@ class SWAP(Gate):
     def matrix(self) -> torch.Tensor:
         return SWAP.__matrix.to(self.device, dtype=self.dtype)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _swap_display(self, ax, x, )
-
 
 class CP(ParamGate):
     r"""A collection of controlled P gates.
@@ -281,9 +266,6 @@ class CP(ParamGate):
 
         super().__init__(
             _cp, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _crx_like_display(self, ax, x)
 
 
 class CRX(ParamGate):
@@ -333,9 +315,6 @@ class CRX(ParamGate):
         super().__init__(
             _crx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _crx_like_display(self, ax, x)
-
 
 class CRY(ParamGate):
     r"""A collection of controlled rotation gates about the y-axis.
@@ -383,9 +362,6 @@ class CRY(ParamGate):
 
         super().__init__(
             _cry, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _crx_like_display(self, ax, x, )
 
 
 class CRZ(ParamGate):
@@ -435,9 +411,6 @@ class CRZ(ParamGate):
         super().__init__(
             _crz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _crx_like_display(self, ax, x)
-
 
 class CU(ParamGate):
     r"""A collection of controlled single-qubit rotation gates.
@@ -485,9 +458,6 @@ class CU(ParamGate):
         super().__init__(
             _cu, param, 4, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _crx_like_display(self, ax, x)
-
 
 class RXX(ParamGate):
     r"""A collection of RXX gates.
@@ -531,9 +501,6 @@ class RXX(ParamGate):
         }
         super().__init__(
             _rxx, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _rxx_like_display(self, ax, x)
 
 
 class RYY(ParamGate):
@@ -580,9 +547,6 @@ class RYY(ParamGate):
         super().__init__(
             _ryy, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _rxx_like_display(self, ax, x)
-
 
 class RZZ(ParamGate):
     r"""A collection of RZZ gates.
@@ -627,9 +591,6 @@ class RZZ(ParamGate):
         super().__init__(
             _rzz, param, 1, param_sharing, qubits_idx, [2, 2], check_legality=False, gate_info=gate_info, support_batch=True)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _rxx_like_display(self, ax, x)
-
 
 class MS(Gate):
     r"""A collection of Mølmer-Sørensen (MS) gates for trapped ion devices.
@@ -673,9 +634,6 @@ class MS(Gate):
     def matrix(self) -> torch.Tensor:
         mat = MS.__matrix.to(self.device, dtype=self.dtype)
         return utils.linalg._dagger(mat) if self._is_dagger else mat
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _oracle_like_display(self, ax, x)
 
 
 class CSWAP(Gate):
@@ -726,9 +684,6 @@ class CSWAP(Gate):
     def matrix(self) -> torch.Tensor:
         return CSWAP.__matrix.to(self.device, dtype=self.dtype)
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _cswap_display(self, ax, x)
-
 
 class CCX(Gate):
     r"""A collection of CCX (Toffoli) gates.
@@ -777,9 +732,6 @@ class CCX(Gate):
     @property
     def matrix(self) -> torch.Tensor:
         return CCX.__matrix.to(self.device, dtype=self.dtype)
-
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        return _tofolli_display(self, ax, x, )
 
 
 Toffoli = CCX

@@ -30,38 +30,97 @@ from ..database import pauli_str_basis, std_basis
 __all__ = ["Measure", "ExpecVal"]
 
 
-# Debug: torch.trace
-class ExpecVal(Operator):
-    r"""The class of the loss function to compute the expectation value for the observable.
+def _select_measure_results(prob_array: torch.Tensor, desired_result: torch.Tensor) -> torch.Tensor:
+    r"""Select desired measurement outcomes from dense or sparse probabilities."""
+    if prob_array.layout == torch.strided:
+        return torch.index_select(prob_array, dim=-1, index=desired_result)
 
-    This interface can make you using the expectation value for the observable as the loss function.
+    sparse_prob = prob_array.coalesce() if prob_array.layout == torch.sparse_coo else prob_array.to_sparse_coo().coalesce()
+    desired_cpu = desired_result.to(device="cpu", dtype=torch.int64)
+    desired_map = {}
+    for pos, idx in enumerate(desired_cpu.tolist()):
+        desired_map.setdefault(int(idx), []).append(pos)
+
+    if sparse_prob.ndim == 1:
+        result = torch.zeros((desired_result.numel(),), dtype=sparse_prob.dtype, device=sparse_prob.device)
+        indices = sparse_prob.indices()[0]
+        values = sparse_prob.values()
+        for p in range(values.numel()):
+            mapped_positions = desired_map.get(int(indices[p].item()))
+            if mapped_positions is None:
+                continue
+            for pos in mapped_positions:
+                result[pos] = values[p]
+        return result
+
+    if sparse_prob.ndim != 2:
+        raise ValueError(
+            f"Expected a 1D/2D measurement tensor, received shape {list(prob_array.shape)}."
+        )
+
+    result = torch.zeros(
+        (sparse_prob.shape[0], desired_result.numel()),
+        dtype=sparse_prob.dtype,
+        device=sparse_prob.device,
+    )
+    indices = sparse_prob.indices()
+    values = sparse_prob.values()
+    for p in range(values.numel()):
+        mapped_positions = desired_map.get(int(indices[1, p].item()))
+        if mapped_positions is None:
+            continue
+        row = int(indices[0, p].item())
+        for pos in mapped_positions:
+            result[row, pos] = values[p]
+    return result
+
+
+class ExpecVal(Operator):
+    r"""The class of the loss function to compute the expectation value for an observable.
+
+    This interface allows you to use the expectation value of an observable as a loss function for training quantum circuits.
+    The expectation value is defined as :math:`\langle H \rangle = \text{tr}(\rho H)`.
 
     Args:
-        hamiltonian: The input observable.
-        
-    .. code-block:: python
+        hamiltonian: The input observable (Hamiltonian) to compute the expectation value for.
 
-        from quairkit.database import random_hamiltonian_generator, random_state
+    Note:
+        This class supports batch operations. When input states have batch dimensions,
+        the expectation value is computed element-wise along the batch dimension.
 
-        observable = random_hamiltonian_generator(1)
-        print(f'The input observable is:\n{observable}')
-        expec_val = ExpecVal(observable)
+    Examples:
+        .. code-block:: python
 
-        input_state = random_state(num_systems=1, rank=2)
-        print('The expectation value of the observable:',expec_val(input_state, decompose=True))
+            from quairkit.database import random_hamiltonian_generator, random_state
+            from quairkit.loss import ExpecVal
 
-        input_state_batch = random_state(num_systems=1, size=2)
-        print('The expectation value of the observable:',expec_val(input_state_batch, decompose=False))
-                
-    ::
-    
-        The input observable is:
-        -0.28233465254251144 Z0
-        0.12440505341821817 X0
-        -0.2854054036807161 Y0
-        The expectation value of the observable: tensor([-0.1162,  0.0768, -0.0081])
-        The expectation value of the observable: tensor([0.1748, 0.0198])
+            # Create observable and compute expectation value
+            observable = random_hamiltonian_generator(1)
+            print(f'The input observable is:\n{observable}')
+            expec_val = ExpecVal(observable)
 
+            input_state = random_state(num_systems=1, rank=2)
+            result = expec_val(input_state, decompose=True)
+            print('The expectation value of the observable:', result)
+
+        ::
+
+            The input observable is:
+            -0.28233465254251144 Z0
+            0.12440505341821817 X0
+            -0.2854054036807161 Y0
+            The expectation value of the observable: tensor([-0.1162,  0.0768, -0.0081])
+
+        .. code-block:: python
+
+            # Batch expectation value example
+            input_state_batch = random_state(num_systems=1, size=2)
+            batch_result = expec_val(input_state_batch, decompose=False)
+            print('The expectation value of the observable:', batch_result)
+
+        ::
+
+            The expectation value of the observable: tensor([0.1748, 0.0198])
     """
     
     def __init__(self, hamiltonian: Hamiltonian):
@@ -74,19 +133,21 @@ class ExpecVal(Operator):
     def forward(self, state: _State, shots: Optional[int] = None, decompose: Optional[bool] = False) -> torch.Tensor:
         r"""Compute the expectation value of the observable with respect to the input state.
 
-        The value computed by this function can be used as a loss function to optimize.
+        The value computed by this function can be used as a loss function to optimize quantum circuits.
 
         Args:
-            state: The input state which will be used to compute the expectation value.
-            shots: The number of shots to measure the observable. Defaults to None, which means the default behavior.
-            decompose: Defaults to ``False``.  If decompose is ``True``, it will return the expectation value of each term.
-
-        Raises:
-            NotImplementedError: The backend is wrong or not supported.
+            state: The input quantum state which will be used to compute the expectation value.
+                Can be a single state or a batch of states.
+            shots: The number of shots to measure the observable. Defaults to None, which means exact computation.
+            decompose: If True, returns the expectation value of each term in the observable separately.
+                Defaults to False, which returns the total expectation value.
 
         Returns:
-            The expectation value or the list of expectation values for each term in the observable.
+            The expectation value of the observable. If ``decompose=True``, returns a tensor with one value per term.
+            If ``decompose=False``, returns a scalar for single states or a tensor for batched states.
 
+        Raises:
+            NotImplementedError: If the backend is wrong or not supported.
         """
         return state.expec_val(self.hamiltonian, shots=shots, decompose=decompose)
 
@@ -109,8 +170,6 @@ class Measure(Operator):
 
         # Define measurement basis using a string (e.g., 'xy' denotes eigen-basis of X ⊗ Y)
         op = Measure("xy")
-        # Define measurement basis using a list for multiple measurement setups (e.g., 'xy' and 'yz')
-        op = Measure(["xy", "yz"])
         # Define a custom measurement basis using a user-specified PVM tensor
         pvm_tensor = std_basis(2).density_matrix
         op = Measure(pvm_tensor)
@@ -172,7 +231,7 @@ class Measure(Operator):
                 [0.1513, 0.4921, 0.1676, 0.1891]])
     """
     
-    def __init__(self, measure_op: Optional[Union[str, List[str], torch.Tensor]] = None) -> None:
+    def __init__(self, measure_op: Optional[Union[str, torch.Tensor]] = None) -> None:
         r"""
         
         Note:
@@ -183,9 +242,8 @@ class Measure(Operator):
         """
         super().__init__()
 
-        self.measure_basis = None
-        if measure_op is None or isinstance(measure_op, (str, List)):
-            self.measure_op = measure_op
+        if measure_op is None or isinstance(measure_op, str):
+            self.measure_op: Union[torch.Tensor, StateSimulator] = measure_op
         
         elif isinstance(measure_op, torch.Tensor):
             assert torch.all(utils.check._is_pvm(measure_op)).item(), \
@@ -202,7 +260,7 @@ class Measure(Operator):
     ) -> Union[torch.Tensor, Tuple[torch.Tensor, _State]]:
         return self.forward(state, system_idx, shots, desired_result, keep_state)
     
-    def __check_measure_op(self, state: _State, system_idx: List[int]) -> bool:
+    def __check_measure_op(self, state: _State, system_idx: List[int]) -> None:
         r"""Check whether the shape of input measurement operator is valid,
         and return whether measurement is performed across all qubits.
         
@@ -210,61 +268,49 @@ class Measure(Operator):
             used for simulator backend only.
         """
         system_dim = [state.system_dim[idx] for idx in system_idx]
-        measure_op = self.measure_op
         num_measure_systems = len(system_idx)
 
-        if measure_op is None:
-            self.measure_basis = std_basis(num_measure_systems, system_dim)
-            self.measure_op = self.measure_basis.density_matrix
+        if self.measure_op is None:
+            self.measure_op = std_basis(num_measure_systems, system_dim)
             return num_measure_systems == state.num_systems
-        elif isinstance(measure_op, (str, List)):
-            if isinstance(measure_op, str) and len(measure_op) == 1:
-                measure_op *= num_measure_systems
-            self.measure_basis = pauli_str_basis(measure_op)
-            self.measure_op = self.measure_basis.density_matrix
+        elif isinstance(self.measure_op, str):
+            if len(self.measure_op) == 1:
+                self.measure_op *= num_measure_systems
+            self.measure_op = pauli_str_basis(self.measure_op)
             return num_measure_systems == state.num_systems
 
         dim = math.prod(system_dim)
         expected_shape = [dim, dim]
-        if measure_op.shape[-2:] != tuple(expected_shape):
+        if self.measure_op.shape[-2:] != tuple(expected_shape):
             raise ValueError(
                 f"The dimension of the PVM does not match the number of qubits: "
-                f"received shape {measure_op.shape}, expected {expected_shape}"
+                f"received shape {self.measure_op.shape}, expected {expected_shape}"
             )
-        if ((measure_batch_dim := list(measure_op.shape[:-3])) and 
-            state._batch_dim and 
-            (state._batch_dim != measure_batch_dim)):
-            raise ValueError(
-                f"The batch dimensions of input state do not match with measurement operator: "
-                f"expected None or {measure_batch_dim}, received {state.batch_dim}"
-            )
-        
-        return bool(
-            self.measure_basis
-            and dim == measure_op.shape[-3]
-            and num_measure_systems == state.num_systems
-        )
         
     def __measure_simulator_backend(
-        self, state: StateSimulator, system_idx: List[int], shots: Optional[int],
+        self, state: StateSimulator, system_idx: List[int],
         desired_result: Optional[torch.Tensor], keep_state: bool
     ) -> Union[torch.Tensor, Tuple[torch.Tensor, StateSimulator]]:
-        measure_all_sys = self.__check_measure_op(state, system_idx)
+        self.__check_measure_op(state, system_idx)
         measure_op = self.measure_op
 
         if desired_result is not None:
-            measure_op = torch.index_select(measure_op, dim=-3, index=desired_result)
-        
-        prob_array, measured_state = state.measure(system_idx, shots=shots, measure_op=measure_op, keep_state=True)
+            if isinstance(measure_op, StateSimulator):
+                measure_op = measure_op[desired_result]
+            else:
+                measure_op = torch.index_select(measure_op, dim=-3, index=desired_result)
 
-        if keep_state:
-            if measure_all_sys:
-                measure_basis = self.measure_basis.permute(system_idx)
-                if desired_result is not None:
-                    measure_basis = measure_basis[desired_result]
-                measured_state = measure_basis.expand_as(measured_state)
-            return prob_array, measured_state
-        return prob_array
+        if isinstance(measure_op, StateSimulator):
+            if keep_state:
+                prob_array, measured_state = state._measure_by_state(
+                    measure_op, system_idx, keep_state=True
+                )
+                return prob_array, measured_state
+            return state._measure_by_state(measure_op, system_idx, keep_state=False)
+        else:
+            if keep_state:
+                return state._measure(measure_op, system_idx)
+            return state._expec_val(measure_op, system_idx).real
     
     def __measure_operator_backend(
         self, state: StateOperator, system_idx: List[int], shots: Optional[int],
@@ -273,13 +319,9 @@ class Measure(Operator):
         assert not keep_state, \
             "The post-measurement state is not supported for state operators."
         
-        measure_op = self.measure_op
-        if isinstance(measure_op, List):
-            raise NotImplementedError(
-                "The measurement with multiple measurement operators is not supported for state operators.")
-        prob_array = state.measure(system_idx, shots=shots, measure_op=measure_op)
-        if desired_result:
-            prob_array = torch.index_select(prob_array, dim=-1, index=desired_result)
+        prob_array = state.measure(system_idx, shots=shots, measure_op=self.measure_op)
+        if desired_result is not None:
+            prob_array = _select_measure_results(prob_array, desired_result)
         return prob_array
 
     @_alias({"system_idx": "qubits_idx"})
@@ -320,7 +362,7 @@ class Measure(Operator):
 
         if isinstance(state, StateSimulator):
             return self.__measure_simulator_backend(
-                state, system_idx, shots, desired_result, keep_state
+                state, system_idx, desired_result, keep_state
             )
         
         return self.__measure_operator_backend(

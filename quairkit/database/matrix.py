@@ -18,14 +18,23 @@ Gate matrices.
 """
 
 import itertools
+import math
 from typing import Callable, List, Optional, Union
 
 import torch
 
 from .. import database
 from ..core import get_dtype, utils
-from ..core.intrinsic import (_ArrayLike, _ParamLike, _SingleParamLike,
-                              _type_fetch, _type_transform)
+from ..core.intrinsic import (
+    _ArrayLike,
+    _ParamLike,
+    _SingleParamLike,
+    _alias,
+    _ensure_param_2d,
+    _type_fetch,
+    _type_transform,
+    _unflatten_batch,
+)
 
 __all__ = [
     "phase",
@@ -151,14 +160,18 @@ def grover_matrix(oracle: _ArrayLike, dtype: Optional[torch.dtype] = None) -> _A
     return utils.matrix._grover(oracle)
 
 
-def qft_matrix(num_qubits: int) -> torch.Tensor:
-    r"""Construct the quantum Fourier transpose (QFT) gate.
+@_alias({"num_systems": "num_qubits"})
+def qft_matrix(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> torch.Tensor:
+    r"""Construct the quantum Fourier transform (QFT) matrix.
 
     Args:
-        num_qubits: number of qubits :math:`n` st. :math:`N = 2^n`.
+        num_systems: Number of systems :math:`n`. If None, inferred from ``system_dim``.
+            Alias of ``num_qubits``.
+        system_dim: Dimension of systems. Can be a list of system dimensions
+            or an int representing the dimension of all systems. Defaults to qubit case.
 
     Returns:
-        A matrix in the form
+        A matrix in the form:
 
         .. math::
 
@@ -174,8 +187,7 @@ def qft_matrix(num_qubits: int) -> torch.Tensor:
     Examples:
         .. code-block:: python
 
-            num_qubits = 1
-            qft_gate = qft_matrix(num_qubits)
+            qft_gate = qft_matrix(1)
             print(f'The QFT gate is:\n{qft_gate}')
 
         ::
@@ -183,8 +195,29 @@ def qft_matrix(num_qubits: int) -> torch.Tensor:
             The QFT gate is:
             tensor([[ 0.7071+0.0000e+00j,  0.7071+0.0000e+00j],
                     [ 0.7071+0.0000e+00j, -0.7071+8.6596e-17j]])
+
+        .. code-block:: python
+
+            qft_gate = qft_matrix(2, system_dim=[2, 3])
+            print(qft_gate.shape)
+
+        ::
+
+            torch.Size([6, 6])
     """
-    return utils.matrix._qft(num_qubits, get_dtype())
+    if num_systems is None:
+        num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
+
+    if isinstance(system_dim, int):
+        system_dim = [system_dim] * num_systems
+    else:
+        system_dim = list(system_dim)
+        assert len(system_dim) == num_systems, (
+            f"Dimension of each system should match num_systems: received {system_dim} and {num_systems}."
+        )
+
+    N = math.prod(system_dim)
+    return utils.matrix._qft(N, get_dtype())
 
 
 def h() -> torch.Tensor:
@@ -481,9 +514,11 @@ def p(theta: _SingleParamLike) -> _ArrayLike:
             tensor([[1.0000+0.0000j, 0.0000+0.0000j],
                     [0.0000+0.0000j, 0.7071+0.7071j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._p(theta).view(batch_dim + [2, 2])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._p(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -517,9 +552,11 @@ def rx(theta: _SingleParamLike) -> _ArrayLike:
             tensor([[0.9239+0.0000j, 0.0000-0.3827j],
                     [0.0000-0.3827j, 0.9239+0.0000j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._rx(theta).view(batch_dim + [2, 2])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._rx(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -553,9 +590,11 @@ def ry(theta: _SingleParamLike) -> _ArrayLike:
             tensor([[ 0.9239+0.j, -0.3827+0.j],
                     [ 0.3827+0.j,  0.9239+0.j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._ry(theta).view(batch_dim + [2, 2])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._ry(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -589,9 +628,11 @@ def rz(theta: _SingleParamLike) -> _ArrayLike:
             tensor([[0.9239-0.3827j, 0.0000+0.0000j],
                     [0.0000+0.0000j, 0.9239+0.3827j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._rz(theta).view(batch_dim + [2, 2])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._rz(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -625,9 +666,11 @@ def u3(theta: _ParamLike) -> _ArrayLike:
             tensor([[ 9.2388e-01+0.0000j, -3.3141e-01-0.1913j],
                     [ 1.9134e-01+0.3314j, -4.0384e-08+0.9239j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._u3(theta).view(batch_dim + [2, 2])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=3)
+    mat_b = utils.matrix._u3(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -797,9 +840,11 @@ def cp(theta: _SingleParamLike) -> _ArrayLike:
                     [0.0000+0.0000j, 0.0000+0.0000j, 1.0000+0.0000j, 0.0000+0.0000j],
                     [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.7071+0.7071j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._cp(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._cp(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -838,9 +883,11 @@ def crx(theta: _SingleParamLike) -> _ArrayLike:
                     [0.+0.0000j, 0.+0.0000j, 0.9239+0.0000j, 0.+-0.3827j],
                     [0.+0.0000j, 0.+0.0000j, 0.+-0.3827j, 0.9239+0.0000j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._crx(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._crx(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -879,9 +926,11 @@ def cry(theta: _SingleParamLike) -> _ArrayLike:
                     [0.+0.j, 0.+0.j, 0.9239+0.j, -0.3827+0.j],
                     [0.+0.j, 0.+0.j, 0.3827+0.j, 0.9239+0.j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._cry(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._cry(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -920,9 +969,11 @@ def crz(theta: _SingleParamLike) -> _ArrayLike:
                     [0.+0.0000j, 0.+0.0000j, 0.9239-0.3827j, 0.+0.0000j],
                     [0.+0.0000j, 0.+0.0000j, 0.+0.0000j, 0.9239+0.3827j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._crz(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._crz(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -960,9 +1011,11 @@ def cu(theta: _ParamLike) -> _ArrayLike:
                     [0.0000e+00+0.0000j, 0.0000e+00+0.0000j, 8.0010e-01+0.4619j, -1.9134e-01-0.3314j],
                     [0.0000e+00+0.0000j, 0.0000e+00+0.0000j, -1.6728e-08+0.3827j, -4.6194e-01+0.8001j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._cu(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=4)
+    mat_b = utils.matrix._cu(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1000,9 +1053,11 @@ def rxx(theta: _SingleParamLike) -> _ArrayLike:
                     [0.0000+0.0000j, 0.0000-0.3827j, 0.9239+0.0000j, 0.0000+0.0000j],
                     [0.0000-0.3827j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.0000j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._rxx(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._rxx(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1040,9 +1095,11 @@ def ryy(theta: _SingleParamLike) -> _ArrayLike:
                     [0.0000+0.0000j, 0.0000-0.3827j, 0.9239+0.0000j, 0.0000+0.0000j],
                     [0.0000+0.3827j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.0000j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._ryy(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._ryy(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1080,9 +1137,11 @@ def rzz(theta: _SingleParamLike) -> _ArrayLike:
                     [0.0000+0.0000j, 0.0000+0.0000j, 0.9239+0.3827j, 0.0000+0.0000j],
                     [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.9239-0.3827j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._rzz(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=1)
+    mat_b = utils.matrix._rzz(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1201,7 +1260,7 @@ def toffoli() -> torch.Tensor:
     return utils.matrix._toffoli(get_dtype())
 
 
-ccx = toffoli  # Alias for Toffoli gate, commonly used in quantum computing libraries
+ccx = toffoli
 
 
 def universal2(theta: _ParamLike) -> _ArrayLike:
@@ -1231,9 +1290,11 @@ def universal2(theta: _ParamLike) -> _ArrayLike:
                     [-0.8151-0.2697j,  0.2345-0.1841j,  0.3835-0.1154j, -0.0720+0.0918j],
                     [-0.2431+0.3212j, -0.1714+0.5374j,  0.1140+0.5703j, -0.2703+0.3289j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._universal2(theta).view(batch_dim + [4, 4])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=15)
+    mat_b = utils.matrix._universal2(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1282,9 +1343,11 @@ def universal3(theta: _ParamLike) -> _ArrayLike:
                     [-0.4124-0.4385j,  0.2306+0.0894j,  0.0104-0.2180j, -0.0180+0.2869j,
                      -0.1030-0.2991j, -0.1473+0.0931j, -0.1686-0.3451j,  0.3825+0.1480j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim = list(theta.shape[:-1])
-    mat = utils.matrix._universal3(theta).view(batch_dim + [8, 8])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    theta2, batch_shape = _ensure_param_2d(theta, n=81)
+    mat_b = utils.matrix._universal3(theta2)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1312,9 +1375,12 @@ def universal_qudit(theta: _ParamLike, dimension: int) -> _ArrayLike:
             tensor([[-0.9486+0.2806j,  0.1459+0.0112j],
                     [-0.1459+0.0112j, -0.9486-0.2806j]])
     """
-    type_str, theta = _type_fetch(theta), _type_transform(theta, "tensor")
-    batch_dim, generator = list(theta.shape[:-1]), database.set.gell_mann(dimension)
-    mat = utils.matrix._param_generator(theta, generator).view(batch_dim + [dimension, dimension])
+    type_str = _type_fetch(theta)
+    theta = _type_transform(theta, "tensor")
+    generator = database.set.gell_mann(dimension)
+    theta2, batch_shape = _ensure_param_2d(theta, n=int(generator.shape[0]))
+    mat_b = utils.matrix._param_generator(theta2, generator)
+    mat = _unflatten_batch(mat_b, batch_shape)
     return _type_transform(mat, type_str)
 
 
@@ -1428,7 +1494,6 @@ def permutation_matrix(perm: List[int], system_dim: Union[int, List[int]] = 2):
 
 for name, func in list(locals().items()):
     if callable(func) and "_" not in name:
-        # Add '_gate' to the name for functions without an underscore
         new_name = f"{name}_gate"
         globals()[new_name] = func
         __all__ += [new_name]

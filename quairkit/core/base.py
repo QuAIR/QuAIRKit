@@ -27,6 +27,8 @@ DEFAULT_DEVICE = "cpu"
 DEFAULT_DTYPE = torch.complex64
 SEED = None
 
+PRODUCT_STATE_THRESHOLD = 2
+
 
 def set_device(device: str) -> None:
     r"""Set the classical device to save the tensor.

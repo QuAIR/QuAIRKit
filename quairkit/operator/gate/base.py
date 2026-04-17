@@ -25,7 +25,6 @@ import torch
 from ...core import (OperatorInfoType, StateSimulator, get_float_dtype,
                      intrinsic, utils)
 from ..channel import Channel
-from .visual import _base_gate_display, _base_param_gate_display
 
 
 class Gate(Channel):
@@ -80,58 +79,8 @@ class Gate(Channel):
             info['tex'] = r'{' + tex + r'}^\dagger'
         return info
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float) -> float:
-        r"""The display function called by circuit instance when plotting.
-
-        Args:
-            ax: the ``matplotlib.axes.Axes`` instance
-            x: the start horizontal position
-
-        Returns:
-            the total width occupied
-
-        Note:
-            Users could overload this function for custom display.
-        """
-        return _base_gate_display(self, ax, x)
-
-    def _single_qubit_combine_with_threshold6(self, state: StateSimulator, matrices: List[torch.Tensor]) -> None:
-        r"""
-        Combines single-qubit gates in a circuit with 6-qubit threshold and updates the state accordingly.
-
-        Args:
-            state: The current state, represented as a `State` object.
-            matrices: A list of `torch.Tensor` objects representing the single-qubit gates to be combined.
-
-        Returns:
-            The updated state after the single-qubit gates have been combined, represented as a `State` object.
-        """
-        threshold_dim = 2 ** 6
-        threshold_systems = threshold_dim // self.dim
-        tensor_times, tensor_left = divmod(len(self.system_idx), threshold_systems)
-        for threshold_idx in range(tensor_times):
-            idx_beg = threshold_idx * threshold_systems
-            idx_end = (threshold_idx + 1) * threshold_systems
-            
-            matrix = utils.linalg._nkron(*matrices[idx_beg:idx_end])
-            state._evolve(matrix, sum(self.system_idx[idx_beg:idx_end], []))
-        
-        if tensor_left > 0:
-            idx_beg = tensor_times * threshold_systems
-            
-            matrix = utils.linalg._nkron(*matrices[idx_beg:]) if tensor_left > 1 else matrices[idx_beg]
-            state._evolve(matrix, sum(self.system_idx[idx_beg:], []))
-        
-        return state
-
     def forward(self, state: StateSimulator) -> StateSimulator:
-        if self.num_acted_system == 1 and self.dim == 2:
-            state = self._single_qubit_combine_with_threshold6(
-                state=state, matrices=[self.matrix for _ in self.system_idx])
-        else:
-            for system_idx in self.system_idx:
-                state._evolve(self.matrix, system_idx)
-
+        state._evolve_many(self.matrix, self.system_idx, on_batch=True)
         return state
 
     def dagger(self) -> None:
@@ -174,9 +123,12 @@ class ParamGate(Gate):
         acted_system_dim: Union[List[int], int] = 2, check_legality: bool = True, gate_info: dict = None,
         support_batch: bool = True
     ):
-        # if # of acted system is unknown, generate an example matrix to run Gate.__init__
-        ex_matrix = generator(torch.randn(
-            [num_acted_param], dtype=get_float_dtype())) if isinstance(acted_system_dim, int) else None
+        if isinstance(acted_system_dim, int):
+            ex_param = torch.randn([1, num_acted_param], dtype=get_float_dtype())
+            ex_matrix = generator(ex_param)
+            ex_matrix = ex_matrix[0] if isinstance(ex_matrix, torch.Tensor) and ex_matrix.ndim == 3 else ex_matrix
+        else:
+            ex_matrix = None
 
         super().__init__(ex_matrix, system_idx, acted_system_dim, check_legality, gate_info)
         
@@ -195,7 +147,8 @@ class ParamGate(Gate):
             theta = torch.flip(theta, [0])
         
         if self.__support_batch:
-            mat = self.__generator(theta).squeeze().to(device=self.device)
+            theta2 = theta.reshape([-1, theta.shape[-1]])
+            mat = self.__generator(theta2).to(device=self.device)
             return utils.linalg._dagger(mat) if self._is_dagger else mat
         
         matrices_list = [
@@ -220,30 +173,8 @@ class ParamGate(Gate):
         })
         return info
 
-    def display_in_circuit(self, ax: matplotlib.axes.Axes, x: float, ) -> float:
-        r"""The display function called by circuit instance when plotting.
-
-        Args:
-            ax: the ``matplotlib.axes.Axes`` instance
-            x: the start horizontal position
-
-        Returns:
-            the total width occupied
-
-        Note:
-            Users could overload this function for custom display.
-        """
-        return _base_param_gate_display(self, ax, x)
-
     def forward(self, state: StateSimulator) -> StateSimulator:
         dim = self.dim
         matrices_list = self.matrix.view([-1, self.theta.shape[-2], dim, dim]).squeeze(-3)
-        
-        if self.num_acted_system == 1 and self.dim == 2:
-            state = self._single_qubit_combine_with_threshold6(
-                state=state, matrices=matrices_list)
-        else:
-            for param_idx, system_idx in enumerate(self.system_idx):
-                state._evolve(matrices_list[param_idx], system_idx)
-        
+        state._evolve_many_batched_groups([matrices_list], [self.system_idx], on_batch=True)
         return state

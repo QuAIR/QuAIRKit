@@ -19,6 +19,7 @@ The source file of the LOCCNet class.
 """
 
 import warnings
+from math import comb
 from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 
 import numpy as np
@@ -28,9 +29,9 @@ from torch.nn import ModuleDict, ModuleList
 from quairkit import Circuit
 from quairkit.core import StateSimulator, get_dtype, intrinsic
 from quairkit.core.intrinsic import _alias
+from quairkit.core.state.backend import ProductDefaultSimulator
 from quairkit.database import bell_state, std_basis, zero_state
 from quairkit.operator import OneWayLOCC, Oracle, ParamOracle
-from quairkit.qinfo import nkron
 
 _LogicalIndex = Tuple[str, int]
 _PartyInfo = Dict[str, Union[int, Dict[str, int]]]
@@ -193,17 +194,27 @@ class OneWayLOCCNet(torch.nn.Module):
         num_total_systems = sum(cir.num_systems for cir in self.values())
         total_system_dim = sum((cir.system_dim for cir in self.values()), [])
 
-        settled_indices = [idx for indices in self._state_map for idx in indices]
-        unsettled_indices = sorted(set(range(num_total_systems)) - set(settled_indices))
+        list_state = []
+        list_state_idx = []
+        
+        def add_state(state: StateSimulator, global_indices: List[int]) -> None:
+            if isinstance(state, ProductDefaultSimulator):
+                for s, local_idx in state._export_blocks(clone_state=False):
+                    list_state.append(s)
+                    list_state_idx.append([global_indices[i] for i in local_idx])
+            else:
+                list_state.append(state)
+                list_state_idx.append(global_indices)
+        
+        for indices in self._state_map:
+            add_state(self._state_map[indices], list(indices))
 
-        states = [self._state_map[indices] for indices in self._state_map]
+        unsettled_indices = sorted(set(range(num_total_systems)) - set(idx for idxs in list_state_idx for idx in idxs))
         if unsettled_indices:
             unsettled_dims = [total_system_dim[idx] for idx in unsettled_indices]
-            states.append(zero_state(len(unsettled_indices), system_dim=unsettled_dims))
+            add_state(zero_state(len(unsettled_indices), system_dim=unsettled_dims), unsettled_indices)
 
-        combined_state = nkron(*states)
-        combined_state._system_seq = settled_indices + unsettled_indices
-        return combined_state
+        return ProductDefaultSimulator(list_state, list_state_idx)
     
     def __check_locc_idx(self, system_idx: List[Union[List[_LogicalIndex]]]) -> List[List[int]]:
         r"""Check if the logical indices are valid and not measured before. Return formatted information.
@@ -289,12 +300,10 @@ class OneWayLOCCNet(torch.nn.Module):
         state = self.__prepare_init_state()
         for cir in self.values():
             state = cir(state)
-        
+
         trace_idx, trace_dim = [], []
         for op in self._list_locc:
             state = op(state)
             trace_idx.extend(op.measure.system_idx[0])
             trace_dim.append(np.prod(op.measure.system_dim))
-        trace_state = std_basis(len(trace_idx), system_dim=[state.system_dim[idx] for idx in trace_idx])
-        trace_state._batch_dim = trace_dim
-        return state.product_trace(trace_state, trace_idx)
+        return state if not trace_idx else state.trace(trace_idx)

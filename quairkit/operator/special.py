@@ -24,8 +24,10 @@ from typing import Iterable, List, Optional, Union
 import numpy as np
 import torch
 
-from ..core import Operator, OperatorInfoType, StateSimulator, to_state, utils
-from ..core.intrinsic import _alias, _digit_to_int, _int_to_digit
+from ..core import (Operator, OperatorInfoType, StateSimulator, intrinsic,
+                    to_state, utils)
+from ..core.intrinsic import (_alias, _digit_to_int, _flatten_batch,
+                              _int_to_digit, _unflatten_batch)
 from . import Channel, Gate
 
 
@@ -48,9 +50,9 @@ class ResetState(Operator):
                  "type": "channel"}
         
         if replace_state is None:
-            data = torch.zeros(int(np.prod(acted_system_dim)))
-            data[0] = 1
-            replace_state = to_state(data, system_dim=acted_system_dim, eps=None)
+            from ..database import \
+                zero_state
+            replace_state = zero_state(system_dim=acted_system_dim)
             state_label = state_label or r'\ket{0}'
             _info["kwargs"] = {"replace_dm": None}
         else:
@@ -109,9 +111,9 @@ class Collapse(Operator):
                  "kwargs": {"if_print": if_print}}
         system_idx = [system_idx] if isinstance(system_idx, int) else list(system_idx)
         if measure_op is None:
-            dim = int(np.prod(acted_system_dim))
-            identity = torch.eye(dim, dtype=self.dtype, device=self.device).unsqueeze(-1)
-            measure_op = identity @ identity.mH
+            from ..database import \
+                std_basis
+            measure_op = std_basis(system_dim=acted_system_dim)
             _info["kwargs"]["measure_basis"] = None
         else:
             assert len(measure_op) > 1, \
@@ -127,12 +129,16 @@ class Collapse(Operator):
                 desired_result = _digit_to_int(desired_result, acted_system_dim)
             digits_str = _int_to_digit(desired_result, acted_system_dim)
             desired_result = torch.tensor(desired_result)
-            measure_op = torch.index_select(measure_op, -3, desired_result)
+            
+            if isinstance(measure_op, torch.Tensor):
+                measure_op = torch.index_select(measure_op, -3, desired_result)
+            else:
+                measure_op = measure_op[desired_result]
             _info["label"] = digits_str
         
         self.system_idx = [system_idx]
         self.system_dim = acted_system_dim
-        self.measure_op = measure_op
+        self.measure_op: Union[torch.Tensor, StateSimulator] = measure_op
 
         self.if_print = if_print
         self.digits_str = digits_str
@@ -165,7 +171,13 @@ class Collapse(Operator):
         Returns:
             The collapsed quantum state.
         """
-        prob_array, measured_state = state._measure(self.measure_op, self.system_idx[0])
+        measure_op, system_idx = self.measure_op, self.system_idx[0]
+        if isinstance(measure_op, StateSimulator):
+            prob_array, measured_state = state._measure_by_state(
+                measure_op, system_idx, keep_state=True
+            )
+        else:
+            prob_array, measured_state = state._measure(measure_op, system_idx)
         
         desired_result = self.desired_result
         if desired_result is None:
@@ -179,7 +191,6 @@ class Collapse(Operator):
                 f"It is computationally infeasible for some states in systems {self.system_idx[0]} "
                 f"to collapse to state {state_str}")
 
-        # whether print the collapsed result
         if self.if_print:
             prob = prob_array.mean().item()
             print(f"systems {self.system_idx[0]} collapse to the state {state_str} with (average) probability {prob}")
@@ -201,7 +212,7 @@ class OneWayLOCC(Operator):
     def __init__(
         self, gate: Gate,
         measure_idx: List[int], measure_dim: Union[List[int], int],
-        measure_op: Optional[torch.Tensor] = None, label: str = 'M', latex_name: str = 'O'
+        measure_op: Optional[Union[torch.Tensor]] = None, label: str = 'M', latex_name: str = 'O'
     ):
         super().__init__()
         num_measure_system = len(measure_idx)
@@ -271,8 +282,6 @@ class OneWayLOCC(Operator):
         
         measured_state = self.measure(state)
         
-        dim = len(matrix.shape[:-2])
-        matrix = matrix.repeat(measured_state._prob.shape[:-dim] + [1] * (dim + 2))
         measured_state._evolve(matrix, sys_idx, on_batch=False)
         return measured_state
 
@@ -305,7 +314,12 @@ class QuasiOperation(Operator):
         assert num_outcomes == (batch_num := matrix.shape[0]), \
             f"The prob distribution does not match the operator #: expect of num {num_outcomes}, received {batch_num}."
         
-        prob = prob.flatten().to(dtype=self.dtype, device=self.device)
+        if torch.is_complex(prob):
+            raise TypeError(
+                "QuasiOperation probability must be real float (complex dtype is not allowed)."
+            )
+        float_dtype = intrinsic._get_float_dtype(self.dtype)
+        prob = prob.flatten().to(dtype=float_dtype, device=self.device)
         if probability_param:
             prob = torch.nn.Parameter(prob)
             self.register_parameter('_prob', prob)
@@ -364,10 +378,11 @@ class QuasiOperation(Operator):
             The collapsed quantum state.
         """
         state = state.clone()
-        state.add_probability(self.probability)
-        
+        prob = self.probability
+        if torch.is_complex(prob):
+            raise TypeError("QuasiOperation probability must be real float.")
+        state.add_probability(prob.to(device=state.device))
+
         matrix = self.quasi_op.matrix
-        dim = len(matrix.shape[:-2])
-        matrix = matrix.repeat(state._prob._dims[:-dim] + [1] * (dim + 2))
         state._evolve(matrix, self.system_idx, on_batch=False)
         return state

@@ -134,13 +134,12 @@ class AmplitudeEncoding(Layer):
     def _householder_reflection(self, vector: torch.Tensor) -> torch.Tensor:
         dim = 2 ** self.num_systems
         
-        # Given a vector v, return a unitary U that U e0 = v
         state_vector = torch.nn.functional.pad(vector.H, (0, dim - vector.shape[0]))
         batch_size, _ = state_vector.shape
         e0 = torch.zeros(dim, dtype=vector.dtype, device=vector.device)
         e0[0] = 1
         
-        unitary = e0.unsqueeze(0) - state_vector  # e0 - v_i for each row
+        unitary = e0.unsqueeze(0) - state_vector
         denom = 1 - state_vector[:, 0].conj()
         c = torch.where(torch.abs(denom) > 1e-10, 1.0 / denom, torch.zeros_like(denom))
         outer = unitary.unsqueeze(2) * unitary.conj().unsqueeze(1)

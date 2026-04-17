@@ -25,12 +25,14 @@ import numpy as np
 import torch
 from torch.nn.parameter import Parameter
 
-from ..core import get_device, get_dtype, get_float_dtype
+from ..core import (get_backend, get_device, get_dtype, get_float_dtype,
+                    set_backend)
 from ..core.intrinsic import (_display_png, _format_sequential_idx,
                               _merge_qasm, _replace_indices, _State)
 from ..core.latex import OperatorListDrawer
 from ..core.operator import Operator, OperatorInfoType
 from ..core.state import StateSimulator
+from ..core.state.backend import ProductDefaultSimulator
 from ..database import std_basis, zero_state
 
 
@@ -81,7 +83,7 @@ class OperatorList(torch.nn.Sequential):
         else:
             assert len(set(physical_idx)) == len(physical_idx) == num_systems, \
                 f"Duplicate or too less system indices: received {physical_idx}, expected of length {num_systems}"
-        self.__system_idx: List[int] = physical_idx # physical index of systems
+        self.__system_idx: List[int] = physical_idx
 
     @property
     def num_qubits(self) -> int:
@@ -463,7 +465,12 @@ class OperatorList(torch.nn.Sequential):
         r"""Get the unitary matrix form of the operator list.
         """
         dim = int(np.prod(self.system_dim))
+        original_backend = get_backend()
+        set_backend('default')
+        
         input_basis = std_basis(self.num_systems, self.system_dim)
+        if isinstance(input_basis, ProductDefaultSimulator):
+            input_basis = input_basis._merged()
         input_basis._keep_dim = True
         
         physical_idx, self.system_idx = self.system_idx, list(range(self.num_systems))
@@ -474,6 +481,8 @@ class OperatorList(torch.nn.Sequential):
             f"The circuit seems to be a noisy circuit: expect 'default-pure', output {output_basis.backend}"
         input_basis = input_basis.bra.view([dim, 1, 1, dim])
         output_basis = output.ket.view([dim, -1, dim, 1])
+        
+        set_backend(original_backend)
         return torch.sum(output_basis @ input_basis, dim=0).view(output.batch_dim[1:] + [dim, dim])
     
     @property
@@ -569,7 +578,16 @@ class Layer(OperatorList):
         
         self.name = name
         self._depth = depth
+        self._max_fused_dim: int = 64
         super().__init__(len(physical_idx), system_dim, physical_idx)
+
+    def forward(self, state: Optional[_State] = None) -> _State:
+        state = state.clone()
+        for op in self.children():
+            out = op(state)
+            if isinstance(out, StateSimulator):
+                state = out
+        return state
         
     @property
     def depth(self) -> int:

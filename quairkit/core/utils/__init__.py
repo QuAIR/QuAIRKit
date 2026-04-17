@@ -17,15 +17,5 @@ r"""
 The library of torch functions used in QuAIRKit.
 """
 
-# -------------------------- Conventions --------------------------
-#
-# In principle, functions inside `utils` submodule shall be   
-#     - protected i.e. the name should start with "_" ;
-#     - used for developers only ;
-#     - used without calling other functions outside ``utils`` ;
-#     - added with "utils.xxx" when used outside ``core`` module ;
-#     - related to torch in/outputs only, no numpy in/outputs allowed .
-#
-# -----------------------------------------------------------------
 
 from . import check, linalg, matrix, qinfo, representation

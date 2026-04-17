@@ -267,14 +267,12 @@ def gradient(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayL
     """
     type_str = _type_fetch(var)
     var = _type_transform(var, "tensor")
-    # Check if the input is a vector
     var_ = torch.squeeze(var)
     shape = var_.shape
     if len(shape) != 1:
         warnings.warn(
             f"The input of var is not a (m,1) vector: received {var.shape}", RuntimeWarning
         )
-    # Compute and return the gradient
     return _type_transform(utils.linalg._gradient(loss_function, var, n), type_str)
 
 
@@ -313,14 +311,12 @@ def hessian(loss_function: Callable[[torch.Tensor], torch.Tensor], var: _ArrayLi
                      [ 0.,  0., 54.]]])
     """
     shape = var.shape
-    # Check if the input is a square matrix
     if len(shape) != 2:
         warnings.warn(
             f"The input of var is not a (n,m) matrix: received {var.shape}", RuntimeWarning
         )
     type_str = _type_fetch(var)
     var = _type_transform(var, "tensor")
-    # Compute and return the hessian
     return _type_transform(utils.linalg._hessian(loss_function, var), type_str)
 
 
@@ -818,7 +814,6 @@ def schmidt_decompose(
             Subsystem B bases: tensor([...])
     """
     type_psi = _type_fetch(psi)
-    # TODO: Provide a complete example when psi is defined.
     psi = _type_transform(psi, "state_vector").ket
 
     assert math.log2(

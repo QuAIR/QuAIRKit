@@ -20,13 +20,16 @@ The module that implements various backends of the state.
 from typing import Dict, Optional, Type, Union
 
 from .base import State
-from .default import DefaultSimulator, MixedState, PureState
-from .operator import StateOperator
+from .default import DefaultSimulator, MixedState, ProductDefaultSimulator, PureState
+from .operator import SimpleStateOperator, StateOperator
 from .simulator import StateSimulator
 
 r"""Backend classifier in the QuAIRKit.
 """ 
-BACKEND_LIST: Dict[str, Type[State]] = {DefaultSimulator.backend: DefaultSimulator}
+BACKEND_LIST: Dict[str, Type[State]] = {
+    DefaultSimulator.backend: DefaultSimulator,
+    ProductDefaultSimulator.backend: ProductDefaultSimulator,
+}
 
 r"""Default simulator for the state backend.
 """

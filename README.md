@@ -9,11 +9,11 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
   </a>
   <!-- PyPI -->
   <a href="https://pypi.org/project/quairkit/">
-    <img src="https://img.shields.io/badge/pypi-v0.4.4-orange.svg?style=flat-square&logo=pypi"/>
+    <img src="https://img.shields.io/badge/pypi-v0.5.0-orange.svg?style=flat-square&logo=pypi"/>
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python"/>
+    <img src="https://img.shields.io/badge/Python-3.9+-blue.svg?style=flat-square&logo=python"/>
   </a>
   <!-- License -->
   <a href="./LICENSE">
@@ -36,29 +36,36 @@ QuAIRKit provides the following functionalities,
 - Quantum channel simulation
 - Quantum algorithm/information tools
 
+We provide [skills](skills/quairkit) for coding agents to use QuAIRKit.
+
 ## Installation
 
-The minimum Python environment for QuAIRKit is `3.9`. We recommend installing QuAIRKit with Python `3.10`.
+The minimum supported Python version for QuAIRKit is `3.9`. We recommend Python `3.10`.
+A typical fresh environment is:
 
 ```bash
 conda create -n quair python=3.10
 conda activate quair
-conda install jupyter notebook
+conda install jupyter notebook  # for notebook tutorials
 ```
 
-We recommend the following way of installing QuAIRKit with pip,
+### Quick start (recommended)
+
+If you use Python >= 3.10, PyTorch >= 2.9, and one of the following platforms: Windows x86_64, Linux x86_64, or macOS Apple Silicon (arm64), the command below installs the recommended PyPI wheel.
 
 ```bash
 pip install quairkit
 ```
 
-or download all the files and finish the installation locally,
+Or install a wheel downloaded from [GitHub Releases](https://github.com/QuAIR/QuAIRKit/releases) (Assets):
 
 ```bash
-git clone https://github.com/QuAIR/QuAIRKit
-cd QuAIRKit
-pip install -e . --config-settings editable_mode=strict
+pip install ./quairkit-0.5.0-*.whl
 ```
+
+These wheels are built against PyTorch 2.9.x and are expected to work with both CPU and CUDA PyTorch builds, as long as your installed PyTorch is also 2.9.x.
+
+If you need a source or developer install instead, see [Installation from source](#installation-from-source) at the end of this README.
 
 ## Setup
 
@@ -70,10 +77,12 @@ import torch # library for tensor manipulation
 
 from quairkit import Circuit # standard quantum circuit interface
 
-from quairkit.database import ... # common matrices, sets, Hamiltonian, states, etc.
-from quairkit.qinfo import ... # common functions in quantum information processing
-from quairkit.loss import ... # common loss operators in neural network training
+from quairkit.database import * # common matrices, sets, Hamiltonian, states, etc.
+from quairkit.qinfo import * # common functions in quantum information processing
+from quairkit.loss import * # common loss operators in neural network training
 ```
+
+In most workflows, `Circuit` builds the executable workflow, `quairkit.database` provides standard states, matrices, and channels, `quairkit.qinfo` analyzes outputs, and `quairkit.loss` packages reusable training objectives.
 
 QuAIRKit provides global setup functions to set the default data type, device and random seed.
 
@@ -91,7 +100,7 @@ QuAIRKit provides a wide range of features for quantum computing, quantum inform
 
 QuAIRKit supports batch computations for quantum circuit simulations, state measurement and quantum information processing. It is easy to use and can be customized for different quantum (machine learning) algorithms.
 
-Below is an example of batch computation for quantum circuit simulation. Here a zero state is passed through four different quantum circuits, and compared with the target state.
+Below is an example of batched circuit simulation. Here one circuit applies a batched oracle and batched rotation parameters, then compares the four outputs with the same target state.
 
 ```python
 target_state = zero_state(1)
@@ -102,7 +111,7 @@ cir.oracle(unitary_data, 0)
 cir.ry(param=[0, 1, 2, 3])
 
 output_state = cir() # zero-state input by default
-print(state_fidelity(cir(), target_state)) 
+print(state_fidelity(output_state, target_state))
 ```
 
 ```text
@@ -112,21 +121,21 @@ tensor([1.0000, 0.4794, 0.8415, 0.0707])
 Above output is equivalent to
 
 ```math
-\left|\bra{0} R_z(0)\,I \ket{0} \right|,\,\,
-\left|\bra{0} R_z(1)\,X \ket{0} \right|,\,\,
-\left|\bra{0} R_z(2)\,Y \ket{0} \right|,\,\,
-\left|\bra{0} R_z(3)\,Z \ket{0} \right|
+\left|\bra{0} R_y(0)\,I \ket{0} \right|,\,\,
+\left|\bra{0} R_y(1)\,X \ket{0} \right|,\,\,
+\left|\bra{0} R_y(2)\,Y \ket{0} \right|,\,\,
+\left|\bra{0} R_y(3)\,Z \ket{0} \right|
 ```
 
 ### Qudit computation
 
-QuAIRKit also supports batch computations for quantum circuit simulations and most of the quantum information processing tools in qudit quantum computing, as shown below
+QuAIRKit also supports qudit workflows, including mixed-dimension circuits and batched operators, as shown below
 
 ```python
-# claim three systems, with 1 qubit and 1 qutrit
+# create two systems: one qubit and one qutrit
 cir = Circuit(2, system_dim=[2, 3])
 
-# apply 6^2 Heisenberg-Weyl operators on all systems
+# apply dimension-6 Heisenberg-Weyl operators on the composite system
 cir.oracle(heisenberg_weyl(6), [0, 1])
 
 # apply the H gate on the qubit, controlled by the qutrit
@@ -157,7 +166,7 @@ The 6th and 7th state for the batched qubit state is
 
 ### Probabilistic computation
 
-QuAIRKit supports probabilistic quantum circuit simulation, which allows you to simulate quantum circuits with probabilistic operations, such as measurement, partial post-selection, LOCC. This is useful in quantum communication protocols or quantum algorithm design. This functional is also compatible with batch computation and qudit computation.
+QuAIRKit supports probabilistic quantum circuit simulation, which allows you to simulate quantum circuits with probabilistic operations such as measurement, partial post-selection, and LOCC. This is useful in quantum communication protocols and quantum algorithm design. This functionality is also compatible with batch and qudit computation.
 
 Below is the implementation of a qubit teleportation protocol in QuAIRKit.
 
@@ -185,11 +194,13 @@ print('The average fidelity of the teleportation protocol is', fid)
 The average fidelity of the teleportation protocol is 0.9999999999998951
 ```
 
+Here `cir(input_state)` keeps the LOCC branch structure, and `expec_state()` averages that branch axis before the fidelity is compared with one reference state per input sample.
+
 ### Other functionalities
 
 #### Plot circuit with LaTeX
 
-Circuit in QuAIRKIt can be plotted with Quantikz, a LaTeX package for quantum circuit visualization, which is useful for academic presentation. You can use the `plot` function to visualize the circuit. Make sure you have up-to-date LaTeX installed on your system, so that the `quantikz` package is available.
+Circuit in QuAIRKit can be visualized with Quantikz, a LaTeX package for quantum circuit presentation. Use `to_latex()` if you only need the source code, or `plot()` if you want QuAIRKit to render the figure. Make sure you have an up-to-date LaTeX installation so that the `quantikz` package is available.
 
 ```python
 cir: Circuit = ...
@@ -200,7 +211,7 @@ See the [tutorial](tutorials/feature/plot.ipynb) for more details.
 
 #### Third-party Cloud Integration
 
-QuAIRKit supports third-party cloud integration, which allows you to run quantum circuits on real quantum devices with QuAIRKit interfaces. You can use the `set_backend` function to set the backend for measurement and computation of expectation value.
+QuAIRKit supports third-party cloud integration through `StateOperator` backends. This is a backend-integrator interface rather than the default user path; ordinary users typically interact with such backends through `set_backend` together with measurement and expectation-value APIs.
 
 ```python
 class YourState(qkit.StateOperator):
@@ -228,7 +239,7 @@ cir.universal_two_qubits() # apply universal two-qubit gate with random paramete
 
 #### Implicit transition
 
-If you want to perform noise simulation or mixed-state-related tools, there is no need to specify the backend, or import other libraries. Just call the function, and QuAIRKit will transit the backend for you.
+If you want to perform noise simulation or mixed-state-related analysis, there is no need to switch backends manually or import other libraries. Just call the function, and QuAIRKit will move the simulator from the pure-state path to the mixed-state path when the workflow becomes non-unitary.
 
 ```python
 cir = Circuit(3)
@@ -271,9 +282,10 @@ default-mixed
   - [Analyze Barren Plateau in quantum neural networks](tutorials/research/bp.ipynb)
   - [Hamiltonian simulation via Trotter decomposition](tutorials/research/trotter.ipynb)
   - [Quantum State Teleportation and Distribution](tutorials/research/locc.ipynb)
-  - [Search quantum information protocols with LOCCNet](tutorials/research/loccnet.ipynb)
   - [Rediscovering Simon's algorithm with PQC](tutorials/research/simon.ipynb)
+  - [Search quantum information protocols with LOCCNet](tutorials/research/loccnet.ipynb)
   - [Training quantum process transformation with PQC](tutorials/research/comb.ipynb)
+  - [Quantum Boltzmann Machine](tutorials/research/qbm.ipynb)
 
 - [Tutorials for AIAA 5072](tutorials/AIAA-5072), a quantum computing course instructed in HKUST(GZ)
   - [Brief Introduction to Quantum Computing](tutorials/AIAA-5072/week%201%20qubit.ipynb)
@@ -285,6 +297,46 @@ default-mixed
   - [Quantum state amplitude amplification](tutorials/AIAA-5072/week%207%20qaa.ipynb)
   - [Quantum phase estimation](tutorials/AIAA-5072/week%208%20qpe.ipynb)
   - [Hamiltonian simulation](tutorials/AIAA-5072/week%209%20hamiltonian.ipynb)
+
+## Installation from source
+
+Installation from source will compile the C++ extension and compiler/toolchain with C++17 support.
+Source builds support PyTorch >= 2.4 (recommended: PyTorch 2.9 or newer).
+
+Compiler toolchain references (official):
+
+- Windows: [Visual Studio Build Tools (C++)](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+- Linux: [GCC](https://gcc.gnu.org/) (or [Clang](https://clang.llvm.org/))
+- macOS: [Xcode Command Line Tools](https://developer.apple.com/xcode/resources/)
+
+Install from source (assumes your environment is already activated):
+
+```bash
+git clone https://github.com/QuAIR/QuAIRKit
+cd QuAIRKit
+
+pip install -e . --no-build-isolation
+```
+
+If VSCode/Pylance cannot resolve `quairkit` after the editable install above, you can choose one of the following:
+
+- Reinstall in strict editable mode for better IDE compatibility:
+
+```bash
+pip install -e . --config-settings editable_mode=strict --no-build-isolation
+```
+
+- Keep the default editable install and add your local QuAIRKit repository root to the global `python.analysis.extraPaths` setting in VSCode/Pylance. Since the `quairkit/` package directory lives directly under the repository root, add the absolute path to your cloned `QuAIRKit` directory, for example:
+
+```json
+{
+  "python.analysis.extraPaths": [
+    "/path/to/QuAIRKit"
+  ]
+}
+```
+
+If you frequently modify the source code, we recommend the `extraPaths` approach above. The strict editable mode may require rerunning the install command after C++ changes.
 
 ## Acknowledgements
 

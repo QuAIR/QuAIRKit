@@ -18,6 +18,7 @@ Source file for base class that simulates quantum states.
 """
 
 
+import importlib
 import warnings
 from abc import abstractmethod
 from typing import Iterable, List, Optional, Tuple, Type, Union
@@ -27,6 +28,21 @@ import torch
 
 from ... import Hamiltonian, utils
 from .base import State
+
+
+def _get_cpp_probability_data():
+    """Return the C++ ProbabilityData class if the extension is available."""
+    try:
+        mod = importlib.import_module("quairkit._C")
+        state_mod = getattr(mod, "state", None)
+        if state_mod is None:
+            return None
+        return getattr(state_mod, "ProbabilityData", None)
+    except Exception:
+        return None
+
+
+_CPP_ProbabilityData = _get_cpp_probability_data()
 
 
 class ProbabilityData:
@@ -46,45 +62,60 @@ class ProbabilityData:
     """
 
     def __init__(self, probs: Optional[List[torch.Tensor]] = None) -> None:
+        self._impl = _CPP_ProbabilityData(probs or []) if _CPP_ProbabilityData is not None else None
+
         self._list: List[torch.Tensor] = []
         self._dims: List[int] = []
-        if probs:
+        if self._impl is None and probs:
             for p in probs:
                 self._list.append(p)
                 self._dims.append(int(p.shape[-1]))
 
     def __len__(self) -> int:
-        return len(self._list)
+        return len(self._impl) if self._impl is not None else len(self._list)
 
     def __bool__(self) -> bool:
         return len(self) > 0
 
     def __getitem__(self, idx: int) -> torch.Tensor:
+        if self._impl is not None:
+            return self._impl.list[idx]
         return self._list[idx]
 
     @property
     def list(self) -> List[torch.Tensor]:
-        return self._list
+        return self._impl.list if self._impl is not None else self._list
 
     def clone_list(self) -> List[torch.Tensor]:
+        if self._impl is not None:
+            return self._impl.clone_list()
         return [p.clone() for p in self._list]
 
     @property
     def shape(self) -> List[int]:
+        if self._impl is not None:
+            return list(self._impl.shape)
         return self._dims.copy()
     
     @property
     def non_prob_dim(self) -> List[int]:
+        if self._impl is not None:
+            return list(self._impl.non_prob_dim)
         num_prob = len(self._list)
         return [] if num_prob == 0 else list(self._list[-1].shape[:-num_prob])
 
     @property
     def product_dim(self) -> int:
+        if self._impl is not None:
+            return int(self._impl.product_dim)
         return int(np.prod(self._dims))
 
     def clear(self) -> None:
-        self._list.clear()
-        self._dims.clear()
+        if self._impl is not None:
+            self._impl.clear()
+        else:
+            self._list.clear()
+            self._dims.clear()
 
     def prepare_new(self, prob: torch.Tensor, dtype: Optional[torch.dtype] = None,
                     device: Optional[torch.device] = None, real_only: bool = False) -> torch.Tensor:
@@ -92,6 +123,11 @@ class ProbabilityData:
         Canonicalize a fresh probability tensor to shape [1]*num_prev + [-1].
         This does not append; it only prepares the shaped tensor.
         """
+        if self._impl is not None:
+            if isinstance(device, str):
+                device = torch.device(device)
+            return self._impl.prepare_new(prob, dtype=dtype, device=device, real_only=real_only)
+
         num_prev = len(self._list)
         p = prob.view([1] * num_prev + [-1])
         if dtype is not None or device is not None:
@@ -113,13 +149,18 @@ class ProbabilityData:
             dtype, device: Optional dtype/device cast.
             real_only: If True, keep only the real part.
         """
-        p = self.prepare_new(prob, dtype=dtype, device=device, real_only=real_only) if normalize else prob
-        if dtype is not None or device is not None:
-            p = p.to(dtype=dtype, device=device)
-        if real_only:
-            p = p.real
-        self._list.append(p)
-        self._dims.append(int(p.shape[-1]))
+        if self._impl is not None:
+            if isinstance(device, str):
+                device = torch.device(device)
+            self._impl.append(prob, normalize=normalize, dtype=dtype, device=device, real_only=real_only)
+        else:
+            p = self.prepare_new(prob, dtype=dtype, device=device, real_only=real_only) if normalize else prob
+            if dtype is not None or device is not None:
+                p = p.to(dtype=dtype, device=device)
+            if real_only:
+                p = p.real
+            self._list.append(p)
+            self._dims.append(int(p.shape[-1]))
 
     def joint(self, prob_idx: List[int]) -> torch.Tensor:
         r"""
@@ -128,21 +169,28 @@ class ProbabilityData:
         Returns:
             A tensor shaped to the broadcasted product of the selected distributions.
         """
-        if len(self._list) == 0:
-            # Keep previous behavior: return a CPU scalar 1.0
+        if self._impl is not None:
+            return self._impl.joint(prob_idx)
+
+        if len(self.list) == 0:
             return torch.tensor(1.0)
 
-        dtype = self._list[0].dtype
-        device = self._list[0].device
+        first = self.list[0]
+        dtype = first.dtype
+        device = first.device
         result = torch.tensor(1.0, dtype=dtype, device=device)
         for idx in sorted(prob_idx):
-            p = self._list[idx]
+            p = self[idx]
             if p.dim() > result.dim():
                 result = result.view(list(result.shape) + [1] * (p.dim() - result.dim()))
             result = result * p
         return result
 
     def clone(self) -> 'ProbabilityData':
+        if self._impl is not None:
+            out = ProbabilityData()
+            out._impl = self._impl.clone()
+            return out
         return ProbabilityData(self.clone_list())
 
 
@@ -166,14 +214,15 @@ class StateSimulator(State):
         super().__init__(sys_dim)
 
         self._prob = ProbabilityData(probability)
-        
-        non_batch_len = 2 + len(self._prob)
-        self._batch_dim = list(data.shape[:-non_batch_len])
-
         self._data = data.contiguous().to(dtype=self.dtype, device=self.device)
-        self._system_seq = list(range(len(sys_dim))) if system_seq is None else system_seq
 
-        self._keep_dim = False # the flag to switch on the unitary matrix recording.
+    def _get_data_tensor(self) -> torch.Tensor:
+        r"""Internal helper to access the underlying tensor without relying on public `_data` access.
+
+        For the default backend, the real storage is `_data_tensor` and `_data` may be a
+        deprecated property. For other backends, `_data` is typically the real storage.
+        """
+        return getattr(self, "_data_tensor", self._data)
 
     @abstractmethod
     def __getitem__(self, key: Union[int, slice]) -> 'StateSimulator':
@@ -200,18 +249,6 @@ class StateSimulator(State):
         Args:
             prob: the probability distribution to be added, which should be a 1-D tensor.
         
-        """
-
-    @abstractmethod
-    def expand_as(self, other: 'StateSimulator') -> 'StateSimulator':
-        r"""Expand this tensor to the same size as other.
-
-        Args:
-            other: the state to be expanded to.
-
-        Note:
-            See torch.Tensor.expand_as() for more information about expand logic.
-
         """
 
     def __copy__(self) -> 'StateSimulator':
@@ -403,11 +440,13 @@ class StateSimulator(State):
         """
 
     @abstractmethod
-    def _index_select(self, new_indices: torch.Tensor) -> None:
+    def _index_select(self, new_indices: torch.Tensor, system_idx_pairs: Optional[List[List[int]]] = None) -> None:
         r"""Select the entries stored in this state.
 
         Args:
             new_indices: the indices of the entries to be selected.
+            system_idx_pairs: list of system index pairs involved (e.g. [[0, 1], [2, 3]]).
+                Used to determine if the operation can be performed locally on a single block.
         """
 
     def index_select(self, new_indices: Iterable[int]) -> 'StateSimulator':
@@ -542,6 +581,60 @@ class StateSimulator(State):
 
         """
 
+    def _expec_val_pauli_terms(
+        self,
+        pauli_words_r: List[str],
+        sites: List[List[int]],
+    ) -> torch.Tensor:
+        r"""Compute exact expectation values of non-identity Pauli terms.
+
+        Args:
+            pauli_words_r: List of Pauli words in right-order form.
+            sites: List of acted subsystem indices for each Pauli word.
+
+        Returns:
+            Real-valued expectation values for each input term before coefficients,
+            with shape ``[num_terms, batch_product]``.
+        """
+        if len(pauli_words_r) != len(sites):
+            raise ValueError(
+                "pauli_words_r and sites must have the same length: "
+                f"got {len(pauli_words_r)} and {len(sites)}."
+            )
+        if not pauli_words_r:
+            batch_product = int(self.trace().reshape(-1).numel())
+            return torch.empty((0, batch_product), dtype=self.dtype, device=self.device)
+
+        pauli_ops = {
+            "I": torch.eye(2, dtype=self.dtype, device=self.device),
+            "X": torch.tensor([[0, 1], [1, 0]], dtype=self.dtype, device=self.device),
+            "Y": torch.tensor([[0, -1j], [1j, 0]], dtype=self.dtype, device=self.device),
+            "Z": torch.tensor([[1, 0], [0, -1]], dtype=self.dtype, device=self.device),
+        }
+
+        expec_vals = []
+        for pauli_word, qubits_idx in zip(pauli_words_r, sites):
+            if len(pauli_word) != len(qubits_idx):
+                raise ValueError(
+                    "Each Pauli word length must match its site length: "
+                    f"got word='{pauli_word}' with sites={qubits_idx}."
+                )
+            obs_factors = []
+            for p in pauli_word:
+                key = str(p).upper()
+                if key not in pauli_ops:
+                    raise ValueError(
+                        "Unsupported Pauli character in _expec_val_pauli_terms: "
+                        f"received '{p}' in '{pauli_word}'."
+                    )
+                obs_factors.append(pauli_ops[key])
+
+            obs = utils.linalg._nkron(*obs_factors)
+            term_expec = self._expec_val(obs.unsqueeze(0), [int(q) for q in qubits_idx])
+            expec_vals.append(term_expec.real.reshape(-1))
+
+        return torch.stack(expec_vals, dim=0)
+
     @abstractmethod
     def _expec_state(self, prob_idx: List[int]) -> 'StateSimulator':
         r"""The expectation with respect to the specific probability distribution(s) of states
@@ -551,11 +644,16 @@ class StateSimulator(State):
         """
 
     @abstractmethod
-    def _measure(self, measure_op: torch.Tensor, sys_idx: List[int]) -> Tuple[torch.Tensor, 'StateSimulator']:
+    def _measure(
+        self,
+        measure_op: torch.Tensor,
+        sys_idx: List[int]
+    ) -> Tuple[torch.Tensor, 'StateSimulator']:
         r"""Measure the quantum state with the measured operators.
 
         Args:
             measure_op: the measurement operators, where the first dimension is the number of operators.
+            sys_idx: the system indices to be measured.
 
         Returns:
             The probability and collapsed states of each measurement result.
@@ -569,6 +667,66 @@ class StateSimulator(State):
             - (m, r), (n) -> error
 
         """
+        
+    def _measure_many(self, measure_op: torch.Tensor, sys_idx_list: List[List[int]]) -> Tuple[torch.Tensor, 'StateSimulator']:
+        r"""Measure the quantum state with the measured operators for many measurement operators.
+        
+        Args:
+            measure_op: stacked measurement operators of shape
+                ``[num_measure, num_measure_ops, d, d]``.
+                Here ``measure_op[i]`` is the operator set used in the i-th measurement, and
+                all measurements in this call must share the same ``num_measure_ops`` and ``d``.
+            sys_idx_list: a list of system index lists to be measured for each measurement in order.
+                Must satisfy ``len(sys_idx_list) == num_measure``. For each i, the dimension implied by
+                ``sys_idx_list[i]`` must match the operator dimension ``d`` of ``measure_op[i]``.
+            
+        Returns:
+            A tuple ``(prob, state)`` where:
+
+            - ``prob``: the (broadcasted) **joint** probability distribution of the measurement
+              variables added in this call, with the last ``num_measure`` dimensions corresponding
+              to the outcomes of each measurement **in order**. It may carry leading broadcast/batch
+              dimensions (including existing probability dimensions when measuring a probabilistic
+              state).
+            - ``state``: the collapsed state after all measurements.
+        """
+        num_measure = int(measure_op.shape[0])
+        if len(sys_idx_list) != num_measure:
+            raise ValueError(
+                "sys_idx_list length must match measure_op.shape[0]: "
+                f"got len(sys_idx_list)={len(sys_idx_list)} and num_measure={num_measure}."
+            )
+
+        state = self.clone()
+        prob_start = len(state._prob)
+        for i in range(num_measure):
+            _, state = state._measure(measure_op[i], sys_idx_list[i])
+
+        prob_idx = list(range(prob_start, len(state._prob)))
+        prob = state._joint_probability(prob_idx)
+        return prob, state
+    
+    def _measure_by_state(
+        self,
+        measure_basis: 'StateSimulator',
+        sys_idx: List[int],
+        keep_state: bool = False,
+    ) -> Union[torch.Tensor, Tuple[torch.Tensor, 'StateSimulator']]:
+        r"""Measure the quantum state with the measured basis, which is a state basis represented by a batched pure StateSimulator (i.e., has ket property)
+
+        Args:
+            measure_basis: the measurement basis.
+            sys_idx: the system indices to be measured.
+            keep_state: if ``False``, return only probabilities (delegates to :meth:`measure` with the same flag).
+
+        Returns:
+            Probabilities, or ``(prob, collapsed_state)`` when ``keep_state`` is ``True``.
+        """
+        return self.measure(
+            system_idx=sys_idx,
+            measure_op=measure_basis.density_matrix,
+            keep_state=keep_state,
+        )
 
     def evolve(self, unitary: torch.Tensor, sys_idx: Optional[Union[int, List[int]]] = None) -> 'StateSimulator':
         r"""Evolve this state with unitary operators.
@@ -591,6 +749,60 @@ class StateSimulator(State):
         new_state._evolve(unitary, sys_idx)
         return new_state
 
+    def _evolve_many(
+        self,
+        unitary: torch.Tensor,
+        sys_idx_list: List[List[int]],
+        on_batch: bool = True,
+    ) -> None:
+        r"""Evolve this state by applying the same unitary on many subsystem index groups.
+
+        This is a batching helper to reduce Python overhead. Backends may override this
+        method to fuse or vectorize the underlying kernel calls.
+
+        Args:
+            unitary: The unitary operator.
+            sys_idx_list: A list of subsystem indices. Each element is a list of ints (multi-subsystem).
+            on_batch: Whether the operator batch dimension aligns with the state batch.
+
+        Note:
+            This method is **in-place** and returns ``None``.
+        """
+        for sys_idx in sys_idx_list:
+            self._evolve(unitary, sys_idx, on_batch)
+        return None
+
+    def _evolve_many_batched_groups(
+        self,
+        unitary_groups: List[torch.Tensor],
+        sys_idx_groups: List[List[List[int]]],
+        on_batch: bool = True,
+    ) -> None:
+        r"""Internal helper for applying varying unitaries in groups.
+
+        This default implementation is a Python for-loop so that all backends can
+        support Layer fast paths without runtime capability checks.
+
+        Args:
+            unitary_groups: list of tensors. Each element is either a single unitary
+                (broadcast) shaped [..., d, d], or a per-op stack shaped
+                [N, ..., d, d] where N == len(sys_idx_list) for the corresponding group.
+            sys_idx_groups: list of sys_idx_list, each is a list of sys_idx (List[int]).
+            on_batch: whether unitary batch dims align with state batch dims.
+        """
+        if len(unitary_groups) != len(sys_idx_groups):
+                raise ValueError(
+                    "unitary_groups and sys_idx_groups must have the same number of groups: "
+                    f"got {len(unitary_groups)} and {len(sys_idx_groups)}."
+                )
+                
+        for unitary_group, sys_idx_list in zip(unitary_groups, sys_idx_groups):
+            n_ops = len(sys_idx_list)
+            per_op = unitary_group.dim() >= 3 and unitary_group.size(0) == n_ops
+            for i, sys_idx in enumerate(sys_idx_list):
+                u = unitary_group[i] if per_op else unitary_group
+                self._evolve(u, self._check_sys_idx(sys_idx), on_batch)
+
     def transform(self, op: torch.Tensor, sys_idx: Optional[Union[int, List[int]]] = None,
                   repr_type: str = 'kraus') -> 'StateSimulator':
         r"""Apply a general linear operator to the state.
@@ -603,24 +815,19 @@ class StateSimulator(State):
         Returns:
             the transformed state.
 
+        Note:
+            Transform support the broadcast rule similar to evolve.
+
         """
-        # TODO add assertion for the dimension of input channels
         sys_idx = self._check_sys_idx(sys_idx)
 
-        # TODO add support for batched operators
         repr_type = repr_type.lower()
         if repr_type == 'kraus':
             self._check_op_dim(op, sys_idx)
             if len(op.shape) == 2:
                 op = op.unsqueeze(0)
-            elif len(op.shape) > 3:
-                raise NotImplementedError(
-                    'consider the batched Kraus operators in the upcoming future')
-
         elif repr_type == 'choi':
-            if len(op.shape) > 2:
-                raise NotImplementedError(
-                    'consider the batched Choi operators in the upcoming future')
+            pass
         else:
             raise ValueError(
                 f"Unsupported representation type {repr_type}: expected 'kraus' or 'choi'.")
@@ -629,18 +836,30 @@ class StateSimulator(State):
         new_state._transform(op, sys_idx, repr_type)
         return new_state
 
-    def product_trace(self, trace_state: 'StateSimulator', trace_idx: List[int]) -> 'StateSimulator':
-        r"""Partial trace over this state, when this state is a product state
+    def _transform_many(
+        self,
+        op: torch.Tensor,
+        sys_idx_list: List[List[int]],
+        repr_type: str,
+        on_batch: bool = True,
+    ) -> None:
+        r"""Transform this state by applying the same channel/operator on many subsystem index groups.
 
         Args:
-            trace_state: the state for the subsystem to be traced out.
-            trace_idx: the subsystem indices to be traced out.
+            op: The input operator. For 'kraus', supports [num_kraus, d, d] or
+                [batch, num_kraus, d, d]. For 'choi', supports [d_out^2, d_in^2]
+                or [batch, d_out^2, d_in^2].
+            sys_idx_list: A list of subsystem indices. Each element can be an int
+                (single subsystem) or a list of ints (multi-subsystem).
+            repr_type: Representation type of the operator, 'kraus' or 'choi'.
+            on_batch: Whether the operator batch dimension aligns with the state batch.
 
         Note:
-            This function only works when the state is a product state represented by PureState
-
+            This method is **in-place** and returns ``None``.
         """
-        return self.trace(trace_idx)
+        for sys_idx in sys_idx_list:
+            self._transform(op, sys_idx, repr_type, on_batch)
+        return None
 
     def expec_val(self, hamiltonian: Hamiltonian, shots: Optional[int] = None, decompose: bool = False) -> torch.Tensor:
         r"""The expectation value of the observable with respect to the quantum state.
@@ -675,24 +894,38 @@ class StateSimulator(State):
             f"The number of qubits in the Hamiltonian {hamiltonian.n_qubits} is greater the number of state qubits {self.num_qubits}"
 
         num_terms, list_qubits_idx = hamiltonian.n_terms, hamiltonian.sites
-        list_coef, list_matrices = hamiltonian.coefficients, hamiltonian.pauli_words_matrix
+        list_coef = hamiltonian.coefficients
+        list_pauli_words_r = hamiltonian.pauli_words_r
 
-        expec_val_each_term = []
+        expec_val_terms: List[torch.Tensor] = [None] * num_terms
+        pauli_words_non_id: List[str] = []
+        sites_non_id: List[List[int]] = []
+        coef_list_non_id = []
+        non_id_indices = []
+
         for i in range(num_terms):
             qubits_idx = list_qubits_idx[i]
             if qubits_idx == ['']:
-                expec_val_each_term.append(list_coef[i] * self.trace())
+                expec_val_terms[i] = list_coef[i] * self.trace()
                 continue
-            matrix = list_matrices[i]
 
-            #TODO this assertion should be done by Hamiltonian, not State
-            assert 2 ** len(qubits_idx) == matrix.shape[0], \
-                f"The qubit index {qubits_idx} does not match the matrix dimension {matrix.shape[0]}"
+            pauli_words_non_id.append(list_pauli_words_r[i])
+            sites_non_id.append([int(q) for q in qubits_idx])
+            coef_list_non_id.append(list_coef[i])
+            non_id_indices.append(i)
 
-            expec_val = self._expec_val(matrix.unsqueeze(0), qubits_idx).squeeze(-1).real * list_coef[i]
-            expec_val_each_term.append(expec_val)
+        if pauli_words_non_id:
+            expec_vals = self._expec_val_pauli_terms(pauli_words_non_id, sites_non_id)
+            coef_tensor = torch.tensor(coef_list_non_id, dtype=expec_vals.dtype, device=expec_vals.device).unsqueeze(-1)
+            expec_vals = expec_vals * coef_tensor
+            for idx, term_idx in enumerate(non_id_indices):
+                expec_val_terms[term_idx] = expec_vals[idx]
+            expec_val_terms = [
+                term.reshape(-1) if term.ndim != 1 else term
+                for term in expec_val_terms
+            ]
 
-        expec_val_each_term = torch.stack(expec_val_each_term)
+        expec_val_each_term = torch.stack(expec_val_terms)
         return expec_val_each_term if decompose else torch.sum(expec_val_each_term, dim=0)
 
     def expec_state(self, prob_idx: Optional[Union[int, List[int]]] = None) -> 'StateSimulator':
@@ -712,10 +945,25 @@ class StateSimulator(State):
         if prob_idx is None:
             prob_idx = list(range(num_prob))
         elif isinstance(prob_idx, int):
-            prob_idx = [prob_idx]
+            normalized = num_prob + prob_idx if prob_idx < 0 else prob_idx
+            prob_idx = [normalized]
         else:
             prob_idx = [num_prob + idx if idx < 0 else idx for idx in sorted(prob_idx)]
+        if not prob_idx:
+            return self.clone()
+        for idx in prob_idx:
+            if idx < 0 or idx >= num_prob:
+                raise IndexError(f"Probability index out of range: got {idx}, expected in [0, {num_prob - 1}].")
         return self._expec_state(prob_idx)
+
+    def to_prod_sum(self, subgroup_indices: List[List[int]], tol: Optional[float] = None) -> 'StateSimulator':
+        r"""Convert the state into a subgroup-level product-sum form.
+
+        Args:
+            subgroup_indices: Partition of system indices into ordered subgroups.
+            tol: Truncation tolerance. If None, backend-specific default is used.
+        """
+        raise NotImplementedError(f"Backend '{self.backend}' does not implement to_prod_sum().")
 
     def measure(self, system_idx: Optional[Union[int, List[int]]] = None, shots: Optional[int] = None,
                 measure_op: Optional[torch.Tensor] = None, 
@@ -758,10 +1006,12 @@ class StateSimulator(State):
                 raise ValueError(
                     "`is_povm` and `keep_state` cannot be both True, " +
                     "since a general POVM does not distinguish states.")
-            return self._expec_val(measure_op, system_idx)
+            return self._expec_val(measure_op, system_idx).real
 
-        prob, collapsed_state = self._measure(measure_op, system_idx)
-        return (prob, collapsed_state) if keep_state else prob
+        if keep_state:
+            prob, collapsed_state = self._measure(measure_op, system_idx)
+            return prob, collapsed_state
+        return self._expec_val(measure_op, system_idx).real
 
     @abstractmethod
     def sqrt(self) -> torch.Tensor:
@@ -797,17 +1047,17 @@ class StateSimulator(State):
         Args:
             reset_idx: the subsystem indices to be reset.
             replace_state: the state to replace the quantum state.
-
+            
         Returns:
             the new state after resetting.
-
+        
         """
         if isinstance(reset_idx, int):
             reset_idx = [reset_idx]
         system_dim = [self.system_dim[i] for i in reset_idx]
         assert replace_state.system_dim == system_dim, \
             f"The system dimension of the replace state {replace_state.system_dim} does not match the reset system dimension {system_dim}."
-        if len(reset_idx) == self.num_systems and self._data.requires_grad:
+        if len(reset_idx) == self.num_systems and self._get_data_tensor().requires_grad:
             warnings.warn("All systems will be reset: gradient break here.", UserWarning)
             return replace_state.clone()
         if replace_state.batch_dim:
@@ -815,7 +1065,7 @@ class StateSimulator(State):
                 "A batched replace state is not supported")
         
         return self._reset(reset_idx, replace_state)
-
+    
     def transpose(self, transpose_idx: Optional[Union[List[int], int]] = None) -> 'StateSimulator':
         r"""(Partial) transpose of the state
 
@@ -833,3 +1083,4 @@ class StateSimulator(State):
             f"The transpose index {transpose_idx} should be smaller than number of systems {self.num_systems}"
 
         return self._transpose(transpose_idx)
+

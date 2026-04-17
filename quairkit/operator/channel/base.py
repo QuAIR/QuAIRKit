@@ -73,7 +73,10 @@ class Channel(Operator):
                 f"Need to specify all system dimensions to get # of acted systems: received {acted_system_dim}"
             self.system_dim, num_acted_system = acted_system_dim, len(acted_system_dim)
         else:
-            representation = representation.to(dtype=self.dtype, device=self.device)
+            if type_repr == 'kraus' and isinstance(representation, (list, tuple)):
+                representation = torch.stack([r.to(dtype=self.dtype, device=self.device) for r in representation])
+            elif isinstance(representation, torch.Tensor):
+                representation = representation.to(dtype=self.dtype, device=self.device)
             num_acted_system = getattr(self, f'_Channel__{type_repr}_init')(representation, acted_system_dim, check_legality)
         
         if system_idx is None:
@@ -106,13 +109,23 @@ class Channel(Operator):
                     acted_system_dim: Union[List[int], int, None], 
                     check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'choi'``
+        
+        Supports batch dimension: shape can be [dim_out^2, dim_in^2] or [batch, dim_out^2, dim_in^2]
         """
         input_dim = math.isqrt(choi_repr.shape[-1])
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
-        if check_legality and not torch.all(utils.check._is_choi(choi_repr)):
-            warnings.warn(
-                "The input data may not be a Choi representation of a channel.", UserWarning)
+        if check_legality:
+            if choi_repr.dim() == 3:
+                for i in range(choi_repr.shape[0]):
+                    if not utils.check._is_choi(choi_repr[i]):
+                        warnings.warn(
+                            f"The input data at batch index {i} may not be a Choi representation of a channel.", 
+                            UserWarning)
+            else:
+                if not torch.all(utils.check._is_choi(choi_repr)):
+                    warnings.warn(
+                        "The input data may not be a Choi representation of a channel.", UserWarning)
         
         self.__choi_repr = choi_repr.contiguous()
         return num_acted_system
@@ -121,6 +134,8 @@ class Channel(Operator):
                      acted_system_dim: Union[List[int], int, None], 
                      check_legality: bool) -> int:
         r"""Initialize channel for type_repr as ``'kraus'``
+        
+        Supports batch dimension: shape can be [num_kraus, dim, dim] or [batch, num_kraus, dim, dim]
         """
         if len(kraus_repr.shape) == 2:
             kraus_repr = kraus_repr.unsqueeze(0)
@@ -128,12 +143,13 @@ class Channel(Operator):
         input_dim = kraus_repr.shape[-1]
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
-        # sanity check
         if check_legality:
             oper_sum = (utils.linalg._dagger(kraus_repr) @ kraus_repr).sum(dim=-3)
             identity = torch.eye(input_dim).to(device=oper_sum.device)
+            if oper_sum.dim() == 3:
+                identity = identity.unsqueeze(0).expand_as(oper_sum)
             err = torch.norm(torch.abs(oper_sum - identity)).item()
-            if err > min(1e-6 * input_dim * len(kraus_repr), 0.01):
+            if err > min(1e-6 * input_dim * kraus_repr.shape[-3], 0.01):
                 warnings.warn(
                     f"The input data may not be a Kraus representation of a channel: norm(sum(E * E^d) - I) = {err}.",
                     UserWarning)
@@ -167,9 +183,7 @@ class Channel(Operator):
         input_dim = stinespring_repr.shape[-1]
         num_acted_system = self.__register_dim(input_dim, acted_system_dim)
 
-        # sanity check
         if check_legality:
-            # TODO: need to add more sanity check for stinespring
             out_dim = stinespring_repr.shape[-2]
             assert out_dim % input_dim == 0, \
                 'The width of stinespring matrix should be the factor of its height'
@@ -267,14 +281,21 @@ class Channel(Operator):
         return info
 
     def forward(self, state: StateSimulator) -> StateSimulator:
-        # TODO support auto transform
         if state.backend == 'default-pure':
-            state = state.to_mixed() 
-        
-        for system_idx in self.system_idx:
-            if self.type_repr == 'choi':
-                state._transform(self.choi_repr, system_idx, 'choi')
-            else:
-                state._transform(self.kraus_repr, system_idx, 'kraus')
+            state = state._to_mixed()
+        if self.type_repr == 'choi':
+            choi = getattr(self, '_Channel__choi_repr', None)
+            if choi is None:
+                choi = self.choi_repr
+            state._transform_many(choi, self.system_idx, 'choi', on_batch=True)
+            return state
 
+        kraus = getattr(self, '_Channel__kraus_repr', None)
+        if kraus is None:
+            kraus = self.kraus_repr
+        if isinstance(kraus, list):
+            kraus = torch.stack(kraus)
+        if kraus.dim() == 2:
+            kraus = kraus.unsqueeze(0)
+        state._transform_many(kraus, self.system_idx, 'kraus', on_batch=True)
         return state

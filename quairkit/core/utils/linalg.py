@@ -18,6 +18,7 @@ Linear algebra functions in QuAIRKit.
 """
 
 import math
+import os
 from collections import OrderedDict, defaultdict
 from functools import reduce
 from itertools import product
@@ -26,6 +27,48 @@ from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 import numpy as np
 import scipy
 import torch
+import importlib
+
+_WINDOWS_DLL_DIR_HANDLES: List[object] = []
+
+
+def _prepare_windows_dll_search_path() -> None:
+    if os.name != "nt":
+        return
+    torch_lib_dir = os.path.join(os.path.dirname(torch.__file__), "lib")
+    if not os.path.isdir(torch_lib_dir):
+        return
+    try:
+        _WINDOWS_DLL_DIR_HANDLES.append(os.add_dll_directory(torch_lib_dir))
+    except (AttributeError, FileNotFoundError, OSError):
+        pass
+
+
+def _require_cpp_submodule(submodule: str):
+    """Return a required C++ extension submodule.
+
+    This module no longer supports a Python fallback implementation for
+    performance-critical kernels. If the C++ extension is not available, raise an
+    ImportError with actionable guidance.
+    """
+    _prepare_windows_dll_search_path()
+    try:
+        mod = importlib.import_module("quairkit._C")
+    except Exception as e:
+        raise ImportError(
+            "QuAIRKit requires the compiled C++ extension (quairkit._C). "
+            "Please build it first (e.g. `python setup.py build_ext --inplace`)."
+        ) from e
+    cpp_mod = getattr(mod, submodule, None)
+    if cpp_mod is None:
+        raise ImportError(
+            f"quairkit._C is available but missing submodule '{submodule}'. "
+            "Please rebuild the C++ extension (e.g. `python setup.py build_ext --inplace`)."
+        )
+    return cpp_mod
+
+
+_CPP_LINALG = _require_cpp_submodule("linalg")
 
 
 def _abs_norm(mat: torch.Tensor) -> float: 
@@ -46,25 +89,28 @@ def _p_norm(mat: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
 
 
 def _dagger(mat: torch.Tensor) -> torch.Tensor: 
-    return mat.mH.contiguous()
+    return _CPP_LINALG.dagger(mat)
 
 
 def _block_enc_herm(   
     mat: torch.Tensor, num_block_qubits: Optional[int] = 1
 ) -> torch.Tensor:  
-    H = mat.detach().numpy()
+    device = mat.device
+    H = mat.detach().cpu().numpy()
     complex_dtype = mat.dtype
 
     num_qubits = int(math.log2(mat.shape[0]))
     H_complement = scipy.linalg.sqrtm(np.eye(2**num_qubits) - H @ H)
     block_enc = np.block([[H, 1j * H_complement], [1j * H_complement, H]])
-    block_enc = torch.from_numpy(block_enc.astype("complex128")).to(complex_dtype)
+    block_enc = torch.from_numpy(block_enc.astype("complex128")).to(dtype=complex_dtype, device=device)
 
     if num_block_qubits > 1:
         block_enc = _direct_sum(
             block_enc,
-            torch.eye(2 ** (num_block_qubits + num_qubits) - 2 ** (num_qubits + 1)).to(
-                complex_dtype
+            torch.eye(
+                2 ** (num_block_qubits + num_qubits) - 2 ** (num_qubits + 1),
+                dtype=complex_dtype,
+                device=device,
             ),
         )
 
@@ -84,11 +130,10 @@ def _direct_sum(A: torch.Tensor, B: torch.Tensor) -> torch.Tensor:
     B_rows, B_cols = B.shape[-2], B.shape[-1]
 
     batch_size = int(np.prod(batch_dim))
-    # Create zero matrices with appropriate shapes
-    zero_AB = torch.zeros((batch_size, A_rows, B_cols), dtype=A.dtype)
-    zero_BA = torch.zeros((batch_size, B_rows, A_cols), dtype=B.dtype)
+    device = A.device
+    zero_AB = torch.zeros((batch_size, A_rows, B_cols), dtype=A.dtype, device=device)
+    zero_BA = torch.zeros((batch_size, B_rows, A_cols), dtype=B.dtype, device=device)
 
-    # Stack matrices to form the direct sum
     mat_upper = torch.cat((A, zero_AB), dim=-1)
     mat_lower = torch.cat((zero_BA, B), dim=-1)
     mat = torch.cat((mat_upper, mat_lower), dim=-2)
@@ -122,13 +167,12 @@ def _subsystem_decomposition(
     second_basis: List[torch.Tensor],
     inner_prod: Callable[[torch.Tensor, torch.Tensor], torch.Tensor],
 ) -> torch.Tensor:
-    # Check if the input has a batch dimension
     if mat.ndim == 3:
         batch_size, d1, d2 = mat.shape
     else:
         d1, d2 = mat.shape
         batch_size = 1
-        mat = mat.unsqueeze(0)  # Add a batch dimension
+        mat = mat.unsqueeze(0)
 
     assert (
         (d1, d2) == torch.kron(first_basis[0], second_basis[0]).shape
@@ -136,24 +180,19 @@ def _subsystem_decomposition(
 
     first_dim, second_dim = len(first_basis), len(second_basis)
 
-    # Create Kronecker products for all pairs in the basis sets
     kron_products = torch.stack([
         torch.kron(first_basis[i], second_basis[j])
         for i, j in product(range(first_dim), range(second_dim))
     ])
 
-    # Expand dimensions to match the batch size
     kron_products = kron_products.unsqueeze(0).expand(batch_size, -1, -1, -1)
 
-    # Reshape for batch matrix multiplication
     mat = mat.unsqueeze(1).expand(-1, first_dim * second_dim, -1, -1)
     kron_products = kron_products.reshape(batch_size * first_dim * second_dim, d1, d2)
     mat = mat.reshape(batch_size * first_dim * second_dim, d1, d2)
 
-    # Compute inner product in a batched way
     coefs = inner_prod(kron_products, mat).unsqueeze(0) 
 
-    # Reshape the result to [batch_size, first_dim, second_dim]
     coefs = coefs.view(batch_size, first_dim, second_dim)
 
     return coefs.squeeze(0) if batch_size == 1 else coefs
@@ -182,9 +221,7 @@ def _trace_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
         dim1: the dimension of the first system.
     
     """
-    batch_dims, dim2 = list(mat.shape[:-2]), int(mat.shape[-1] // dim1)
-    mat = mat.view(-1, dim1, dim2, dim1, dim2)
-    return _trace(mat, axis1=-2, axis2=-4).reshape(batch_dims + [dim2, dim2])
+    return _CPP_LINALG.trace_1(mat, dim1)
 
 
 def _ptrace_1(xy: torch.Tensor, x: torch.Tensor) -> torch.Tensor:
@@ -209,10 +246,7 @@ def _transpose_1(mat: torch.Tensor, dim1: int) -> torch.Tensor:
         dim1: the dimension of the first system.
     
     """
-    total_dim = mat.shape[-1]
-    batch_dims, dim2 = list(mat.shape[:-2]), int(total_dim // dim1)
-    mat = mat.view(-1, dim1, dim2, dim1, dim2)
-    return torch.permute(mat, [0, 3, 2, 1, 4]).reshape(batch_dims + [total_dim, total_dim])
+    return _CPP_LINALG.transpose_1(mat, dim1)
 
 
 def _partial_trace(
@@ -237,7 +271,6 @@ def _partial_trace_discontiguous(
 
 def _density_to_vector(rho: torch.Tensor) -> torch.Tensor: 
 
-    # Handle a batch of density matrices
     batch_dim = list(rho.shape[:-2])
     batch_size = [int(np.prod(batch_dim))]
 
@@ -258,8 +291,7 @@ def _density_to_vector(rho: torch.Tensor) -> torch.Tensor:
 
 
 def _trace(mat: torch.Tensor, axis1: int = -2, axis2: int =- 1) -> torch.Tensor:
-    dia_elements = torch.diagonal(mat, offset=0 ,dim1=axis1, dim2=axis2)
-    return torch.sum(dia_elements, dim=-1)
+    return _CPP_LINALG.trace(mat, axis1, axis2)
 
 
 def _kron(matrix_A: torch.Tensor, matrix_B: torch.Tensor) -> torch.Tensor:
@@ -275,16 +307,46 @@ def _kron(matrix_A: torch.Tensor, matrix_B: torch.Tensor) -> torch.Tensor:
     Note:
         See https://discuss.pytorch.org/t/kronecker-product/3919/11
     """
-    mat_dim = torch.Size([matrix_A.shape[-2] * matrix_B.shape[-2], matrix_A.shape[-1] * matrix_B.shape[-1]])
-    output = matrix_A.unsqueeze(-1).unsqueeze(-3) * matrix_B.unsqueeze(-2).unsqueeze(-4)
-    batch_dim = output.shape[:-4]
-    return output.reshape(batch_dim + mat_dim)
+    return _CPP_LINALG.kron(matrix_A, matrix_B)
 
 
 def _nkron( 
     matrix_1st: torch.Tensor, *args: torch.Tensor
 ) -> torch.Tensor:
-    return reduce(_kron, args, matrix_1st)
+    return _CPP_LINALG.nkron([matrix_1st] + list(args))
+
+
+def _cartesian_expand_batch(*tensors: torch.Tensor) -> List[torch.Tensor]:
+    r"""Expand multiple tensors' batch dimensions into Cartesian product form.
+
+    Given tensors with batch sizes [d0], [d1], ..., [dn], expand each tensor so
+    that all have the same batch size ``d0 * d1 * ... * dn``, corresponding to
+    the Cartesian product of the original batch indices.
+
+    Args:
+        tensors: Input tensors, each assumed to have a batch dimension at dim 0.
+
+    Returns:
+        A list of expanded tensors with aligned batch dimensions.
+    """
+    if not tensors:
+        return []
+    if len(tensors) == 1:
+        return list(tensors)
+
+    batch_dims = [int(t.shape[0]) for t in tensors]
+    expanded: List[torch.Tensor] = []
+
+    for i, tensor in enumerate(tensors):
+        interleave = math.prod(batch_dims[i + 1 :]) if i < len(batch_dims) - 1 else 1
+        tile = math.prod(batch_dims[:i]) if i > 0 else 1
+
+        out = tensor.repeat_interleave(interleave, dim=0) if interleave > 1 else tensor
+        if tile > 1:
+            out = out.repeat([tile] + [1] * (out.ndim - 1))
+        expanded.append(out)
+
+    return expanded
 
 
 def _partial_transpose(state: torch.Tensor, transpose_idx: List[int], system_dim: List[int]) -> torch.Tensor: 
@@ -302,9 +364,47 @@ def _partial_transpose(state: torch.Tensor, transpose_idx: List[int], system_dim
 def _permute_systems(mat: torch.Tensor, perm_list: List[int], dim_list: List[int]) -> torch.Tensor:
     if perm_list == list(range(len(dim_list))):
         return mat
-    original_shape = mat.shape
-    mat = mat.view([-1] + list(mat.shape[-2:]))
-    return _permute_dm(mat, perm_list, dim_list).view(original_shape).contiguous()
+    return _CPP_LINALG.permute_systems(mat, perm_list, dim_list)
+
+
+def _vector_to_prod_sum(
+    vec: torch.Tensor,
+    system_dim: List[int],
+    tol: float,
+) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
+    r"""Factorize a (batched) state vector into subgroup-level product-sum factors.
+
+    Args:
+        vec: Input vector with shape ``[..., prod(system_dim)]`` or ``[..., prod(system_dim), 1]``.
+        system_dim: Local dimensions for each subgroup.
+        tol: Singular-value truncation threshold (absolute).
+
+    Returns:
+        A tuple ``(factors, coeffs)`` where:
+            - ``factors[i]`` has shape ``[..., r_{i-1}, d_i, r_i]``.
+            - ``coeffs[i]`` has shape ``[..., r_i]``.
+    """
+    return _CPP_LINALG.vector_to_prod_sum(vec, [int(d) for d in system_dim], float(tol))
+
+
+def _matrix_to_prod_sum(
+    matrix: torch.Tensor,
+    system_dim: List[int],
+    tol: float,
+) -> Tuple[List[torch.Tensor], List[torch.Tensor]]:
+    r"""Factorize a (batched) operator into subgroup-level product-sum factors.
+
+    Args:
+        matrix: Input matrix with shape ``[..., prod(system_dim), prod(system_dim)]``.
+        system_dim: Local dimensions for each subgroup.
+        tol: Singular-value truncation threshold (absolute).
+
+    Returns:
+        A tuple ``(factors, coeffs)`` where:
+            - ``factors[i]`` has shape ``[..., r_{i-1}, d_i, d_i, r_i]``.
+            - ``coeffs[i]`` has shape ``[..., r_i]``.
+    """
+    return _CPP_LINALG.matrix_to_prod_sum(matrix, [int(d) for d in system_dim], float(tol))
 
 
 def _schmidt_decompose(
@@ -313,33 +413,26 @@ def _schmidt_decompose(
 
     psi = psi.reshape(-1, 1)
     psi_len = psi.shape[-2]
-    # Determine the number of qubits
     num_qubits = int(math.log2(psi_len))
 
-    # If sys_A is not specified, use the first half of qubits
     sys_A = sys_A if sys_A is not None else list(range(num_qubits // 2))
     
-    # Determine sys_B as the complement of sys_A
     sys_B = [i for i in range(num_qubits) if i not in sys_A]
 
 
-    # Permute qubit indices
     psi = psi.reshape([-1] + [2] * num_qubits).permute([0] + [x + 1 for x in sys_A + sys_B])
 
-    # Construct amplitude matrix
-    amp_mtr = psi.reshape([-1, 2 ** len(sys_A), 2 ** len(sys_B)])
+    amp_vec = psi.reshape([-1, 2 ** len(sys_A), 2 ** len(sys_B)]).reshape([-1, psi_len])
 
-    # Standard process to obtain Schmidt decomposition
-    u, c, v = torch.svd(amp_mtr)
+    factors, coeffs = _vector_to_prod_sum(
+        amp_vec,
+        [2 ** len(sys_A), 2 ** len(sys_B)],
+        tol=psi_len * 1e-13,
+    )
 
-    # Count non-zero singular values
-    k = torch.count_nonzero(c > psi_len*1e-13, dim=-1)
-
-    # Select top-k singular values and reshape singular vectors
-    c = c[:, :k.max()]
-    u = u[:, :, :k.max()].transpose(1, 2).reshape([c.size(0), -1, 1])
-    v = v[:, :, :k.max()].transpose(1, 2).reshape([c.size(0), -1, 1])
-
+    c = coeffs[0]
+    u = factors[0].squeeze(-3).transpose(-1, -2).reshape([c.size(0), -1, 1])
+    v = factors[1].squeeze(-1).reshape([c.size(0), -1, 1])
     return c, u, v
 
 
@@ -414,11 +507,7 @@ def _permute_sv(state: torch.Tensor, perm: Union[List, Tuple],
         permuted state.
 
     """
-    base_idx = torch.arange(int(np.prod(system_dim))).view(system_dim)
-    base_idx = torch.permute(base_idx, dims=perm)
-    base_idx = base_idx.reshape([1, -1]).expand(state.shape)
-    
-    return state.gather(1, index=base_idx)
+    return _CPP_LINALG.permute_sv(state, perm, system_dim)
 
 
 def _permute_dm(state: torch.Tensor, perm: Union[List, Tuple],
@@ -433,18 +522,12 @@ def _permute_dm(state: torch.Tensor, perm: Union[List, Tuple],
     Returns:
         permuted state.
     """
-    base_idx = torch.arange(int(np.prod(system_dim))).view(system_dim)
-    base_idx = torch.permute(base_idx, dims=perm).contiguous()
-    
-    state = state.gather(1, index=base_idx.view([1, -1, 1]).expand(state.shape))
-    state = state.gather(2, index=base_idx.view([1, 1, -1]).expand(state.shape))
-
-    return state
+    return _CPP_LINALG.permute_dm(state, perm, system_dim)
 
 class __Logm(torch.autograd.Function):
     @staticmethod
     def forward(ctx, A):
-        assert A.size(-1) == A.size(-2)  # Square matrix
+        assert A.size(-1) == A.size(-2)
         assert A.dtype in (
             torch.float32,
             torch.float64,
@@ -464,10 +547,7 @@ _logm = __Logm.apply
 
 
 def _sqrtm(A: torch.Tensor) -> torch.Tensor:
-    w, v = torch.linalg.eigh(A)
-    w = torch.clamp(w, min=1e-20)
-    sqrt_w = torch.sqrt(w)
-    return (v * sqrt_w.unsqueeze(-2)) @ v.mH
+    return _CPP_LINALG.sqrtm(A)
 
 
 def _create_matrix(
@@ -475,19 +555,15 @@ def _create_matrix(
     input_dim: int,
     input_dtype: torch.dtype,
 ) -> torch.Tensor:
-    # Create an identity matrix representing all basis vectors
     identity_matrix = torch.eye(input_dim, dtype=input_dtype)
 
-    # Apply the linear map to each column of the identity matrix
     mapped_vectors = [
         linear_map(identity_matrix[:, i].unsqueeze(1)) for i in range(input_dim)
     ]
 
-    # Stack all mapped vectors to form the final matrix
     return torch.stack(mapped_vectors, dim=1).squeeze()
 
 
-# TODO: this is a temporal solution for programs that use this function, will be depreciated in the future
 def _unitary_transformation(
         U: torch.Tensor, V: torch.Tensor, qubit_idx: Union[List[int], int], num_qubits: int
 ) -> torch.Tensor:
@@ -502,14 +578,12 @@ def _unitary_transformation(
     Returns:
         The transformed quantum state.
     """
-    # The order of the tensor in paddle is less than 10.
     batch_dims = list(U.shape[:-2])
     num_batch_dims = len(batch_dims)
     
     if not isinstance(qubit_idx, Iterable):
         qubit_idx = [qubit_idx]
         
-    # generate swap_list
     num_acted_qubits = len(qubit_idx)
     origin_seq = list(range(num_qubits))
     seq_for_acted = qubit_idx + [x for x in origin_seq if x not in qubit_idx]
@@ -625,7 +699,6 @@ def _get_swap_indices(pos1: int, pos2: int, system_indices: List[List[int]],
 
     indices = torch.arange(total_dim, device=device)
     
-    # Apply swap
     for qubits_idx in reversed(system_indices):
         i, j = qubits_idx
         dim_i, dim_j = system_dim[i], system_dim[j]

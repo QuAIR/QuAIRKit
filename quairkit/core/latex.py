@@ -145,14 +145,12 @@ def __clear_temp_files(file_name: str) -> None:
 def _plot_code(latex_code: str, dpi: int) -> IPython.display.Image:
     r"""Plot the given LaTeX code using local LaTeX distribution
     """
-    # Write the LaTeX code to a file
     date = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     uid = uuid.uuid4()
     file_name = f"quairkit{date}temp_{uid}"
     with open(f"{file_name}.tex", "w") as f:
         f.write(latex_code)
 
-    # Run pdflatex to compile the TeX file
     result = subprocess.run(
         ["pdflatex", "-interaction=nonstopmode", f"{file_name}.tex"],
         stdout=subprocess.DEVNULL,
@@ -173,7 +171,6 @@ def _plot_code(latex_code: str, dpi: int) -> IPython.display.Image:
         __clear_temp_files(file_name)
         raise RuntimeError("LaTeX compilation failed. See log output for details.")
 
-    # Convert the resulting PDF to an image using pdf2image
     pdf_path = f"{file_name}.pdf"
     try:
         images = convert_from_path(pdf_path, dpi=dpi)
@@ -222,7 +219,6 @@ class OperatorListDrawer:
             lengths[idx] = len(current_str)
         max_len = max(lengths.values()) + 1
         
-        # Pad each line up to max_len
         classical_idx = classical_idx if classical_idx is not None else []
         for idx, old_len in lengths.items():
             pad_amount = max_len - (old_len + 1)
@@ -364,7 +360,7 @@ class OperatorListDrawer:
         classical_prefix = r"vertical wire=c" if classical else ''
 
         for idx in range(min_idx, max_idx + 1):
-            if idx == start_idx: # the first control system
+            if idx == start_idx:
                 label = control_label[ctrl_system_idx.index(idx)]
                 if label == '0':
                     self._code[idx].append(r"\octrl[" + classical_prefix + r"]{" + str(across_system) + r'}')

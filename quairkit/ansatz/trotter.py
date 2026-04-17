@@ -183,11 +183,9 @@ class TrotterLayer(Layer):
         if not reverse:
             for hamiltonian in grouped_hamiltonian:
                 assert isinstance(hamiltonian, Hamiltonian)
-                # decompose the Hamiltonian into 3 lists
                 coeffs, pauli_words, sites = hamiltonian.decompose_with_sites()
                 term_index = 0
                 while term_index < len(coeffs):
-                    # get the sorted pauli_word and site (an array of qubit indices) according to their qubit indices
                     pauli_word, site = sort_pauli_word(pauli_words[term_index], sites[term_index])
                     self.add_n_pauli_gate(2 * tau * coeffs[term_index], pauli_word, site)
                     term_index += 1
@@ -262,7 +260,6 @@ class TrotterLayer(Layer):
 
         if not isinstance(theta, torch.Tensor):
             theta = torch.tensor(theta)
-        # if it is a single-Pauli case, apply the single qubit rotation gate accordingly
         if len(which_qubits) == 1:
             if re.match(r'X', pauli_word[0], flags=re.I):
                 self.append(RX(which_qubits[0], param=theta))
@@ -277,21 +274,18 @@ class TrotterLayer(Layer):
     def __add_n_pauli(self, which_qubits, pauli_word, theta):
         which_qubits.sort()
 
-        # Change the basis for qubits on which the acting operators are not 'Z'
         for qubit_index in range(len(which_qubits)):
             if re.match(r'X', pauli_word[qubit_index], flags=re.I):
                 self.append(H([which_qubits[qubit_index]]))
             elif re.match(r'Y', pauli_word[qubit_index], flags=re.I):
                 self.append(RX(which_qubits[qubit_index], param=torch.pi / 2))
 
-        # Add a Z tensor n rotational gate
         for i in range(len(which_qubits) - 1):
             self.append(CNOT([which_qubits[i], which_qubits[i + 1]]))
         self.append(RZ(which_qubits[-1], param=theta))
         for i in reversed(range(len(which_qubits) - 1)):
             self.append(CNOT([which_qubits[i], which_qubits[i + 1]]))
 
-        # Change the basis for qubits on which the acting operators are not 'Z'
         for qubit_index in range(len(which_qubits)):
             if re.match(r'X', pauli_word[qubit_index], flags=re.I):
                 self.append(H([which_qubits[qubit_index]]))

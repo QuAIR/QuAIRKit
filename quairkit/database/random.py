@@ -25,7 +25,6 @@ import scipy
 import torch
 from scipy.stats import unitary_group
 
-# TODO this is added due to channel_repr_convert, move it to intrinsic
 import quairkit as qkit
 
 from ..core import Hamiltonian, StateSimulator, get_dtype, to_state, utils
@@ -50,6 +49,11 @@ __all__ = [
     "random_channel",
     "random_clifford"
 ]
+
+
+def _format_size(size: Union[int, List[int]]) -> List[int]:
+    r"""Format batch size into a list."""
+    return [size] if isinstance(size, int) else list(size)
 
 
 def random_pauli_str_generator(num_qubits: int, terms: Optional[int] = 3) -> List:
@@ -79,7 +83,6 @@ def random_pauli_str_generator(num_qubits: int, terms: Optional[int] = 3) -> Lis
     """
     pauli_str = []
     for sublen in np.random.randint(1, high=num_qubits + 1, size=terms):
-        # Tips: -1 <= coeff < 1
         coeff = np.random.rand() * 2 - 1
         ops = np.random.choice(["x", "y", "z"], size=sublen)
         pos = np.random.choice(range(num_qubits), size=sublen, replace=False)
@@ -101,7 +104,10 @@ def random_state(
 
     Args:
         num_systems: The number of qubits contained in the quantum state.
-        rank: The rank of the density matrix. Defaults to ``None`` (full rank).
+        rank: The rank of the density matrix. If ``None``, a random rank in :math:`[1, d]`
+            is sampled. For batched generation (``size`` with total batch size larger than 1),
+            random ranks are sampled independently for each sample and the result is returned
+            in density-matrix representation.
         is_real: If the quantum state only contains real numbers. Defaults to ``False``.
         size: Batch size. Defaults to 1.
         system_dim: Dimension of systems. Can be a list of system dimensions
@@ -167,18 +173,33 @@ def random_state(
             ---------------------------------------------------
     """
     dim = _format_total_dim(num_systems, system_dim)
-    size = [size] if isinstance(size, int) else list(size)
-    rank = np.random.randint(1, dim + 1) if rank is None else rank
+    size = _format_size(size)
     total_size = int(np.prod(size))
 
-    if rank == 1:
-        list_state = torch.stack(
-            [haar_state_vector(dim, is_real) for _ in range(total_size)]
-        ).view(size + [dim, 1])
+    if rank is None:
+        if total_size == 1:
+            sampled_rank = np.random.randint(1, dim + 1)
+            list_state = (
+                haar_state_vector(dim, is_real)
+                if sampled_rank == 1
+                else haar_density_operator(dim, sampled_rank, is_real)
+            )
+        else:
+            sampled_rank = np.random.randint(1, dim + 1, size=total_size)
+            list_state = torch.empty([total_size, dim, dim], dtype=get_dtype())
+            for current_rank in np.unique(sampled_rank):
+                sample_indices = np.where(sampled_rank == current_rank)[0]
+                rho_batch = haar_density_operator(
+                    dim, int(current_rank), is_real=is_real, size=len(sample_indices)
+                )
+                if rho_batch.ndim == 2:
+                    rho_batch = rho_batch.unsqueeze(0)
+                list_state[torch.as_tensor(sample_indices, dtype=torch.long)] = rho_batch
+            list_state = list_state.view(size + [dim, dim])
+    elif rank == 1:
+        list_state = haar_state_vector(dim, is_real, size)
     else:
-        list_state = torch.stack(
-            [haar_density_operator(dim, rank, is_real) for _ in range(total_size)]
-        ).view(size + [dim, dim])
+        list_state = haar_density_operator(dim, rank, is_real, size)
 
     list_state = list_state if total_size > 1 else list_state.squeeze()
     return to_state(list_state, system_dim)
@@ -351,14 +372,27 @@ def random_unitary(
                       [0.5196-0.8084j, 0.2238+0.1624j]]]])
     """
     dim = _format_total_dim(num_systems, system_dim)
-    size = [size] if isinstance(size, int) else list(size)
+    size = _format_size(size)
     total_size = math.prod(size)
-    list_unitary = torch.stack(
-        [
-            torch.tensor(unitary_group.rvs(dim), dtype=get_dtype())
-            for _ in range(total_size)
-        ]
-    ).view(size + [dim, dim])
+    try:
+        list_unitary_np = np.asarray(unitary_group.rvs(dim, size=total_size))
+        expected_shape = (total_size, dim, dim)
+        if total_size == 1:
+            list_unitary_np = list_unitary_np.reshape(expected_shape)
+        elif list_unitary_np.shape != expected_shape:
+            raise ValueError(
+                f"Unexpected shape from unitary_group.rvs: {list_unitary_np.shape}, expect {expected_shape}"
+            )
+        list_unitary = torch.tensor(list_unitary_np, dtype=get_dtype()).view(
+            size + [dim, dim]
+        )
+    except Exception:
+        list_unitary = torch.stack(
+            [
+                torch.tensor(unitary_group.rvs(dim), dtype=get_dtype())
+                for _ in range(total_size)
+            ]
+        ).view(size + [dim, dim])
     return list_unitary if total_size > 1 else list_unitary.squeeze()
 
 
@@ -498,11 +532,8 @@ def haar_orthogonal(dim: int) -> torch.Tensor:
             tensor([[-0.6859+0.j,  0.7277+0.j],
                     [ 0.7277+0.j,  0.6859+0.j]])
     """
-    # Step 1: sample from Ginibre ensemble
     ginibre = np.random.randn(dim, dim)
-    # Step 2: perform QR decomposition of G
     mat_q, mat_r = np.linalg.qr(ginibre)
-    # Step 3: make the decomposition unique
     mat_lambda = np.diag(mat_r) / abs(np.diag(mat_r))
     mat_u = mat_q @ np.diag(mat_lambda)
     return torch.tensor(mat_u, dtype=get_dtype())
@@ -530,25 +561,28 @@ def haar_unitary(dim: int) -> torch.Tensor:
             tensor([[ 0.2800+0.6235j,  0.7298+0.0160j],
                     [-0.7289-0.0396j,  0.3267-0.6003j]])
     """
-    # Step 1: sample from Ginibre ensemble
     ginibre = (np.random.randn(dim, dim) + 1j * np.random.randn(dim, dim)) / np.sqrt(2)
-    # Step 2: perform QR decomposition of G
     mat_q, mat_r = np.linalg.qr(ginibre)
-    # Step 3: make the decomposition unique
     mat_lambda = np.diag(mat_r) / np.abs(np.diag(mat_r))
     mat_u = mat_q @ np.diag(mat_lambda)
     return torch.tensor(mat_u, dtype=get_dtype())
 
 
-def haar_state_vector(dim: int, is_real: Optional[bool] = False) -> torch.Tensor:
+def haar_state_vector(
+    dim: int,
+    is_real: Optional[bool] = False,
+    size: Union[int, List[int]] = 1,
+) -> torch.Tensor:
     r"""Randomly generate a state vector following Haar measure.
 
     Args:
         dim: Dimension of the state vector.
         is_real: Whether the vector is real. Defaults to False.
+        size: Batch size. Defaults to 1.
 
     Returns:
-        A :math:`d \times 1` state vector.
+        A :math:`d \times 1` state vector. For batched generation (total batch size larger
+        than 1), returns a tensor with shape ``size + [d, 1]``.
 
     Examples:
         .. code-block:: python
@@ -562,22 +596,24 @@ def haar_state_vector(dim: int, is_real: Optional[bool] = False) -> torch.Tensor
             tensor([[0.9908+0.j],
                     [-0.1356+0.j]])
     """
-    if is_real:
-        # Generate a Haar random orthogonal matrix
-        mat_orthog = haar_orthogonal(dim)
-        # Perform orthogonal transformation on |0>
-        phi = mat_orthog[:, 0]
-    else:
-        # Generate a Haar random unitary
-        unitary = haar_unitary(dim)
-        # Perform unitary transformation on |0>
-        phi = unitary[:, 0]
+    size = _format_size(size)
+    total_size = int(np.prod(size))
 
-    return phi.view([-1, 1])
+    if is_real:
+        phi = np.random.randn(total_size, dim)
+    else:
+        phi = (np.random.randn(total_size, dim) + 1j * np.random.randn(total_size, dim)) / np.sqrt(2)
+
+    phi /= np.linalg.norm(phi, axis=-1, keepdims=True)
+    phi = torch.tensor(phi, dtype=get_dtype()).view(size + [dim, 1])
+    return phi if total_size > 1 else phi[0]
 
 
 def haar_density_operator(
-    dim: int, rank: int, is_real: Optional[bool] = False
+    dim: int,
+    rank: int,
+    is_real: Optional[bool] = False,
+    size: Union[int, List[int]] = 1,
 ) -> torch.Tensor:
     r"""Randomly generate a density matrix following Haar measure.
 
@@ -585,9 +621,11 @@ def haar_density_operator(
         dim: Dimension of the density matrix.
         rank: Rank of the density matrix.
         is_real: Whether the density matrix is real. Defaults to False.
+        size: Batch size. Defaults to 1.
 
     Returns:
-        A :math:`d \times d` density matrix.
+        A :math:`d \times d` density matrix. For batched generation (total batch size larger
+        than 1), returns a tensor with shape ``size + [d, d]``.
 
     Examples:
         .. code-block:: python
@@ -608,14 +646,22 @@ def haar_density_operator(
                     [-0.4875+0.j, 0.3887+0.j]])
     """
     assert 0 < rank <= dim, "rank is an invalid number"
+    size = _format_size(size)
+    total_size = int(np.prod(size))
+
     if is_real:
-        ginibre_matrix = np.random.randn(dim, rank)
-        rho = ginibre_matrix @ ginibre_matrix.T
+        ginibre_matrix = np.random.randn(total_size, dim, rank)
+        rho = ginibre_matrix @ np.swapaxes(ginibre_matrix, -1, -2)
     else:
-        ginibre_matrix = np.random.randn(dim, rank) + 1j * np.random.randn(dim, rank)
-        rho = ginibre_matrix @ ginibre_matrix.conj().T
-    rho = rho / np.trace(rho)
-    return torch.tensor(rho, dtype=get_dtype())
+        ginibre_matrix = (
+            np.random.randn(total_size, dim, rank)
+            + 1j * np.random.randn(total_size, dim, rank)
+        ) / np.sqrt(2)
+        rho = ginibre_matrix @ np.swapaxes(np.conjugate(ginibre_matrix), -1, -2)
+
+    rho = rho / np.trace(rho, axis1=-2, axis2=-1)[..., None, None]
+    rho = torch.tensor(rho, dtype=get_dtype()).view(size + [dim, dim])
+    return rho if total_size > 1 else rho[0]
 
 
 @_alias({"num_systems": "num_qubits"})
@@ -742,19 +788,16 @@ def random_clifford(num_qubits: int) -> torch.Tensor:
             tensor([[ 0.7071+0.0000j, -0.7071+0.0000j],
                     [ 0.0000+0.7071j,  0.0000+0.7071j]])
     """
-    # Generate a random Clifford operator (stabilizer tableaux) and the elements of the canonical form
     _, gamma_matrices, delta_matrices, hadamard_layer, permutation = __generate_random_clifford(num_qubits)
 
     gamma1, gamma2 = gamma_matrices[0], gamma_matrices[1]
     delta1, delta2 = delta_matrices[0].T, delta_matrices[1].T
     phase = np.random.randint(0, 2, size=2 * num_qubits)
 
-    # Initialize the circuit
     circuit = qkit.Circuit(num_qubits)
 
     __apply_circuit_layers(circuit, delta2, gamma2)
 
-    # Apply Pauli gates based on the phase vector
     x_indices, y_indices, z_indices = [], [], []
     for idx in range(num_qubits):
         if phase[idx] == 1 and phase[idx + num_qubits] == 0:
@@ -770,7 +813,6 @@ def random_clifford(num_qubits: int) -> torch.Tensor:
     if z_indices:
         circuit.z(z_indices)
 
-    # Apply SWAP gates based on the permutation
     swapped_indices, swap_gate_indices = [], []
     for idx in range(num_qubits):
         if permutation[idx] == idx:
@@ -787,7 +829,6 @@ def random_clifford(num_qubits: int) -> torch.Tensor:
 
     __apply_circuit_layers(circuit, delta1, gamma1)
 
-    # Return the Clifford unitary matrix
     return circuit.matrix
 
 
@@ -808,12 +849,10 @@ def __generate_random_clifford(
 
     TODO: bad code quality, need to eliminate the for loops.
     """
-    # Constant matrices
     zero_matrix = np.zeros((num_qubits, num_qubits), dtype=int)
     zero_matrix_2n = np.zeros((2 * num_qubits, 2 * num_qubits), dtype=int)
     identity_matrix = np.eye(num_qubits, dtype=int)
 
-    # Sample from the quantum Mallows distribution
     hadamard_layer, permutation = __sample_quantum_mallows(num_qubits)
 
     gamma1 = np.copy(zero_matrix)
@@ -821,13 +860,11 @@ def __generate_random_clifford(
     gamma2 = np.copy(zero_matrix)
     delta2 = np.copy(identity_matrix)
 
-    # Generate random diagonal elements for Gamma matrices
     for i in range(num_qubits):
         gamma2[i, i] = np.random.randint(2)
         if hadamard_layer[i]:
             gamma1[i, i] = np.random.randint(2)
 
-    # Generate random elements for Gamma and Delta matrices based on canonical form constraints
     for j in range(num_qubits):
         for i in range(j + 1, num_qubits):
             b = np.random.randint(2)
@@ -853,7 +890,6 @@ def __generate_random_clifford(
             if hadamard_layer[i] == 0 and hadamard_layer[j] == 0 and permutation[i] < permutation[j]:
                 delta1[i, j] = np.random.randint(2)
 
-    # Compute stabilizer tableaux
     prod1 = np.matmul(gamma1, delta1)
     prod2 = np.matmul(gamma2, delta2)
     inv1 = np.linalg.inv(np.transpose(delta1))
@@ -863,13 +899,10 @@ def __generate_random_clifford(
     f1 = f1.astype(int) % 2
     f2 = f2.astype(int) % 2
 
-    # Compute the full stabilizer tableaux
     stabilizer_tableaux = np.copy(zero_matrix_2n)
-    # Apply qubit permutation to F2
     for i in range(num_qubits):
         stabilizer_tableaux[i, :] = f2[permutation[i], :]
         stabilizer_tableaux[i + num_qubits, :] = f2[permutation[i] + num_qubits, :]
-    # Apply Hadamard layer
     for i in range(num_qubits):
         if hadamard_layer[i] == 1:
             stabilizer_tableaux[(i, i + num_qubits), :] = stabilizer_tableaux[(i + num_qubits, i), :]
@@ -887,16 +920,15 @@ def __sample_quantum_mallows(n: int) -> Tuple[np.ndarray, np.ndarray]:
         hadamard_layer: A binary array indicating the Hadamard layer.
         permutation: A permutation array.
     """
-    # Initialize Hadamard layer and permutation layer
     hadamard_layer = np.zeros(n, dtype=int)
     permutation = np.zeros(n, dtype=int)
 
     remaining_indices = list(range(n))
 
     for i in range(n):
-        m = n - i  # Number of remaining indices
+        m = n - i
         r = np.random.uniform(0, 1)
-        index = -1 * int(np.ceil(np.log2(r + (1 - r) * (4 ** (-1 * float(m))))))  # sample index
+        index = -1 * int(np.ceil(np.log2(r + (1 - r) * (4 ** (-1 * float(m))))))
         hadamard_layer[i] = 1 if index < m else 0
         k = index if index < m else 2 * m - index - 1
         permutation[i] = remaining_indices[k]

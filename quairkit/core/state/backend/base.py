@@ -136,7 +136,9 @@ class State(ABC):
             measure_op: the measurement operator.
             
         Returns:
-            A tensor containing the measurement results.
+            A tensor containing the measurement results. Simulator backends return
+            dense probabilities, while shot-based operator backends may return sparse
+            empirical probabilities over the same outcome space.
         
         """
         

@@ -22,8 +22,12 @@ from typing import List, Optional, Union
 
 import torch
 
-from ..core import OperatorInfoType, StateSimulator, get_backend, to_state
+from ..core import (OperatorInfoType, StateSimulator, get_backend, get_dtype,
+                    tensor_state, to_state)
+from ..core.base import PRODUCT_STATE_THRESHOLD
 from ..core.intrinsic import _alias, _format_total_dim, _State
+from ..core.state.backend import DefaultSimulator
+from ..core.state.backend.default import ProductDefaultSimulator
 from ..operator import CNOT, CRY, RY, H, X
 
 __all__ = [
@@ -43,7 +47,7 @@ __all__ = [
 
 @_alias({"num_systems": "num_qubits"})
 def zero_state(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> _State:
-    r"""Generate a zero state.
+    r"""Generate a zero state :math:`|0\rangle^{\otimes n}`.
 
     Args:
         num_systems: Number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
@@ -56,14 +60,31 @@ def zero_state(num_systems: Optional[int] = None, system_dim: Union[List[int], i
     Examples:
         .. code-block:: python
 
-            num_systems = 2
-            system_dim = [2, 3]
-            state = zero_state(num_systems, system_dim)
-            print(f'The zero state is:\n{state}')
+            from quairkit.database import zero_state
+
+            # Generate a 2-qubit zero state
+            state = zero_state(2)
+            print(f'2-qubit zero state:\n{state}')
 
         ::
 
-            The zero state is:
+            2-qubit zero state:
+            ---------------------------------------------------
+            Backend: state_vector
+            System dimension: [2, 2]
+            System sequence: [0, 1]
+            [1.+0.j 0.+0.j 0.+0.j 0.+0.j]
+            ---------------------------------------------------
+
+        .. code-block:: python
+
+            # Generate a qubit-qutrit zero state
+            state = zero_state(2, system_dim=[2, 3])
+            print(f'Qubit-qutrit zero state:\n{state}')
+
+        ::
+
+            Qubit-qutrit zero state:
             ---------------------------------------------------
             Backend: state_vector
             System dimension: [2, 3]
@@ -146,11 +167,36 @@ def computational_state(num_systems: Optional[int] = None, index: int = 0,
     
     backend = get_backend()
     if issubclass(backend, StateSimulator):
+        if issubclass(backend, DefaultSimulator) and num_systems >= PRODUCT_STATE_THRESHOLD:
+            sys_dim = [system_dim] * num_systems if isinstance(system_dim, int) else list(system_dim)
+            total_dim = math.prod(sys_dim)
+            if index < 0 or index >= total_dim:
+                raise ValueError(
+                    f"index out of range for computational basis: got {index}, "
+                    f"expect in [0, {total_dim - 1}]"
+                )
+
+            digits = []
+            quotient = index
+            for d in reversed(sys_dim):
+                digits.append(quotient % d)
+                quotient //= d
+            digits.reverse()
+
+            single_states = []
+            for d, digit in zip(sys_dim, digits):
+                vec = torch.zeros(d, dtype=get_dtype())
+                vec[digit] = 1
+                single_states.append(to_state(vec, d))
+
+            return tensor_state(single_states[0], *single_states[1:])
+
         dim = _format_total_dim(num_systems, system_dim)
         data = torch.zeros(dim)
         data[index] = 1
+        return to_state(data, system_dim)
     else:
-        system_dim = [2] * num_systems # TODO add support for no num_systems input
+        system_dim = [2] * num_systems
         index_binary = bin(index)[2:].zfill(num_systems)
         x_idx = [[idx] for idx in range(num_systems) if index_binary[idx] == '1']
         data = [X(x_idx).info] if x_idx else []   
@@ -159,7 +205,7 @@ def computational_state(num_systems: Optional[int] = None, index: int = 0,
 
 @_alias({"num_systems": "num_qubits"})
 def bell_state(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> _State:
-    r"""Generate a Bell state.
+    r"""Generate a Bell state (maximally entangled state).
 
     Its matrix form is:
 
@@ -167,30 +213,53 @@ def bell_state(num_systems: Optional[int] = None, system_dim: Union[List[int], i
 
         |\Phi_{D}\rangle=\frac{1}{\sqrt{D}} \sum_{j=0}^{D-1}|j\rangle_{A}|j\rangle_{B}
 
+    where :math:`D` is the dimension of each subsystem.
+
     Args:
-        num_systems: Number of systems in this state. If None, inferred from system_dim. Alias of ``num_qubits``.
+        num_systems: Number of systems in this state. Must be even. If None, inferred from system_dim. 
+            Alias of ``num_qubits``.
         system_dim: Dimension of systems. Can be a list of system dimensions 
             or an int representing the dimension of all systems. Defaults to qubit case.
 
     Returns:
         The generated quantum state.
 
+    Raises:
+        AssertionError: If the number of systems is not even.
+
     Examples:
         .. code-block:: python
 
-            num_systems = 2
-            system_dim = [2, 2]
-            state = bell_state(num_systems, system_dim)
-            print(f'The Bell state is:\n{state}')
+            from quairkit.database import bell_state
+
+            # Generate a 2-qubit Bell state
+            state = bell_state(2)
+            print(f'2-qubit Bell state:\n{state}')
 
         ::
 
-            The Bell state is:
+            2-qubit Bell state:
             ---------------------------------------------------
             Backend: state_vector
             System dimension: [2, 2]
             System sequence: [0, 1]
             [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+            ---------------------------------------------------
+
+        .. code-block:: python
+
+            # Generate a 4-qubit Bell state (two Bell pairs)
+            state = bell_state(4)
+            print(f'4-qubit Bell state:\n{state}')
+
+        ::
+
+            4-qubit Bell state:
+            ---------------------------------------------------
+            Backend: state_vector
+            System dimension: [2, 2, 2, 2]
+            System sequence: [0, 1, 2, 3]
+            [0.5+0.j 0.+0.j ... 0.5+0.j]
             ---------------------------------------------------
     """
     if num_systems is None:
@@ -309,32 +378,36 @@ def _add_w_state_info(num_qubits: int) -> List[OperatorInfoType]:
 
 
 def w_state(num_qubits: int) -> _State:
-    r"""Generate a W-state.
+    r"""Generate a W-state :math:`|W_n\rangle = \frac{1}{\sqrt{n}}(|10...0\rangle + |01...0\rangle + ... + |00...1\rangle)`.
+
+    The W-state is a symmetric superposition of all states with exactly one qubit in state :math:`|1\rangle`.
 
     Args:
-        num_qubits: The number of qubits in the quantum state.
+        num_qubits: The number of qubits in the quantum state. Must be at least 1.
+
+    Returns:
+        The generated W-state.
 
     Raises:
         NotImplementedError: If the backend is wrong or not implemented.
 
-    Returns:
-        The generated quantum state.
-
     Examples:
         .. code-block:: python
 
-            num_qubits = 2
-            w_state_inst = w_state(num_qubits)
-            print(f'The W-state is:\n{w_state_inst}')
+            from quairkit.database import w_state
+
+            # Generate a 3-qubit W-state
+            state = w_state(3)
+            print(f'3-qubit W-state:\n{state}')
 
         ::
 
-            The W-state is:
+            3-qubit W-state:
             ---------------------------------------------------
             Backend: state_vector
-            System dimension: [2, 2]
-            System sequence: [0, 1]
-            [0.  +0.j 0.71+0.j 0.71+0.j 0.  +0.j]
+            System dimension: [2, 2, 2]
+            System sequence: [0, 1, 2]
+            [0.  +0.j 0.58+0.j 0.58+0.j 0.  +0.j 0.58+0.j 0.  +0.j 0.  +0.j 0.  +0.j]
             ---------------------------------------------------
     """
 
@@ -353,32 +426,36 @@ def w_state(num_qubits: int) -> _State:
 
 
 def ghz_state(num_qubits: int) -> _State:
-    r"""Generate a GHZ-state.
+    r"""Generate a GHZ-state (Greenberger-Horne-Zeilinger state).
+
+    The GHZ-state is :math:`|GHZ_n\rangle = \frac{1}{\sqrt{2}}(|0\rangle^{\otimes n} + |1\rangle^{\otimes n})`.
 
     Args:
-        num_qubits: The number of qubits in the quantum state.
+        num_qubits: The number of qubits in the quantum state. Must be at least 2.
+
+    Returns:
+        The generated GHZ-state.
 
     Raises:
         NotImplementedError: If the backend is wrong or not implemented.
 
-    Returns:
-        The generated quantum state.
-
     Examples:
         .. code-block:: python
 
-            num_qubits = 2
-            ghz_state_inst = ghz_state(num_qubits)
-            print(f'The GHZ-state is:\n{ghz_state_inst}')
+            from quairkit.database import ghz_state
+
+            # Generate a 3-qubit GHZ-state
+            state = ghz_state(3)
+            print(f'3-qubit GHZ-state:\n{state}')
 
         ::
 
-            The GHZ-state is:
+            3-qubit GHZ-state:
             ---------------------------------------------------
             Backend: state_vector
-            System dimension: [2, 2]
-            System sequence: [0, 1]
-            [0.71+0.j 0.  +0.j 0.  +0.j 0.71+0.j]
+            System dimension: [2, 2, 2]
+            System sequence: [0, 1, 2]
+            [0.71+0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.71+0.j]
             ---------------------------------------------------
     """
     backend = get_backend()
@@ -395,34 +472,40 @@ def ghz_state(num_qubits: int) -> _State:
 
 
 def completely_mixed_computational(num_qubits: int) -> StateSimulator:
-    r"""Generate the density matrix of the completely mixed state.
+    r"""Generate the density matrix of the completely mixed state :math:`\rho = I/2^n`.
+
+    The completely mixed state is the maximally mixed state with maximum von Neumann entropy.
 
     Args:
         num_qubits: The number of qubits in the quantum state.
+
+    Returns:
+        The generated completely mixed quantum state (density matrix).
 
     Raises:
         Exception: The state should be a pure state if the backend is state_vector.
         NotImplementedError: If the backend is wrong or not implemented.
 
-    Returns:
-        The generated quantum state.
-
     Examples:
         .. code-block:: python
 
-            num_qubits = 1
-            state = completely_mixed_computational(num_qubits)
-            print(f'The density matrix of the completely mixed state is:\n{state}')
+            from quairkit.database import completely_mixed_computational
+
+            # Generate a 2-qubit completely mixed state
+            state = completely_mixed_computational(2)
+            print(f'2-qubit completely mixed state:\n{state}')
 
         ::
 
-            The density matrix of the completely mixed state is:
+            2-qubit completely mixed state:
             ---------------------------------------------------
             Backend: density_matrix
-            System dimension: [2]
-            System sequence: [0]
-            [[0.5+0.j 0. +0.j]
-             [0. +0.j 0.5+0.j]]
+            System dimension: [2, 2]
+            System sequence: [0, 1]
+            [[0.25+0.j 0.  +0.j 0.  +0.j 0.  +0.j]
+             [0.  +0.j 0.25+0.j 0.  +0.j 0.  +0.j]
+             [0.  +0.j 0.  +0.j 0.25+0.j 0.  +0.j]
+             [0.  +0.j 0.  +0.j 0.  +0.j 0.25+0.j]]
             ---------------------------------------------------
     """
     data = torch.eye(2 ** num_qubits) / (2 ** num_qubits)

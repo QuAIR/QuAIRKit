@@ -137,7 +137,13 @@ Integrate third-party quantum cloud providers for execution:
         def _execute(self, qasm: str, shots: int):
             '''Execute the qasm on your backend and return a counts dict.'''
 
+        def _multi_execute(self, list_qasm, list_shots):
+            '''Recommended: return batched CSR counts (offsets, indices, counts).'''
+
     qkit.set_backend(YourState)
+
+Operator backends can return sparse measurement probabilities from ``measure()``
+while preserving the same outcome indexing semantics as dense simulator outputs.
 
 Noise and mixed-state tools
 ---------------------------
@@ -168,8 +174,21 @@ For notebooks and examples, see:
 - https://github.com/QuAIR/QuAIRKit/tree/main/tutorials
 """
 
+import importlib
 import os
+
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+_WINDOWS_TORCH_DLL_HANDLE = None
+
+if os.name == "nt":
+    try:
+        import torch
+
+        _torch_lib_dir = os.path.join(os.path.dirname(torch.__file__), "lib")
+        if os.path.isdir(_torch_lib_dir):
+            _WINDOWS_TORCH_DLL_HANDLE = os.add_dll_directory(_torch_lib_dir)
+    except Exception:
+        pass
 
 from .core import set_backend, set_device, set_dtype, set_seed
 from .core import get_backend, get_device, get_dtype, get_seed, get_float_dtype
@@ -183,17 +202,24 @@ from .circuit import Circuit
 from . import application
 
 name = "quairkit"
-__version__ = "0.4.4"
+__version__ = "0.5.0"
 
+try:
+    importlib.import_module("quairkit._C")
+except Exception as e:
+    raise ImportError(
+            "QuAIRKit requires the C++ extension (quairkit._C). "
+            "Please build it first (e.g. `python setup.py build_ext --inplace`)."
+        ) from e
 
 def print_info() -> None:
     r"""Print the information of QuAIRKit, its dependencies and current environment.
 
     """
-    import torch
+    import matplotlib
     import numpy
     import scipy
-    import matplotlib
+    import torch
     print("\n---------VERSION---------")
     print("quairkit:", __version__)
     print("torch:", torch.__version__)
@@ -210,9 +236,9 @@ def print_info() -> None:
     print("OS version:", platform.version())
 
     
-    import subprocess
     import re
-    # stack overflow #4842448
+    import subprocess
+
     print("---------DEVICE---------")
     if platform.system() == "Windows":
         cpu_name = platform.processor()

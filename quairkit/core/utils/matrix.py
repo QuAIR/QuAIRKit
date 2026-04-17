@@ -17,13 +17,38 @@ r"""
 Built-in Gate matrices.
 """
 
-import math
-from typing import List, Union
+import importlib
+from typing import Iterable, List, Union
 
-import numpy as np
 import torch
 
 from .. import utils
+
+
+def _require_cpp_submodule(submodule: str):
+    """Return a required C++ extension submodule.
+
+    This module no longer supports a Python fallback implementation for kernels
+    that have C++ equivalents. If the C++ extension is not available, raise an
+    ImportError with actionable guidance.
+    """
+    try:
+        mod = importlib.import_module("quairkit._C")
+    except Exception as e:
+        raise ImportError(
+            "QuAIRKit requires the compiled C++ extension (quairkit._C). "
+            "Please build it first (e.g. `python setup.py build_ext --inplace`)."
+        ) from e
+    cpp_mod = getattr(mod, submodule, None)
+    if cpp_mod is None:
+        raise ImportError(
+            f"quairkit._C is available but missing submodule '{submodule}'. "
+            "Please rebuild the C++ extension (e.g. `python setup.py build_ext --inplace`)."
+        )
+    return cpp_mod
+
+
+_CPP_MATRIX = _require_cpp_submodule("matrix")
 
 
 def __get_complex_dtype(float_dtype: torch.dtype) -> torch.dtype:
@@ -46,12 +71,11 @@ def _one(dtype: torch.dtype = None, device: torch.device = None) -> torch.Tensor
 
 
 def _phase(dim: int, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    w = np.exp(2 * math.pi * 1j / dim)
-    return torch.from_numpy(np.diag([w**i for i in range(dim)])).to(dtype)
+    return _CPP_MATRIX.phase(dim, dtype)
 
 
 def _shift(dim: int, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    return torch.roll(torch.eye(dim), shifts=1, dims=0).to(dtype)
+    return _CPP_MATRIX.shift(dim, dtype)
 
 
 def _grover(oracle: torch.Tensor) -> torch.Tensor:
@@ -65,524 +89,359 @@ def _grover(oracle: torch.Tensor) -> torch.Tensor:
     return oracle @ diffusion_op @ oracle.conj().T @ reflection_op
 
 
-def _qft(num_qubits: int, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    N = 2**num_qubits
-    omega_N = np.exp(1j * 2 * math.pi / N)
-
-    qft_mat = np.ones([N, N]).astype("complex128")
-    for i in range(1, N):
-        for j in range(1, N):
-            qft_mat[i, j] = omega_N ** ((i * j) % N)
-
-    return torch.tensor(qft_mat / math.sqrt(N)).to(dtype)
+def _qft(N: int, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
+    return _CPP_MATRIX.qft(N, dtype)
 
 
 def _h(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    element = math.sqrt(2) / 2
-    gate_matrix = [
-        [element, element],
-        [element, -element],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.h(dtype)
 
 
 def _s(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0],
-        [0, 1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.s(dtype)
 
 
 def _sdg(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0],
-        [0, -1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.sdg(dtype)
 
 
 def _t(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0],
-        [0, math.sqrt(2) / 2 + math.sqrt(2) / 2 * 1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.t(dtype)
 
 
 def _tdg(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0],
-        [0, math.sqrt(2) / 2 - math.sqrt(2) / 2 * 1j],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.tdg(dtype)
 
 
 def _eye(dim: int, dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    return torch.eye(dim, dtype=dtype)
+    return _CPP_MATRIX.eye(dim, dtype)
 
 
 def _x(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [0, 1],
-        [1, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.x(dtype)
 
 
 def _y(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [0, -1j],
-        [1j, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.y(dtype)
 
 
 def _z(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0],
-        [0, -1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.z(dtype)
 
 
 def _p(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
-    gate_matrix = [
-        _1, _0,
-        _0, torch.cos(theta) + 1j * torch.sin(theta),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.p(theta)
 
 
 def _rx(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    gate_matrix = [
-        torch.cos(theta / 2), -1j * torch.sin(theta / 2),
-        -1j * torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.rx(theta)
 
 
 def _ry(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    gate_matrix = [
-        torch.cos(theta / 2), -torch.sin(theta / 2),
-        torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2]) + 0j
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.ry(theta)
 
 
 def _rz(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0 = torch.zeros_like(theta)
-    gate_matrix = [
-        torch.exp(-1j * theta / 2), _0,
-        _0, torch.exp(1j * theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.rz(theta)
 
 
 def _u3(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 3, 1])
-    theta, phi, lam = theta[:, 0], theta[:, 1], theta[:, 2]
-    gate_matrix = [
-        torch.cos(theta / 2), -torch.exp(1j * lam) * torch.sin(theta / 2),
-        torch.exp(1j * phi) * torch.sin(theta / 2), torch.exp(1j * (phi + lam)) * torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 2, 2])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 3:
+        raise ValueError(f"theta must have shape [B, 3], got {list(theta.shape)}")
+    return _CPP_MATRIX.u3(theta)
 
 
 
-# ------------------------------------------------- Split line -------------------------------------------------
 
-    #Belows are multi-qubit matrices.
 
 
 
 def _cnot(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, 1],
-        [0, 0, 1, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.cnot(dtype)
 
 
 def _cy(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, -1j],
-        [0, 0, 1j, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.cy(dtype)
 
 
 def _cz(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, -1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.cz(dtype)
 
 
 def _swap(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0, 0, 0],
-        [0, 0, 1, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, 1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.swap(dtype)
 
 
 
 def _cp(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
-    gate_matrix = [
-        _1, _0, _0, _0,
-        _0, _1, _0, _0,
-        _0, _0, _1, _0,
-        _0, _0, _0, torch.cos(theta) + 1j * torch.sin(theta),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.cp(theta)
 
 
 def _crx(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
-    gate_matrix = [
-        _1, _0, _0, _0, 
-        _0, _1, _0, _0,
-        _0, _0, torch.cos(theta / 2), -1j * torch.sin(theta / 2),
-        _0, _0, -1j * torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.crx(theta)
 
 
 def _cry(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
-    gate_matrix = [
-        _1, _0, _0, _0,
-        _0, _1, _0, _0,
-        _0, _0, torch.cos(theta / 2), -torch.sin(theta / 2),
-        _0, _0, torch.sin(theta / 2), torch.cos(theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4]) + 0j
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.cry(theta)
 
 
 def _crz(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0, _1 = torch.zeros_like(theta), torch.ones_like(theta)
-    gate_matrix = [
-        _1, _0, _0, _0,
-        _0, _1, _0, _0,
-        _0, _0, torch.cos(theta / 2) - 1j * torch.sin(theta / 2), _0,
-        _0, _0, _0, torch.cos(theta / 2) + 1j * torch.sin(theta / 2),
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.crz(theta)
 
 
 def _cu(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 4, 1])
-    _0, _1 = torch.zeros_like(theta[:, -1]), torch.ones_like(theta[:, -1])
-
-    entry22 = torch.cos(theta[:, 0] / 2) * (torch.cos(theta[:, 3]) + 1j * torch.sin(theta[:, 3]))
-    entry23 = -torch.sin(theta[:, 0] / 2) * (torch.cos(theta[:, 2] + theta[:, 3]) + 1j * torch.sin(theta[:, 2] + theta[:, 3]))
-    entry32 = torch.sin(theta[:, 0] / 2) * (torch.cos(theta[:, 1] + theta[:, 3]) + 1j * torch.sin(theta[:, 1] + theta[:, 3])) 
-    entry33 = torch.cos(theta[:, 0] / 2) * (
-        torch.cos(theta[:, 1] + theta[:, 2] + theta[:, 3])
-        + 1j * torch.sin(theta[:, 1] + theta[:, 2] + theta[:, 3])
-    )
-    
-    gate_matrix = [
-        _1, _0, _0, _0,
-        _0, _1, _0, _0,
-        _0, _0, entry22, entry23,
-        _0, _0, entry32, entry33,
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 4:
+        raise ValueError(f"theta must have shape [B, 4], got {list(theta.shape)}")
+    return _CPP_MATRIX.cu(theta)
 
 
 def _rxx(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0 = torch.zeros_like(theta)
-    _cos = torch.cos(theta / 2)
-    _sin = -1j * torch.sin(theta / 2)
-    
-    gate_matrix = [
-        _cos, _0, _0, _sin,
-        _0, _cos, _sin, _0,
-        _0, _sin, _cos, _0,
-        _sin, _0, _0, _cos,
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.rxx(theta)
 
 
 def _ryy(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0 = torch.zeros_like(theta)
-    
-    param1 = torch.cos(theta / 2)
-    param2 = -1j * torch.sin(theta / 2)
-    param3 = 1j * torch.sin(theta / 2)
-    
-    gate_matrix = [
-        param1, _0, _0, param3,
-        _0, param1, param2, _0,
-        _0, param2, param1, _0,
-        param3, _0, _0, param1,
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.ryy(theta)
 
 
 def _rzz(theta: torch.Tensor) -> torch.Tensor:
-    theta = theta.view([-1, 1])
-    _0 = torch.zeros_like(theta)
-    
-    param1 = torch.cos(theta / 2) - 1j * torch.sin(theta / 2)
-    param2 = torch.cos(theta / 2) + 1j * torch.sin(theta / 2)
-    
-    gate_matrix = [
-        param1, _0, _0, _0,
-        _0, param2, _0, _0,
-        _0, _0, param2, _0,
-        _0, _0, _0, param1,
-    ]
-    return torch.cat(gate_matrix, dim=-1).view([-1, 4, 4])
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 1:
+        raise ValueError(f"theta must have shape [B, 1], got {list(theta.shape)}")
+    return _CPP_MATRIX.rzz(theta)
 
 
 def _ms(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    val1 = math.sqrt(2) / 2
-    val2 = 1j / math.sqrt(2)
-    gate_matrix = [
-        [val1, 0, 0, val2],
-        [0, val1, val2, 0],
-        [0, val2, val1, 0],
-        [val2, 0, 0, val1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.ms(dtype)
 
 
 def _cswap(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.cswap(dtype)
 
 
 def _toffoli(dtype: torch.dtype = torch.complex128) -> torch.Tensor:
-    gate_matrix = [
-        [1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 1, 0],
-    ]
-    return torch.tensor(gate_matrix, dtype=dtype)
+    return _CPP_MATRIX.toffoli(dtype)
 
 
 def _universal2(theta: torch.Tensor) -> torch.Tensor:
-    theta, complex_dtype = theta.view([-1, 15]), __get_complex_dtype(theta.dtype)
-    unitary = _eye(4, complex_dtype)
-    _cnot_gate = _cnot(complex_dtype)
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 15:
+        raise ValueError(f"theta must have shape [B, 15], got {list(theta.shape)}")
+    complex_dtype = __get_complex_dtype(theta.dtype)
+    I2 = _eye(2, complex_dtype)
+    cnot_01 = _cnot(complex_dtype)
+    swap = _swap(complex_dtype)
+    cnot_10 = swap @ cnot_01 @ swap
 
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[:, [0, 1, 2]]), qubit_idx=0, num_qubits=2
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[:, [3, 4, 5]]), qubit_idx=1, num_qubits=2
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _cnot_gate, qubit_idx=[1, 0], num_qubits=2
-    )
+    gates = [
+        utils.linalg._kron(_u3(theta[:, [0, 1, 2]]), I2),
+        utils.linalg._kron(I2, _u3(theta[:, [3, 4, 5]])),
+        cnot_10,
+        utils.linalg._kron(_rz(theta[:, [6]]), I2),
+        utils.linalg._kron(I2, _ry(theta[:, [7]])),
+        cnot_01,
+        utils.linalg._kron(I2, _ry(theta[:, [8]])),
+        cnot_10,
+        utils.linalg._kron(_u3(theta[:, [9, 10, 11]]), I2),
+        utils.linalg._kron(I2, _u3(theta[:, [12, 13, 14]])),
+    ]
 
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _rz(theta[:, [6]]), qubit_idx=0, num_qubits=2
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _ry(theta[:, [7]]), qubit_idx=1, num_qubits=2
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _cnot_gate, qubit_idx=[0, 1], num_qubits=2
-    )
-
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _ry(theta[:, [8]]), qubit_idx=1, num_qubits=2
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _cnot_gate, qubit_idx=[1, 0], num_qubits=2
-    )
-
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[:, [9, 10, 11]]), qubit_idx=0, num_qubits=2
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(theta[:, [12, 13, 14]]), qubit_idx=1, num_qubits=2
-    )
+    unitary = gates[0]
+    for gate in gates[1:]:
+        unitary = torch.matmul(gate, unitary)
 
     return unitary
 
 
 def _universal3(theta: torch.Tensor) -> torch.Tensor:
-    theta, complex_dtype = theta.view([-1, 81]), __get_complex_dtype(theta.dtype)
-    unitary = _eye(8, complex_dtype)
-    __h, __s, __cnot = _h(complex_dtype), _s(complex_dtype), _cnot(complex_dtype)
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    if theta.ndim != 2 or theta.shape[1] != 81:
+        raise ValueError(f"theta must have shape [B, 81], got {list(theta.shape)}")
+    complex_dtype = __get_complex_dtype(theta.dtype)
+    I2, I4 = _eye(2, complex_dtype), _eye(4, complex_dtype)
+    h, s = _h(complex_dtype), _s(complex_dtype)
+    cnot = _cnot(complex_dtype)
+
+    num_qubits = 3
+
+    def _embed_gate(gate: torch.Tensor, qubit_idx: Union[List[int], int]) -> torch.Tensor:
+        if not isinstance(qubit_idx, Iterable) or isinstance(qubit_idx, str):
+            qubit_idx = [qubit_idx]
+        perm = list(qubit_idx) + [q for q in range(num_qubits) if q not in qubit_idx]
+        perm_mat = _permutation(perm, [2] * num_qubits).to(gate.dtype).to(gate.device)
+        rest_dim = 2 ** (num_qubits - len(qubit_idx))
+        eye_rest = torch.eye(rest_dim, dtype=gate.dtype, device=gate.device)
+        full_gate = utils.linalg._kron(gate, eye_rest)
+        return perm_mat.T @ full_gate @ perm_mat
+
+    cnot01_3q = _embed_gate(cnot, [0, 1])
+    cnot12_3q = _embed_gate(cnot, [1, 2])
+    cnot10_3q = _embed_gate(cnot, [1, 0])
+    cnot02_3q = _embed_gate(cnot, [0, 2])
+    cnot20_3q = _embed_gate(cnot, [2, 0])
+    cnot21_3q = _embed_gate(cnot, [2, 1])
 
     psi = torch.reshape(theta[:, :60], shape=[-1, 4, 15])
     phi = torch.reshape(theta[:, 60:], shape=[-1, 7, 3])
 
     def __block_u(_unitary, _theta):
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[:, 0]), qubit_idx=1, num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 1], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[:, 1]), qubit_idx=1, num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 1], num_qubits=3
-        )
-
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(_unitary, __h, qubit_idx=2, num_qubits=3)
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 0], num_qubits=3
-        )
-
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, _rz(_theta[:, 2]), qubit_idx=2, num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 2], num_qubits=3
-        )
+        gates = [
+            cnot12_3q,
+            _embed_gate(_ry(_theta[:, 0]), 1),
+            cnot01_3q,
+            _embed_gate(_ry(_theta[:, 1]), 1),
+            cnot01_3q,
+            cnot12_3q,
+            _embed_gate(h, 2),
+            cnot10_3q,
+            cnot02_3q,
+            cnot12_3q,
+            _embed_gate(_rz(_theta[:, 2]), 2),
+            cnot12_3q,
+            cnot02_3q,
+        ]
+        for gate in gates:
+            _unitary = torch.matmul(gate, _unitary)
         return _unitary
 
     def __block_v(_unitary, _theta):
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[2, 0], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[2, 1], num_qubits=3
-        )
-
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[:, 0]), qubit_idx=2, num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, _ry(_theta[:, 1]), qubit_idx=2, num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 2], num_qubits=3
-        )
-
-        _unitary = utils.linalg._unitary_transformation(_unitary, __s, qubit_idx=2, num_qubits=3)
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[2, 0], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 1], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[1, 0], num_qubits=3
-        )
-
-        _unitary = utils.linalg._unitary_transformation(_unitary, __h, qubit_idx=2, num_qubits=3)
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 2], num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, _rz(_theta[:, 2]), qubit_idx=2, num_qubits=3
-        )
-        _unitary = utils.linalg._unitary_transformation(
-            _unitary, __cnot, qubit_idx=[0, 2], num_qubits=3
-        )
+        gates = [
+            cnot20_3q,
+            cnot12_3q,
+            cnot21_3q,
+            _embed_gate(_ry(_theta[:, 0]), 2),
+            cnot12_3q,
+            _embed_gate(_ry(_theta[:, 1]), 2),
+            cnot12_3q,
+            _embed_gate(s, 2),
+            cnot20_3q,
+            cnot01_3q,
+            cnot10_3q,
+            _embed_gate(h, 2),
+            cnot02_3q,
+            _embed_gate(_rz(_theta[:, 2]), 2),
+            cnot02_3q,
+        ]
+        for gate in gates:
+            _unitary = torch.matmul(gate, _unitary)
         return _unitary
 
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[:, 0]), qubit_idx=[0, 1], num_qubits=3
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[:, 0, 0:3]), qubit_idx=2, num_qubits=3
-    )
+    gates = [
+        _embed_gate(_universal2(psi[:, 0]), [0, 1]),
+        _embed_gate(_u3(phi[:, 0, 0:3]), 2),
+    ]
+    unitary = gates[0]
+    for gate in gates[1:]:
+        unitary = torch.matmul(gate, unitary)
     unitary = __block_u(unitary, phi[:, 1])
 
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[:, 1]), qubit_idx=[0, 1], num_qubits=3
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[:, 2, 0:3]), qubit_idx=2, num_qubits=3
-    )
+    gates = [
+        _embed_gate(_universal2(psi[:, 1]), [0, 1]),
+        _embed_gate(_u3(phi[:, 2, 0:3]), 2),
+    ]
+    for gate in gates:
+        unitary = torch.matmul(gate, unitary)
     unitary = __block_v(unitary, phi[:, 3])
 
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[:, 2]), qubit_idx=[0, 1], num_qubits=3
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[:, 4, 0:3]), qubit_idx=2, num_qubits=3
-    )
+    gates = [
+        _embed_gate(_universal2(psi[:, 2]), [0, 1]),
+        _embed_gate(_u3(phi[:, 4, 0:3]), 2),
+    ]
+    for gate in gates:
+        unitary = torch.matmul(gate, unitary)
     unitary = __block_u(unitary, phi[:, 5])
 
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _universal2(psi[:, 3]), qubit_idx=[0, 1], num_qubits=3
-    )
-    unitary = utils.linalg._unitary_transformation(
-        unitary, _u3(phi[:, 6, 0:3]), qubit_idx=2, num_qubits=3
-    )
+    gates = [
+        _embed_gate(_universal2(psi[:, 3]), [0, 1]),
+        _embed_gate(_u3(phi[:, 6, 0:3]), 2),
+    ]
+    for gate in gates:
+        unitary = torch.matmul(gate, unitary)
+
     return unitary
 
 
 def _permutation(perm: List[int], system_dim: List[int]) -> torch.Tensor:
-    num_system, dimension = len(perm), np.prod(system_dim)
-    mat = torch.eye(dimension).view(2 * system_dim)
-    idx = perm + list(range(num_system, 2 * num_system))
-    return torch.permute(mat, idx).reshape([dimension, dimension])
+    return _CPP_MATRIX.permutation(perm, system_dim)
 
 
 def _param_generator(theta: torch.Tensor, generator: torch.Tensor) -> torch.Tensor:
-    r"""Generate a unitary with the given parameters and generators.
-    Such unitary is universal when generator forms a basis of the unitary group.
-    """
-    num_param = generator.shape[0]
-    theta = theta.view([-1, num_param, 1, 1])
-    hamiltonian = torch.sum(torch.mul(theta, generator), dim=-3)
-    return torch.matrix_exp(1j * hamiltonian)
+    if theta.ndim == 1:
+        theta = theta.reshape([1, -1])
+    return _CPP_MATRIX.param_generator(theta, generator)

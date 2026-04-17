@@ -1,0 +1,78 @@
+name: Build wheels
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cibuildwheel
+        run: python -m pip install --upgrade pip cibuildwheel
+
+      - name: Build wheels
+        run: python -m cibuildwheel --output-dir wheelhouse
+        env:
+          CIBW_BUILD: "cp310-* cp311-* cp312-*"
+          CIBW_SKIP: "*-musllinux_*"
+          CIBW_BUILD_VERBOSITY: "1"
+          # Windows: PyTorch wheels are 64-bit only.
+          CIBW_ARCHS_WINDOWS: "auto64"
+          # Linux: ensure PEP517 build isolation (build-system.requires) also resolves CPU-only torch.
+          CIBW_ENVIRONMENT_LINUX: >-
+            PIP_INDEX_URL=https://download.pytorch.org/whl/cpu
+            PIP_EXTRA_INDEX_URL=https://pypi.org/simple
+          # Build against PyTorch 2.9.x (CPU wheels) to provide consistent ABI expectations.
+          CIBW_BEFORE_BUILD: >-
+            python -m pip install --upgrade pip &&
+            python -m pip install "torch==2.9.*" --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple &&
+            python -m pip install ninja
+          CIBW_TEST_COMMAND: >-
+            python -c "import quairkit; import quairkit._C; print(quairkit.__version__)"
+          # Avoid bundling large PyTorch shared libraries into our wheel.
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
+
+      - name: Upload wheel artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
+          if-no-files-found: error
+
+  upload_release_assets:
+    name: Upload wheels to GitHub Release
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/**/*.whl
+

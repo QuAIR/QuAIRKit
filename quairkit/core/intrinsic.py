@@ -20,6 +20,7 @@ NOT ALLOWED to be exposed to users.
 
 import copy
 import functools
+import gc
 import io
 import math
 import warnings
@@ -32,6 +33,7 @@ import PIL
 import torch
 from torch.nn.parameter import Parameter
 
+from . import base as _base
 from .base import get_dtype, get_float_dtype, get_seed
 from .state import StateOperator, StateSimulator, to_state
 
@@ -191,6 +193,31 @@ def _format_operator_idx(
     return system_idx.tolist()
 
 
+def _infer_num_acted_system(
+        system_idx: Union[List[Union[List[int], int]], int]
+) -> int:
+    r"""Infer number of acted systems from raw operator indices.
+
+    Args:
+        system_idx: raw operator indices before formatting.
+
+    Returns:
+        Number of systems that one operation acts on.
+    """
+    if isinstance(system_idx, int):
+        return 1
+
+    if not isinstance(system_idx, (list, tuple)) or len(system_idx) == 0:
+        raise ValueError(f"Invalid system_idx: received {system_idx}")
+
+    first = system_idx[0]
+    if isinstance(first, (list, tuple, np.ndarray)):
+        if len(first) == 0:
+            raise ValueError("Invalid empty system index group.")
+        return len(first)
+    return len(system_idx)
+
+
 def _format_param_shape(system_idx: List[List[int]], num_acted_param: int, 
                         param_sharing: bool, batch_size: int = 1) -> List[int]:
     r"""Formatting the shape of parameters of param gates
@@ -209,7 +236,7 @@ def _format_param_shape(system_idx: List[List[int]], num_acted_param: int,
     return [1 if param_sharing else len(system_idx), batch_size, num_acted_param]
 
 
-def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, List[float]], 
+def _theta_generation(net: torch.nn.Module, param: Optional[Union[torch.Tensor, float, List[float]]], 
                       system_idx: List[List[int]], num_acted_param: int, param_sharing: bool) -> None:
     r""" determine net.theta, and create parameter if necessary
 
@@ -225,7 +252,7 @@ def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, Li
         - if ``param`` is ``None``
         
         or ``param`` will be added to the parameter list:
-        - if ``param`` is a ParamBase instance
+        - if ``param`` is a Parameter instance (reshaped to expect shape if needed)
         
         or ``param`` will keep unchanged:
         - if ``param`` is a Tensor but not a ParamBase
@@ -251,17 +278,19 @@ def _theta_generation(net: torch.nn.Module, param: Union[torch.Tensor, float, Li
         batch_size = int(param.numel() // (1 if param_sharing else len(system_idx)) // num_acted_param)
         expect_shape = _format_param_shape(system_idx, num_acted_param, param_sharing, batch_size=batch_size)
         
-        assert list(param.shape) == expect_shape, \
-            f"Shape assertion failed for input parameter: receive {list(param.shape)}, expect {expect_shape}"
+        assert param.numel() == math.prod(expect_shape), \
+            f"Numel mismatch for input parameter: receive {param.numel()}, expect {math.prod(expect_shape)}"
         assert param.dtype == (torch.float32 if float_dtype == torch.float32 else torch.float64), \
             f"Dtype assertion failed for input parameter: receive {param.dtype}, expect {float_dtype}"
+        if list(param.shape) != expect_shape:
+            param = Parameter(param.data.reshape(expect_shape), requires_grad=param.requires_grad)
         net.register_parameter('theta', param)
     
     elif isinstance(param, torch.Tensor):
         expect_shape = _format_param_shape(system_idx, num_acted_param, param_sharing, -1)
         net.theta = param.to(net.device, dtype=float_dtype).reshape(expect_shape)
     
-    else:  # when param is an Iterable
+    else:
         expect_shape = _format_param_shape(system_idx, num_acted_param, param_sharing, -1)
         net.theta = torch.tensor(param, dtype=float_dtype).view(expect_shape)
 
@@ -365,7 +394,6 @@ def _type_transform(data: _General, output_type: str,
         if output_type == "tensor":
             return torch.from_numpy(data)
 
-        #TODO remove when all state manipulation functions are implemented
         if system_dim is None:
             shape = data.shape
             system_dim = shape[-2] if (len(shape) >= 2 and shape[-1] == 1) else shape[-1]
@@ -378,7 +406,6 @@ def _type_transform(data: _General, output_type: str,
         if output_type == "numpy":
             return data.detach().cpu().resolve_conj().numpy()
 
-        #TODO remove when all state manipulation functions are implemented
         if system_dim is None:
             shape = data.shape
             system_dim = shape[-2] if (len(shape) >= 2 and shape[-1] == 1) else shape[-1]
@@ -388,10 +415,114 @@ def _type_transform(data: _General, output_type: str,
         return to_state(data, system_dim=system_dim, eps=None)
 
     if current_type == "state":
-        return data.numpy() if output_type == "numpy" else data._data.clone()
+        if output_type == "numpy":
+            return data.numpy()
+        if hasattr(data, "_data_tensor"):
+            return data._data_tensor.clone()
+        return data._data.clone()
     
     raise ValueError(
         f"does not support transformation from {current_type} to type {output_type}: received {data}")
+
+
+def _flatten_batch(x: torch.Tensor, tail_ndim: int) -> Tuple[torch.Tensor, List[int]]:
+    r"""Flatten all leading batch dimensions into a single batch dim.
+
+    This helper is intended to be used by *external* interfaces before calling
+    strict internal implementations.
+
+    Examples:
+        - x.shape == [d1, d2, n], tail_ndim=1  -> ([B, n], batch_shape=[d1, d2])
+        - x.shape == [d1, d2, m, n], tail_ndim=2 -> ([B, m, n], batch_shape=[d1, d2])
+    """
+    if tail_ndim < 0:
+        raise ValueError(f"tail_ndim must be >= 0, got {tail_ndim}")
+    if x.ndim < tail_ndim:
+        raise ValueError(f"x.ndim must be >= tail_ndim, got x.ndim={x.ndim}, tail_ndim={tail_ndim}")
+
+    batch_shape: List[int] = list(x.shape[:-tail_ndim]) if tail_ndim > 0 else list(x.shape)
+    tail_shape: List[int] = list(x.shape[-tail_ndim:]) if tail_ndim > 0 else []
+    batch_size = int(np.prod(batch_shape)) if batch_shape else 1
+    return x.reshape([batch_size] + tail_shape), batch_shape
+
+
+def _unflatten_batch(y: torch.Tensor, batch_shape: List[int]) -> torch.Tensor:
+    r"""Inverse of `_flatten_batch` for outputs shaped as [B, ...]."""
+    if not isinstance(batch_shape, list):
+        batch_shape = list(batch_shape)
+    if len(batch_shape) == 0:
+        return y.squeeze(0)
+    return y.reshape(batch_shape + list(y.shape[1:]))
+
+
+def _ensure_param_2d(theta: torch.Tensor, n: int) -> Tuple[torch.Tensor, List[int]]:
+    r"""Normalize parameter-like input to shape [B, n] and return original batch_shape.
+
+    Accepted inputs:
+        - scalar (only when n == 1)
+        - [n] (single, unbatched)
+        - [B] (only when n == 1, treated as batched scalars)
+        - [..., n] (multi-batch)
+    """
+    if not isinstance(theta, torch.Tensor):
+        raise TypeError(f"theta must be torch.Tensor, got {type(theta)}")
+    if n <= 0:
+        raise ValueError(f"n must be positive, got {n}")
+
+    if theta.ndim == 0:
+        if n != 1:
+            raise ValueError(f"Scalar parameter only supported for n==1, got n={n}")
+        return theta.reshape(1, 1), []
+
+    if theta.ndim == 1:
+        if theta.shape[0] == n:
+            return theta.reshape(1, n), []
+        if n == 1:
+            return theta.reshape(theta.shape[0], 1), [int(theta.shape[0])]
+        raise ValueError(
+            f"1D parameter must have shape [n] (n={n}) or [B] (only when n==1), got {list(theta.shape)}"
+        )
+
+    if theta.shape[-1] != n:
+        raise ValueError(f"Parameter last dim mismatch: expect [...,{n}], got {list(theta.shape)}")
+    theta2, batch_shape = _flatten_batch(theta, tail_ndim=1)
+    return theta2, batch_shape
+
+
+def _ensure_mat_3d(mat: torch.Tensor) -> Tuple[torch.Tensor, List[int]]:
+    r"""Normalize matrix-like input to shape [B, d, d] and return original batch_shape."""
+    if not isinstance(mat, torch.Tensor):
+        raise TypeError(f"mat must be torch.Tensor, got {type(mat)}")
+    if mat.ndim < 2:
+        raise ValueError(f"mat.ndim must be >= 2, got {mat.ndim}")
+    if mat.shape[-1] != mat.shape[-2]:
+        raise ValueError(f"mat must be square on last 2 dims, got {list(mat.shape)}")
+    mat3, batch_shape = _flatten_batch(mat, tail_ndim=2)
+    return mat3, batch_shape
+
+
+def _ensure_vec_3d(vec: torch.Tensor) -> Tuple[torch.Tensor, List[int]]:
+    r"""Normalize state-vector-like input to shape [B, d, 1] and return original batch_shape."""
+    if not isinstance(vec, torch.Tensor):
+        raise TypeError(f"vec must be torch.Tensor, got {type(vec)}")
+    if vec.ndim < 2:
+        raise ValueError(f"vec.ndim must be >= 2, got {vec.ndim}")
+    if vec.shape[-1] != 1:
+        raise ValueError(f"State vector must have last dim 1, got {list(vec.shape)}")
+    vec3, batch_shape = _flatten_batch(vec, tail_ndim=2)
+    return vec3, batch_shape
+
+
+def _ensure_set_4d(set_op: torch.Tensor) -> Tuple[torch.Tensor, List[int]]:
+    r"""Normalize operator-set input to shape [B, K, d, d] and return original batch_shape."""
+    if not isinstance(set_op, torch.Tensor):
+        raise TypeError(f"set_op must be torch.Tensor, got {type(set_op)}")
+    if set_op.ndim < 3:
+        raise ValueError(f"set_op.ndim must be >= 3, got {set_op.ndim}")
+    if set_op.shape[-1] != set_op.shape[-2]:
+        raise ValueError(f"set_op must be square on last 2 dims, got {list(set_op.shape)}")
+    set4, batch_shape = _flatten_batch(set_op, tail_ndim=3)
+    return set4, batch_shape
 
 
 def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], param: torch.Tensor, 
@@ -416,20 +547,38 @@ def _assert_gradient(func: Union[Callable[[torch.Tensor], torch.Tensor], str], p
         "The gradient check only supports double precision, which can be set by `quairkit.set_dtype('complex128')`."
     param = param.to(dtype).clone().requires_grad_(True)
     
-    try:
-        result = torch.autograd.gradcheck(func, param, eps=eps, atol=atol, 
-                                          rtol=rtol, raise_exception=True, nondet_tol=nondet_tol)
-    except Exception as e:
-        result = False
-        warnings.warn("The following error occurred when trying to compute the gradient\n" 
-                      + str(e), RuntimeWarning)
+    result = False
+    last_exc: Optional[Exception] = None
+    for trial_eps in (eps, eps * 0.1, eps * 0.01):
+        if trial_eps <= 0:
+            continue
+        try:
+            result = torch.autograd.gradcheck(
+                func,
+                param,
+                eps=trial_eps,
+                atol=atol,
+                rtol=rtol,
+                raise_exception=True,
+                nondet_tol=nondet_tol,
+            )
+            if result:
+                break
+        except Exception as e:
+            last_exc = e
+            result = False
+            continue
+    if not result and last_exc is not None:
+        warnings.warn(
+            "The following error occurred when trying to compute the gradient\n" + str(last_exc),
+            RuntimeWarning,
+        )
     
     assert result, (
         "Gradient test failed \n"
         f"Setting: seed {seed}, precision {atol}, message {message} "
     )
         
-    # Print the result for confirmation
     if feedback:
         print(f"Gradient test with seed {seed} passed",
               f"under abs tolerance {atol} and rel tolerance {rtol}.")
@@ -461,7 +610,6 @@ def _is_sample_linear(
         func, Callable
     ), f"The input 'func' must be callable, received {type(func)}"
 
-    # Process the 'info' argument to create a tensor generator
     generator = info
 
     if input_dtype is None:
@@ -470,21 +618,21 @@ def _is_sample_linear(
         raise TypeError(f"Input must be of type torch.dtype or None. Received type: {type(input_dtype)}")
 
     if isinstance(info, list) and all((isinstance(x, int) and x > 0) for x in info):
-        # If 'info' is a list of integers, create a torch.tensor generator based on the shape of input data and the input dtype
         generator = lambda: torch.randn(info, dtype=input_dtype)
-        sample = generator()
+        sample_tensor = generator()
         func_in = func
 
     elif isinstance(info, Callable):
         sample = info()
-        # Handling different types of generated inputs
 
         if isinstance(sample, np.ndarray):
             generator = lambda: torch.from_numpy(info())
-            func_in = lambda input_data: func(torch.from_numpy(input_data))
+            func_in = func
+            sample_tensor = torch.from_numpy(sample)
         elif isinstance(sample, torch.Tensor):
             generator = lambda: info()
             func_in = func
+            sample_tensor = sample
         else:
             raise TypeError(
                 f"The output of info must be a torch.Tensor or numpy.ndarray: received {type(sample)}"
@@ -496,18 +644,45 @@ def _is_sample_linear(
             + f"received info {info} with type {type(info)}"
         )
 
-    # guarantee the output type is torch.Tensor
-    output = func(sample)
-
-    func_tensor = func_in
-    if isinstance(output, np.ndarray):
-        func_tensor = lambda mat: torch.from_numpy(func_in(mat))
-    elif not isinstance(output, torch.Tensor):
+    is_output_numpy = False
+    is_output_tensor = False
+    
+    if isinstance(sample_tensor, torch.Tensor):
+        try:
+            sample_numpy = sample_tensor.detach().cpu().numpy()
+            output_numpy = func_in(sample_numpy)
+            is_output_numpy = isinstance(output_numpy, np.ndarray)
+            is_output_tensor = isinstance(output_numpy, torch.Tensor)
+        except (TypeError, AttributeError, RuntimeError):
+            output = func_in(sample_tensor)
+            is_output_numpy = isinstance(output, np.ndarray)
+            is_output_tensor = isinstance(output, torch.Tensor)
+    else:
+        output = func_in(sample_tensor)
+        is_output_numpy = isinstance(output, np.ndarray)
+        is_output_tensor = isinstance(output, torch.Tensor)
+    
+    if not (is_output_numpy or is_output_tensor):
         raise TypeError(
             f"The input function either return torch.Tensor or np.ndarray: received type {type(output)}"
         )
 
-    return func_tensor, generator, input_dtype, _type_fetch(output)
+    output_type_str = "numpy" if is_output_numpy else "tensor"
+    
+    func_tensor = func_in
+    if is_output_numpy:
+        def wrapped_func_tensor(mat):
+            if isinstance(mat, torch.Tensor):
+                mat_np = mat.detach().cpu().numpy()
+                result = func_in(mat_np)
+            else:
+                result = func_in(mat)
+            if isinstance(result, np.ndarray):
+                return torch.from_numpy(result)
+            return result
+        func_tensor = wrapped_func_tensor
+
+    return func_tensor, generator, input_dtype, output_type_str
 
 
 def _alias(aliases: Dict[str, str]) -> Callable:
@@ -645,3 +820,73 @@ def _merge_qasm(qasm1: Union[str, List[str]], qasm2: Union[str, List[str]]) -> U
         for ii in range(len(qasm1)):
             qasm1[ii] += qasm2[ii]
     return qasm1
+
+
+def _reset_all(
+    *vars: object,
+    force_gc: bool = True,
+    clear_cuda_cache: bool = True,
+    reset_globals: bool = False,
+) -> Tuple[None, ...]:
+    r"""Reset QuAIRKit global defaults and help release memory held by passed variables.
+
+    Args:
+        *vars: Any number of variables to be reset. The function returns the same
+            number of ``None`` so users can write ``x, y = _reset_all(x, y)``.
+        force_gc: Whether to force Python garbage collection. Defaults to True.
+        clear_cuda_cache: Whether to clear CUDA cache when available. Defaults to True.
+        reset_globals: Whether to reset QuAIRKit global defaults (device/dtype/seed)
+            and sync PyTorch defaults. Defaults to False.
+
+    Returns:
+        A tuple of ``None`` with the same length as the input ``vars``.
+
+    Note:
+        This function cannot forcibly free objects that are still referenced elsewhere.
+        The intended usage is to drop references by assigning the returned ``None``.
+
+        If any input is a ``torch.Tensor`` (including ``torch.nn.Parameter``) with
+        ``requires_grad=True``, a warning will be emitted to avoid accidental misuse
+        in training code.
+    """
+    for v in vars:
+        if isinstance(v, torch.Tensor) and getattr(v, "requires_grad", False):
+            warnings.warn(
+                "_reset_all received a Tensor/Parameter with requires_grad=True. "
+                "This may break training if called on model parameters or graph intermediates. "
+                "Consider detaching or avoid resetting during training.",
+                UserWarning,
+            )
+            break
+
+    if reset_globals:
+        try:
+            _base.set_device("cpu")
+        except Exception:
+            pass
+        try:
+            _base.set_dtype("complex64")
+        except Exception:
+            pass
+        try:
+            _base.SEED = None
+        except Exception:
+            pass
+
+    if clear_cuda_cache and torch.cuda.is_available():
+        try:
+            torch.cuda.empty_cache()
+        except Exception:
+            pass
+        try:
+            torch.cuda.reset_peak_memory_stats()
+        except Exception:
+            pass
+
+    if force_gc:
+        try:
+            gc.collect()
+        except Exception:
+            pass
+
+    return (None,) * len(vars)

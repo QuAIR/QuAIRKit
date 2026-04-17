@@ -23,8 +23,13 @@ import torch
 from torch.linalg import matrix_power
 
 from .. import database
-from ..core import StateSimulator, get_dtype, to_state, utils
+from ..core import (StateSimulator, get_backend, get_dtype, tensor_state,
+                    to_state, utils)
+from ..core.base import PRODUCT_STATE_THRESHOLD
 from ..core.intrinsic import _alias
+from ..core.state.backend import DefaultSimulator
+from ..core.state.backend.default import ProductDefaultSimulator
+from ..core.utils.linalg import _cartesian_expand_batch
 
 __all__ = [
     "pauli_basis",
@@ -161,19 +166,40 @@ def pauli_str_basis(pauli_str: Union[str, List[str]]) -> StateSimulator:
     i_basis = z_basis
     locals_ = locals()
     
-    def __get_single_str(string: str) -> torch.Tensor:
-        list_basis = [locals_[f'{p}_basis'] for p in string.lower()]
-        basis = utils.linalg._nkron(*list_basis) if len(list_basis) > 1 else list_basis[0]
-        return basis.unsqueeze(-1)
+    def __get_single_str(string: str):
+        return [locals_[f'{p}_basis'] for p in string.lower()]
+    
+    def __basis_state_for_string(string: str) -> StateSimulator:
+        basis_list = __get_single_str(string)
+        sys_dim = [basis.shape[-2] for basis in basis_list]
+        single_bases = [basis.unsqueeze(-1).to(get_dtype()) for basis in basis_list]
+        expanded = _cartesian_expand_batch(*single_bases)
+        states = [to_state(basis, dim) for basis, dim in zip(expanded, sys_dim)]
+        return tensor_state(states[0], *states[1:]) if len(states) > 1 else states[0]
     
     if isinstance(pauli_str, str):
-        basis = __get_single_str(pauli_str)
+        basis_list = __get_single_str(pauli_str)
+        backend = get_backend()
+        if issubclass(backend, DefaultSimulator) and len(basis_list) >= PRODUCT_STATE_THRESHOLD:
+            return __basis_state_for_string(pauli_str)
+        basis = utils.linalg._nkron(*basis_list) if len(basis_list) > 1 else basis_list[0]
+        return to_state(basis.unsqueeze(-1).to(get_dtype()))
     else:
         pauli_len = len(pauli_str[0])
         assert all(len(s) == pauli_len for s in pauli_str), \
             "All Pauli strings must have the same length."
-        basis = torch.stack([__get_single_str(string) for string in pauli_str])
-    return to_state(basis.to(dtype=get_dtype()))
+        backend = get_backend()
+        if issubclass(backend, DefaultSimulator) and pauli_len >= PRODUCT_STATE_THRESHOLD:
+            states = [__basis_state_for_string(string) for string in pauli_str]
+            kets = torch.stack([state.ket for state in states])
+            return to_state(kets, list(states[0].system_dim))
+        stacked = []
+        for string in pauli_str:
+            basis_list = __get_single_str(string)
+            basis = utils.linalg._nkron(*basis_list) if len(basis_list) > 1 else basis_list[0]
+            stacked.append(basis)
+        basis_tensor = torch.stack(stacked)
+        return to_state(basis_tensor.unsqueeze(-1).to(get_dtype()))
 
 
 def pauli_str_povm(pauli_str: Union[str, List[str]]) -> torch.Tensor:
@@ -211,11 +237,15 @@ def pauli_str_povm(pauli_str: Union[str, List[str]]) -> torch.Tensor:
     return pauli_str_basis(pauli_str).density_matrix
 
 
-def qft_basis(num_qubits: int) -> StateSimulator:
+@_alias({"num_systems": "num_qubits"})
+def qft_basis(num_systems: Optional[int] = None, system_dim: Union[List[int], int] = 2) -> StateSimulator:
     r"""Compute the eigenvectors (eigenbasis) of the Quantum Fourier Transform (QFT) matrix.
 
     Args:
-        num_qubits: Number of qubits :math:`n` such that :math:`N = 2^n`.
+        num_systems: Number of systems :math:`n`. If None, inferred from ``system_dim``.
+            Alias of ``num_qubits``.
+        system_dim: Dimension of systems. Can be a list of system dimensions
+            or an int representing the dimension of all systems. Defaults to qubit case.
 
     Returns:
         A tensor where the first index gives the eigenvector of the QFT matrix.
@@ -223,8 +253,7 @@ def qft_basis(num_qubits: int) -> StateSimulator:
     Examples:
         .. code-block:: python
 
-            num_qubits = 2
-            qft_state = qft_basis(num_qubits)
+            qft_state = qft_basis(2)
             print(f'The eigenvectors of the QFT matrix is:\n{qft_state}')
 
         ::
@@ -242,9 +271,18 @@ def qft_basis(num_qubits: int) -> StateSimulator:
             [-0.38-0.j  0.92+0.j]
             ---------------------------------------------------
     """
-    #TODO numerically unstable, needs a more precise implementation instead of using eig decomposition
-    _, eigvec = torch.linalg.eig(database.matrix.qft_matrix(num_qubits))
-    return to_state(eigvec.T.unsqueeze(-1).to(get_dtype()))
+    if num_systems is None:
+        num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
+    if isinstance(system_dim, int):
+        system_dim = [system_dim] * num_systems
+    else:
+        system_dim = list(system_dim)
+        assert len(system_dim) == num_systems, (
+            f"Dimension of each system should match num_systems: received {system_dim} and {num_systems}."
+        )
+
+    _, eigvec = torch.linalg.eig(database.matrix.qft_matrix(num_systems, system_dim))
+    return to_state(eigvec.T.unsqueeze(-1).to(get_dtype()), system_dim=system_dim)
 
 
 @_alias({"num_systems": "num_qubits"})
@@ -285,6 +323,16 @@ def std_basis(num_systems: Optional[int] = None, system_dim: Union[List[int], in
     if num_systems is None:
         num_systems = 1 if isinstance(system_dim, int) else len(system_dim)
   
+    backend = get_backend()
+    if issubclass(backend, DefaultSimulator) and num_systems >= PRODUCT_STATE_THRESHOLD:
+        sys_dim = [system_dim] * num_systems if isinstance(system_dim, int) else list(system_dim)
+        single_bases = [
+            torch.eye(d, dtype=get_dtype()).unsqueeze(-1) for d in sys_dim
+        ]
+        expanded = _cartesian_expand_batch(*single_bases)
+        states = [to_state(basis, d) for basis, d in zip(expanded, sys_dim)]
+        return tensor_state(states[0], *states[1:]) if len(states) > 1 else states[0]
+
     dim = system_dim ** num_systems if isinstance(system_dim, int) else math.prod(system_dim)
     return to_state(torch.eye(dim).unsqueeze(-1).to(get_dtype()), system_dim)
 
@@ -322,10 +370,10 @@ def bell_basis() -> StateSimulator:
             ---------------------------------------------------
     """
     mat = torch.tensor([
-        [ 1,  0,  0,  1],   # |Φ+⟩ = (|00⟩ + |11⟩) / √2
-        [ 1,  0,  0, -1],   # |Φ-⟩ = (|00⟩ - |11⟩) / √2
-        [ 0,  1,  1,  0],   # |Ψ+⟩ = (|01⟩ + |10⟩) / √2
-        [ 0,  1, -1,  0]    # |Ψ-⟩ = (|01⟩ - |10⟩) / √2
+        [ 1,  0,  0,  1],
+        [ 1,  0,  0, -1],
+        [ 0,  1,  1,  0],
+        [ 0,  1, -1,  0]
     ], dtype=torch.complex128) / math.sqrt(2)
     return to_state(mat.unsqueeze(-1).to(get_dtype()))
 
@@ -441,7 +489,6 @@ def __gell_mann(index1: int, index2: int, dim: int) -> torch.Tensor:
             
             mat = N * torch.diag(diag_element).to(torch.complex128)
     else:
-        # Off-diagonal elements
         E = torch.zeros(dim, dim)
         E[index1, index2] = 1
         mat = E + E.T if index1 < index2 else 1j * (E - E.T)

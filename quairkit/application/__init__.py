@@ -17,13 +17,6 @@ r"""
 The application library of QuAIRKit.
 """
 
-# -------------------------- Conventions --------------------------
-#
-# In principle, submodules inside `applications` module shall not  
-#     - use relative paths to import quairkit modules ;
-#     - call any functions inside `core` module ;
-#
-# -----------------------------------------------------------------
 
 from .comb import PQCombNet
 from .locc import OneWayLOCCNet

@@ -18,210 +18,190 @@ Representations of channels
 """
 
 import torch
+import importlib
+
+
+def _require_cpp_submodule(submodule: str):
+    """Return a required C++ extension submodule.
+
+    This module no longer supports a Python fallback implementation for kernels
+    that have C++ equivalents. If the C++ extension is not available, raise an
+    ImportError with actionable guidance.
+    """
+    try:
+        mod = importlib.import_module("quairkit._C")
+    except Exception as e:
+        raise ImportError(
+            "QuAIRKit requires the compiled C++ extension (quairkit._C). "
+            "Please build it first (e.g. `python setup.py build_ext --inplace`)."
+        ) from e
+    cpp_mod = getattr(mod, submodule, None)
+    if cpp_mod is None:
+        raise ImportError(
+            f"quairkit._C is available but missing submodule '{submodule}'. "
+            "Please rebuild the C++ extension (e.g. `python setup.py build_ext --inplace`)."
+        )
+    return cpp_mod
+
+
+_CPP_REPR = _require_cpp_submodule("representation")
 
 
 def _bit_flip_kraus(prob:  torch.Tensor) -> torch.Tensor:
-    prob = prob.view([1])
-    
-    _0 = torch.zeros_like(prob)
-    kraus_oper = [
-        # E0
-        torch.sqrt(1 - prob), _0,
-        _0, torch.sqrt(1 - prob),
-        # E1
-        _0, torch.sqrt(prob),
-        torch.sqrt(prob), _0
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([2, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if prob.ndim == 1:
+        prob = prob.reshape([-1, 1])
+    if prob.ndim != 2 or prob.shape[1] != 1:
+        raise ValueError(f"prob must have shape [B, 1], got {list(prob.shape)}")
+    return _CPP_REPR.bit_flip_kraus(prob)
 
 
 def _phase_flip_kraus(prob:  torch.Tensor) -> torch.Tensor:
-    prob = prob.view([1])
-    _0 = torch.zeros_like(prob)
-    kraus_oper = [
-        # E0
-        torch.sqrt(1 - prob), _0,
-        _0, torch.sqrt(1 - prob),
-        # E1
-        torch.sqrt(prob), _0,
-        _0, -torch.sqrt(prob)
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([2, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if prob.ndim == 1:
+        prob = prob.reshape([-1, 1])
+    if prob.ndim != 2 or prob.shape[1] != 1:
+        raise ValueError(f"prob must have shape [B, 1], got {list(prob.shape)}")
+    return _CPP_REPR.phase_flip_kraus(prob)
 
 
 def _bit_phase_flip_kraus(prob:  torch.Tensor) -> torch.Tensor:
-    prob = prob.view([1])
-    _0 = torch.zeros_like(prob)
-    kraus_oper = [
-        # E0
-        torch.sqrt(1 - prob), _0,
-        _0, torch.sqrt(1 - prob),
-        # E1
-        _0, -1j * torch.sqrt(prob),
-        1j * torch.sqrt(prob), _0,
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([2, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if prob.ndim == 1:
+        prob = prob.reshape([-1, 1])
+    if prob.ndim != 2 or prob.shape[1] != 1:
+        raise ValueError(f"prob must have shape [B, 1], got {list(prob.shape)}")
+    return _CPP_REPR.bit_phase_flip_kraus(prob)
 
 
 def _amplitude_damping_kraus(gamma:  torch.Tensor) -> torch.Tensor:
-    gamma = gamma.view([1])
-    _0, _1 = torch.zeros_like(gamma), torch.ones_like(gamma)
-    kraus_oper = [
-        # E0
-        _1, _0,
-        _0, torch.sqrt(1 - gamma),
-        # E1
-        _0, torch.sqrt(gamma),
-        _0, _0,
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([2, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(gamma, torch.Tensor):
+        raise TypeError(f"gamma must be torch.Tensor, got {type(gamma)}")
+    if gamma.ndim == 1:
+        gamma = gamma.reshape([-1, 1])
+    if gamma.ndim != 2 or gamma.shape[1] != 1:
+        raise ValueError(f"gamma must have shape [B, 1], got {list(gamma.shape)}")
+    return _CPP_REPR.amplitude_damping_kraus(gamma)
 
 
 def _generalized_amplitude_damping_kraus(
     gamma:  torch.Tensor, prob:  torch.Tensor) -> torch.Tensor:
-    gamma, prob = gamma.view([1]), prob.view([1])
-    _0 = torch.zeros_like(prob)
-    kraus_oper = [
-        # E0
-        torch.sqrt(prob), _0,
-        _0, torch.sqrt(prob) * torch.sqrt(1 - gamma),
-        # E1
-        _0, torch.sqrt(prob) * torch.sqrt(gamma),
-        _0, _0,
-        # E2
-        torch.sqrt(1 - prob) * torch.sqrt(1 - gamma), _0,
-        _0, torch.sqrt(1 - prob),
-        # E3
-        _0, _0,
-        torch.sqrt(1 - prob) * torch.sqrt(gamma), _0,
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([4, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(gamma, torch.Tensor):
+        raise TypeError(f"gamma must be torch.Tensor, got {type(gamma)}")
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if gamma.ndim == 1:
+        gamma = gamma.reshape([-1, 1])
+    if prob.ndim == 1:
+        prob = prob.reshape([-1, 1])
+    if gamma.ndim != 2 or gamma.shape[1] != 1:
+        raise ValueError(f"gamma must have shape [B, 1], got {list(gamma.shape)}")
+    if prob.ndim != 2 or prob.shape[1] != 1:
+        raise ValueError(f"prob must have shape [B, 1], got {list(prob.shape)}")
+    if gamma.shape[0] != prob.shape[0]:
+        raise ValueError(f"Batch size mismatch: gamma B={gamma.shape[0]} vs prob B={prob.shape[0]}")
+    out = _CPP_REPR.generalized_amplitude_damping_kraus(gamma, prob)
+    return out.unsqueeze(0) if out.ndim == 3 else out
 
 
 def _phase_damping_kraus(gamma:  torch.Tensor) -> torch.Tensor:
-    gamma = gamma.view([1])
-    _0, _1=torch.zeros_like(gamma), torch.ones_like(gamma)
-    kraus_oper = [
-        # E0
-        _1, _0,
-        _0, torch.sqrt(1 - gamma),
-        # E1
-        _0, _0,
-        _0, torch.sqrt(gamma),
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([2, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(gamma, torch.Tensor):
+        raise TypeError(f"gamma must be torch.Tensor, got {type(gamma)}")
+    if gamma.ndim == 1:
+        gamma = gamma.reshape([1, -1])
+    if gamma.ndim != 2 or gamma.shape[1] != 1:
+        raise ValueError(f"gamma must have shape [B, 1], got {list(gamma.shape)}")
+    return _CPP_REPR.phase_damping_kraus(gamma)
 
 
 def _depolarizing_kraus(prob:  torch.Tensor) -> torch.Tensor:
-    prob = prob.view([1])
-    _0 = torch.zeros_like(prob)
-    kraus_oper = [
-        # E0
-        torch.sqrt(1 - 3 * prob / 4), _0,
-        _0, torch.sqrt(1 - 3 * prob / 4),
-        # E1
-        _0, torch.sqrt(prob / 4),
-        torch.sqrt(prob / 4), _0,
-        # E2
-        _0, -1j * torch.sqrt(prob / 4),
-        1j * torch.sqrt(prob / 4), _0,
-        # E3
-        torch.sqrt(prob / 4), _0,
-        _0, (-1 * torch.sqrt(prob / 4)),
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([4, 2, 2])
-    return kraus_oper
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if prob.ndim == 1:
+        prob = prob.reshape([1, -1])
+    if prob.ndim != 2 or prob.shape[1] != 1:
+        raise ValueError(f"prob must have shape [B, 1], got {list(prob.shape)}")
+    return _CPP_REPR.depolarizing_kraus(prob)
 
     
 def _pauli_kraus(prob: torch.Tensor) -> torch.Tensor:
-    prob_x, prob_y, prob_z = prob.view([3, 1])
-    assert (prob_sum := torch.sum(prob)) <= 1, \
-        f"The sum of input probabilities should not be greater than 1: received {prob_sum.item()}"
-    prob_i = (1 - prob_sum).view([1])
-    _0 = torch.zeros_like(prob_i)
-    
-    kraus_oper = [
-        # E0
-        torch.sqrt(prob_i), _0,
-        _0, torch.sqrt(prob_i),
-        # E1
-        _0, torch.sqrt(prob_x),
-        torch.sqrt(prob_x), _0,
-        # E2
-        _0, -1j * torch.sqrt(prob_y),
-        1j * torch.sqrt(prob_y), _0,
-        # E3
-        torch.sqrt(prob_z), _0,
-        _0, (-torch.sqrt(prob_z)),
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([4, 2, 2])
-    return kraus_oper
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if prob.ndim == 1:
+        prob = prob.reshape([1, -1])
+    if prob.ndim != 2 or prob.shape[1] != 3:
+        raise ValueError(f"prob must have shape [B, 3], got {list(prob.shape)}")
+    return _CPP_REPR.pauli_kraus(prob)
 
 
 def _reset_kraus(prob: torch.Tensor) -> torch.Tensor:
-    prob_0, prob_1 = prob.view([2, 1])
-    assert (prob_sum := torch.sum(prob)) <= 1, \
-        f"The sum of input probabilities should not be greater than 1: received {prob_sum.item()}"
-    prob_i = (1 - prob_sum).view([1])
-    _0 = torch.zeros_like(prob_i)
-    kraus_oper = [
-        # E0
-        torch.sqrt(prob_0), _0,
-        _0, _0,
-        # E1
-        _0, torch.sqrt(prob_0),
-        _0, _0,
-        # E2
-        _0, _0,
-        torch.sqrt(prob_1), _0,
-        # E3
-        _0, _0,
-        _0, torch.sqrt(prob_1),
-        # E4
-        torch.sqrt(prob_i), _0,
-        _0, torch.sqrt(prob_i),
-    ]
-    kraus_oper = torch.cat(kraus_oper).view([5, 2, 2])
-    return kraus_oper + 0j
+    if not isinstance(prob, torch.Tensor):
+        raise TypeError(f"prob must be torch.Tensor, got {type(prob)}")
+    if prob.ndim == 1:
+        prob = prob.reshape([1, -1])
+    if prob.ndim != 2 or prob.shape[1] != 2:
+        raise ValueError(f"prob must have shape [B, 2], got {list(prob.shape)}")
+    return _CPP_REPR.reset_kraus(prob)
 
 
 def _thermal_relaxation_kraus(
     const_t: torch.Tensor, exec_time: torch.Tensor) -> torch.Tensor:
-    
-    t1, t2 = const_t.view([2, 1])
-    assert t2 <= t1, \
-        f"The relaxation time T2 and T1 must satisfy T2 <= T1: received T2 {t2} and T1{t1}"
-    
-    exec_time = exec_time.view([1]) / 1000
-    prob_reset = 1 - torch.exp(-exec_time / t1)
-    prob_z = (1 - prob_reset) * (1 - torch.exp(-exec_time / t2) * torch.exp(exec_time / t1)) / 2
+    if not isinstance(const_t, torch.Tensor):
+        raise TypeError(f"const_t must be torch.Tensor, got {type(const_t)}")
+    if not isinstance(exec_time, torch.Tensor):
+        raise TypeError(f"exec_time must be torch.Tensor, got {type(exec_time)}")
+    if exec_time.ndim == 0:
+        exec_time = exec_time.reshape([1, 1])
+    if const_t.ndim == 1:
+        const_t = const_t.reshape([-1, const_t.shape[-1]])
+    if exec_time.ndim == 1:
+        exec_time = exec_time.reshape([-1, 1])
+    if const_t.ndim != 2 or const_t.shape[1] != 2:
+        raise ValueError(f"const_t must have shape [B, 2], got {list(const_t.shape)}")
+    if exec_time.ndim != 2 or exec_time.shape[1] != 1:
+        raise ValueError(f"exec_time must have shape [B, 1], got {list(exec_time.shape)}")
+    if const_t.shape[0] != exec_time.shape[0]:
+        raise ValueError(f"Batch size mismatch: const_t B={const_t.shape[0]} vs exec_time B={exec_time.shape[0]}")
+
+    t1, t2 = const_t[:, 0:1], const_t[:, 1:2]
+    assert torch.all(t2 <= t1 + 1e-6), (
+        f"The relaxation time T2 and T1 must satisfy T2 <= T1: received max(T2-T1) {torch.max(t2 - t1).item()}"
+    )
+
+    exec_time_s = exec_time / 1000
+    prob_reset = 1 - torch.exp(-exec_time_s / t1)
+    prob_z = (1 - prob_reset) * (1 - torch.exp(-exec_time_s / t2) * torch.exp(exec_time_s / t1)) / 2
     prob_z = prob_z.clamp(min=0)
     prob_i = 1 - prob_reset - prob_z
-    _0 = torch.zeros_like(exec_time)
+    _0 = torch.zeros_like(exec_time_s)
+
     kraus_oper = [
-        # E0
         torch.sqrt(prob_i), _0,
         _0, torch.sqrt(prob_i),
-        # E1
         torch.sqrt(prob_z), _0,
         _0, -torch.sqrt(prob_z),
-        # E2
         torch.sqrt(prob_reset), _0,
         _0, _0,
-        # E3
         _0, torch.sqrt(prob_reset),
         _0, _0,
     ]
-    kraus_oper = torch.cat(kraus_oper).view([4, 2, 2])
+    B = const_t.shape[0]
+    kraus_oper = torch.cat(kraus_oper, dim=-1).view([B, 4, 2, 2])
     return kraus_oper + 0j
 
 
 def _replacement_choi(sigma: torch.Tensor) -> torch.Tensor:
-    return torch.kron(torch.eye(sigma.shape[-1]), sigma)
+    if not isinstance(sigma, torch.Tensor):
+        raise TypeError(f"sigma must be torch.Tensor, got {type(sigma)}")
+    if sigma.ndim == 2:
+        sigma = sigma.unsqueeze(0)
+    if sigma.ndim != 3 or sigma.shape[-1] != sigma.shape[-2]:
+        raise ValueError(f"sigma must have shape [B, d, d] (or [d, d]), got {list(sigma.shape)}")
+    B, d, _ = sigma.shape
+    eye = torch.eye(d, dtype=sigma.dtype, device=sigma.device)
+    choi = torch.einsum("ij,bac->biajc", eye, sigma).reshape(B, d * d, d * d)
+    return choi
 
