@@ -36,7 +36,7 @@ QuAIRKit provides the following functionalities,
 - Quantum channel simulation
 - Quantum algorithm/information tools
 
-We provide [skills](skills/quairkit-guide) for coding agents to use QuAIRKit.
+We provide [skills](skills/quairkit) for coding agents to use QuAIRKit.
 
 ## Installation
 
