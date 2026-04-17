@@ -1,6 +1,0 @@
-quairkit.ansatz.layer
-=====================
-
-.. automodule:: quairkit.ansatz.layer
-    :members:
-

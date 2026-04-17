@@ -1,6 +1,0 @@
-quairkit.core.test
-==================
-
-.. automodule:: quairkit.core.test
-    :members:
-

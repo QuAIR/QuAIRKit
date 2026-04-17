@@ -1,8 +1,0 @@
-tutorials.AIAA-5072
-===================
-
-.. toctree::
-    :maxdepth: 2
-    :glob:
-
-    tutorials/AIAA-5072/*

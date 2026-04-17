@@ -1,6 +1,0 @@
-quairkit.core.state.backend.simulator
-=====================================
-
-.. automodule:: quairkit.core.state.backend.simulator
-    :members:
-

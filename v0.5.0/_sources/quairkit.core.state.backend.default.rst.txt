@@ -1,6 +1,0 @@
-quairkit.core.state.backend.default
-===================================
-
-.. automodule:: quairkit.core.state.backend.default
-    :members:
-
