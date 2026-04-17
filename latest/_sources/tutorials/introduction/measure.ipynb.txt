@@ -137,7 +137,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "The probability distribution of outcome tensor([0.1965, 0.8035])\n"
+      "The probability distribution of outcome tensor([0.7233, 0.2767])\n"
      ]
     }
    ],
@@ -172,15 +172,15 @@
       " Batch size: [2]\n",
       "\n",
       " # 0:\n",
-      "[[ 0.23+0.j   -0.17-0.03j  0.23+0.j   -0.17-0.03j]\n",
-      " [-0.17+0.03j  0.27+0.j   -0.17+0.03j  0.27+0.j  ]\n",
-      " [ 0.23+0.j   -0.17-0.03j  0.23+0.j   -0.17-0.03j]\n",
-      " [-0.17+0.03j  0.27+0.j   -0.17+0.03j  0.27+0.j  ]]\n",
+      "[[0.16+0.j   0.06-0.18j 0.16+0.j   0.06-0.18j]\n",
+      " [0.06+0.18j 0.34+0.j   0.06+0.18j 0.34+0.j  ]\n",
+      " [0.16+0.j   0.06-0.18j 0.16+0.j   0.06-0.18j]\n",
+      " [0.06+0.18j 0.34+0.j   0.06+0.18j 0.34+0.j  ]]\n",
       " # 1:\n",
-      "[[ 0.07+0.j  0.11-0.j -0.07+0.j -0.11+0.j]\n",
-      " [ 0.11+0.j  0.43+0.j -0.11-0.j -0.43+0.j]\n",
-      " [-0.07+0.j -0.11+0.j  0.07+0.j  0.11-0.j]\n",
-      " [-0.11-0.j -0.43+0.j  0.11+0.j  0.43+0.j]]\n",
+      "[[ 0.12+0.j   -0.02+0.08j -0.12+0.j    0.02-0.08j]\n",
+      " [-0.02-0.08j  0.38+0.j    0.02+0.08j -0.38+0.j  ]\n",
+      " [-0.12+0.j    0.02-0.08j  0.12+0.j   -0.02+0.08j]\n",
+      " [ 0.02+0.08j -0.38+0.j   -0.02-0.08j  0.38+0.j  ]]\n",
       "-----------------------------------------------------\n",
       "\n"
      ]
@@ -207,7 +207,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "The probability for obtaining outcome 1 is tensor([0.8035]), with outcome state \n",
+      "The probability for obtaining outcome 1 is tensor([0.2767]), with outcome state \n",
       "-----------------------------------------------------\n",
       " Backend: default-mixed\n",
       " System dimension: [2, 2]\n",
@@ -215,10 +215,10 @@
       " Batch size: [1]\n",
       "\n",
       " # 0:\n",
-      "[[ 0.07+0.j  0.11-0.j -0.07+0.j -0.11+0.j]\n",
-      " [ 0.11+0.j  0.43+0.j -0.11-0.j -0.43+0.j]\n",
-      " [-0.07+0.j -0.11+0.j  0.07+0.j  0.11-0.j]\n",
-      " [-0.11-0.j -0.43+0.j  0.11+0.j  0.43+0.j]]\n",
+      "[[ 0.12+0.j   -0.02+0.08j -0.12+0.j    0.02-0.08j]\n",
+      " [-0.02-0.08j  0.38+0.j    0.02+0.08j -0.38+0.j  ]\n",
+      " [-0.12+0.j    0.02-0.08j  0.12+0.j   -0.02+0.08j]\n",
+      " [ 0.02+0.08j -0.38+0.j   -0.02-0.08j  0.38+0.j  ]]\n",
       "-----------------------------------------------------\n",
       "\n"
      ]
@@ -251,7 +251,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "The probability distribution of outcome tensor([0.6381, 0.3619])\n",
+      "The probability distribution of outcome tensor([0.4825, 0.5175])\n",
       "The collapsed state for each outcome is \n",
       "-----------------------------------------------------\n",
       " Backend: default-mixed\n",
@@ -303,8 +303,8 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Time for measuring with pvm: 0.0011847019s\n",
-      "Time for measuring with povm: 0.0000000000s\n"
+      "Time for measuring with pvm: 0.0000000000s\n",
+      "Time for measuring with povm: 0.0009996891s\n"
      ]
     },
     {
@@ -312,9 +312,9 @@
      "output_type": "stream",
      "text": [
       "Traceback (most recent call last):\n",
-      "  File \"C:\\Users\\Cloud\\AppData\\Local\\Temp\\ipykernel_25024\\3381646845.py\", line 11, in <module>\n",
+      "  File \"C:\\Users\\Cloud\\AppData\\Local\\Temp\\ipykernel_864\\3381646845.py\", line 11, in <module>\n",
       "    rho.measure(measure_op=pvm, is_povm=True, keep_state=True)\n",
-      "  File \"C:\\Users\\Cloud\\QuAIRKit-Dev\\build\\__editable__.quairkit-0.4.4-py3-none-any\\quairkit\\core\\state\\backend\\simulator.py\", line 758, in measure\n",
+      "  File \"C:\\Users\\Cloud\\QuAIRKit-Dev\\build\\__editable__.quairkit-0.5.0-cp310-cp310-win_amd64\\quairkit\\core\\state\\backend\\simulator.py\", line 1014, in measure\n",
       "    raise ValueError(\n",
       "ValueError: `is_povm` and `keep_state` cannot be both True, since a general POVM does not distinguish states.\n"
      ]
@@ -340,148 +340,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Batch measurement"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "QuAIRKit supports batched measurement under the broadcasting rule, which includes either one or multiple PVMs, one or multiple input states, or both. This means that users can perform different measurements at the same time. The broadcasting rule is summarized as follows:\n",
-    "\n",
-    "| PVM with size m    | State      | Probability       |\n",
-    "|:----------------:|:---------------------:|:---------------------:|\n",
-    "| [None, ...]   | [None, ...] | [m] |\n",
-    "| [None, ...] | [n, ...]       | [n, m] |\n",
-    "| [n, ...] | [None, ...]       | [n, m] |\n",
-    "| [n, ...] | [n, ...]       | [n, m] |\n",
-    "| [n, ...] | [p, ...]       | Error |\n",
-    "\n",
-    "Here the first dimension indicates the batch size of PVMs and input states.\n",
-    "\n",
-    "- The first row refers to 1 PVM set with m elements, and 1 state to be measured, so there is m outcomes to form a probability distribution.\n",
-    "- The second row means there is 1 PVM set with m elements, and n state to be measured. Therefore, same measurement is implemented for different states.\n",
-    "- The third row denotes n PVM sets with m elements, and 1 state to be measured. Different measurements will be executed for one state.\n",
-    "- The fourth row means there are n PVM sets with m elements each and n states, to perform corresponding measurements for every state.\n",
-    "\n",
-    "Notice that the number of PVM sets should be consistent with the number of states, as it is shown in the last row."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "Users can also initialize a batch Measure instance via a Pauli string, or directly input the batched PVM in *torch.Tensor*."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 9,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "The tensor shape of the measurement: torch.Size([3, 2, 2, 2])\n"
-     ]
-    }
-   ],
-   "source": [
-    "op = Measure([\"x\", \"y\", \"z\"])  # measure states by x, y, z basis, respectively\n",
-    "\n",
-    "list_pvm = pauli_str_povm([\"x\", \"y\", \"z\"])\n",
-    "\n",
-    "print(f\"The tensor shape of the measurement: {list_pvm.shape}\")\n",
-    "\n",
-    "op = Measure(list_pvm)  # equivalent to Measure(['x', 'y', 'z'])"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "As shown by the above table, users are able to apply `Measure` to a single state,"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 10,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "The measured states for the first batch is \n",
-      "-----------------------------------------------------\n",
-      " Backend: default-mixed\n",
-      " System dimension: [2]\n",
-      " System sequence: [0]\n",
-      " Batch size: [2]\n",
-      "\n",
-      " # 0:\n",
-      "[[0.5+0.j 0.5+0.j]\n",
-      " [0.5+0.j 0.5+0.j]]\n",
-      " # 1:\n",
-      "[[ 0.5+0.j -0.5+0.j]\n",
-      " [-0.5+0.j  0.5+0.j]]\n",
-      "-----------------------------------------------------\n",
-      " with prob distribution tensor([0.6381, 0.3619])\n"
-     ]
-    }
-   ],
-   "source": [
-    "prob, collapsed_state = op(rho, keep_state=True)\n",
-    "print(\n",
-    "    \"The measured states for the first batch is\",\n",
-    "    collapsed_state[0],\n",
-    "    f\"with prob distribution {prob[0]}\",\n",
-    ")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "or apply `Measure` to a batched state. Note that the batch dimension needs to be matched."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 11,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "The measured states for the first batch is \n",
-      "-----------------------------------------------------\n",
-      " Backend: default-pure\n",
-      " System dimension: [2]\n",
-      " System sequence: [0]\n",
-      " Batch size: [2]\n",
-      "\n",
-      " # 0:\n",
-      "[0.35-0.61j 0.35-0.61j]\n",
-      " # 1:\n",
-      "[-0.25+0.66j  0.25-0.66j]\n",
-      "-----------------------------------------------------\n",
-      " with prob distribution tensor([0.0507, 0.9493])\n"
-     ]
-    }
-   ],
-   "source": [
-    "batch_size = 3\n",
-    "list_rho = random_state(num_qubits=1, size=batch_size)\n",
-    "\n",
-    "prob, collapsed_state = op(list_rho, keep_state=True)\n",
-    "print(\n",
-    "    \"The measured states for the first batch is\",\n",
-    "    collapsed_state[0],\n",
-    "    f\"with prob distribution {prob[0]}\",\n",
-    ")"
+    "QuAIRKit supports batched measurement under the broadcasting rule, i.e., accept one or multiple input states."
    ]
   },
   {
@@ -510,7 +369,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [
     {
@@ -518,23 +377,26 @@
      "output_type": "stream",
      "text": [
       "3 probability distributions are\n",
-      " tensor([[0.0507, 0.9493],\n",
-      "        [0.3128, 0.6872],\n",
-      "        [0.9854, 0.0146]])\n",
+      " tensor([[0.3788, 0.6212],\n",
+      "        [0.4598, 0.5402],\n",
+      "        [0.4732, 0.5268]])\n",
       "\n",
       "The outcomes of quantum measurements:\n",
-      "{'0': tensor([  58,  340, 1009]), '1': tensor([966, 684,  15])}\n",
+      "{'0': tensor([378, 479, 498]), '1': tensor([646, 545, 526])}\n",
       "\n",
       "The outcomes of quantum measurements with the decimal system of dictionary system:\n",
-      " {'0': tensor([  63,  323, 1007]), '1': tensor([961, 701,  17])}\n",
+      " {'0': tensor([373, 509, 504]), '1': tensor([651, 515, 520])}\n",
       "\n",
       "The outcomes of quantum measurements in proportion:\n",
-      " {'0': tensor([0.0459, 0.3213, 0.9834]), '1': tensor([0.9541, 0.6787, 0.0166])}\n"
+      " {'0': tensor([0.3799, 0.4727, 0.4746]), '1': tensor([0.6201, 0.5273, 0.5254])}\n"
      ]
     }
    ],
    "source": [
     "batch_size = 3\n",
+    "rho = random_state(num_qubits=1, size=batch_size)\n",
+    "prob = rho.measure(measure_op=pvm)\n",
+    "\n",
     "print(f\"{batch_size} probability distributions are\\n\", prob)\n",
     "\n",
     "print(f\"\\nThe outcomes of quantum measurements:\\n{prob_sample(prob)}\")\n",
@@ -581,7 +443,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
@@ -590,7 +452,7 @@
      "text": [
       "\n",
       "---------VERSION---------\n",
-      "quairkit: 0.4.4\n",
+      "quairkit: 0.5.0\n",
       "torch: 2.8.0+cpu\n",
       "numpy: 2.2.6\n",
       "scipy: 1.15.3\n",

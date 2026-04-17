@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -886,9 +886,9 @@ The Pauli decomposition of the Hamiltonian for the Heisenberg model is:
 0.5 Z1, Z2
 ----------------------------------------------------------------------------------------------------
 The Pauli decomposition of the random Hamiltonian is:
- -0.5246883542849716 Y1, X2
-0.8919255321323236 X0
-0.2589889893657027 Z0, Y1, Y2
+ 0.8572333562151848 Z1
+-0.12905096380555414 Z2
+0.5844681998021177 Y1
 ----------------------------------------------------------------------------------------------------
 </pre></div></div>
 </div>
@@ -943,9 +943,9 @@ For given Hamiltonian coefficients, the coresponding Hamiltonian class is:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Expection value of the Hamiltonian: tensor(0.2054)
+Expection value of the Hamiltonian: tensor([-0.0171])
 ----------------------------------------------------------------------------------------------------
-Expection value of the Hamiltonian: tensor(0.2054)
+Expection value of the Hamiltonian: tensor([-0.0171])
 </pre></div></div>
 </div>
 <p>Moreover, for batch state, batch calculation of the expection value of a Hamiltonian is also provided.</p>
@@ -988,12 +988,12 @@ Expection value of the Hamiltonian: tensor(0.2054)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 For 1000 random 3-qubit states, a set of Expection value of a given Hamiltonian:
- tensor([ 0.0448,  0.2185,  0.0592,  0.0876, -0.3929,  0.0445,  0.0699, -0.0767,
-         0.0381, -0.0659])
+ tensor([-0.0663,  0.2418,  0.1590,  0.0517,  0.1348,  0.0434, -0.1230, -0.1681,
+         0.1613,  0.0865])
 ----------------------------------------------------------------------------------------------------
 For 1000 random 3-qubit states, a set of Expection value of a given Hamiltonian:
- tensor([ 0.0448,  0.2185,  0.0592,  0.0876, -0.3929,  0.0445,  0.0699, -0.0767,
-         0.0381, -0.0659])
+ tensor([-0.0663,  0.2418,  0.1590,  0.0517,  0.1348,  0.0434, -0.1230, -0.1681,
+         0.1613,  0.0865])
 </pre></div></div>
 </div>
 <h2 id="The-Hamiltonian-class">The Hamiltonian class<a class="headerlink" href="#The-Hamiltonian-class" title="Link to this heading">¶</a></h2>
@@ -1033,37 +1033,37 @@ For 1000 random 3-qubit states, a set of Expection value of a given Hamiltonian:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The Pauli decomposition of the random Hamiltonian is:
- -0.9747217478613857 Y0, Y2
--0.0026319749284342553 X0, Y1, X2
--0.210454885673244 X1
+ -0.7204436377413268 Y0, Z1, Y2
+0.7245103785023301 Y2
+0.19130980349203175 Z0, Y1
 ----------------------------------------------------------------------------------------------------
 Number of terms: 3
 ----------------------------------------------------------------------------------------------------
 The Pauli string corresponding to the Hamiltonian:
- [[-0.9747217478613857, &#39;Y0,Y2&#39;], [-0.0026319749284342553, &#39;X0,Y1,X2&#39;], [-0.210454885673244, &#39;X1&#39;]]
+ [[-0.7204436377413268, &#39;Y0,Z1,Y2&#39;], [0.7245103785023301, &#39;Y2&#39;], [0.19130980349203175, &#39;Z0,Y1&#39;]]
 ----------------------------------------------------------------------------------------------------
 The coefficients of the terms in the Hamiltonian:
- [-0.9747217478613857, -0.0026319749284342553, -0.210454885673244]
+ [-0.7204436377413268, 0.7245103785023301, 0.19130980349203175]
 ----------------------------------------------------------------------------------------------------
 The matrix form of the Hamiltonian:
- tensor([[ 0.0000+0.0000j,  0.0000+0.0000j, -0.2105+0.0000j,  0.0000+0.0000j,
-          0.0000+0.0000j,  0.9747+0.0000j,  0.0000+0.0000j,  0.0000+0.0026j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.2105+0.0000j,
-         -0.9747+0.0000j,  0.0000+0.0000j,  0.0000+0.0026j,  0.0000+0.0000j],
-        [-0.2105+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
-          0.0000+0.0000j,  0.0000-0.0026j,  0.0000+0.0000j,  0.9747+0.0000j],
-        [ 0.0000+0.0000j, -0.2105+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
-          0.0000-0.0026j,  0.0000+0.0000j, -0.9747+0.0000j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j, -0.9747+0.0000j,  0.0000+0.0000j,  0.0000+0.0026j,
-          0.0000+0.0000j,  0.0000+0.0000j, -0.2105+0.0000j,  0.0000+0.0000j],
-        [ 0.9747+0.0000j,  0.0000+0.0000j,  0.0000+0.0026j,  0.0000+0.0000j,
-          0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.2105+0.0000j],
-        [ 0.0000+0.0000j,  0.0000-0.0026j,  0.0000+0.0000j, -0.9747+0.0000j,
-         -0.2105+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [ 0.0000-0.0026j,  0.0000+0.0000j,  0.9747+0.0000j,  0.0000+0.0000j,
-          0.0000+0.0000j, -0.2105+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j]])
+ tensor([[ 0.0000+0.0000j,  0.0000-0.7245j,  0.0000-0.1913j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.7204+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.7245j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000-0.1913j,
+         -0.7204+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.1913j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000-0.7245j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j, -0.7204+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.1913j,  0.0000+0.7245j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000+0.0000j,  0.7204+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j, -0.7204+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000-0.7245j,  0.0000+0.1913j,  0.0000+0.0000j],
+        [ 0.7204+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,
+          0.0000+0.7245j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.1913j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.0000+0.0000j,  0.7204+0.0000j,
+          0.0000-0.1913j,  0.0000+0.0000j,  0.0000+0.0000j,  0.0000-0.7245j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.7204+0.0000j,  0.0000+0.0000j,
+          0.0000+0.0000j,  0.0000-0.1913j,  0.0000+0.7245j,  0.0000+0.0000j]])
 ----------------------------------------------------------------------------------------------------
-The Pauli word of each term: [&#39;YIY&#39;, &#39;XYX&#39;, &#39;IXI&#39;]
+The Pauli word of each term: [&#39;YZY&#39;, &#39;IIY&#39;, &#39;ZYI&#39;]
 ----------------------------------------------------------------------------------------------------
 Number of qubits in the Hamiltonian: 3
 ----------------------------------------------------------------------------------------------------
@@ -1144,7 +1144,7 @@ Number of qubits in the Hamiltonian: 3
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.4
+quairkit: 0.5.0
 torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
@@ -1197,7 +1197,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1214,7 +1214,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

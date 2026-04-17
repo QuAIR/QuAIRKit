@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -734,7 +734,7 @@
 <p>In the training of classical neural networks, gradient-based optimization methods encounter the problem of local minimum and saddle points. Correspondingly, the <strong>Barren plateau</strong> phenomenon could potentially block us from efficiently training quantum neural networks. This peculiar phenomenon was first discovered by McClean et al. in 2018 [1].</p>
 <p>In a few words, when we randomly initialize the parameters in a random circuit structure that meets a certain degree of complexity, the optimization landscape will become very flat, which makes it difficult for the optimization method based on gradient descent to find the global minimum. For most variational quantum algorithms (VQE, etc.), this phenomenon means that when the number of qubits increases, randomly choosing a circuit ansatz and randomly initializing the parameters may not be a good
 idea. This will make the optimization landscape corresponding to the loss function into a huge plateau, which makes the training of QNN much more difficult. The initial random value for the optimization process will likely stay inside this plateau, and the convergence time of gradient descent will be prolonged.</p>
-<figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="tutorials/research/figures/BP-fig-barren.jpg" style="width: 700px;" /></p>
+<figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="tutorials/research/figures/BP-fig-barren.jpg" width="700" /></p>
 <figcaption><p>Fig.1: Depiction of barren plateau phenomenon.</p>
 </figcaption></figure><h2 id="2.-Random-network-structure">2. Random network structure<a class="headerlink" href="#2.-Random-network-structure" title="Link to this heading">¶</a></h2>
 <p>Here we follow the original method mentioned in the paper by McClean (2018) [1] and build the following random circuit: First, we rotate all the qubits around the <span class="math notranslate nohighlight">\(y\)</span>-axis of the Bloch sphere with rotation gates <span class="math notranslate nohighlight">\(R_y(\pi/4)\)</span>.</p>
@@ -1261,7 +1261,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   

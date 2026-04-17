@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -442,16 +442,6 @@
     
     <span class="md-ellipsis">
       <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#pauil-gates (reference label)"><span>Pauil Gates</span></span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#Rotation-Gates" class="md-nav__link">
-    
-    <span class="md-ellipsis">
-      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#rotation-gates (reference label)"><span>Rotation Gates</span></span>
     </span>
   </a>
   
@@ -924,16 +914,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#Rotation-Gates" class="md-nav__link">
-    
-    <span class="md-ellipsis">
-      <span title="/tutorials/aiaa-5072/week 1 qubit.ipynb#rotation-gates (reference label)"><span>Rotation Gates</span></span>
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1075,7 +1055,7 @@ solve certain problems exponentially faster than classical computers, with appli
 <li><p><a class="reference internal" href="#Quantum-Gates"><span class="std std-ref">Quantum Gates</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#Pauil-Gates"><span class="std std-ref">Pauli Gates</span></a></p></li>
-<li><p><a class="reference internal" href="#Rotation-Gates"><span class="std std-ref">Rotation Gates</span></a></p></li>
+<li><p>Rotation Gates</p></li>
 <li><p>Two Qubits Gates</p></li>
 </ul>
 </li>
@@ -1191,11 +1171,10 @@ One state with single qubit:
 
 Random state with single qubit:
 -----------------------------------------------------
- Backend: default-mixed
+ Backend: default-pure
  System dimension: [2]
  System sequence: [0]
-[[ 0.98+0.j -0.03+0.j]
- [-0.03-0.j  0.02+0.j]]
+[0.18+0.47j 0.85+0.19j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1328,10 +1307,10 @@ to describe both pure states and mixed states(statistical ensembles).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Random density matrix: tensor([[ 0.1933+0.0000j,  0.1323-0.1586j,  0.1102-0.2323j, -0.1462-0.1607j],
-        [ 0.1323+0.1586j,  0.2206+0.0000j,  0.2660-0.0686j,  0.0317-0.2299j],
-        [ 0.1102+0.2323j,  0.2660+0.0686j,  0.3420+0.0000j,  0.1098-0.2673j],
-        [-0.1462+0.1607j,  0.0317+0.2299j,  0.1098+0.2673j,  0.2441+0.0000j]])
+Random density matrix: tensor([[ 0.4802+0.0000j,  0.1006+0.2253j, -0.0493-0.1525j,  0.1473-0.0984j],
+        [ 0.1006-0.2253j,  0.2188+0.0000j, -0.1606-0.0119j, -0.1055-0.0405j],
+        [-0.0493+0.1525j, -0.1606+0.0119j,  0.1209+0.0000j,  0.0916+0.0117j],
+        [ 0.1473+0.0984j, -0.1055+0.0405j,  0.0916-0.0117j,  0.1801+0.0000j]])
 </pre></div></div>
 </div>
 <h3 id="Quantum-Evolution">Quantum Evolution<a class="headerlink" href="#Quantum-Evolution" title="Link to this heading">¶</a></h3>
@@ -1349,31 +1328,12 @@ Random density matrix: tensor([[ 0.1933+0.0000j,  0.1323-0.1586j,  0.1102-0.2323
 <p>Quantum gates are the fundamental building blocks of quantum circuits, analogous to classical logic gates (e.g., AND, OR). They are unitary operators that act on qubits, preserving the norm of the quantum state. Mathematically, a quantum gate applied to an <span class="math notranslate nohighlight">\(n\)</span>-qubit system is represented by a <span class="math notranslate nohighlight">\(2^n \times 2^n\)</span> unitary matrix <span class="math notranslate nohighlight">\(U\)</span> (i.e., <span class="math notranslate nohighlight">\(U^{\dagger}U=I\)</span>).</p>
 <p>Common quantum gates and their matrix representations are listed below:</p>
 <h4 id="Pauil-Gates">Pauil Gates<a class="headerlink" href="#Pauil-Gates" title="Link to this heading">¶</a></h4>
-<table class="docutils data align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>gate</p></th>
-<th class="head"><p>matrix</p></th>
-<th class="head"><p>code</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>X</p></td>
-<td><p><span class="math notranslate nohighlight">\(\begin{bmatrix}0 &amp; 1\\1 &amp; 0\end{bmatrix}\)</span></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>Y</p></td>
-<td><p><span class="math notranslate nohighlight">\(\begin{bmatrix}0 &amp; -i\\i &amp; 0\end{bmatrix}\)</span></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">y</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p>Z</p></td>
-<td><p><span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0\\0 &amp; -1\end{bmatrix}\)</span></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">z</span></code></p></td>
-</tr>
-</tbody>
-</table>
-<h4 id="Rotation-Gates">Rotation Gates<a class="headerlink" href="#Rotation-Gates" title="Link to this heading">¶</a></h4>
-<p>Rotation gates implement unitary rotations around Bloch sphere axes by angle <span class="math notranslate nohighlight">\(\theta\)</span>: | gate | matrix | code | |:——:|:——–:|:—–:| | RX |<span class="math notranslate nohighlight">\(\begin{bmatrix}\cos{\frac{\theta}{2}} &amp; -i\sin{\frac{\theta}{2}} \\ -i\sin{\frac{\theta}{2}} &amp; \cos{\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">rx</span></code> | | RY |<span class="math notranslate nohighlight">\(\begin{bmatrix}\cos{\frac{\theta}{2}} &amp; -\sin{\frac{\theta}{2}} \\ \sin{\frac{\theta}{2}} &amp; \cos{\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">ry</span></code> | | RZ
-|<span class="math notranslate nohighlight">\(\begin{bmatrix}e^{-i\frac{\theta}{2}} &amp; 0 \\ 0 &amp; e^{i\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">rz</span></code> | #### Two-Qubit Gates | gate | matrix | code | |:——:|:——–:|:—–:| | CNOT |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\\0 &amp; 0 &amp; 1 &amp; 0\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">cnot</span></code> | | CZ |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 0 &amp; -1\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">cz</span></code>|</p>
+<div class="line-block">
+<div class="line">gate | matrix | code |</div>
+</div>
+<p>|:​—​​—​:|​—​|:​—​–:| | X |<span class="math notranslate nohighlight">\(\begin{bmatrix}0 &amp; 1\\1 &amp; 0\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">x</span></code> | | Y |<span class="math notranslate nohighlight">\(\begin{bmatrix}0 &amp; -i\\i &amp; 0\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">y</span></code> | | Z |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0\\0 &amp; -1\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">z</span></code> | #### Rotation Gates Rotation gates implement unitary rotations around Bloch sphere axes by angle <span class="math notranslate nohighlight">\(\theta\)</span>: | gate | matrix | code | |:​—​​—​:|​—​|:​—​–:| | RX
+|<span class="math notranslate nohighlight">\(\begin{bmatrix}\cos{\frac{\theta}{2}} &amp; -i\sin{\frac{\theta}{2}} \\ -i\sin{\frac{\theta}{2}} &amp; \cos{\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">rx</span></code> | | RY |<span class="math notranslate nohighlight">\(\begin{bmatrix}\cos{\frac{\theta}{2}} &amp; -\sin{\frac{\theta}{2}} \\ \sin{\frac{\theta}{2}} &amp; \cos{\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">ry</span></code> | | RZ |<span class="math notranslate nohighlight">\(\begin{bmatrix}e^{-i\frac{\theta}{2}} &amp; 0 \\ 0 &amp; e^{i\frac{\theta}{2}}\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">rz</span></code> | #### Two-Qubit Gates | gate | matrix | code |
+|:​—​​—​:|​—​|:​—​–:| | CNOT |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 1\\0 &amp; 0 &amp; 1 &amp; 0\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">cnot</span></code> | | CZ |<span class="math notranslate nohighlight">\(\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 0 &amp; -1\end{bmatrix}\)</span>| <code class="docutils literal notranslate"><span class="pre">cz</span></code>|</p>
 <h3 id="Quantum-Circuit">Quantum Circuit<a class="headerlink" href="#Quantum-Circuit" title="Link to this heading">¶</a></h3>
 <p>Quantum circuits provide the operational framework for quantum computation, translating the abstract principles of unitary evolution into executable sequences of quantum gates.</p>
 <p>A quantum circuit is composed of:</p>
@@ -1455,22 +1415,22 @@ The output state for input random state is:
  Backend: default-mixed
  System dimension: [2, 2, 2]
  System sequence: [1, 0, 2]
-[[ 0.13+0.j    0.08+0.1j  -0.01-0.04j  0.01-0.02j  0.01-0.06j  0.03-0.j
-  -0.01+0.01j -0.01+0.02j]
- [ 0.08-0.1j   0.15+0.j   -0.05-0.02j  0.01-0.02j -0.05-0.06j -0.03-0.02j
-  -0.  -0.01j  0.02+0.02j]
- [-0.01+0.04j -0.05+0.02j  0.09+0.j   -0.04+0.03j  0.04-0.02j -0.01-0.01j
-   0.02+0.02j  0.02-0.01j]
- [ 0.01+0.02j  0.01+0.02j -0.04-0.03j  0.08+0.j    0.01+0.03j -0.03+0.02j
-  -0.01-0.03j -0.03+0.01j]
- [ 0.01+0.06j -0.05+0.06j  0.04+0.02j  0.01-0.03j  0.16+0.j    0.02-0.07j
-   0.01+0.08j -0.03+0.08j]
- [ 0.03+0.j   -0.03+0.02j -0.01+0.01j -0.03-0.02j  0.02+0.07j  0.18+0.j
-  -0.04+0.06j -0.09-0.01j]
- [-0.01-0.01j -0.  +0.01j  0.02-0.02j -0.01+0.03j  0.01-0.08j -0.04-0.06j
-   0.1 +0.j    0.04+0.05j]
- [-0.01-0.02j  0.02-0.02j  0.02+0.01j -0.03-0.01j -0.03-0.08j -0.09+0.01j
-   0.04-0.05j  0.12+0.j  ]]
+[[ 0.34+0.j   -0.02-0.08j -0.  -0.07j -0.02+0.08j  0.01-0.07j -0.12-0.02j
+  -0.04+0.08j -0.01+0.01j]
+ [-0.02+0.08j  0.13+0.j    0.04-0.01j  0.01-0.08j  0.02+0.02j  0.06-0.05j
+   0.01-0.04j -0.  -0.03j]
+ [-0.  +0.07j  0.04+0.01j  0.03+0.j   -0.  -0.03j  0.01+0.02j  0.03-0.03j
+  -0.03-0.01j -0.01-0.03j]
+ [-0.02-0.08j  0.01+0.08j -0.  +0.03j  0.1 +0.j   -0.05-0.01j  0.05+0.08j
+   0.06-0.01j  0.06-0.j  ]
+ [ 0.01+0.07j  0.02-0.02j  0.01-0.02j -0.05+0.01j  0.08+0.j   -0.04-0.03j
+  -0.03+0.02j -0.07+0.02j]
+ [-0.12+0.02j  0.06+0.05j  0.03+0.03j  0.05-0.08j -0.04+0.03j  0.11+0.j
+   0.  -0.05j  0.03-0.05j]
+ [-0.04-0.08j  0.01+0.04j -0.03+0.01j  0.06+0.01j -0.03-0.02j  0.  +0.05j
+   0.11+0.j    0.05+0.06j]
+ [-0.01-0.01j -0.  +0.03j -0.01+0.03j  0.06+0.j   -0.07-0.02j  0.03+0.05j
+   0.05-0.06j  0.11+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1665,7 +1625,7 @@ Kraus representation of a depolarizing channel with probability 0.5:
          [ 0.0000+0.3536j,  0.0000+0.0000j]],
 
         [[ 0.3536+0.0000j,  0.0000+0.0000j],
-         [ 0.0000+0.0000j, -0.3536+0.0000j]]])
+         [ 0.0000+0.0000j, -0.3536-0.0000j]]])
 
 </pre></div></div>
 </div>
@@ -1817,7 +1777,7 @@ tensor([[0.+0.0000j, 0.-0.4183j],
         [0.+0.4183j, 0.+0.0000j]])
 K3:
 tensor([[ 0.4183+0.j,  0.0000+0.j],
-        [ 0.0000+0.j, -0.4183+0.j]])
+        [ 0.0000+0.j, -0.4183-0.j]])
 
 After depolarizing channel, the output state:
 -----------------------------------------------------
@@ -1945,15 +1905,15 @@ The collapsed state for each outcome is:
  Batch size: [2]
 
  # 0:
-[[ 0.32+0.j   -0.12+0.13j  0.32+0.j   -0.12+0.13j]
- [-0.12-0.13j  0.18+0.j   -0.12-0.13j  0.18+0.j  ]
- [ 0.32+0.j   -0.12+0.13j  0.32+0.j   -0.12+0.13j]
- [-0.12-0.13j  0.18+0.j   -0.12-0.13j  0.18+0.j  ]]
+[[ 0.27+0.j   -0.05-0.02j  0.27+0.j   -0.05-0.02j]
+ [-0.05+0.02j  0.23+0.j   -0.05+0.02j  0.23+0.j  ]
+ [ 0.27+0.j   -0.05-0.02j  0.27+0.j   -0.05-0.02j]
+ [-0.05+0.02j  0.23+0.j   -0.05+0.02j  0.23+0.j  ]]
  # 1:
-[[ 0.34+0.j    0.11+0.11j -0.34+0.j   -0.11-0.11j]
- [ 0.11-0.11j  0.16+0.j   -0.11+0.11j -0.16+0.j  ]
- [-0.34+0.j   -0.11-0.11j  0.34+0.j    0.11+0.11j]
- [-0.11+0.11j -0.16+0.j    0.11-0.11j  0.16+0.j  ]]
+[[ 0.11+0.j    0.15-0.06j -0.11+0.j   -0.15+0.06j]
+ [ 0.15+0.06j  0.39+0.j   -0.15-0.06j -0.39+0.j  ]
+ [-0.11+0.j   -0.15+0.06j  0.11+0.j    0.15-0.06j]
+ [-0.15-0.06j -0.39+0.j    0.15+0.06j  0.39+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -2062,9 +2022,9 @@ The Pauli decomposition of the Hamiltonian for the Heisenberg model is:
 0.5 Z1, Z2
 ----------------------------------------------------------------------------------------------------
 The Pauli decomposition of the random Hamiltonian is:
- 0.45403777068681817 Y0, X1
--0.270132904940946 X0
-0.9207009676070583 Y1, Z2
+ 0.22947293139767266 X1, Y2
+-0.9673899462483009 Z0, X2
+-0.3388123785179684 X2
 ----------------------------------------------------------------------------------------------------
 Custom Hamiltonian from coefficient list:
  0.1 X0, Z1
@@ -2106,34 +2066,34 @@ Custom Hamiltonian from coefficient list:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The Pauli decomposition of the random Hamiltonian is:
- 0.8501514511256654 Z0, Y1, X2
-0.9491868763526996 X2
--0.19439967249921986 X0, Z1, X2
+ -0.38047042580108137 X0, Y2
+-0.31772924942807035 Z0, Y1, Y2
+-0.04696225542792609 Z0, X1, Z2
 ----------------------------------------------------------------------------------------------------
 random state with three qubit:
 -----------------------------------------------------
  Backend: default-mixed
  System dimension: [2, 2, 2]
  System sequence: [0, 1, 2]
-[[ 0.07+0.j    0.01+0.04j  0.02+0.06j  0.01+0.01j  0.04-0.07j  0.  -0.03j
-  -0.  -0.01j -0.03-0.01j]
- [ 0.01-0.04j  0.32+0.j    0.1 -0.03j  0.02-0.04j -0.01-0.13j -0.01-0.07j
-  -0.11-0.01j -0.04+0.03j]
- [ 0.02-0.06j  0.1 +0.03j  0.1 -0.j    0.03-0.02j -0.04-0.07j -0.03-0.05j
-  -0.04-0.04j -0.01+0.02j]
- [ 0.01-0.01j  0.02+0.04j  0.03+0.02j  0.06+0.j   -0.  +0.01j -0.02-0.04j
-  -0.02-0.03j -0.06+0.02j]
- [ 0.04+0.07j -0.01+0.13j -0.04+0.07j -0.  -0.01j  0.15-0.j    0.05+0.j
-   0.01-0.03j -0.01-0.01j]
- [ 0.  +0.03j -0.01+0.07j -0.03+0.05j -0.02+0.04j  0.05-0.j    0.09-0.j
-   0.05-0.04j  0.01-0.04j]
- [-0.  +0.01j -0.11+0.01j -0.04+0.04j -0.02+0.03j  0.01+0.03j  0.05+0.04j
-   0.1 +0.j    0.01-0.01j]
- [-0.03+0.01j -0.04-0.03j -0.01-0.02j -0.06-0.02j -0.01+0.01j  0.01+0.04j
-   0.01+0.01j  0.11+0.j  ]]
+[[ 0.15+0.j   -0.05-0.04j -0.03+0.05j  0.04-0.02j -0.  +0.04j  0.02-0.01j
+   0.04+0.04j -0.01+0.05j]
+ [-0.05+0.04j  0.15+0.j   -0.01-0.04j -0.01+0.03j -0.05-0.05j -0.  -0.03j
+  -0.05-0.06j -0.04-0.06j]
+ [-0.03-0.05j -0.01+0.04j  0.1 -0.j   -0.05-0.03j  0.01-0.01j -0.04+0.02j
+   0.04-0.04j  0.07+0.06j]
+ [ 0.04+0.02j -0.01-0.03j -0.05+0.03j  0.11-0.j   -0.04+0.05j -0.02-0.04j
+  -0.02+0.05j -0.03+0.01j]
+ [-0.  -0.04j -0.05+0.05j  0.01+0.01j -0.04-0.05j  0.1 +0.j    0.04+0.05j
+   0.08-0.01j  0.03-0.02j]
+ [ 0.02+0.01j -0.  +0.03j -0.04-0.02j -0.02+0.04j  0.04-0.05j  0.09-0.j
+   0.01-0.01j  0.  -0.06j]
+ [ 0.04-0.04j -0.05+0.06j  0.04+0.04j -0.02-0.05j  0.08+0.01j  0.01+0.01j
+   0.16-0.j    0.02+0.04j]
+ [-0.01-0.05j -0.04+0.06j  0.07-0.06j -0.03-0.01j  0.03+0.02j  0.  +0.06j
+   0.02-0.04j  0.14-0.j  ]]
 -----------------------------------------------------
 
-Expection value of the Hamiltonian: 0.11617866158485413
+Expection value of the Hamiltonian: tensor([0.0693])
 </pre></div></div>
 </div>
 <p>This tutorial has introduced the core functionalities of QuAIRKit, demonstrating its capabilities for quantum state manipulation, gate operations, measurements, and expectation value estimation—essential tools for quantum algorithm development and simulation.</p>
@@ -2179,7 +2139,7 @@ Expection value of the Hamiltonian: 0.11617866158485413
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(p\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(p_i\)</span></p></td>
-<td><p>THe probability</p></td>
+<td><p>The probability</p></td>
 </tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(K_i\)</span></p></td>
 <td></td>
@@ -2246,7 +2206,7 @@ Expection value of the Hamiltonian: 0.11617866158485413
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.4
+quairkit: 0.5.0
 torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
@@ -2299,7 +2259,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -2316,7 +2276,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

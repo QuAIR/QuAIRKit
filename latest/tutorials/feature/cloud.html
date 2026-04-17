@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -679,6 +679,7 @@
 
 <span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
 <span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">StateOperator</span><span class="p">,</span> <span class="n">Hamiltonian</span>
+<span class="kn">from</span> <span class="nn">quairkit.core</span> <span class="kn">import</span> <span class="n">SimpleStateOperator</span>
 <span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
@@ -696,7 +697,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </s
 </code></pre></div>
 </div>
 <p>The cloud platform is accessed via a token. Please contact Tencent quantum cloud for more details.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[ ]:
 </code></pre></div>
 </div>
@@ -708,39 +709,51 @@ pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </s
 </code></pre></div>
 </div>
 </div>
-<p>Hardware-like backends in QuAIRKit can be set via an abstract class <code class="docutils literal notranslate"><span class="pre">StateOperator</span></code>. Such class provides a unified interface for quantum hardware and quantum circuit emulations. By implementing an abstract method <code class="docutils literal notranslate"><span class="pre">_execute</span></code> on how to run quantum circuits (via <a class="reference external" href="https://github.com/openqasm/openqasm/tree/OpenQASM2.x">OpenQASM 2.0</a>), one can initialize a backend for quantum circuit execution and gradient back-propagations.</p>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+List of available backends in quantum cloud:
+ [tencent::tianji_s2, tencent::tianji_m2, tencent::tianxuan_s2, tencent::simulator:tc, tencent::tianji_m2v16s1, tencent::tianxuan_s2v20s1, tencent::tianji_s2v6, tencent::tianxuan_s2v20s2, tencent::tianji_m2v15s3, tencent::tianji_m2v14s2, tencent::tianji_m2v14s4, tencent::tianji_s2v7]
+</pre></div></div>
+</div>
+<p>Hardware-like backends in QuAIRKit can be set via an abstract class <code class="docutils literal notranslate"><span class="pre">StateOperator</span></code>. Such class provides a unified interface for quantum hardware and quantum circuit emulations. By implementing an method <code class="docutils literal notranslate"><span class="pre">_multi_execute</span></code> on how to run quantum circuits (via <a class="reference external" href="https://github.com/openqasm/openqasm/tree/OpenQASM2.x">OpenQASM 2.0</a>) in batch, one can initialize a backend for quantum circuit execution and gradient back-propagations.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
 </code></pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TensorCircuitState</span><span class="p">(</span><span class="n">StateOperator</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">_MAX_PATCH_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="k">class</span> <span class="nc">TensorCircuitState</span><span class="p">(</span><span class="n">StateOperator</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Tensor Circuit backend for QuAIRKit linked to the Tencent quantum cloud.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;TensorCircuit&quot;</span> <span class="c1"># need to specify the backend name</span>
-    <span class="n">DEVICE</span> <span class="o">=</span> <span class="s2">&quot;simulator:tc&quot;</span> <span class="c1"># or any available backend list above</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="s2">&quot;tencent::simulator:tc&quot;</span> <span class="c1"># or any available backend list above</span>
 
     <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">TensorCircuitState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sys_dim</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qasm</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">shots</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;IMPLEMENT HERE to execute the circuit on the quantum cloud.</span>
+    <span class="k">def</span> <span class="nf">_multi_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_qasm</span><span class="p">,</span> <span class="n">list_shots</span><span class="p">):</span>
+        <span class="n">shots</span> <span class="o">=</span> <span class="n">list_shots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">list_circuit</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">list_job</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            qasm: The OpenQASM string of the circuit to be executed.</span>
-<span class="sd">            shots: The number of shots for the execution.</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">qasm</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">list_qasm</span><span class="p">):</span>
+            <span class="n">circuit</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">from_openqasm</span><span class="p">(</span><span class="n">qasm</span><span class="p">)</span>
+            <span class="n">list_circuit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            A dictionary storing the number of each measurement outcomes.</span>
-<span class="sd">            The keys are the outcome digits in binary string, and the values are the number of occurrences.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_circuit</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">_MAX_PATCH_SIZE</span> <span class="ow">or</span> <span class="n">idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_qasm</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">list_job</span> <span class="o">+=</span> <span class="n">apis</span><span class="o">.</span><span class="n">submit_task</span><span class="p">(</span>
+                    <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEVICE</span><span class="p">,</span>
+                    <span class="n">circuit</span><span class="o">=</span><span class="n">list_circuit</span><span class="p">,</span>
+                    <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">,</span>
+                <span class="p">)</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">circuit</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">Circuit</span><span class="o">.</span><span class="n">from_openqasm</span><span class="p">(</span><span class="n">qasm</span><span class="p">)</span>
-        <span class="n">job</span> <span class="o">=</span> <span class="n">apis</span><span class="o">.</span><span class="n">submit_task</span><span class="p">(</span>
-            <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEVICE</span><span class="p">,</span>
-            <span class="n">circuit</span><span class="o">=</span><span class="n">circuit</span><span class="p">,</span>
-            <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">job</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+                <span class="n">list_circuit</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">list_job</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">job</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -750,6 +763,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </s
 </code></pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="n">TensorCircuitState</span><span class="p">)</span>
+<span class="c1"># qkit.set_backend(SimpleStateOperator)  # for testing without cloud usage</span>
 </code></pre></div>
 </div>
 </div>
@@ -865,11 +879,11 @@ Ground state energy: -1.5360291004180908
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-iter: 0, loss: 0.90886796, lr: 1.00E-01, avg_time: 2864.2311s
-iter: 1, loss: 0.54134756, lr: 1.00E-01, avg_time: 478.4038s
-iter: 2, loss: 0.14775312, lr: 1.00E-01, avg_time: 489.8597s
-iter: 3, loss: -0.29219526, lr: 1.00E-01, avg_time: 479.3605s
-iter: 4, loss: -0.55003899, lr: 1.00E-01, avg_time: 475.9992s
+iter: 0, loss: 0.09912293, lr: 1.00E-01, avg_time: 181.6588s
+iter: 1, loss: -0.20921345, lr: 1.00E-01, avg_time: 172.5386s
+iter: 2, loss: -0.40042341, lr: 1.00E-01, avg_time: 175.4110s
+iter: 3, loss: -0.57756150, lr: 1.00E-01, avg_time: 174.6104s
+iter: 4, loss: -0.77725583, lr: 1.00E-01, avg_time: 177.0942s
 </pre></div></div>
 </div>
 <p>As shown below, the loss value approaches the ground state energy of the Hamiltonian.</p>
@@ -927,7 +941,7 @@ iter: 4, loss: -0.55003899, lr: 1.00E-01, avg_time: 475.9992s
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.4
+quairkit: 0.5.0
 torch: 2.9.1+cpu
 numpy: 1.26.4
 scipy: 1.15.3
@@ -980,7 +994,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -997,7 +1011,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

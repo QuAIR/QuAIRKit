@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -913,7 +913,7 @@ A = \sum_{x \in \{0,1\}^n} A(x) \, |x\rangle \langle x|, \quad A(x) \in [-1,1].
 <p>However, the main difficulty is that the inverse map <span class="math notranslate nohighlight">\(\mathcal{N} \equiv \mathcal{O}^{-1}\)</span> in (2) may not be physically implementable, i.e., it may not be a CPTP map. According to Property 1 in <a class="reference external" href="https://doi.org/10.48550/arXiv.2012.10959">[4]</a>, <span class="math notranslate nohighlight">\(\mathcal{O}\)</span> is both Hermitian-preserving and trace-preserving (<strong>HPTP</strong>), it may still not be directly realizable in practice.</p>
 <p>Therefore, the problem we face is: How can we physically approximate the action of an HPTP map?</p>
 <p>Such an approximation inevitably incurs additional computational cost. We employ PEC to address this issue.</p>
-<figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="../../_images/pec_flowchart.jpg" style="width: 1000px;" /></p>
+<figure style="text-align: center;"><p><img alt="alt text" class="no-scaled-link" src="../../_images/pec_flowchart.jpg" width="1000" /></p>
 <figcaption><p>Fig.1: PEC procedure.</p>
 </figcaption></figure><p>The diagram illustrates the main steps of the PEC procedure. First, an initial quantum state <span class="math notranslate nohighlight">\(\mathcal{O}(\rho)\)</span> is prepared where <span class="math notranslate nohighlight">\(\mathcal{O}\)</span> is a noisy channel. The inverse channel <span class="math notranslate nohighlight">\(\mathcal{O}^{-1}\)</span> is then decomposed into a quasi-probability distribution over physically implementable unitaries <span class="math notranslate nohighlight">\(\{\mathcal{O}_\alpha\}\)</span>. Each unitary <span class="math notranslate nohighlight">\(\mathcal{O}_\alpha\)</span> is sampled according to the normalized absolute value of its coefficient, applied to the noisy state, and the
 observable <span class="math notranslate nohighlight">\(A\)</span> is measured. The measurement outcome is multiplied by the sign of the corresponding coefficient, and the process is repeated <span class="math notranslate nohighlight">\(M\)</span> times. Averaging all outcomes yields the PEC estimate <span class="math notranslate nohighlight">\(\xi\)</span>, which approximates the ideal expectation value in the presence of noise.</p>
@@ -1078,9 +1078,9 @@ E(\xi) &amp;= 2^{\nu(\mathcal{N})} \frac{1}{M} \sum_{m=1}^M E \big( \mathrm{sgn}
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-PEC estimate = 0.7917613846556191
-Exact value = 0.7917613846556191
-Absolute error = 0.0
+PEC estimate = 0.43845251866067236
+Exact value = 0.43845251866067253
+Absolute error = 1.6653345369377348e-16
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1147,7 +1147,7 @@ Absolute error = 0.0
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.4
+quairkit: 0.5.0
 torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
@@ -1200,7 +1200,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1217,7 +1217,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

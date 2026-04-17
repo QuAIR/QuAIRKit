@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -880,7 +880,7 @@ A state vector with 2 qubits following Haar random
  Backend: default-pure
  System dimension: [2]
  System sequence: [0]
-[ 0.5 -0.24j -0.83-0.02j]
+[-0.51-0.78j  0.33-0.14j]
 -----------------------------------------------------
 
 type of the state: default-mixed
@@ -910,11 +910,11 @@ type of the state: default-mixed
  Batch size: [3]
 
  # 0:
-[0.28-0.24j 0.59+0.72j]
+[0.42-0.45j 0.77+0.15j]
  # 1:
-[0.16+0.85j 0.48-0.13j]
+[ 0.4 +0.82j -0.27-0.31j]
  # 2:
-[ 0.14+0.07j -0.14+0.98j]
+[0.06+0.84j 0.07+0.54j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -936,31 +936,31 @@ type of the state: default-mixed
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Its density matrix is :
- tensor([[[ 0.1378+0.0000j, -0.0109-0.3445j],
-         [-0.0109+0.3445j,  0.8622+0.0000j]],
+ tensor([[[ 0.3795+0.0000j,  0.2519-0.4148j],
+         [ 0.2519+0.4148j,  0.6205+0.0000j]],
 
-        [[ 0.7547+0.0000j, -0.0332+0.4290j],
-         [-0.0332-0.4290j,  0.2453+0.0000j]],
+        [[ 0.8356+0.0000j, -0.3584-0.0945j],
+         [-0.3584+0.0945j,  0.1644+0.0000j]],
 
-        [[ 0.0257+0.0000j,  0.0486-0.1505j],
-         [ 0.0486+0.1505j,  0.9743+0.0000j]]])
+        [[ 0.7008+0.0000j,  0.4570+0.0293j],
+         [ 0.4570-0.0293j,  0.2992+0.0000j]]])
 
 Its ket is :
- tensor([[[ 0.2803-0.2433j],
-         [ 0.5862+0.7201j]],
+ tensor([[[ 0.4172-0.4533j],
+         [ 0.7723+0.1550j]],
 
-        [[ 0.1554+0.8547j],
-         [ 0.4790-0.1260j]],
+        [[ 0.4041+0.8199j],
+         [-0.2660-0.3060j]],
 
-        [[ 0.1439+0.0705j],
-         [-0.1412+0.9769j]]])
+        [[ 0.0560+0.8353j],
+         [ 0.0714+0.5423j]]])
 
 Its bra is :
- tensor([[[ 0.2803+0.2433j,  0.5862-0.7201j]],
+ tensor([[[ 0.4172+0.4533j,  0.7723-0.1550j]],
 
-        [[ 0.1554-0.8547j,  0.4790+0.1260j]],
+        [[ 0.4041-0.8199j, -0.2660+0.3060j]],
 
-        [[ 0.1439-0.0705j, -0.1412-0.9769j]]])
+        [[ 0.0560-0.8353j,  0.0714-0.5423j]]])
 </pre></div></div>
 </div>
 <p>We can also use the method <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> to output <em>numpy.ndarray</em> type data for <code class="docutils literal notranslate"><span class="pre">State</span></code>.</p>
@@ -979,9 +979,9 @@ Its bra is :
 <div class="highlight"><pre>
 
 The state is :
- [[ 0.2803382 -0.24330717j  0.5862257 +0.72010523j]
- [ 0.15535067+0.8547047j   0.47904193-0.12595585j]
- [ 0.14390607+0.07051402j -0.14120625+0.9769235j ]]
+ [[ 0.41717303-0.45330948j  0.77230525+0.15498972j]
+ [ 0.404109  +0.8199433j  -0.2660459 -0.30595505j]
+ [ 0.05601955+0.83528674j  0.07141142+0.5422714j ]]
 </pre></div></div>
 </div>
 <p>Other useful information can be read via <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
@@ -1001,7 +1001,7 @@ The state is :
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The trace of these states are tensor([1.0000+0.j, 1.0000+0.j, 1.0000+0.j])
+The trace of these states are tensor([1.+0.j, 1.+0.j, 1.+0.j])
 The rank of these states are [1.0, 1.0, 1.0]
 The size of these states are 2
 The shape of vectorization of these states are torch.Size([3, 4, 1])
@@ -1049,9 +1049,9 @@ the second and third state in the batch:
  Batch size: [2]
 
  # 0:
-[0.16+0.85j 0.48-0.13j]
+[ 0.4 +0.82j -0.27-0.31j]
  # 1:
-[ 0.14+0.07j -0.14+0.98j]
+[0.06+0.84j 0.07+0.54j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1076,9 +1076,9 @@ the second and third state in the batch:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 matrix multiplication:
-tensor([[0.3762+0.0000j, 0.0167+0.0205j],
-        [0.0000+0.0000j, 0.0000+0.0000j]])
-The overlap of state_1 and state_2 is : tensor(0.3762+0.j)
+tensor([[ 0.1379+0.0000j, -0.1218-0.1484j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j]])
+The overlap of state_1 and state_2 is : tensor(0.1379+0.j)
 </pre></div></div>
 </div>
 <p>User can also use <code class="docutils literal notranslate"><span class="pre">NKron</span></code> to obtain the tensor product <span class="math notranslate nohighlight">\(\rho \otimes \sigma\)</span> of the two quantum states <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
@@ -1097,10 +1097,10 @@ The overlap of state_1 and state_2 is : tensor(0.3762+0.j)
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 tensor product:
-tensor([[0.3762+0.0000j, 0.0167+0.0205j, 0.0000+0.0000j, 0.0000+0.0000j],
-        [0.0167-0.0205j, 0.6238+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
-        [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j],
-        [0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j, 0.0000+0.0000j]])
+tensor([[ 0.1379+0.0000j, -0.1218-0.1484j,  0.0000+0.0000j,  0.0000-0.0000j],
+        [-0.1218+0.1484j,  0.8621+0.0000j, -0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000-0.0000j,  0.0000+0.0000j,  0.0000-0.0000j],
+        [-0.0000+0.0000j,  0.0000+0.0000j, -0.0000+0.0000j,  0.0000+0.0000j]])
 </pre></div></div>
 </div>
 <p>Permuting subsystems can be implemented by adapting the value of <code class="docutils literal notranslate"><span class="pre">system_seq</span></code>. However, such a change does not affect its output on ket, bra, and density matrix, in which case <code class="docutils literal notranslate"><span class="pre">system_seq</span></code> would be reset to the default sequence. Here, three randomly prepared 2-qubit states <span class="math notranslate nohighlight">\(\{ |\phi_j\rangle \}_{j=1}^3\)</span> are permuted as examples.</p>
@@ -1126,7 +1126,7 @@ tensor([[0.3762+0.0000j, 0.0167+0.0205j, 0.0000+0.0000j, 0.0000+0.0000j],
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [0, 1]
-[ 0.45-0.32j  0.26-0.07j -0.49-0.37j  0.42+0.28j]
+[0.09+0.19j 0.1 +0.36j 0.57-0.46j 0.47-0.25j]
 -----------------------------------------------------
 
 state after permutation:
@@ -1134,7 +1134,7 @@ state after permutation:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [1, 0]
-[ 0.45-0.32j -0.49-0.37j  0.26-0.07j  0.42+0.28j]
+[0.09+0.19j 0.57-0.46j 0.1 +0.36j 0.47-0.25j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1186,7 +1186,7 @@ state after evolving with unitary:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [1, 0]
-[-0.28-0.05j -0.65+0.14j  0.5 +0.22j -0.2 -0.38j]
+[-0.23-0.33j -0.52+0.43j -0.14-0.07j  0.12+0.58j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1212,7 +1212,7 @@ state after transformation:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [0, 1]
-[ 0.45-0.32j  0.26-0.07j -0.49-0.37j  0.42+0.28j]
+[0.09+0.19j 0.1 +0.36j 0.57-0.46j 0.47-0.25j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1237,7 +1237,7 @@ state after transformation:
  Backend: default-pure
  System dimension: [2, 2]
  System sequence: [0, 1]
-[ 0.45-0.32j  0.26-0.07j -0.49-0.37j  0.42+0.28j]
+[0.09+0.19j 0.1 +0.36j 0.57-0.46j 0.47-0.25j]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1260,7 +1260,7 @@ state after transformation:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-the expectation value under the given observable:  tensor(-0.5100)
+the expectation value under the given observable:  tensor([-1.2577])
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">State.measure()</span></code> returns the measurement result in the computational basis.</p>
@@ -1277,7 +1277,7 @@ the expectation value under the given observable:  tensor(-0.5100)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Theoretical value is : tensor([0.3017, 0.0708, 0.3693, 0.2582])
+Theoretical value is : tensor([0.0462, 0.1394, 0.5340, 0.2805])
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1335,7 +1335,7 @@ Theoretical value is : tensor([0.3017, 0.0708, 0.3693, 0.2582])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.4.4
+quairkit: 0.5.0
 torch: 2.8.0+cpu
 numpy: 2.2.6
 scipy: 1.15.3
@@ -1388,7 +1388,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1405,7 +1405,7 @@ CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
     
       
         <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

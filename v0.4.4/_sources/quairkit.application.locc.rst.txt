@@ -1,0 +1,7 @@
+quairkit.application.locc
+=========================
+
+.. toctree::
+    :maxdepth: 2
+
+    quairkit.application.locc.locc

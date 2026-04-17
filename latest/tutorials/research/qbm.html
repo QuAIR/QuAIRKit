@@ -1,0 +1,1697 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="loccnet.html">
+      
+      
+        <link rel="next" href="simon.html">
+      
+      
+      <link rel="icon" href="../../_static/favicon.svg">
+    
+    
+      
+        <title>Quantum Boltzmann Machine - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
+        <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Classical-Boltzmann-distribution" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quantum Boltzmann Machine
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quairkit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.AIAA-5072.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.aiaa-5072.rst (reference label)"><span>tutorials.<wbr>AIAA-<wbr>5072</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.feature.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.feature.rst (reference label)"><span>tutorials.<wbr>feature</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials.introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.introduction.rst (reference label)"><span>tutorials.<wbr>introduction</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tutorials.research.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/tutorials.research.rst (reference label)"><span>tutorials.<wbr>research</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bp.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/bp.ipynb (reference label)"><span>Analyze Barren Plateau in Quantum Neural Networks</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comb.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/comb.ipynb (reference label)"><span>Training quantum process transformation with PQC</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="locc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/locc.ipynb (reference label)"><span>Quantum State Teleportation and Distribution</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="loccnet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/loccnet.ipynb (reference label)"><span>Search quantum information protocols with LOCCNet</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/qbm.ipynb (reference label)"><span>Quantum Boltzmann Machine</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/qbm.ipynb (reference label)"><span>Quantum Boltzmann Machine</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Classical-Boltzmann-distribution" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#classical-boltzmann-distribution (reference label)"><span>Classical Boltzmann distribution</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Boltzmann-machine" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#boltzmann-machine (reference label)"><span>Boltzmann machine</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Quantum-Boltzmann-machine-for-ground-state-energy-estimation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#quantum-boltzmann-machine-for-ground-state-energy-estimation (reference label)"><span>Quantum Boltzmann machine for ground-<wbr>state energy estimation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum Boltzmann machine for ground-state energy estimation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Overview" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#overview (reference label)"><span>Overview</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Implementation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#implementation (reference label)"><span>Implementation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Sampling-the-evolution-parameter-t" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#sampling-the-evolution-parameter-t (reference label)"><span>Sampling the evolution parameter t</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#First-gradient-term:-Hadamard-test-circuit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#first-gradient-term:-hadamard-test-circuit (reference label)"><span>First gradient term:<wbr> Hadamard-<wbr>test circuit</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Second-gradient-term:-exact-expectation-product" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#second-gradient-term:-exact-expectation-product (reference label)"><span>Second gradient term:<wbr> exact expectation product</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Assemble-the-full-gradient" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#assemble-the-full-gradient (reference label)"><span>Assemble the full gradient</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Training-loop" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#training-loop (reference label)"><span>Training loop</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Extension:-evolved-quantum-Boltzmann-machines" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#extension:-evolved-quantum-boltzmann-machines (reference label)"><span>Extension:<wbr> evolved quantum Boltzmann machines</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="simon.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/simon.ipynb (reference label)"><span>Rediscovering Simon’s algorithm with PQC</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trotter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials/research/trotter.ipynb (reference label)"><span>Hamiltonian simulation via Trotter decomposition</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Classical-Boltzmann-distribution" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#classical-boltzmann-distribution (reference label)"><span>Classical Boltzmann distribution</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Boltzmann-machine" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#boltzmann-machine (reference label)"><span>Boltzmann machine</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Quantum-Boltzmann-machine-for-ground-state-energy-estimation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#quantum-boltzmann-machine-for-ground-state-energy-estimation (reference label)"><span>Quantum Boltzmann machine for ground-<wbr>state energy estimation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quantum Boltzmann machine for ground-state energy estimation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Overview" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#overview (reference label)"><span>Overview</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Implementation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#implementation (reference label)"><span>Implementation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#Sampling-the-evolution-parameter-t" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#sampling-the-evolution-parameter-t (reference label)"><span>Sampling the evolution parameter t</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#First-gradient-term:-Hadamard-test-circuit" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#first-gradient-term:-hadamard-test-circuit (reference label)"><span>First gradient term:<wbr> Hadamard-<wbr>test circuit</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Second-gradient-term:-exact-expectation-product" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#second-gradient-term:-exact-expectation-product (reference label)"><span>Second gradient term:<wbr> exact expectation product</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Assemble-the-full-gradient" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#assemble-the-full-gradient (reference label)"><span>Assemble the full gradient</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#Training-loop" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#training-loop (reference label)"><span>Training loop</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Extension:-evolved-quantum-Boltzmann-machines" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#extension:-evolved-quantum-boltzmann-machines (reference label)"><span>Extension:<wbr> evolved quantum Boltzmann machines</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#References" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/tutorials/research/qbm.ipynb#references (reference label)"><span>References</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="Quantum-Boltzmann-Machine">Quantum Boltzmann Machine<a class="headerlink" href="#Quantum-Boltzmann-Machine" title="Link to this heading">¶</a></h1>
+<p>Copyright (c) 2026 QuAIR team. All Rights Reserved.</p>
+<p>This tutorial studies the idea of quantum Boltzmann machine and its application for ground-state energy estimation. The goal is to optimize a parameterized Gibbs state so that its energy under a target Hamiltonian becomes as small as possible.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Classical-Boltzmann-distribution"><span class="std std-ref">Classical Boltzmann distribution</span></a></p></li>
+<li><p><a class="reference internal" href="#Boltzmann-machine"><span class="std std-ref">Boltzmann machine</span></a></p></li>
+<li><p><a class="reference internal" href="#Quantum-Boltzmann-machine-for-ground-state-energy-estimation"><span class="std std-ref">Quantum Boltzmann machine for ground-state energy estimation</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#Overview"><span class="std std-ref">Overview</span></a></p></li>
+<li><p><a class="reference internal" href="#Implementation"><span class="std std-ref">Implementation</span></a></p></li>
+</ul>
+</li>
+<li><p>Extension: evolved quantum Boltzmann machines</p></li>
+<li><p><a class="reference internal" href="#References"><span class="std std-ref">References</span></a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TypeAlias</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">import</span> <span class="nn">quairkit</span> <span class="k">as</span> <span class="nn">qkit</span>
+<span class="kn">from</span> <span class="nn">quairkit</span> <span class="kn">import</span> <span class="n">Circuit</span><span class="p">,</span> <span class="n">Hamiltonian</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">to_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;mathtext.fontset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.family&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;STIXGeneral&quot;</span>
+</code><br/><br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">SEED</span> <span class="o">=</span> <span class="mi">910</span>
+
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_dtype</span><span class="p">(</span><span class="s2">&quot;complex128&quot;</span><span class="p">)</span>
+<span class="n">qkit</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+
+<span class="n">Coeff</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">float</span>
+<span class="n">PauliString</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">PauliTerm</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">Coeff</span> <span class="o">|</span> <span class="n">PauliString</span><span class="p">]</span>
+<span class="n">PauliList</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">PauliTerm</span><span class="p">]</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="Classical-Boltzmann-distribution">Classical Boltzmann distribution<a class="headerlink" href="#Classical-Boltzmann-distribution" title="Link to this heading">¶</a></h2>
+<p>A classical system with discrete states <span class="math notranslate nohighlight">\(i\)</span> and scalar energies <span class="math notranslate nohighlight">\(E_i\)</span> follows the Boltzmann distribution in thermal equilibrium:</p>
+<div class="math notranslate nohighlight">
+\[p_i = \frac{e^{-\beta E_i}}{Z},
+\qquad
+\beta = \frac{1}{k_B T},
+\qquad
+Z = \sum_i e^{-\beta E_i}. \tag{1}\]</div>
+<p>Lower-energy states are exponentially more probable, so in the zero-temperature limit the probability mass concentrates on the ground state.</p>
+<h2 id="Boltzmann-machine">Boltzmann machine<a class="headerlink" href="#Boltzmann-machine" title="Link to this heading">¶</a></h2>
+<p>A classical Boltzmann machine turns this energy-based viewpoint into a trainable probabilistic model over visible and hidden binary units:</p>
+<div class="math notranslate nohighlight">
+\[E(v,h) = -v^\top W h - b^\top v - c^\top h. \tag{2}\]</div>
+<p>Training adjusts the parameters so that the model distribution matches the data distribution. The main computational bottleneck is the partition function, whose exact evaluation becomes intractable as the system grows.</p>
+<p>A quantum Boltzmann machine (QBM) keeps the same Gibbs-state idea, but replaces the scalar energy by a Hamiltonian.</p>
+<p>The role of the QBM here is therefore different from the role of a classical Boltzmann machine in generative modeling:</p>
+<ul class="simple">
+<li><p>A classical Boltzmann machine is trained to reproduce a data distribution.</p></li>
+<li><p>In this tutorial, the QBM is used as a <strong>variational ansatz</strong>. Its Gibbs state is optimized so that the energy under a target Hamiltonian becomes as small as possible.</p></li>
+</ul>
+<p>So the quantity being optimized is not a likelihood, but the energy expectation value <span class="math notranslate nohighlight">\(\textrm{Tr}(H \rho(\theta))\)</span>.</p>
+<h2 id="Quantum-Boltzmann-machine-for-ground-state-energy-estimation">Quantum Boltzmann machine for ground-state energy estimation<a class="headerlink" href="#Quantum-Boltzmann-machine-for-ground-state-energy-estimation" title="Link to this heading">¶</a></h2>
+<h3 id="Overview">Overview<a class="headerlink" href="#Overview" title="Link to this heading">¶</a></h3>
+<p>In this tutorial, a QBM is used as a <strong>variational mixed-state ansatz</strong> for a target Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>. We introduce a learnable Hamiltonian</p>
+<div class="math notranslate nohighlight">
+\[G(\theta) = \sum_{j=1}^{J}\theta_j G_j,
+\qquad
+\rho(\theta) = \frac{e^{-G(\theta)}}{Z(\theta)},
+\qquad
+Z(\theta)=\operatorname{Tr}[e^{-G(\theta)}]. \tag{3}\]</div>
+<p>Here the inverse temperature can be absorbed into the scale of <span class="math notranslate nohighlight">\(G(\theta)\)</span>, so the tutorial writes the Gibbs state directly in the form <span class="math notranslate nohighlight">\(e^{-G(\theta)}/Z(\theta)\)</span>. The quantity optimized by the QBM is the energy expectation value</p>
+<div class="math notranslate nohighlight">
+\[f(\theta)=\operatorname{Tr}[H\rho(\theta)]. \tag{4}\]</div>
+<p>This is the objective function that the tutorial is optimizing. The reason it is relevant to ground-state estimation is the variational principle: <span class="math notranslate nohighlight">\(f(\theta)\ge E_0\)</span>, where <span class="math notranslate nohighlight">\(E_0\)</span> is the smallest eigenvalue of <span class="math notranslate nohighlight">\(H\)</span>. Therefore, lowering <span class="math notranslate nohighlight">\(f(\theta)\)</span> pushes the model state toward the ground-state energy of <span class="math notranslate nohighlight">\(H\)</span>.</p>
+<p>It is useful to keep the following three objects separate:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H\)</span>: the fixed target Hamiltonian whose ground-state energy we want.</p></li>
+<li><p><span class="math notranslate nohighlight">\(G(\theta)\)</span>: the learnable QBM Hamiltonian.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho(\theta)\)</span>: the Gibbs state induced by <span class="math notranslate nohighlight">\(G(\theta)\)</span>.</p></li>
+</ul>
+<p>To make the gradient formula concrete, we fix the target Hamiltonian before introducing the estimator. Throughout this tutorial, we use a 6-qubit transverse-field Ising model (TFIM) with open boundary conditions,</p>
+<div class="math notranslate nohighlight">
+\[H
+=
+-J \sum_{i=0}^{n-2} Z_i Z_{i+1}
+-h \sum_{i=0}^{n-1} X_i. \tag{5}\]</div>
+<p>This choice produces only three nearest-neighbor <span class="math notranslate nohighlight">\(ZZ\)</span> terms and four local <span class="math notranslate nohighlight">\(X\)</span> terms, so the later sum over Hamiltonian terms can be evaluated exactly instead of sampled.</p>
+<h3 id="Implementation">Implementation<a class="headerlink" href="#Implementation" title="Link to this heading">¶</a></h3>
+<p>We construct the target Hamiltonian and the Pauli basis for <span class="math notranslate nohighlight">\(G(\theta)\)</span> upfront, because both objects appear repeatedly in the gradient estimator and in the training loop below.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="k">def</span> <span class="nf">tfim_obc</span><span class="p">(</span>
+    <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">coupling</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">field</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">open_boundary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PauliList</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Construct the transverse-field Ising model in Pauli-list form.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        num_qubits: Number of qubits in the spin chain.</span>
+<span class="sd">        coupling: Coupling constant :math:`J` in the ZZ interaction term.</span>
+<span class="sd">        field: Field strength :math:`h` in the transverse X term.</span>
+<span class="sd">        open_boundary: Whether to use open boundary conditions. If ``False``,</span>
+<span class="sd">            the last qubit is also coupled to the first one.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A Pauli-list representation of the TFIM Hamiltonian.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pauli_terms</span><span class="p">:</span> <span class="n">PauliList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">coupling_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">open_boundary</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">coupling_range</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">num_qubits</span>
+        <span class="n">pauli_terms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="o">-</span><span class="n">coupling</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Z</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,Z</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">):</span>
+        <span class="n">pauli_terms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="o">-</span><span class="n">field</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;X</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">pauli_terms</span>
+
+<span class="n">target_terms</span> <span class="o">=</span> <span class="n">tfim_obc</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">coupling</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">target_hamiltonian</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">target_terms</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">target_matrix</span> <span class="o">=</span> <span class="n">target_hamiltonian</span><span class="o">.</span><span class="n">matrix</span>
+<span class="n">generator_terms</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pauli_str</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">pauli_str</span> <span class="ow">in</span> <span class="n">target_terms</span><span class="p">]</span>
+<span class="n">generator_hamiltonians</span> <span class="o">=</span> <span class="p">[</span><span class="n">Hamiltonian</span><span class="p">([</span><span class="n">term</span><span class="p">],</span> <span class="n">compress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">generator_terms</span><span class="p">]</span>
+<span class="n">generator_mats</span> <span class="o">=</span> <span class="p">[</span><span class="n">generator_hamiltonian</span><span class="o">.</span><span class="n">matrix</span> <span class="k">for</span> <span class="n">generator_hamiltonian</span> <span class="ow">in</span> <span class="n">generator_hamiltonians</span><span class="p">]</span>
+<span class="c1"># Move each target-term sign into the observable so the controlled gate still</span>
+<span class="c1"># acts on a Hermitian unitary.</span>
+<span class="n">target_weights</span> <span class="o">=</span> <span class="n">target_matrix</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span> <span class="k">for</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">target_terms</span><span class="p">])</span>
+<span class="n">target_unitary_mats</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mf">1.0</span> <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">generator_mat</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">generator_mat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">target_terms</span><span class="p">,</span> <span class="n">generator_mats</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">ground_energy</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">target_matrix</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ground-state energy (exact eigvalsh): </span><span class="si">{</span><span class="n">ground_energy</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Ground-state energy (exact eigvalsh): -5.770919
+</pre></div></div>
+</div>
+<p>Patel et al. [3] derive the gradient in the form</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial f(\theta)}{\partial \theta_j}
+= -\frac{1}{2}\operatorname{Tr}\!\left[\{H,\Phi_\theta(G_j)\}\rho(\theta)\right]
++ \operatorname{Tr}[H\rho(\theta)]\,\operatorname{Tr}[G_j\rho(\theta)], \tag{6}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\Phi_\theta(X)
+= \int_{\mathbb{R}} dt\, p(t)\,
+e^{-iG(\theta)t} X e^{iG(\theta)t}. \tag{7}\]</div>
+<p>The first term can be estimated by a Hadamard-test circuit, and the second term is a product of expectation values.</p>
+<p>This tutorial follows that decomposition, but makes two simulator-oriented simplifications:</p>
+<ul class="simple">
+<li><p>The target Hamiltonian is a <span class="math notranslate nohighlight">\(n\)</span>-qubit TFIM with only <span class="math notranslate nohighlight">\(2n-1\)</span> Pauli terms, so we <strong>sum over all Hamiltonian terms exactly</strong> instead of sampling a Hamiltonian term index.</p></li>
+<li><p>We use <code class="docutils literal notranslate"><span class="pre">output.probability</span></code> and <code class="docutils literal notranslate"><span class="pre">State.expec_val(...)</span></code> to compute exact expectations on the simulator, instead of converting those probabilities into extra Bernoulli samples.</p></li>
+</ul>
+<p>These choices make the demo shorter, more stable, and easier to read. For larger Hamiltonians or shot-based backends, the Monte Carlo form of quantum Boltzmann gradient estimator (QBGE) remains the scalable strategy.</p>
+<p>With the concrete TFIM fixed, we use the following naming convention throughout the implementation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target_terms</span></code>: the Pauli decomposition of the fixed Hamiltonian <span class="math notranslate nohighlight">\(H\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">generator_terms</span></code>: the Pauli basis used to build the learnable Hamiltonian <span class="math notranslate nohighlight">\(G(\theta)\)</span>. In this demo, we reuse the same Pauli strings as <code class="docutils literal notranslate"><span class="pre">target_terms</span></code>, but with learnable coefficients. This is a tutorial choice, not a requirement of the general QBM framework.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_weights</span></code>: the non-negative coefficients <span class="math notranslate nohighlight">\(\alpha_k\)</span> in <span class="math notranslate nohighlight">\(H = \sum_k \alpha_k H_k\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_unitary_mats</span></code>: the signed matrices for the observables <span class="math notranslate nohighlight">\(H_k\)</span>, each equal to <span class="math notranslate nohighlight">\(\pm G_j\)</span>, so they can enter the controlled circuit directly.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model_hamiltonian</span></code>: the matrix form of the current <span class="math notranslate nohighlight">\(G(\theta)\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rho_theta</span></code>: the density matrix form of the current Gibbs state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rho_state</span></code>: the same Gibbs state wrapped as a QuAIRKit <code class="docutils literal notranslate"><span class="pre">State</span></code>, so we can use <code class="docutils literal notranslate"><span class="pre">State.expec_val(...)</span></code>.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">replace_coeffs</span><span class="p">(</span><span class="n">pauli_list</span><span class="p">:</span> <span class="n">PauliList</span><span class="p">,</span> <span class="n">new_coeffs</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PauliList</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a copy of ``pauli_list`` with updated coefficients.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pauli_list: Input Pauli terms whose strings remain unchanged.</span>
+<span class="sd">        new_coeffs: One-dimensional tensor of new coefficients.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A new Pauli list with the same Pauli strings as ``pauli_list`` and the</span>
+<span class="sd">        coefficients supplied by ``new_coeffs``.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``new_coeffs`` is not one-dimensional or has a mismatched</span>
+<span class="sd">            length.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">new_coeffs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected a 1D tensor, but received shape </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">new_coeffs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pauli_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_coeffs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The coefficient count </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_coeffs</span><span class="p">)</span><span class="si">}</span><span class="s2"> does not match the number &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;of Pauli terms </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pauli_list</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">coeffs</span> <span class="o">=</span> <span class="n">new_coeffs</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">),</span> <span class="n">pauli_list</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)]</span>
+
+
+<span class="k">def</span> <span class="nf">gibbs_state</span><span class="p">(</span><span class="n">model_hamiltonian</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the Gibbs state generated by a Hamiltonian matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_hamiltonian: Matrix representation of :math:`G(\theta)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The density matrix</span>
+<span class="sd">        :math:`\rho(\theta)=e^{-G(\theta)}/\operatorname{Tr}[e^{-G(\theta)}]`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gibbs_numerator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_exp</span><span class="p">(</span><span class="o">-</span><span class="n">model_hamiltonian</span><span class="p">)</span>
+    <span class="n">partition_function</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">gibbs_numerator</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">return</span> <span class="n">gibbs_numerator</span> <span class="o">/</span> <span class="n">partition_function</span>
+</code></pre></div>
+</div>
+</div>
+<p>The integral over the time variable <span class="math notranslate nohighlight">\(t\)</span> is still estimated by Monte Carlo, because that is the genuinely large or continuous part of the QBGE. The Hamiltonian-term sum, however, is evaluated exactly in this tutorial. We also form the Gibbs state by direct matrix exponentiation, because the whole workflow here is a simulator-side teaching demo. In the scalable QBM setting discussed in Patel et al. [3], one assumes access to thermal-state samples rather than constructing the full density
+matrix explicitly.</p>
+<h4 id="Sampling-the-evolution-parameter-t">Sampling the evolution parameter <span class="math notranslate nohighlight">\(t\)</span><a class="headerlink" href="#Sampling-the-evolution-parameter-t" title="Link to this heading">¶</a></h4>
+<p>Patel et al. [3] define the time-sampling density through the channel <span class="math notranslate nohighlight">\(\Phi_\theta\)</span> in Eq. (7). The probability density is</p>
+<div class="math notranslate nohighlight">
+\[p(t)=\frac{2}{\pi}\log\left|\coth\frac{\pi t}{2}\right|. \tag{8}\]</div>
+<p>For implementation, it is convenient to rewrite this density as a mixture of exponential distributions,</p>
+<div class="math notranslate nohighlight">
+\[p(t)
+= \sum_{k=0}^{\infty} w_k \lambda_k e^{-\lambda_k |t|},
+\qquad
+\lambda_k = (2k+1)\pi,
+\qquad
+w_k = \frac{8}{\pi^2(2k+1)^2}. \tag{9}\]</div>
+<p>The helper below samples <span class="math notranslate nohighlight">\(t\)</span> by</p>
+<ol class="arabic simple">
+<li><p>drawing an exponential component index <span class="math notranslate nohighlight">\(k\)</span>,</p></li>
+<li><p>sampling a positive magnitude from that component,</p></li>
+<li><p>assigning a random sign.</p></li>
+</ol>
+<p>This is the only place where the tutorial still uses Monte Carlo randomness in the gradient estimator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sample_time_parameters</span><span class="p">(</span>
+    <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">reference</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">kmax</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sample time values from the QBGE density ``p(t)``.</span>
+
+<span class="sd">    The density</span>
+<span class="sd">    :math:`p(t)=\frac{2}{\pi}\log\left|\coth(\pi t / 2)\right|`</span>
+<span class="sd">    can be sampled from a mixture of exponential distributions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        num_samples: Number of time samples to draw.</span>
+<span class="sd">        reference: Tensor whose real dtype and device are reused for sampling.</span>
+<span class="sd">        kmax: Truncation level of the exponential mixture.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A one-dimensional tensor containing signed samples of ``t``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">component_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
+        <span class="n">kmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">reference</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="n">reference</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">component_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">rates</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">component_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span>
+
+    <span class="n">chosen_components</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">chosen_rates</span> <span class="o">=</span> <span class="n">rates</span><span class="p">[</span><span class="n">chosen_components</span><span class="p">]</span>
+    <span class="n">uniform_samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span>
+        <span class="n">num_samples</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">clamp_min</span><span class="p">(</span><span class="mf">1e-12</span><span class="p">)</span>
+    <span class="n">magnitudes</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">uniform_samples</span><span class="p">)</span> <span class="o">/</span> <span class="n">chosen_rates</span>
+    <span class="n">signs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+        <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">component_idx</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">magnitudes</span> <span class="o">*</span> <span class="n">signs</span>
+
+<span class="k">def</span> <span class="nf">batched_time_evolution</span><span class="p">(</span><span class="n">generator</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">times</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a batch of unitaries ``exp(-i t G)`` for a Hermitian generator.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        generator: Hermitian matrix :math:`G(\theta)`.</span>
+<span class="sd">        times: One-dimensional tensor of evolution times.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tensor of shape ``[len(times), dim, dim]`` containing the unitary</span>
+<span class="sd">        evolutions corresponding to every value in ``times``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span>
+    <span class="n">phases</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">times</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">eigvals</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">eigvecs_dag</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eigvecs</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="n">torch</span><span class="o">.</span><span class="n">diag_embed</span><span class="p">(</span><span class="n">phases</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">generator</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span> <span class="o">@</span> <span class="n">eigvecs_dag</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="First-gradient-term:-Hadamard-test-circuit">First gradient term: Hadamard-test circuit<a class="headerlink" href="#First-gradient-term:-Hadamard-test-circuit" title="Link to this heading">¶</a></h4>
+<p>The first term in the QBM gradient is</p>
+<div class="math notranslate nohighlight">
+\[-\frac{1}{2}\operatorname{Tr}\!\left[\{H,\Phi_\theta(G_j)\}\rho(\theta)\right].
+\tag{10}\]</div>
+<p>Expanding <span class="math notranslate nohighlight">\(H = \sum_k \alpha_k H_k\)</span> gives</p>
+<div class="math notranslate nohighlight">
+\[-\sum_k \alpha_k \int_{\mathbb{R}} dt\, p(t)
+\left(
+\frac{1}{2}\operatorname{Tr}\!\left[
+\left(U_{jk}(\theta,t)+U_{jk}^\dagger(\theta,t)\right)\rho(\theta)
+\right]
+\right). \tag{11}\]</div>
+<p>In the circuit picture, <span class="math notranslate nohighlight">\(U_{jk}(\theta,t)\)</span> is the effective interference term produced by the sequence controlled-<span class="math notranslate nohighlight">\(G_j\)</span> → <span class="math notranslate nohighlight">\(e^{-iG(\theta)t}\)</span> → controlled-<span class="math notranslate nohighlight">\(H_k\)</span>.</p>
+<p>The paper samples both the Hamiltonian index <span class="math notranslate nohighlight">\(k\)</span> and the time variable <span class="math notranslate nohighlight">\(t\)</span>. In this tutorial, we keep the Monte Carlo sampling over <span class="math notranslate nohighlight">\(t\)</span>, but replace the outer sum over <span class="math notranslate nohighlight">\(k\)</span> by an exact sum because the 4-qubit TFIM has only seven terms. This keeps the same target quantity while removing one source of variance.</p>
+<p>As in the standard Hadamard test, the ancilla probability difference <span class="math notranslate nohighlight">\(p(0) - p(1)\)</span> equals the real part of the overlap term, so reading <code class="docutils literal notranslate"><span class="pre">output.probability</span></code> is enough for the simulator implementation.</p>
+<p>The circuit below therefore:</p>
+<ol class="arabic simple">
+<li><p>prepares <span class="math notranslate nohighlight">\(\ket{0}\bra{0} \otimes \rho(\theta)\)</span>,</p></li>
+<li><p>applies a Hadamard on the ancilla,</p></li>
+<li><p>applies controlled-<span class="math notranslate nohighlight">\(G_j\)</span>,</p></li>
+<li><p>applies the batched evolution <span class="math notranslate nohighlight">\(e^{-iG(\theta)t}\)</span>,</p></li>
+<li><p>applies controlled-<span class="math notranslate nohighlight">\(H_k\)</span>,</p></li>
+<li><p>applies a final Hadamard and reads out the ancilla probability.</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">estimate_grad_term1_circuit</span><span class="p">(</span>
+    <span class="n">target_weights</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">target_unitary_mats</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">generator_mat</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">evolution_batch</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">circuit_input</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span>
+    <span class="n">system_dim</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Estimate the first QBM gradient term with a Hadamard-test circuit.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target_weights: Non-negative coefficients in the decomposition</span>
+<span class="sd">            :math:`H=\sum_k \alpha_k H_k`.</span>
+<span class="sd">        target_unitary_mats: Hermitian-unitary matrices representing the signed</span>
+<span class="sd">            observables :math:`H_k`.</span>
+<span class="sd">        generator_mat: Matrix of the basis operator :math:`G_j`.</span>
+<span class="sd">        evolution_batch: Batch of unitaries ``exp(-i t G(theta))``.</span>
+<span class="sd">        circuit_input: Input state ``|0&gt;&lt;0| \otimes \rho(\theta)``.</span>
+<span class="sd">        system_dim: Mixed system dimensions for the ancilla-system register.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An estimate of</span>
+<span class="sd">        :math:`-\frac{1}{2}\operatorname{Tr}[\{H,\Phi_\theta(G_j)\}\rho(\theta)]`.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The original QBGE algorithm samples a Hamiltonian term index and then a</span>
+<span class="sd">        measurement bit. Here we only sample the time variable ``t``. The sum</span>
+<span class="sd">        over Hamiltonian terms is exact, and the ancilla expectation is computed</span>
+<span class="sd">        directly from ``output.probability``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sample_contributions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">target_unitary</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">target_weights</span><span class="p">,</span> <span class="n">target_unitary_mats</span><span class="p">):</span>
+        <span class="n">cir</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="n">system_dim</span><span class="p">)</span>
+        <span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">generator_mat</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;G_j&quot;</span><span class="p">)</span>
+        <span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">evolution_batch</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;e^{-iG(\theta)t}&quot;</span><span class="p">)</span>
+        <span class="n">cir</span><span class="o">.</span><span class="n">oracle</span><span class="p">(</span><span class="n">target_unitary</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">control_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">latex_name</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;H_k&quot;</span><span class="p">)</span>
+        <span class="n">cir</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">cir</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">system_idx</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">output_state</span> <span class="o">=</span> <span class="n">cir</span><span class="p">(</span><span class="n">circuit_input</span><span class="p">)</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="n">output_state</span><span class="o">.</span><span class="n">probability</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">clamp_min</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="n">probabilities</span> <span class="o">/</span> <span class="n">probabilities</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ancilla_z_expectation</span> <span class="o">=</span> <span class="n">probabilities</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">probabilities</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">sample_contributions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="o">-</span><span class="n">coeff</span><span class="p">)</span> <span class="o">*</span> <span class="n">ancilla_z_expectation</span><span class="p">)</span>
+
+    <span class="n">first_term_samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">sample_contributions</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">first_term_samples</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="Second-gradient-term:-exact-expectation-product">Second gradient term: exact expectation product<a class="headerlink" href="#Second-gradient-term:-exact-expectation-product" title="Link to this heading">¶</a></h4>
+<p>The second term in Eq. (6) is</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Tr}[H\rho(\theta)]\,\operatorname{Tr}[G_j\rho(\theta)].
+\tag{12}\]</div>
+<p>In the paper, this product is estimated from sampled measurement outcomes on two copies of the Gibbs state. On the simulator, we can compute both expectation values directly, so the Bernoulli product estimator is replaced by its exact expectation. This is again a tutorial-oriented simplification.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">estimate_grad_term2_exact</span><span class="p">(</span>
+    <span class="n">energy_expectation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">generator_hamiltonian</span><span class="p">:</span> <span class="n">Hamiltonian</span><span class="p">,</span>
+    <span class="n">rho_state</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the second QBM gradient term exactly.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        energy_expectation: The exact energy :math:`\operatorname{Tr}[H\rho(\theta)]`.</span>
+<span class="sd">        generator_hamiltonian: Single basis operator :math:`G_j`.</span>
+<span class="sd">        rho_state: Current QBM Gibbs state.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The exact value of</span>
+<span class="sd">        :math:`\operatorname{Tr}[H\rho(\theta)]\operatorname{Tr}[G_j\rho(\theta)]`.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Because the simulator gives exact expectation values, the Bernoulli</span>
+<span class="sd">        product estimator from the paper is replaced by the exact product of two</span>
+<span class="sd">        expectations in this tutorial.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">generator_expectation</span> <span class="o">=</span> <span class="n">rho_state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">generator_hamiltonian</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">energy_expectation</span> <span class="o">*</span> <span class="n">generator_expectation</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="Assemble-the-full-gradient">Assemble the full gradient<a class="headerlink" href="#Assemble-the-full-gradient" title="Link to this heading">¶</a></h4>
+<p>For each basis operator <span class="math notranslate nohighlight">\(G_j\)</span>, we evaluate the first term with the Hadamard-test circuit and the second term as an exact product of expectations. The resulting vector is the simulator-friendly QBM gradient used throughout the rest of the tutorial.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">estimate_gradient</span><span class="p">(</span>
+    <span class="n">model_hamiltonian</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">rho_theta</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">rho_state</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span>
+    <span class="n">num_time_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Estimate the QBM gradient for all parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_hamiltonian: Current QBM Hamiltonian matrix ``G(theta)``.</span>
+<span class="sd">        rho_theta: Current Gibbs density matrix.</span>
+<span class="sd">        rho_state: Current Gibbs state wrapped as a QuAIRKit ``State``.</span>
+<span class="sd">        num_time_samples: Number of Monte Carlo samples for the time variable</span>
+<span class="sd">            ``t``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tensor containing the estimated gradient components.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">energy_expectation</span> <span class="o">=</span> <span class="n">rho_state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">target_hamiltonian</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">sampled_times</span> <span class="o">=</span> <span class="n">sample_time_parameters</span><span class="p">(</span>
+        <span class="n">num_samples</span><span class="o">=</span><span class="n">num_time_samples</span><span class="p">,</span>
+        <span class="n">reference</span><span class="o">=</span><span class="n">model_hamiltonian</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">evolution_batch</span> <span class="o">=</span> <span class="n">batched_time_evolution</span><span class="p">(</span><span class="n">model_hamiltonian</span><span class="p">,</span> <span class="n">sampled_times</span><span class="p">)</span>
+    <span class="n">circuit_input</span> <span class="o">=</span> <span class="n">nkron</span><span class="p">(</span><span class="n">zero_state</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">to_state</span><span class="p">(</span><span class="n">rho_theta</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="n">num_qubits</span><span class="p">))</span>
+    <span class="n">system_dim</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">rho_theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+    <span class="n">gradient_components</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">generator_hamiltonian</span><span class="p">,</span> <span class="n">generator_mat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">generator_hamiltonians</span><span class="p">,</span> <span class="n">generator_mats</span><span class="p">):</span>
+        <span class="n">first_term</span> <span class="o">=</span> <span class="n">estimate_grad_term1_circuit</span><span class="p">(</span>
+            <span class="n">target_weights</span><span class="o">=</span><span class="n">target_weights</span><span class="p">,</span>
+            <span class="n">target_unitary_mats</span><span class="o">=</span><span class="n">target_unitary_mats</span><span class="p">,</span>
+            <span class="n">generator_mat</span><span class="o">=</span><span class="n">generator_mat</span><span class="p">,</span>
+            <span class="n">evolution_batch</span><span class="o">=</span><span class="n">evolution_batch</span><span class="p">,</span>
+            <span class="n">circuit_input</span><span class="o">=</span><span class="n">circuit_input</span><span class="p">,</span>
+            <span class="n">system_dim</span><span class="o">=</span><span class="n">system_dim</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">second_term</span> <span class="o">=</span> <span class="n">estimate_grad_term2_exact</span><span class="p">(</span>
+            <span class="n">energy_expectation</span><span class="o">=</span><span class="n">energy_expectation</span><span class="p">,</span>
+            <span class="n">generator_hamiltonian</span><span class="o">=</span><span class="n">generator_hamiltonian</span><span class="p">,</span>
+            <span class="n">rho_state</span><span class="o">=</span><span class="n">rho_state</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">gradient_components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first_term</span> <span class="o">+</span> <span class="n">second_term</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">model_hamiltonian</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">gradient_components</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>The rest of the workflow is classical: initialize <span class="math notranslate nohighlight">\(\theta\)</span>, estimate the gradient, update the parameters, rebuild <span class="math notranslate nohighlight">\(G(\theta)\)</span>, and track the energy trajectory. The helper below chooses a learning rate using the same kind of smoothness-inspired scaling that appears in the QBM analysis.</p>
+<h4 id="Training-loop">Training loop<a class="headerlink" href="#Training-loop" title="Link to this heading">¶</a></h4>
+<p>Once the gradient estimator is available, the optimization loop is standard:</p>
+<ol class="arabic simple">
+<li><p>initialize <span class="math notranslate nohighlight">\(\theta\)</span>,</p></li>
+<li><p>construct <span class="math notranslate nohighlight">\(G(\theta)\)</span> and <span class="math notranslate nohighlight">\(\rho(\theta)\)</span>,</p></li>
+<li><p>estimate the QBM gradient,</p></li>
+<li><p>update <span class="math notranslate nohighlight">\(\theta\)</span> with gradient descent,</p></li>
+<li><p>record the energy trajectory.</p></li>
+</ol>
+<p>We keep the paper-inspired smoothness scaling for the learning rate, but use a smaller system size and fewer optimization steps so that the tutorial remains lightweight enough to run quickly.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">max_op_norm</span><span class="p">(</span><span class="n">term_mats</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the maximum spectral norm of a list of matrices.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        term_mats: Input matrices.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The largest operator norm among all matrices in ``term_mats``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="n">term_mats</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">train_qbm_ground_state_energy</span><span class="p">(</span>
+    <span class="n">theta</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_time_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Train a QBM Gibbs ansatz for ground-state energy estimation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        theta: Initial parameter vector.</span>
+<span class="sd">        num_qubits: Number of qubits in the QBM instance.</span>
+<span class="sd">        num_epochs: Number of gradient-descent iterations.</span>
+<span class="sd">        num_time_samples: Number of time samples used in the first gradient term.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple ``(theta_final, energy_trajectory)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_generators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">generator_mats</span><span class="p">)</span>
+    <span class="n">alpha_l1</span> <span class="o">=</span> <span class="n">target_weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">max_generator_norm</span> <span class="o">=</span> <span class="n">max_op_norm</span><span class="p">(</span><span class="n">generator_mats</span><span class="p">)</span>
+    <span class="n">smoothness_rate</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">2.0</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="o">*</span> <span class="p">(</span><span class="n">num_generators</span><span class="o">**</span><span class="mf">0.75</span><span class="p">)</span>
+        <span class="o">*</span> <span class="p">(</span><span class="n">alpha_l1</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">max_generator_norm</span>
+    <span class="p">)</span>
+    <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">20.0</span> <span class="o">/</span> <span class="n">smoothness_rate</span>
+
+    <span class="n">model_terms</span> <span class="o">=</span> <span class="n">replace_coeffs</span><span class="p">(</span><span class="n">generator_terms</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+    <span class="n">model_hamiltonian</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">model_terms</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span>
+    <span class="n">rho_theta</span> <span class="o">=</span> <span class="n">gibbs_state</span><span class="p">(</span><span class="n">model_hamiltonian</span><span class="p">)</span>
+    <span class="n">rho_state</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">rho_theta</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_qubits</span><span class="p">)</span>
+    <span class="n">energy_trajectory</span> <span class="o">=</span> <span class="p">[</span><span class="n">rho_state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">target_hamiltonian</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">item</span><span class="p">()]</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+        <span class="n">gradient_estimate</span> <span class="o">=</span> <span class="n">estimate_gradient</span><span class="p">(</span>
+            <span class="n">model_hamiltonian</span><span class="o">=</span><span class="n">model_hamiltonian</span><span class="p">,</span>
+            <span class="n">rho_theta</span><span class="o">=</span><span class="n">rho_theta</span><span class="p">,</span>
+            <span class="n">rho_state</span><span class="o">=</span><span class="n">rho_state</span><span class="p">,</span>
+            <span class="n">num_time_samples</span><span class="o">=</span><span class="n">num_time_samples</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_estimate</span>
+
+        <span class="n">model_terms</span> <span class="o">=</span> <span class="n">replace_coeffs</span><span class="p">(</span><span class="n">generator_terms</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+        <span class="n">model_hamiltonian</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">model_terms</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span>
+        <span class="n">rho_theta</span> <span class="o">=</span> <span class="n">gibbs_state</span><span class="p">(</span><span class="n">model_hamiltonian</span><span class="p">)</span>
+        <span class="n">rho_state</span> <span class="o">=</span> <span class="n">to_state</span><span class="p">(</span><span class="n">rho_theta</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_qubits</span><span class="p">)</span>
+        <span class="n">energy_trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rho_state</span><span class="o">.</span><span class="n">expec_val</span><span class="p">(</span><span class="n">target_hamiltonian</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">theta</span><span class="p">,</span> <span class="n">energy_trajectory</span>
+</code></pre></div>
+</div>
+</div>
+<p>We now compare several values of the number of sampled time points in the first QBGE term.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">num_time_samples</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[11]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">theta_initial</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">generator_terms</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">target_weights</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">target_weights</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+<span class="n">theta_final</span><span class="p">,</span> <span class="n">energy_trajectory</span> <span class="o">=</span> <span class="n">train_qbm_ground_state_energy</span><span class="p">(</span>
+    <span class="n">theta</span><span class="o">=</span><span class="n">theta_initial</span><span class="p">,</span>
+    <span class="n">num_qubits</span><span class="o">=</span><span class="n">num_qubits</span><span class="p">,</span>
+    <span class="n">num_epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+    <span class="n">num_time_samples</span><span class="o">=</span><span class="n">num_time_samples</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>Increasing <code class="docutils literal notranslate"><span class="pre">num_time_samples</span></code> reduces the Monte Carlo noise associated with the integral over <code class="docutils literal notranslate"><span class="pre">t</span></code>. In this tutorial, that is the only remaining Monte Carlo dimension: the Hamiltonian-term sum and the readout expectation are both evaluated exactly on the simulator.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[12]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">energy_trajectory</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s2">&quot;$N_t=</span><span class="si">{</span><span class="n">num_time_samples</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">ground_energy</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;navy&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ground energy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Optimization step&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/tutorials_research_qbm_28_0.png" src="../../_images/tutorials_research_qbm_28_0.png" />
+</div>
+</div>
+<p>The energy curves should move downward toward the exact ground-state energy. The final gap still depends on the ansatz, the initialization, and the number of sampled time values. The important tutorial point is that the QBM is optimizing the energy function <span class="math notranslate nohighlight">\(\textrm{Tr}(H \rho(\theta))\)</span>, and that the gradient can be decomposed into a Hadamard-test term plus an expectation-product term.</p>
+<h2 id="Extension:-evolved-quantum-Boltzmann-machines">Extension: evolved quantum Boltzmann machines<a class="headerlink" href="#Extension:-evolved-quantum-Boltzmann-machines" title="Link to this heading">¶</a></h2>
+<p>The QBM above follows Patel et al. [3]. A later extension, the evolved quantum Boltzmann machine (EQBM) of Minervini et al. [4], appends a learnable unitary layer</p>
+<div class="math notranslate nohighlight">
+\[U(\boldsymbol{\phi}) = e^{-iH(\boldsymbol{\phi})},
+\qquad
+H(\boldsymbol{\phi}) = \sum_{k=1}^{n}\phi_k Y_k,\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(Y_k\)</span> denotes the Pauli-<span class="math notranslate nohighlight">\(Y\)</span> operator acting on qubit <span class="math notranslate nohighlight">\(k\)</span>, and <span class="math notranslate nohighlight">\(\phi_k\)</span> is the corresponding real-valued rotation parameter. In other words, the <span class="math notranslate nohighlight">\(\boldsymbol{\phi}\)</span>-parameters control an extra variational layer built from single-qubit local <span class="math notranslate nohighlight">\(Y\)</span>-rotations, while the <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>-parameters still determine the underlying Gibbs state.</p>
+<p>So the evolved state is $ <span class="math">\omega`(:nbsphinx-math:</span>boldsymbol{theta}`,:nbsphinx-math:<cite>boldsymbol{phi}</cite>) ;=; U(<span class="math">\boldsymbol{\phi}</span>),:nbsphinx-math:<cite>rho`(:nbsphinx-math:</cite>boldsymbol{theta}`),U(<span class="math">\boldsymbol{\phi}</span>)^:nbsphinx-math:<cite>dagger</cite>. $ And we optimize the energy $ E(<span class="math">\boldsymbol{\theta}</span>,:nbsphinx-math:<cite>boldsymbol{phi}</cite>) =
+<span class="math">\operatorname{Tr}`[O,:nbsphinx-math:</span>omega`(<span class="math">\boldsymbol{\theta}</span>,:nbsphinx-math:<cite>boldsymbol{phi}</cite>)].$</p>
+<p>Setting <span class="math notranslate nohighlight">\(\phi = 0\)</span> recovers the original QBM. We do not implement the full EQBM training loop here, because that would require an additional gradient estimator for the <span class="math notranslate nohighlight">\(\phi\)</span> parameters. The purpose of this section is only to show how the QBM ansatz is extended in the follow-up work.</p>
+<h2 id="References">References<a class="headerlink" href="#References" title="Link to this heading">¶</a></h2>
+<p>[1] Ackley, David H., Geoffrey E. Hinton, and Terrence J. Sejnowski. “A learning algorithm for Boltzmann machines.” Cognitive science 9.1 (1985): 147-169.</p>
+<p>[2] Marullo, Chiara, and Elena Agliari. “Boltzmann machines as generalized Hopfield networks: a review of recent results and outlooks.” Entropy 23.1 (2020): 34.</p>
+<p>[3] Patel, Dhrumil, Daniel Koch, Saahil Patel, and Mark M. Wilde. “Quantum Boltzmann machine learning of ground-state energies.” arXiv preprint arXiv:2410.12935 (2024).</p>
+<p>[4] Minervini, Michele, Dhrumil Patel, and Mark M. Wilde. “Evolved Quantum Boltzmann Machines.” arXiv preprint arXiv:2501.03367 (2025).</p>
+<p><em>Table: A reference of notation conventions in this tutorial.</em></p>
+<table class="docutils data align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(H\)</span>,<span class="math notranslate nohighlight">\(G\)</span></p></td>
+<td><p>Hamiltonian</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\alpha\)</span>,<span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<td><p>Parameters for Hamiltonian H and G respectively</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f\)</span></p></td>
+<td><p>Energy, loss function</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\rho(\theta)\)</span></p></td>
+<td><p>Gibbs state</p></td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[13]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qkit</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+---------VERSION---------
+quairkit: 0.5.0
+torch: 2.8.0+cpu
+numpy: 2.2.6
+scipy: 1.15.3
+matplotlib: 3.10.6
+---------SYSTEM---------
+Python version: 3.10.18
+OS: Windows
+OS version: 10.0.26100
+---------DEVICE---------
+CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+</pre></div></div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    9.1.0.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
+    
+      
+        <script src="../../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+    
+  </body>
+</html>
