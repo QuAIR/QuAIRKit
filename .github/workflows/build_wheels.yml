@@ -48,8 +48,16 @@ jobs:
             python -m pip install ninja
           CIBW_TEST_COMMAND: >-
             python -c "import quairkit; import quairkit._C; print(quairkit.__version__)"
-          # Avoid bundling large PyTorch shared libraries into our wheel.
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >-
+            auditwheel repair -w {dest_dir} {wheel}
+            --exclude libtorch.so
+            --exclude libtorch_cpu.so
+            --exclude libtorch_cuda.so
+            --exclude libtorch_python.so
+            --exclude libtorch_global_deps.so
+            --exclude libc10.so
+            --exclude libc10_cuda.so
+            --exclude libshm.so
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
 
       - name: Upload wheel artifacts
