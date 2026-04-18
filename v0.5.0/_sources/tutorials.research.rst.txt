@@ -1,0 +1,8 @@
+tutorials.research
+==================
+
+.. toctree::
+    :maxdepth: 2
+    :glob:
+
+    tutorials/research/*

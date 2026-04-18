@@ -1634,7 +1634,9 @@
 </dd>
 <dt id="quairkit.ansatz.layer.LinearEntangledLayer.__init__.depth"><span class="sig-name descname">depth</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.layer.LinearEntangledLayer.__init__.depth" title="Permalink to this definition">¶</a></dt><dd><p>Number of layers.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.LinearEntangledLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.LinearEntangledLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.LinearEntangledLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.LinearEntangledLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">len(qubits_idx)]</span></code>. Single-sample input
+with <code class="docutils literal notranslate"><span class="pre">numel</span> <span class="pre">==</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">len(qubits_idx)</span></code> is also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1652,7 +1654,9 @@
 </dd>
 <dt id="quairkit.ansatz.layer.RealEntangledLayer.__init__.depth"><span class="sig-name descname">depth</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.layer.RealEntangledLayer.__init__.depth" title="Permalink to this definition">¶</a></dt><dd><p>Number of layers. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.RealEntangledLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.RealEntangledLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.RealEntangledLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.RealEntangledLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">len(qubits_idx)]</span></code>. Single-sample input
+with <code class="docutils literal notranslate"><span class="pre">numel</span> <span class="pre">==</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">len(qubits_idx)</span></code> is also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1675,7 +1679,9 @@ This ansatz is from the following paper: <a class="reference external" href="htt
 </dd>
 <dt id="quairkit.ansatz.layer.ComplexEntangledLayer.__init__.depth"><span class="sig-name descname">depth</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.layer.ComplexEntangledLayer.__init__.depth" title="Permalink to this definition">¶</a></dt><dd><p>Number of layers. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.ComplexEntangledLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.ComplexEntangledLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.ComplexEntangledLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.ComplexEntangledLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">len(qubits_idx)]</span></code>. Single-sample input
+with <code class="docutils literal notranslate"><span class="pre">numel</span> <span class="pre">==</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">len(qubits_idx)</span></code> is also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1698,7 +1704,9 @@ This ansatz is from the following paper: <a class="reference external" href="htt
 </dd>
 <dt id="quairkit.ansatz.layer.ComplexBlockLayer.__init__.depth"><span class="sig-name descname">depth</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.layer.ComplexBlockLayer.__init__.depth" title="Permalink to this definition">¶</a></dt><dd><p>Number of layers. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.ComplexBlockLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.ComplexBlockLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.ComplexBlockLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.ComplexBlockLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">(2</span> <span class="pre">*</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">(len(qubits_idx)</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">+</span> <span class="pre">len(qubits_idx))</span> <span class="pre">*</span> <span class="pre">3]</span></code>.
+Single-sample input with matching <code class="docutils literal notranslate"><span class="pre">numel</span></code> is also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1720,7 +1728,9 @@ This ansatz is from the following paper: <a class="reference external" href="htt
 </dd>
 <dt id="quairkit.ansatz.layer.RealBlockLayer.__init__.depth"><span class="sig-name descname">depth</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.ansatz.layer.RealBlockLayer.__init__.depth" title="Permalink to this definition">¶</a></dt><dd><p>Number of layers. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.RealBlockLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.RealBlockLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.RealBlockLayer.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.RealBlockLayer.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">depth</span> <span class="pre">*</span> <span class="pre">(len(qubits_idx)</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">+</span> <span class="pre">len(qubits_idx)]</span></code>.
+Single-sample input with matching <code class="docutils literal notranslate"><span class="pre">numel</span></code> is also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1740,7 +1750,9 @@ This ansatz is from the following paper: <a class="reference external" href="htt
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.ansatz.layer.Universal2.__init__.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.layer.Universal2.__init__.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the layer is applied.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.Universal2.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.Universal2.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.Universal2.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.Universal2.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">15]</span></code>. Single-sample input with <code class="docutils literal notranslate"><span class="pre">numel</span> <span class="pre">==</span> <span class="pre">15</span></code> is
+also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1756,7 +1768,9 @@ This ansatz is from the following paper: <a class="reference external" href="htt
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.ansatz.layer.Universal3.__init__.qubits_idx"><span class="sig-name descname">qubits_idx</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int]</span></span><a class="headerlink" href="#quairkit.ansatz.layer.Universal3.__init__.qubits_idx" title="Permalink to this definition">¶</a></dt><dd><p>Indices of the qubits on which the layer is applied.</p>
 </dd>
-<dt id="quairkit.ansatz.layer.Universal3.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.Universal3.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Defaults to be self-generated.</p>
+<dt id="quairkit.ansatz.layer.Universal3.__init__.param"><span class="sig-name descname">param</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tensor | None</span></span><a class="headerlink" href="#quairkit.ansatz.layer.Universal3.__init__.param" title="Permalink to this definition">¶</a></dt><dd><p>Initial parameters for the layer. Batched input should have shape
+<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">81]</span></code>. Single-sample input with <code class="docutils literal notranslate"><span class="pre">numel</span> <span class="pre">==</span> <span class="pre">81</span></code> is
+also accepted.</p>
 </dd>
 </dl>
 </dd>
@@ -1819,7 +1833,7 @@ This ansatz is from the following paper: <a class="reference external" href="htt
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}, {"aliases": ["v0.5.0"], "title": "v0.5.0", "version": "v0.5.0"}], "versionPath": null}}</script>
     
       
         <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

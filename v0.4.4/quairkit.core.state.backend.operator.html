@@ -1011,6 +1011,18 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#quairkit.core.state.backend.operator.SimpleStateOperator" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.operator.SimpleStateOperator (Python class) — A minimal backend built atop the default simulator for quick experimentation."><span>quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>operator.<wbr>Simple<wbr>State<wbr>Operator</span></span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1613,6 +1625,18 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#quairkit.core.state.backend.operator.SimpleStateOperator" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.state.backend.operator.SimpleStateOperator (Python class) — A minimal backend built atop the default simulator for quick experimentation."><span>quairkit.<wbr>core.<wbr>state.<wbr>backend.<wbr>operator.<wbr>Simple<wbr>State<wbr>Operator</span></span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1672,7 +1696,7 @@ Such class should emulate quantum computing via OpenQASM 2.0.</p>
 
 <dl class="py property objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.core.state.backend.operator.StateOperator.qasm2">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">qasm2</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">str</span></span><a class="headerlink" href="#quairkit.core.state.backend.operator.StateOperator.qasm2" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">qasm2</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#quairkit.core.state.backend.operator.StateOperator.qasm2" title="Link to this definition">¶</a></dt>
 <dd><p>The QASM 2.0 string that represents the circuit stored in this state emulator.</p>
 </dd></dl>
 
@@ -1707,7 +1731,9 @@ which can be a char or a string composed of ‘i’, ‘x’, ‘y’, or ‘z�
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.core.state.backend.operator.StateOperator.measure-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.operator.StateOperator.measure-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>A tensor containing the measurement results, where each element corresponds to empirical probabilities of the measurement outcomes.</p>
+<dd class="field-even"><p>A tensor containing the measurement results. Simulator backends return dense
+probabilities, while <code class="docutils literal notranslate"><span class="pre">StateOperator</span></code> backends return sparse empirical
+probabilities over the same outcome space.</p>
 </dd>
 <dt class="field-odd" id="quairkit.core.state.backend.operator.StateOperator.measure-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.operator.StateOperator.measure-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>Tensor</em></p>
@@ -1747,6 +1773,14 @@ which can be a char or a string composed of ‘i’, ‘x’, ‘y’, or ‘z�
 <dd><p>Retrieve shift rule for a given quantum gate.</p>
 <dl class="field-list simple">
 </dl>
+</dd></dl>
+
+<dl class="py class objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.state.backend.operator.SimpleStateOperator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.core.state.backend.operator.</span></span><span class="sig-name descname"><span class="pre">SimpleStateOperator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.state.backend.operator.SimpleStateOperator" title="quairkit.core.state.backend.operator.SimpleStateOperator.__init__.list_operator (Python parameter)"><span class="n"><span class="pre">list_operator</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.state.backend.operator.SimpleStateOperator" title="quairkit.core.state.backend.operator.SimpleStateOperator.__init__.sys_dim (Python parameter)"><span class="n"><span class="pre">sys_dim</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.state.backend.operator.SimpleStateOperator" title="Link to this definition">¶</a></dt>
+<dd><p>A minimal backend built atop the default simulator for quick experimentation.</p>
+<p>It executes QASM locally (via the default backend) and returns sparse counts dict.
+This is primarily for users to try <cite>StateOperator</cite> without integrating a real device.</p>
 </dd></dl>
 
 

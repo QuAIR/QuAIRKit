@@ -1,0 +1,6 @@
+quairkit.ansatz.trotter
+=======================
+
+.. automodule:: quairkit.ansatz.trotter
+    :members:
+

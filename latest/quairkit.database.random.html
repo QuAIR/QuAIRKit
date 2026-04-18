@@ -1581,6 +1581,18 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.database.random.haar_state_vector.size" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.random.haar_state_vector.size (Python parameter) — Batch size."><span>size</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1666,6 +1678,18 @@
     
     <span class="md-ellipsis">
       <span title="quairkit.database.random.haar_density_operator.is_real (Python parameter) — Whether the density matrix is real."><span>is_<wbr>real</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.random.haar_density_operator.size" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.random.haar_density_operator.size (Python parameter) — Batch size."><span>size</span></span>
     </span>
   </a>
   
@@ -3173,6 +3197,18 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quairkit.database.random.haar_state_vector.size" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.random.haar_state_vector.size (Python parameter) — Batch size."><span>size</span></span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3258,6 +3294,18 @@
     
     <span class="md-ellipsis">
       <span title="quairkit.database.random.haar_density_operator.is_real (Python parameter) — Whether the density matrix is real."><span>is_<wbr>real</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.random.haar_density_operator.size" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.random.haar_density_operator.size (Python parameter) — Batch size."><span>size</span></span>
     </span>
   </a>
   
@@ -3534,7 +3582,10 @@
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="quairkit.database.random.random_state.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.random.random_state.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>The number of qubits contained in the quantum state.</p>
 </dd>
-<dt id="quairkit.database.random.random_state.rank"><span class="sig-name descname">rank</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.random.random_state.rank" title="Permalink to this definition">¶</a></dt><dd><p>The rank of the density matrix. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> (full rank).</p>
+<dt id="quairkit.database.random.random_state.rank"><span class="sig-name descname">rank</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.random.random_state.rank" title="Permalink to this definition">¶</a></dt><dd><p>The rank of the density matrix. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a random rank in <span class="math notranslate nohighlight">\([1, d]\)</span>
+is sampled. For batched generation (<code class="docutils literal notranslate"><span class="pre">size</span></code> with total batch size larger than 1),
+random ranks are sampled independently for each sample and the result is returned
+in density-matrix representation.</p>
 </dd>
 <dt id="quairkit.database.random.random_state.is_real"><span class="sig-name descname">is_real</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.database.random.random_state.is_real" title="Permalink to this definition">¶</a></dt><dd><p>If the quantum state only contains real numbers. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 </dd>
@@ -3982,8 +4033,8 @@ referenced by arXiv:math-ph/0609050v2.</p>
 </dd></dl>
 
 <dl class="py function objdesc">
-<dt class="sig sig-object highlight py" id="quairkit.database.random.haar_state_vector">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.random.</span></span><span class="sig-name descname"><span class="pre">haar_state_vector</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_state_vector.dim" title="quairkit.database.random.haar_state_vector.dim (Python parameter) — Dimension of the state vector."><span class="n"><span class="pre">dim</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_state_vector.is_real" title="quairkit.database.random.haar_state_vector.is_real (Python parameter) — Whether the vector is real."><span class="n"><span class="pre">is_real</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.random.haar_state_vector" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.database.random.haar_state_vector">
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.random.</span></span><span class="sig-name descname"><span class="pre">haar_state_vector</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_state_vector.dim" title="quairkit.database.random.haar_state_vector.dim (Python parameter) — Dimension of the state vector."><span class="n"><span class="pre">dim</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_state_vector.is_real" title="quairkit.database.random.haar_state_vector.is_real (Python parameter) — Whether the vector is real."><span class="n"><span class="pre">is_real</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_state_vector.size" title="quairkit.database.random.haar_state_vector.size (Python parameter) — Batch size."><span class="n"><span class="pre">size</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.random.haar_state_vector" title="Link to this definition">¶</a></dt>
 <dd><p>Randomly generate a state vector following Haar measure.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.random.haar_state_vector-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.random.haar_state_vector-parameters" title="Permalink to this headline">¶</a></dt>
@@ -3992,10 +4043,13 @@ referenced by arXiv:math-ph/0609050v2.</p>
 </dd>
 <dt id="quairkit.database.random.haar_state_vector.is_real"><span class="sig-name descname">is_real</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.database.random.haar_state_vector.is_real" title="Permalink to this definition">¶</a></dt><dd><p>Whether the vector is real. Defaults to False.</p>
 </dd>
+<dt id="quairkit.database.random.haar_state_vector.size"><span class="sig-name descname">size</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int]</span></span><a class="headerlink" href="#quairkit.database.random.haar_state_vector.size" title="Permalink to this definition">¶</a></dt><dd><p>Batch size. Defaults to 1.</p>
+</dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.database.random.haar_state_vector-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.random.haar_state_vector-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>A <span class="math notranslate nohighlight">\(d \times 1\)</span> state vector.</p>
+<dd class="field-even"><p>A <span class="math notranslate nohighlight">\(d \times 1\)</span> state vector. For batched generation (total batch size larger
+than 1), returns a tensor with shape <code class="docutils literal notranslate"><span class="pre">size</span> <span class="pre">+</span> <span class="pre">[d,</span> <span class="pre">1]</span></code>.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.random.haar_state_vector-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.random.haar_state_vector-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>Tensor</em></p>
@@ -4015,7 +4069,7 @@ referenced by arXiv:math-ph/0609050v2.</p>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py" id="quairkit.database.random.haar_density_operator">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.random.</span></span><span class="sig-name descname"><span class="pre">haar_density_operator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.dim" title="quairkit.database.random.haar_density_operator.dim (Python parameter) — Dimension of the density matrix."><span class="n"><span class="pre">dim</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.rank" title="quairkit.database.random.haar_density_operator.rank (Python parameter) — Rank of the density matrix."><span class="n"><span class="pre">rank</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.is_real" title="quairkit.database.random.haar_density_operator.is_real (Python parameter) — Whether the density matrix is real."><span class="n"><span class="pre">is_real</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.random.haar_density_operator" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.random.</span></span><span class="sig-name descname"><span class="pre">haar_density_operator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.dim" title="quairkit.database.random.haar_density_operator.dim (Python parameter) — Dimension of the density matrix."><span class="n"><span class="pre">dim</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.rank" title="quairkit.database.random.haar_density_operator.rank (Python parameter) — Rank of the density matrix."><span class="n"><span class="pre">rank</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.is_real" title="quairkit.database.random.haar_density_operator.is_real (Python parameter) — Whether the density matrix is real."><span class="n"><span class="pre">is_real</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.random.haar_density_operator.size" title="quairkit.database.random.haar_density_operator.size (Python parameter) — Batch size."><span class="n"><span class="pre">size</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.random.haar_density_operator" title="Link to this definition">¶</a></dt>
 <dd><p>Randomly generate a density matrix following Haar measure.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.random.haar_density_operator-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.random.haar_density_operator-parameters" title="Permalink to this headline">¶</a></dt>
@@ -4026,10 +4080,13 @@ referenced by arXiv:math-ph/0609050v2.</p>
 </dd>
 <dt id="quairkit.database.random.haar_density_operator.is_real"><span class="sig-name descname">is_real</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.database.random.haar_density_operator.is_real" title="Permalink to this definition">¶</a></dt><dd><p>Whether the density matrix is real. Defaults to False.</p>
 </dd>
+<dt id="quairkit.database.random.haar_density_operator.size"><span class="sig-name descname">size</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | List[int]</span></span><a class="headerlink" href="#quairkit.database.random.haar_density_operator.size" title="Permalink to this definition">¶</a></dt><dd><p>Batch size. Defaults to 1.</p>
+</dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.database.random.haar_density_operator-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.random.haar_density_operator-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>A <span class="math notranslate nohighlight">\(d \times d\)</span> density matrix.</p>
+<dd class="field-even"><p>A <span class="math notranslate nohighlight">\(d \times d\)</span> density matrix. For batched generation (total batch size larger
+than 1), returns a tensor with shape <code class="docutils literal notranslate"><span class="pre">size</span> <span class="pre">+</span> <span class="pre">[d,</span> <span class="pre">d]</span></code>.</p>
 </dd>
 <dt class="field-odd" id="quairkit.database.random.haar_density_operator-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.random.haar_density_operator-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>Tensor</em></p>
@@ -4214,7 +4271,7 @@ IEEE Transactions on Information Theory 67(7), 4546-4563 (2021).</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}, {"aliases": ["v0.5.0"], "title": "v0.5.0", "version": "v0.5.0"}], "versionPath": null}}</script>
     
       
         <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

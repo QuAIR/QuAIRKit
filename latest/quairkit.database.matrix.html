@@ -685,7 +685,7 @@
       <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.database.matrix.qft_matrix (Python function) — Construct the quantum Fourier transpose (QFT) gate."><span>quairkit.<wbr>database.<wbr>matrix.<wbr>qft_<wbr>matrix</span></span>
+      <span title="quairkit.database.matrix.qft_matrix (Python function) — Construct the quantum Fourier transform (QFT) matrix."><span>quairkit.<wbr>database.<wbr>matrix.<wbr>qft_<wbr>matrix</span></span>
     </span>
   </a>
   
@@ -704,12 +704,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quairkit.database.matrix.qft_matrix.num_qubits" class="md-nav__link">
+  <a href="#quairkit.database.matrix.qft_matrix.num_systems" class="md-nav__link">
     
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.database.matrix.qft_matrix.num_qubits (Python parameter) — number of qubits n st."><span>num_<wbr>qubits</span></span>
+      <span title="quairkit.database.matrix.qft_matrix.num_systems (Python parameter) — Number of systems n."><span>num_<wbr>systems</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.matrix.qft_matrix.system_dim" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.matrix.qft_matrix.system_dim (Python parameter) — Dimension of systems."><span>system_<wbr>dim</span></span>
     </span>
   </a>
   
@@ -5107,7 +5119,7 @@
       <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.database.matrix.qft_matrix (Python function) — Construct the quantum Fourier transpose (QFT) gate."><span>quairkit.<wbr>database.<wbr>matrix.<wbr>qft_<wbr>matrix</span></span>
+      <span title="quairkit.database.matrix.qft_matrix (Python function) — Construct the quantum Fourier transform (QFT) matrix."><span>quairkit.<wbr>database.<wbr>matrix.<wbr>qft_<wbr>matrix</span></span>
     </span>
   </a>
   
@@ -5126,12 +5138,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quairkit.database.matrix.qft_matrix.num_qubits" class="md-nav__link">
+  <a href="#quairkit.database.matrix.qft_matrix.num_systems" class="md-nav__link">
     
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.database.matrix.qft_matrix.num_qubits (Python parameter) — number of qubits n st."><span>num_<wbr>qubits</span></span>
+      <span title="quairkit.database.matrix.qft_matrix.num_systems (Python parameter) — Number of systems n."><span>num_<wbr>systems</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.database.matrix.qft_matrix.system_dim" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.database.matrix.qft_matrix.system_dim (Python parameter) — Dimension of systems."><span>system_<wbr>dim</span></span>
     </span>
   </a>
   
@@ -9201,18 +9225,21 @@
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.database.matrix.qft_matrix">
-<span class="sig-prename descclassname"><span class="pre">quairkit.database.matrix.</span></span><span class="sig-name descname"><span class="pre">qft_matrix</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.matrix.qft_matrix.num_qubits" title="quairkit.database.matrix.qft_matrix.num_qubits (Python parameter) — number of qubits n st."><span class="n"><span class="pre">num_qubits</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix" title="Link to this definition">¶</a></dt>
-<dd><p>Construct the quantum Fourier transpose (QFT) gate.</p>
+<span class="sig-prename descclassname"><span class="pre">quairkit.database.matrix.</span></span><span class="sig-name descname"><span class="pre">qft_matrix</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.matrix.qft_matrix.num_systems" title="quairkit.database.matrix.qft_matrix.num_systems (Python parameter) — Number of systems n."><span class="n"><span class="pre">num_systems</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.database.matrix.qft_matrix.system_dim" title="quairkit.database.matrix.qft_matrix.system_dim (Python parameter) — Dimension of systems."><span class="n"><span class="pre">system_dim</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Construct the quantum Fourier transform (QFT) matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.database.matrix.qft_matrix-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.database.matrix.qft_matrix.num_qubits"><span class="sig-name descname">num_qubits</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix.num_qubits" title="Permalink to this definition">¶</a></dt><dd><p>number of qubits <span class="math notranslate nohighlight">\(n\)</span> st. <span class="math notranslate nohighlight">\(N = 2^n\)</span>.</p>
+<dt id="quairkit.database.matrix.qft_matrix.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems <span class="math notranslate nohighlight">\(n\)</span>. If None, inferred from <code class="docutils literal notranslate"><span class="pre">system_dim</span></code>.
+Alias of <code class="docutils literal notranslate"><span class="pre">num_qubits</span></code>.</p>
+</dd>
+<dt id="quairkit.database.matrix.qft_matrix.system_dim"><span class="sig-name descname">system_dim</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[int] | int</span></span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix.system_dim" title="Permalink to this definition">¶</a></dt><dd><p>Dimension of systems. Can be a list of system dimensions
+or an int representing the dimension of all systems. Defaults to qubit case.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.database.matrix.qft_matrix-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><p>A matrix in the form</p>
-<div class="math notranslate nohighlight">
+<dd class="field-even"><p><div class="math notranslate nohighlight">
 \[\begin{split}QFT = \frac{1}{\sqrt{N}}
 \begin{bmatrix}
     1 &amp; 1 &amp; \cdots &amp; 1 \\
@@ -9224,18 +9251,24 @@
 </p>
 </dd>
 <dt class="field-odd" id="quairkit.database.matrix.qft_matrix-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.database.matrix.qft_matrix-return-type" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><em>Tensor</em></p>
+<dd class="field-odd"><p>A matrix in the form</p>
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">qft_gate</span> <span class="o">=</span> <span class="n">qft_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">qft_gate</span> <span class="o">=</span> <span class="n">qft_matrix</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The QFT gate is:</span><span class="se">\n</span><span class="si">{</span><span class="n">qft_gate</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">QFT</span> <span class="n">gate</span> <span class="ow">is</span><span class="p">:</span>
 <span class="n">tensor</span><span class="p">([[</span> <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span>  <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">],</span>
         <span class="p">[</span> <span class="mf">0.7071</span><span class="o">+</span><span class="mf">0.0000e+00</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7071</span><span class="o">+</span><span class="mf">8.6596e-17</span><span class="n">j</span><span class="p">]])</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">qft_gate</span> <span class="o">=</span> <span class="n">qft_matrix</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">system_dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qft_gate</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </dd></dl>
@@ -11937,7 +11970,7 @@ For example, [1, 0, 2] swaps the first two subsystems.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}], "versionPath": null}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": ["v0.1.0"], "title": "v0.1.0", "version": "v0.1.0"}, {"aliases": ["v0.2.0"], "title": "v0.2.0", "version": "v0.2.0"}, {"aliases": ["v0.3.0"], "title": "v0.3.0", "version": "v0.3.0"}, {"aliases": ["v0.4.0"], "title": "v0.4.0", "version": "v0.4.0"}, {"aliases": ["v0.4.1"], "title": "v0.4.1", "version": "v0.4.1"}, {"aliases": ["v0.4.3"], "title": "v0.4.3", "version": "v0.4.3"}, {"aliases": ["v0.4.4"], "title": "v0.4.4", "version": "v0.4.4"}, {"aliases": ["v0.5.0"], "title": "v0.5.0", "version": "v0.5.0"}], "versionPath": null}}</script>
     
       
         <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>

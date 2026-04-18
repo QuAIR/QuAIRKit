@@ -616,7 +616,7 @@
       <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal (Python class) — The class of the loss function to compute the expectation value for the observable."><span>quairkit.<wbr>loss.<wbr>Expec<wbr>Val</span></span>
+      <span title="quairkit.loss.ExpecVal (Python class) — The class of the loss function to compute the expectation value for an observable."><span>quairkit.<wbr>loss.<wbr>Expec<wbr>Val</span></span>
     </span>
   </a>
   
@@ -640,7 +640,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable."><span>hamiltonian</span></span>
+      <span title="quairkit.loss.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable (Hamiltonian) to compute the expectation value for."><span>hamiltonian</span></span>
     </span>
   </a>
   
@@ -681,7 +681,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal.forward.state (Python parameter) — The input state which will be used to compute the expectation value."><span>state</span></span>
+      <span title="quairkit.loss.ExpecVal.forward.state (Python parameter) — The input quantum state which will be used to compute the expectation value. Can be a single state or a batch of states."><span>state</span></span>
     </span>
   </a>
   
@@ -705,7 +705,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal.forward.decompose (Python parameter) — Defaults to False."><span>decompose</span></span>
+      <span title="quairkit.loss.ExpecVal.forward.decompose (Python parameter) — If True, returns the expectation value of each term in the observable separately. Defaults to False, which returns the total expectation value."><span>decompose</span></span>
     </span>
   </a>
   
@@ -717,20 +717,20 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.ExpecVal.forward-raises" class="md-nav__link">
+  <a href="#quairkit.loss.ExpecVal.forward-returns" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Raises</span>
+      <span>Returns</span>
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.ExpecVal.forward-returns" class="md-nav__link">
+  <a href="#quairkit.loss.ExpecVal.forward-raises" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Returns</span>
+      <span>Raises</span>
     </span>
   </a>
   
@@ -786,7 +786,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.TraceDistance.__init__.target_state (Python parameter) — The target state to be used to compute the trace distance."><span>target_<wbr>state</span></span>
+      <span title="quairkit.loss.TraceDistance.__init__.target_state (Python parameter) — The target quantum state to be used to compute the trace distance. Can be a single state or a batch of states."><span>target_<wbr>state</span></span>
     </span>
   </a>
   
@@ -827,7 +827,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.TraceDistance.forward.state (Python parameter) — The input state which will be used to compute the trace distance with the target state."><span>state</span></span>
+      <span title="quairkit.loss.TraceDistance.forward.state (Python parameter) — The input quantum state which will be used to compute the trace distance with the target state. Can be a single state or a batch of states."><span>state</span></span>
     </span>
   </a>
   
@@ -839,20 +839,20 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.TraceDistance.forward-raises" class="md-nav__link">
+  <a href="#quairkit.loss.TraceDistance.forward-returns" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Raises</span>
+      <span>Returns</span>
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.TraceDistance.forward-returns" class="md-nav__link">
+  <a href="#quairkit.loss.TraceDistance.forward-raises" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Returns</span>
+      <span>Raises</span>
     </span>
   </a>
   
@@ -908,7 +908,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.StateFidelity.__init__.target_state (Python parameter) — The target state to be used to compute the state fidelity."><span>target_<wbr>state</span></span>
+      <span title="quairkit.loss.StateFidelity.__init__.target_state (Python parameter) — The target quantum state to be used to compute the state fidelity. Can be a single state or a batch of states."><span>target_<wbr>state</span></span>
     </span>
   </a>
   
@@ -949,7 +949,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.StateFidelity.forward.state (Python parameter) — The input state which will be used to compute the state fidelity with the target state."><span>state</span></span>
+      <span title="quairkit.loss.StateFidelity.forward.state (Python parameter) — The input quantum state which will be used to compute the state fidelity with the target state. Can be a single state or a batch of states."><span>state</span></span>
     </span>
   </a>
   
@@ -961,20 +961,20 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.StateFidelity.forward-raises" class="md-nav__link">
+  <a href="#quairkit.loss.StateFidelity.forward-returns" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Raises</span>
+      <span>Returns</span>
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.StateFidelity.forward-returns" class="md-nav__link">
+  <a href="#quairkit.loss.StateFidelity.forward-raises" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Returns</span>
+      <span>Raises</span>
     </span>
   </a>
   
@@ -1263,7 +1263,7 @@
       <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal (Python class) — The class of the loss function to compute the expectation value for the observable."><span>quairkit.<wbr>loss.<wbr>Expec<wbr>Val</span></span>
+      <span title="quairkit.loss.ExpecVal (Python class) — The class of the loss function to compute the expectation value for an observable."><span>quairkit.<wbr>loss.<wbr>Expec<wbr>Val</span></span>
     </span>
   </a>
   
@@ -1287,7 +1287,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable."><span>hamiltonian</span></span>
+      <span title="quairkit.loss.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable (Hamiltonian) to compute the expectation value for."><span>hamiltonian</span></span>
     </span>
   </a>
   
@@ -1328,7 +1328,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal.forward.state (Python parameter) — The input state which will be used to compute the expectation value."><span>state</span></span>
+      <span title="quairkit.loss.ExpecVal.forward.state (Python parameter) — The input quantum state which will be used to compute the expectation value. Can be a single state or a batch of states."><span>state</span></span>
     </span>
   </a>
   
@@ -1352,7 +1352,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.ExpecVal.forward.decompose (Python parameter) — Defaults to False."><span>decompose</span></span>
+      <span title="quairkit.loss.ExpecVal.forward.decompose (Python parameter) — If True, returns the expectation value of each term in the observable separately. Defaults to False, which returns the total expectation value."><span>decompose</span></span>
     </span>
   </a>
   
@@ -1364,20 +1364,20 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.ExpecVal.forward-raises" class="md-nav__link">
+  <a href="#quairkit.loss.ExpecVal.forward-returns" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Raises</span>
+      <span>Returns</span>
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.ExpecVal.forward-returns" class="md-nav__link">
+  <a href="#quairkit.loss.ExpecVal.forward-raises" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Returns</span>
+      <span>Raises</span>
     </span>
   </a>
   
@@ -1433,7 +1433,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.TraceDistance.__init__.target_state (Python parameter) — The target state to be used to compute the trace distance."><span>target_<wbr>state</span></span>
+      <span title="quairkit.loss.TraceDistance.__init__.target_state (Python parameter) — The target quantum state to be used to compute the trace distance. Can be a single state or a batch of states."><span>target_<wbr>state</span></span>
     </span>
   </a>
   
@@ -1474,7 +1474,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.TraceDistance.forward.state (Python parameter) — The input state which will be used to compute the trace distance with the target state."><span>state</span></span>
+      <span title="quairkit.loss.TraceDistance.forward.state (Python parameter) — The input quantum state which will be used to compute the trace distance with the target state. Can be a single state or a batch of states."><span>state</span></span>
     </span>
   </a>
   
@@ -1486,20 +1486,20 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.TraceDistance.forward-raises" class="md-nav__link">
+  <a href="#quairkit.loss.TraceDistance.forward-returns" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Raises</span>
+      <span>Returns</span>
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.TraceDistance.forward-returns" class="md-nav__link">
+  <a href="#quairkit.loss.TraceDistance.forward-raises" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Returns</span>
+      <span>Raises</span>
     </span>
   </a>
   
@@ -1555,7 +1555,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.StateFidelity.__init__.target_state (Python parameter) — The target state to be used to compute the state fidelity."><span>target_<wbr>state</span></span>
+      <span title="quairkit.loss.StateFidelity.__init__.target_state (Python parameter) — The target quantum state to be used to compute the state fidelity. Can be a single state or a batch of states."><span>target_<wbr>state</span></span>
     </span>
   </a>
   
@@ -1596,7 +1596,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.loss.StateFidelity.forward.state (Python parameter) — The input state which will be used to compute the state fidelity with the target state."><span>state</span></span>
+      <span title="quairkit.loss.StateFidelity.forward.state (Python parameter) — The input quantum state which will be used to compute the state fidelity with the target state. Can be a single state or a batch of states."><span>state</span></span>
     </span>
   </a>
   
@@ -1608,20 +1608,20 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.StateFidelity.forward-raises" class="md-nav__link">
+  <a href="#quairkit.loss.StateFidelity.forward-returns" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Raises</span>
+      <span>Returns</span>
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quairkit.loss.StateFidelity.forward-returns" class="md-nav__link">
+  <a href="#quairkit.loss.StateFidelity.forward-raises" class="md-nav__link">
     
     <span class="md-ellipsis">
-      <span>Returns</span>
+      <span>Raises</span>
     </span>
   </a>
   
@@ -1672,7 +1672,7 @@
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.Measure-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.Measure-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.Measure.__init__.measure_op"><span class="sig-name descname">measure_op</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | List[str] | Tensor | None</span></span><a class="headerlink" href="#quairkit.loss.Measure.__init__.measure_op" title="Permalink to this definition">¶</a></dt><dd><p>Specify the basis of the measurement. Defaults to <code class="docutils literal notranslate"><span class="pre">'computational'</span></code>.</p>
+<dt id="quairkit.loss.Measure.__init__.measure_op"><span class="sig-name descname">measure_op</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | Tensor | None</span></span><a class="headerlink" href="#quairkit.loss.Measure.__init__.measure_op" title="Permalink to this definition">¶</a></dt><dd><p>Specify the basis of the measurement. Defaults to <code class="docutils literal notranslate"><span class="pre">'computational'</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -1688,8 +1688,6 @@
 
 <span class="c1"># Define measurement basis using a string (e.g., &#39;xy&#39; denotes eigen-basis of X ⊗ Y)</span>
 <span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="s2">&quot;xy&quot;</span><span class="p">)</span>
-<span class="c1"># Define measurement basis using a list for multiple measurement setups (e.g., &#39;xy&#39; and &#39;yz&#39;)</span>
-<span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">([</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;yz&quot;</span><span class="p">])</span>
 <span class="c1"># Define a custom measurement basis using a user-specified PVM tensor</span>
 <span class="n">pvm_tensor</span> <span class="o">=</span> <span class="n">std_basis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">density_matrix</span>
 <span class="n">op</span> <span class="o">=</span> <span class="n">Measure</span><span class="p">(</span><span class="n">pvm_tensor</span><span class="p">)</span>
@@ -1782,28 +1780,35 @@
 
 <dl class="py class objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.loss.ExpecVal">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.loss.</span></span><span class="sig-name descname"><span class="pre">ExpecVal</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.__init__.hamiltonian" title="quairkit.loss.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable."><span class="n"><span class="pre">hamiltonian</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.ExpecVal" title="Link to this definition">¶</a></dt>
-<dd><p>The class of the loss function to compute the expectation value for the observable.</p>
-<p>This interface can make you using the expectation value for the observable as the loss function.</p>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.loss.</span></span><span class="sig-name descname"><span class="pre">ExpecVal</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.__init__.hamiltonian" title="quairkit.loss.ExpecVal.__init__.hamiltonian (Python parameter) — The input observable (Hamiltonian) to compute the expectation value for."><span class="n"><span class="pre">hamiltonian</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.ExpecVal" title="Link to this definition">¶</a></dt>
+<dd><p>The class of the loss function to compute the expectation value for an observable.</p>
+<p>This interface allows you to use the expectation value of an observable as a loss function for training quantum circuits.
+The expectation value is defined as <span class="math notranslate nohighlight">\(\langle H \rangle = \text{tr}(\rho H)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.ExpecVal-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.ExpecVal.__init__.hamiltonian"><span class="sig-name descname">hamiltonian</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.hamiltonian.html#quairkit.core.hamiltonian.Hamiltonian" title="quairkit.core.hamiltonian.Hamiltonian (Python class) — Hamiltonian class in QuAIRKit.">Hamiltonian</a></span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.__init__.hamiltonian" title="Permalink to this definition">¶</a></dt><dd><p>The input observable.</p>
+<dt id="quairkit.loss.ExpecVal.__init__.hamiltonian"><span class="sig-name descname">hamiltonian</span><span class="p"> : </span><span class="desctype"><span class="desctype"><a class="reference internal" href="quairkit.core.hamiltonian.html#quairkit.core.hamiltonian.Hamiltonian" title="quairkit.core.hamiltonian.Hamiltonian (Python class) — Hamiltonian class in QuAIRKit.">Hamiltonian</a></span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.__init__.hamiltonian" title="Permalink to this definition">¶</a></dt><dd><p>The input observable (Hamiltonian) to compute the expectation value for.</p>
 </dd>
 </dl>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This class supports batch operations. When input states have batch dimensions,
+the expectation value is computed element-wise along the batch dimension.</p>
+</div>
+<p class="example rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_hamiltonian_generator</span><span class="p">,</span> <span class="n">random_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="n">ExpecVal</span>
 
+<span class="c1"># Create observable and compute expectation value</span>
 <span class="n">observable</span> <span class="o">=</span> <span class="n">random_hamiltonian_generator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The input observable is:</span><span class="se">\n</span><span class="si">{</span><span class="n">observable</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">expec_val</span> <span class="o">=</span> <span class="n">ExpecVal</span><span class="p">(</span><span class="n">observable</span><span class="p">)</span>
 
 <span class="n">input_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The expectation value of the observable:&#39;</span><span class="p">,</span><span class="n">expec_val</span><span class="p">(</span><span class="n">input_state</span><span class="p">,</span> <span class="n">decompose</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-
-<span class="n">input_state_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The expectation value of the observable:&#39;</span><span class="p">,</span><span class="n">expec_val</span><span class="p">(</span><span class="n">input_state_batch</span><span class="p">,</span> <span class="n">decompose</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">expec_val</span><span class="p">(</span><span class="n">input_state</span><span class="p">,</span> <span class="n">decompose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The expectation value of the observable:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="nb">input</span> <span class="n">observable</span> <span class="ow">is</span><span class="p">:</span>
@@ -1811,30 +1816,41 @@
 <span class="mf">0.12440505341821817</span> <span class="n">X0</span>
 <span class="o">-</span><span class="mf">0.2854054036807161</span> <span class="n">Y0</span>
 <span class="n">The</span> <span class="n">expectation</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1162</span><span class="p">,</span>  <span class="mf">0.0768</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0081</span><span class="p">])</span>
-<span class="n">The</span> <span class="n">expectation</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.1748</span><span class="p">,</span> <span class="mf">0.0198</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batch expectation value example</span>
+<span class="n">input_state_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">batch_result</span> <span class="o">=</span> <span class="n">expec_val</span><span class="p">(</span><span class="n">input_state_batch</span><span class="p">,</span> <span class="n">decompose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The expectation value of the observable:&#39;</span><span class="p">,</span> <span class="n">batch_result</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">expectation</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observable</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.1748</span><span class="p">,</span> <span class="mf">0.0198</span><span class="p">])</span>
 </code></pre></div>
 </div>
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.loss.ExpecVal.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.forward.state" title="quairkit.loss.ExpecVal.forward.state (Python parameter) — The input state which will be used to compute the expectation value."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.forward.shots" title="quairkit.loss.ExpecVal.forward.shots (Python parameter) — The number of shots to measure the observable."><span class="n"><span class="pre">shots</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.forward.decompose" title="quairkit.loss.ExpecVal.forward.decompose (Python parameter) — Defaults to False."><span class="n"><span class="pre">decompose</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.forward.state" title="quairkit.loss.ExpecVal.forward.state (Python parameter) — The input quantum state which will be used to compute the expectation value. Can be a single state or a batch of states."><span class="n"><span class="pre">state</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.forward.shots" title="quairkit.loss.ExpecVal.forward.shots (Python parameter) — The number of shots to measure the observable."><span class="n"><span class="pre">shots</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.ExpecVal.forward.decompose" title="quairkit.loss.ExpecVal.forward.decompose (Python parameter) — If True, returns the expectation value of each term in the observable separately. Defaults to False, which returns the total expectation value."><span class="n"><span class="pre">decompose</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the expectation value of the observable with respect to the input state.</p>
-<p>The value computed by this function can be used as a loss function to optimize.</p>
+<p>The value computed by this function can be used as a loss function to optimize quantum circuits.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.ExpecVal.forward-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.ExpecVal.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input state which will be used to compute the expectation value.</p>
+<dt id="quairkit.loss.ExpecVal.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input quantum state which will be used to compute the expectation value.
+Can be a single state or a batch of states.</p>
 </dd>
-<dt id="quairkit.loss.ExpecVal.forward.shots"><span class="sig-name descname">shots</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward.shots" title="Permalink to this definition">¶</a></dt><dd><p>The number of shots to measure the observable. Defaults to None, which means the default behavior.</p>
+<dt id="quairkit.loss.ExpecVal.forward.shots"><span class="sig-name descname">shots</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward.shots" title="Permalink to this definition">¶</a></dt><dd><p>The number of shots to measure the observable. Defaults to None, which means exact computation.</p>
 </dd>
-<dt id="quairkit.loss.ExpecVal.forward.decompose"><span class="sig-name descname">decompose</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward.decompose" title="Permalink to this definition">¶</a></dt><dd><p>Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.  If decompose is <code class="docutils literal notranslate"><span class="pre">True</span></code>, it will return the expectation value of each term.</p>
+<dt id="quairkit.loss.ExpecVal.forward.decompose"><span class="sig-name descname">decompose</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool | None</span></span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward.decompose" title="Permalink to this definition">¶</a></dt><dd><p>If True, returns the expectation value of each term in the observable separately.
+Defaults to False, which returns the total expectation value.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even" id="quairkit.loss.ExpecVal.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward-raises" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><strong>NotImplementedError</strong> – The backend is wrong or not supported.</p>
+<dt class="field-even" id="quairkit.loss.ExpecVal.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The expectation value of the observable. If <code class="docutils literal notranslate"><span class="pre">decompose=True</span></code>, returns a tensor with one value per term.
+If <code class="docutils literal notranslate"><span class="pre">decompose=False</span></code>, returns a scalar for single states or a tensor for batched states.</p>
 </dd>
-<dt class="field-odd" id="quairkit.loss.ExpecVal.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p>The expectation value or the list of expectation values for each term in the observable.</p>
+<dt class="field-odd" id="quairkit.loss.ExpecVal.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If the backend is wrong or not supported.</p>
 </dd>
 <dt class="field-even" id="quairkit.loss.ExpecVal.forward-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.ExpecVal.forward-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-even"><p><em>Tensor</em></p>
@@ -1846,55 +1862,74 @@
 
 <dl class="py class objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.loss.TraceDistance">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.loss.</span></span><span class="sig-name descname"><span class="pre">TraceDistance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.TraceDistance.__init__.target_state" title="quairkit.loss.TraceDistance.__init__.target_state (Python parameter) — The target state to be used to compute the trace distance."><span class="n"><span class="pre">target_state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.TraceDistance" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.loss.</span></span><span class="sig-name descname"><span class="pre">TraceDistance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.TraceDistance.__init__.target_state" title="quairkit.loss.TraceDistance.__init__.target_state (Python parameter) — The target quantum state to be used to compute the trace distance. Can be a single state or a batch of states."><span class="n"><span class="pre">target_state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.TraceDistance" title="Link to this definition">¶</a></dt>
 <dd><p>The class of the loss function to compute the trace distance.</p>
-<p>This interface can make you using the trace distance as the loss function.</p>
+<p>This interface allows you to use the trace distance as a loss function for training quantum circuits.
+The trace distance is defined as <span class="math notranslate nohighlight">\(D(\rho, \sigma) = \frac{1}{2}\text{tr}|\rho-\sigma|\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.TraceDistance-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.TraceDistance.__init__.target_state"><span class="sig-name descname">target_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">State</span></span><a class="headerlink" href="#quairkit.loss.TraceDistance.__init__.target_state" title="Permalink to this definition">¶</a></dt><dd><p>The target state to be used to compute the trace distance.</p>
+<dt id="quairkit.loss.TraceDistance.__init__.target_state"><span class="sig-name descname">target_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator</span></span><a class="headerlink" href="#quairkit.loss.TraceDistance.__init__.target_state" title="Permalink to this definition">¶</a></dt><dd><p>The target quantum state to be used to compute the trace distance.
+Can be a single state or a batch of states.</p>
 </dd>
 </dl>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">one_state</span><span class="p">,</span> <span class="n">bell_state</span><span class="p">,</span> <span class="n">random_state</span>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This class supports batch operations. When both target and input states have batch dimensions,
+the trace distance is computed element-wise along the batch dimension.</p>
+</div>
+<p class="example rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">one_state</span><span class="p">,</span> <span class="n">bell_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="n">TraceDistance</span>
 
 <span class="c1"># Single state example</span>
 <span class="n">target_state</span> <span class="o">=</span> <span class="n">one_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define target</span>
 <span class="n">input_state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define input</span>
 <span class="n">trace_distance</span> <span class="o">=</span> <span class="n">TraceDistance</span><span class="p">(</span><span class="n">target_state</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Single state distance:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>  <span class="c1"># Output: tensor(0.7071)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Single state distance:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Single</span> <span class="n">state</span> <span class="n">distance</span><span class="p">:</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">0.7071</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batched states example</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_state</span>
 
-<span class="c1"># Batched states example</span>
 <span class="n">target_state_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Batch of 2 targets</span>
 <span class="n">input_state_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># Batch of 2 inputs</span>
 <span class="n">trace_distance</span> <span class="o">=</span> <span class="n">TraceDistance</span><span class="p">(</span><span class="n">target_state_batch</span><span class="p">)</span>
 <span class="n">batch_result</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">input_state_batch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Batched distances:&#39;</span><span class="p">,</span> <span class="n">batch_result</span><span class="p">)</span>  <span class="c1"># Output: tensor([0.7912, 0.7283])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Batched distances:&#39;</span><span class="p">,</span> <span class="n">batch_result</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Single</span> <span class="n">state</span> <span class="n">distance</span><span class="p">:</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">0.7071</span><span class="p">)</span>
-<span class="n">Batched</span> <span class="n">distances</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.7912</span><span class="p">,</span> <span class="mf">0.7283</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Batched</span> <span class="n">distances</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.7912</span><span class="p">,</span> <span class="mf">0.7283</span><span class="p">])</span>
 </code></pre></div>
 </div>
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.loss.TraceDistance.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.TraceDistance.forward.state" title="quairkit.loss.TraceDistance.forward.state (Python parameter) — The input state which will be used to compute the trace distance with the target state."><span class="n"><span class="pre">state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.TraceDistance.forward.state" title="quairkit.loss.TraceDistance.forward.state (Python parameter) — The input quantum state which will be used to compute the trace distance with the target state. Can be a single state or a batch of states."><span class="n"><span class="pre">state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the trace distance between the input state and the target state.</p>
-<p>The value computed by this function can be used as a loss function to optimize.</p>
+<p>The value computed by this function can be used as a loss function to optimize quantum circuits.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.TraceDistance.forward-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.TraceDistance.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">State</span></span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input state which will be used to compute the trace distance with the target state.</p>
+<dt id="quairkit.loss.TraceDistance.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator</span></span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input quantum state which will be used to compute the trace distance with the target state.
+Can be a single state or a batch of states. Must have the same number of systems as the target state.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even" id="quairkit.loss.TraceDistance.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward-raises" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><strong>NotImplementedError</strong> – The backend is wrong or not supported.</p>
+<dt class="field-even" id="quairkit.loss.TraceDistance.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The trace distance between the input state and the target state. Returns a scalar for single states,
+or a tensor for batched states.</p>
 </dd>
-<dt class="field-odd" id="quairkit.loss.TraceDistance.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p>The trace distance between the input state and the target state.</p>
+<dt class="field-odd" id="quairkit.loss.TraceDistance.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the number of systems in the input state does not match the target state.</p></li>
+<li><p><strong>NotImplementedError</strong> – If the backend is wrong or not supported.</p></li>
+</ul>
 </dd>
 <dt class="field-even" id="quairkit.loss.TraceDistance.forward-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.TraceDistance.forward-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-even"><p><em>Tensor</em></p>
@@ -1906,56 +1941,74 @@
 
 <dl class="py class objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.loss.StateFidelity">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.loss.</span></span><span class="sig-name descname"><span class="pre">StateFidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.StateFidelity.__init__.target_state" title="quairkit.loss.StateFidelity.__init__.target_state (Python parameter) — The target state to be used to compute the state fidelity."><span class="n"><span class="pre">target_state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.StateFidelity" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.loss.</span></span><span class="sig-name descname"><span class="pre">StateFidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.StateFidelity.__init__.target_state" title="quairkit.loss.StateFidelity.__init__.target_state (Python parameter) — The target quantum state to be used to compute the state fidelity. Can be a single state or a batch of states."><span class="n"><span class="pre">target_state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.StateFidelity" title="Link to this definition">¶</a></dt>
 <dd><p>The class of the loss function to compute the state fidelity.</p>
-<p>This interface can make you using the state fidelity as the loss function.</p>
+<p>This interface allows you to use the state fidelity as a loss function for training quantum circuits.
+The state fidelity is defined as <span class="math notranslate nohighlight">\(F(\rho, \sigma) = \text{tr}(\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}})\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.StateFidelity-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.StateFidelity.__init__.target_state"><span class="sig-name descname">target_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">State</span></span><a class="headerlink" href="#quairkit.loss.StateFidelity.__init__.target_state" title="Permalink to this definition">¶</a></dt><dd><p>The target state to be used to compute the state fidelity.</p>
+<dt id="quairkit.loss.StateFidelity.__init__.target_state"><span class="sig-name descname">target_state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator</span></span><a class="headerlink" href="#quairkit.loss.StateFidelity.__init__.target_state" title="Permalink to this definition">¶</a></dt><dd><p>The target quantum state to be used to compute the state fidelity.
+Can be a single state or a batch of states.</p>
 </dd>
 </dl>
 </dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code>    <span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">one_state</span><span class="p">,</span> <span class="n">bell_state</span><span class="p">,</span> <span class="n">random_state</span>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This class supports batch operations. When both target and input states have batch dimensions,
+the fidelity is computed element-wise along the batch dimension.</p>
+</div>
+<p class="example rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">one_state</span><span class="p">,</span> <span class="n">bell_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.loss</span> <span class="kn">import</span> <span class="n">StateFidelity</span>
 
-    <span class="c1"># Single state example</span>
-    <span class="n">target_state</span> <span class="o">=</span> <span class="n">one_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define target</span>
-    <span class="n">input_state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define input</span>
-    <span class="n">fidelity_calculator</span> <span class="o">=</span> <span class="n">StateFidelity</span><span class="p">(</span><span class="n">target_state</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">fidelity_calculator</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Single state fidelity:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>  <span class="c1"># Output: tensor(0.7071)</span>
+<span class="c1"># Single state example</span>
+<span class="n">target_state</span> <span class="o">=</span> <span class="n">one_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define target</span>
+<span class="n">input_state</span> <span class="o">=</span> <span class="n">bell_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define input</span>
+<span class="n">fidelity_calculator</span> <span class="o">=</span> <span class="n">StateFidelity</span><span class="p">(</span><span class="n">target_state</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fidelity_calculator</span><span class="p">(</span><span class="n">input_state</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Single state fidelity:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Single</span> <span class="n">state</span> <span class="n">fidelity</span><span class="p">:</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">0.7071</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batched states example</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_state</span>
 
-    <span class="c1"># Batched states example</span>
-    <span class="n">target_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Batch of 2 targets</span>
-    <span class="n">input_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># Batch of 2 inputs</span>
-    <span class="n">fidelity_calculator</span> <span class="o">=</span> <span class="n">StateFidelity</span><span class="p">(</span><span class="n">target_batch</span><span class="p">)</span>
-    <span class="n">batch_result</span> <span class="o">=</span> <span class="n">fidelity_calculator</span><span class="p">(</span><span class="n">input_batch</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Batched fidelities:&#39;</span><span class="p">,</span> <span class="n">batch_result</span><span class="p">)</span>  <span class="c1"># Output: tensor([0.5658, 0.7090])</span>
-
-<span class="p">::</span>
-
-    <span class="n">Single</span> <span class="n">state</span> <span class="n">fidelity</span><span class="p">:</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">0.7071</span><span class="p">)</span>
-    <span class="n">Batched</span> <span class="n">fidelities</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.5658</span><span class="p">,</span> <span class="mf">0.7090</span><span class="p">])</span>
+<span class="n">target_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Batch of 2 targets</span>
+<span class="n">input_batch</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="n">num_systems</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># Batch of 2 inputs</span>
+<span class="n">fidelity_calculator</span> <span class="o">=</span> <span class="n">StateFidelity</span><span class="p">(</span><span class="n">target_batch</span><span class="p">)</span>
+<span class="n">batch_result</span> <span class="o">=</span> <span class="n">fidelity_calculator</span><span class="p">(</span><span class="n">input_batch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Batched fidelities:&#39;</span><span class="p">,</span> <span class="n">batch_result</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Batched</span> <span class="n">fidelities</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.5658</span><span class="p">,</span> <span class="mf">0.7090</span><span class="p">])</span>
 </code></pre></div>
 </div>
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.loss.StateFidelity.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.StateFidelity.forward.state" title="quairkit.loss.StateFidelity.forward.state (Python parameter) — The input state which will be used to compute the state fidelity with the target state."><span class="n"><span class="pre">state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.loss.StateFidelity.forward.state" title="quairkit.loss.StateFidelity.forward.state (Python parameter) — The input quantum state which will be used to compute the state fidelity with the target state. Can be a single state or a batch of states."><span class="n"><span class="pre">state</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the state fidelity between the input state and the target state.</p>
-<p>The value computed by this function can be used as a loss function to optimize.</p>
+<p>The value computed by this function can be used as a loss function to optimize quantum circuits.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.loss.StateFidelity.forward-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.loss.StateFidelity.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">State</span></span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input state which will be used to compute the state fidelity with the target state.</p>
+<dt id="quairkit.loss.StateFidelity.forward.state"><span class="sig-name descname">state</span><span class="p"> : </span><span class="desctype"><span class="desctype">StateSimulator</span></span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward.state" title="Permalink to this definition">¶</a></dt><dd><p>The input quantum state which will be used to compute the state fidelity with the target state.
+Can be a single state or a batch of states. Must have the same number of systems as the target state.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even" id="quairkit.loss.StateFidelity.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward-raises" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p><strong>NotImplementedError</strong> – The backend is wrong or not supported.</p>
+<dt class="field-even" id="quairkit.loss.StateFidelity.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>The state fidelity between the input state and the target state. Returns a scalar for single states,
+or a tensor for batched states. The fidelity ranges from 0 to 1.</p>
 </dd>
-<dt class="field-odd" id="quairkit.loss.StateFidelity.forward-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p>The state fidelity between the input state and the target state.</p>
+<dt class="field-odd" id="quairkit.loss.StateFidelity.forward-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward-raises" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the number of systems in the input state does not match the target state.</p></li>
+<li><p><strong>NotImplementedError</strong> – If the backend is wrong or not supported.</p></li>
+</ul>
 </dd>
 <dt class="field-even" id="quairkit.loss.StateFidelity.forward-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.loss.StateFidelity.forward-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-even"><p><em>Tensor</em></p>
@@ -2040,6 +2093,7 @@
     
       
         <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

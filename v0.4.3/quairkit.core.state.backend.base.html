@@ -1698,7 +1698,9 @@
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.core.state.backend.base.State.measure-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.base.State.measure-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>A tensor containing the measurement results.</p>
+<dd class="field-even"><p>A tensor containing the measurement results. Simulator backends return
+dense probabilities, while shot-based operator backends may return sparse
+empirical probabilities over the same outcome space.</p>
 </dd>
 <dt class="field-odd" id="quairkit.core.state.backend.base.State.measure-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.state.backend.base.State.measure-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>Tensor</em></p>

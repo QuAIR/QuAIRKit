@@ -805,7 +805,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor."><span>unitary</span></span>
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A single 2x2 unitary matrix or a batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor."><span>unitary</span></span>
     </span>
   </a>
   
@@ -817,7 +817,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned."><span>return_<wbr>global</span></span>
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle \alpha is also returned."><span>return_<wbr>global</span></span>
     </span>
   </a>
   
@@ -1045,7 +1045,7 @@
       <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — Calculate the fidelity between gates."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span></span>
+      <span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — Calculate the fidelity between two quantum gates."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span></span>
     </span>
   </a>
   
@@ -1069,7 +1069,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — Quantum gate U in matrix form."><span>U</span></span>
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — First quantum gate in matrix form (can be a Tensor, ndarray, or State)."><span>U</span></span>
     </span>
   </a>
   
@@ -1081,7 +1081,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — Quantum gate V in matrix form."><span>V</span></span>
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — Second quantum gate in matrix form (can be a Tensor, ndarray, or State)."><span>V</span></span>
     </span>
   </a>
   
@@ -1123,7 +1123,7 @@
       <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general states."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span></span>
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general (possibly subnormalized) quantum states."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span></span>
     </span>
   </a>
   
@@ -1147,7 +1147,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — A subnormalized quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -1159,7 +1159,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — A subnormalized quantum state."><span>sigma</span></span>
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span>sigma</span></span>
     </span>
   </a>
   
@@ -1681,7 +1681,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -1981,7 +1981,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — A quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -1993,7 +1993,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — A quantum state."><span>sigma</span></span>
+      <span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span>sigma</span></span>
     </span>
   </a>
   
@@ -2059,7 +2059,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — A quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -2071,7 +2071,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — A quantum state."><span>sigma</span></span>
+      <span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span>sigma</span></span>
     </span>
   </a>
   
@@ -2137,7 +2137,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -2509,7 +2509,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor."><span>unitary</span></span>
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A single 2x2 unitary matrix or a batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor."><span>unitary</span></span>
     </span>
   </a>
   
@@ -2521,7 +2521,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned."><span>return_<wbr>global</span></span>
+      <span title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle \alpha is also returned."><span>return_<wbr>global</span></span>
     </span>
   </a>
   
@@ -2749,7 +2749,7 @@
       <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — Calculate the fidelity between gates."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span></span>
+      <span title="quairkit.qinfo.qinfo.gate_fidelity (Python function) — Calculate the fidelity between two quantum gates."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>gate_<wbr>fidelity</span></span>
     </span>
   </a>
   
@@ -2773,7 +2773,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — Quantum gate U in matrix form."><span>U</span></span>
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — First quantum gate in matrix form (can be a Tensor, ndarray, or State)."><span>U</span></span>
     </span>
   </a>
   
@@ -2785,7 +2785,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — Quantum gate V in matrix form."><span>V</span></span>
+      <span title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — Second quantum gate in matrix form (can be a Tensor, ndarray, or State)."><span>V</span></span>
     </span>
   </a>
   
@@ -2827,7 +2827,7 @@
       <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general states."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span></span>
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity (Python function) — Calculate the fidelity measure of two general (possibly subnormalized) quantum states."><span>quairkit.<wbr>qinfo.<wbr>qinfo.<wbr>general_<wbr>state_<wbr>fidelity</span></span>
     </span>
   </a>
   
@@ -2851,7 +2851,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — A subnormalized quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -2863,7 +2863,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — A subnormalized quantum state."><span>sigma</span></span>
+      <span title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span>sigma</span></span>
     </span>
   </a>
   
@@ -3385,7 +3385,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -3685,7 +3685,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — A quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -3697,7 +3697,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — A quantum state."><span>sigma</span></span>
+      <span title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span>sigma</span></span>
     </span>
   </a>
   
@@ -3763,7 +3763,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — A quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -3775,7 +3775,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — A quantum state."><span>sigma</span></span>
+      <span title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span>sigma</span></span>
     </span>
   </a>
   
@@ -3841,7 +3841,7 @@
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state."><span>rho</span></span>
+      <span title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state (can be a State, Tensor, or ndarray)."><span>rho</span></span>
     </span>
   </a>
   
@@ -4035,38 +4035,54 @@
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.decomp_1qubit">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">decomp_1qubit</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.decomp_1qubit.unitary" title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor."><span class="n"><span class="pre">unitary</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.decomp_1qubit.return_global" title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle alpha is also returned."><span class="n"><span class="pre">return_global</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">decomp_1qubit</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.decomp_1qubit.unitary" title="quairkit.qinfo.qinfo.decomp_1qubit.unitary (Python parameter) — A single 2x2 unitary matrix or a batch of 2x2 unitary matrices representing single-qubit gates, as either a numpy ndarray or a torch Tensor."><span class="n"><span class="pre">unitary</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.decomp_1qubit.return_global" title="quairkit.qinfo.qinfo.decomp_1qubit.return_global (Python parameter) — If set to True, the global phase angle \alpha is also returned."><span class="n"><span class="pre">return_global</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit" title="Link to this definition">¶</a></dt>
 <dd><p>Decompose a single-qubit unitary operator into Z-Y-Z rotation angles.</p>
+<p>Decomposes a single-qubit unitary <span class="math notranslate nohighlight">\(U\)</span> as <span class="math notranslate nohighlight">\(U = e^{i\alpha} R_Z(\beta) R_Y(\gamma) R_Z(\delta)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.decomp_1qubit-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.decomp_1qubit.unitary"><span class="sig-name descname">unitary</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit.unitary" title="Permalink to this definition">¶</a></dt><dd><p>A batch of 2x2 unitary matrices representing single-qubit gates,
-as either a numpy ndarray or a torch Tensor. The shape should be (m, 2, 2).</p>
+<dt id="quairkit.qinfo.qinfo.decomp_1qubit.unitary"><span class="sig-name descname">unitary</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit.unitary" title="Permalink to this definition">¶</a></dt><dd><p>A single 2x2 unitary matrix or a batch of 2x2 unitary matrices representing single-qubit gates,
+as either a numpy ndarray or a torch Tensor. Shape should be <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code> for single or <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">2,</span> <span class="pre">2)</span></code> for batch.</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.decomp_1qubit.return_global"><span class="sig-name descname">return_global</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit.return_global" title="Permalink to this definition">¶</a></dt><dd><p>If set to True, the global phase angle <cite>alpha</cite> is also returned.</p>
+<dt id="quairkit.qinfo.qinfo.decomp_1qubit.return_global"><span class="sig-name descname">return_global</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit.return_global" title="Permalink to this definition">¶</a></dt><dd><p>If set to True, the global phase angle <span class="math notranslate nohighlight">\(\alpha\)</span> is also returned. Defaults to False.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.decomp_1qubit-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>A tuple containing the angles <cite>(beta, gamma, delta)</cite> or <cite>(alpha, beta, gamma, delta)</cite> if <cite>return_global</cite> is True.
-The type of the tuple elements matches the input type.</p>
+<dd class="field-even"><p>A tuple containing the angles <code class="docutils literal notranslate"><span class="pre">(beta,</span> <span class="pre">gamma,</span> <span class="pre">delta)</span></code> or <code class="docutils literal notranslate"><span class="pre">(alpha,</span> <span class="pre">beta,</span> <span class="pre">gamma,</span> <span class="pre">delta)</span></code> if <code class="docutils literal notranslate"><span class="pre">return_global</span></code> is True.
+The type of the tuple elements matches the input type. For batch input, each angle is a tensor with shape <code class="docutils literal notranslate"><span class="pre">(m,)</span></code>.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.decomp_1qubit-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>Tuple</em>[<em>ndarray</em>, …] | <em>Tuple</em>[<em>Tensor</em>, …]</p>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function supports batch operations. When input is a batch of unitaries, all angles are computed in parallel.</p>
+</div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">angles</span> <span class="o">=</span> <span class="n">decomp_1qubit</span><span class="p">(</span><span class="n">h</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The angles are:</span><span class="se">\n</span><span class="si">{</span><span class="n">angles</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">h</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">decomp_1qubit</span>
+
+<span class="c1"># Decompose Hadamard gate</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="n">decomp_1qubit</span><span class="p">(</span><span class="n">h</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Z-Y-Z angles for H gate: </span><span class="si">{</span><span class="n">angles</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">angles</span> <span class="n">are</span><span class="p">:</span>
-<span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.5708</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">3.1416</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Z</span><span class="o">-</span><span class="n">Y</span><span class="o">-</span><span class="n">Z</span> <span class="n">angles</span> <span class="k">for</span> <span class="n">H</span> <span class="n">gate</span><span class="p">:</span> <span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.5708</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">3.1416</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Decompose with global phase</span>
+<span class="n">angles_with_phase</span> <span class="o">=</span> <span class="n">decomp_1qubit</span><span class="p">(</span><span class="n">h</span><span class="p">(),</span> <span class="n">return_global</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;With global phase: </span><span class="si">{</span><span class="n">angles_with_phase</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">With</span> <span class="k">global</span> <span class="n">phase</span><span class="p">:</span> <span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.5708</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">3.1416</span><span class="p">))</span>
 </code></pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.decomp_1qubit-raises">Raises<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.decomp_1qubit-raises" title="Permalink to this headline">¶</a></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – Raises a ValueError if the input matrix is not a batch of 2x2 unitary matrices.</p>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the input matrix is not a 2x2 unitary matrix or batch of 2x2 unitary matrices.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -4180,68 +4196,111 @@ The type of the tuple elements matches the input type.</p>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.gate_fidelity">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">gate_fidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.gate_fidelity.U" title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — Quantum gate U in matrix form."><span class="n"><span class="pre">U</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.gate_fidelity.V" title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — Quantum gate V in matrix form."><span class="n"><span class="pre">V</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the fidelity between gates.</p>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">gate_fidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.gate_fidelity.U" title="quairkit.qinfo.qinfo.gate_fidelity.U (Python parameter) — First quantum gate in matrix form (can be a Tensor, ndarray, or State)."><span class="n"><span class="pre">U</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.gate_fidelity.V" title="quairkit.qinfo.qinfo.gate_fidelity.V (Python parameter) — Second quantum gate in matrix form (can be a Tensor, ndarray, or State)."><span class="n"><span class="pre">V</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the fidelity between two quantum gates.</p>
 <div class="math notranslate nohighlight">
-\[F(U, V) = |\text{tr}(UV^\dagger)|/2^n\]</div>
-<p><span class="math notranslate nohighlight">\(U\)</span> is a <span class="math notranslate nohighlight">\(2^n\times 2^n\)</span> unitary gate.</p>
+\[F(U, V) = \frac{|\text{tr}(UV^\dagger)|}{2^n}\]</div>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> are <span class="math notranslate nohighlight">\(2^n\times 2^n\)</span> unitary gates.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.gate_fidelity-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.gate_fidelity.U"><span class="sig-name descname">U</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity.U" title="Permalink to this definition">¶</a></dt><dd><p>Quantum gate <span class="math notranslate nohighlight">\(U\)</span> in matrix form.</p>
+<dt id="quairkit.qinfo.qinfo.gate_fidelity.U"><span class="sig-name descname">U</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity.U" title="Permalink to this definition">¶</a></dt><dd><p>First quantum gate in matrix form (can be a Tensor, ndarray, or State).</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.gate_fidelity.V"><span class="sig-name descname">V</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity.V" title="Permalink to this definition">¶</a></dt><dd><p>Quantum gate <span class="math notranslate nohighlight">\(V\)</span> in matrix form.</p>
+<dt id="quairkit.qinfo.qinfo.gate_fidelity.V"><span class="sig-name descname">V</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity.V" title="Permalink to this definition">¶</a></dt><dd><p>Second quantum gate in matrix form (can be a Tensor, ndarray, or State).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.gate_fidelity-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>Fidelity between gates.</p>
+<dd class="field-even"><p>Fidelity between the two gates. Returns a scalar for single gates,
+or a tensor for batched gates.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.gate_fidelity-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.gate_fidelity-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function supports batch operations. When input gates have batch dimensions,
+the fidelity is computed element-wise along the batch dimension.</p>
+</div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">xy_fidelity</span> <span class="o">=</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">x</span><span class="p">(),</span> <span class="n">y</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The fidelity of X and Y is:</span><span class="se">\n</span><span class="si">{</span><span class="n">xy_fidelity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">gate_fidelity</span>
+
+<span class="c1"># Calculate fidelity between X and Y gates</span>
+<span class="n">fid</span> <span class="o">=</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">x</span><span class="p">(),</span> <span class="n">y</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fidelity between X and Y gates: </span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">fidelity</span> <span class="n">of</span> <span class="n">X</span> <span class="ow">and</span> <span class="n">Y</span> <span class="ow">is</span><span class="p">:</span>
-<span class="mf">0.0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Fidelity</span> <span class="n">between</span> <span class="n">X</span> <span class="ow">and</span> <span class="n">Y</span> <span class="n">gates</span><span class="p">:</span> <span class="mf">0.0</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batch gate fidelity example</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_unitary</span>
+
+<span class="n">batch_U</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 single-qubit unitaries</span>
+<span class="n">batch_V</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 single-qubit unitaries</span>
+<span class="n">batch_fid</span> <span class="o">=</span> <span class="n">gate_fidelity</span><span class="p">(</span><span class="n">batch_U</span><span class="p">,</span> <span class="n">batch_V</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Batch fidelity shape: </span><span class="si">{</span><span class="n">batch_fid</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Batch</span> <span class="n">fidelity</span> <span class="n">shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.general_state_fidelity">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">general_state_fidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.general_state_fidelity.rho" title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — A subnormalized quantum state."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.general_state_fidelity.sigma" title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — A subnormalized quantum state."><span class="n"><span class="pre">sigma</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the fidelity measure of two general states.</p>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">general_state_fidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.general_state_fidelity.rho" title="quairkit.qinfo.qinfo.general_state_fidelity.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.general_state_fidelity.sigma" title="quairkit.qinfo.qinfo.general_state_fidelity.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">sigma</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the fidelity measure of two general (possibly subnormalized) quantum states.</p>
 <div class="math notranslate nohighlight">
 \[F_*(\rho, \sigma) = F(\rho, \sigma) + \sqrt{(1 - \text{tr}[\rho])(1 - \text{tr}[\sigma])}\]</div>
-<p>where <span class="math notranslate nohighlight">\(F(\rho, \sigma)\)</span> is the state fidelity without square.</p>
+<p>where <span class="math notranslate nohighlight">\(F(\rho, \sigma)\)</span> is the standard state fidelity without square.</p>
+<p>This measure is useful for subnormalized states where <span class="math notranslate nohighlight">\(\text{tr}[\rho] \leq 1\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.general_state_fidelity-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.general_state_fidelity.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity.rho" title="Permalink to this definition">¶</a></dt><dd><p>A subnormalized quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.general_state_fidelity.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity.rho" title="Permalink to this definition">¶</a></dt><dd><p>First quantum state (can be a State, Tensor, or ndarray). May be subnormalized.</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.general_state_fidelity.sigma"><span class="sig-name descname">sigma</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity.sigma" title="Permalink to this definition">¶</a></dt><dd><p>A subnormalized quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.general_state_fidelity.sigma"><span class="sig-name descname">sigma</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity.sigma" title="Permalink to this definition">¶</a></dt><dd><p>Second quantum state (can be a State, Tensor, or ndarray). May be subnormalized.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.general_state_fidelity-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The general state fidelity of the input subnormalized states.</p>
+<dd class="field-even"><p>The general state fidelity of the input states. Returns a scalar for single states,
+or a tensor for batched states.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.general_state_fidelity-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.general_state_fidelity-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function supports batch operations. When input states have batch dimensions,
+the fidelity is computed element-wise along the batch dimension.</p>
+</div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">fidelity</span> <span class="o">=</span> <span class="n">general_state_fidelity</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">zero_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The fidelity of Bell state and zero state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">fidelity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">bell_state</span><span class="p">,</span> <span class="n">zero_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">general_state_fidelity</span>
+
+<span class="c1"># Calculate general fidelity between Bell state and zero state</span>
+<span class="n">fid</span> <span class="o">=</span> <span class="n">general_state_fidelity</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">zero_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;General fidelity: </span><span class="si">{</span><span class="n">fid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">fidelity</span> <span class="n">of</span> <span class="n">Bell</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">zero</span> <span class="n">state</span> <span class="ow">is</span><span class="p">:</span>
-<span class="mf">0.70710688829422</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">General</span> <span class="n">fidelity</span><span class="p">:</span> <span class="mf">0.70710688829422</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batch general fidelity example</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_state</span>
+
+<span class="n">batch_rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 states</span>
+<span class="n">batch_sigma</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 states</span>
+<span class="n">batch_fid</span> <span class="o">=</span> <span class="n">general_state_fidelity</span><span class="p">(</span><span class="n">batch_rho</span><span class="p">,</span> <span class="n">batch_sigma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Batch general fidelity shape: </span><span class="si">{</span><span class="n">batch_fid</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Batch</span> <span class="n">general</span> <span class="n">fidelity</span> <span class="n">shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </dd></dl>
@@ -4463,31 +4522,49 @@ then this function returns the observable <code class="docutils literal notransl
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.purity">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">purity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.purity.rho" title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state."><span class="n"><span class="pre">rho</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">purity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.purity.rho" title="quairkit.qinfo.qinfo.purity.rho (Python parameter) — Density matrix form of the quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">rho</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the purity of a quantum state.</p>
 <div class="math notranslate nohighlight">
 \[P = \text{tr}(\rho^2)\]</div>
+<p>The purity ranges from <span class="math notranslate nohighlight">\(1/d\)</span> (maximally mixed) to 1 (pure state), where <span class="math notranslate nohighlight">\(d\)</span> is the dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.purity-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.purity.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity.rho" title="Permalink to this definition">¶</a></dt><dd><p>Density matrix form of the quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.purity.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity.rho" title="Permalink to this definition">¶</a></dt><dd><p>Density matrix form of the quantum state (can be a State, Tensor, or ndarray).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.purity-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The purity of the input quantum state.</p>
+<dd class="field-even"><p>The purity of the input quantum state. Returns a scalar for single states,
+or a tensor for batched states.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.purity-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.purity-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function supports batch operations. When input states have batch dimensions,
+the purity is computed element-wise along the batch dimension.</p>
+</div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">max_mixed</span> <span class="o">=</span> <span class="n">purity</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The purity of 1-qubit maximal mixed state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">max_mixed</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">eye</span><span class="p">,</span> <span class="n">bell_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">purity</span>
+
+<span class="c1"># Purity of maximally mixed state</span>
+<span class="n">max_mixed_purity</span> <span class="o">=</span> <span class="n">purity</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Purity of 1-qubit maximally mixed state: </span><span class="si">{</span><span class="n">max_mixed_purity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">purity</span> <span class="n">of</span> <span class="mi">1</span><span class="o">-</span><span class="n">qubit</span> <span class="n">maximal</span> <span class="n">mixed</span> <span class="n">state</span> <span class="ow">is</span><span class="p">:</span>
-<span class="mf">0.5</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Purity</span> <span class="n">of</span> <span class="mi">1</span><span class="o">-</span><span class="n">qubit</span> <span class="n">maximally</span> <span class="n">mixed</span> <span class="n">state</span><span class="p">:</span> <span class="mf">0.5</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Purity of pure state (Bell state)</span>
+<span class="n">bell_purity</span> <span class="o">=</span> <span class="n">purity</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Purity of Bell state: </span><span class="si">{</span><span class="n">bell_purity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Purity</span> <span class="n">of</span> <span class="n">Bell</span> <span class="n">state</span><span class="p">:</span> <span class="mf">1.0</span>
 </code></pre></div>
 </div>
 </dd></dl>
@@ -4589,21 +4666,23 @@ then this function returns the observable <code class="docutils literal notransl
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.state_fidelity">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">state_fidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.state_fidelity.rho" title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — A quantum state."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.state_fidelity.sigma" title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — A quantum state."><span class="n"><span class="pre">sigma</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">state_fidelity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.state_fidelity.rho" title="quairkit.qinfo.qinfo.state_fidelity.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.state_fidelity.sigma" title="quairkit.qinfo.qinfo.state_fidelity.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">sigma</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the fidelity of two quantum states, no extra square is taken.</p>
 <div class="math notranslate nohighlight">
 \[F(\rho, \sigma) = \text{tr}(\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}})\]</div>
+<p>For pure states, this simplifies to <span class="math notranslate nohighlight">\(|\langle\psi|\phi\rangle|\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.state_fidelity-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.state_fidelity.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity.rho" title="Permalink to this definition">¶</a></dt><dd><p>A quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.state_fidelity.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity.rho" title="Permalink to this definition">¶</a></dt><dd><p>First quantum state (can be a State, Tensor, or ndarray).</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.state_fidelity.sigma"><span class="sig-name descname">sigma</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity.sigma" title="Permalink to this definition">¶</a></dt><dd><p>A quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.state_fidelity.sigma"><span class="sig-name descname">sigma</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity.sigma" title="Permalink to this definition">¶</a></dt><dd><p>Second quantum state (can be a State, Tensor, or ndarray).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.state_fidelity-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The fidelity between the input quantum states.</p>
+<dd class="field-even"><p>The fidelity between the input quantum states. Returns a scalar for single states,
+or a tensor for batched states.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.state_fidelity-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.state_fidelity-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
@@ -4611,81 +4690,138 @@ then this function returns the observable <code class="docutils literal notransl
 </dl>
 <div class="note admonition">
 <p class="admonition-title">Note</p>
-<p>The fidelity equation is based on Equation (9.53) in Quantum Computation &amp; Quantum Information, 10th edition.</p>
+<p>The fidelity equation is based on Equation (9.53) in Quantum Computation &amp; Quantum Information, 10th edition.
+This function supports batch operations. When input states have batch dimensions,
+the fidelity is computed element-wise along the batch dimension.</p>
 </div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">fidelity</span> <span class="o">=</span> <span class="n">state_fidelity</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The state fidelity between Bell state and maximal mixed state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">fidelity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">bell_state</span><span class="p">,</span> <span class="n">zero_state</span><span class="p">,</span> <span class="n">eye</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">state_fidelity</span>
+
+<span class="c1"># Single state fidelity</span>
+<span class="n">fidelity</span> <span class="o">=</span> <span class="n">state_fidelity</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fidelity between Bell state and maximal mixed state: </span><span class="si">{</span><span class="n">fidelity</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">state</span> <span class="n">fidelity</span> <span class="n">between</span> <span class="n">Bell</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">maximal</span> <span class="n">mixed</span> <span class="n">state</span> <span class="ow">is</span><span class="p">:</span>
-<span class="mf">0.5000725984573364</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Fidelity</span> <span class="n">between</span> <span class="n">Bell</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">maximal</span> <span class="n">mixed</span> <span class="n">state</span><span class="p">:</span> <span class="mf">0.5000725984573364</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batch fidelity example</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_state</span>
+
+<span class="n">batch_rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 states</span>
+<span class="n">batch_sigma</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 states</span>
+<span class="n">batch_fid</span> <span class="o">=</span> <span class="n">state_fidelity</span><span class="p">(</span><span class="n">batch_rho</span><span class="p">,</span> <span class="n">batch_sigma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Batch fidelity shape: </span><span class="si">{</span><span class="n">batch_fid</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Batch</span> <span class="n">fidelity</span> <span class="n">shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.trace_distance">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">trace_distance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.trace_distance.rho" title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — A quantum state."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.trace_distance.sigma" title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — A quantum state."><span class="n"><span class="pre">sigma</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">trace_distance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.trace_distance.rho" title="quairkit.qinfo.qinfo.trace_distance.rho (Python parameter) — First quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.trace_distance.sigma" title="quairkit.qinfo.qinfo.trace_distance.sigma (Python parameter) — Second quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">sigma</span></span></a></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the trace distance of two quantum states.</p>
 <div class="math notranslate nohighlight">
 \[D(\rho, \sigma) = \frac{1}{2}\text{tr}|\rho-\sigma|\]</div>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.trace_distance-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.trace_distance.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance.rho" title="Permalink to this definition">¶</a></dt><dd><p>A quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.trace_distance.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance.rho" title="Permalink to this definition">¶</a></dt><dd><p>First quantum state (can be a State, Tensor, or ndarray).</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.trace_distance.sigma"><span class="sig-name descname">sigma</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance.sigma" title="Permalink to this definition">¶</a></dt><dd><p>A quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.trace_distance.sigma"><span class="sig-name descname">sigma</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance.sigma" title="Permalink to this definition">¶</a></dt><dd><p>Second quantum state (can be a State, Tensor, or ndarray).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.trace_distance-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The trace distance between the input quantum states.</p>
+<dd class="field-even"><p>The trace distance between the input quantum states. Returns a scalar for single states,
+or a tensor for batched states.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.trace_distance-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.trace_distance-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function supports batch operations. When input states have batch dimensions,
+the trace distance is computed element-wise along the batch dimension.</p>
+</div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">tr_dist</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The trace distance between Bell state and maximal mixed state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">tr_dist</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">bell_state</span><span class="p">,</span> <span class="n">eye</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">trace_distance</span>
+
+<span class="c1"># Single state trace distance</span>
+<span class="n">tr_dist</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trace distance between Bell state and maximal mixed state: </span><span class="si">{</span><span class="n">tr_dist</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">trace</span> <span class="n">distance</span> <span class="n">between</span> <span class="n">Bell</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">maximal</span> <span class="n">mixed</span> <span class="n">state</span> <span class="ow">is</span><span class="p">:</span>
-<span class="mf">0.75</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Trace</span> <span class="n">distance</span> <span class="n">between</span> <span class="n">Bell</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">maximal</span> <span class="n">mixed</span> <span class="n">state</span><span class="p">:</span> <span class="mf">0.75</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Batch trace distance example</span>
+<span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">random_state</span>
+
+<span class="n">batch_rho</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 states</span>
+<span class="n">batch_sigma</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Batch of 3 states</span>
+<span class="n">batch_dist</span> <span class="o">=</span> <span class="n">trace_distance</span><span class="p">(</span><span class="n">batch_rho</span><span class="p">,</span> <span class="n">batch_sigma</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Batch trace distance shape: </span><span class="si">{</span><span class="n">batch_dist</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Batch</span> <span class="n">trace</span> <span class="n">distance</span> <span class="n">shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
 </code></pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py" id="quairkit.qinfo.qinfo.von_neumann_entropy">
-<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">von_neumann_entropy</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.von_neumann_entropy.rho" title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.von_neumann_entropy.base" title="quairkit.qinfo.qinfo.von_neumann_entropy.base (Python parameter) — The base of logarithm."><span class="n"><span class="pre">base</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">quairkit.qinfo.qinfo.</span></span><span class="sig-name descname"><span class="pre">von_neumann_entropy</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.von_neumann_entropy.rho" title="quairkit.qinfo.qinfo.von_neumann_entropy.rho (Python parameter) — Density matrix form of the quantum state (can be a State, Tensor, or ndarray)."><span class="n"><span class="pre">rho</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.qinfo.qinfo.von_neumann_entropy.base" title="quairkit.qinfo.qinfo.von_neumann_entropy.base (Python parameter) — The base of logarithm."><span class="n"><span class="pre">base</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">2</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the von Neumann entropy of a quantum state.</p>
 <div class="math notranslate nohighlight">
 \[S = -\text{tr}(\rho \log_\text{base}(\rho))\]</div>
+<p>The von Neumann entropy measures the amount of quantum information in a state.
+For a <span class="math notranslate nohighlight">\(d\)</span>-dimensional system, it ranges from 0 (pure state) to <span class="math notranslate nohighlight">\(\log_d(\text{base})\)</span> (maximally mixed).</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="quairkit.qinfo.qinfo.von_neumann_entropy-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy-parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="quairkit.qinfo.qinfo.von_neumann_entropy.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy.rho" title="Permalink to this definition">¶</a></dt><dd><p>Density matrix form of the quantum state.</p>
+<dt id="quairkit.qinfo.qinfo.von_neumann_entropy.rho"><span class="sig-name descname">rho</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | StateSimulator | StateOperator</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy.rho" title="Permalink to this definition">¶</a></dt><dd><p>Density matrix form of the quantum state (can be a State, Tensor, or ndarray).</p>
 </dd>
-<dt id="quairkit.qinfo.qinfo.von_neumann_entropy.base"><span class="sig-name descname">base</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | Iterable[float] | float | int | None</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy.base" title="Permalink to this definition">¶</a></dt><dd><p>The base of logarithm. Defaults to 2.</p>
+<dt id="quairkit.qinfo.qinfo.von_neumann_entropy.base"><span class="sig-name descname">base</span><span class="p"> : </span><span class="desctype"><span class="desctype">ndarray | Tensor | Iterable[float] | float | int | None</span></span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy.base" title="Permalink to this definition">¶</a></dt><dd><p>The base of logarithm. Defaults to 2 (bits). Use <span class="math notranslate nohighlight">\(e\)</span> for nats.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="quairkit.qinfo.qinfo.von_neumann_entropy-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy-returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The von Neumann entropy of the input quantum state.</p>
+<dd class="field-even"><p>The von Neumann entropy of the input quantum state. Returns a scalar for single states,
+or a tensor for batched states.</p>
 </dd>
 <dt class="field-odd" id="quairkit.qinfo.qinfo.von_neumann_entropy-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.qinfo.qinfo.von_neumann_entropy-return-type" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><p><em>ndarray</em> | <em>Tensor</em></p>
 </dd>
 </dl>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function supports batch operations. When input states have batch dimensions,
+the entropy is computed element-wise along the batch dimension.</p>
+</div>
 <p class="example rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="n">ent</span> <span class="o">=</span> <span class="n">von_neumann_entropy</span><span class="p">(</span><span class="n">completely_mixed_computational</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The von neumann entropy of 1-qubit maximal mixed state is:</span><span class="se">\n</span><span class="si">{</span><span class="n">ent</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">quairkit.database</span> <span class="kn">import</span> <span class="n">completely_mixed_computational</span><span class="p">,</span> <span class="n">bell_state</span>
+<span class="kn">from</span> <span class="nn">quairkit.qinfo</span> <span class="kn">import</span> <span class="n">von_neumann_entropy</span>
+
+<span class="c1"># Entropy of maximally mixed state</span>
+<span class="n">ent</span> <span class="o">=</span> <span class="n">von_neumann_entropy</span><span class="p">(</span><span class="n">completely_mixed_computational</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Von Neumann entropy of 1-qubit maximally mixed state: </span><span class="si">{</span><span class="n">ent</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">von</span> <span class="n">neumann</span> <span class="n">entropy</span> <span class="n">of</span> <span class="mi">1</span><span class="o">-</span><span class="n">qubit</span> <span class="n">maximal</span> <span class="n">mixed</span> <span class="n">state</span> <span class="ow">is</span><span class="p">:</span>
-<span class="mf">1.0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Von</span> <span class="n">Neumann</span> <span class="n">entropy</span> <span class="n">of</span> <span class="mi">1</span><span class="o">-</span><span class="n">qubit</span> <span class="n">maximally</span> <span class="n">mixed</span> <span class="n">state</span><span class="p">:</span> <span class="mf">1.0</span>
+</code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Entropy of pure state (should be 0)</span>
+<span class="n">pure_ent</span> <span class="o">=</span> <span class="n">von_neumann_entropy</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Von Neumann entropy of Bell state: </span><span class="si">{</span><span class="n">pure_ent</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">Von</span> <span class="n">Neumann</span> <span class="n">entropy</span> <span class="n">of</span> <span class="n">Bell</span> <span class="n">state</span><span class="p">:</span> <span class="mf">0.0</span>
 </code></pre></div>
 </div>
 </dd></dl>
