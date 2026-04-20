@@ -921,7 +921,25 @@ MixedState::measure_by_state(const torch::Tensor &measure_basis_ket,
       out.data_.contiguous().reshape({-1, applied_dim, rest_dim, applied_dim, rest_dim});
   auto k_flat = k.contiguous().reshape({num_outcomes, applied_dim});
 
-  auto rho_rest = at::einsum("baicj,oa,oc->boij", {rho, k_flat.conj(), k_flat});
+  const auto B_r = rho.size(0);
+  auto k_conj_flat = k_flat.conj();
+  auto rho_perm = rho.permute({1, 0, 2, 3, 4}).contiguous();
+  auto rho_flat = rho_perm.reshape(
+      {applied_dim, B_r * rest_dim * applied_dim * rest_dim});
+  auto temp_mat = at::matmul(k_conj_flat, rho_flat);
+  auto temp =
+      temp_mat.reshape({num_outcomes, B_r, rest_dim, applied_dim, rest_dim});
+
+  auto temp_perm = temp.permute({0, 1, 2, 4, 3}).contiguous();
+  auto temp_flat = temp_perm.reshape(
+      {num_outcomes, B_r * rest_dim * rest_dim, applied_dim});
+  auto k_mat = k_flat.unsqueeze(-1);
+  auto rho_rest_flat =
+      at::bmm(temp_flat, k_mat).squeeze(-1);
+  auto rho_rest = rho_rest_flat
+                      .reshape({num_outcomes, B_r, rest_dim, rest_dim})
+                      .permute({1, 0, 2, 3})
+                      .contiguous();
 
   auto prob =
       at::real(rho_rest.diagonal( 0, -2, -1).sum(-1));
@@ -1120,10 +1138,46 @@ MixedState::measure_by_state_product(
 
     if (i == 0) {
       auto v = rho0.view({B, a, AR, a, AR});
-      cur = at::einsum("bpxqy,op,oq->boxy", {v, k_conj, k_plain});
+
+      auto v_perm = v.permute({1, 0, 2, 3, 4}).contiguous();
+      auto v_flat = v_perm.reshape({a, B * AR * a * AR});
+      auto temp_mat = at::matmul(k_conj, v_flat);
+      auto temp =
+          temp_mat.reshape({num_outcomes, B, AR, a, AR});
+
+      auto temp_perm =
+          temp.permute({0, 1, 2, 4, 3}).contiguous();
+      auto temp_flat =
+          temp_perm.reshape({num_outcomes, B * AR * AR, a});
+      auto k_mat = k_plain.unsqueeze(-1);
+      auto cur_flat =
+          at::bmm(temp_flat, k_mat).squeeze(-1);
+      cur = cur_flat.reshape({num_outcomes, B, AR, AR})
+                .permute({1, 0, 2, 3})
+                .contiguous();
     } else {
       auto v = cur.view({B, num_outcomes, a, AR, a, AR});
-      cur = at::einsum("bopxqy,op,oq->boxy", {v, k_conj, k_plain});
+
+      auto v_perm =
+          v.permute({1, 0, 3, 4, 5, 2}).contiguous();
+      auto v_flat = v_perm.reshape(
+          {num_outcomes, B * AR * a * AR, a});
+      auto k_conj_mat = k_conj.unsqueeze(-1);
+      auto temp_flat =
+          at::bmm(v_flat, k_conj_mat).squeeze(-1);
+      auto temp =
+          temp_flat.reshape({num_outcomes, B, AR, a, AR});
+
+      auto temp_perm =
+          temp.permute({0, 1, 2, 4, 3}).contiguous();
+      auto temp_flat2 =
+          temp_perm.reshape({num_outcomes, B * AR * AR, a});
+      auto k_plain_mat = k_plain.unsqueeze(-1);
+      auto cur_flat =
+          at::bmm(temp_flat2, k_plain_mat).squeeze(-1);
+      cur = cur_flat.reshape({num_outcomes, B, AR, AR})
+                .permute({1, 0, 2, 3})
+                .contiguous();
     }
 
     applied_rem = next_applied_rem;

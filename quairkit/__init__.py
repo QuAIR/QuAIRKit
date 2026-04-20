@@ -202,7 +202,7 @@ from .circuit import Circuit
 from . import application
 
 name = "quairkit"
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 try:
     importlib.import_module("quairkit._C")

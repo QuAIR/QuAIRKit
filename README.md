@@ -9,7 +9,7 @@ QuAIRKit is a Python SDK for algorithm development in quantum computing, quantum
   </a>
   <!-- PyPI -->
   <a href="https://pypi.org/project/quairkit/">
-    <img src="https://img.shields.io/badge/pypi-v0.5.0-orange.svg?style=flat-square&logo=pypi"/>
+    <img src="https://img.shields.io/badge/pypi-v0.5.1-orange.svg?style=flat-square&logo=pypi"/>
   </a>
   <!-- Python -->
   <a href="https://www.python.org/">
@@ -60,7 +60,7 @@ pip install quairkit
 Or install a wheel downloaded from [GitHub Releases](https://github.com/QuAIR/QuAIRKit/releases) (Assets):
 
 ```bash
-pip install ./quairkit-0.5.0-*.whl
+pip install ./quairkit-0.5.1-*.whl
 ```
 
 These wheels are built against PyTorch 2.11.x and are expected to work with both CPU and CUDA PyTorch builds, as long as your installed PyTorch is also 2.11.x.
@@ -337,7 +337,3 @@ pip install -e . --config-settings editable_mode=strict --no-build-isolation
 ```
 
 If you frequently modify the source code, we recommend the `extraPaths` approach above. The strict editable mode may require rerunning the install command after C++ changes.
-
-## Acknowledgements
-
-We appreciate the kind support from the [Sourcery AI](https://sourcery.ai) that greatly enhances the coding & review quality of the QuAIRKit project.

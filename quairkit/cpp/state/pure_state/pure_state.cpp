@@ -989,11 +989,23 @@ PureState::measure_by_state_product(
     auto k_conj = infos[i].k_flat.conj();
 
     if (i == 0) {
-      auto cur_view = psi.view({B, a, rem});
-      cur = at::einsum("oa,bar->bor", {k_conj, cur_view});
+      auto cur_view = psi.view({B, a, rem}).contiguous();
+      auto psi_flat =
+          cur_view.permute({1, 0, 2}).contiguous().reshape({a, B * rem});
+      auto out_mat = at::matmul(k_conj, psi_flat);
+      cur = out_mat.reshape({num_outcomes, B, rem})
+                .permute({1, 0, 2})
+                .contiguous();
     } else {
       auto cur_view = cur.view({B, num_outcomes, a, rem});
-      cur = at::einsum("oa,boar->bor", {k_conj, cur_view});
+      auto cur_perm =
+          cur_view.permute({1, 0, 3, 2}).contiguous();
+      auto cur_flat = cur_perm.reshape({num_outcomes, B * rem, a});
+      auto k_mat = k_conj.unsqueeze(-1);
+      auto out_bmm = at::bmm(cur_flat, k_mat).squeeze(-1);
+      cur = out_bmm.reshape({num_outcomes, B, rem})
+                .permute({1, 0, 2})
+                .contiguous();
     }
 
     applied_rem = next_applied_rem;

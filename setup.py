@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     setup(
         name="quairkit",
-        version="0.5.0",
+        version="0.5.1",
         packages=find_packages(include=["quairkit", "quairkit.*"]),
         ext_modules=_get_ext_modules(),
         cmdclass={"build_ext": BuildExtension},

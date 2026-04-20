@@ -1,10 +1,14 @@
 [build-system]
+# The C++ extension links against libtorch, so ABI must match at runtime.
+# Pin the build-time torch version so PEP517 build-isolation environments
+# (both CI and source installs) compile against exactly torch 2.11.x and
+# produce wheels consistent with README's "built against PyTorch 2.11.x".
 requires = ["setuptools>=77", "wheel", "torch==2.11.*", "ninja"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "quairkit"
-version = "0.5.0"
+version = "0.5.1"
 description = "QuAIRKit is a Python research toolbox for developing quantum computing, quantum information, and quantum machine learning algorithms."
 readme = "README.md"
 requires-python = ">=3.10,<4"

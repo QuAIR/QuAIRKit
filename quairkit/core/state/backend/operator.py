@@ -272,9 +272,10 @@ def _empty_measure_probabilities(
     size = (num_outcomes,) if batch_size == 1 else (batch_size, num_outcomes)
     indices = torch.empty((len(size), 0), dtype=torch.int64, device="cpu")
     values = torch.empty((0,), dtype=get_float_dtype(), device="cpu")
-    result = torch.sparse_coo_tensor(
-        indices, values, size=size, dtype=get_float_dtype(), device="cpu"
-    ).coalesce()
+    with torch.sparse.check_sparse_tensor_invariants(enable=False):
+        result = torch.sparse_coo_tensor(
+            indices, values, size=size, dtype=get_float_dtype(), device="cpu",
+        ).coalesce()
     if device is not None:
         result = result.to(device=device)
     return result
@@ -313,13 +314,14 @@ def _csr_counts_to_sparse_probabilities(
             [row_indices, indices.to(dtype=torch.int64, copy=False)],
             dim=0,
         )
-    result = torch.sparse_coo_tensor(
-        sparse_indices,
-        values,
-        size=size,
-        dtype=get_float_dtype(),
-        device="cpu",
-    ).coalesce()
+    with torch.sparse.check_sparse_tensor_invariants(enable=False):
+        result = torch.sparse_coo_tensor(
+            sparse_indices,
+            values,
+            size=size,
+            dtype=get_float_dtype(),
+            device="cpu",
+        ).coalesce()
     if device is not None:
         result = result.to(device=device)
     return result
