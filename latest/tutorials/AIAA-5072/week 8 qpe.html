@@ -930,7 +930,7 @@ eigenphase <span class="math notranslate nohighlight">\(\theta\)</span> correspo
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Selected eigenstate |ψ8⟩ as the input state for the subsequent example
+Selected eigenstate |ψ9⟩ as the input state for the subsequent example
 </pre></div></div>
 </div>
 <p>QPE takes a unitary operator <span class="math notranslate nohighlight">\(U\)</span> and one of its eigenstates <span class="math notranslate nohighlight">\(| \psi\rangle\)</span> as input. Using <span class="math notranslate nohighlight">\(n\)</span> auxiliary qubits and a total of <span class="math notranslate nohighlight">\(2^n\)</span> control-<span class="math notranslate nohighlight">\(U\)</span>, it outputs an <span class="math notranslate nohighlight">\(n\)</span>-bit binary approximation <span class="math notranslate nohighlight">\(x_1 x_2 \ldots x_n \in \{0,1\}^n\)</span> such that</p>
@@ -1281,8 +1281,8 @@ Grover-like operator <span class="math notranslate nohighlight">\(Q = -A S_0 A^\
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Eigenphases of Q with respect to |w±&gt;: 2.660973352021139 -2.660973352021139
-2θ = 2.6609733520211396
+Eigenphases of Q with respect to |w±&gt;: 1.9655037080445734 -1.9655037080445734
+2θ = 1.965503708044573
 </pre></div></div>
 </div>
 <p>Then the input state can be decomposed as: <span class="math">\begin{align*}
@@ -1419,9 +1419,9 @@ The probability distribution of estimated amplitudes |sin(θ_k)| from QPE measur
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-True amplitude = 0.971264
-Estimated amplitude = 0.980785 with probability 0.855277
-Absolute Error = 9.520957e-03
+True amplitude = 0.832027
+Estimated amplitude = 0.831470 with probability 0.999915
+Absolute Error = 5.574564e-04
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -1540,17 +1540,19 @@ Absolute Error = 9.520957e-03
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.5.0
-torch: 2.8.0+cpu
+quairkit: 0.5.1
+torch: 2.11.0+cu130
+torch cuda: 13.0
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.6
+matplotlib: 3.10.5
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 

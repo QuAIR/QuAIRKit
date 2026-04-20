@@ -1155,17 +1155,17 @@ $ U^{-1} $ directly using the original unitary $ U $ without performing process 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-iter: 0000, loss: 0.75052066, fidelity: 0.90633363, lr: 5.00E-02, avg_time: 0.0587s
-iter: 0200, loss: 0.07363142, fidelity: 0.99797891, lr: 2.50E-02, avg_time: 0.0291s
-iter: 0400, loss: 0.04875813, fidelity: 0.99908660, lr: 6.25E-03, avg_time: 0.0373s
-iter: 0600, loss: 0.03985517, fidelity: 0.99937480, lr: 6.25E-03, avg_time: 0.0403s
-iter: 0800, loss: 0.03381006, fidelity: 0.99954167, lr: 3.13E-03, avg_time: 0.0392s
-iter: 1000, loss: 0.02999720, fidelity: 0.99963335, lr: 3.13E-03, avg_time: 0.0422s
-iter: 1200, loss: 0.02616608, fidelity: 0.99971630, lr: 3.13E-03, avg_time: 0.0389s
-iter: 1400, loss: 0.02424311, fidelity: 0.99975403, lr: 1.56E-03, avg_time: 0.0368s
-iter: 1600, loss: 0.02231436, fidelity: 0.99978993, lr: 1.56E-03, avg_time: 0.0389s
-iter: 1800, loss: 0.02032987, fidelity: 0.99982433, lr: 1.56E-03, avg_time: 0.0397s
-iter: 1999, loss: 0.01906304, fidelity: 0.99984475, lr: 3.91E-04, avg_time: 0.0419s
+iter: 0000, loss: 0.76730291, fidelity: 0.72914419, lr: 5.00E-02, avg_time: 0.1068s
+iter: 0200, loss: 0.09258577, fidelity: 0.97110728, lr: 2.50E-02, avg_time: 0.0255s
+iter: 0400, loss: 0.06596928, fidelity: 0.97939176, lr: 1.25E-02, avg_time: 0.0190s
+iter: 0600, loss: 0.05256793, fidelity: 0.98335056, lr: 6.25E-03, avg_time: 0.0797s
+iter: 0800, loss: 0.04392398, fidelity: 0.98591200, lr: 6.25E-03, avg_time: 0.0351s
+iter: 1000, loss: 0.03935392, fidelity: 0.98730290, lr: 3.13E-03, avg_time: 0.0317s
+iter: 1200, loss: 0.03561594, fidelity: 0.98847718, lr: 3.13E-03, avg_time: 0.0319s
+iter: 1400, loss: 0.03207341, fidelity: 0.98962699, lr: 3.13E-03, avg_time: 0.0414s
+iter: 1600, loss: 0.03139152, fidelity: 0.98984998, lr: 3.91E-04, avg_time: 0.0302s
+iter: 1800, loss: 0.03095900, fidelity: 0.98999460, lr: 3.91E-04, avg_time: 0.0338s
+iter: 1999, loss: 0.03049009, fidelity: 0.99015173, lr: 3.91E-04, avg_time: 0.0334s
 </pre></div></div>
 </div>
 <p>As shown by above training result, one can obtain a trained circuit that can effectively simulate the inverse of a given unitary <span class="math notranslate nohighlight">\(U\)</span>, with test fidelity above 99%.</p>
@@ -1227,29 +1227,29 @@ iter: 1999, loss: 0.01906304, fidelity: 0.99984475, lr: 3.91E-04, avg_time: 0.04
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">0   0.0522s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.72283228</span>, <span class="ansi-green-intense-fg">Fid: 0.27506825</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">100 0.0426s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.05809634</span>, <span class="ansi-green-intense-fg">Fid: 0.93883122</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">200 0.0477s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.01752682</span>, <span class="ansi-green-intense-fg">Fid: 0.98168563</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">300 0.0429s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.00673983</span>, <span class="ansi-green-intense-fg">Fid: 0.99300901</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">400 0.0420s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00338254</span>, <span class="ansi-green-intense-fg">Fid: 0.99650463</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">500 0.0459s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00312901</span>, <span class="ansi-green-intense-fg">Fid: 0.99676978</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">600 0.0440s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00287147</span>, <span class="ansi-green-intense-fg">Fid: 0.99703744</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">700 0.0433s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00261370</span>, <span class="ansi-green-intense-fg">Fid: 0.99730506</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">800 0.0479s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00236129</span>, <span class="ansi-green-intense-fg">Fid: 0.99756694</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">900 0.0431s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00211870</span>, <span class="ansi-green-intense-fg">Fid: 0.99781845</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1000        0.0459s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00188938</span>, <span class="ansi-green-intense-fg">Fid: 0.99805603</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1100        0.0455s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00167582</span>, <span class="ansi-green-intense-fg">Fid: 0.99827710</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1200        0.0465s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00147962</span>, <span class="ansi-green-intense-fg">Fid: 0.99847998</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1300        0.0429s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00130163</span>, <span class="ansi-green-intense-fg">Fid: 0.99866382</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1400        0.0414s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00114193</span>, <span class="ansi-green-intense-fg">Fid: 0.99882856</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1500        0.0462s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00100002</span>, <span class="ansi-green-intense-fg">Fid: 0.99897475</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1600        0.0437s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00087492</span>, <span class="ansi-green-intense-fg">Fid: 0.99910344</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1700        0.0416s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00076530</span>, <span class="ansi-green-intense-fg">Fid: 0.99921606</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1800        0.0461s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00066968</span>, <span class="ansi-green-intense-fg">Fid: 0.99931417</span>
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1900        0.0496s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00058651</span>, <span class="ansi-green-intense-fg">Fid: 0.99939943</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">0   0.0313s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.74091514</span>, <span class="ansi-green-intense-fg">Fid: 0.25523979</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">100 0.0336s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.06753812</span>, <span class="ansi-green-intense-fg">Fid: 0.93150229</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">200 0.0292s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.02073504</span>, <span class="ansi-green-intense-fg">Fid: 0.97901226</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">300 0.0460s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-02</span>, <span class="ansi-red-intense-fg">Loss: 0.00696386</span>, <span class="ansi-green-intense-fg">Fid: 0.99296454</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">400 0.0270s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00475762</span>, <span class="ansi-green-intense-fg">Fid: 0.99517700</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">500 0.0338s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00425961</span>, <span class="ansi-green-intense-fg">Fid: 0.99568089</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">600 0.0248s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00377110</span>, <span class="ansi-green-intense-fg">Fid: 0.99617574</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">700 0.0146s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00330649</span>, <span class="ansi-green-intense-fg">Fid: 0.99664672</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">800 0.0158s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00287541</span>, <span class="ansi-green-intense-fg">Fid: 0.99708405</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">900 0.0156s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00248351</span>, <span class="ansi-green-intense-fg">Fid: 0.99748187</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1000        0.0150s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00213330</span>, <span class="ansi-green-intense-fg">Fid: 0.99783754</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1100        0.0145s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00182481</span>, <span class="ansi-green-intense-fg">Fid: 0.99815088</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1200        0.0318s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00155631</span>, <span class="ansi-green-intense-fg">Fid: 0.99842359</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1300        0.0146s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00132479</span>, <span class="ansi-green-intense-fg">Fid: 0.99865862</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1400        0.0146s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00112660</span>, <span class="ansi-green-intense-fg">Fid: 0.99885970</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1500        0.0145s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00095778</span>, <span class="ansi-green-intense-fg">Fid: 0.99903084</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1600        0.0147s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00081443</span>, <span class="ansi-green-intense-fg">Fid: 0.99917604</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1700        0.0154s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00069289</span>, <span class="ansi-green-intense-fg">Fid: 0.99929904</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1800        0.0151s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00058991</span>, <span class="ansi-green-intense-fg">Fid: 0.99940321</span>
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1900        0.0145s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00050261</span>, <span class="ansi-green-intense-fg">Fid: 0.99949147</span>
 Progress |██████████████████████████████████████████████████| 100.0%
-[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1999        0.0501s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00051496</span>, <span class="ansi-green-intense-fg">Fid: 0.99947271</span>
-[pqcomb_dagger | process | 73] Finished training with Fidelity: 0.99947340
+[pqcomb_dagger | process | 73 | <span class="ansi-black-intense-fg">1999        0.0149s</span>] slot_dim: 2, slots: 4, ancilla_dim: 8, <span class="ansi-yellow-intense-fg">LR: 5.00e-03</span>, <span class="ansi-red-intense-fg">Loss: 0.00042924</span>, <span class="ansi-green-intense-fg">Fid: 0.99956561</span>
+[pqcomb_dagger | process | 73] Finished training with Fidelity: 0.99956630
 </pre></div></div>
 </div>
 <h3 id="Other-functional">Other functional<a class="headerlink" href="#Other-functional" title="Link to this heading">¶</a></h3>
@@ -1343,17 +1343,19 @@ with the original parameterized circuit. we will show a simple example in this s
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.5.0
-torch: 2.8.0+cpu
+quairkit: 0.5.1
+torch: 2.11.0+cu130
+torch cuda: 13.0
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.6
+matplotlib: 3.10.5
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 <p><em>Table: A reference of notation conventions in this tutorial.</em></p>

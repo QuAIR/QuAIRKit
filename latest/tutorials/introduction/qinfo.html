@@ -789,12 +789,12 @@ related to quantum information theory, this module includes partial trace, quant
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Matrix A is:
-tensor([[-0.3884-0.4122j, -0.1848-0.8031j],
-        [-0.8195+0.0872j,  0.5164+0.2328j]])
+tensor([[ 0.5055-0.1762j, -0.4898+0.6881j],
+        [-0.7566-0.3755j, -0.5289+0.0833j]])
 
 Matrix B is:
-tensor([[-0.6601-0.5897j,  0.3727-0.2788j],
-        [ 0.3678-0.2851j, -0.3929-0.7931j]])
+tensor([[-0.8704-0.4277j,  0.2176+0.1102j],
+        [ 0.2255+0.0930j,  0.8921+0.3803j]])
 </pre></div></div>
 </div>
 <p>Users can use functions in <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> to implement specific operations on these two matrices.</p>
@@ -827,24 +827,24 @@ tensor([[-0.6601-0.5897j,  0.3727-0.2788j],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The trace of matrix A is (0.12790802129059875-0.1794292967949851j)
+The trace of matrix A is (-0.023323571515555197-0.09297417506081378j)
 The direct sum of matrix A and B is:
-tensor([[-0.3884-0.4122j, -0.1848-0.8031j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [-0.8195+0.0872j,  0.5164+0.2328j,  0.0000+0.0000j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.6601-0.5897j,  0.3727-0.2788j],
-        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.3678-0.2851j, -0.3929-0.7931j]])
+tensor([[ 0.5055-0.1762j, -0.4898+0.6881j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [-0.7566-0.3755j, -0.5289+0.0833j,  0.0000+0.0000j,  0.0000+0.0000j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j, -0.8704-0.4277j,  0.2176+0.1102j],
+        [ 0.0000+0.0000j,  0.0000+0.0000j,  0.2255+0.0930j,  0.8921+0.3803j]])
 
 The tensor product of matrix A and B is:
-tensor([[ 0.0133+0.5011j, -0.2597-0.0453j, -0.3516+0.6391j, -0.2928-0.2478j],
-        [-0.2604-0.0409j, -0.1743+0.4700j, -0.2970-0.2427j, -0.5643+0.4622j],
-        [ 0.5923+0.4257j, -0.2811+0.2610j, -0.2036-0.4581j,  0.2573-0.0572j],
-        [-0.2766+0.2657j,  0.3912+0.6157j,  0.2563-0.0616j, -0.0183-0.5010j]])
+tensor([[-0.5154-0.0628j,  0.1294+0.0173j,  0.7206-0.3895j, -0.1824+0.0958j],
+        [ 0.1304+0.0073j,  0.5180+0.0350j, -0.1744+0.1096j, -0.6986+0.4276j],
+        [ 0.4979+0.6504j, -0.1233-0.1651j,  0.4959+0.1537j, -0.1243-0.0401j],
+        [-0.1357-0.1550j, -0.5322-0.6227j, -0.1270-0.0304j, -0.5035-0.1269j]])
 
 The conjugate transpose of matrix A is:
-tensor([[-0.3884+0.4122j, -0.8195-0.0872j],
-        [-0.1848+0.8031j,  0.5164-0.2328j]])
+tensor([[ 0.5055+0.1762j, -0.7566+0.3755j],
+        [-0.4898-0.6881j, -0.5289-0.0833j]])
 
-The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(5.3621), tensor(1.9373), tensor(-2.6121))
+The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is (tensor(-2.3455), tensor(2.0117), tensor(5.6664))
 </pre></div></div>
 </div>
 <h2 id="Functions-in-quantum-information">Functions in quantum information<a class="headerlink" href="#Functions-in-quantum-information" title="Link to this heading">¶</a></h2>
@@ -875,16 +875,16 @@ The decomposition of single-qubit unitary operator A to Z-Y-Z rotation angles is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The first quantum state is:
- tensor([[ 0.3851+0.0000j, -0.1570+0.0753j, -0.1344+0.0259j,  0.0822+0.0692j],
-        [-0.1570-0.0753j,  0.3193+0.0000j,  0.0504-0.0453j, -0.0786+0.0960j],
-        [-0.1344-0.0259j,  0.0504+0.0453j,  0.1128+0.0000j, -0.0790-0.0776j],
-        [ 0.0822-0.0692j, -0.0786-0.0960j, -0.0790+0.0776j,  0.1827+0.0000j]])
+ tensor([[ 0.3507+0.0000j, -0.0197-0.0064j, -0.0641-0.0233j, -0.0154-0.0243j],
+        [-0.0197+0.0064j,  0.3630+0.0000j, -0.0631+0.0716j,  0.0748-0.1107j],
+        [-0.0641+0.0233j, -0.0631-0.0716j,  0.1179+0.0000j,  0.0061+0.0327j],
+        [-0.0154+0.0243j,  0.0748+0.1107j,  0.0061-0.0327j,  0.1684+0.0000j]])
 
 The second quantum state is:
- tensor([[ 0.4962-0.3743j],
-        [ 0.4080+0.5233j],
-        [-0.1311-0.1072j],
-        [ 0.2524-0.2848j]])
+ tensor([[-0.0908+0.5952j],
+        [-0.3127+0.3893j],
+        [ 0.4503+0.0181j],
+        [ 0.4134+0.1190j]])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -919,18 +919,18 @@ The second quantum state is:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The von Neumann entropy between state 1 is:
-1.2572084861292692
+1.6204648336221799
 torch.float64
 The trace distance between state 1 and state 2  is:
-0.6863140228451563
+0.7882972615918882
 The state fidelity between state 1 and state 2 is:
-0.6065432358149189
+0.47745516931241044
 The purity of state 1 is:
-0.4820326099708884
+0.3649625962019061
 The relative entropy of state 1 and state 2 is:
-33.72864128762425
+39.84313001423501
 The Schatten 2-norm of state 1 is:
-0.694285683253579
+0.6041213422830766
 </pre></div></div>
 </div>
 <h2 id="Validation-functions">Validation functions<a class="headerlink" href="#Validation-functions" title="Link to this heading">¶</a></h2>
@@ -961,7 +961,7 @@ The Schatten 2-norm of state 1 is:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The matrix is a positive matrix: False
-The state 1 is a PPT state: False
+The state 1 is a PPT state: True
 The matrix is a unitary matrix: True
 </pre></div></div>
 </div>
@@ -1012,17 +1012,19 @@ State fidelity dtype (State): &lt;class &#39;torch.Tensor&#39;&gt;
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.5.0
-torch: 2.8.0+cpu
+quairkit: 0.5.1
+torch: 2.11.0+cu130
+torch cuda: 13.0
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.6
+matplotlib: 3.10.5
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 

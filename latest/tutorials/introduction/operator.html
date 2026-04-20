@@ -1301,17 +1301,17 @@ R_{z}(\theta) =
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The matrix form of x-axis rotation gate with parameter 6.147 is
-tensor([[-0.9977-0.0000j, -0.0000-0.0680j],
-        [-0.0000-0.0680j, -0.9977-0.0000j]])
+The matrix form of x-axis rotation gate with parameter 2.979 is
+tensor([[0.0812-0.0000j, 0.0000-0.9967j],
+        [0.0000-0.9967j, 0.0812-0.0000j]])
 
-The matrix form of y-axis rotation gate with parameter 6.147 is
-tensor([[-0.9977-0.j, -0.0680+0.j],
-        [ 0.0680-0.j, -0.9977-0.j]])
+The matrix form of y-axis rotation gate with parameter 2.979 is
+tensor([[ 0.0812-0.j, -0.9967-0.j],
+        [ 0.9967+0.j,  0.0812-0.j]])
 
-The matrix form of z-axis rotation gate with parameter 6.147 is
-tensor([[-0.9977-0.0680j,  0.0000+0.0000j],
-        [ 0.0000+0.0000j, -0.9977+0.0680j]])
+The matrix form of z-axis rotation gate with parameter 2.979 is
+tensor([[0.0812-0.9967j, 0.0000+0.0000j],
+        [0.0000+0.0000j, 0.0812+0.9967j]])
 </pre></div></div>
 </div>
 <h3 id="Two-qubit-gates">Two-qubit gates<a class="headerlink" href="#Two-qubit-gates" title="Link to this heading">¶</a></h3>
@@ -1414,12 +1414,12 @@ The matrix form of swap gate is
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 pure output state after applying a unitary:
- tensor([[ 0.6977-0.6044j],
-        [-0.1652-0.3473j]])
+ tensor([[-0.7132-0.5005j],
+        [ 0.2456-0.4248j]])
 
 mixed output state after applying a unitary:
- tensor([[0.4520+2.7756e-17j, 0.0451-4.8939e-01j],
-        [0.0451+4.8939e-01j, 0.5480+2.7756e-17j]])
+ tensor([[ 0.7680+1.3878e-17j, -0.1276-2.3695e-01j],
+        [-0.1276+2.3695e-01j,  0.2320-6.9389e-18j]])
 </pre></div></div>
 </div>
 <p>The position of the qubit on which the quantum gate acts can be specified through <code class="docutils literal notranslate"><span class="pre">sys_idx</span></code>. The dimension of a quantum gate can be smaller than the dimension of the quantum state.</p>
@@ -1441,10 +1441,14 @@ mixed output state after applying a unitary:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a unitary on the first qubit:
- tensor([[ 0.0170+0.0000j, -0.0519+0.0432j, -0.0396-0.0664j, -0.0366+0.0693j],
-        [-0.0519-0.0432j,  0.2690+0.0000j, -0.0478+0.3041j,  0.2883-0.1189j],
-        [-0.0396+0.0664j, -0.0478-0.3041j,  0.3524+0.0000j, -0.1857-0.3049j],
-        [-0.0366-0.0693j,  0.2883+0.1189j, -0.1857+0.3049j,  0.3617+0.0000j]])
+ tensor([[ 0.1654-6.9389e-18j,  0.0695-9.4108e-02j, -0.0734-7.0040e-02j,
+          0.1799-6.2037e-03j],
+        [ 0.0695+9.4108e-02j,  0.1344-6.9389e-18j,  0.0085-6.4808e-02j,
+          0.0651+2.2486e-01j],
+        [-0.0734+7.0040e-02j,  0.0085+6.4808e-02j,  0.1308+0.0000e+00j,
+          0.0014+1.0332e-01j],
+        [ 0.1799+6.2037e-03j,  0.0651-2.2486e-01j,  0.0014-1.0332e-01j,
+          0.5693-1.3878e-17j]])
 </pre></div></div>
 </div>
 <p>The application of a quantum gate on batched states is also supported.</p>
@@ -1483,20 +1487,20 @@ batched states after applying a unitary:
  Batch size: [5]
 
  # 0:
-[[0.2 +0.j   0.01-0.24j]
- [0.01+0.24j 0.8 -0.j  ]]
+[[ 0.48-0.j   -0.32-0.07j]
+ [-0.32+0.07j  0.52+0.j  ]]
  # 1:
-[[ 0.3 +0.j  -0.45+0.1j]
- [-0.45-0.1j  0.7 +0.j ]]
+[[ 0.32-0.j   -0.18-0.43j]
+ [-0.18+0.43j  0.68+0.j  ]]
  # 2:
-[[ 0.76+0.j   -0.2 +0.38j]
- [-0.2 -0.38j  0.24+0.j  ]]
+[[ 0.32-0.j   -0.09+0.33j]
+ [-0.09-0.33j  0.68+0.j  ]]
  # 3:
-[[0.77-0.j   0.01-0.04j]
- [0.01+0.04j 0.23+0.j  ]]
+[[0.64+0.j   0.45+0.16j]
+ [0.45-0.16j 0.36-0.j  ]]
  # 4:
-[[ 0.31-0.j   -0.15+0.44j]
- [-0.15-0.44j  0.69+0.j  ]]
+[[ 0.36+0.j  -0.27+0.4j]
+ [-0.27-0.4j  0.64-0.j ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1537,20 +1541,20 @@ state after applying batched unitaries:
  Batch size: [5]
 
  # 0:
-[[0.75-0.j   0.04+0.34j]
- [0.04-0.34j 0.25+0.j  ]]
+[[ 0.11+0.j  -0.04-0.2j]
+ [-0.04+0.2j  0.89-0.j ]]
  # 1:
-[[0.15-0.j   0.16-0.16j]
- [0.16+0.16j 0.85+0.j  ]]
+[[ 0.13+0.j   -0.05+0.23j]
+ [-0.05-0.23j  0.87+0.j  ]]
  # 2:
-[[ 0.16+0.j   -0.05+0.24j]
- [-0.05-0.24j  0.84-0.j  ]]
+[[ 0.55-0.j   -0.29-0.32j]
+ [-0.29+0.32j  0.45+0.j  ]]
  # 3:
-[[ 0.36+0.j   -0.07+0.39j]
- [-0.07-0.39j  0.64+0.j  ]]
+[[ 0.7 -0.j   -0.38-0.06j]
+ [-0.38+0.06j  0.3 +0.j  ]]
  # 4:
-[[ 0.48+0.j   -0.41+0.09j]
- [-0.41-0.09j  0.52-0.j  ]]
+[[0.76+0.j   0.35-0.04j]
+ [0.35+0.04j 0.24+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1610,10 +1614,10 @@ output state after applying a quantum circuit:
  Backend: default-mixed
  System dimension: [2, 2]
  System sequence: [0, 1]
-[[0.36+0.j   0.33+0.02j 0.16+0.08j 0.07+0.03j]
- [0.33-0.02j 0.46+0.j   0.23+0.09j 0.01+0.07j]
- [0.16-0.08j 0.23-0.09j 0.13+0.j   0.02+0.03j]
- [0.07-0.03j 0.01-0.07j 0.02-0.03j 0.05+0.j  ]]
+[[ 0.25+0.j    0.17-0.17j  0.13-0.04j -0.13-0.02j]
+ [ 0.17+0.17j  0.35+0.j   -0.05+0.12j -0.07-0.09j]
+ [ 0.13+0.04j -0.05-0.12j  0.33+0.j   -0.07-0.04j]
+ [-0.13+0.02j -0.07+0.09j -0.07+0.04j  0.07+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1653,30 +1657,30 @@ output batched states after applying a quantum circuit:
  Batch size: [5]
 
  # 0:
-[[ 0.07+0.j   -0.03-0.01j  0.08+0.14j  0.1 +0.01j]
- [-0.03+0.01j  0.1 +0.j   -0.08+0.02j -0.15-0.08j]
- [ 0.08-0.14j -0.08-0.02j  0.4 +0.j    0.11-0.09j]
- [ 0.1 -0.01j -0.15+0.08j  0.11+0.09j  0.43+0.j  ]]
+[[ 0.27+0.j    0.02-0.02j  0.01-0.14j  0.16+0.16j]
+ [ 0.02+0.02j  0.19+0.j    0.06-0.15j -0.09+0.03j]
+ [ 0.01+0.14j  0.06+0.15j  0.26+0.j   -0.04+0.03j]
+ [ 0.16-0.16j -0.09-0.03j -0.04-0.03j  0.28+0.j  ]]
  # 1:
-[[ 0.22+0.j   -0.04+0.2j   0.15-0.01j -0.02+0.07j]
- [-0.04-0.2j   0.3 +0.j   -0.08-0.17j  0.07-0.04j]
- [ 0.15+0.01j -0.08+0.17j  0.23+0.j   -0.07-0.06j]
- [-0.02-0.07j  0.07+0.04j -0.07+0.06j  0.26+0.j  ]]
+[[ 0.17+0.j   -0.16+0.j    0.15+0.1j  -0.09+0.27j]
+ [-0.16-0.j    0.15+0.j   -0.14-0.1j   0.09-0.26j]
+ [ 0.15-0.1j  -0.14+0.1j   0.2 +0.j    0.09+0.3j ]
+ [-0.09-0.27j  0.09+0.26j  0.09-0.3j   0.48+0.j  ]]
  # 2:
-[[ 0.17+0.j    0.1 -0.04j  0.07+0.04j  0.08-0.01j]
- [ 0.1 +0.04j  0.21+0.j    0.16+0.04j  0.11+0.02j]
- [ 0.07-0.04j  0.16-0.04j  0.45+0.j   -0.01+0.03j]
- [ 0.08+0.01j  0.11-0.02j -0.01-0.03j  0.17+0.j  ]]
+[[ 0.09+0.j   -0.07+0.02j -0.1 +0.03j -0.26+0.02j]
+ [-0.07-0.02j  0.06+0.j    0.08+0.j    0.2 +0.05j]
+ [-0.1 -0.03j  0.08-0.j    0.11+0.j    0.28+0.06j]
+ [-0.26-0.02j  0.2 -0.05j  0.28-0.06j  0.74+0.j  ]]
  # 3:
-[[0.07+0.j   0.1 -0.07j 0.05-0.14j 0.09+0.01j]
- [0.1 +0.07j 0.33+0.j   0.31-0.11j 0.11+0.04j]
- [0.05+0.14j 0.31+0.11j 0.42+0.j   0.02+0.16j]
- [0.09-0.01j 0.11-0.04j 0.02-0.16j 0.19+0.j  ]]
+[[ 0.38+0.j   -0.05-0.16j -0.34-0.08j -0.02+0.24j]
+ [-0.05+0.16j  0.09+0.j    0.09-0.12j -0.11-0.04j]
+ [-0.34+0.08j  0.09+0.12j  0.38+0.j   -0.04-0.21j]
+ [-0.02-0.24j -0.11+0.04j -0.04+0.21j  0.16+0.j  ]]
  # 4:
-[[ 0.52+0.j   -0.02-0.12j  0.13-0.08j  0.21-0.14j]
- [-0.02+0.12j  0.04+0.j   -0.01+0.02j -0.02+0.04j]
- [ 0.13+0.08j -0.01-0.02j  0.11+0.j    0.19-0.01j]
- [ 0.21+0.14j -0.02-0.04j  0.19+0.01j  0.33+0.j  ]]
+[[ 0.23+0.j    0.33+0.04j -0.1 -0.01j -0.09-0.14j]
+ [ 0.33-0.04j  0.55+0.j   -0.17+0.04j -0.13-0.15j]
+ [-0.1 +0.01j -0.17-0.04j  0.07+0.j    0.05+0.03j]
+ [-0.09+0.14j -0.13+0.15j  0.05-0.03j  0.14+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -1837,18 +1841,18 @@ such that for all <span class="math notranslate nohighlight">\(\rho_{A} \in \mat
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Kraus representation of a quantum channel:
- tensor([[[ 0.6643+0.3246j,  0.6538-0.1610j],
-         [ 0.6731-0.0153j, -0.5565+0.4868j]]])
+ tensor([[[ 0.9015+0.1514j, -0.0888-0.3955j],
+         [ 0.2473+0.3212j, -0.4601+0.7899j]]])
 
 Choi representation of the same quantum channel:
- tensor([[ 0.5467+0.0000j,  0.4422+0.2287j,  0.3820+0.3192j, -0.2117-0.5041j],
-        [ 0.4422-0.2287j,  0.4533+0.0000j,  0.4425+0.0984j, -0.3820-0.3192j],
-        [ 0.3820-0.3192j,  0.4425-0.0984j,  0.4533+0.0000j, -0.4422-0.2287j],
-        [-0.2117+0.5041j, -0.3820+0.3192j, -0.4422+0.2287j,  0.5467+0.0000j]])
+ tensor([[ 0.8357+0.0000j,  0.2715-0.2522j, -0.1400+0.3431j, -0.2952-0.7818j],
+        [ 0.2715+0.2522j,  0.1643+0.0000j, -0.1490+0.0693j,  0.1400-0.3431j],
+        [-0.1400-0.3431j, -0.1490-0.0693j,  0.1643+0.0000j, -0.2715+0.2522j],
+        [-0.2952+0.7818j,  0.1400+0.3431j, -0.2715-0.2522j,  0.8357+0.0000j]])
 
 Stinespring representation of the same quantum channel:
- tensor([[ 0.6643+0.3246j,  0.6538-0.1610j],
-        [ 0.6731-0.0153j, -0.5565+0.4868j]])
+ tensor([[ 0.9015+0.1514j, -0.0888-0.3955j],
+        [ 0.2473+0.3212j, -0.4601+0.7899j]])
 
 </pre></div></div>
 </div>
@@ -2153,12 +2157,12 @@ Stinespring representation of a amplitude damping channel with parameter 0.5:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a quantum channel in Kraus representation:
- tensor([[0.3984+0.0000e+00j, 0.3384+1.6389e-01j],
-        [0.3384-1.6389e-01j, 0.6016-1.3878e-17j]])
+ tensor([[0.1982-2.7756e-17j, 0.3130-2.4699e-01j],
+        [0.3130+2.4699e-01j, 0.8018-2.7756e-17j]])
 
 state after applying a quantum channel in Choi representation:
- tensor([[0.3984+0.0000j, 0.3384+0.1639j],
-        [0.3384-0.1639j, 0.6016+0.0000j]])
+ tensor([[0.1982+0.0000j, 0.3130-0.2470j],
+        [0.3130+0.2470j, 0.8018+0.0000j]])
 </pre></div></div>
 </div>
 <p>The position of the qubit on which the quantum channel acts can be specified through <code class="docutils literal notranslate"><span class="pre">sys_idx</span></code>.</p>
@@ -2180,14 +2184,14 @@ state after applying a quantum channel in Choi representation:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 state after applying a quantum channel on the first qubit:
- tensor([[ 0.2565+0.0000e+00j,  0.1293+5.0565e-02j, -0.1388-8.7691e-02j,
-         -0.0441+5.9329e-02j],
-        [ 0.1293-5.0565e-02j,  0.3010+5.2042e-18j, -0.0641-9.4144e-02j,
-          0.0304+1.8036e-02j],
-        [-0.1388+8.7691e-02j, -0.0641+9.4144e-02j,  0.2180-3.2526e-18j,
-          0.0372+1.2311e-02j],
-        [-0.0441-5.9329e-02j,  0.0304-1.8036e-02j,  0.0372-1.2311e-02j,
-          0.2245-6.9389e-18j]])
+ tensor([[ 0.1387+1.3878e-17j, -0.0591-4.5665e-02j,  0.0167-1.5236e-01j,
+         -0.3007+3.2250e-03j],
+        [-0.0591+4.5665e-02j,  0.0402+1.3878e-17j,  0.0430+7.0386e-02j,
+          0.1270-1.0034e-01j],
+        [ 0.0167+1.5236e-01j,  0.0430-7.0386e-02j,  0.1693-1.3878e-17j,
+         -0.0398-3.2982e-01j],
+        [-0.3007-3.2250e-03j,  0.1270+1.0034e-01j, -0.0398+3.2982e-01j,
+          0.6517-5.5511e-17j]])
 </pre></div></div>
 </div>
 <p>For batched states, the application of a quantum channel is also supported.</p>
@@ -2226,20 +2230,20 @@ batched states after applying a quantum channel:
  Batch size: [5]
 
  # 0:
-[[0.75-0.j   0.04+0.34j]
- [0.04-0.34j 0.25+0.j  ]]
+[[ 0.11+0.j  -0.04-0.2j]
+ [-0.04+0.2j  0.89-0.j ]]
  # 1:
-[[0.15-0.j   0.16-0.16j]
- [0.16+0.16j 0.85+0.j  ]]
+[[ 0.13+0.j   -0.05+0.23j]
+ [-0.05-0.23j  0.87+0.j  ]]
  # 2:
-[[ 0.16+0.j   -0.05+0.24j]
- [-0.05-0.24j  0.84-0.j  ]]
+[[ 0.55-0.j   -0.29-0.32j]
+ [-0.29+0.32j  0.45+0.j  ]]
  # 3:
-[[ 0.36+0.j   -0.07+0.39j]
- [-0.07-0.39j  0.64+0.j  ]]
+[[ 0.7 -0.j   -0.38-0.06j]
+ [-0.38+0.06j  0.3 +0.j  ]]
  # 4:
-[[ 0.48+0.j   -0.41+0.09j]
- [-0.41-0.09j  0.52-0.j  ]]
+[[0.76+0.j   0.35-0.04j]
+ [0.35+0.04j 0.24+0.j  ]]
 -----------------------------------------------------
 
 </pre></div></div>
@@ -2346,17 +2350,19 @@ batched states after applying a quantum channel:
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.5.0
-torch: 2.8.0+cpu
+quairkit: 0.5.1
+torch: 2.11.0+cu130
+torch cuda: 13.0
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.6
+matplotlib: 3.10.5
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 

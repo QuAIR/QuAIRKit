@@ -1275,7 +1275,7 @@ The diagram of the quantum circuit after adding two parametric oracles:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The parameters of circuit are tensor([6.2548, 0.3462])
+The parameters of circuit are tensor([5.6021, 0.9027])
 </pre></div></div>
 </div>
 <h4 id="Oracles-on-Qudits">Oracles on Qudits<a class="headerlink" href="#Oracles-on-Qudits" title="Link to this heading">¶</a></h4>
@@ -1540,7 +1540,7 @@ The diagram of a quantum circuit containing a general permutation and a controll
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-systems [0] collapse to the state |0&gt; with (average) probability 0.2843988537788391
+systems [0] collapse to the state |0&gt; with (average) probability 0.9845726490020752
 The diagram of a quantum circuit containing complex layers and subsequent measurements and post-selections:
 </pre></div></div>
 </div>
@@ -1556,7 +1556,7 @@ The diagram of a quantum circuit containing complex layers and subsequent measur
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The probability distribution of the last measurement after post-selections is tensor([[0.2626, 0.0218]], grad_fn=&lt;MulBackward0&gt;)
+The probability distribution of the last measurement after post-selections is tensor([[0.8221, 0.1625]], grad_fn=&lt;MulBackward0&gt;)
 </pre></div></div>
 </div>
 <h2 id="Putting-Circuit-Plots-into-the-Paper">Putting Circuit Plots into the Paper<a class="headerlink" href="#Putting-Circuit-Plots-into-the-Paper" title="Link to this heading">¶</a></h2>
@@ -1664,17 +1664,19 @@ the diagram of a quantum circuit with compact style and 400 dpi, as well as prin
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.5.0
-torch: 2.8.0+cpu
+quairkit: 0.5.1
+torch: 2.11.0+cu130
+torch cuda: 13.0
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.6
+matplotlib: 3.10.5
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 

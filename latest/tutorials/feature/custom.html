@@ -823,16 +823,16 @@ Circuit(
 <div class="highlight"><pre>
 The parameters of first two RY gates are
  [Parameter containing:
-tensor([[[0.4800]],
+tensor([[[1.7528]],
 
-        [[0.7134]]], requires_grad=True)]
+        [[1.5618]]], requires_grad=True)]
 The Kraus representations of the first two RY gates are:
- tensor([[[[ 0.9713-0.j, -0.2377-0.j],
-          [ 0.2377+0.j,  0.9713-0.j]]],
+ tensor([[[[ 0.6399-0.j, -0.7684-0.j],
+          [ 0.7684+0.j,  0.6399-0.j]]],
 
 
-        [[[ 0.9371-0.j, -0.3492-0.j],
-          [ 0.3492+0.j,  0.9371-0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
+        [[[ 0.7103-0.j, -0.7039-0.j],
+          [ 0.7039+0.j,  0.7103-0.j]]]], grad_fn=&lt;UnsqueezeBackward0&gt;)
 </pre></div></div>
 </div>
 <p>In addition to parameter manipulations, the <code class="docutils literal notranslate"><span class="pre">Circuit</span></code> class also provides built-in interface for parameterized gate customizations. For example, suppose one wants to implement a controlled-U3 parameterized gate with control on the <span class="math notranslate nohighlight">\(\vert{11}\rangle\)</span> state</p>
@@ -872,7 +872,7 @@ The Kraus representations of the first two RY gates are:
 <div class="highlight"><pre>
 The parameters of this circuit are
  [Parameter containing:
-tensor([[[2.1941, 3.5388, 0.5171]]], requires_grad=True)]
+tensor([[[3.9862, 6.2638, 1.2549]]], requires_grad=True)]
 </pre></div></div>
 </div>
 <h2 id="Setup-via-torch.nn.Module">Setup via torch.nn.Module<a class="headerlink" href="#Setup-via-torch.nn.Module" title="Link to this heading">¶</a></h2>
@@ -1036,17 +1036,19 @@ shape of the gradient tensor for the theta parameters torch.Size([2, 100, 6])
 <div class="highlight"><pre>
 
 ---------VERSION---------
-quairkit: 0.5.0
-torch: 2.8.0+cpu
+quairkit: 0.5.1
+torch: 2.11.0+cu130
+torch cuda: 13.0
 numpy: 2.2.6
 scipy: 1.15.3
-matplotlib: 3.10.6
+matplotlib: 3.10.5
 ---------SYSTEM---------
 Python version: 3.10.18
-OS: Windows
-OS version: 10.0.26100
+OS: Linux
+OS version: #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025
 ---------DEVICE---------
-CPU: ARMv8 (64-bit) Family 8 Model 1 Revision 201, Qualcomm Technologies Inc
+CPU:  13th Gen Intel(R) Core(TM) i9-13980HX
+GPU: (0) NVIDIA GeForce RTX 4090 Laptop GPU
 </pre></div></div>
 </div>
 
