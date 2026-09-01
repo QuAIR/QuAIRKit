@@ -1,5 +1,14 @@
 # Core APIs
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- Scope, top-level exports, and global runtime settings
+- `Hamiltonian`, `to_state`, and simulator state semantics
+- Tensor and probability-axis shapes
+- `StateOperator`, third-party backends, examples, and pitfalls
+
 ## Scope
 
 Use this file for:
@@ -88,7 +97,7 @@ state = to_state(data, system_dim=2, eps=1e-4, backend=None, prob=None)
 - Numeric tensor/array input goes through a simulator backend.
 - Existing `State` input is cloned; it is not numerically re-parsed.
 - `StateOperator` backends cannot be created from numeric state data.
-- If the current backend is a `StateOperator` backend and you try to pass numeric data, QuAIRKit raises an error and asks you to switch back to a simulator.
+- If the active backend is a `StateOperator` backend and you try to pass numeric data, QuAIRKit raises an error and asks you to switch back to a simulator.
 
 ### As Circuit Input
 
@@ -182,7 +191,7 @@ These interfaces preserve batch/probability information where applicable.
 
 ## `tensor_state`
 
-`tensor_state(state1, state2, ...)` is the state-level tensor/Kronecker-product helper. In the current runtime, `tensor_state` is not exported from the top-level `quairkit` package. Treat it as a core/state helper rather than a default top-level import.
+`tensor_state(state1, state2, ...)` is the state-level tensor/Kronecker-product helper. In QuAIRKit 0.5.1, `tensor_state` is not exported from the top-level `quairkit` package. Treat it as a core/state helper rather than a default top-level import.
 
 If the inputs are possibly arrays/tensors instead of `State` objects, prefer `qinfo.nkron`. In general, one should use `qinfo.nkron` unless you are pretty sure the inputs are definitely `State` objects.
 

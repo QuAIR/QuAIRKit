@@ -1,5 +1,14 @@
 # Loss And Application APIs
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- Public loss exports and responsibility boundaries
+- Expectation, measurement, distance, and fidelity wrappers
+- `Circuit.measure` versus `Measure`
+- `OneWayLOCCNet`, execution, examples, and common pitfalls
+
 ## Scope
 
 Use this file for:

@@ -1,3 +1,10 @@
+try:
+    from check_version import VersionGateError, require_exact_version
+
+    require_exact_version()
+except VersionGateError as exc:
+    raise SystemExit(f"Version gate failed: {exc}") from exc
+
 import numpy as np
 import torch
 

@@ -1,5 +1,14 @@
 # Task Pattern Checklist
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- State, circuit, Hamiltonian, matrix, qinfo, and measurement workflows
+- Training, batching, backend, hybrid-model, and visualization workflows
+- Qudit, LOCC, oracle, simulation, mitigation, and communication workflows
+- QPE, Grover search, and reproduction guardrails
+
 ## How To Use This File
 
 This file is a capability checklist for common QuAIRKit workloads.
@@ -150,4 +159,4 @@ For each task pattern:
 - Prefer reproducing capabilities, not copying notebook prose or code blocks.
 - Keep the same scientific meaning even if constants, seeds, or formatting are simplified.
 - If a task depends on unsupported infrastructure, use a clearly labeled fallback.
-- If an older example relies on weaker or deprecated APIs, prefer current stable APIs unless exact historical reproduction is requested.
+- If an older example relies on weaker or deprecated APIs, prefer QuAIRKit 0.5.1 public APIs unless exact historical reproduction is requested.

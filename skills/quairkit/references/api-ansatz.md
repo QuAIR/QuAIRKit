@@ -1,5 +1,14 @@
 # Ansatz APIs
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- Scope and public exports
+- `Layer` versus `Circuit`, insertion, and batch rules
+- Encoding and built-in layer families
+- Circuit inspection, custom layers, plotting, and tutorial guidance
+
 ## Scope
 
 Use this file for:

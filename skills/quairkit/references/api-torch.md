@@ -1,5 +1,14 @@
 # PyTorch And NumPy Integration
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- Module hierarchy and parameter management
+- Training templates, objectives, and validation metrics
+- Hybrid models, dtype/device, and autograd
+- NumPy interoperability, common Torch APIs, defaults, and pitfalls
+
 ## Scope
 
 Use this file for:
@@ -88,6 +97,7 @@ def fidelity_fcn(circuit: Circuit) -> torch.Tensor:
     pass
 
 loss_list, time_list = [], []
+print_every = max(1, NUM_ITR // max(1, PRINT_TIMES))
 
 opt = torch.optim.Adam(lr=LR, params=cir.parameters()) # cir is a Circuit type
 scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, 'min', factor=0.5) # activate scheduler
@@ -107,7 +117,7 @@ for itr in range(NUM_ITR):
     loss_list.append(loss)
     time_list.append(time.time() - start_time)
 
-    if itr % (NUM_ITR // PRINT_TIMES) == 0 or itr == NUM_ITR - 1:
+    if itr % print_every == 0 or itr == NUM_ITR - 1:
         fidelity = fidelity_fcn(cir).item() # compute fidelity
         print(f"iter: {str(itr).zfill(len(str(NUM_ITR)))}, " +
               f"loss: {loss:.8f}, fidelity: {fidelity:.8f}, " +
@@ -209,7 +219,7 @@ The exact per-family rules come from QuAIRKit's `_type_fetch` / `_type_transform
 ## `to_state`
 
 - accepts NumPy arrays
-- converts them into simulator-state data using the current QuAIRKit dtype/device
+- converts them into simulator-state data using the active QuAIRKit dtype/device
 
 ## `State.numpy()`
 
@@ -248,3 +258,4 @@ Use `state.numpy()` when a NumPy array is explicitly required for external analy
 - `.detach().cpu().numpy()` breaks gradient flow. Only use it for logging, plotting, or non-differentiable post-processing.
 - Passing a plain tensor as `param` does not make it appear in `model.parameters()`. Use `param=None` or `torch.nn.Parameter` for trainable module parameters.
 - Do not assume all `database` helpers preserve NumPy round-tripping. Fixed constructors are often tensor-only, while parameterized helpers mirror the input type more often.
+- Guard logging intervals with `max(1, ...)`; `NUM_ITR // PRINT_TIMES` can be zero when the requested print count exceeds the iteration count.

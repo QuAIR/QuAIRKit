@@ -1,0 +1,4106 @@
+{
+  "schema_version": 1,
+  "quairkit_version": "0.5.1",
+  "symbols": [
+    {
+      "name": "add_systems",
+      "qualified_name": "Circuit.add_systems",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.add_systems(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "amplitude_damping",
+      "qualified_name": "Circuit.amplitude_damping",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.amplitude_damping(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "amplitude_encoding",
+      "qualified_name": "Circuit.amplitude_encoding",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.amplitude_encoding(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "angle_encoding",
+      "qualified_name": "Circuit.angle_encoding",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.angle_encoding(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "append",
+      "qualified_name": "Circuit.append",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.append(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "basis_encoding",
+      "qualified_name": "Circuit.basis_encoding",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.basis_encoding(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "bit_flip",
+      "qualified_name": "Circuit.bit_flip",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.bit_flip(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "bit_phase_flip",
+      "qualified_name": "Circuit.bit_phase_flip",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.bit_phase_flip(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "ccx",
+      "qualified_name": "Circuit.ccx",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ccx(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "choi_channel",
+      "qualified_name": "Circuit.choi_channel",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.choi_channel(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cnot",
+      "qualified_name": "Circuit.cnot",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cnot(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "collapse",
+      "qualified_name": "Circuit.collapse",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.collapse(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "complex_block_layer",
+      "qualified_name": "Circuit.complex_block_layer",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.complex_block_layer(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "complex_entangled_layer",
+      "qualified_name": "Circuit.complex_entangled_layer",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.complex_entangled_layer(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "control_oracle",
+      "qualified_name": "Circuit.control_oracle",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.control_oracle(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cp",
+      "qualified_name": "Circuit.cp",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cp(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "crx",
+      "qualified_name": "Circuit.crx",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.crx(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cry",
+      "qualified_name": "Circuit.cry",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cry(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "crz",
+      "qualified_name": "Circuit.crz",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.crz(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cswap",
+      "qualified_name": "Circuit.cswap",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cswap(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cu",
+      "qualified_name": "Circuit.cu",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cu(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cx",
+      "qualified_name": "Circuit.cx",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cx(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cy",
+      "qualified_name": "Circuit.cy",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cy(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "cz",
+      "qualified_name": "Circuit.cz",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cz(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "dagger",
+      "qualified_name": "Circuit.dagger",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.dagger(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "depolarizing",
+      "qualified_name": "Circuit.depolarizing",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.depolarizing(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "extend",
+      "qualified_name": "Circuit.extend",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.extend(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "forward",
+      "qualified_name": "Circuit.forward",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.forward(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "from_operators",
+      "qualified_name": "Circuit.from_operators",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "Circuit.from_operators(operator_history)",
+      "alternatives": [],
+      "notes": "QuAIRKit 0.5.1 classmethod for qubit-only, non-daggered operator_history reconstruction; not a general persistence API."
+    },
+    {
+      "name": "from_qasm2",
+      "qualified_name": "Circuit.from_qasm2",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.from_qasm2(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "generalized_amplitude_damping",
+      "qualified_name": "Circuit.generalized_amplitude_damping",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.generalized_amplitude_damping(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "generalized_depolarizing",
+      "qualified_name": "Circuit.generalized_depolarizing",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.generalized_depolarizing(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "get_qasm",
+      "qualified_name": "Circuit.get_qasm",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.get_qasm(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "h",
+      "qualified_name": "Circuit.h",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.h(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "iqp_encoding",
+      "qualified_name": "Circuit.iqp_encoding",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.iqp_encoding(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "kraus_channel",
+      "qualified_name": "Circuit.kraus_channel",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.kraus_channel(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "linear_entangled_layer",
+      "qualified_name": "Circuit.linear_entangled_layer",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.linear_entangled_layer(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "locc",
+      "qualified_name": "Circuit.locc",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.locc(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "measure",
+      "qualified_name": "Circuit.measure",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.measure(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "ms",
+      "qualified_name": "Circuit.ms",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ms(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "operators",
+      "qualified_name": "Circuit.operators",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.operators(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "oracle",
+      "qualified_name": "Circuit.oracle",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.oracle(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "p",
+      "qualified_name": "Circuit.p",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.p(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "param_locc",
+      "qualified_name": "Circuit.param_locc",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.param_locc(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "param_oracle",
+      "qualified_name": "Circuit.param_oracle",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.param_oracle(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "param_quasi",
+      "qualified_name": "Circuit.param_quasi",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.param_quasi(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "pauli_channel",
+      "qualified_name": "Circuit.pauli_channel",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.pauli_channel(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "permute",
+      "qualified_name": "Circuit.permute",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.permute(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "phase_damping",
+      "qualified_name": "Circuit.phase_damping",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.phase_damping(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "phase_flip",
+      "qualified_name": "Circuit.phase_flip",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.phase_flip(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "plot",
+      "qualified_name": "Circuit.plot",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.plot(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "qft",
+      "qualified_name": "Circuit.qft",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.qft(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "quasi",
+      "qualified_name": "Circuit.quasi",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.quasi(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "randomize_param",
+      "qualified_name": "Circuit.randomize_param",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.randomize_param(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "real_block_layer",
+      "qualified_name": "Circuit.real_block_layer",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.real_block_layer(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "real_entangled_layer",
+      "qualified_name": "Circuit.real_entangled_layer",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.real_entangled_layer(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "register_idx",
+      "qualified_name": "Circuit.register_idx",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.register_idx(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "reset",
+      "qualified_name": "Circuit.reset",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.reset(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "reset_channel",
+      "qualified_name": "Circuit.reset_channel",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.reset_channel(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "rx",
+      "qualified_name": "Circuit.rx",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rx(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "rxx",
+      "qualified_name": "Circuit.rxx",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rxx(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "ry",
+      "qualified_name": "Circuit.ry",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ry(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "ryy",
+      "qualified_name": "Circuit.ryy",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ryy(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "rz",
+      "qualified_name": "Circuit.rz",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rz(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "rzz",
+      "qualified_name": "Circuit.rzz",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rzz(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "s",
+      "qualified_name": "Circuit.s",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.s(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "sdg",
+      "qualified_name": "Circuit.sdg",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.sdg(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "sort",
+      "qualified_name": "Circuit.sort",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.sort(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "stinespring_channel",
+      "qualified_name": "Circuit.stinespring_channel",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.stinespring_channel(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "swap",
+      "qualified_name": "Circuit.swap",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.swap(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "t",
+      "qualified_name": "Circuit.t",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.t(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "tdg",
+      "qualified_name": "Circuit.tdg",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.tdg(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "thermal_relaxation",
+      "qualified_name": "Circuit.thermal_relaxation",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.thermal_relaxation(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "to",
+      "qualified_name": "Circuit.to",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.to(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "to_latex",
+      "qualified_name": "Circuit.to_latex",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.to_latex(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "toffoli",
+      "qualified_name": "Circuit.toffoli",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.toffoli(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "transfer_static",
+      "qualified_name": "Circuit.transfer_static",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.transfer_static(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "trotter",
+      "qualified_name": "Circuit.trotter",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.trotter(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "u3",
+      "qualified_name": "Circuit.u3",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.u3(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "unitary_matrix",
+      "qualified_name": "Circuit.unitary_matrix",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.unitary_matrix(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "universal_qudits",
+      "qualified_name": "Circuit.universal_qudits",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_qudits(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "universal_three_qubits",
+      "qualified_name": "Circuit.universal_three_qubits",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_three_qubits(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "universal_two_qubits",
+      "qualified_name": "Circuit.universal_two_qubits",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_two_qubits(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "update_param",
+      "qualified_name": "Circuit.update_param",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.update_param(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "x",
+      "qualified_name": "Circuit.x",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.x(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "y",
+      "qualified_name": "Circuit.y",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.y(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "z",
+      "qualified_name": "Circuit.z",
+      "kind": "method",
+      "tier": "circuit_method",
+      "actual_import": null,
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.z(...)",
+      "alternatives": [],
+      "notes": "Public Circuit method inherited only from QuAIRKit-authored classes."
+    },
+    {
+      "name": "Circuit",
+      "qualified_name": "quairkit.Circuit",
+      "kind": "class",
+      "tier": "root",
+      "actual_import": "from quairkit import Circuit",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "Circuit(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "Hamiltonian",
+      "qualified_name": "quairkit.Hamiltonian",
+      "kind": "class",
+      "tier": "root",
+      "actual_import": "from quairkit import Hamiltonian",
+      "recommended_import": "from quairkit import Hamiltonian",
+      "preferred_usage": "Hamiltonian(...)",
+      "alternatives": [
+        "from quairkit.core import Hamiltonian"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "Operator",
+      "qualified_name": "quairkit.Operator",
+      "kind": "class",
+      "tier": "root",
+      "actual_import": "from quairkit import Operator",
+      "recommended_import": "from quairkit import Operator",
+      "preferred_usage": "Operator(...)",
+      "alternatives": [
+        "from quairkit.core import Operator"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "State",
+      "qualified_name": "quairkit.State",
+      "kind": "class",
+      "tier": "root",
+      "actual_import": "from quairkit import State",
+      "recommended_import": "from quairkit import State",
+      "preferred_usage": "State(...)",
+      "alternatives": [],
+      "notes": "Top-level State is the user-facing alias of StateSimulator."
+    },
+    {
+      "name": "StateOperator",
+      "qualified_name": "quairkit.StateOperator",
+      "kind": "class",
+      "tier": "root",
+      "actual_import": "from quairkit import StateOperator",
+      "recommended_import": "from quairkit import StateOperator",
+      "preferred_usage": "StateOperator(...)",
+      "alternatives": [
+        "from quairkit.core import StateOperator"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "__version__",
+      "qualified_name": "quairkit.__version__",
+      "kind": "constant",
+      "tier": "root",
+      "actual_import": "from quairkit import __version__",
+      "recommended_import": "from quairkit import __version__",
+      "preferred_usage": "__version__",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ansatz",
+      "qualified_name": "quairkit.ansatz",
+      "kind": "module",
+      "tier": "root",
+      "actual_import": "from quairkit import ansatz",
+      "recommended_import": "from quairkit import ansatz",
+      "preferred_usage": "ansatz.<public_name>",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "AmplitudeEncoding",
+      "qualified_name": "quairkit.ansatz.AmplitudeEncoding",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import AmplitudeEncoding",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.amplitude_encoding(...)",
+      "alternatives": [
+        "from quairkit.ansatz import AmplitudeEncoding"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "AngleEncoding",
+      "qualified_name": "quairkit.ansatz.AngleEncoding",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import AngleEncoding",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.angle_encoding(...)",
+      "alternatives": [
+        "from quairkit.ansatz import AngleEncoding"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "BasisEncoding",
+      "qualified_name": "quairkit.ansatz.BasisEncoding",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import BasisEncoding",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.basis_encoding(...)",
+      "alternatives": [
+        "from quairkit.ansatz import BasisEncoding"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "ComplexBlockLayer",
+      "qualified_name": "quairkit.ansatz.ComplexBlockLayer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import ComplexBlockLayer",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.complex_block_layer(...)",
+      "alternatives": [
+        "from quairkit.ansatz import ComplexBlockLayer"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "ComplexEntangledLayer",
+      "qualified_name": "quairkit.ansatz.ComplexEntangledLayer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import ComplexEntangledLayer",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.complex_entangled_layer(...)",
+      "alternatives": [
+        "from quairkit.ansatz import ComplexEntangledLayer"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "IQPEncoding",
+      "qualified_name": "quairkit.ansatz.IQPEncoding",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import IQPEncoding",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.iqp_encoding(...)",
+      "alternatives": [
+        "from quairkit.ansatz import IQPEncoding"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "Layer",
+      "qualified_name": "quairkit.ansatz.Layer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import Layer",
+      "recommended_import": "from quairkit.ansatz import Layer",
+      "preferred_usage": "Layer(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "LinearEntangledLayer",
+      "qualified_name": "quairkit.ansatz.LinearEntangledLayer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import LinearEntangledLayer",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.linear_entangled_layer(...)",
+      "alternatives": [
+        "from quairkit.ansatz import LinearEntangledLayer"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "OperatorList",
+      "qualified_name": "quairkit.ansatz.OperatorList",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import OperatorList",
+      "recommended_import": "from quairkit.ansatz import OperatorList",
+      "preferred_usage": "OperatorList(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "RealBlockLayer",
+      "qualified_name": "quairkit.ansatz.RealBlockLayer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import RealBlockLayer",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.real_block_layer(...)",
+      "alternatives": [
+        "from quairkit.ansatz import RealBlockLayer"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "RealEntangledLayer",
+      "qualified_name": "quairkit.ansatz.RealEntangledLayer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import RealEntangledLayer",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.real_entangled_layer(...)",
+      "alternatives": [
+        "from quairkit.ansatz import RealEntangledLayer"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "TrotterLayer",
+      "qualified_name": "quairkit.ansatz.TrotterLayer",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import TrotterLayer",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.trotter(...)",
+      "alternatives": [
+        "from quairkit.ansatz import TrotterLayer"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "Universal2",
+      "qualified_name": "quairkit.ansatz.Universal2",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import Universal2",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_two_qubits(...)",
+      "alternatives": [
+        "from quairkit.ansatz import Universal2"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "Universal3",
+      "qualified_name": "quairkit.ansatz.Universal3",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.ansatz import Universal3",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_three_qubits(...)",
+      "alternatives": [
+        "from quairkit.ansatz import Universal3"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "application",
+      "qualified_name": "quairkit.application",
+      "kind": "module",
+      "tier": "root",
+      "actual_import": "from quairkit import application",
+      "recommended_import": "from quairkit import application",
+      "preferred_usage": "application.<public_name>",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "OneWayLOCCNet",
+      "qualified_name": "quairkit.application.OneWayLOCCNet",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.application import OneWayLOCCNet",
+      "recommended_import": "from quairkit.application import OneWayLOCCNet",
+      "preferred_usage": "OneWayLOCCNet(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "PQCombNet",
+      "qualified_name": "quairkit.application.PQCombNet",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.application import PQCombNet",
+      "recommended_import": "from quairkit.application import PQCombNet",
+      "preferred_usage": "PQCombNet(...)",
+      "alternatives": [],
+      "notes": "Declared public export but intentionally outside the recommended skill surface."
+    },
+    {
+      "name": "BACKEND_LIST",
+      "qualified_name": "quairkit.core.BACKEND_LIST",
+      "kind": "constant",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import BACKEND_LIST",
+      "recommended_import": "from quairkit.core import BACKEND_LIST",
+      "preferred_usage": "BACKEND_LIST",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "DEFAULT_BACKEND",
+      "qualified_name": "quairkit.core.DEFAULT_BACKEND",
+      "kind": "constant",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import DEFAULT_BACKEND",
+      "recommended_import": "from quairkit.core import DEFAULT_BACKEND",
+      "preferred_usage": "DEFAULT_BACKEND",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "DEFAULT_DEVICE",
+      "qualified_name": "quairkit.core.DEFAULT_DEVICE",
+      "kind": "constant",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import DEFAULT_DEVICE",
+      "recommended_import": "from quairkit.core import DEFAULT_DEVICE",
+      "preferred_usage": "DEFAULT_DEVICE",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "DEFAULT_DTYPE",
+      "qualified_name": "quairkit.core.DEFAULT_DTYPE",
+      "kind": "constant",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import DEFAULT_DTYPE",
+      "recommended_import": "from quairkit.core import DEFAULT_DTYPE",
+      "preferred_usage": "DEFAULT_DTYPE",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "DefaultSimulator",
+      "qualified_name": "quairkit.core.DefaultSimulator",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import DefaultSimulator",
+      "recommended_import": "from quairkit.core import DefaultSimulator",
+      "preferred_usage": "DefaultSimulator(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "MixedState",
+      "qualified_name": "quairkit.core.MixedState",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import MixedState",
+      "recommended_import": "from quairkit.core import MixedState",
+      "preferred_usage": "MixedState(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "OperatorInfo",
+      "qualified_name": "quairkit.core.OperatorInfo",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import OperatorInfo",
+      "recommended_import": "from quairkit.core import OperatorInfo",
+      "preferred_usage": "OperatorInfo(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "OperatorInfoType",
+      "qualified_name": "quairkit.core.OperatorInfoType",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import OperatorInfoType",
+      "recommended_import": "from quairkit.core import OperatorInfoType",
+      "preferred_usage": "OperatorInfoType(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "PRODUCT_STATE_THRESHOLD",
+      "qualified_name": "quairkit.core.PRODUCT_STATE_THRESHOLD",
+      "kind": "constant",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import PRODUCT_STATE_THRESHOLD",
+      "recommended_import": "from quairkit.core import PRODUCT_STATE_THRESHOLD",
+      "preferred_usage": "PRODUCT_STATE_THRESHOLD",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ProductDefaultSimulator",
+      "qualified_name": "quairkit.core.ProductDefaultSimulator",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import ProductDefaultSimulator",
+      "recommended_import": "from quairkit.core import ProductDefaultSimulator",
+      "preferred_usage": "ProductDefaultSimulator(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "PureState",
+      "qualified_name": "quairkit.core.PureState",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import PureState",
+      "recommended_import": "from quairkit.core import PureState",
+      "preferred_usage": "PureState(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "SEED",
+      "qualified_name": "quairkit.core.SEED",
+      "kind": "constant",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import SEED",
+      "recommended_import": "from quairkit.core import SEED",
+      "preferred_usage": "SEED",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "SimpleStateOperator",
+      "qualified_name": "quairkit.core.SimpleStateOperator",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import SimpleStateOperator",
+      "recommended_import": "from quairkit.core import SimpleStateOperator",
+      "preferred_usage": "SimpleStateOperator(...)",
+      "alternatives": [],
+      "notes": "Local execution-backend stand-in for interface tests and examples."
+    },
+    {
+      "name": "SpinOps",
+      "qualified_name": "quairkit.core.SpinOps",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import SpinOps",
+      "recommended_import": "from quairkit.core import SpinOps",
+      "preferred_usage": "SpinOps(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "State",
+      "qualified_name": "quairkit.core.State",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import State",
+      "recommended_import": "from quairkit.core import State",
+      "preferred_usage": "State(...)",
+      "alternatives": [],
+      "notes": "Abstract backend state base; use top-level State for ordinary simulator code."
+    },
+    {
+      "name": "StateSimulator",
+      "qualified_name": "quairkit.core.StateSimulator",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import StateSimulator",
+      "recommended_import": "from quairkit.core import StateSimulator",
+      "preferred_usage": "StateSimulator(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "OperatorListDrawer",
+      "qualified_name": "quairkit.core.latex.OperatorListDrawer",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core.latex import OperatorListDrawer",
+      "recommended_import": "from quairkit.core.latex import OperatorListDrawer",
+      "preferred_usage": "OperatorListDrawer(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "code_to_str",
+      "qualified_name": "quairkit.core.latex.code_to_str",
+      "kind": "function",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core.latex import code_to_str",
+      "recommended_import": "from quairkit.core.latex import code_to_str",
+      "preferred_usage": "code_to_str(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "qasm2_to_info",
+      "qualified_name": "quairkit.core.qasm2_to_info",
+      "kind": "function",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import qasm2_to_info",
+      "recommended_import": "from quairkit.core import qasm2_to_info",
+      "preferred_usage": "qasm2_to_info(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "tensor_state",
+      "qualified_name": "quairkit.core.tensor_state",
+      "kind": "function",
+      "tier": "low_level",
+      "actual_import": "from quairkit.core import tensor_state",
+      "recommended_import": "from quairkit.core import tensor_state",
+      "preferred_usage": "tensor_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "database",
+      "qualified_name": "quairkit.database",
+      "kind": "module",
+      "tier": "root",
+      "actual_import": "from quairkit import database",
+      "recommended_import": "from quairkit import database",
+      "preferred_usage": "database.<public_name>",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "Of",
+      "qualified_name": "quairkit.database.Of",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import Of",
+      "recommended_import": "from quairkit.database import Of",
+      "preferred_usage": "Of(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "Uf",
+      "qualified_name": "quairkit.database.Uf",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import Uf",
+      "recommended_import": "from quairkit.database import Uf",
+      "preferred_usage": "Uf(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "amplitude_damping_kraus",
+      "qualified_name": "quairkit.database.amplitude_damping_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import amplitude_damping_kraus",
+      "recommended_import": "from quairkit.database import amplitude_damping_kraus",
+      "preferred_usage": "amplitude_damping_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "bell_basis",
+      "qualified_name": "quairkit.database.bell_basis",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import bell_basis",
+      "recommended_import": "from quairkit.database import bell_basis",
+      "preferred_usage": "bell_basis(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "bell_diagonal_state",
+      "qualified_name": "quairkit.database.bell_diagonal_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import bell_diagonal_state",
+      "recommended_import": "from quairkit.database import bell_diagonal_state",
+      "preferred_usage": "bell_diagonal_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "bell_state",
+      "qualified_name": "quairkit.database.bell_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import bell_state",
+      "recommended_import": "from quairkit.database import bell_state",
+      "preferred_usage": "bell_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "bit_flip_kraus",
+      "qualified_name": "quairkit.database.bit_flip_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import bit_flip_kraus",
+      "recommended_import": "from quairkit.database import bit_flip_kraus",
+      "preferred_usage": "bit_flip_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "bit_phase_flip_kraus",
+      "qualified_name": "quairkit.database.bit_phase_flip_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import bit_phase_flip_kraus",
+      "recommended_import": "from quairkit.database import bit_phase_flip_kraus",
+      "preferred_usage": "bit_phase_flip_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ccx",
+      "qualified_name": "quairkit.database.ccx",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import ccx",
+      "recommended_import": "from quairkit.database import ccx",
+      "preferred_usage": "ccx(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cnot",
+      "qualified_name": "quairkit.database.cnot",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cnot",
+      "recommended_import": "from quairkit.database import cnot",
+      "preferred_usage": "cnot(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "completely_mixed_computational",
+      "qualified_name": "quairkit.database.completely_mixed_computational",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import completely_mixed_computational",
+      "recommended_import": "from quairkit.database import completely_mixed_computational",
+      "preferred_usage": "completely_mixed_computational(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "computational_state",
+      "qualified_name": "quairkit.database.computational_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import computational_state",
+      "recommended_import": "from quairkit.database import computational_state",
+      "preferred_usage": "computational_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cp",
+      "qualified_name": "quairkit.database.cp",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cp",
+      "recommended_import": "from quairkit.database import cp",
+      "preferred_usage": "cp(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "crx",
+      "qualified_name": "quairkit.database.crx",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import crx",
+      "recommended_import": "from quairkit.database import crx",
+      "preferred_usage": "crx(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cry",
+      "qualified_name": "quairkit.database.cry",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cry",
+      "recommended_import": "from quairkit.database import cry",
+      "preferred_usage": "cry(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "crz",
+      "qualified_name": "quairkit.database.crz",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import crz",
+      "recommended_import": "from quairkit.database import crz",
+      "preferred_usage": "crz(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cswap",
+      "qualified_name": "quairkit.database.cswap",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cswap",
+      "recommended_import": "from quairkit.database import cswap",
+      "preferred_usage": "cswap(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cu",
+      "qualified_name": "quairkit.database.cu",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cu",
+      "recommended_import": "from quairkit.database import cu",
+      "preferred_usage": "cu(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cy",
+      "qualified_name": "quairkit.database.cy",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cy",
+      "recommended_import": "from quairkit.database import cy",
+      "preferred_usage": "cy(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "cz",
+      "qualified_name": "quairkit.database.cz",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import cz",
+      "recommended_import": "from quairkit.database import cz",
+      "preferred_usage": "cz(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "depolarizing_kraus",
+      "qualified_name": "quairkit.database.depolarizing_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import depolarizing_kraus",
+      "recommended_import": "from quairkit.database import depolarizing_kraus",
+      "preferred_usage": "depolarizing_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "eye",
+      "qualified_name": "quairkit.database.eye",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import eye",
+      "recommended_import": "from quairkit.database import eye",
+      "preferred_usage": "eye(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "gell_mann",
+      "qualified_name": "quairkit.database.gell_mann",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import gell_mann",
+      "recommended_import": "from quairkit.database import gell_mann",
+      "preferred_usage": "gell_mann(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "generalized_amplitude_damping_kraus",
+      "qualified_name": "quairkit.database.generalized_amplitude_damping_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import generalized_amplitude_damping_kraus",
+      "recommended_import": "from quairkit.database import generalized_amplitude_damping_kraus",
+      "preferred_usage": "generalized_amplitude_damping_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "generalized_depolarizing_kraus",
+      "qualified_name": "quairkit.database.generalized_depolarizing_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import generalized_depolarizing_kraus",
+      "recommended_import": "from quairkit.database import generalized_depolarizing_kraus",
+      "preferred_usage": "generalized_depolarizing_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ghz_state",
+      "qualified_name": "quairkit.database.ghz_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import ghz_state",
+      "recommended_import": "from quairkit.database import ghz_state",
+      "preferred_usage": "ghz_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "grover_matrix",
+      "qualified_name": "quairkit.database.grover_matrix",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import grover_matrix",
+      "recommended_import": "from quairkit.database import grover_matrix",
+      "preferred_usage": "grover_matrix(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "h",
+      "qualified_name": "quairkit.database.h",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import h",
+      "recommended_import": "from quairkit.database import h",
+      "preferred_usage": "h(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "haar_density_operator",
+      "qualified_name": "quairkit.database.haar_density_operator",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import haar_density_operator",
+      "recommended_import": "from quairkit.database import haar_density_operator",
+      "preferred_usage": "haar_density_operator(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "haar_orthogonal",
+      "qualified_name": "quairkit.database.haar_orthogonal",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import haar_orthogonal",
+      "recommended_import": "from quairkit.database import haar_orthogonal",
+      "preferred_usage": "haar_orthogonal(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "haar_state_vector",
+      "qualified_name": "quairkit.database.haar_state_vector",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import haar_state_vector",
+      "recommended_import": "from quairkit.database import haar_state_vector",
+      "preferred_usage": "haar_state_vector(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "haar_unitary",
+      "qualified_name": "quairkit.database.haar_unitary",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import haar_unitary",
+      "recommended_import": "from quairkit.database import haar_unitary",
+      "preferred_usage": "haar_unitary(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "heisenberg_hamiltonian",
+      "qualified_name": "quairkit.database.heisenberg_hamiltonian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import heisenberg_hamiltonian",
+      "recommended_import": "from quairkit.database import heisenberg_hamiltonian",
+      "preferred_usage": "heisenberg_hamiltonian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "heisenberg_weyl",
+      "qualified_name": "quairkit.database.heisenberg_weyl",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import heisenberg_weyl",
+      "recommended_import": "from quairkit.database import heisenberg_weyl",
+      "preferred_usage": "heisenberg_weyl(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ising_hamiltonian",
+      "qualified_name": "quairkit.database.ising_hamiltonian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import ising_hamiltonian",
+      "recommended_import": "from quairkit.database import ising_hamiltonian",
+      "preferred_usage": "ising_hamiltonian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "isotropic_state",
+      "qualified_name": "quairkit.database.isotropic_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import isotropic_state",
+      "recommended_import": "from quairkit.database import isotropic_state",
+      "preferred_usage": "isotropic_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ms",
+      "qualified_name": "quairkit.database.ms",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import ms",
+      "recommended_import": "from quairkit.database import ms",
+      "preferred_usage": "ms(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "one_state",
+      "qualified_name": "quairkit.database.one_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import one_state",
+      "recommended_import": "from quairkit.database import one_state",
+      "preferred_usage": "one_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "p",
+      "qualified_name": "quairkit.database.p",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import p",
+      "recommended_import": "from quairkit.database import p",
+      "preferred_usage": "p(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_basis",
+      "qualified_name": "quairkit.database.pauli_basis",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import pauli_basis",
+      "recommended_import": "from quairkit.database import pauli_basis",
+      "preferred_usage": "pauli_basis(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_group",
+      "qualified_name": "quairkit.database.pauli_group",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import pauli_group",
+      "recommended_import": "from quairkit.database import pauli_group",
+      "preferred_usage": "pauli_group(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_kraus",
+      "qualified_name": "quairkit.database.pauli_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import pauli_kraus",
+      "recommended_import": "from quairkit.database import pauli_kraus",
+      "preferred_usage": "pauli_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_str_basis",
+      "qualified_name": "quairkit.database.pauli_str_basis",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import pauli_str_basis",
+      "recommended_import": "from quairkit.database import pauli_str_basis",
+      "preferred_usage": "pauli_str_basis(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_str_povm",
+      "qualified_name": "quairkit.database.pauli_str_povm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import pauli_str_povm",
+      "recommended_import": "from quairkit.database import pauli_str_povm",
+      "preferred_usage": "pauli_str_povm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "permutation_matrix",
+      "qualified_name": "quairkit.database.permutation_matrix",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import permutation_matrix",
+      "recommended_import": "from quairkit.database import permutation_matrix",
+      "preferred_usage": "permutation_matrix(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "phase",
+      "qualified_name": "quairkit.database.phase",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import phase",
+      "recommended_import": "from quairkit.database import phase",
+      "preferred_usage": "phase(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "phase_damping_kraus",
+      "qualified_name": "quairkit.database.phase_damping_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import phase_damping_kraus",
+      "recommended_import": "from quairkit.database import phase_damping_kraus",
+      "preferred_usage": "phase_damping_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "phase_flip_kraus",
+      "qualified_name": "quairkit.database.phase_flip_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import phase_flip_kraus",
+      "recommended_import": "from quairkit.database import phase_flip_kraus",
+      "preferred_usage": "phase_flip_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "phase_space_point",
+      "qualified_name": "quairkit.database.phase_space_point",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import phase_space_point",
+      "recommended_import": "from quairkit.database import phase_space_point",
+      "preferred_usage": "phase_space_point(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "qft_basis",
+      "qualified_name": "quairkit.database.qft_basis",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import qft_basis",
+      "recommended_import": "from quairkit.database import qft_basis",
+      "preferred_usage": "qft_basis(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "qft_matrix",
+      "qualified_name": "quairkit.database.qft_matrix",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import qft_matrix",
+      "recommended_import": "from quairkit.database import qft_matrix",
+      "preferred_usage": "qft_matrix(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "r_state",
+      "qualified_name": "quairkit.database.r_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import r_state",
+      "recommended_import": "from quairkit.database import r_state",
+      "preferred_usage": "r_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_channel",
+      "qualified_name": "quairkit.database.random_channel",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_channel",
+      "recommended_import": "from quairkit.database import random_channel",
+      "preferred_usage": "random_channel(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_clifford",
+      "qualified_name": "quairkit.database.random_clifford",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_clifford",
+      "recommended_import": "from quairkit.database import random_clifford",
+      "preferred_usage": "random_clifford(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_density_matrix",
+      "qualified_name": "quairkit.database.random_density_matrix",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_density_matrix",
+      "recommended_import": "from quairkit.database import random_density_matrix",
+      "preferred_usage": "random_density_matrix(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_hamiltonian_generator",
+      "qualified_name": "quairkit.database.random_hamiltonian_generator",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_hamiltonian_generator",
+      "recommended_import": "from quairkit.database import random_hamiltonian_generator",
+      "preferred_usage": "random_hamiltonian_generator(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_hermitian",
+      "qualified_name": "quairkit.database.random_hermitian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_hermitian",
+      "recommended_import": "from quairkit.database import random_hermitian",
+      "preferred_usage": "random_hermitian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_lcu",
+      "qualified_name": "quairkit.database.random_lcu",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_lcu",
+      "recommended_import": "from quairkit.database import random_lcu",
+      "preferred_usage": "random_lcu(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_orthogonal_projection",
+      "qualified_name": "quairkit.database.random_orthogonal_projection",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_orthogonal_projection",
+      "recommended_import": "from quairkit.database import random_orthogonal_projection",
+      "preferred_usage": "random_orthogonal_projection(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_pauli_str_generator",
+      "qualified_name": "quairkit.database.random_pauli_str_generator",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_pauli_str_generator",
+      "recommended_import": "from quairkit.database import random_pauli_str_generator",
+      "preferred_usage": "random_pauli_str_generator(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_projector",
+      "qualified_name": "quairkit.database.random_projector",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_projector",
+      "recommended_import": "from quairkit.database import random_projector",
+      "preferred_usage": "random_projector(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_state",
+      "qualified_name": "quairkit.database.random_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_state",
+      "recommended_import": "from quairkit.database import random_state",
+      "preferred_usage": "random_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_unitary",
+      "qualified_name": "quairkit.database.random_unitary",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_unitary",
+      "recommended_import": "from quairkit.database import random_unitary",
+      "preferred_usage": "random_unitary(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_unitary_hermitian",
+      "qualified_name": "quairkit.database.random_unitary_hermitian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_unitary_hermitian",
+      "recommended_import": "from quairkit.database import random_unitary_hermitian",
+      "preferred_usage": "random_unitary_hermitian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "random_unitary_with_hermitian_block",
+      "qualified_name": "quairkit.database.random_unitary_with_hermitian_block",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import random_unitary_with_hermitian_block",
+      "recommended_import": "from quairkit.database import random_unitary_with_hermitian_block",
+      "preferred_usage": "random_unitary_with_hermitian_block(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "replacement_choi",
+      "qualified_name": "quairkit.database.replacement_choi",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import replacement_choi",
+      "recommended_import": "from quairkit.database import replacement_choi",
+      "preferred_usage": "replacement_choi(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "reset_kraus",
+      "qualified_name": "quairkit.database.reset_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import reset_kraus",
+      "recommended_import": "from quairkit.database import reset_kraus",
+      "preferred_usage": "reset_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "rx",
+      "qualified_name": "quairkit.database.rx",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import rx",
+      "recommended_import": "from quairkit.database import rx",
+      "preferred_usage": "rx(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "rxx",
+      "qualified_name": "quairkit.database.rxx",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import rxx",
+      "recommended_import": "from quairkit.database import rxx",
+      "preferred_usage": "rxx(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ry",
+      "qualified_name": "quairkit.database.ry",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import ry",
+      "recommended_import": "from quairkit.database import ry",
+      "preferred_usage": "ry(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ryy",
+      "qualified_name": "quairkit.database.ryy",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import ryy",
+      "recommended_import": "from quairkit.database import ryy",
+      "preferred_usage": "ryy(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "rz",
+      "qualified_name": "quairkit.database.rz",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import rz",
+      "recommended_import": "from quairkit.database import rz",
+      "preferred_usage": "rz(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "rzz",
+      "qualified_name": "quairkit.database.rzz",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import rzz",
+      "recommended_import": "from quairkit.database import rzz",
+      "preferred_usage": "rzz(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "s",
+      "qualified_name": "quairkit.database.s",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import s",
+      "recommended_import": "from quairkit.database import s",
+      "preferred_usage": "s(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "s_state",
+      "qualified_name": "quairkit.database.s_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import s_state",
+      "recommended_import": "from quairkit.database import s_state",
+      "preferred_usage": "s_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "sdg",
+      "qualified_name": "quairkit.database.sdg",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import sdg",
+      "recommended_import": "from quairkit.database import sdg",
+      "preferred_usage": "sdg(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "shift",
+      "qualified_name": "quairkit.database.shift",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import shift",
+      "recommended_import": "from quairkit.database import shift",
+      "preferred_usage": "shift(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "std_basis",
+      "qualified_name": "quairkit.database.std_basis",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import std_basis",
+      "recommended_import": "from quairkit.database import std_basis",
+      "preferred_usage": "std_basis(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "swap",
+      "qualified_name": "quairkit.database.swap",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import swap",
+      "recommended_import": "from quairkit.database import swap",
+      "preferred_usage": "swap(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "t",
+      "qualified_name": "quairkit.database.t",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import t",
+      "recommended_import": "from quairkit.database import t",
+      "preferred_usage": "t(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "tdg",
+      "qualified_name": "quairkit.database.tdg",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import tdg",
+      "recommended_import": "from quairkit.database import tdg",
+      "preferred_usage": "tdg(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "thermal_relaxation_kraus",
+      "qualified_name": "quairkit.database.thermal_relaxation_kraus",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import thermal_relaxation_kraus",
+      "recommended_import": "from quairkit.database import thermal_relaxation_kraus",
+      "preferred_usage": "thermal_relaxation_kraus(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "toffoli",
+      "qualified_name": "quairkit.database.toffoli",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import toffoli",
+      "recommended_import": "from quairkit.database import toffoli",
+      "preferred_usage": "toffoli(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "u3",
+      "qualified_name": "quairkit.database.u3",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import u3",
+      "recommended_import": "from quairkit.database import u3",
+      "preferred_usage": "u3(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "universal2",
+      "qualified_name": "quairkit.database.universal2",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import universal2",
+      "recommended_import": "from quairkit.database import universal2",
+      "preferred_usage": "universal2(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "universal3",
+      "qualified_name": "quairkit.database.universal3",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import universal3",
+      "recommended_import": "from quairkit.database import universal3",
+      "preferred_usage": "universal3(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "universal_qudit",
+      "qualified_name": "quairkit.database.universal_qudit",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import universal_qudit",
+      "recommended_import": "from quairkit.database import universal_qudit",
+      "preferred_usage": "universal_qudit(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "w_state",
+      "qualified_name": "quairkit.database.w_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import w_state",
+      "recommended_import": "from quairkit.database import w_state",
+      "preferred_usage": "w_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "x",
+      "qualified_name": "quairkit.database.x",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import x",
+      "recommended_import": "from quairkit.database import x",
+      "preferred_usage": "x(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "xy_hamiltonian",
+      "qualified_name": "quairkit.database.xy_hamiltonian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import xy_hamiltonian",
+      "recommended_import": "from quairkit.database import xy_hamiltonian",
+      "preferred_usage": "xy_hamiltonian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "y",
+      "qualified_name": "quairkit.database.y",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import y",
+      "recommended_import": "from quairkit.database import y",
+      "preferred_usage": "y(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "z",
+      "qualified_name": "quairkit.database.z",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import z",
+      "recommended_import": "from quairkit.database import z",
+      "preferred_usage": "z(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "zero_state",
+      "qualified_name": "quairkit.database.zero_state",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.database import zero_state",
+      "recommended_import": "from quairkit.database import zero_state",
+      "preferred_usage": "zero_state(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "get_backend",
+      "qualified_name": "quairkit.get_backend",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import get_backend",
+      "recommended_import": "from quairkit import get_backend",
+      "preferred_usage": "get_backend(...)",
+      "alternatives": [
+        "from quairkit.core import get_backend"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "get_device",
+      "qualified_name": "quairkit.get_device",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import get_device",
+      "recommended_import": "from quairkit import get_device",
+      "preferred_usage": "get_device(...)",
+      "alternatives": [
+        "from quairkit.core import get_device"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "get_dtype",
+      "qualified_name": "quairkit.get_dtype",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import get_dtype",
+      "recommended_import": "from quairkit import get_dtype",
+      "preferred_usage": "get_dtype(...)",
+      "alternatives": [
+        "from quairkit.core import get_dtype"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "get_float_dtype",
+      "qualified_name": "quairkit.get_float_dtype",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import get_float_dtype",
+      "recommended_import": "from quairkit import get_float_dtype",
+      "preferred_usage": "get_float_dtype(...)",
+      "alternatives": [
+        "from quairkit.core import get_float_dtype"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "get_seed",
+      "qualified_name": "quairkit.get_seed",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import get_seed",
+      "recommended_import": "from quairkit import get_seed",
+      "preferred_usage": "get_seed(...)",
+      "alternatives": [
+        "from quairkit.core import get_seed"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "loss",
+      "qualified_name": "quairkit.loss",
+      "kind": "module",
+      "tier": "root",
+      "actual_import": "from quairkit import loss",
+      "recommended_import": "from quairkit import loss",
+      "preferred_usage": "loss.<public_name>",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "ExpecVal",
+      "qualified_name": "quairkit.loss.ExpecVal",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.loss import ExpecVal",
+      "recommended_import": "from quairkit.loss import ExpecVal",
+      "preferred_usage": "ExpecVal(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "Measure",
+      "qualified_name": "quairkit.loss.Measure",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.loss import Measure",
+      "recommended_import": "from quairkit.loss import Measure",
+      "preferred_usage": "Measure(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "StateFidelity",
+      "qualified_name": "quairkit.loss.StateFidelity",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.loss import StateFidelity",
+      "recommended_import": "from quairkit.loss import StateFidelity",
+      "preferred_usage": "StateFidelity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "TraceDistance",
+      "qualified_name": "quairkit.loss.TraceDistance",
+      "kind": "class",
+      "tier": "submodule",
+      "actual_import": "from quairkit.loss import TraceDistance",
+      "recommended_import": "from quairkit.loss import TraceDistance",
+      "preferred_usage": "TraceDistance(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "name",
+      "qualified_name": "quairkit.name",
+      "kind": "constant",
+      "tier": "root",
+      "actual_import": "from quairkit import name",
+      "recommended_import": "from quairkit import name",
+      "preferred_usage": "name",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "operator",
+      "qualified_name": "quairkit.operator",
+      "kind": "module",
+      "tier": "root",
+      "actual_import": "from quairkit import operator",
+      "recommended_import": "from quairkit import operator",
+      "preferred_usage": "operator.<public_name>",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "AmplitudeDamping",
+      "qualified_name": "quairkit.operator.AmplitudeDamping",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import AmplitudeDamping",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.amplitude_damping(...)",
+      "alternatives": [
+        "from quairkit.operator import AmplitudeDamping"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "BitFlip",
+      "qualified_name": "quairkit.operator.BitFlip",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import BitFlip",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.bit_flip(...)",
+      "alternatives": [
+        "from quairkit.operator import BitFlip"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "BitPhaseFlip",
+      "qualified_name": "quairkit.operator.BitPhaseFlip",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import BitPhaseFlip",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.bit_phase_flip(...)",
+      "alternatives": [
+        "from quairkit.operator import BitPhaseFlip"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CCX",
+      "qualified_name": "quairkit.operator.CCX",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CCX",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ccx(...)",
+      "alternatives": [
+        "from quairkit.operator import CCX"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CNOT",
+      "qualified_name": "quairkit.operator.CNOT",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CNOT",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cnot(...)",
+      "alternatives": [
+        "from quairkit.operator import CNOT"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CP",
+      "qualified_name": "quairkit.operator.CP",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CP",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cp(...)",
+      "alternatives": [
+        "from quairkit.operator import CP"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CRX",
+      "qualified_name": "quairkit.operator.CRX",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CRX",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.crx(...)",
+      "alternatives": [
+        "from quairkit.operator import CRX"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CRY",
+      "qualified_name": "quairkit.operator.CRY",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CRY",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cry(...)",
+      "alternatives": [
+        "from quairkit.operator import CRY"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CRZ",
+      "qualified_name": "quairkit.operator.CRZ",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CRZ",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.crz(...)",
+      "alternatives": [
+        "from quairkit.operator import CRZ"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CSWAP",
+      "qualified_name": "quairkit.operator.CSWAP",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CSWAP",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cswap(...)",
+      "alternatives": [
+        "from quairkit.operator import CSWAP"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CU",
+      "qualified_name": "quairkit.operator.CU",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CU",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cu(...)",
+      "alternatives": [
+        "from quairkit.operator import CU"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CX",
+      "qualified_name": "quairkit.operator.CX",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CX",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cx(...)",
+      "alternatives": [
+        "from quairkit.operator import CX"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CY",
+      "qualified_name": "quairkit.operator.CY",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CY",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cy(...)",
+      "alternatives": [
+        "from quairkit.operator import CY"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "CZ",
+      "qualified_name": "quairkit.operator.CZ",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import CZ",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.cz(...)",
+      "alternatives": [
+        "from quairkit.operator import CZ"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Channel",
+      "qualified_name": "quairkit.operator.Channel",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Channel",
+      "recommended_import": "from quairkit.operator import Channel",
+      "preferred_usage": "Channel(...)",
+      "alternatives": [],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ChoiRepr",
+      "qualified_name": "quairkit.operator.ChoiRepr",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ChoiRepr",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.choi_channel(...)",
+      "alternatives": [
+        "from quairkit.operator import ChoiRepr"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Collapse",
+      "qualified_name": "quairkit.operator.Collapse",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Collapse",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.collapse(...)",
+      "alternatives": [
+        "from quairkit.operator import Collapse"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ControlOracle",
+      "qualified_name": "quairkit.operator.ControlOracle",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ControlOracle",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.oracle(...)",
+      "alternatives": [
+        "from quairkit.operator import ControlOracle"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ControlParamOracle",
+      "qualified_name": "quairkit.operator.ControlParamOracle",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ControlParamOracle",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.param_oracle(...)",
+      "alternatives": [
+        "from quairkit.operator import ControlParamOracle"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Depolarizing",
+      "qualified_name": "quairkit.operator.Depolarizing",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Depolarizing",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.depolarizing(...)",
+      "alternatives": [
+        "from quairkit.operator import Depolarizing"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Gate",
+      "qualified_name": "quairkit.operator.Gate",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Gate",
+      "recommended_import": "from quairkit.operator import Gate",
+      "preferred_usage": "Gate(...)",
+      "alternatives": [],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "GeneralizedAmplitudeDamping",
+      "qualified_name": "quairkit.operator.GeneralizedAmplitudeDamping",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import GeneralizedAmplitudeDamping",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.generalized_amplitude_damping(...)",
+      "alternatives": [
+        "from quairkit.operator import GeneralizedAmplitudeDamping"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "GeneralizedDepolarizing",
+      "qualified_name": "quairkit.operator.GeneralizedDepolarizing",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import GeneralizedDepolarizing",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.generalized_depolarizing(...)",
+      "alternatives": [
+        "from quairkit.operator import GeneralizedDepolarizing"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "H",
+      "qualified_name": "quairkit.operator.H",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import H",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.h(...)",
+      "alternatives": [
+        "from quairkit.operator import H"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "KrausRepr",
+      "qualified_name": "quairkit.operator.KrausRepr",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import KrausRepr",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.kraus_channel(...)",
+      "alternatives": [
+        "from quairkit.operator import KrausRepr"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "MS",
+      "qualified_name": "quairkit.operator.MS",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import MS",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ms(...)",
+      "alternatives": [
+        "from quairkit.operator import MS"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ManifoldUniversalQudits",
+      "qualified_name": "quairkit.operator.ManifoldUniversalQudits",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ManifoldUniversalQudits",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_qudits(...)",
+      "alternatives": [
+        "from quairkit.operator import ManifoldUniversalQudits"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "OneWayLOCC",
+      "qualified_name": "quairkit.operator.OneWayLOCC",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import OneWayLOCC",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.locc(...)",
+      "alternatives": [
+        "from quairkit.operator import OneWayLOCC"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Oracle",
+      "qualified_name": "quairkit.operator.Oracle",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Oracle",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.oracle(...)",
+      "alternatives": [
+        "from quairkit.operator import Oracle"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "P",
+      "qualified_name": "quairkit.operator.P",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import P",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.p(...)",
+      "alternatives": [
+        "from quairkit.operator import P"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ParamGate",
+      "qualified_name": "quairkit.operator.ParamGate",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ParamGate",
+      "recommended_import": "from quairkit.operator import ParamGate",
+      "preferred_usage": "ParamGate(...)",
+      "alternatives": [],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ParamOracle",
+      "qualified_name": "quairkit.operator.ParamOracle",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ParamOracle",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.param_oracle(...)",
+      "alternatives": [
+        "from quairkit.operator import ParamOracle"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "PauliChannel",
+      "qualified_name": "quairkit.operator.PauliChannel",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import PauliChannel",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.pauli_channel(...)",
+      "alternatives": [
+        "from quairkit.operator import PauliChannel"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Permutation",
+      "qualified_name": "quairkit.operator.Permutation",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Permutation",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.permute(...)",
+      "alternatives": [
+        "from quairkit.operator import Permutation"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "PhaseDamping",
+      "qualified_name": "quairkit.operator.PhaseDamping",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import PhaseDamping",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.phase_damping(...)",
+      "alternatives": [
+        "from quairkit.operator import PhaseDamping"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "PhaseFlip",
+      "qualified_name": "quairkit.operator.PhaseFlip",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import PhaseFlip",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.phase_flip(...)",
+      "alternatives": [
+        "from quairkit.operator import PhaseFlip"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "QFT",
+      "qualified_name": "quairkit.operator.QFT",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import QFT",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.qft(...)",
+      "alternatives": [
+        "from quairkit.operator import QFT"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "QuasiOperation",
+      "qualified_name": "quairkit.operator.QuasiOperation",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import QuasiOperation",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.quasi(...)",
+      "alternatives": [
+        "from quairkit.operator import QuasiOperation"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "RX",
+      "qualified_name": "quairkit.operator.RX",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import RX",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rx(...)",
+      "alternatives": [
+        "from quairkit.operator import RX"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "RXX",
+      "qualified_name": "quairkit.operator.RXX",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import RXX",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rxx(...)",
+      "alternatives": [
+        "from quairkit.operator import RXX"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "RY",
+      "qualified_name": "quairkit.operator.RY",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import RY",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ry(...)",
+      "alternatives": [
+        "from quairkit.operator import RY"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "RYY",
+      "qualified_name": "quairkit.operator.RYY",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import RYY",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.ryy(...)",
+      "alternatives": [
+        "from quairkit.operator import RYY"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "RZ",
+      "qualified_name": "quairkit.operator.RZ",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import RZ",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rz(...)",
+      "alternatives": [
+        "from quairkit.operator import RZ"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "RZZ",
+      "qualified_name": "quairkit.operator.RZZ",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import RZZ",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.rzz(...)",
+      "alternatives": [
+        "from quairkit.operator import RZZ"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ReplacementChannel",
+      "qualified_name": "quairkit.operator.ReplacementChannel",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ReplacementChannel",
+      "recommended_import": "from quairkit.operator import ReplacementChannel",
+      "preferred_usage": "ReplacementChannel(...)",
+      "alternatives": [],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ResetChannel",
+      "qualified_name": "quairkit.operator.ResetChannel",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ResetChannel",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.reset_channel(...)",
+      "alternatives": [
+        "from quairkit.operator import ResetChannel"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ResetState",
+      "qualified_name": "quairkit.operator.ResetState",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ResetState",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.reset(...)",
+      "alternatives": [
+        "from quairkit.operator import ResetState"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "S",
+      "qualified_name": "quairkit.operator.S",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import S",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.s(...)",
+      "alternatives": [
+        "from quairkit.operator import S"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "SWAP",
+      "qualified_name": "quairkit.operator.SWAP",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import SWAP",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.swap(...)",
+      "alternatives": [
+        "from quairkit.operator import SWAP"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Sdg",
+      "qualified_name": "quairkit.operator.Sdg",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Sdg",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.sdg(...)",
+      "alternatives": [
+        "from quairkit.operator import Sdg"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "StinespringRepr",
+      "qualified_name": "quairkit.operator.StinespringRepr",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import StinespringRepr",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.stinespring_channel(...)",
+      "alternatives": [
+        "from quairkit.operator import StinespringRepr"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "T",
+      "qualified_name": "quairkit.operator.T",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import T",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.t(...)",
+      "alternatives": [
+        "from quairkit.operator import T"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Tdg",
+      "qualified_name": "quairkit.operator.Tdg",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Tdg",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.tdg(...)",
+      "alternatives": [
+        "from quairkit.operator import Tdg"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "ThermalRelaxation",
+      "qualified_name": "quairkit.operator.ThermalRelaxation",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import ThermalRelaxation",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.thermal_relaxation(...)",
+      "alternatives": [
+        "from quairkit.operator import ThermalRelaxation"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Toffoli",
+      "qualified_name": "quairkit.operator.Toffoli",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Toffoli",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.toffoli(...)",
+      "alternatives": [
+        "from quairkit.operator import Toffoli"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "U3",
+      "qualified_name": "quairkit.operator.U3",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import U3",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.u3(...)",
+      "alternatives": [
+        "from quairkit.operator import U3"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "UniversalQudits",
+      "qualified_name": "quairkit.operator.UniversalQudits",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import UniversalQudits",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.universal_qudits(...)",
+      "alternatives": [
+        "from quairkit.operator import UniversalQudits"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "X",
+      "qualified_name": "quairkit.operator.X",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import X",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.x(...)",
+      "alternatives": [
+        "from quairkit.operator import X"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Y",
+      "qualified_name": "quairkit.operator.Y",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Y",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.y(...)",
+      "alternatives": [
+        "from quairkit.operator import Y"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "Z",
+      "qualified_name": "quairkit.operator.Z",
+      "kind": "class",
+      "tier": "low_level",
+      "actual_import": "from quairkit.operator import Z",
+      "recommended_import": "from quairkit import Circuit",
+      "preferred_usage": "circuit.z(...)",
+      "alternatives": [
+        "from quairkit.operator import Z"
+      ],
+      "notes": "Low-level operator class; prefer the Circuit interface in ordinary user code."
+    },
+    {
+      "name": "print_info",
+      "qualified_name": "quairkit.print_info",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import print_info",
+      "recommended_import": "from quairkit import print_info",
+      "preferred_usage": "print_info(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "qinfo",
+      "qualified_name": "quairkit.qinfo",
+      "kind": "module",
+      "tier": "root",
+      "actual_import": "from quairkit import qinfo",
+      "recommended_import": "from quairkit import qinfo",
+      "preferred_usage": "qinfo.<public_name>",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "NKron",
+      "qualified_name": "quairkit.qinfo.NKron",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import NKron",
+      "recommended_import": "from quairkit.qinfo import NKron",
+      "preferred_usage": "NKron(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "abs_norm",
+      "qualified_name": "quairkit.qinfo.abs_norm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import abs_norm",
+      "recommended_import": "from quairkit.qinfo import abs_norm",
+      "preferred_usage": "abs_norm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "block_enc_herm",
+      "qualified_name": "quairkit.qinfo.block_enc_herm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import block_enc_herm",
+      "recommended_import": "from quairkit.qinfo import block_enc_herm",
+      "preferred_usage": "block_enc_herm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "channel_repr_convert",
+      "qualified_name": "quairkit.qinfo.channel_repr_convert",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import channel_repr_convert",
+      "recommended_import": "from quairkit.qinfo import channel_repr_convert",
+      "preferred_usage": "channel_repr_convert(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "create_choi_repr",
+      "qualified_name": "quairkit.qinfo.create_choi_repr",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import create_choi_repr",
+      "recommended_import": "from quairkit.qinfo import create_choi_repr",
+      "preferred_usage": "create_choi_repr(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "create_matrix",
+      "qualified_name": "quairkit.qinfo.create_matrix",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import create_matrix",
+      "recommended_import": "from quairkit.qinfo import create_matrix",
+      "preferred_usage": "create_matrix(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "dagger",
+      "qualified_name": "quairkit.qinfo.dagger",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import dagger",
+      "recommended_import": "from quairkit.qinfo import dagger",
+      "preferred_usage": "dagger(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "decomp_1qubit",
+      "qualified_name": "quairkit.qinfo.decomp_1qubit",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import decomp_1qubit",
+      "recommended_import": "from quairkit.qinfo import decomp_1qubit",
+      "preferred_usage": "decomp_1qubit(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "decomp_ctrl_1qubit",
+      "qualified_name": "quairkit.qinfo.decomp_ctrl_1qubit",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import decomp_ctrl_1qubit",
+      "recommended_import": "from quairkit.qinfo import decomp_ctrl_1qubit",
+      "preferred_usage": "decomp_ctrl_1qubit(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "diamond_norm",
+      "qualified_name": "quairkit.qinfo.diamond_norm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import diamond_norm",
+      "recommended_import": "from quairkit.qinfo import diamond_norm",
+      "preferred_usage": "diamond_norm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "direct_sum",
+      "qualified_name": "quairkit.qinfo.direct_sum",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import direct_sum",
+      "recommended_import": "from quairkit.qinfo import direct_sum",
+      "preferred_usage": "direct_sum(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "gate_fidelity",
+      "qualified_name": "quairkit.qinfo.gate_fidelity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import gate_fidelity",
+      "recommended_import": "from quairkit.qinfo import gate_fidelity",
+      "preferred_usage": "gate_fidelity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "general_state_fidelity",
+      "qualified_name": "quairkit.qinfo.general_state_fidelity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import general_state_fidelity",
+      "recommended_import": "from quairkit.qinfo import general_state_fidelity",
+      "preferred_usage": "general_state_fidelity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "gradient",
+      "qualified_name": "quairkit.qinfo.gradient",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import gradient",
+      "recommended_import": "from quairkit.qinfo import gradient",
+      "preferred_usage": "gradient(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "herm_transform",
+      "qualified_name": "quairkit.qinfo.herm_transform",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import herm_transform",
+      "recommended_import": "from quairkit.qinfo import herm_transform",
+      "preferred_usage": "herm_transform(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "hessian",
+      "qualified_name": "quairkit.qinfo.hessian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import hessian",
+      "recommended_import": "from quairkit.qinfo import hessian",
+      "preferred_usage": "hessian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_choi",
+      "qualified_name": "quairkit.qinfo.is_choi",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_choi",
+      "recommended_import": "from quairkit.qinfo import is_choi",
+      "preferred_usage": "is_choi(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_density_matrix",
+      "qualified_name": "quairkit.qinfo.is_density_matrix",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_density_matrix",
+      "recommended_import": "from quairkit.qinfo import is_density_matrix",
+      "preferred_usage": "is_density_matrix(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_hermitian",
+      "qualified_name": "quairkit.qinfo.is_hermitian",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_hermitian",
+      "recommended_import": "from quairkit.qinfo import is_hermitian",
+      "preferred_usage": "is_hermitian(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_linear",
+      "qualified_name": "quairkit.qinfo.is_linear",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_linear",
+      "recommended_import": "from quairkit.qinfo import is_linear",
+      "preferred_usage": "is_linear(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_positive",
+      "qualified_name": "quairkit.qinfo.is_positive",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_positive",
+      "recommended_import": "from quairkit.qinfo import is_positive",
+      "preferred_usage": "is_positive(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_povm",
+      "qualified_name": "quairkit.qinfo.is_povm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_povm",
+      "recommended_import": "from quairkit.qinfo import is_povm",
+      "preferred_usage": "is_povm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_ppt",
+      "qualified_name": "quairkit.qinfo.is_ppt",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_ppt",
+      "recommended_import": "from quairkit.qinfo import is_ppt",
+      "preferred_usage": "is_ppt(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_projector",
+      "qualified_name": "quairkit.qinfo.is_projector",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_projector",
+      "recommended_import": "from quairkit.qinfo import is_projector",
+      "preferred_usage": "is_projector(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_pvm",
+      "qualified_name": "quairkit.qinfo.is_pvm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_pvm",
+      "recommended_import": "from quairkit.qinfo import is_pvm",
+      "preferred_usage": "is_pvm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_state_vector",
+      "qualified_name": "quairkit.qinfo.is_state_vector",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_state_vector",
+      "recommended_import": "from quairkit.qinfo import is_state_vector",
+      "preferred_usage": "is_state_vector(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "is_unitary",
+      "qualified_name": "quairkit.qinfo.is_unitary",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import is_unitary",
+      "recommended_import": "from quairkit.qinfo import is_unitary",
+      "preferred_usage": "is_unitary(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "kron_power",
+      "qualified_name": "quairkit.qinfo.kron_power",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import kron_power",
+      "recommended_import": "from quairkit.qinfo import kron_power",
+      "preferred_usage": "kron_power(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "link",
+      "qualified_name": "quairkit.qinfo.link",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import link",
+      "recommended_import": "from quairkit.qinfo import link",
+      "preferred_usage": "link(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "logarithmic_negativity",
+      "qualified_name": "quairkit.qinfo.logarithmic_negativity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import logarithmic_negativity",
+      "recommended_import": "from quairkit.qinfo import logarithmic_negativity",
+      "preferred_usage": "logarithmic_negativity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "logm",
+      "qualified_name": "quairkit.qinfo.logm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import logm",
+      "recommended_import": "from quairkit.qinfo import logm",
+      "preferred_usage": "logm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "mana",
+      "qualified_name": "quairkit.qinfo.mana",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import mana",
+      "recommended_import": "from quairkit.qinfo import mana",
+      "preferred_usage": "mana(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "mutual_information",
+      "qualified_name": "quairkit.qinfo.mutual_information",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import mutual_information",
+      "recommended_import": "from quairkit.qinfo import mutual_information",
+      "preferred_usage": "mutual_information(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "negativity",
+      "qualified_name": "quairkit.qinfo.negativity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import negativity",
+      "recommended_import": "from quairkit.qinfo import negativity",
+      "preferred_usage": "negativity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "nkron",
+      "qualified_name": "quairkit.qinfo.nkron",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import nkron",
+      "recommended_import": "from quairkit.qinfo import nkron",
+      "preferred_usage": "nkron(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "p_norm",
+      "qualified_name": "quairkit.qinfo.p_norm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import p_norm",
+      "recommended_import": "from quairkit.qinfo import p_norm",
+      "preferred_usage": "p_norm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "partial_trace",
+      "qualified_name": "quairkit.qinfo.partial_trace",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import partial_trace",
+      "recommended_import": "from quairkit.qinfo import partial_trace",
+      "preferred_usage": "partial_trace(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "partial_trace_discontiguous",
+      "qualified_name": "quairkit.qinfo.partial_trace_discontiguous",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import partial_trace_discontiguous",
+      "recommended_import": "from quairkit.qinfo import partial_trace_discontiguous",
+      "preferred_usage": "partial_trace_discontiguous(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "partial_transpose",
+      "qualified_name": "quairkit.qinfo.partial_transpose",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import partial_transpose",
+      "recommended_import": "from quairkit.qinfo import partial_transpose",
+      "preferred_usage": "partial_transpose(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_decomposition",
+      "qualified_name": "quairkit.qinfo.pauli_decomposition",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import pauli_decomposition",
+      "recommended_import": "from quairkit.qinfo import pauli_decomposition",
+      "preferred_usage": "pauli_decomposition(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "pauli_str_convertor",
+      "qualified_name": "quairkit.qinfo.pauli_str_convertor",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import pauli_str_convertor",
+      "recommended_import": "from quairkit.qinfo import pauli_str_convertor",
+      "preferred_usage": "pauli_str_convertor(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "permute_systems",
+      "qualified_name": "quairkit.qinfo.permute_systems",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import permute_systems",
+      "recommended_import": "from quairkit.qinfo import permute_systems",
+      "preferred_usage": "permute_systems(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "prob_sample",
+      "qualified_name": "quairkit.qinfo.prob_sample",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import prob_sample",
+      "recommended_import": "from quairkit.qinfo import prob_sample",
+      "preferred_usage": "prob_sample(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "purity",
+      "qualified_name": "quairkit.qinfo.purity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import purity",
+      "recommended_import": "from quairkit.qinfo import purity",
+      "preferred_usage": "purity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "relative_entropy",
+      "qualified_name": "quairkit.qinfo.relative_entropy",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import relative_entropy",
+      "recommended_import": "from quairkit.qinfo import relative_entropy",
+      "preferred_usage": "relative_entropy(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "schmidt_decompose",
+      "qualified_name": "quairkit.qinfo.schmidt_decompose",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import schmidt_decompose",
+      "recommended_import": "from quairkit.qinfo import schmidt_decompose",
+      "preferred_usage": "schmidt_decompose(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "sqrtm",
+      "qualified_name": "quairkit.qinfo.sqrtm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import sqrtm",
+      "recommended_import": "from quairkit.qinfo import sqrtm",
+      "preferred_usage": "sqrtm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "stab_nullity",
+      "qualified_name": "quairkit.qinfo.stab_nullity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import stab_nullity",
+      "recommended_import": "from quairkit.qinfo import stab_nullity",
+      "preferred_usage": "stab_nullity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "stab_renyi",
+      "qualified_name": "quairkit.qinfo.stab_renyi",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import stab_renyi",
+      "recommended_import": "from quairkit.qinfo import stab_renyi",
+      "preferred_usage": "stab_renyi(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "state_fidelity",
+      "qualified_name": "quairkit.qinfo.state_fidelity",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import state_fidelity",
+      "recommended_import": "from quairkit.qinfo import state_fidelity",
+      "preferred_usage": "state_fidelity(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "trace",
+      "qualified_name": "quairkit.qinfo.trace",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import trace",
+      "recommended_import": "from quairkit.qinfo import trace",
+      "preferred_usage": "trace(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "trace_distance",
+      "qualified_name": "quairkit.qinfo.trace_distance",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import trace_distance",
+      "recommended_import": "from quairkit.qinfo import trace_distance",
+      "preferred_usage": "trace_distance(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "trace_norm",
+      "qualified_name": "quairkit.qinfo.trace_norm",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import trace_norm",
+      "recommended_import": "from quairkit.qinfo import trace_norm",
+      "preferred_usage": "trace_norm(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "von_neumann_entropy",
+      "qualified_name": "quairkit.qinfo.von_neumann_entropy",
+      "kind": "function",
+      "tier": "submodule",
+      "actual_import": "from quairkit.qinfo import von_neumann_entropy",
+      "recommended_import": "from quairkit.qinfo import von_neumann_entropy",
+      "preferred_usage": "von_neumann_entropy(...)",
+      "alternatives": [],
+      "notes": ""
+    },
+    {
+      "name": "set_backend",
+      "qualified_name": "quairkit.set_backend",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import set_backend",
+      "recommended_import": "from quairkit import set_backend",
+      "preferred_usage": "set_backend(...)",
+      "alternatives": [
+        "from quairkit.core import set_backend"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "set_device",
+      "qualified_name": "quairkit.set_device",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import set_device",
+      "recommended_import": "from quairkit import set_device",
+      "preferred_usage": "set_device(...)",
+      "alternatives": [
+        "from quairkit.core import set_device"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "set_dtype",
+      "qualified_name": "quairkit.set_dtype",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import set_dtype",
+      "recommended_import": "from quairkit import set_dtype",
+      "preferred_usage": "set_dtype(...)",
+      "alternatives": [
+        "from quairkit.core import set_dtype"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "set_seed",
+      "qualified_name": "quairkit.set_seed",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import set_seed",
+      "recommended_import": "from quairkit import set_seed",
+      "preferred_usage": "set_seed(...)",
+      "alternatives": [
+        "from quairkit.core import set_seed"
+      ],
+      "notes": ""
+    },
+    {
+      "name": "to_state",
+      "qualified_name": "quairkit.to_state",
+      "kind": "function",
+      "tier": "root",
+      "actual_import": "from quairkit import to_state",
+      "recommended_import": "from quairkit import to_state",
+      "preferred_usage": "to_state(...)",
+      "alternatives": [
+        "from quairkit.core import to_state"
+      ],
+      "notes": ""
+    }
+  ]
+}

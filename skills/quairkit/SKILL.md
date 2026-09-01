@@ -1,207 +1,125 @@
 ---
 name: quairkit
-description: Write, explain, validate, and reproduce QuAIRKit code using only the reference files in this directory. Use when working with QuAIRKit circuits, states, ansatzes, LOCC, Quantikz plotting, training loops, common workload patterns, or third-party execution backends.
+description: Use for QuAIRKit 0.5.1 only when writing, explaining, reviewing, validating, or reproducing code involving circuits, states, ansatz layers, database factories, qinfo, losses, LOCC, Quantikz plotting, QASM, training loops, PyTorch integration, import paths, or StateOperator backends.
+license: Apache-2.0
 ---
 
-# QuAIRKit Guide
+# QuAIRKit 0.5.1
 
-## When To Use
+## Version Gate
 
-Use this skill when a task involves:
+1. Resolve every referenced path relative to this skill directory.
+2. Before reading API references, recommending imports, or producing QuAIRKit code, run:
 
-- writing or reviewing QuAIRKit code
-- reproducing or adapting examples from the official QuAIRKit tutorials
-- explaining QuAIRKit APIs for states, circuits, training, plotting, or LOCC
-- creating tutorial-like demos for the paper appendix
-- integrating a `StateOperator` backend
+   ```bash
+   python scripts/check_version.py
+   ```
 
-## First Principles
+3. If QuAIRKit is missing or its installed version is not exactly `0.5.1`, stop. Ask the user to install an official QuAIRKit 0.5.1 package; do not adapt these instructions with APIs from another version.
 
-1. Treat the QuAIRKit installed package source as the source of truth.
-2. Prefer `Circuit` as the default user-facing interface.
-3. Use `database` for construction and `qinfo` for analysis.
-4. Use `loss` wrappers for training-oriented code.
-5. When an insertion rule is ambiguous, verify it in code instead of guessing.
+## Source Of Truth
 
-## Installation
+1. Treat the installed QuAIRKit 0.5.1 package and its public release source as authoritative.
+2. Use `Circuit` as the default user-facing circuit interface.
+3. Use `database` to construct matrices, channels, states, bases, and random data.
+4. Use `qinfo` for analysis and `loss` for reusable training-oriented wrappers.
+5. Treat `StateOperator` as an execution-backend interface, not a numeric state constructor.
+6. Verify ambiguous signatures, shapes, or insertion behavior with a minimal runnable snippet in the gated 0.5.1 environment.
 
-### Runtime Install
+## Setup Defaults
 
-- Recommended environment: Python 3.10 and PyTorch 2.11.x.
-- On supported wheel platforms, use `pip install quairkit`.
-- Release wheels are acceptable if their PyTorch compatibility matches the environment.
+- Use an official QuAIRKit 0.5.1 wheel that matches the target Python and operating system. Do not install from a repository tree.
+- Use Python 3.10 and PyTorch 2.11 for the verified baseline.
+- Use `python -m pip install "quairkit==0.5.1"` when installing from the official package index.
+- Use `qkit.set_dtype("complex128")` for numerical stability, `qkit.set_device(...)` for device choice, and `qkit.set_seed(...)` for reproducibility.
+- `Circuit.plot()` requires a TeX toolchain with `pdflatex`.
 
-### Source Install
+Read [references/environment-and-style.md](references/environment-and-style.md) for installation, imports, plotting dependencies, and deliverable style.
 
-- Use source install when modifying QuAIRKit itself or when no compatible wheel exists.
-- Requirements: active Python environment, PyTorch >= 2.4, and a C++17 toolchain.
-- Standard editable install:
+## Reference Routing
 
-```bash
-pip install -e . --no-build-isolation
-```
+Read only the references needed for the task:
 
-- Better IDE compatibility:
+- states, Hamiltonians, backend switching: [references/api-core.md](references/api-core.md)
+- circuits, gates, channels, measurement, QASM2, plotting: [references/api-circuit.md](references/api-circuit.md)
+- template layers, encodings, subcircuits: [references/api-ansatz.md](references/api-ansatz.md)
+- database factories and quantum-information utilities: [references/api-database-qinfo.md](references/api-database-qinfo.md)
+- loss wrappers and `OneWayLOCCNet`: [references/api-loss-application.md](references/api-loss-application.md)
+- PyTorch integration and training loops: [references/api-torch.md](references/api-torch.md)
+- tutorial reconstruction and common workloads: [references/tutorials-checklist.md](references/tutorials-checklist.md)
+- canonical QuAIRKit 0.5.1 import routes: [references/imports.json](references/imports.json)
 
-```bash
-pip install -e . --config-settings editable_mode=strict --no-build-isolation
-```
+## Workflow
 
-- For VSCode/Pylance, `python.analysis.extraPaths` may still be useful after editable install.
+### Write Or Review Code
 
-### Optional Plotting Dependencies
+1. Confirm the version gate passes.
+2. Identify the API family: state preparation, circuit construction, analysis, training, plotting, or backend integration.
+3. Query an uncertain function, class, or method before choosing its import:
 
-- `Circuit.plot()` requires `pdflatex`.
-- Recommended TeX distribution: TeX Live or MacTeX.
-- On macOS, install `poppler` if PDF page-count errors appear.
+   ```bash
+   python scripts/recommend_import.py Circuit
+   python scripts/recommend_import.py Circuit.rx
+   python scripts/recommend_import.py state_fidelity --json
+   ```
 
-## Default Imports
+4. Prefer `Circuit` plus public `database`, `qinfo`, and `loss` routes over low-level operator classes.
+5. Keep batch shape, probability axes, `system_dim`, dtype, device, and randomness explicit.
+6. Run a minimal snippet when API behavior matters.
 
-```python
-import time
-import numpy as np
-import torch
-import quairkit as qkit
+### Reproduce A Tutorial
 
-from quairkit import Circuit, State, Hamiltonian, to_state
-from quairkit.database import *
-from quairkit.loss import *
-from quairkit.qinfo import *
-```
+1. Confirm the version gate passes.
+2. Use [references/tutorials-checklist.md](references/tutorials-checklist.md) to identify the capability and relevant APIs.
+3. Rebuild from QuAIRKit 0.5.1 APIs instead of copying tutorial cells.
+4. Preserve scientific meaning; simplify constants only when exact reproduction is unnecessary.
+5. Seed stochastic steps and provide a simulator fallback for optional external backends when possible.
 
-Use narrower imports in final user-facing code when that improves readability.
+### Write Training Code
 
-## Default Global Setup
+1. Confirm the version gate passes.
+2. Separate the optimization objective from the validation metric.
+3. Prefer a stable differentiable loss even when the final metric differs.
+4. Follow [references/api-torch.md](references/api-torch.md), including a nonzero logging interval.
 
-- Use `qkit.set_dtype("complex128")` when numerical stability matters.
-- Use `qkit.set_device("cpu")` or `qkit.set_device("cuda")` with PyTorch-style device strings.
-- Use `qkit.set_seed(seed)` when reproducibility matters.
-- Backend choice, dtype, device, and seed are global settings.
+## API Conventions
 
-## Core Mental Model
+- `Circuit.append(layer)` preserves a child-module boundary; `Circuit.extend(layer)` flattens it.
+- Built-in trainable layers use parameters shaped `[batch_size, total_param_num]`.
+- Ordinary parameterized gates flatten accepted parameter input to one batch axis. They support the same batch size or size-one broadcasting, not arbitrary multidimensional NumPy broadcasting.
+- `int`, `List[int]`, and `List[List[int]]` insertion targets are API- and arity-dependent; consult the circuit reference.
+- `database.rx(...)` returns a matrix, not a callable gate object.
+- Do not use low-level operator classes such as `RX`, `CNOT`, `Oracle`, `Collapse`, or `OneWayLOCC` in ordinary user code when a `Circuit` method exists.
+- `Circuit.measure` changes circuit structure; `loss.Measure` consumes an existing state.
+- Only qubit circuits export to OpenQASM 2.0.
+- QuAIRKit 0.5.1 has no QuAIRKit-specific circuit compiler, public IR, binding table, executable plan, or generic circuit snapshot API. Do not invent `Circuit.save` or `Circuit.load`.
+- An inherited `Circuit.compile` attribute is PyTorch `torch.nn.Module` behavior, not a QuAIRKit quantum-circuit compiler.
+- `Circuit.from_operators(...)` only reconstructs a qubit circuit from a non-daggered `operator_history`; it is not general persistence or a cross-version interchange format.
+- Do not recommend `PQCombNet`.
 
-- `Circuit` is the main user entry point.
-- `Layer` is a reusable subcircuit template and is an `OperatorList`.
-- `State` is the top-level alias users normally see.
-- `StateSimulator` is for tensor-level simulation and state inspection.
-- `StateOperator` is for execution-style backends such as cloud or shot-based providers.
-- `database` builds matrices, channels, states, bases, and random data.
-- `qinfo` is the analysis toolbox.
-- `loss` provides training-friendly wrappers.
-- `OneWayLOCCNet` is the only application-level wrapper covered by this skill.
+## Backend Guardrails
 
-## Routing
+- `StateOperator` backends support execution, shots, and operator-history workflows.
+- Only promise `measure` and `expec_val` unless a provider explicitly supports more.
+- Prefer `_multi_execute()` returning batched CSR counts for shot-based backends.
+- Shot-based measurement may return sparse probabilities while preserving dense simulator outcome indexing.
+- Use `SimpleStateOperator` as a local stand-in when demonstrating interface design.
 
-### States, Hamiltonians, `to_state`, backend switching, or cloud backends
+## Validation
 
-Read [api-core.md](api-core.md).
+- Run `python scripts/check_version.py` before any other validation.
+- Run `python scripts/verify_examples.py` after changing examples or references.
+- Run `python scripts/recommend_import.py` to validate query behavior; version mismatch exits before recommendations are produced.
+- Inspect the reported installation path and exact version when freshness matters.
+- State missing TeX or external-backend dependencies explicitly; do not imply unexecuted behavior was verified.
 
-### Circuit creation, gates, channels, oracles, measurement, plotting, or QASM2
+## Gotchas
 
-Read [api-circuit.md](api-circuit.md).
-
-### Template layers, encodings, or custom subcircuits
-
-Read [api-ansatz.md](api-ansatz.md).
-
-### Matrix/state generators, random data, or quantum-information utilities
-
-Read [api-database-qinfo.md](api-database-qinfo.md).
-
-### Loss wrappers or `OneWayLOCCNet`
-
-Read [api-loss-application.md](api-loss-application.md).
-
-### Training loops, PyTorch integration, hybrid models, or NumPy/Torch interop
-
-Read [api-torch.md](api-torch.md).
-
-### Common workload patterns and tutorial-like reconstruction
-
-Read [tutorials-checklist.md](tutorials-checklist.md).
-
-## Default Working Patterns
-
-### Writing A New Example
-
-1. Decide whether the task is about state preparation, circuit construction, analysis, training, plotting, or backend integration.
-2. Pick the right API family instead of mixing abstractions randomly.
-3. Prefer `Circuit` plus `database` factories for concise examples.
-4. Keep batch shape and `system_dim` semantics explicit.
-5. If plotting or cloud execution is involved, mention external dependencies.
-
-### Reproducing A Tutorial
-
-1. Use [tutorials-checklist.md](tutorials-checklist.md) to identify the target capability and APIs.
-2. Rebuild the workflow from APIs and patterns, not by copying tutorial cells.
-3. Preserve the same conceptual pipeline, but simplify constants or logging if the user does not need an exact replica.
-4. If the tutorial depends on randomness, seed it or state clearly that output is stochastic.
-5. If the tutorial depends on third-party infrastructure, provide a simulator fallback when possible.
-
-### Writing Training Code
-
-1. Separate the training objective from the validation metric.
-2. Prefer numerically stable losses even if the final success metric is different.
-3. Use the standard loop in [api-torch.md](api-torch.md).
-4. For simple VQE-like tasks, the validation metric can be omitted; otherwise keep it.
-
-## Non-Negotiable API Conventions
-
-- For trainable built-in layers in `quairkit.ansatz.layer`, batched parameters use `[batch_size, total_param_num]`.
-- `Circuit.append(layer)` keeps the layer as a child module; `Circuit.extend(layer)` flattens the layer into its internal operators.
-- For operator insertion, `int`, `List[int]`, and `List[List[int]]` can mean different things depending on arity. Check [api-circuit.md](api-circuit.md) before writing examples.
-- Build circuits with `Circuit.*`; use `database.*` when you need matrices, channels, or named states outside a circuit.
-- Do not import from `quairkit.operator` in ordinary user code. Names such as `RX`, `CNOT`, `Oracle`, `Collapse`, and `OneWayLOCC` are low-level operator classes, not the default user interface.
-- `database.rx(...)` returns a matrix (`torch.Tensor` or `numpy.ndarray`), not a callable gate object.
-- Conceptually, state tensors follow `(batch, prob_1, ..., prob_K, state_rows, state_cols)`. See [api-core.md](api-core.md) before reshaping or indexing leading dimensions.
-- `qinfo` is more analysis-oriented; `loss` is more training-oriented.
-- `Circuit.measure` is structurally different from `loss.Measure`.
-- Only qubit circuits can be exported to OpenQASM 2.0.
-- Do not document or recommend `PQCombNet` in this skill.
-- Do not create a separate backend-integration skill; backend integration belongs in the core/backend notes.
-
-## Plotting And Paper Integration
-
-- `Circuit.to_latex()` returns Quantikz code.
-- `Circuit.plot()` depends on `pdflatex`.
-- For arXiv, include the Quantikz support file if the archive does not provide it.
-- If users only need a publication figure, exporting code and compiling in Overleaf is a valid fallback.
-
-## Backend Integration Guardrails
-
-- `StateOperator` backends are for shots, execution, and operator-history workflows.
-- They do not support direct numeric state construction from matrices or state vectors.
-- For backend examples, only promise `measure` and `expec_val` unless the provider explicitly supports more.
-- Use `SimpleStateOperator` as a lightweight local stand-in when demonstrating interface design.
-
-## What To Avoid
-
-- Do not invent undocumented batch rules.
-- Do not assume tutorial prose is newer than the source.
-- Do not paste large tutorial code blocks when a smaller runnable example is enough.
-- Do not mix qubit-only and qudit-aware assumptions silently.
-- Do not use Windows-style paths inside the skill files.
-
-## Common Pitfalls
-
-- `Circuit.rx(...)`, `database.rx(...)`, and `quairkit.operator.RX(...)` live at three different abstraction levels. Use the first for circuit building, the second for matrices, and avoid the third in ordinary examples.
-- Not every leading state dimension is an independent training batch. Later leading dimensions can be probability branches created by `measure`, `locc`, or `quasi`.
-- Passing a plain `torch.Tensor` as `param` does not register a module parameter. Use `param=None` or an explicit `torch.nn.Parameter` when the parameter must appear in `model.parameters()`.
-- `Circuit.measure` changes circuit structure; `loss.Measure` consumes an already prepared state.
-- `StateOperator` backends cannot be initialized from numeric matrices or state vectors.
-
-## Deliverable Style
-
-- Keep examples short and runnable.
-- Prefer current APIs over deprecated wrappers.
-- Use English only.
-- If something is uncertain, say it needs verification instead of guessing.
-
-## Additional Resources
-
-- State and backend details: [api-core.md](api-core.md)
-- Circuit and plotting details: [api-circuit.md](api-circuit.md)
-- Layers and encodings: [api-ansatz.md](api-ansatz.md)
-- Data generation and analysis tools: [api-database-qinfo.md](api-database-qinfo.md)
-- Training and PyTorch usage: [api-torch.md](api-torch.md)
-- Tutorial coverage targets: [tutorials-checklist.md](tutorials-checklist.md)
+- This skill is not cross-version guidance. Do not infer APIs from a different QuAIRKit release.
+- A local package tree that shadows the official wheel fails the version gate; remove it from the import path rather than bypassing the check.
+- `Circuit.rx`, `database.rx`, and `quairkit.operator.RX` are different abstraction levels.
+- Leading state dimensions can include probability branches introduced by measurement, LOCC, or quasi operations; they are not always independent training batches.
+- A plain `torch.Tensor` passed as `param` does not become a registered module parameter.
+- Sparse forward outputs do not guarantee sparse backward memory for every PyTorch operation.
+- Do not silently mix qubit-only and qudit-aware assumptions.
+- Match the user's language in conversation, but keep code, comments, and repository-facing artifacts in English unless the task explicitly requires another language.

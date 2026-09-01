@@ -1,5 +1,14 @@
 # Database And Qinfo APIs
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- Database public families, signatures, and usage patterns
+- Qinfo public families and signatures
+- NumPy, Tensor, and State interoperability
+- Validation, batching, examples, and common pitfalls
+
 ## Scope
 Use this file for:
 
@@ -35,7 +44,7 @@ Important distinction:
 
 Runtime-verified caveat:
 
-- in the current environment, `heisenberg_hamiltonian` expects a 3D `edges` tensor whose leading dimension stores the XX / YY / ZZ coupling weights
+- in QuAIRKit 0.5.1, `heisenberg_hamiltonian` expects a 3D `edges` tensor whose leading dimension stores the XX / YY / ZZ coupling weights
 
 ### Matrix Generators
 - `phase`
@@ -101,7 +110,7 @@ These usually follow the `_ArrayLike` mirror rule:
 - `rxx(theta: float | np.ndarray | torch.Tensor) -> np.ndarray | torch.Tensor`
 - `ryy(theta: float | np.ndarray | torch.Tensor) -> np.ndarray | torch.Tensor`
 - `rzz(theta: float | np.ndarray | torch.Tensor) -> np.ndarray | torch.Tensor`
-- `ms(theta: float | np.ndarray | torch.Tensor) -> np.ndarray | torch.Tensor`
+- `ms() -> torch.Tensor`
 - `universal2(theta: np.ndarray | torch.Tensor | Iterable[float]) -> np.ndarray | torch.Tensor`
 - `universal3(theta: np.ndarray | torch.Tensor | Iterable[float]) -> np.ndarray | torch.Tensor`
 - `universal_qudit(theta: np.ndarray | torch.Tensor | Iterable[float], dimension: int) -> np.ndarray | torch.Tensor`
@@ -110,7 +119,7 @@ Practical rule:
 
 - NumPy parameter input usually gives NumPy output
 - tensor or scalar input usually gives tensor output
-- fixed matrix constructors such as `cnot()` or `h()` still return `torch.Tensor`
+- fixed matrix constructors such as `cnot()`, `h()`, or `ms()` still return `torch.Tensor`
 
 ### State Factories
 These return QuAIRKit state objects, not bare tensors:
@@ -128,7 +137,7 @@ Other named factories in this family include `bell_diagonal_state`, `completely_
 Important caveat:
 
 - `bell_state(num_systems)` requires an even number of systems
-- in the current runtime, `bell_state()` with no explicit argument does not mean "the smallest Bell pair"; use `bell_state(2)` when you want the standard two-qubit Bell state
+- in QuAIRKit 0.5.1, `bell_state()` with no explicit argument does not mean "the smallest Bell pair"; use `bell_state(2)` when you want the standard two-qubit Bell state
 
 ### Random Generators
 Representative signatures:
@@ -141,8 +150,8 @@ Other names in this family include `random_pauli_str_generator`, `random_hamilto
 
 Important note:
 
-- `random_state(...)` currently returns a simulator-backed state object such as `MixedState`
-- do not assume `random_state(...)` will expose a pure-state `ket`; in the current runtime it commonly returns a mixed-state object
+- `random_state(...)` in QuAIRKit 0.5.1 returns a simulator-backed state object such as `MixedState`
+- do not assume `random_state(...)` will expose a pure-state `ket`; in QuAIRKit 0.5.1 it commonly returns a mixed-state object
 - many random generators accept `size` for batch generation
 - `num_qubits` may exist as an alias of `num_systems`
 
@@ -271,7 +280,7 @@ The functions are best understood in three families:
 Typical pattern:
 
 - `is_unitary(mat: np.ndarray | torch.Tensor, eps: float | None = 1e-4) -> bool | list[bool]`
-- `is_density_matrix(mat: np.ndarray | torch.Tensor, eps: float | None = 1e-4) -> bool | list[bool]`
+- `is_density_matrix(mat: np.ndarray | torch.Tensor, eps: float = 1e-6) -> bool | list[bool]`
 
 Use these as validation helpers, not as differentiable objectives.
 
@@ -358,7 +367,7 @@ fid = state_fidelity(state_a, state_b)
 ```
 
 ### High-Frequency Runtime Facts
-Verified in the current environment:
+Verified with QuAIRKit 0.5.1:
 
 - `type(rx(0.5)).__name__ == "Tensor"`
 - `type(rx(np.array([0.5]))).__name__ == "ndarray"`
@@ -405,7 +414,7 @@ If a function accepts two batched objects, expect broadcast-like or pairwise mat
 - `database.rx(...)` returns a matrix, not a callable gate object. `database.rx(0.5)(state)` is wrong.
 - `Circuit.rx(...)`, `database.rx(...)`, and `quairkit.operator.RX(...)` are different abstractions. Use `Circuit` for circuit construction and `database` for matrices.
 - Do not assume every `database` helper mirrors NumPy input types. Fixed constructors such as `h()` and `cnot()` return `torch.Tensor`.
-- Do not assume all Hamiltonian generators share one signature. In the current runtime: `ising_hamiltonian(edges, vertices)`, `xy_hamiltonian(edges)`, `heisenberg_hamiltonian(edges)`.
+- Do not assume all Hamiltonian generators share one signature. In QuAIRKit 0.5.1: `ising_hamiltonian(edges, vertices)`, `xy_hamiltonian(edges)`, `heisenberg_hamiltonian(edges)`.
 - `bell_state()` without an explicit even `num_systems` is easy to misuse. Use `bell_state(2)` when you want the standard two-qubit Bell pair.
 - `Uf` and `Of` are not interchangeable. `Uf(f, n)` is Simon's `2n`-qubit XOR oracle, while `Of(f, n)` is the `n`-qubit phase oracle for unstructured search.
 - `grover_matrix(Of(...))` is not automatically the textbook phase-oracle Grover iterate. Check the documented `oracle` convention first, or build diffusion plus `Of(...)` manually.

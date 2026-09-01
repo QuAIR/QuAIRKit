@@ -1,5 +1,14 @@
 # Circuit APIs
 
+This reference applies only to public QuAIRKit 0.5.1. Run `python scripts/check_version.py` from the skill directory before using it.
+
+## Contents
+
+- Construction, index formats, parameter rules, and universal gates
+- Noise, layers, append/extend, oracles, measurement, LOCC, and quasi operations
+- Circuit information, Quantikz plotting, and QASM2
+- QPE patterns, working advice, and common pitfalls
+
 ## Scope
 
 Use this file for:
@@ -50,7 +59,7 @@ This separates:
 
 Use this when composing systems across larger workflows.
 
-In the current runtime, circuit insertion methods are in-place APIs and are normally used as statements. Do not assume calls such as `Circuit(2).h(0)` or `Circuit(2).depolarizing(0.1, 0)` return a new circuit object for fluent chaining.
+In QuAIRKit 0.5.1, circuit insertion methods are in-place APIs and are normally used as statements. Do not assume calls such as `Circuit(2).h(0)` or `Circuit(2).depolarizing(0.1, 0)` return a new circuit object for fluent chaining.
 
 ## Operator Insertion Rules
 
@@ -133,6 +142,8 @@ The common conceptual layout is:
 
 The actual input does not always need to be written in exactly that shape, as long as it can be reshaped to the expected internal format.
 
+For ordinary parameterized gates, QuAIRKit reshapes tensor or iterable input to `[num_operators or 1, batch_size, num_params_per_operator]`. Any extra middle dimensions are flattened into the single `batch_size` axis. Downstream execution supports matching batch sizes or size-one broadcasting; do not promise arbitrary multidimensional NumPy-style broadcasting between unrelated batch shapes.
+
 ### `param=None`
 If `param=None`, QuAIRKit creates trainable parameters automatically.
 
@@ -155,6 +166,8 @@ Important nuance:
 - `universal_three_qubits(...)`
 
 Use these when a built-in universal parameterization is enough.
+
+`Circuit.ms(qubits_idx='linear')` inserts the fixed Mølmer-Sørensen gate and takes no angle parameter. Use `Circuit.rxx(..., param=theta)` for an angle-parameterized XX rotation.
 
 ### `universal_qudits`
 
@@ -409,6 +422,13 @@ Probabilities must be real-valued, not complex.
 
 Use `matrix` only when the circuit is unitary-only.
 
+### Reconstruction And Compilation Boundaries
+
+- `Circuit.from_operators(list_operators)` reconstructs a qubit-only circuit from `operator_history` records. QuAIRKit 0.5.1 rejects an empty input and does not support daggered records.
+- This reconstruction helper does not define a serialized file format, generic persistence mechanism, or cross-version interchange contract.
+- QuAIRKit 0.5.1 has no QuAIRKit-specific circuit compiler, public IR, binding table, executable plan, or generic snapshot API. Do not invent `Circuit.save` or `Circuit.load`.
+- If `Circuit.compile` is visible, it is inherited PyTorch `torch.nn.Module` behavior. Do not present it as a QuAIRKit compiler or use it to answer requests for a quantum-circuit compilation interface.
+
 ## Plotting And Quantikz
 
 ### `to_latex`
@@ -417,7 +437,7 @@ Use `matrix` only when the circuit is unitary-only.
 
 ### `plot`
 
-Current public signature:
+QuAIRKit 0.5.1 public signature:
 
 ```python
 cir.plot(style="standard", decimal=2, dpi=300, print_code=False, show_plot=True, include_empty=False)
@@ -430,7 +450,7 @@ Important implementation note:
 
 Tutorial note:
 - some tutorial prose discusses a `latex` switch for Quantikz versus matplotlib fallback
-- in the current source, the stable documented knobs are the explicit signature above plus the Quantikz-based default rendering path
+- in the QuAIRKit 0.5.1 public source, the stable documented knobs are the explicit signature above plus the Quantikz-based default rendering path
 
 ### Plot Styles
 
@@ -508,7 +528,7 @@ cir.oracle(power, [control, target], control_idx=1)
 
 Prefer this over relying on an undocumented `.matrix_power(...)` method on the returned object.
 
-For controlled parameterized gates such as `crz`, `cp`, and `cu`, the current calling convention is:
+For controlled parameterized gates such as `crz`, `cp`, and `cu`, the QuAIRKit 0.5.1 calling convention is:
 
 ```python
 cir.crz([control, target], param=theta)
@@ -534,3 +554,4 @@ Pass the acted-on qubit indices first and the parameter as `param=...`.
 - `Circuit.measure` modifies circuit structure and later state shapes. It is not interchangeable with `loss.Measure`.
 - `Circuit.trotter(...)` mutates the circuit in place and requires explicit `time` and `num_steps` choices; vary `num_steps` at fixed `time` when comparing Trotter accuracy.
 - For `crz`, `cp`, and related controlled parameterized gates, do not pass the angle as the first positional argument. Use `cir.crz([control, target], param=theta)`.
+- Multi-dimensional parameter input is flattened into one gate-batch axis. Preserve the intended grouping explicitly instead of relying on multi-axis broadcasting semantics.
