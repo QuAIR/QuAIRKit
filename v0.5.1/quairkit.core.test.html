@@ -1,0 +1,2132 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="quairkit.core.state.state.html">
+      
+      
+        <link rel="next" href="quairkit.database.html">
+      
+      
+      <link rel="icon" href="_static/favicon.svg">
+    
+    
+      
+        <title>quairkit.core.test - QuAIRKit</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quairkit.core.test.get_test_device_list" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="QuAIRKit" class="md-header__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            QuAIRKit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              quairkit.core.test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="QuAIRKit" class="md-nav__button md-logo" aria-label="QuAIRKit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    QuAIRKit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/QuAIR/QuAIRKit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    QuAIRKit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.rst (reference label)"><span>quairkit</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.ansatz.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.ansatz.rst (reference label)"><span>quairkit.<wbr>ansatz</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.application.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.application.rst (reference label)"><span>quairkit.<wbr>application</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.circuit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.circuit.rst (reference label)"><span>quairkit.<wbr>circuit</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="quairkit.core.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.rst (reference label)"><span>quairkit.<wbr>core</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/quairkit.core.rst (reference label)"><span>quairkit.<wbr>core</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.base.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.base.rst (reference label)"><span>quairkit.<wbr>core.<wbr>base</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.hamiltonian.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.hamiltonian.rst (reference label)"><span>quairkit.<wbr>core.<wbr>hamiltonian</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.latex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.latex.rst (reference label)"><span>quairkit.<wbr>core.<wbr>latex</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.operator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.operator.rst (reference label)"><span>quairkit.<wbr>core.<wbr>operator</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.core.state.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.state.rst (reference label)"><span>quairkit.<wbr>core.<wbr>state</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.test.rst (reference label)"><span>quairkit.<wbr>core.<wbr>test</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.core.test.rst (reference label)"><span>quairkit.<wbr>core.<wbr>test</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_test_device_list" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_test_device_list (Python function) — Return the device list for tests."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>test_<wbr>device_<wbr>list</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_state_simulator_test_device_list" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_state_simulator_test_device_list (Python function) — Return the device list for StateSimulator-focused tests."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>state_<wbr>simulator_<wbr>test_<wbr>device_<wbr>list</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor (Python class) — Monitor performance metrics (time and memory) for test functions."><span>quairkit.<wbr>core.<wbr>test.<wbr>Performance<wbr>Monitor</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.PerformanceMonitor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.wall_time" class="md-nav__link">
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.wall_time (Python property) — Wall time in seconds."><span>wall_<wbr>time</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.memory_peak" class="md-nav__link">
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.memory_peak (Python property) — Peak memory usage in MB."><span>memory_<wbr>peak</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.memory_delta" class="md-nav__link">
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.memory_delta (Python property) — Memory delta from start to peak in MB."><span>memory_<wbr>delta</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.to_dict" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.to_dict (Python method) — Convert to dictionary for JSON serialization."><span>to_<wbr>dict</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_version" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_version (Python function) — Get the version from quairkit package."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>version</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_commit_hash" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_commit_hash (Python function) — Get the git commit hash of the current repository."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>commit_<wbr>hash</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.get_commit_hash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_commit_hash-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_commit_hash-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report (Python function) — Generate a test performance report."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>test_<wbr>report</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_test_report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report.test_results" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report.test_results (Python parameter) — Dictionary mapping test names to their performance metrics."><span>test_<wbr>results</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report.output_dir" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report.output_dir (Python parameter) — Directory to save the report."><span>output_<wbr>dir</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report.format" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report.format (Python parameter) — Output format, either &#34;json&#34; or &#34;csv&#34;."><span>format</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations (Python function) — Generate various system index permutations for testing."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>system_<wbr>index_<wbr>permutations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_system_index_permutations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.num_systems" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.num_systems (Python parameter) — Total number of systems."><span>num_<wbr>systems</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.num_acted" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.num_acted (Python parameter) — Number of systems the operation acts on."><span>num_<wbr>acted</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.max_permutations" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.max_permutations (Python parameter) — Maximum number of permutations to generate."><span>max_<wbr>permutations</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.include_sequential" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.include_sequential (Python parameter) — Include sequential indices like [0, 1, 2]."><span>include_<wbr>sequential</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.include_shuffled" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.include_shuffled (Python parameter) — Include shuffled indices."><span>include_<wbr>shuffled</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.include_partial" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.include_partial (Python parameter) — Include cases where not all systems are used."><span>include_<wbr>partial</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_batch_dimensions (Python function) — Generate batch dimension combinations for testing."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>batch_<wbr>dimensions</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_batch_dimensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions.default_range" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_batch_dimensions.default_range (Python parameter) — Default range for batch sizes (min, max)."><span>default_<wbr>range</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions.special_range" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_batch_dimensions.special_range (Python parameter) — Special range for cases needing more systems (min, max)."><span>special_<wbr>range</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations (Python function) — Generate system dimension combinations for testing."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>system_<wbr>dim_<wbr>combinations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_system_dim_combinations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations.num_systems" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations.num_systems (Python parameter) — Number of systems."><span>num_<wbr>systems</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations.default_dim_range" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations.default_dim_range (Python parameter) — Default dimension range (min, max)."><span>default_<wbr>dim_<wbr>range</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations.qudit_combinations" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations.qudit_combinations (Python parameter) — Optional predefined qudit combinations."><span>qudit_<wbr>combinations</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.track_performance" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.track_performance (Python function) — Decorator to track performance of a test function."><span>quairkit.<wbr>core.<wbr>test.<wbr>track_<wbr>performance</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_test_performance_results" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_test_performance_results (Python function) — Get all collected test performance results."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>test_<wbr>performance_<wbr>results</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.clear_test_performance_results" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.clear_test_performance_results (Python function) — Clear all collected test performance results."><span>quairkit.<wbr>core.<wbr>test.<wbr>clear_<wbr>test_<wbr>performance_<wbr>results</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.database.rst (reference label)"><span>quairkit.<wbr>database</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.loss.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.loss.rst (reference label)"><span>quairkit.<wbr>loss</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.operator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.operator.rst (reference label)"><span>quairkit.<wbr>operator</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quairkit.qinfo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/quairkit.qinfo.rst (reference label)"><span>quairkit.<wbr>qinfo</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/tutorials.rst (reference label)"><span>tutorials</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_test_device_list" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_test_device_list (Python function) — Return the device list for tests."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>test_<wbr>device_<wbr>list</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_state_simulator_test_device_list" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_state_simulator_test_device_list (Python function) — Return the device list for StateSimulator-focused tests."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>state_<wbr>simulator_<wbr>test_<wbr>device_<wbr>list</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor (Python class) — Monitor performance metrics (time and memory) for test functions."><span>quairkit.<wbr>core.<wbr>test.<wbr>Performance<wbr>Monitor</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.PerformanceMonitor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.wall_time" class="md-nav__link">
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.wall_time (Python property) — Wall time in seconds."><span>wall_<wbr>time</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.memory_peak" class="md-nav__link">
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.memory_peak (Python property) — Peak memory usage in MB."><span>memory_<wbr>peak</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.memory_delta" class="md-nav__link">
+    
+      <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.memory_delta (Python property) — Memory delta from start to peak in MB."><span>memory_<wbr>delta</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.PerformanceMonitor.to_dict" class="md-nav__link">
+    
+      <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.PerformanceMonitor.to_dict (Python method) — Convert to dictionary for JSON serialization."><span>to_<wbr>dict</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_version" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_version (Python function) — Get the version from quairkit package."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>version</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_commit_hash" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_commit_hash (Python function) — Get the git commit hash of the current repository."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>commit_<wbr>hash</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.get_commit_hash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_commit_hash-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_commit_hash-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report (Python function) — Generate a test performance report."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>test_<wbr>report</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_test_report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report.test_results" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report.test_results (Python parameter) — Dictionary mapping test names to their performance metrics."><span>test_<wbr>results</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report.output_dir" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report.output_dir (Python parameter) — Directory to save the report."><span>output_<wbr>dir</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report.format" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_test_report.format (Python parameter) — Output format, either &#34;json&#34; or &#34;csv&#34;."><span>format</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_test_report-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations (Python function) — Generate various system index permutations for testing."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>system_<wbr>index_<wbr>permutations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_system_index_permutations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.num_systems" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.num_systems (Python parameter) — Total number of systems."><span>num_<wbr>systems</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.num_acted" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.num_acted (Python parameter) — Number of systems the operation acts on."><span>num_<wbr>acted</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.max_permutations" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.max_permutations (Python parameter) — Maximum number of permutations to generate."><span>max_<wbr>permutations</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.include_sequential" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.include_sequential (Python parameter) — Include sequential indices like [0, 1, 2]."><span>include_<wbr>sequential</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.include_shuffled" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.include_shuffled (Python parameter) — Include shuffled indices."><span>include_<wbr>shuffled</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations.include_partial" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_index_permutations.include_partial (Python parameter) — Include cases where not all systems are used."><span>include_<wbr>partial</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_index_permutations-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_batch_dimensions (Python function) — Generate batch dimension combinations for testing."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>batch_<wbr>dimensions</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_batch_dimensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions.default_range" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_batch_dimensions.default_range (Python parameter) — Default range for batch sizes (min, max)."><span>default_<wbr>range</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions.special_range" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_batch_dimensions.special_range (Python parameter) — Special range for cases needing more systems (min, max)."><span>special_<wbr>range</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_batch_dimensions-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations (Python function) — Generate system dimension combinations for testing."><span>quairkit.<wbr>core.<wbr>test.<wbr>generate_<wbr>system_<wbr>dim_<wbr>combinations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="quairkit.core.test.generate_system_dim_combinations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations.num_systems" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations.num_systems (Python parameter) — Number of systems."><span>num_<wbr>systems</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations.default_dim_range" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations.default_dim_range (Python parameter) — Default dimension range (min, max)."><span>default_<wbr>dim_<wbr>range</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations.qudit_combinations" class="md-nav__link">
+    
+      <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.generate_system_dim_combinations.qudit_combinations (Python parameter) — Optional predefined qudit combinations."><span>qudit_<wbr>combinations</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quairkit.core.test.generate_system_dim_combinations-return-type" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Return type</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.track_performance" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.track_performance (Python function) — Decorator to track performance of a test function."><span>quairkit.<wbr>core.<wbr>test.<wbr>track_<wbr>performance</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.get_test_performance_results" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.get_test_performance_results (Python function) — Get all collected test performance results."><span>quairkit.<wbr>core.<wbr>test.<wbr>get_<wbr>test_<wbr>performance_<wbr>results</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quairkit.core.test.clear_test_performance_results" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="quairkit.core.test.clear_test_performance_results (Python function) — Clear all collected test performance results."><span>quairkit.<wbr>core.<wbr>test.<wbr>clear_<wbr>test_<wbr>performance_<wbr>results</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="module-quairkit.core.test"><span id="quairkit-core-test"></span>quairkit.core.test<a class="headerlink" href="#module-quairkit.core.test" title="Link to this heading">¶</a></h1>
+<p>Common settings and utilities for the unit test</p>
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.get_test_device_list">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">get_test_device_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.get_test_device_list" title="Link to this definition">¶</a></dt>
+<dd><p>Return the device list for tests.</p>
+<p>Policy:
+- Always test CPU.
+- By default, do NOT expand to CUDA for the whole suite (many tests rely on CPU-only numpy/scipy paths).</p>
+<blockquote>
+<div><p>You can opt-in by setting environment variable <cite>QUAIRKIT_TEST_ALL_DEVICES=1</cite>.</p>
+</div></blockquote>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.get_state_simulator_test_device_list">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">get_state_simulator_test_device_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.get_state_simulator_test_device_list" title="Link to this definition">¶</a></dt>
+<dd><p>Return the device list for StateSimulator-focused tests.</p>
+<p>Policy:
+- Always test CPU.
+- Automatically include CUDA when available.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py class objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.PerformanceMonitor">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">PerformanceMonitor</span></span><a class="headerlink" href="#quairkit.core.test.PerformanceMonitor" title="Link to this definition">¶</a></dt>
+<dd><p>Monitor performance metrics (time and memory) for test functions.</p>
+<dl class="py property objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.PerformanceMonitor.wall_time">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wall_time</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">float</span></span><a class="headerlink" href="#quairkit.core.test.PerformanceMonitor.wall_time" title="Link to this definition">¶</a></dt>
+<dd><p>Wall time in seconds.</p>
+</dd></dl>
+
+<dl class="py property objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.PerformanceMonitor.memory_peak">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">memory_peak</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">float</span></span><a class="headerlink" href="#quairkit.core.test.PerformanceMonitor.memory_peak" title="Link to this definition">¶</a></dt>
+<dd><p>Peak memory usage in MB.</p>
+</dd></dl>
+
+<dl class="py property objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.PerformanceMonitor.memory_delta">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">memory_delta</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">float</span></span><a class="headerlink" href="#quairkit.core.test.PerformanceMonitor.memory_delta" title="Link to this definition">¶</a></dt>
+<dd><p>Memory delta from start to peak in MB.</p>
+</dd></dl>
+
+<dl class="py method objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.PerformanceMonitor.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.PerformanceMonitor.to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Convert to dictionary for JSON serialization.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.get_version">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.get_version" title="Link to this definition">¶</a></dt>
+<dd><p>Get the version from quairkit package.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.get_commit_hash">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">get_commit_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.get_commit_hash" title="Link to this definition">¶</a></dt>
+<dd><p>Get the git commit hash of the current repository.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.test.get_commit_hash-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.get_commit_hash-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p>Short commit hash (7 characters) if git is available, otherwise “unknown”.</p>
+</dd>
+<dt class="field-even" id="quairkit.core.test.get_commit_hash-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.get_commit_hash-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.test.generate_test_report">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">generate_test_report</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_test_report.test_results" title="quairkit.core.test.generate_test_report.test_results (Python parameter) — Dictionary mapping test names to their performance metrics."><span class="n"><span class="pre">test_results</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_test_report.output_dir" title="quairkit.core.test.generate_test_report.output_dir (Python parameter) — Directory to save the report."><span class="n"><span class="pre">output_dir</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_test_report.format" title="quairkit.core.test.generate_test_report.format (Python parameter) — Output format, either &quot;json&quot; or &quot;csv&quot;."><span class="n"><span class="pre">format</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;json&#39;</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.generate_test_report" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a test performance report.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.test.generate_test_report-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_test_report-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.test.generate_test_report.test_results"><span class="sig-name descname">test_results</span><span class="p"> : </span><span class="desctype"><span class="desctype">Dict[str, Dict[str, Any]]</span></span><a class="headerlink" href="#quairkit.core.test.generate_test_report.test_results" title="Permalink to this definition">¶</a></dt><dd><p>Dictionary mapping test names to their performance metrics.</p>
+</dd>
+<dt id="quairkit.core.test.generate_test_report.output_dir"><span class="sig-name descname">output_dir</span><span class="p"> : </span><span class="desctype"><span class="desctype">str | Path | None</span></span><a class="headerlink" href="#quairkit.core.test.generate_test_report.output_dir" title="Permalink to this definition">¶</a></dt><dd><p>Directory to save the report. Defaults to <cite>tests/reports/</cite>.</p>
+</dd>
+<dt id="quairkit.core.test.generate_test_report.format"><span class="sig-name descname">format</span><span class="p"> : </span><span class="desctype"><span class="desctype">str</span></span><a class="headerlink" href="#quairkit.core.test.generate_test_report.format" title="Permalink to this definition">¶</a></dt><dd><p>Output format, either “json” or “csv”. Defaults to “json”.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.core.test.generate_test_report-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_test_report-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Path to the generated report file.</p>
+</dd>
+<dt class="field-odd" id="quairkit.core.test.generate_test_report-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_test_report-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>Path</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.test.generate_system_index_permutations">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">generate_system_index_permutations</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_index_permutations.num_systems" title="quairkit.core.test.generate_system_index_permutations.num_systems (Python parameter) — Total number of systems."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_index_permutations.num_acted" title="quairkit.core.test.generate_system_index_permutations.num_acted (Python parameter) — Number of systems the operation acts on."><span class="n"><span class="pre">num_acted</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_index_permutations.max_permutations" title="quairkit.core.test.generate_system_index_permutations.max_permutations (Python parameter) — Maximum number of permutations to generate."><span class="n"><span class="pre">max_permutations</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_index_permutations.include_sequential" title="quairkit.core.test.generate_system_index_permutations.include_sequential (Python parameter) — Include sequential indices like [0, 1, 2]."><span class="n"><span class="pre">include_sequential</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_index_permutations.include_shuffled" title="quairkit.core.test.generate_system_index_permutations.include_shuffled (Python parameter) — Include shuffled indices."><span class="n"><span class="pre">include_shuffled</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_index_permutations.include_partial" title="quairkit.core.test.generate_system_index_permutations.include_partial (Python parameter) — Include cases where not all systems are used."><span class="n"><span class="pre">include_partial</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">True</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations" title="Link to this definition">¶</a></dt>
+<dd><p>Generate various system index permutations for testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.test.generate_system_index_permutations-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.test.generate_system_index_permutations.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Total number of systems.</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_index_permutations.num_acted"><span class="sig-name descname">num_acted</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations.num_acted" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems the operation acts on.</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_index_permutations.max_permutations"><span class="sig-name descname">max_permutations</span><span class="p"> : </span><span class="desctype"><span class="desctype">int | None</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations.max_permutations" title="Permalink to this definition">¶</a></dt><dd><p>Maximum number of permutations to generate. If None, generates all.</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_index_permutations.include_sequential"><span class="sig-name descname">include_sequential</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations.include_sequential" title="Permalink to this definition">¶</a></dt><dd><p>Include sequential indices like [0, 1, 2].</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_index_permutations.include_shuffled"><span class="sig-name descname">include_shuffled</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations.include_shuffled" title="Permalink to this definition">¶</a></dt><dd><p>Include shuffled indices.</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_index_permutations.include_partial"><span class="sig-name descname">include_partial</span><span class="p"> : </span><span class="desctype"><span class="desctype">bool</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations.include_partial" title="Permalink to this definition">¶</a></dt><dd><p>Include cases where not all systems are used.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.core.test.generate_system_index_permutations-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>List of system index lists.</p>
+</dd>
+<dt class="field-odd" id="quairkit.core.test.generate_system_index_permutations-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_system_index_permutations-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>List</em>[<em>List</em>[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.test.generate_batch_dimensions">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">generate_batch_dimensions</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_batch_dimensions.default_range" title="quairkit.core.test.generate_batch_dimensions.default_range (Python parameter) — Default range for batch sizes (min, max)."><span class="n"><span class="pre">default_range</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_batch_dimensions.special_range" title="quairkit.core.test.generate_batch_dimensions.special_range (Python parameter) — Special range for cases needing more systems (min, max)."><span class="n"><span class="pre">special_range</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.generate_batch_dimensions" title="Link to this definition">¶</a></dt>
+<dd><p>Generate batch dimension combinations for testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.test.generate_batch_dimensions-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_batch_dimensions-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.test.generate_batch_dimensions.default_range"><span class="sig-name descname">default_range</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tuple[int, int]</span></span><a class="headerlink" href="#quairkit.core.test.generate_batch_dimensions.default_range" title="Permalink to this definition">¶</a></dt><dd><p>Default range for batch sizes (min, max).</p>
+</dd>
+<dt id="quairkit.core.test.generate_batch_dimensions.special_range"><span class="sig-name descname">special_range</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tuple[int, int] | None</span></span><a class="headerlink" href="#quairkit.core.test.generate_batch_dimensions.special_range" title="Permalink to this definition">¶</a></dt><dd><p>Special range for cases needing more systems (min, max).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.core.test.generate_batch_dimensions-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_batch_dimensions-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>List of batch dimension lists, including [], [1], [n], [m, n] combinations.</p>
+</dd>
+<dt class="field-odd" id="quairkit.core.test.generate_batch_dimensions-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_batch_dimensions-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>List</em>[<em>List</em>[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight sig-wrap py" id="quairkit.core.test.generate_system_dim_combinations">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">generate_system_dim_combinations</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_dim_combinations.num_systems" title="quairkit.core.test.generate_system_dim_combinations.num_systems (Python parameter) — Number of systems."><span class="n"><span class="pre">num_systems</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_dim_combinations.default_dim_range" title="quairkit.core.test.generate_system_dim_combinations.default_dim_range (Python parameter) — Default dimension range (min, max)."><span class="n"><span class="pre">default_dim_range</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.generate_system_dim_combinations.qudit_combinations" title="quairkit.core.test.generate_system_dim_combinations.qudit_combinations (Python parameter) — Optional predefined qudit combinations."><span class="n"><span class="pre">qudit_combinations</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations" title="Link to this definition">¶</a></dt>
+<dd><p>Generate system dimension combinations for testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="quairkit.core.test.generate_system_dim_combinations-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="quairkit.core.test.generate_system_dim_combinations.num_systems"><span class="sig-name descname">num_systems</span><span class="p"> : </span><span class="desctype"><span class="desctype">int</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations.num_systems" title="Permalink to this definition">¶</a></dt><dd><p>Number of systems.</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_dim_combinations.default_dim_range"><span class="sig-name descname">default_dim_range</span><span class="p"> : </span><span class="desctype"><span class="desctype">Tuple[int, int]</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations.default_dim_range" title="Permalink to this definition">¶</a></dt><dd><p>Default dimension range (min, max).</p>
+</dd>
+<dt id="quairkit.core.test.generate_system_dim_combinations.qudit_combinations"><span class="sig-name descname">qudit_combinations</span><span class="p"> : </span><span class="desctype"><span class="desctype">List[List[int]] | None</span></span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations.qudit_combinations" title="Permalink to this definition">¶</a></dt><dd><p>Optional predefined qudit combinations.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="quairkit.core.test.generate_system_dim_combinations-returns">Returns<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>List of system dimension lists.</p>
+</dd>
+<dt class="field-odd" id="quairkit.core.test.generate_system_dim_combinations-return-type">Return type<span class="colon">:</span><a class="headerlink" href="#quairkit.core.test.generate_system_dim_combinations-return-type" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><p><em>List</em>[<em>List</em>[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.track_performance">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">track_performance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#quairkit.core.test.track_performance" title="quairkit.core.test.track_performance.test_name (Python parameter)"><span class="n"><span class="pre">test_name</span></span></a><span class="o"><span class="pre">=</span></span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.track_performance" title="Link to this definition">¶</a></dt>
+<dd><p>Decorator to track performance of a test function.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="nd">@track_performance</span><span class="p">(</span><span class="s2">&quot;test_name&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_xxx</span><span class="p">():</span>
+    <span class="o">...</span>
+</code></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.get_test_performance_results">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">get_test_performance_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.get_test_performance_results" title="Link to this definition">¶</a></dt>
+<dd><p>Get all collected test performance results.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function objdesc">
+<dt class="sig sig-object highlight py" id="quairkit.core.test.clear_test_performance_results">
+<span class="sig-prename descclassname"><span class="pre">quairkit.core.test.</span></span><span class="sig-name descname"><span class="pre">clear_test_performance_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#quairkit.core.test.clear_test_performance_results" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all collected test performance results.</p>
+</dd></dl>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, QuAIR.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    9.1.0.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": null}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
+</html>
